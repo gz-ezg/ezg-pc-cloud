@@ -1,0 +1,55 @@
+<!--  外勤明细  -->
+<template>
+    <div>
+        <Table
+            :columns="header" 
+            :data="data1"
+        >
+        </Table>
+    </div>
+</template>
+
+<script>
+export default {
+        props:['time'],
+        data(){
+            return{
+                header:[
+                    {
+                        title:'人员',
+                        key:''
+                    },
+                    {
+                        title:'公司名称',
+                        key:''
+                    },
+                    {
+                        title:'订单号',
+                        key:''
+                    },
+                    {
+                        title:'创建时间',
+                        key:''
+                    },
+                    {
+                        title:'工单',
+                        key:''
+                    },
+                    {
+                        title:'当前完成节点',
+                        key:''
+                    },
+                    {
+                        title:'完成时间',
+                        key:''
+                    },
+                    {
+                        title:'是否额外节点',
+                        key:''
+                    }
+
+                ]
+            }
+        }
+}
+</script>

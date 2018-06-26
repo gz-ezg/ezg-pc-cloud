@@ -1,0 +1,120 @@
+<!--  完成情况统计  -->
+<template>
+    <div style="width:100%;height:100%;" id="Completion">
+    </div>
+</template>
+
+<script>
+import echarts from 'echarts'
+export default {
+    name: 'visiteVolume',
+        props:['time'],
+        data () {
+            return {
+                //
+                customerTypeGroupData: [],
+                customerT: 0,
+            };
+        },
+        methods: {
+        //     getEchartsData() {
+        //         let _self = this
+        //         let url = '/channel/type/queryUserChannel'
+
+        //         function doSuccess(re) {
+        //             let url2 = '/customer/groupQueryByChannelId?channelTypeId='+re.data.data[0].id+'&reportTypes=customerTypeGroup'
+
+        //             function doSuccess2(re) {
+        //                 let _data = re.data.data.customerTypeGroup
+        //                 // console.log(re)
+        //                 for (let i = 0; i < _data.length; i++) {
+        //                     let _color = ''
+        //                     _self.customerT = _self.customerT + parseInt(_data[i].value)
+
+        //                     _self.customerTypeGroupData.push({
+        //                         value: _data[i].value,
+        //                         name: _data[i].name,
+        //                     })
+        //                 }
+        //                 _self.getEcharts()
+        //             }
+
+        //             _self.GetData(url2, doSuccess2)
+        //         }
+
+        //         this.GetData(url, doSuccess)
+        //     },
+
+            getEcharts() {
+                let visiteVolume = echarts.init(document.getElementById('Completion'));
+                // let _self = this
+                // let xAxisData = [];
+                // let data1 = [];
+                // let data2 = [];
+                // for (let i = 0; i < 20; i++) {
+                //     xAxisData.push('类目' + i);
+                //     data1.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5);
+                //     data2.push((Math.cos(i / 5) * (i / 5 - 10) + i / 6) * 5);
+                // }
+
+                let option = {
+                    tooltip : {
+                        trigger: 'axis',
+                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        }
+                    },
+                    legend: {
+                        data:['完成节点','完成工单']
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : ['陈志超','梁家兴','符东','张威雄','王威娜','李振威','罗汉淇','潘美珊']
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'完成节点',
+                            type:'bar',
+                            data:[320, 332, 301, 334, 390, 330, 320, 310]
+                        },
+                        {
+                            name:'完成工单',
+                            type:'bar',
+                            data:[120, 132, 101, 134, 90, 230, 210,310]
+                        }
+                    ]
+                };
+
+
+                visiteVolume.setOption(option);
+
+                window.addEventListener('resize', function () {
+                    visiteVolume.resize();
+                });
+            }
+        },
+        mounted () {
+            // console.log('11')
+            this.getEcharts()
+            // this.getEchartsData()
+            // console.log('22')
+            /*this.$nextTick(() => {
+
+            });*/
+        }
+}
+</script>
+

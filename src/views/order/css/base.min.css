@@ -1,0 +1,636 @@
+@charset "UTF-8"; /*! normalize.css v4.1.1 | MIT License | github.com/necolas/normalize.css */
+progress, sub, sup {
+    vertical-align: baseline
+}
+
+button, hr, input {
+    overflow: visible
+}
+
+[type=checkbox], [type=radio], legend {
+    padding: 0;
+    box-sizing: border-box
+}
+
+*, legend {
+    box-sizing: border-box
+}
+
+body {
+    margin: 0
+}
+
+article, aside, details, figcaption, figure, footer, header, main, menu, nav, section, summary {
+    display: block
+}
+
+audio, canvas, progress, video {
+    display: inline-block
+}
+
+audio:not([controls]) {
+    display: none;
+    height: 0
+}
+
+[hidden], template {
+    display: none
+}
+
+a {
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects
+}
+
+a:active, a:hover {
+    outline-width: 0
+}
+
+abbr[title] {
+    border-bottom: none;
+    text-decoration: underline;
+    text-decoration: underline dotted
+}
+
+b, strong {
+    font-weight: bolder
+}
+
+dfn {
+    font-style: italic
+}
+
+h1 {
+    font-size: 2em;
+    margin: .67em 0
+}
+
+mark {
+    background-color: #ff0;
+    color: #000
+}
+
+small {
+    font-size: 80%
+}
+
+sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative
+}
+
+sub {
+    bottom: -.25em
+}
+
+sup {
+    top: -.5em
+}
+
+img {
+    border-style: none
+}
+
+svg:not(:root) {
+    overflow: hidden
+}
+
+code, kbd, pre, samp {
+    font-family: monospace, monospace;
+    font-size: 1em
+}
+
+figure {
+    margin: 1em 40px
+}
+
+hr {
+    box-sizing: content-box;
+    height: 0
+}
+
+button, input, select, textarea {
+    font: inherit;
+    margin: 0
+}
+
+optgroup {
+    font-weight: 700
+}
+
+.dialog-main, textarea {
+    overflow: auto
+}
+
+button, select {
+    text-transform: none
+}
+
+[type=reset], [type=submit], button, html [type=button] {
+    -webkit-appearance: button
+}
+
+[type=button]::-moz-focus-inner, [type=reset]::-moz-focus-inner, [type=submit]::-moz-focus-inner, button::-moz-focus-inner {
+    border-style: none;
+    padding: 0
+}
+
+[type=button]:-moz-focusring, [type=reset]:-moz-focusring, [type=submit]:-moz-focusring, button:-moz-focusring {
+    outline: ButtonText dotted 1px
+}
+
+fieldset {
+    border: 1px solid silver;
+    margin: 0 2px;
+    padding: .35em .625em .75em
+}
+
+legend {
+    color: inherit;
+    display: table;
+    max-width: 100%;
+    white-space: normal
+}
+
+[type=number]::-webkit-inner-spin-button, [type=number]::-webkit-outer-spin-button {
+    height: auto
+}
+
+[type=search] {
+    -webkit-appearance: textfield;
+    outline-offset: -2px
+}
+
+[type=search]::-webkit-search-cancel-button, [type=search]::-webkit-search-decoration {
+    -webkit-appearance: none
+}
+
+::-webkit-input-placeholder {
+    color: inherit;
+    opacity: .54
+}
+
+.dialog-main, .dialog-overlay {
+    position: fixed;
+    margin: auto;
+    opacity: 0;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0
+}
+
+::-webkit-file-upload-button {
+    -webkit-appearance: button;
+    font: inherit
+}
+
+@font-face {
+    font-family: iconfont;
+}
+
+.iconfont {
+    font-family: iconfont !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+.icon-shezhi:before {
+    content: "\e601"
+}
+
+.icon-xiazai:before {
+    content: "\e600"
+}
+
+.icon-QQ:before {
+    content: "\e60d"
+}
+
+.icon-youjiantou:before {
+    content: "\e610"
+}
+
+.icon-denglu:before {
+    content: "\e613"
+}
+
+.icon-zuojiantou:before {
+    content: "\e612"
+}
+
+.icon-gerenzhongxin:before {
+    content: "\e618"
+}
+
+.icon-que:before {
+    content: "\e611"
+}
+
+.icon-dianhua:before {
+    content: "\e603"
+}
+
+.icon-sanjiao:before {
+    content: "\e680"
+}
+
+.icon-caidan:before {
+    content: "\e617"
+}
+
+.icon-shouye:before {
+    content: "\e6a2"
+}
+
+.icon-fenlei:before {
+    content: "\e644"
+}
+
+.icon-weixin:before {
+    content: "\e734"
+}
+
+.icon-about:before {
+    content: "\e651"
+}
+
+.icon-gouwuche:before {
+    content: "\e621"
+}
+
+.icon-mima:before {
+    content: "\e61e"
+}
+
+.icon-kaifazhong:before {
+    content: "\e62d"
+}
+
+.icon-duanxin:before {
+    content: "\e61f"
+}
+
+.icon-gotoshouye:before {
+    content: "\e648"
+}
+
+.icon-yuan:before {
+    content: "\e933"
+}
+
+.icon-xiajiantou:before {
+    content: "\e64c"
+}
+
+.icon-tuijian:before {
+    content: "\e665"
+}
+
+.icon-cha:before {
+    content: "\e63d"
+}
+
+.icon-kefu:before {
+    content: "\e6ce"
+}
+
+.icon-gou:before {
+    content: "\e66f"
+}
+
+.icon-zaixiankefuzhuanhuan:before {
+    content: "\e68e"
+}
+
+.icon-zhuce:before {
+    content: "\e614"
+}
+
+.icon-yanzhengma:before {
+    content: "\e628"
+}
+
+.icon-xinxi:before {
+    content: "\e627"
+}
+
+.icon-baobiao1:before {
+    content: "\e619"
+}
+
+.icon-daijinjuan:before {
+    content: "\e60e"
+}
+
+.icon-wodedingdan:before {
+    content: "\e732"
+}
+
+.icon-fuwu:before {
+    content: "\e609"
+}
+
+.icon-baobiao:before {
+    content: "\e604"
+}
+
+.icon-fapiao:before {
+    content: "\e60f"
+}
+
+.icon-daibanzhongxin:before {
+    content: "\e602"
+}
+
+.icon-gongsizhuce:before {
+    content: "\e605"
+}
+
+.icon-dianxinzengzhiyewu:before {
+    content: "\e606"
+}
+
+.icon-gongsibiangeng:before {
+    content: "\e607"
+}
+
+.icon-zhuceshangbiao:before {
+    content: "\e608"
+}
+
+.icon-jizhangfuwu:before {
+    content: "\e60a"
+}
+
+.icon-shenjipinggu:before {
+    content: "\e60b"
+}
+
+.icon-zhishichanquanruanzhu:before {
+    content: "\e60c"
+}
+
+.icon-baobiao2:before {
+    content: "\e678"
+}
+
+.dialog-normal-button-item {
+    color: #fff;
+    background: #952f2a;
+    padding: .8rem 1rem;
+    text-align: center;
+    letter-spacing: 1px;
+    line-height: normal;
+    border: 1px solid #952f2a
+}
+
+[disabled].dialog-normal-button-item {
+    background: #d9d9d9;
+    color: #666;
+    border-color: #d9d9d9
+}
+
+.dialog-main {
+    text-align: center;
+    z-index: 9999;
+    display: none
+}
+
+.dialog-main.normal {
+    width: 60%;
+    height: 40%;
+    max-width: 16rem;
+    max-height: 20rem;
+    display: block
+}
+
+.dialog-normal-main {
+    background: #fff;
+    border-radius: 5px;
+    text-align: center;
+    overflow: hidden
+}
+
+.dialog-normal-text {
+    padding: 1rem
+}
+
+.dialog-normal-text img {
+    width: 100%
+}
+
+.dialog-normal-button {
+    display: table;
+    width: 100.5%
+}
+
+.dialog-normal-button-item {
+    display: table-cell;
+    border-radius: 0;
+    border-right: 1px solid #d9d9d9
+}
+
+.dialog-normal-button-item:last-child {
+    border-right: none
+}
+
+.dialog-overlay {
+    z-index: 9998;
+    width: 100%;
+    height: 100%;
+    display: none
+}
+
+@media screen and (max-width: 319px) {
+    html {
+        font-size: 12px
+    }
+}
+
+@media screen and (min-width: 320px) {
+    html {
+        font-size: 11.95px
+    }
+}
+
+@media screen and (min-width: 375px) {
+    html {
+        font-size: 14px
+    }
+}
+
+@media only screen and (min-width: 414px) {
+    html {
+        font-size: 15.46px
+    }
+}
+
+@media only screen and (min-width: 425px) {
+    html {
+        font-size: 15.87px
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    html {
+        font-size: 14px
+    }
+
+    body {
+        width: 48rem;
+        margin: 0 auto
+    }
+}
+
+html {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    font-family: Helvetica, 'Microsoft Yahei', '微软雅黑', Arial, sans-serif
+}
+
+body {
+    /*background: #f3f6f6;*/
+    color: #666;
+    margin-bottom: 4rem
+}
+
+body.showLXB #LXB_CONTAINER_SHOW {
+    display: block !important
+}
+
+body.noMargin {
+    margin-bottom: 0
+}
+
+.absoluteMiddle {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto
+}
+
+.trueMiddleAlign {
+    vertical-align: middle;
+    margin-top: -2px;
+    margin-bottom: 1px
+}
+
+p, ul {
+    margin: 0
+}
+
+.clearfix:after {
+    content: '';
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+    *zoom: 1
+}
+
+ul {
+    list-style: none;
+    padding: 0
+}
+
+button, input[type=button], input[type=text], input[type=password], input[type=tel], input[type=search] {
+    background-color: transparent;
+    border: none;
+    outline: 0;
+    border-radius: 0;
+    padding: 0;
+    color: #666
+}
+
+button:focus, input[type=button]:focus, input[type=text]:focus, input[type=password]:focus, input[type=tel]:focus, input[type=search]:focus {
+    outline: 0
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none
+}
+
+select::-ms-expand {
+    display: none
+}
+
+a {
+    text-decoration: none;
+    color: #666
+}
+
+#LXB_CONTAINER_SHOW {
+    display: none !important
+}
+
+*{ margin:0; padding:0;}
+
+#wrap{
+    width:600px;
+    height:400px;
+    margin:50px auto;
+}
+#top{
+    width:600px;
+    border-bottom:1px solid #bbb;
+    font-family:'Microsoft yahei';
+}
+#top p{
+    margin-bottom:15px;
+}
+#top p font{
+    font-size:14px;
+    color:#000;
+    margin-right:15px;
+}
+#top p span{
+    font-size:14px;
+    color:#666;
+    border:1px solid #999;
+    display:inline-block;
+    padding:8px;
+    cursor:pointer;
+}
+#top p span.on{
+    border:2px solid #742323;
+    padding:7px;
+    /*background:url(../test/on.png) no-repeat right bottom;*/
+}
+#bottom{
+    width:600px;
+    height:159px;
+    padding-top:20px;
+    font-family:'Microsoft yahei';
+}
+#bottom p font{
+    color:#742323;
+    font-size:20px;
+    margin-right:20px;
+}
+#bottom p a{
+    font-size:14px;
+    color:blue;
+}
+#bottom p a i{
+    margin:0 5px;
+    color:#90c;
+}
+#bottom button{
+    width:330px;
+    height:50px;
+    font-family:'Microsoft yahei';
+    margin-top:20px;
+    font-size:20px;
+    background:#742323;
+    color:#fff;
+    border:none;
+
+}
