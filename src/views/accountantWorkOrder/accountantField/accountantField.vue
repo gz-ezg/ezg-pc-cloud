@@ -297,6 +297,11 @@
                         key: 'serverrealname',
                         width: 120
                     },
+                    // {
+                    //     title:'结果类型',
+                    //     key:"",
+                    //     width:120
+                    // },
                     {
                         title: '月服务期间',
                         key: 'period',

@@ -273,7 +273,8 @@ export default {
                     fileMemo: _self.company.resourceMemo,
                     realname: _self.company.realname,
                     bcreatedate:DateFormat(_self.company.date[0]),
-                    ecreatedate:DateFormat(_self.company.date[1])                    
+                    ecreatedate:DateFormat(_self.company.date[1]),
+                    sortField:"createdate"                   
                 }
             }
             this.$http.get(url, config).then(function(res){

@@ -23,6 +23,11 @@
                                         <Input v-model="SearchValidate.followby_realname" size="small"></Input>
                                     </FormItem>
                                     </Col>
+                                    <!-- <Col span="8">
+                                    <FormItem label="服务部门：" prop="followby_realname">
+                                        <Input v-model="SearchValidate.followby_realname" size="small"></Input>
+                                    </FormItem>
+                                    </Col> -->
                                 </Row>
                                 <center>
                                     <FormItem>

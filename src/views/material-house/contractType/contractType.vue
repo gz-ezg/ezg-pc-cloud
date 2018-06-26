@@ -305,7 +305,8 @@ export default {
                     fileMemo: _self.contract.fileMemo,
                     realname: _self.contract.realname,
                     bcreatedate:DateFormat(_self.contract.date[0]),
-                    ecreatedate:DateFormat(_self.contract.date[1])                    
+                    ecreatedate:DateFormat(_self.contract.date[1]),
+                    sortField:"createdate"                  
                 }
             }
             this.$http.get(url, config).then(function(res){

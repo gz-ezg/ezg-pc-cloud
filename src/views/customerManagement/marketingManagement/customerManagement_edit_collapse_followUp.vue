@@ -580,7 +580,7 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
                 //     that.file.push(b1)
 
                 // })
-                console.log(that.file)
+                // console.log(that.file)
                 return false;
             },
 

@@ -312,7 +312,8 @@ export default {
                     videoMemo: _self.video.videoMemo,
                     realname: _self.video.realname,
                     bcreatedate:DateFormat(_self.video.date[0]),
-                    ecreatedate:DateFormat(_self.video.date[1])                    
+                    ecreatedate:DateFormat(_self.video.date[1]),
+                    sortField:"createDate"                  
                 }
             }
             this.$http.get(url, config).then(function(res){

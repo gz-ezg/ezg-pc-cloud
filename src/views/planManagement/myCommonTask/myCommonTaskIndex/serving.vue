@@ -294,7 +294,7 @@ export default {
                     // },
                     {
                         title: '实际完成时间',
-                        key: 'ServiceEnd',
+                        key: 'UpdateDate',
                         width: 140,
                         sortable: true, 
                     },
@@ -463,8 +463,8 @@ export default {
                     if(_self.data[i].ServiceStart!='' && _self.data[i].ServiceStart!=null){
                         _self.data[i].ServiceStart = _self.data[i].ServiceStart.slice(0,10)
                     }
-                    if(_self.data[i].ServiceEnd!='' && _self.data[i].ServiceEnd!=null){
-                        _self.data[i].ServiceEnd = _self.data[i].ServiceEnd.slice(0,10)
+                    if(_self.data[i].UpdateDate!='' && _self.data[i].UpdateDate!=null){
+                        _self.data[i].UpdateDate = _self.data[i].UpdateDate.slice(0,10)
                     }
                 }
                 _self.Sloading = false

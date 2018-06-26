@@ -334,6 +334,11 @@
                         key: 'realname',
                         width: 120
                     },
+                    // {
+                    //     title:'结果类型',
+                    //     key:"",
+                    //     width:120
+                    // },
                     {
                         title: '总结',
                         key: 'remark',

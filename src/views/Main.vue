@@ -107,7 +107,7 @@
                     </Col>
                 </Row> -->
                 <div slot="footer">
-                    <Button type="primary" @click="submit_index">修改</Button>
+                    <Button type="primary" @click="submit_index" :loading="submit_button">提交</Button>
                     <Button type="ghost" @click="reset">重置</Button>
                 </div>
             </Modal>
@@ -138,6 +138,7 @@
         },
         data () {
             return {
+                submit_button:false,
                 rate:{
                     content:"",
                     star:new Number()
@@ -145,7 +146,6 @@
                 file:[],
                 // 是否弹出系统反馈框
                 tip:false,
-
                 shrink: false,
                 userName: '',
                 isFullScreen: false,
@@ -212,7 +212,7 @@
                         .then(function (response) {
                             if (response.data.msgCode == '40000') {
                                 // _self.winReload()
-                                localStorage.setItem('isTip',"N")
+                                // localStorage.setItem('isTip',"N")
                                 _self.$Message.success('注销成功!')                                                             
                                 _self.$router.push({
                                     name: 'login'
@@ -251,11 +251,22 @@
                 let _self = this
                 let url = `api/system/checkSystemFeedbackStatusByUserId`
                 let config = {
-                    params:{}
+                    params:{
+                        userid:localStorage.getItem('id')
+                    }
                 }
 
                 function success(res){
-                    console.log(res)
+                    // console.log(res.data.data.isNeedFeedback)
+                    if(res.data.data.isNeedFeedback == "N"){
+                        if(localStorage.getItem('id')==10059){
+                            _self.tip = false
+                        }else{
+                            _self.tip = true
+                        }
+                    }else{
+                        _self.tip = false
+                    }
                 }
 
                 function fail(res){
@@ -272,11 +283,29 @@
                 }
             },
             submit(){
-                localStorage.setItem('isTip',"Y")
-                this.tip = false
-                console.log(this.rate.star)
+                // localStorage.setItem('isTip',"Y")
+                // this.tip = false
+                let _self = this
+                let url = `api/system/createSystemFeedback`
+                _self.submit_button = true
+                let config = {
+                    score:_self.rate.star,
+                    suggestion:_self.rate.content
+                }
+                function success(res){
+                    _self.tip = false
+                    _self.submit_button = false
+                }
+                function fail(res){
+                    _self.submit_button = false
+                }
+
+                this.$Post(url,config,success,fail)
             },
-            reset(){},
+            reset(){
+                this.rate.star = ""
+                this.rate.content = ""
+            },
             handleUpload(file) {
                 this.file.push(file)
                 return false;
@@ -301,6 +330,7 @@
         },
         mounted () {
             this.init();
+            // this.rate_start()
         },
         created () {
             // 显示打开的页面的列表

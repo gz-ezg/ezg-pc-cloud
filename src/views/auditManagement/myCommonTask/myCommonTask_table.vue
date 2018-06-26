@@ -4,12 +4,12 @@
             <TabPane label="未开始" name="name1">
                 <notbegin :paydir="hash"></notbegin>
             </TabPane>
-            <TabPane label="服务中" name="name2">
+            <!-- <TabPane label="服务中" name="name2">
                 <serving></serving>
-            </TabPane> 
-            <TabPane label="已完结" name="name3">
+            </TabPane>  -->
+            <!-- <TabPane label="已完结" name="name3">
                 <finished></finished>
-            </TabPane>
+            </TabPane> -->
             <TabPane label="全部" name="name4">
                 <all></all>
             </TabPane>

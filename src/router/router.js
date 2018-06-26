@@ -742,34 +742,34 @@ export const appRouter = [
     //         }
     //     ]
     // },
-    {
-        // access: 6080,
-        path: '/stystemcomplaint',
-        icon: 'social-windows',
-        name: 'stystemcomplaint',
-        title: '系统反馈',
-        component: Main,
-        children: [
-            {
-                // access: 6081,
-                path: 'complainAndAdvice',
-                title: '投诉管理',
-                name: 'complainAndAdvice_index',
-                component: resolve => {
-                    require(['@/views/stystemComplain/complainAndAdvice/complainAndAdvice.vue'], resolve);
-                }
-            },
-            {
-                // access: 6082,
-                path: 'complainReply',
-                title: '反馈回复',
-                name: 'complainReply_index',
-                component: resolve => {
-                    require(['@/views/stystemComplain/complainReply/complainReply.vue'], resolve);
-                }
-            }
-        ]
-    },
+    // {
+    //     // access: 6080,
+    //     path: '/stystemcomplaint',
+    //     icon: 'social-windows',
+    //     name: 'stystemcomplaint',
+    //     title: '系统反馈',
+    //     component: Main,
+    //     children: [
+    //         {
+    //             // access: 6081,
+    //             path: 'complainAndAdvice',
+    //             title: '投诉管理',
+    //             name: 'complainAndAdvice_index',
+    //             component: resolve => {
+    //                 require(['@/views/stystemComplain/complainAndAdvice/complainAndAdvice.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             // access: 6082,
+    //             path: 'complainReply',
+    //             title: '反馈回复',
+    //             name: 'complainReply_index',
+    //             component: resolve => {
+    //                 require(['@/views/stystemComplain/complainReply/complainReply.vue'], resolve);
+    //             }
+    //         }
+    //     ]
+    // },
    /* {
         access: 6027,
         path: '/publicPool',
