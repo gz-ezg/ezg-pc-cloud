@@ -314,24 +314,24 @@ export const appRouter = [
                     require(['@/views/customerService/offlineCustomer/table/offline_index.vue'], resolve);
                 },
             },
-            {
-                path: 'customerFollowUp_1',
-                access: 6063,                
-                title: '客户跟进记录',
-                name: 'customerFollowUp_index_1',
-                component: resolve => {
-                    require(['@/views/customerService/followUp/followUp_index.vue'], resolve);
-                },
-            },
-            {
-                path: 'temp',
-                access: 6064,                
-                title: '临时导出外勤记录',
-                name: 'temp',
-                component: resolve => {
-                    require(['@/views/customerService/followUp/temp.vue'], resolve);
-                },
-            },
+            // {
+            //     path: 'customerFollowUp_1',
+            //     access: 6063,                
+            //     title: '客户跟进记录',
+            //     name: 'customerFollowUp_index_1',
+            //     component: resolve => {
+            //         require(['@/views/customerService/followUp/followUp_index.vue'], resolve);
+            //     },
+            // },
+            // {
+            //     path: 'temp',
+            //     access: 6064,                
+            //     title: '临时导出外勤记录',
+            //     name: 'temp',
+            //     component: resolve => {
+            //         require(['@/views/customerService/followUp/temp.vue'], resolve);
+            //     },
+            // },
         ]
     },
     {
@@ -586,7 +586,7 @@ export const appRouter = [
                 access:6050,
                 path: 'allot',
                 title: '工单分配',
-                name:"'ACCOUNT','AUDIT'",
+                name:"'ACCOUNT'",
                 component: resolve => {
                     require(['@/views/taskManagement/allotCommonTask/commonTask_table.vue'], resolve);
                 }
@@ -742,34 +742,34 @@ export const appRouter = [
     //         }
     //     ]
     // },
-    // {
-    //     // access: 6080,
-    //     path: '/stystemcomplaint',
-    //     icon: 'social-windows',
-    //     name: 'stystemcomplaint',
-    //     title: '系统反馈',
-    //     component: Main,
-    //     children: [
-    //         {
-    //             // access: 6081,
-    //             path: 'complainAndAdvice',
-    //             title: '投诉管理',
-    //             name: 'complainAndAdvice_index',
-    //             component: resolve => {
-    //                 require(['@/views/stystemComplain/complainAndAdvice/complainAndAdvice.vue'], resolve);
-    //             }
-    //         },
-    //         {
-    //             // access: 6082,
-    //             path: 'complainReply',
-    //             title: '反馈回复',
-    //             name: 'complainReply_index',
-    //             component: resolve => {
-    //                 require(['@/views/stystemComplain/complainReply/complainReply.vue'], resolve);
-    //             }
-    //         }
-    //     ]
-    // },
+    {
+        // access: 6080,
+        path: '/stystemcomplaint',
+        icon: 'social-windows',
+        name: 'stystemcomplaint',
+        title: '系统反馈',
+        component: Main,
+        children: [
+            {
+                // access: 6081,
+                path: 'complainAndAdvice',
+                title: '意见管理',
+                name: 'complainAndAdvice_index',
+                component: resolve => {
+                    require(['@/views/stystemComplain/complainAndAdvice/complainAndAdvice.vue'], resolve);
+                }
+            },
+            {
+                // access: 6082,
+                path: 'complainReply',
+                title: '反馈回复',
+                name: 'complainReply_index',
+                component: resolve => {
+                    require(['@/views/stystemComplain/complainReply/complainReply.vue'], resolve);
+                }
+            }
+        ]
+    },
    /* {
         access: 6027,
         path: '/publicPool',

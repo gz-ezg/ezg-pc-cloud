@@ -2479,21 +2479,24 @@
                                             });
                                             _self.$Message.error('请勾选服务项');
                                         } else {
-                                            let url = '/order/financeUpdate'
+                                            // let url = '/order/financeUpdate'
+                                            let url = `/order/finishedUpdate`
                                             let _data = {}
 
                                             for (let i = 0; i < _self.orderItemList4.length; i++) {
                                                 delete _self.orderItemList4[i].servicedeparts;
                                             }
+                                        console.log(_self.StartTime5)
 
-                                            _data.companyId = _self.formValidatexiugai.companyid,
+                                                // _data.companyId = _self.formValidatexiugai.companyid,
                                                 _data.paydir = _self.formValidatexiugai.payDir,
                                                 _data.id = _self.formValidatexiugai.id,
-                                                _data.orderPayNumber = _self.formValidatexiugai.orderPayNumber,
-                                                _data.servicestartdate = _self.StartTime6,
-                                                _data.GDSreport = _self.formValidatexiugai.GDSreport,
+                                                // _data.orderPayNumber = _self.formValidatexiugai.orderPayNumber,
+                                                // _data.servicestartdate = _self.StartTime6,
+                                                // _data.GDSreport = _self.formValidatexiugai.GDSreport,
                                                 _data.paytime = _self.StartTime5,
-                                                _data.orderitems = JSON.stringify(_self.orderItemList4)
+                                                // _data.paytime = "2018-06-30"
+                                                _data.items = JSON.stringify(_self.orderItemList4)
 
                                             function doSuccess(response) {
                                                 _self.xiugai = false
@@ -2515,21 +2518,24 @@
                                     }
                                     _self.GetData(url, doSuccess)
                                 } else {
-                                    let url = '/order/financeUpdate'
+                                    // let url = '/order/financeUpdate'
+                                    let url = `/order/finishedUpdate`
+
                                     let _data = {}
 
                                     for (let i = 0; i < _self.orderItemList4.length; i++) {
                                         delete _self.orderItemList4[i].servicedeparts;
                                     }
-
-                                    _data.companyId = _self.formValidatexiugai.companyid,
+                                    // _data.companyId = _self.formValidatexiugai.companyid,
                                         _data.paydir = _self.formValidatexiugai.payDir,
                                         _data.id = _self.formValidatexiugai.id,
-                                        _data.orderPayNumber = _self.formValidatexiugai.orderPayNumber,
-                                        _data.servicestartdate = _self.StartTime6,
-                                        _data.GDSreport = _self.formValidatexiugai.GDSreport,
+                                        // _data.orderPayNumber = _self.formValidatexiugai.orderPayNumber,
+                                        // _data.servicestartdate = _self.StartTime6,
+                                        // _data.GDSreport = _self.formValidatexiugai.GDSreport,
                                         _data.paytime = _self.StartTime5,
-                                        _data.orderitems = JSON.stringify(_self.orderItemList4)
+                                        // _data.paytime = "2018-06-30"
+
+                                        _data.items = JSON.stringify(_self.orderItemList4)
 
                                     function doSuccess(response) {
                                         _self.xiugai = false
@@ -3211,6 +3217,7 @@
                         _self.formValidatexiugai.NAME = _data.name
                         _self.formValidatexiugai.nodeducttotalmoney = _data.nodeducttotalmoney
                         _self.formValidatexiugai.date = _data.payTime
+                        _self.StartTime5 = _data.payTime
                         _self.formValidatexiugai.orderPayNumber = _data.realnumber
                         _self.formValidatexiugai.zongjia = _data.paynumber
                         _self.formValidatexiugai.performanceMoney = _data.performanceMoney
@@ -3218,7 +3225,7 @@
                         _self.formValidatexiugai.ticheng = _data.performanceMoney
                         _self.formValidatexiugai.tel = _data.tel
                         _self.orderItemList4 = _data.items
-
+                        // console.log(_self.getStartTime5)
                         for (let i = 0; i < _data.items.length; i++) {
                             if (_data.items[i].product == '会计到家') {
                                 _self.kjdj = true
@@ -3256,20 +3263,19 @@
                                 {field: 'productid', title: '产品名', hidden: true, sortable: true},
                                 {field: 'product', title: '产品名', width: 150},
                                 {field: 'propertys', title: '产品属性', width: 250},
-                                {field: 'oaprice', title: '产品价格', width: 100, editor: {type: 'numberbox',  options: {precision: 2}}},
+                                {field: 'oaprice', title: '产品价格', width: 100},
                                 {field: 'productnumber', title: '产品数量', width: 80,},
                                 {
                                     field: 'paynumber',
                                     title: '销售价格',
-                                    width: 80,
-                                    editor: {type: 'numberbox',  options: {precision: 2}}                                    
+                                    width: 80                                    
                                 },
                                 {field: 'givethenumber', title: '赠送数量', width: 100}, 
                                         
                                 {field:'servicestartdate',title:'服务开始税期',width:90,
-                                    formatter: function(val, row, a) {
-                                        return row.servicestartdate
-                                    }
+                                    // formatter: function(val, row, a) {
+                                    //     return row.servicestartdate
+                                    // }
                                 }, 
                                  {
                                     field: 'departname',
@@ -3287,6 +3293,7 @@
                                     field: 'unitprice',
                                     title: '单价/月',
                                     width: 70,
+                                    editor: {type: 'numberbox',  options: {precision: 2}}
                                 },
                                 {field: 'memo', title: '备注 ', width: 300, editor: 'text'}
                             ]],
@@ -3470,7 +3477,7 @@
                 }
 
                 if (field == 'servicestartdate') {
-                    _self.selectDate = true
+                    _self.selectDate = truetrue
                     _self.fieldIndex = index
                 }
 

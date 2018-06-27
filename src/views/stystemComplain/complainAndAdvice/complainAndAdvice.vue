@@ -85,7 +85,7 @@
                 </Row>
             </Form>
             <div slot="footer">
-                <Button type="ghost" @click="submit_reply" :loading="button_loading">提交</Button>
+                <Button type="primary" @click="submit_reply" :loading="button_loading">提交</Button>
                 <Button type="ghost" @click="close_reply">关闭</Button>
             </div>
         </Modal>

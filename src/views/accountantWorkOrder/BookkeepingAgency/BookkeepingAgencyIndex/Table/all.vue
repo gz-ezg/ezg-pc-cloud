@@ -23,12 +23,20 @@
                                         <Input v-model="SearchValidate.followby_realname" size="small"></Input>
                                     </FormItem>
                                     </Col>
-                                    <!-- <Col span="8">
-                                    <FormItem label="服务部门：" prop="followby_realname">
-                                        <Input v-model="SearchValidate.followby_realname" size="small"></Input>
-                                    </FormItem>
-                                    </Col> -->
                                 </Row>
+                                <!-- <Row :gutter="8" style="height:56px">
+                                    <Col span="8">
+                                    <FormItem label="服务部门：" prop="departname">
+                                        <Select v-model="SearchValidate.departname" size="small" transfer>
+                                            <Option value="广州会计1组">广州会计1组</Option>
+                                            <Option value="深圳会计部">深圳会计部</Option>
+                                            <Option value="东莞会计部">东莞会计部</Option>
+                                            <Option value="郑州会计部">郑州会计部</Option>
+                                            <Option value="兰州会计部">兰州会计部</Option>
+                                        </Select>
+                                    </FormItem>
+                                    </Col>
+                                </Row> -->
                                 <center>
                                     <FormItem>
                                         <Button type="primary" @click="Search">搜索</Button>
@@ -93,7 +101,8 @@
                 SearchValidate:{
                     CompanyName:'',
                     server_realname:'',
-                    followby_realname:''
+                    followby_realname:'',
+                    departname:''
                 },
                 page: 1,
                 pageSize: 10,
@@ -286,6 +295,7 @@
                 this.SearchValidate.CompanyName = ""
                 this.SearchValidate.server_realname = ""
                 this.SearchValidate.followby_realname = "" 
+                this.SearchValidate.departname = ""
                 this.Search()               
             },
             Search(){
@@ -301,6 +311,7 @@
             getData() {
                 let _self = this
                 let url = '/order/cycle/service/record/list?sortField=updatedate&service_type=dljz&page=' + _self.page + '&pageSize=' + _self.pageSize +'&followby_realname='+_self.SearchValidate.followby_realname + '&CompanyName=' + _self.SearchValidate.CompanyName +'&server_realname=' +_self.SearchValidate.server_realname
+                //  +'&departname='+ _self.SearchValidate.departname
 
                 function doSuccess(res) {
                     let _data = res.data.data

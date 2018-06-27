@@ -348,21 +348,21 @@
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        width: 200,
+                        width: 100,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            Bus.$emit('openCompanyDetail',params.row.companyid)
-                                        }
-                                    }
-                                }, '[公司详情]'),
+                                // h('Button', {
+                                //     props: {
+                                //         type: 'text',
+                                //         size: 'small'
+                                //     },
+                                //     on: {
+                                //         click: () => {
+                                //             Bus.$emit('openCompanyDetail',params.row.companyid)
+                                //         }
+                                //     }
+                                // }, '[公司详情]'),
                                 h('Button', {
                                     props: {
                                         type: 'text',

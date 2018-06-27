@@ -18,11 +18,11 @@
                                         <Input v-model="SearchValidate.server_realname" size="small"></Input>
                                     </FormItem>
                                     </Col>
-                                    <Col span="8">
+                                    <!-- <Col span="8">
                                     <FormItem label="跟进人：" prop="followby_realname">
                                         <Input v-model="SearchValidate.followby_realname" size="small"></Input>
                                     </FormItem>
-                                    </Col>
+                                    </Col> -->
                                     <!-- <Col span="8">
                                     <FormItem label="服务部门：" prop="followby_realname">
                                         <Input v-model="SearchValidate.followby_realname" size="small"></Input>
@@ -47,9 +47,9 @@
                 <!-- <Button type="primary" icon="information-circled" @click="scbd">时长变动日志</Button> -->
                 <Button type="primary" icon="ios-color-wand-outline" @click="ksfw">停止服务</Button>
                 <Button type="primary" icon="information-circled" @click="fpkj">变更会计</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="zlwc" v-if="zl">资料完成</Button>
+                <!-- <Button type="primary" icon="ios-color-wand-outline" @click="zlwc" v-if="zl">资料完成</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="zzwc" v-if="zz">做账完成</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="bswc" v-if="bs">报税完成</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="bswc" v-if="bs">报税完成</Button> -->
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
             </ButtonGroup>
             <!-- <Poptip
@@ -925,27 +925,25 @@
             downloadExcel(){
                 let field = [
                     {field:'service_status',title:'服务状态',format:'cservicest'},
-                    {field:'CompanyName',title:'对应企业'},
+                    {field:'customername',title:'客户名称'},
+                    {field:'companyname',title:'对应企业'},
                     {field:'product',title:'产品名称'},
-                    {field:'server_realname',title:'服务人员'},
-                    {field:'followby_realname',title:'市场'},
-                    {field:'balance_count',title:'剩余时长'},
-                    {field:'begin_period',title:'开始期间'},
+                    {field:'realname',title:'服务人员'},
+                    {field:'followbyrealname',title:'市场'},
+                    // {field:'balance_count',title:'剩余时长'},
+                    // {field:'begin_period',title:'开始期间'},
                     {field:'end_period',title:'结束期间'},
                     // {field:'serverrealname',title:'服务人员'},
                     // {field:'period',title:'服务周期'}
                     ]
                 let _self = this
-                let url = `api/order/cycle/service/record/list`
+                let url = `api/order/cycle/month/service/list`
                 let config = {
-                        service_status:'inservice',
-                        sort:'updatedate',
-                        service_type:'dljz',
                         page: '1',
                         pageSize: '1000000',
-                        CompanyName: _self.SearchValidate.CompanyName,
-                        server_realname: _self.SearchValidate.server_realname,
-                        followby_realname: _self.SearchValidate.followby_realname,
+                        period:"",
+                        companyname: _self.SearchValidate.CompanyName,
+                        realname: _self.SearchValidate.server_realname,
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field))
                 }
@@ -976,7 +974,9 @@
                     params:{
                         page: _self.page,
                         pageSize: _self.pageSize,
-                        period:""
+                        period:"",
+                        companyname: _self.SearchValidate.CompanyName,
+                        realname: _self.SearchValidate.server_realname,
                     }
                 }
                 this.$http.get(url,config).then(function(res){
@@ -1120,7 +1120,7 @@
                     onOk: () => {
                         let url = 'api/order/cycle/service/record/update'
                         let _data = {
-                            id: _self.current_row.id,
+                            id: _self.current_row.cycle_service_record_id,
                             serviceStatus: 'stop'
                         }
 
@@ -1161,7 +1161,7 @@
 
             selectRow(e){
                 this.current_row = e
-                console.log(this.current_row)
+                // console.log(this.current_row)
             },
             // selectrow(a) {
             //     let _self = this

@@ -813,7 +813,7 @@ import AllotDetail from './detail'
                     }
                     if(flag==true){
                         // if(_self.change_rows[0].ServiceDeptID!=11570){
-                        if(_self.local_router_name !="'ACCOUNT','AUDIT'"){
+                        if(_self.local_router_name !="'ACCOUNT'"){
                             _self.Distribution = true
                             _self.ServiceDeptID = _self.change_rows[0].ServiceDeptID
                             _self.departname = _self.change_rows[0].departname
@@ -847,7 +847,7 @@ import AllotDetail from './detail'
                     }
                     if(flag==true){
                         // if(_self.change_rows2[0].ServiceDeptID!=11570){
-                    if(_self.local_router_name !="'ACCOUNT','AUDIT'"){
+                    if(_self.local_router_name !="'ACCOUNT'"){
                             _self.transfer = true
                             _self.ServiceDeptID = _self.change_rows2[0].ServiceDeptID
                             _self.departname = _self.change_rows2[0].departname

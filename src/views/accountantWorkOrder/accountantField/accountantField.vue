@@ -311,22 +311,22 @@
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        width: 200,
+                        width: 100,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.customerDetail(params)
-                                            Bus.$emit('Open_customer_detail',params.row.customerId)
-                                        }
-                                    }
-                                }, '[客户详情]'),
+                                // h('Button', {
+                                //     props: {
+                                //         type: 'text',
+                                //         size: 'small'
+                                //     },
+                                //     on: {
+                                //         click: () => {
+                                //             this.customerDetail(params)
+                                //             Bus.$emit('Open_customer_detail',params.row.customerId)
+                                //         }
+                                //     }
+                                // }, '[客户详情]'),
                                 h('Button', {
                                     props: {
                                         type: 'text',
