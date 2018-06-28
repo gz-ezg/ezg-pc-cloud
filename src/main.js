@@ -129,7 +129,7 @@ Vue.prototype.$Post = function(url, config, success, fail){
             fail(res)
         }
     }).catch(function(err){
-        fail(res)
+        fail(err)
         _self.$Message.error('网络异常！')
     })
 }

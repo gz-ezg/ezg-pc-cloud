@@ -614,9 +614,33 @@
                             </FormItem>
                         </Col>
                     </Row>
+                    <Row :gutter="16">
+                        <Col span="1" style="visibility:hidden">1</Col>
+                            <Col span="20">
+                            <FormItem style="margin-bottom:5px" label="沟通证据：">
+                                <!-- class="upload_before" -->
+                            
+                                <Upload
+                                        ref="upload"
+                                        multiple
+                                        :before-upload="handleUpload"
+                                        action="/api/customer/addCustomerContentImg"
+                                        >
+                                    <Button type="ghost" icon="ios-cloud-upload-outline" :class="{input_warning:warning}">选择文件</Button>
+                                </Upload>
+                                <!-- <div v-show="warning" style="color:#ed3f14;height:20px;margin-bottom:5px;line-height:20px">请上传附件</div> -->
+                                <div v-for="(item,index) in show_file" :key=index>{{ item.name }}
+                                    <Button type="text" @click="fileRemove(item)">移除</Button>
+                                </div>
+                                
+                            </FormItem>
+                        </Col>
+                    </Row>
+
                 </Form>
                 <div slot="footer">
-                    <Button type="primary" @click="add_workorder_followup" :loading="followUp_loading">新增</Button>
+                    <!-- <Button type="primary" @click="add_workorder_followup" :loading="followUp_loading">新增</Button> -->
+                    <Button type="primary" @click="upload" :loading="followUp_loading">新增</Button>
                     <Button type="ghost" @click="cancel_workorder_followup">重置</Button>                    
                 </div>
         </Modal>
@@ -626,12 +650,20 @@
 <script>
     import Bus from '../../../components/bus.js'
     import Bscroll from 'better-scroll'
+    // import { yasuo } from '../../../libs/img_beforeUpload.js'
+    import { yasuo } from '../../../libs/img_beforeUpload'
+
 
 
     export default {
         props: ['companyId'],
         data(){
             return {
+                warning:false,
+                //  上传图片相关
+                attIds:"",
+                show_file:[],
+                file_array:[],
                 followUp_loading:false,
                 followTypeText:[],
                 addDetailContent:{
@@ -640,6 +672,7 @@
                     customerId:"",
                     companyId:""
                 },
+                //
                 spinShow:false,
                 addcontentdetail:false,
                 contentdetail:false,
@@ -1040,7 +1073,8 @@
                     content: _self.addDetailContent.content,
                     customerId: _self.companyInfo.customerid,
                     companyId:_self.companyInfo.id,
-                    followUpType: _self.addDetailContent.followUpType
+                    followUpType: _self.addDetailContent.followUpType,
+                    attIds:_self.attIds
                 }
                 function success(res){
                     _self.getData()
@@ -1056,6 +1090,8 @@
             cancel_workorder_followup(){
                 this.addDetailContent.content = ""
                 this.addDetailContent.followUpType = ""
+                this.show_file = ""
+                this.file_array = ""
             },
             GetFollowUpType(){
                 var _self = this
@@ -1077,6 +1113,56 @@
                 this.$GetDataCenter(params, success)
                 
             },
+            //  新增跟进记录
+            handleUpload(file) {
+                this.show_file.push(file)
+                var _self = this
+                yasuo(file,_self.file_array)
+                return false;
+            },
+
+            fileRemove(e){
+                this.file_array.splice(this.file_array.indexOf(e), 1);
+                this.show_file.splice(this.show_file.indexOf(e), 1);
+            },
+
+            upload(){
+                let _self = this
+                _self.followUp_loading = true
+                if(_self.file_array.length == 0){
+                    _self.uploadCustomerContentNote()
+                }else{
+                    let formdata = new FormData()
+                    for(let i = 0;i<_self.file_array.length;i++){
+                        console.log(_self.file_array[i])
+                        formdata.append('files',_self.file_array[i],"file_" + Date.parse(new Date()) + ".jpg")
+                    }
+
+                    let url = `/api/customer/addCustomerContentImg`
+
+                    _self.$http.post(url,formdata).then(function(res){
+                        // console.log(res.data.msgCode)
+                        if(res.data.msgCode == "40000"){
+                            let temp = []
+                            for(let j = 0;j<res.data.data.length;j++){
+                            // console.log(res.data.data[])
+
+                                temp.push(res.data.data[j].id)
+                            }
+                            _self.attIds = temp.toString()
+                            _self.add_workorder_followup()
+                        }else{
+                            _self.followUp_loading = false
+                            _self.$Message.error("新增错误！")
+                        }
+                    }).catch(function(err){
+                            _self.followUp_loading = false
+                            _self.$Message.error("网络异常！")
+
+                    })
+                }
+            }
+
         },
         created(){
             var _self = this

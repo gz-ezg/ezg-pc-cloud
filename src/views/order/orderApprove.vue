@@ -129,22 +129,7 @@
                                     <Select transfer v-model="formValidateDetail.payDir" disabled>
                                         <Option v-for="(item, index) in payDirType" :key=index :value="item.typecode">{{item.typename}}</Option>                            
                                         
-                                        <!-- <Option value="gszfb">公司支付宝</Option>
-                                        <Option value="gh">工行</Option>
-                                        <Option value="zh">招行</Option>
-                                        <Option value="wx">微信公众号</Option>
-                                        <Option value="gw">官网</Option>
-                                        <Option value="other">其他</Option>
-                                        <Option value="cash">现金</Option>
-                                        <Option value="jhang">建行</Option>
-                                        <Option value="nsh">农商行</Option>
-                                        <Option value="tb">淘宝</Option>
-                                        <Option value="zht">中衡通</Option>
-                                        <Option value="jt">锦涛</Option>
-                                        <Option value="wjw">魏建伟</Option>
-                                        <Option value="zgrzh">转个人账户</Option>
-                                        <Option value="dgzfb">东莞支付宝</Option>
-                                        <Option value="szgh">深圳工行</Option> -->
+                                        
                                     </Select>
                                 </FormItem>
                             </Col>
@@ -284,13 +269,6 @@
                         <ButtonGroup>
                             <Button v-permission="['orderA.exportY']" type="primary" icon="ios-color-filter-outline" @click="downloadExcelY">导出Excel</Button>
                         </ButtonGroup>
-                        <!-- <Poptip
-                        style="float: right"
-                        placement="bottom-end"
-                        width="600">
-                    <Button type="text" icon="funnel">筛选</Button>
-                    
-                </Poptip> -->
                     </Row>
                     <Row style="margin-top: 10px;">
                         <Table highlight-row border :columns="columns" :data="data" size="small"></Table>
@@ -343,24 +321,7 @@
                             <Col span="8">
                             <FormItem label="缴费渠道" prop="payDir">
                                 <Select transfer v-model="formValidateDetail.payDir" disabled>
-                                <Option v-for="(item, index) in payDirType" :key=index :value="item.typecode">{{item.typename}}</Option>                            
-                                    
-                                    <!-- <Option value="gszfb">公司支付宝</Option>
-                                    <Option value="gh">工行</Option>
-                                    <Option value="zh">招行</Option>
-                                    <Option value="wx">微信公众号</Option>
-                                    <Option value="gw">官网</Option>
-                                    <Option value="other">其他</Option>
-                                    <Option value="cash">现金</Option>
-                                    <Option value="jhang">建行</Option>
-                                    <Option value="nsh">农商行</Option>
-                                    <Option value="tb">淘宝</Option>
-                                    <Option value="zht">中衡通</Option>
-                                    <Option value="jt">锦涛</Option>
-                                    <Option value="wjw">魏建伟</Option>
-                                    <Option value="zgrzh">转个人账户</Option>
-                                    <Option value="dgzfb">东莞支付宝</Option>
-                                    <Option value="szgh">深圳工行</Option> -->
+                                    <Option v-for="(item, index) in payDirType" :key=index :value="item.typecode">{{item.typename}}</Option>                            
                                 </Select>
                             </FormItem>
                             </Col>
@@ -1111,6 +1072,7 @@
                     
                     function doSuccess(re) {
                         _self.ApproveFlow = re.data.data.processInsts
+                        console.log(_self.ApproveFlow)
                     }
 
                     this.GetData(url, doSuccess)
