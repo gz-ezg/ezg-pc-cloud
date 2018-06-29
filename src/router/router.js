@@ -143,23 +143,25 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    // {
-    //     path: '/test',
-    //     icon: 'social-windows',
-    //     name: 'test',
-    //     title: 'Test',
-    //     component: Main,
-    //     children: [
-    //         {
-    //             path: 'test',
-    //             title: '测试页面',
-    //             name: 'test_index',
-    //             component: resolve => {
-    //                 require(['@/views/test/components/main.vue'], resolve);
-    //             }
-    //         }
-    //     ]
-    // },
+    {
+        path: '/test',
+        icon: 'social-windows',
+        name: 'test',
+        title: 'Test',
+        component: Main,
+        children: [
+            {
+                path: 'test',
+                title: '测试页面',
+                name: 'test_index',
+                component: resolve => {
+                    // require(['@/views/test/components/main.vue'], resolve);
+                    require(['@/views/woa-components/file-preview/index.vue'], resolve);
+
+                }
+            }
+        ]
+    },
     // {
     //     path: '/allindex',
     //     icon: 'social-windows',
