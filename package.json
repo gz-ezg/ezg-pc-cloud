@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "init": "webpack --progress --config build/webpack.dev.config.js",
-    "dev4": "webpack-dev-server --content-base ./ --open --inline --hot --compress --config build/webpack4.dev.config.js --host",    
+    "dev4": "webpack-dev-server --content-base ./ --open --inline --hot --compress --config build/webpack4.dev.config.js --host",
     "dev3": "webpack-dev-server --content-base ./ --open --inline --hot --compress --config build/webpack3.dev.config.js --host",
     "dev2": "webpack-dev-server --content-base ./ --open --inline --hot --compress --config build/webpack2.dev.config.js --host",
     "dev": "webpack-dev-server --content-base ./ --open --inline --hot --compress --config build/webpack.dev.config.js --host",
@@ -22,6 +22,7 @@
   "dependencies": {
     "area-data": "^1.0.0",
     "axios": "^0.17.1",
+    "babel-plugin-transform-remove-strict-mode": "0.0.2",
     "better-scroll": "^1.11.1",
     "clipboard": "^1.7.1",
     "countup": "^1.8.2",
