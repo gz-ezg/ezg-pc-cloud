@@ -16,6 +16,9 @@
     <company-detail></company-detail>
     <customer-detail></customer-detail>
     <div v-html="content"></div>
+    <Button @click="downAccoutProductivity">导出会计绩效</Button>
+    <Button @click="downMarketProductivityTotal">导出市场绩效统计</Button>
+    <Button @click="downMarketProductivityDetail">导出市场绩效详情</Button>
   </div>
 </template>
 
@@ -536,6 +539,104 @@ export default {
             return new Promise(function(resolve,reject){
 
             })
+        },
+
+        downAccoutProductivity(){
+            let _self = this
+            let field = [
+                    {field:'name',title:'职工'},
+                    {field:'product1',title:'0申报代理记账（9元/1分）'},
+                    {field:'product2',title:'小规模代理记账(25元/2分)'},
+                    {field:'product3',title:'一般纳税人代理记账(45元/5分)'},
+                    {field:'product4',title:'小规模高新(35元/3分)'},
+                    {field:'product5',title:'一般纳税人高新(85元/7.5分)'},
+                    {field:'totalmoney',title:'总计'},
+                    {field:'totalscore',title:'工作量总分'},
+                    // {field:'serverrealname',title:'服务人员'},
+                    // {field:'period',title:'服务周期'}
+                    ]
+                let url = `api/system/queryAccPerDetail/list`
+                let config = {
+                        sort:'updatedate',
+                        service_type:'dljz',
+                        page: '1',
+                        pageSize: '1000000',
+                        date:'201805',
+                        // CompanyName: _self.SearchValidate.CompanyName,
+                        // server_realname: _self.SearchValidate.server_realname,
+                        // followby_realname: _self.SearchValidate.followby_realname,
+                        // departname: _self.SearchValidate.departname,
+                        export: 'Y',
+                        exportField: encodeURI(JSON.stringify(field))
+                }
+                let toExcel = this.$MergeURL(url, config)
+                console.log(toExcel)
+                window.open(toExcel)
+        },
+        downMarketProductivityTotal(){
+            let _self = this
+            let field = [
+                    {field:'realname',title:'职工'},
+                    {field:'totalmoney',title:'订单总价'},
+                    {field:'ticheng',title:'提成'},
+                    ]
+                let url = `api/system/queryAccPerDetail/list`
+                let config = {
+                        sort:'updatedate',
+                        service_type:'dljz',
+                        page: '1',
+                        pageSize: '1000000',
+                        starttime:'2018-06-01',
+                        endtime:'2018-07-01',
+                        // CompanyName: _self.SearchValidate.CompanyName,
+                        // server_realname: _self.SearchValidate.server_realname,
+                        // followby_realname: _self.SearchValidate.followby_realname,
+                        // departname: _self.SearchValidate.departname,
+                        export: 'Y',
+                        exportField: encodeURI(JSON.stringify(field))
+                }
+                let toExcel = this.$MergeURL(url, config)
+                console.log(toExcel)
+                window.open(toExcel)
+        },
+        downMarketProductivityDetail(){
+            let _self = this
+            let field = [
+                    {field:'realname',title:'市场人员'},
+                    {field:'ordercode',title:'订单号'},
+                    {field:'paytime',title:'付款时间'},
+                    {field:'area',title:'地区'},
+                    {field:'departname',title:'部门'},
+                    {field:'paynumber',title:'paynumber'},
+                    {field:'realnumber',title:'realnumber'},
+                    {field:'name',title:'客户名称'},
+                    {field:'companyname',title:'公司名称'},
+                    {field:'totalnumber',title:'totalnumber'},
+                    {field:'itempaynumber',title:'itempaynumber'},
+                    {field:'product',title:'产品名称'},
+                    {field:'skuname',title:'skuname'},
+                    {field:'memo',title:'memo'},
+                    {field:'cluesources',title:'cluesources'},
+
+                    ]
+                let url = `api/system/queryAccPerDetail/list`
+                let config = {
+                        sort:'updatedate',
+                        service_type:'dljz',
+                        page: '1',
+                        pageSize: '1000000',
+                        starttime:'2018-06-01',
+                        endtime:'2018-07-01',
+                        // CompanyName: _self.SearchValidate.CompanyName,
+                        // server_realname: _self.SearchValidate.server_realname,
+                        // followby_realname: _self.SearchValidate.followby_realname,
+                        // departname: _self.SearchValidate.departname,
+                        export: 'Y',
+                        exportField: encodeURI(JSON.stringify(field))
+                }
+                let toExcel = this.$MergeURL(url, config)
+                console.log(toExcel)
+                window.open(toExcel)
         }
     },
     mounted () {

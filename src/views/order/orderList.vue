@@ -2142,6 +2142,7 @@
                 _data.GDSreport = _self.formValidate.GDSreport,
                 _data.orderitems = JSON.stringify(_self.orderItemList),
                 _data.payTime = _self.StartTime1,
+                _data.isornotkp = _self.formValidate.isornotkp
 
                 _self.$http({
                     method: 'post',
@@ -2158,6 +2159,8 @@
                             _self.orderItemList = []
                             _self.cancel('formValidate')
                             _self.currentPage2 = 1
+                            _self.beforeAddOrder = false
+
                         } else if (response.data.msgCode == '50003') {
                             _self.$Message.error('抱歉，您还未登录，即将前往登录页面');
                             setTimeout(() => {

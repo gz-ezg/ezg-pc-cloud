@@ -24,10 +24,10 @@
                                     </FormItem>
                                     </Col>
                                 </Row>
-                                <!-- <Row :gutter="8" style="height:56px">
+                                <Row :gutter="8" style="height:56px">
                                     <Col span="8">
                                     <FormItem label="服务部门：" prop="departname">
-                                        <Select v-model="SearchValidate.departname" size="small" transfer>
+                                        <Select v-model="SearchValidate.departname" size="small" transfer @on-change="getData">
                                             <Option value="广州会计1组">广州会计1组</Option>
                                             <Option value="深圳会计部">深圳会计部</Option>
                                             <Option value="东莞会计部">东莞会计部</Option>
@@ -36,7 +36,7 @@
                                         </Select>
                                     </FormItem>
                                     </Col>
-                                </Row> -->
+                                </Row>
                                 <center>
                                     <FormItem>
                                         <Button type="primary" @click="Search">搜索</Button>
@@ -285,6 +285,7 @@
                         CompanyName: _self.SearchValidate.CompanyName,
                         server_realname: _self.SearchValidate.server_realname,
                         followby_realname: _self.SearchValidate.followby_realname,
+                        departname: _self.SearchValidate.departname,
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field))
                 }
@@ -310,8 +311,7 @@
             },
             getData() {
                 let _self = this
-                let url = '/order/cycle/service/record/list?sortField=updatedate&service_type=dljz&page=' + _self.page + '&pageSize=' + _self.pageSize +'&followby_realname='+_self.SearchValidate.followby_realname + '&CompanyName=' + _self.SearchValidate.CompanyName +'&server_realname=' +_self.SearchValidate.server_realname
-                //  +'&departname='+ _self.SearchValidate.departname
+                let url = '/order/cycle/service/record/list?sortField=updatedate&service_type=dljz&page=' + _self.page + '&pageSize=' + _self.pageSize +'&followby_realname='+_self.SearchValidate.followby_realname + '&CompanyName=' + _self.SearchValidate.CompanyName +'&server_realname=' +_self.SearchValidate.server_realname +'&departname='+ _self.SearchValidate.departname
 
                 function doSuccess(res) {
                     let _data = res.data.data

@@ -155,8 +155,8 @@ export const appRouter = [
                 title: '测试页面',
                 name: 'test_index',
                 component: resolve => {
-                    // require(['@/views/test/components/main.vue'], resolve);
-                    require(['@/views/woa-components/file-preview/index.vue'], resolve);
+                    require(['@/views/test/components/main.vue'], resolve);
+                    // require(['@/views/woa-components/file-preview/index.vue'], resolve);
 
                 }
             }

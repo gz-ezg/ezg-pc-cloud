@@ -198,6 +198,21 @@
                     <div slot="footer"></div>
                 </Modal>
                 <Modal
+                    v-model="accout_error"
+                    title="账期异常警示"
+                    width="500"
+                    :mask-closable="false"
+                    :closable="false"
+                >
+                    <Rpw>
+                        <center><Icon type="alert" style="color:red;font-size:40px"></Icon></center>
+                        <center><h2 style="color:red;margin-top:20px">该订单账期存在异常，请修正！</h2></center>
+                    </Rpw>
+                    <div slot="footer">
+                            <Button type="primary" @click="accout_error = false" :disabled="button_disable">关闭</Button>
+                    </div>
+                </Modal>
+                <Modal
                         v-model="checkMemo"
                         title="查看审批备注"
                         @on-ok="checkMemos"
@@ -381,6 +396,8 @@
     export default {
         data() {
             return{
+                button_disable:false,
+                accout_error:false,
                 payDirType:"",
                 loadingN:false,
                 kjdj:"",
@@ -1072,7 +1089,29 @@
                     
                     function doSuccess(re) {
                         _self.ApproveFlow = re.data.data.processInsts
-                        console.log(_self.ApproveFlow)
+                        if(re.data.data.comments == "" || re.data.data.comments == null){
+                            let url = `api/order/cycle/check/order/exception`
+                            let config = {
+                                params:{
+                                    orderId: _self.customerId
+                                }
+                            }
+
+                            function success(res){
+                                console.log(res)
+                                _self.accout_error = true
+                            }
+
+                            function fail(err){
+                                console.log(err)
+                                _self.accout_error = false
+                            }
+
+                            _self.$Get(url,config,success,fail)
+                        }else{
+
+                        }
+                        // console.log(_self.ApproveFlow)
                     }
 
                     this.GetData(url, doSuccess)

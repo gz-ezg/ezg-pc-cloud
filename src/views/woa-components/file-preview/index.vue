@@ -8,25 +8,26 @@
 
 <script>
 import * as flexpaper from './js/flexpaper_flash';
-// import * as swf from './js/swfobject';
+import * as swf from './js/swfobject';
 import 'jquery'
 
 export default {
     data(){
         return{
-
+			local_url:""
         }
     },
     methods:{
         preview(res){
+			let _self = this
 			var swfVersionStr = "10.0.0";
 			var xiSwfUrlStr = "playerProductInstall.swf";
 			var flashvars = new FlexPaperViewer(
-			'plug-in/Flexpaper/FlexPaperViewer', 'viewerPlaceHolder', {
+			'/src/views/woa-components/file-preview/js/FlexPaperViewer', 'viewerPlaceHolder', {
 				config : {
 					//SwfFile : escape('${swfpath}'),//编码设置  
 					// SwfFile : escape('/context/tt.swf'),//编码设置  
-					SwfFile: escape(res),
+					SwfFile: escape(_self.local_url),
 					Scale : 0.6,
 					ZoomTransition : 'easeOut',//变焦过渡  
 					ZoomTime : 0.5,
