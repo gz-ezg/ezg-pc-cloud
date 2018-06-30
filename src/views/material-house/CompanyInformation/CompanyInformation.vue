@@ -173,6 +173,22 @@ export default {
                                         window.open(url)
                                     }
                                 }
+                            }, '预览'),
+                            h('Button', {
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                },
+                                style: {
+                                    marginRight: '5px'
+                                },
+                                on: {
+                                    click: () => {
+                                        console.log(params)
+                                        let url = `api/system/resource/download?id=` + params.row.id
+                                        window.open(url)
+                                    }
+                                }
                             }, '下载'),
                             h('Button', {
                                 props: {

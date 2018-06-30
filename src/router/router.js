@@ -64,6 +64,15 @@ export const locking = {
     }
 };
 
+export const previewFile = {
+    path: '/previewFile/:id',
+    name: 'previewFile',
+    component: resolve => {
+        // require(['@/views/test/components/main.vue'], resolve);
+        require(['@/views/woa-components/file-preview/index.vue'], resolve);
+    }
+}
+
 // 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
 export const otherRouter = {
     path: '/',
@@ -155,8 +164,8 @@ export const appRouter = [
                 title: '测试页面',
                 name: 'test_index',
                 component: resolve => {
-                    require(['@/views/test/components/main.vue'], resolve);
-                    // require(['@/views/woa-components/file-preview/index.vue'], resolve);
+                    // require(['@/views/test/components/main.vue'], resolve);
+                    require(['@/views/woa-components/file-preview/index.vue'], resolve);
 
                 }
             }
@@ -951,7 +960,9 @@ export const routers = [
     preview,
     locking,
     ...appRouter,
+    previewFile,
     page500,
     page403,
-    page404
+    page404,
+    
 ];

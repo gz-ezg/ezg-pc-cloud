@@ -33,32 +33,92 @@
                         key: 'action',
                         width: 200,
                         render: (h, params) => {
-                            return h('div', [
+                            console.log(params)
+                            if(params.row.extend == "jpg"){
+                                return h('div', [
                                     h('Poptip', {
                                     props: {
                                         placement: 'left',
                                         type: 'ghost',
                                     },
-                                },[
+                                    },[
+                                        h('Button',{
+                                            props: {
+                                                type: 'text',
+                                                size: 'small',
+                                                placement: 'left',
+                                            }
+                                        }, '预览'), [
+                                        h('div',{
+                                            slot: 'content'
+                                        },[
+                                            h('img',{
+                                                domProps: {
+                                                    height: 100,
+                                                    src: '/api/assets/'+params.row.realpath,
+                                                },
+                                            })
+                                        ])
+                                            ]
+                                        ]),
+                                    h('Button', {
+                                        props: {
+                                            type: 'text',
+                                            size: 'small'
+                                        },
+                                        on: {
+                                            click:  () => {
+                                                this.fileDownload(params)
+                                            }
+                                        }
+                                    }, '下载'),
+                                    h('Button', {
+                                        props: {
+                                            type: 'text',
+                                            size: 'small'
+                                        }
+                                    },[
+                                        h('Poptip', {
+                                            props: {
+                                                confirm: true,
+                                                title: '您确定要删除此附件吗！',
+                                            },
+                                            on: {
+                                                'on-ok': ()=>{
+                                                    this.filesDelete(params)
+                                                },
+                                                'on-cancel': function(){
+                                                }
+                                                /*click: () => {
+                                                    this.filesDelete(params)
+                                                }*/
+                                            }
+                                        }, '删除')
+                                    ])
+                                ]);
+                            }else{
+                                return h('div', [
                                     h('Button',{
                                         props: {
                                             type: 'text',
                                             size: 'small',
                                             placement: 'left',
+                                        },
+                                        on:{
+                                            click:()=>{
+                                                let routeData = this.$router.resolve({
+                                                    name:'previewFile',
+                                                    params:{
+                                                        id: 12061
+                                                    }
+                                                })
+                                                window.open(routeData.href, '_blank');
+                                                // console.log(params.row.id)
+                                                // let url = "http://" + location.origin + "/#/previewFile/" + params.row.id
+                                                // window.open(url)
+                                            }
                                         }
-                                    }, '预览'), [
-                                    h('div',{
-                                        slot: 'content'
-                                    },[
-                                        h('img',{
-                                            domProps: {
-                                                height: 100,
-                                                src: '/api/assets/'+params.row.realpath,
-                                            },
-                                        })
-                                    ])
-                                        ]
-                                    ]),
+                                    }, '预览'),
                                 h('Button', {
                                     props: {
                                         type: 'text',
@@ -94,6 +154,8 @@
                                     }, '删除')
                                 ])
                             ]);
+                            }
+                            
                         }
                     }
                 ],

@@ -14,6 +14,9 @@ import 'jquery'
 export default {
     data(){
         return{
+			id:"",
+			//	取到文件名，然后改写路径
+			// local_url:"/api/assets/upload/files/20180629132128cmhabfbn.swf"
 			local_url:""
         }
     },
@@ -23,7 +26,8 @@ export default {
 			var swfVersionStr = "10.0.0";
 			var xiSwfUrlStr = "playerProductInstall.swf";
 			var flashvars = new FlexPaperViewer(
-			'/src/views/woa-components/file-preview/js/FlexPaperViewer', 'viewerPlaceHolder', {
+			//	此文件要扔到服务器上api/assets文件夹，路径映射问题
+			'/api/assets/upload/files/FlexPaperViewer', 'viewerPlaceHolder', {
 				config : {
 					//SwfFile : escape('${swfpath}'),//编码设置  
 					// SwfFile : escape('/context/tt.swf'),//编码设置  
@@ -48,11 +52,11 @@ export default {
 					PrintPaperAsBitmap : false,
 					localeChain : 'zh_CN'
 				}
-        })
-        // this.init()
-    },
-    init(){
-            var params = {}
+        	})
+        	// this.init()
+    	},
+		init(){
+			var params = {}
 			params.quality = "high";
 			params.bgcolor = "#ffffff";
 			params.allowscriptaccess = "sameDomain";
@@ -62,10 +66,45 @@ export default {
 			attributes.name = "FlexPaperViewer";
 			swfobject.embedSWF("FlexPaperViewer.swf", "flashContent", "650","500", swfVersionStr, xiSwfUrlStr, flashvars, params,attributes);
 			swfobject.createCSS("#flashContent","display:block;text-align:left;");
-        }
-    },
+		},
+		getSWF(){
+			let _self = this
+			let url = `api/system/documentView`
+			let config = {
+				params: {
+					// documentId:"12058"
+					// documentId:"12061"
+					documentId: _self.id
+					
+				}
+			}
+			
+			function success(res){
+				// console.log(res)
+				let temp = res.data.data.split("/")
+				// console.log(temp)
+				if(temp.length > 1){
+					// console.log(temp[temp.length - 1])
+					_self.local_url = "/api/assets/upload/files/" + temp[temp.length - 1]
+					_self.preview()
+				}else{
+					_self.$Message.warning("此文件不支持预览！")
+					_self.preview()
+				}
+			}
+
+			this.$Get(url, config, success)
+		}
+	},
+	created(){
+		// console.log(this.$route.params.id)
+		this.id = this.$route.params.id
+		// this.id = this.$router.params.id
+		// console.log(this.$router.params.id)
+		this.getSWF()
+	},
     mounted(){
-        this.preview()
+        // this.preview()
     }
 }
 </script>

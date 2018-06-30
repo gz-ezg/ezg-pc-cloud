@@ -11,9 +11,12 @@ import VueBus from './directive/vue-bus'
 import '@/locale';
 import VueI18n from 'vue-i18n';
 import util from '@/libs/util';
-import axios from 'axios'
+import axios from 'axios';
 import Cookies from 'js-cookie';
+import VCharts from 'v-charts';
 // import methods from './common/common'
+
+Vue.use(VCharts)
 Vue.use(VueI18n);
 Vue.use(iView);
 Vue.use(VueBus);

@@ -1884,6 +1884,7 @@
                 _data.GDSreport = _self.formValidate.GDSreport,
                 _data.orderitems = JSON.stringify(_self.orderItemList),
                 _data.payTime = _self.StartTime1,
+                _data.isornotkp = _self.formValidate.isornotkp
 
                 _self.$http({
                     method: 'post',
@@ -2239,13 +2240,14 @@
                                                 delete _self.orderItemList4[i].servicedeparts;
                                             }
 
-                                            _data.companyId = _self.formValidatexiugai.companyid,
+                                            // _data.companyId = _self.formValidatexiugai.companyid,
                                                 _data.paydir = _self.formValidatexiugai.payDir,
                                                 _data.id = _self.formValidatexiugai.id,
-                                                _data.orderPayNumber = _self.formValidatexiugai.orderPayNumber,
-                                                _data.servicestartdate = _self.StartTime6,
-                                                _data.GDSreport = _self.formValidatexiugai.GDSreport,
+                                                // _data.orderPayNumber = _self.formValidatexiugai.orderPayNumber,
+                                                // _data.servicestartdate = _self.StartTime6,
+                                                // _data.GDSreport = _self.formValidatexiugai.GDSreport,
                                                 _data.paytime = _self.StartTime5,
+                                                // _data.isornotkp = _self.formValidatexiugai.isornotkp
                                                 _data.orderitems = JSON.stringify(_self.orderItemList4)
 
                                             function doSuccess(response) {
@@ -2278,12 +2280,12 @@
                                         delete _self.orderItemList4[i].servicedeparts;
                                     }
 
-                                    _data.companyId = _self.formValidatexiugai.companyid,
+                                    // _data.companyId = _self.formValidatexiugai.companyid,
                                         _data.paydir = _self.formValidatexiugai.payDir,
                                         _data.id = _self.formValidatexiugai.id,
-                                        _data.orderPayNumber = _self.formValidatexiugai.orderPayNumber,
-                                        _data.servicestartdate = _self.StartTime6,
-                                        _data.GDSreport = _self.formValidatexiugai.GDSreport,
+                                        // _data.orderPayNumber = _self.formValidatexiugai.orderPayNumber,
+                                        // _data.servicestartdate = _self.StartTime6,
+                                        // _data.GDSreport = _self.formValidatexiugai.GDSreport,
                                         _data.paytime = _self.StartTime5,
                                         _data.orderitems = JSON.stringify(_self.orderItemList4)
 
@@ -2987,6 +2989,7 @@
                         _self.formValidatexiugai.serviceBeginDate = _date
                         _self.formValidatexiugai.ticheng = _data.performanceMoney
                         _self.formValidatexiugai.tel = _data.tel
+                        _self.formValidatexiugai.isornotkp = _data.isornotkp
                         _self.orderItemList4 = _data.items
 
                         for (let i = 0; i < _data.items.length; i++) {
@@ -3101,6 +3104,7 @@
                         _self.formValidatexiugai.tel = _data.tel
                         _self.formValidatexiugai.ticheng = _data.performanceMoney
                         _self.formValidatexiugai.performanceMoney = _data.performanceMoney
+                        _self.formValidatexiugai.isornotkp = _data.isornotkp
                         _self.orderItemList4 = _data.items
 
                         for (let i = 0; i < _data.items.length; i++) {

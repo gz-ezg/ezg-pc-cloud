@@ -3227,6 +3227,7 @@
                         _self.formValidatexiugai.serviceBeginDate = _date
                         _self.formValidatexiugai.ticheng = _data.performanceMoney
                         _self.formValidatexiugai.tel = _data.tel
+                        _self.formValidatexiugai.isornotkp = _data.isornotkp
                         _self.orderItemList4 = _data.items
                         // console.log(_self.getStartTime5)
                         for (let i = 0; i < _data.items.length; i++) {
@@ -3357,6 +3358,7 @@
                         _self.formValidatexiugai.tel = _data.tel
                         _self.formValidatexiugai.ticheng = _data.performanceMoney
                         _self.formValidatexiugai.performanceMoney = _data.performanceMoney
+                        _self.formValidatexiugai.isornotkp = _data.isornotkp
                         _self.orderItemList4 = _data.items
 
                         for (let i = 0; i < _data.items.length; i++) {
