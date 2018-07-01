@@ -15,6 +15,7 @@ export default {
     data(){
         return{
 			id:"",
+			//	/mnt/spring-cloud/springCloudImg/static/upload/files
 			//	取到文件名，然后改写路径
 			// local_url:"/api/assets/upload/files/20180629132128cmhabfbn.swf"
 			local_url:""

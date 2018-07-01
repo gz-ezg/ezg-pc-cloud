@@ -2131,7 +2131,7 @@
                 let _self = this
                 let url = '/order/create'
                 let _data = {}
-
+                _self.add_order_button_loading = true
                 for (let i = 0; i < _self.orderItemList.length; i++) {
                     delete _self.orderItemList[i].servicedeparts;
                 }
@@ -2160,6 +2160,8 @@
                             _self.cancel('formValidate')
                             _self.currentPage2 = 1
                             _self.beforeAddOrder = false
+                            _self.beforeAddOrder = false
+                            _self.add_order_button_loading = false
 
                         } else if (response.data.msgCode == '50003') {
                             _self.$Message.error('抱歉，您还未登录，即将前往登录页面');
@@ -2173,6 +2175,8 @@
                         } else {
                             _self.$nextTick(() => {
                                 _self.loading = true;
+                                _self.beforeAddOrder = false
+                                _self.add_order_button_loading = false
                             });
                             _self.$Message.error('新增失败!');
                         }
