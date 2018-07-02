@@ -3486,7 +3486,7 @@
                 }
 
                 if (field == 'servicestartdate') {
-                    _self.selectDate = truetrue
+                    _self.selectDate = true
                     _self.fieldIndex = index
                 }
 

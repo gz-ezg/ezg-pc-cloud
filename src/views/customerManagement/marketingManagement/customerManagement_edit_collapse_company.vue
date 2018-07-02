@@ -42,6 +42,12 @@
                         </Option>
                     </Select>
                 </FormItem>
+                <!-- <FormItem label="账务等级" prop="importlevel">
+                    <Select transfer v-model="formValidate.importlevel">
+                        <Option v-for="(item, index) in importlevelValue" :value="item.value" :key=index>{{ item.label }}
+                        </Option>
+                    </Select>
+                </FormItem> -->
                 <FormItem label="创建人" prop="createby">
                     <Input v-model="formValidate.createby" disabled></Input>
                 </FormItem>
@@ -114,7 +120,7 @@
         </Modal>
         <Modal
                 v-model="modal8"
-                title="编辑"
+                title="工商信息"
                 :mask-closable="false"                
                 @on-ok="EditCompany"
                 @on-cancel="cancel('formValidate3')">
@@ -455,7 +461,7 @@ import Bus from '../../../components/bus.js'
                                             this.edit(params)
                                         }
                                     }
-                                }, '编辑'),
+                                }, '工商信息'),
                                 h('Button', {
                                     props: {
                                         type: 'text',

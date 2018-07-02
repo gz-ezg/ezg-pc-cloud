@@ -288,6 +288,11 @@
                         width:120
                     },
                     {
+                        title: '回访次数',
+                        key: 'callbackstatuseCount',
+                        width:120
+                    },
+                    {
                         title: '服务人员',
                         key: 'servicename',
                         width: 120

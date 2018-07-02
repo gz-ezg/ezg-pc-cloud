@@ -344,6 +344,11 @@
                         key: 'remark',
                         width: 150
                     },
+                    // {
+                    //     title: '外勤状态',
+                    //     key: 'result',
+                    //     width: 150
+                    // },
                     {
                         title: '操作',
                         key: 'action',

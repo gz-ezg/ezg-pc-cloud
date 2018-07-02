@@ -98,6 +98,16 @@
                                         <DatePicker type="daterange"  transfer v-model="formValidate.upddate" placement="bottom-start" size="small" style="width:100%"></DatePicker>
                                     </FormItem>
                                   </Col>
+                                  <!-- <Col span="8">
+                                    <FormItem label="客户等级：" prop="importlevel">
+                                        <Select transfer v-model="formValidate.importlevel" size="small" @on-change="Search" style="width:100%">
+                                            <!-- <Option value="">     </Option> -->
+                                            <Option v-for="item in impLevel" :value="item.typecode" :key="item.id">
+                                                {{ item.typename }}
+                                            </Option>
+                                        </Select>
+                                    </FormItem>
+                                  </Col> -->
                                 </Row>
                                 <center>
                                     <FormItem style="margin-top:10px">

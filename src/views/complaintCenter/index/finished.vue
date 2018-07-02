@@ -218,6 +218,8 @@ export default {
                     {field:'createdate',title:'创建时间'},                                                                   
                     {field:'updatedate',title:'更新时间'},                                                                     
                     {field:'createby',title:'创建人'},
+                    {field:'record',title:'投诉内容'},
+                    {field:'rx',title:'解决方案'},
                     // {field:'followname',title:'跟进人'} 
                 ]
                 let _self = this

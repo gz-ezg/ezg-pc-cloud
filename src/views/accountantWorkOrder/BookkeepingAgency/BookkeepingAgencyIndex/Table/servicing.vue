@@ -48,8 +48,8 @@
                 <Button type="primary" icon="ios-color-wand-outline" @click="ksfw">停止服务</Button>
                 <Button type="primary" icon="information-circled" @click="fpkj">变更会计</Button>
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="zlwc" v-if="zl">资料完成</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="zzwc" v-if="zz">做账完成</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="bswc" v-if="bs">报税完成</Button> -->
+                <Button type="primary" icon="ios-color-wand-outline" @click="zzwc" v-if="zz">做账完成</Button> -->
+                <Button type="primary" icon="ios-color-wand-outline" @click="bswc" v-if="bs">设置财务等级</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
             </ButtonGroup>
             <!-- <Poptip
@@ -630,6 +630,11 @@
                         key: 'accounter_security_line',
                         width: 120
                     },
+                    // {
+                    //     title: '账务等级',
+                    //     key: 'account_level',
+                    //     width: 120
+                    // },
                     {
                         title: '备注',
                         key: 'memo',
@@ -933,6 +938,7 @@
                     // {field:'balance_count',title:'剩余时长'},
                     // {field:'begin_period',title:'开始期间'},
                     {field:'end_period',title:'结束期间'},
+                    {field:'memo',title:'备注'}
                     // {field:'serverrealname',title:'服务人员'},
                     // {field:'period',title:'服务周期'}
                     ]

@@ -502,6 +502,36 @@
                                 </FormItem>
                             </Col>
                         </Row>
+                        <!-- <Row :gutter="16">
+                            <Col span="1" style="visibility:hidden">1</Col>                            
+                            <Col span="11">
+                                <FormItem prop="Providentfund" label="公积金账户名：" style="margin-bottom:5px">
+                                    <Select transfer v-model="taxManagement.Providentfund" placeholder="" :disabled="isEditTax">
+                                        <Option value="Y">需申报</Option>
+                                        <Option value="N">不需申报</Option>                                        
+                                    </Select>
+                                </FormItem>
+                            </Col>
+                            <Col span="11">
+                                <FormItem prop="taxdisk" label="公积金密码：" style="margin-bottom:5px">
+                                    <Select transfer v-model="taxManagement.taxdisk" placeholder="" :disabled="isEditTax">
+                                        <Option value="Y">有</Option>
+                                        <Option value="N">无</Option>                                        
+                                    </Select>
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <Row :gutter="16">
+                            <Col span="1" style="visibility:hidden">1</Col>                            
+                            <Col span="11">
+                                <FormItem prop="Providentfund" label="社保密码：" style="margin-bottom:5px">
+                                    <Select transfer v-model="taxManagement.Providentfund" placeholder="" :disabled="isEditTax">
+                                        <Option value="Y">需申报</Option>
+                                        <Option value="N">不需申报</Option>                                        
+                                    </Select>
+                                </FormItem>
+                            </Col>
+                        </Row> -->
                     </Form>
                 </TabPane>
                 <TabPane label="客户跟进记录" name="name8">
