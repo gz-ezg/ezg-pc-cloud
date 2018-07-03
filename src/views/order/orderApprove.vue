@@ -197,7 +197,7 @@
                     </Tabs>
                     <div slot="footer"></div>
                 </Modal>
-                <Modal
+                <!-- <Modal
                     v-model="accout_error"
                     title="账期异常警示"
                     width="500"
@@ -209,9 +209,9 @@
                         <center><h2 style="color:red;margin-top:20px">该订单账期存在异常，请修正！</h2></center>
                     </Rpw>
                     <div slot="footer">
-                            <Button type="primary" @click="accout_error = false" :disabled="button_disable">关闭</Button>
+                            <Button type="primary" @click="accout_error = false" :disabled="button_disable">确认</Button>
                     </div>
-                </Modal>
+                </Modal> -->
                 <Modal
                         v-model="checkMemo"
                         title="查看审批备注"
@@ -1098,12 +1098,15 @@
                             }
 
                             function success(res){
-                                console.log(res)
-                                _self.accout_error = true
+                                // console.log(res)
+                                if(res.data.data.hasException == true){
+                                    _self.accout_error = true
+                                }
+                                
                             }
 
                             function fail(err){
-                                console.log(err)
+                                // console.log(err)
                                 _self.accout_error = false
                             }
 
@@ -1114,7 +1117,7 @@
                         // console.log(_self.ApproveFlow)
                     }
 
-                    this.GetData(url, doSuccess)
+                    // this.GetData(url, doSuccess)
 
                     let url2 = '/order/detail/' + _self.customerId
                     _self.isCheck = true

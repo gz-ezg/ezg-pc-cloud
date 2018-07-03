@@ -34,7 +34,7 @@
                         width: 200,
                         render: (h, params) => {
                             console.log(params)
-                            if(params.row.extend == "jpg"){
+                            if(params.row.extend == "jpg" || params.row.extend == "png"){
                                 return h('div', [
                                     h('Poptip', {
                                     props: {

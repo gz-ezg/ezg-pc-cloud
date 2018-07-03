@@ -5,119 +5,123 @@
             v-model="isOpenEdit"
             width = 800
         >
-            <Form ref="add" :model="add" :label-width="140" style="margin:auto">
-                <Row :gutter="16">
-                    <Col span="12">
-                        <FormItem prop="companyname" label="公司名称：">
-                            <Input type="text" v-model="add.companyname" readonly>
-                            </Input>
-                        </FormItem> 
-                    </Col>
-                    <Col span="12">
-                        <FormItem prop="name" label="客户名称：">
-                            <Input type="text" v-model="add.name"  readonly>
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="12">
-                        <FormItem prop="tel" label="客户电话：">
-                            <Input type="text" v-model="add.tel" readonly>
-                            </Input>
-                        </FormItem> 
-                    </Col>
-                    <Col span="12">
-                        <FormItem prop="product" label="产品名称：">
-                            <Input type="text" v-model="add.product"  readonly>
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="12">
-                        <FormItem prop="servicename" label="服务人员：">
-                            <Input type="text" v-model="add.servicename" readonly>
-                            </Input>
-                        </FormItem> 
-                    </Col>
-                    <Col span="12">
-                        <FormItem prop="marketername" label="市场人员：">
-                            <Input type="text" v-model="add.marketername"  readonly>
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="12">
-                        <FormItem prop="serviceranks" label="服务评分：">
-                            <InputNumber  type="text" v-model="add.serviceranks" :max="10" :min="0" style="width:100%" :disabled="isreturn">
-                            </InputNumber>
-                        </FormItem> 
-                    </Col>
-                    <Col span="12">
-                        <FormItem prop="calltype" label="问题类型：">
-                            <Select transfer v-model="add.calltype" placeholder="" :disabled="isreturn">
-                                <Option v-for="(item,index) in hfwtlx" :key=index :value="item.typecode">{{item.typename}}</Option>
-                            </Select>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="24">
-                        <FormItem prop="depart" label="责任部门：">
-                            <CheckboxGroup v-model="add.depart">
-                                <span v-for="item in departAlias" :key=item.id>
-                                    <Checkbox :label="item.typecode" :disabled="isreturn">
-                                        <span>{{item.typename}}</span>
-                                    </Checkbox>
-                                </span>         
-                            </CheckboxGroup>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="12">
-                        <FormItem prop="callbackstatus" label="回访状态：">
-                            <Select transfer v-model="add.callbackstatus" placeholder="" :disabled="isreturn">
-                                <Option v-for="(item,index) in hfzt" :key=index :value="item.typecode">{{item.typename}}</Option>
-                            </Select>
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem prop="callbackdate" label="回访时间：">
-                            
-                                <DatePicker transfer type="date" placeholder="选择日期" style="width:100%" v-model="add.callbackdate" :disabled="isreturn"></DatePicker>
-                            <!-- <Col span="1" style="text-align: center">-</Col>
-                            <Col span="4">
-                                <TimePicker  transfer type="time" placeholder="选择时间" style="width:100%" hide-disabled-options :disabled-hours="[0,1,2,3,4,5,6,7]"></TimePicker>
-                            </Col> -->
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="24">
-                        <FormItem prop="reason" label="问题反馈或建议：">
-                            <Input type="textarea" v-model="add.reason" :row="3" :disabled="isreturn"></Input>
-                        </FormItem> 
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="24">
-                        <FormItem prop="solutionbymarketer" label="市场反馈：">
-                            <Input type="textarea" v-model="add.solutionbymarketer" :row="3" :disabled="ismarket"></Input>
-                        </FormItem> 
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="24">
-                        <FormItem prop="solutionbyservicer" label="服务部门反馈：">
-                            <Input type="textarea" v-model="add.solutionbyservicer" :row="3" :disabled="isservice"></Input>
-                        </FormItem> 
-                    </Col>
-                </Row>
+            <Tabs v-model="showTab">
+                <TabPane label="当前回访记录" name="1">
+                    <Form ref="add" :model="add" :label-width="140" style="margin:auto">
+                    <Row :gutter="16">
+                        <Col span="12">
+                            <FormItem prop="companyname" label="公司名称：">
+                                <Input type="text" v-model="add.companyname" readonly>
+                                </Input>
+                            </FormItem> 
+                        </Col>
+                        <Col span="12">
+                            <FormItem prop="name" label="客户名称：">
+                                <Input type="text" v-model="add.name"  readonly>
+                                </Input>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row :gutter="16">
+                        <Col span="12">
+                            <FormItem prop="tel" label="客户电话：">
+                                <Input type="text" v-model="add.tel" readonly>
+                                </Input>
+                            </FormItem> 
+                        </Col>
+                        <Col span="12">
+                            <FormItem prop="product" label="产品名称：">
+                                <Input type="text" v-model="add.product"  readonly>
+                                </Input>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row :gutter="16">
+                        <Col span="12">
+                            <FormItem prop="servicename" label="服务人员：">
+                                <Input type="text" v-model="add.servicename" readonly>
+                                </Input>
+                            </FormItem> 
+                        </Col>
+                        <Col span="12">
+                            <FormItem prop="marketername" label="市场人员：">
+                                <Input type="text" v-model="add.marketername"  readonly>
+                                </Input>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row :gutter="16">
+                        <Col span="12">
+                            <FormItem prop="serviceranks" label="服务评分：">
+                                <InputNumber  type="text" v-model="add.serviceranks" :max="10" :min="0" style="width:100%" :disabled="isreturn">
+                                </InputNumber>
+                            </FormItem> 
+                        </Col>
+                        <Col span="12">
+                            <FormItem prop="calltype" label="问题类型：">
+                                <Select transfer v-model="add.calltype" placeholder="" :disabled="isreturn">
+                                    <Option v-for="(item,index) in hfwtlx" :key=index :value="item.typecode">{{item.typename}}</Option>
+                                </Select>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row :gutter="16">
+                        <Col span="24">
+                            <FormItem prop="depart" label="责任部门：">
+                                <CheckboxGroup v-model="add.depart">
+                                    <span v-for="item in departAlias" :key=item.id>
+                                        <Checkbox :label="item.typecode" :disabled="isreturn">
+                                            <span>{{item.typename}}</span>
+                                        </Checkbox>
+                                    </span>         
+                                </CheckboxGroup>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row :gutter="16">
+                        <Col span="12">
+                            <FormItem prop="callbackstatus" label="回访状态：">
+                                <Select transfer v-model="add.callbackstatus" placeholder="" :disabled="isreturn">
+                                    <Option v-for="(item,index) in hfzt" :key=index :value="item.typecode">{{item.typename}}</Option>
+                                </Select>
+                            </FormItem>
+                        </Col>
+                        <Col span="12">
+                            <FormItem prop="callbackdate" label="回访时间：">
+                                    <DatePicker transfer type="date" placeholder="选择日期" style="width:100%" v-model="add.callbackdate" :disabled="isreturn"></DatePicker>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row :gutter="16">
+                        <Col span="24">
+                            <FormItem prop="reason" label="问题反馈或建议：">
+                                <Input type="textarea" v-model="add.reason" :row="3" :disabled="isreturn"></Input>
+                            </FormItem> 
+                        </Col>
+                    </Row>
+                    <Row :gutter="16">
+                        <Col span="24">
+                            <FormItem prop="solutionbymarketer" label="市场反馈：">
+                                <Input type="textarea" v-model="add.solutionbymarketer" :row="3" :disabled="ismarket"></Input>
+                            </FormItem> 
+                        </Col>
+                    </Row>
+                    <Row :gutter="16">
+                        <Col span="24">
+                            <FormItem prop="solutionbyservicer" label="服务部门反馈：">
+                                <Input type="textarea" v-model="add.solutionbyservicer" :row="3" :disabled="isservice"></Input>
+                            </FormItem> 
+                        </Col>
+                    </Row>
+                    </Form>
+                </TabPane>
+                <TabPane label="历史回访记录" name="2">
+                    <history-list :companyname="companyname"></history-list>
+                </TabPane>
+            </Tabs>
+            
 
-            </Form>
+            
             <div slot="footer">
                 <Button type="primary" @click="add_complaint_detail">修改</Button>
                 <Button type="ghost" @click="close_complaint_detail">关闭</Button>
@@ -129,10 +133,17 @@
 <script>
     import Bus from '../../../../components/bus'
     import {DateFormat} from '../../../../libs/utils.js'
+    import HistoryList from './histroy_list_show'
+
 export default {
+    components:{
+        HistoryList
+    },
     props:['hfwtlx','hfzt'],
     data(){
         return{
+            showTab:"1",
+            companyname:"",
             isservice:true,
             ismarket:true,
             isreturn:true,
@@ -172,9 +183,9 @@ export default {
                     callbackstatus:_self.add.callbackstatus,
                     reason:_self.add.reason,
                 }
-                console.log(config)
+                // console.log(config)
                 this.$http.post(url,config).then(function(res){
-                    console.log(res.data.msgCode)
+                    // console.log(res.data.msgCode)
                     if(res.data.msgCode == "40000"){
                         _self.$Message.success(res.data.msg)
                         _self.isOpenEdit = false
@@ -196,6 +207,9 @@ export default {
             _self.add = e
             _self.isOpenEdit = true
             _self.add.depart = _self.add.depart.split(',')
+            _self.companyname = e.companyname
+            _self.showTab = "1"
+            // console.log(_self.companyname)
             // console.log(e)      
         })
         let role = localStorage.getItem('Role')

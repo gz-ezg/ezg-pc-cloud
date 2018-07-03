@@ -363,10 +363,11 @@
                         <Row :gutter="16">
                             <Col span="1" style="visibility:hidden">1</Col>
                             <Col span="11">
-                                <FormItem prop="companytype" label="企业跟进类型：" style="margin-bottom:5px">
+                                <FormItem prop="companytype" label="账务等级：" style="margin-bottom:5px">
                                     <Select transfer v-model="taxManagement.companytype" placeholder="" :disabled="isEditTax">
                                         <Option value="A">A</Option>
-                                        <Option value="B">B</Option>                                        
+                                        <Option value="B">B</Option>
+                                        <Option value="C">C</Option>                                        
                                     </Select>
                                 </FormItem>
                             </Col>

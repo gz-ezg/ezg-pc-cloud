@@ -152,25 +152,25 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    {
-        path: '/test',
-        icon: 'social-windows',
-        name: 'test',
-        title: 'Test',
-        component: Main,
-        children: [
-            {
-                path: 'test',
-                title: '测试页面',
-                name: 'test_index',
-                component: resolve => {
-                    // require(['@/views/test/components/main.vue'], resolve);
-                    require(['@/views/woa-components/file-preview/index.vue'], resolve);
+    // {
+    //     path: '/test',
+    //     icon: 'social-windows',
+    //     name: 'test',
+    //     title: 'Test',
+    //     component: Main,
+    //     children: [
+    //         {
+    //             path: 'test',
+    //             title: '测试页面',
+    //             name: 'test_index',
+    //             component: resolve => {
+    //                 // require(['@/views/test/components/main.vue'], resolve);
+    //                 require(['@/views/woa-components/file-preview/index.vue'], resolve);
 
-                }
-            }
-        ]
-    },
+    //             }
+    //         }
+    //     ]
+    // },
     // {
     //     path: '/allindex',
     //     icon: 'social-windows',
@@ -723,15 +723,15 @@ export const appRouter = [
             //         require(['@/views/accountantWorkOrder/accountantField/accountantField.vue'], resolve);                    
             //     }
             // },
-            // {
-            //     // access:6078,
-            //     path: 'fieldWarning',
-            //     title: '外勤预警',
-            //     name: 'fieldWarning_index',
-            //     component: resolve => {
-            //         require(['@/views/fieldManagement/fieldWarning/fieldWarning.vue'],resolve)
-            //     }
-            // }
+            {
+                // access:6078,
+                path: 'fieldWarning',
+                title: '外勤预警',
+                name: 'fieldWarning_index',
+                component: resolve => {
+                    require(['@/views/fieldManagement/fieldWarning/fieldWarning.vue'],resolve)
+                }
+            }
         ]
     },
     // {
@@ -753,34 +753,34 @@ export const appRouter = [
     //         }
     //     ]
     // },
-    {
-        // access: 6080,
-        path: '/stystemcomplaint',
-        icon: 'social-windows',
-        name: 'stystemcomplaint',
-        title: '系统反馈',
-        component: Main,
-        children: [
-            {
-                // access: 6081,
-                path: 'complainAndAdvice',
-                title: '意见管理',
-                name: 'complainAndAdvice_index',
-                component: resolve => {
-                    require(['@/views/stystemComplain/complainAndAdvice/complainAndAdvice.vue'], resolve);
-                }
-            },
-            {
-                // access: 6082,
-                path: 'complainReply',
-                title: '反馈回复',
-                name: 'complainReply_index',
-                component: resolve => {
-                    require(['@/views/stystemComplain/complainReply/complainReply.vue'], resolve);
-                }
-            }
-        ]
-    },
+    // {
+    //     access: 6080,
+    //     path: '/stystemcomplaint',
+    //     icon: 'social-windows',
+    //     name: 'stystemcomplaint',
+    //     title: '系统反馈',
+    //     component: Main,
+    //     children: [
+    //         {
+    //             access: 6081,
+    //             path: 'complainAndAdvice',
+    //             title: '意见管理',
+    //             name: 'complainAndAdvice_index',
+    //             component: resolve => {
+    //                 require(['@/views/stystemComplain/complainAndAdvice/complainAndAdvice.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             access: 6082,
+    //             path: 'complainReply',
+    //             title: '反馈回复',
+    //             name: 'complainReply_index',
+    //             component: resolve => {
+    //                 require(['@/views/stystemComplain/complainReply/complainReply.vue'], resolve);
+    //             }
+    //         }
+    //     ]
+    // },
    /* {
         access: 6027,
         path: '/publicPool',

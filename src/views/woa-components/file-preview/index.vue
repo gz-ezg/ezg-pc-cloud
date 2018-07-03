@@ -80,21 +80,41 @@ export default {
 				}
 			}
 			
-			function success(res){
-				// console.log(res)
-				let temp = res.data.data.split("/")
-				// console.log(temp)
-				if(temp.length > 1){
-					// console.log(temp[temp.length - 1])
-					_self.local_url = "/api/assets/upload/files/" + temp[temp.length - 1]
-					_self.preview()
-				}else{
-					_self.$Message.warning("此文件不支持预览！")
-					_self.preview()
-				}
-			}
+			// function success(res){
+			// 	// console.log(res)
+			// 	let temp = res.data.data.split("/")
+			// 	// console.log(temp)
+			// 	if(temp.length > 1){
+			// 		// console.log(temp[temp.length - 1])
+			// 		_self.local_url = "/api/assets/upload/files/" + temp[temp.length - 1]
+			// 		_self.preview()
+			// 	}else{
+			// 		_self.$Message.warning("此文件不支持预览！")
+			// 		_self.preview()
+			// 	}
+			// }
 
-			this.$Get(url, config, success)
+			// this.$Get(url, config, success)
+			this.$http.get(url,config).then(function(res){
+				if(res.data.msgCode == "40000"){
+					let temp = res.data.data.split("/")
+					// console.log(temp)
+					if(temp.length > 1){
+						// console.log(temp[temp.length - 1])
+						_self.local_url = "/api/assets/upload/files/" + temp[temp.length - 1]
+						_self.preview()
+					}else{
+						_self.$Message.warning("此文件不支持预览！")
+						_self.preview()
+					}
+				}else{
+					_self.preview()
+					_self.$Message.error("抱歉，系统故障，暂无法提供预览！")
+				}
+			}).catch(function(err){
+				_self.preview()
+				_self.$Message.error("抱歉，网络故障，暂无法提供预览！")
+			})
 		}
 	},
 	created(){

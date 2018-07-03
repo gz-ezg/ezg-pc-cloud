@@ -1151,6 +1151,11 @@
                         width: 120,
                         // sortable: true                                                
                     },
+                    {
+                        title: '缴费日期',
+                        key:'payTime',
+                        width: 120
+                    },
                     // {
                     //     title: '订单状态',
                     //     key: 'zip',
@@ -1371,6 +1376,7 @@
                             baseorderid: _data.rows[i].baseorderid,
                             id: _data.rows[i].id,
                             ordercode: _data.rows[i].ordercode,
+                            payTime: _data.rows[i].payTime,
                             customersource:_self.cluesources_map.get(_data.rows[i].customersource),
                             cellClassName: {
                                 companyname: 'demo-table-info-cell-name'

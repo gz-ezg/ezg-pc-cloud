@@ -11,7 +11,7 @@
         <customer-detail></customer-detail>
         <company-detail></company-detail>
         <!-- <companyDetail></companyDetail> -->
-        <edit :hfwtlx="hfwtlx" :hfzt="hfzt"></edit>
+        <edit :hfwtlx="hfwtlx" :hfzt="hfzt" :hfwtlxMap="hfwtlx_map" :departAliasMap="departAlias_map" :departAlias="departAlias" :hfztMap="hfzt_map"></edit>
         <show :hfwtlx="hfwtlx" :hfzt="hfzt"></show>        
     </div>
 </template>
