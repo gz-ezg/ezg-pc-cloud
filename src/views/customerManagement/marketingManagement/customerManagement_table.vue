@@ -98,10 +98,15 @@
                                         <DatePicker type="daterange"  transfer v-model="formValidate.upddate" placement="bottom-start" size="small" style="width:100%"></DatePicker>
                                     </FormItem>
                                   </Col>
+                                  <Col span="8">
+                                    <FormItem label="标签：" prop="labelName">
+                                        <Input v-model="formValidate.labelName" size="small"></Input>
+                                    </FormItem>
+                                  </Col>
                                   <!-- <Col span="8">
                                     <FormItem label="客户等级：" prop="importlevel">
                                         <Select transfer v-model="formValidate.importlevel" size="small" @on-change="Search" style="width:100%">
-                                            <!-- <Option value="">     </Option> -->
+                                            <Option value="">     </Option>
                                             <Option v-for="item in impLevel" :value="item.typecode" :key="item.id">
                                                 {{ item.typename }}
                                             </Option>
@@ -336,7 +341,8 @@ export default {
         companyname:"",
         credate:[],
         upddate:[],
-        customerStatus:''
+        customerStatus:'',
+        labelName:""
       },
       columns: [
         {
@@ -608,6 +614,7 @@ export default {
                         customersource: _self.formValidate.customersource,
                         area: _self.formValidate.area,
                         companyname: _self.formValidate.companyname,
+                        // labelName:_self.formValidate.labelName,
                         bcreatedate:DateFormat(_self.formValidate.credate[0]),
                         ecreatedate:DateFormat(_self.formValidate.credate[1]),
                         bupdatedate:DateFormat(_self.formValidate.upddate[0]),
@@ -654,6 +661,7 @@ export default {
           isbound: _self.formValidate.isbound,
           customersource: _self.formValidate.customersource,
           area: _self.formValidate.area,
+        //   labelName:_self.formValidate.labelName,
           companyName: _self.formValidate.companyname,
           bcreatedate:DateFormat(_self.formValidate.credate[0]),
           ecreatedate:DateFormat(_self.formValidate.credate[1]),

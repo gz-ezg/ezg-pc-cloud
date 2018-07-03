@@ -1282,6 +1282,7 @@
                 _self.formValidateSearch.frealname = ''
                 _self.formValidateSearch.payDir = ''
                 _self.formValidateSearch.date = ''
+                localStorage.setItem("companyname","")
                 _self.page = 1
                 _self.getTableData()
             },
@@ -1290,11 +1291,14 @@
                 if (_self.ishandleSubmit == false) {
                 _self.page = 1;
                 }
+                if(_self.formValidateSearch.companyname == ""){
+                    localStorage.setItem("companyname","")
+                }
                 _self.ishandleSubmit = true;
                 _self.getTableData();
             },
             sort(e){
-                console.log(e)
+                // console.log(e)
                 this.sortField = e.key
                 if(e.order=='normal'){
                     this.order = 'desc'
@@ -1309,7 +1313,18 @@
                 this.loading4 = true
                 let _self = this
                 let url = 'api/order/list'
+                if(localStorage.getItem("companyname") != ""){
 
+                    let role = JSON.parse(localStorage.getItem("Role"))
+                        for(let i = 0;i<role.length;i++){
+                            if(role[i].rolecode == "cwsp"){
+                                _self.search_model = "1"
+                                _self.formValidateSearch.companyname = localStorage.getItem("companyname")
+                            }
+                        }
+                }else{
+                    localStorage.setItem("companyname",_self.formValidateSearch.companyname)
+                }
                 var keys =[]
                     var config = {
                         params:{
@@ -3839,5 +3854,9 @@
             this.getTableData()
             this.getPayDirs()
         },
+        created(){
+            let _self = this
+            
+        }
     }
 </script>

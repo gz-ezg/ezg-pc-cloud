@@ -79,7 +79,7 @@
                             Cookies.set('password', _self.form.password);
                             localStorage.setItem('realname', response.data.data.user.realname)
                             localStorage.setItem('id', response.data.data.user.id)
-                            
+                            localStorage.setItem("companyname","")
                             _self.getAllTSTypeGroups()
                             _self.getInterfaceItem(response.data.data.user.id)
                             _self.getUserRole(response.data.data.user.id)
