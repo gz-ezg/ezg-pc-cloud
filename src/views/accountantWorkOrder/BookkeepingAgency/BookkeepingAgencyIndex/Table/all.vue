@@ -510,7 +510,7 @@
 
             selectrow(a) {
                 let _self = this
-                let url = '/order/cycle/month/service/item/list?monthServiceId=' + a.month_service_id
+                // let url = '/order/cycle/month/service/item/list?monthServiceId=' + a.month_service_id
                 _self.id = a
                 _self.zl = false
                 _self.zz = false
@@ -535,7 +535,7 @@
                     }
                 }
 
-                this.GetData(url, doSuccess)
+                // this.GetData(url, doSuccess)
             },
 
             zlwc() {

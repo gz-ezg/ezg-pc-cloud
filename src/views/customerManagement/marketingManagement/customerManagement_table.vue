@@ -103,7 +103,9 @@
                                         <Input v-model="formValidate.labelName" size="small"></Input>
                                     </FormItem>
                                   </Col>
-                                  <!-- <Col span="8">
+                                </Row>
+                                <Row>
+                                    <Col span="8">
                                     <FormItem label="客户等级：" prop="importlevel">
                                         <Select transfer v-model="formValidate.importlevel" size="small" @on-change="Search" style="width:100%">
                                             <Option value="">     </Option>
@@ -112,7 +114,7 @@
                                             </Option>
                                         </Select>
                                     </FormItem>
-                                  </Col> -->
+                                  </Col>
                                 </Row>
                                 <center>
                                     <FormItem style="margin-top:10px">
@@ -342,7 +344,8 @@ export default {
         credate:[],
         upddate:[],
         customerStatus:'',
-        labelName:""
+        labelName:"",
+        importlevel:""
       },
       columns: [
         {
@@ -614,7 +617,8 @@ export default {
                         customersource: _self.formValidate.customersource,
                         area: _self.formValidate.area,
                         companyname: _self.formValidate.companyname,
-                        // labelName:_self.formValidate.labelName,
+                        labelName:_self.formValidate.labelName,
+                        importlevel:_self.formValidate.importlevel,
                         bcreatedate:DateFormat(_self.formValidate.credate[0]),
                         ecreatedate:DateFormat(_self.formValidate.credate[1]),
                         bupdatedate:DateFormat(_self.formValidate.upddate[0]),
@@ -661,7 +665,8 @@ export default {
           isbound: _self.formValidate.isbound,
           customersource: _self.formValidate.customersource,
           area: _self.formValidate.area,
-        //   labelName:_self.formValidate.labelName,
+          labelName:_self.formValidate.labelName,
+          importlevel:_self.formValidate.importlevel,
           companyName: _self.formValidate.companyname,
           bcreatedate:DateFormat(_self.formValidate.credate[0]),
           ecreatedate:DateFormat(_self.formValidate.credate[1]),

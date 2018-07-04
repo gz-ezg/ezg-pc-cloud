@@ -1,6 +1,54 @@
 <template>
     <div>
         <Row>
+            <Card>
+                <Form ref="SearchValidate" :model="SearchValidate" :label-width="80" style="margin-top: 15px">
+                <Row :gutter="8" style="height:56px">
+                    <Col span="8">
+                        <FormItem label="名字：" prop="realname">
+                            <Input v-model="SearchValidate.realname" size="small"></Input>
+                        </FormItem>
+                    </Col>
+                    <Col span="8">
+                        <FormItem label="电话：" prop="mobilephone">
+                            <Input v-model="SearchValidate.mobilephone" size="small"></Input>
+                        </FormItem>
+                    </Col>
+                    <Col span="8">
+                        <FormItem label="用户账户：" prop="username">
+                            <Input v-model="SearchValidate.username" size="small"></Input>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="8" style="height:56px">
+                    <Col span="8">
+                        <FormItem label="角色ID：" prop="roleid">
+                            <Input v-model="SearchValidate.roleid" size="small"></Input>
+                        </FormItem>
+                    </Col>
+                    <Col span="8">
+                        <FormItem label="角色编码：" prop="rolecode">
+                            <Input v-model="SearchValidate.rolecode" size="small"></Input>
+                        </FormItem>
+                    </Col>
+                    <Col span="8">
+                        <FormItem label="角色名称：" prop="rolename">
+                            <Input v-model="SearchValidate.rolename" size="small"></Input>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <center>
+                    <FormItem>
+                        <Button type="primary" @click="Search">搜索</Button>
+                        <Button type="ghost" @click="handleReset" style="margin-left: 8px">
+                            重置
+                        </Button>
+                    </FormItem>
+                </center>
+            </Form>
+            </Card>
+        </Row>
+        <Row>
             <Col span="12">
                 <Card>
                     <Row style="margin-top: 10px;">
@@ -16,7 +64,7 @@
                                 show-total
                                 show-sizer
                                 show-elevator
-                                :current.sync="currentPage"
+                                :current.sync="userPage"
                                 @on-change="pageChange"
                                 @on-page-size-change="pageSizeChange"
                                 style="margin-top: 10px"></Page>
@@ -85,6 +133,14 @@
     export default {
         data() {
             return{
+                SearchValidate:{
+                    realname:"",
+                    mobilephone:"",
+                    username:"",
+                    roleid:"",
+                    rolecode:"",
+                    rolename:""
+                },
                 userPage: 1,
                 userPageSize: 10,
                 isRM: false,
@@ -153,11 +209,39 @@
             }
         },
         methods: {
+            Search(){
+                this.userPage = 1
+                this.getUserTable()
+            },
+            handleReset(){
+                let _self = this
+                _self.SearchValidate.realname = ""
+                _self.SearchValidate.mobilephone = ""
+                _self.SearchValidate.username = ""
+                _self.SearchValidate.roleid = ""
+                _self.SearchValidate.rolecode = ""
+                _self.SearchValidate.rolecode = ""
+                _self.SearchValidate.rolename = ""
+                _self.userPage = 1
+                _self.getUserTable()
+
+            },
             // 获取用户数据
             getUserTable() {
                 let _self = this
-                let url = '/user/list?page=' + _self.userPage + '&pageSize=' + _self.userPageSize
-
+                let url = 'api/user/list'
+                let config = {
+                    params:{
+                        page: _self.userPage,
+                        pageSize: _self.userPageSize,
+                        realname: _self.SearchValidate.realname,
+                        mobilephone: _self.SearchValidate.mobilephone,
+                        username: _self.SearchValidate.username,
+                        roleid: _self.SearchValidate.roleid,
+                        rolecode: _self.SearchValidate.rolecode,
+                        rolename: _self.SearchValidate.rolename
+                    }
+                }
                 function doSuccess(re) {
                     let _data = re.data.data
                     _self.userTotal = _data.total
@@ -173,7 +257,9 @@
                     }
                 }
 
-                this.GetData(url, doSuccess)
+                this.$Get(url, config, doSuccess)
+                
+                // this.GetData(url, doSuccess)
             },
 
             pageChange(a) {

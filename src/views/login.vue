@@ -111,6 +111,8 @@
 
                 function doSuccess(re) {
                     Cookies.set('access', (re.data.data.interfaces).join()); 
+                    // alert(JSON.stringify(re.data.data.interfaces))
+                    localStorage.setItem("access_array",JSON.stringify(re.data.data.interfaces))
                     Cookies.set('operations', (re.data.data.operations).join());
                     window.location.reload();
                     setTimeout(() => {

@@ -81,6 +81,7 @@
                         :loading="loading"
                         @on-current-change="selectrow"
                         :columns="header"
+                        @on-row-dblclick="openShow"
                         :data="data"></Table>
                 <Page
                             size="small"

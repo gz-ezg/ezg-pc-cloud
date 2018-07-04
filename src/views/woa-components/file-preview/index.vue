@@ -28,7 +28,9 @@ export default {
 			var xiSwfUrlStr = "playerProductInstall.swf";
 			var flashvars = new FlexPaperViewer(
 			//	此文件要扔到服务器上api/assets文件夹，路径映射问题
-			'/api/assets/upload/files/FlexPaperViewer', 'viewerPlaceHolder', {
+			'/api/assets/upload/swf/FlexPaperViewer', 'viewerPlaceHolder', {
+			// '/api/assets/upload/files/FlexPaperViewer', 'viewerPlaceHolder', {
+
 				config : {
 					//SwfFile : escape('${swfpath}'),//编码设置  
 					// SwfFile : escape('/context/tt.swf'),//编码设置  

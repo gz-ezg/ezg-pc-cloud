@@ -413,6 +413,33 @@ Vue.prototype.matchingFields = function (a){
     }
 }
 
+//  路由跳转之前检查是否有权限访问该页面
+// router.beforeEach((to, from, next)=>{
+//     // console.log(to)
+
+//     let temp = JSON.parse(localStorage.getItem("access_array"))
+//     // console.log(temp)
+//     if(JSON.stringify(to.meta) == "{}"){
+//         next()
+//     }else{
+//         let flag = false
+//         for(let i = 0;i<temp.length;i++){
+//             if(to.meta == temp[i]){
+//                 next()
+//                 flag = true
+//             }
+//         }
+//         if(flag == false){
+//             router.push({
+//                 name:'error-403'
+//             })
+//         }
+//         // console.log(to.meta)
+//         // next()
+//     }
+//     // next()
+// })
+
 new Vue({
     el: '#app',
     router: router,

@@ -950,6 +950,7 @@
                         period:"",
                         companyname: _self.SearchValidate.CompanyName,
                         realname: _self.SearchValidate.server_realname,
+                        followbyrealname: _self.SearchValidate.followby_realname,
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field))
                 }
@@ -983,6 +984,7 @@
                         period:"",
                         companyname: _self.SearchValidate.CompanyName,
                         realname: _self.SearchValidate.server_realname,
+                        followbyrealname: _self.SearchValidate.followby_realname,
                     }
                 }
                 this.$http.get(url,config).then(function(res){

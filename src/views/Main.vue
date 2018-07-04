@@ -330,11 +330,12 @@
         },
         mounted () {
             this.init();
-            // this.rate_start()
+            this.rate_start()
         },
         created () {
             // 显示打开的页面的列表
             this.$store.commit('setOpenedList');
-        }
+        },
+        
     };
 </script>

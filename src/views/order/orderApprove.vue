@@ -197,7 +197,7 @@
                     </Tabs>
                     <div slot="footer"></div>
                 </Modal>
-                <!-- <Modal
+                <Modal
                     v-model="accout_error"
                     title="账期异常警示"
                     width="500"
@@ -211,7 +211,7 @@
                     <div slot="footer">
                             <Button type="primary" @click="accout_error = false" :disabled="button_disable">确认</Button>
                     </div>
-                </Modal> -->
+                </Modal>
                 <Modal
                         v-model="checkMemo"
                         title="查看审批备注"

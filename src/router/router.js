@@ -8,7 +8,7 @@ export const loginRouter = {
     path: '/login',
     name: 'login',
     meta: {
-        title: 'Login - 登录'
+        // title: 'Login - 登录'
     },
     component: resolve => {
         require(['@/views/login.vue'], resolve);
@@ -19,7 +19,7 @@ export const page404 = {
     path: '/*',
     name: 'error-404',
     meta: {
-        title: '404-页面不存在'
+        // title: '404-页面不存在'
     },
     component: resolve => {
         require(['@/views/error-page/404.vue'], resolve);
@@ -29,18 +29,18 @@ export const page404 = {
 export const page403 = {
     path: '/403',
     meta: {
-        title: '403-权限不足'
+        // title: '403-权限不足'
     },
     name: 'error-403',
     component: resolve => {
-        require(['@//views/error-page/403.vue'], resolve);
+        require(['@/views/error-page/403.vue'], resolve);
     }
 };
 
 export const page500 = {
     path: '/500',
     meta: {
-        title: '500-服务端错误'
+        // title: '500-服务端错误'
     },
     name: 'error-500',
     component: resolve => {
@@ -230,6 +230,7 @@ export const appRouter = [
     // },
     {
         access: 6001,
+        meta: 6001,
         path: '/customerManagement',
         icon: 'social-windows',
         name: 'customerManagement',
@@ -241,6 +242,7 @@ export const appRouter = [
         children: [
             {
                 access: 6002,
+                meta: 6002,
                 path: 'marketingManagement',
                 title: '营销管理',
                 name: 'marketingManagement_index',
@@ -250,6 +252,7 @@ export const appRouter = [
             },
             {
                 access: 6003,
+                meta: 6003,
                 path: 'customerTabManagement',
                 title: '客户标签管理',
                 name: 'customerTabManagement_index',
@@ -259,6 +262,7 @@ export const appRouter = [
             },
             {
                 access: 6088,
+                meta: 6088,
                 path: 'customerFollowUp',
                 title: '跟进记录管理',
                 name: 'customerFollowUp_index',
@@ -302,6 +306,7 @@ export const appRouter = [
                 access: 6048,
                 path: 'complaintcenter',
                 title: '投诉管理',
+                meta: 6048,
                 name: 'complaintcenter_index',
                 component: resolve => {
                     require(['@/views/complaintCenter/complaintcenter_index.vue'], resolve);
@@ -310,6 +315,7 @@ export const appRouter = [
             {
                 path: 'returnVisit',
                 access: 6061,
+                meta: 6061,
                 title: '客户回访',
                 name: 'returnVisit_index',
                 component: resolve => {
@@ -319,6 +325,7 @@ export const appRouter = [
             {
                 path: 'offlineCustomer',
                 access: 6062,
+                meta: 6062,
                 title: '下线客户',
                 name: 'offlineCustomer_index',
                 component: resolve => {

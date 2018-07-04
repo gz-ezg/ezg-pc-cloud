@@ -93,6 +93,7 @@
                             size="small"
                             @on-row-click="selectRow"
                             :columns="header"
+                            @on-row-dblclick="ck"
                             :data="data"></Table>
                 <Page
                             size="small"
