@@ -175,33 +175,33 @@ export default {
                                     }
                                 }
                             }, '下载'),
-                            h('Button', {
-                                props: {
-                                    type: 'text',
-                                    size: 'small'
-                                },
-                                on: {
-                                    click: () => {
-                                        let _self = this                                        
-                                        let url = `api/system/resource/learn/source/del`
-                                        let config = {
-                                            id: params.row.id
-                                        }
-                                        this.$http.post(url,config).then(function(res){
-                                            _self.$backToLogin(res)
-                                            if(res.data.msgCode == '40000'){
-                                                _self.$Message.success(res.data.msg)
-                                                if(_self.data.length == '1'){
-                                                    _self.page = _self.page - 1
-                                                }
-                                                _self.getData()
-                                            }else{
-                                                _self.$Message.error(res.data.msg)
-                                            }
-                                        })
-                                    }
-                                }
-                            }, '删除')
+                            // h('Button', {
+                            //     props: {
+                            //         type: 'text',
+                            //         size: 'small'
+                            //     },
+                            //     on: {
+                            //         click: () => {
+                            //             let _self = this                                        
+                            //             let url = `api/system/resource/learn/source/del`
+                            //             let config = {
+                            //                 id: params.row.id
+                            //             }
+                            //             this.$http.post(url,config).then(function(res){
+                            //                 _self.$backToLogin(res)
+                            //                 if(res.data.msgCode == '40000'){
+                            //                     _self.$Message.success(res.data.msg)
+                            //                     if(_self.data.length == '1'){
+                            //                         _self.page = _self.page - 1
+                            //                     }
+                            //                     _self.getData()
+                            //                 }else{
+                            //                     _self.$Message.error(res.data.msg)
+                            //                 }
+                            //             })
+                            //         }
+                            //     }
+                            // }, '删除')
                         ]);
                     }
                 }

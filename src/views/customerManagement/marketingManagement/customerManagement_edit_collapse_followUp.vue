@@ -109,9 +109,7 @@
                 :mask-closable="false"                
         >
             <Form ref="formValidate" :rules="ruleValidate" :model="formValidate" :label-width="120">
-                <Row :gutter="16">
-                    <Col span="12">
-                    <FormItem prop="companyId" >
+                <FormItem prop="companyId" >
                         <div slot="label" >公司名称</div>
                         <Select transfer v-model="formValidate.companyId" size="small">
                             <Option v-for="item in companynameArray" :value="item.id" :key="item.id">
@@ -122,16 +120,24 @@
                             <div style="height:12px;padding-top:4px">请输入公司名称</div>
                         </div> -->
                     </FormItem>
+                <Row :gutter="16">
+                    <Col span="12">
+                        <FormItem label="跟进结果" prop="followResult">
+                            <Select transfer v-model="formValidate.followResult" size="small">
+                                <Option v-for="item in market_field_type" :value="item.typecode" :key="item.typecode">{{item.typename}}</Option>
+                            </Select>
+                        </FormItem>
                     </Col>
                     <Col span="12">
-                    <FormItem label="跟进类型" prop="followUpType">
-                        <Select transfer v-model="formValidate.followUpType" size="small">
-                            <Option v-for="item in followTypeText" :value="item.typecode" :key="item.typecode">{{item.typename}}</Option>
-                        </Select>
-                    </FormItem>
+                        <FormItem label="跟进类型" prop="followUpType">
+                            <Select transfer v-model="formValidate.followUpType" size="small">
+                                <Option v-for="item in followTypeText" :value="item.typecode" :key="item.typecode">{{item.typename}}</Option>
+                            </Select>
+                        </FormItem>
                     </Col>
                 </Row>
-                <FormItem label="跟进记录" prop="content" style="margin-top:20px;margin-bottom:20px">
+                
+                <FormItem label="跟进记录" prop="content" style="margin-bottom:20px">
                     <Input size="small" type="textarea" v-model="formValidate.content"/>
                 </FormItem>
                 <!-- <FormItem label="事件通知时间" prop="date" style="margin-top:20px;margin-bottom:20px">
@@ -223,6 +229,7 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
         props: ['customerid'],
         data() {
             return {
+                market_field_type:"",
                 // customerid:"",
                 spinShow:false,
                 onlymarket:false,
@@ -248,6 +255,7 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
                     followUpType: '',
                     content: '',
                     attIds: '',
+                    followResult:'',
                     // followupdate:"",
                     // followuptime:""
                 },
@@ -771,6 +779,16 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
             single_check_change(e){
                 this.onlymarket = e
                 this.openEdi()
+            },
+            getFollowResult(){
+                let _self = this
+                let params = "market_field_type"
+
+                function finish(res){
+                    console.log(res.data.data.market_field_type)
+                    _self.market_field_type = res.data.data.market_field_type
+                }
+                this.$GetDataCenter(params,finish)
             }
         },
         mounted() {
@@ -782,6 +800,7 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
             // console.log(this.customerid)
             
             this.GetFollowUpType()
+            this.getFollowResult()
             this.openEdi()
             _self.formValidate.customerId = this.customerid
             

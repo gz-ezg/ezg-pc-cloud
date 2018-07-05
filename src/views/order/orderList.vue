@@ -1565,27 +1565,32 @@
                     _self.productData = []
 
                     for (let i = 0; i < _data.rows.length; i++) {
-                        _self.productData.push({
-                            id: _data.rows[i].id,
-                            product: _data.rows[i].product,
-                            productCode: _data.rows[i].productCode,
-                            status: _data.rows[i].status,
-                            baseproductId: _data.rows[i].baseproductId,
-                            createDate: _data.rows[i].createDate,
-                            createOperid: _data.rows[i].createOperid,
-                            createby: _data.rows[i].createby,
-                            defaultdepartalias: _data.rows[i].defaultdepartalias,
-                            departalias: _data.rows[i].departalias,
-                            iscycle: _data.rows[i].iscycle,
-                            linkProductids: _data.rows[i].linkProductids,
-                            ordernumber: _data.rows[i].ordernumber,
-                            pId: _data.rows[i].pId,
-                            pSortId: _data.rows[i].pSortId,
-                            productLevel: _data.rows[i].productLevel,
-                            productTypeID: _data.rows[i].productTypeID,
-                            producttags: _data.rows[i].producttags,
-                            rootorgcode: _data.rows[i].rootorgcode,
-                        })
+                        if(_data.rows[i].id == "14"){
+                            _self.pageTotal2 = _self.pageTotal2 - 1
+                        }else{
+                            _self.productData.push({
+                                id: _data.rows[i].id,
+                                product: _data.rows[i].product,
+                                productCode: _data.rows[i].productCode,
+                                status: _data.rows[i].status,
+                                baseproductId: _data.rows[i].baseproductId,
+                                createDate: _data.rows[i].createDate,
+                                createOperid: _data.rows[i].createOperid,
+                                createby: _data.rows[i].createby,
+                                defaultdepartalias: _data.rows[i].defaultdepartalias,
+                                departalias: _data.rows[i].departalias,
+                                iscycle: _data.rows[i].iscycle,
+                                linkProductids: _data.rows[i].linkProductids,
+                                ordernumber: _data.rows[i].ordernumber,
+                                pId: _data.rows[i].pId,
+                                pSortId: _data.rows[i].pSortId,
+                                productLevel: _data.rows[i].productLevel,
+                                productTypeID: _data.rows[i].productTypeID,
+                                producttags: _data.rows[i].producttags,
+                                rootorgcode: _data.rows[i].rootorgcode,
+                            })
+                        }
+                        
                     }
                 }
 
@@ -1772,7 +1777,7 @@
                     let url = '/product/getPriceByAreaAndSKU?skuId=' + skuId + '&areaId=' + _self.res1[2]
 
                     function doSuccess(response) {
-                        if (response.data.data) {
+                        if (response.data.data && response.data.data != []) {
                             let baseprice = response.data.data[0].baseprice
                             let oaprice = response.data.data[0].oaprice
                             _self.price = oaprice

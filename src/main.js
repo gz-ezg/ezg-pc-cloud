@@ -148,7 +148,7 @@ Vue.prototype.$GetDataCenter = function(params, finish){
     }
     let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
     this.$http.get(url, config).then(function(res){
-        _self.$backToLogin(res)
+        // _self.$backToLogin(res)
         if(res.data.msgCode == "40000"){
             finish(res)
         }else{
