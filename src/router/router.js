@@ -627,15 +627,6 @@ export const appRouter = [
                     require(['@/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgency.vue'], resolve);
                 }
             },
-            // {
-            //     access: 6045,
-            //     path: 'accountantField',
-            //     title: '会计到家外勤管理',
-            //     name: 'accountantField_index',
-            //     component: resolve => {
-            //         require(['@/views/accountantWorkOrder/accountantField/accountantField.vue'], resolve);
-            //     }
-            // },
             {
                 access: 6046,
                 path: 'accountantOrder',
@@ -705,6 +696,23 @@ export const appRouter = [
         ]
     },
     {
+        path: '/administrationWorkOrder',
+        icon: 'social-windows',
+        name: 'administrationWorkOrder',
+        title: '行政管理',
+        component: Main,
+        children: [
+            {
+                path: 'administratiotaskmanagement',
+                title: '工单管理',
+                name:"administratiotaskmanagement",
+                component: resolve => {
+                    require(['@/views/administrationManagement/index.vue'], resolve);
+                }
+            },
+        ]
+    },
+    {
         access: 6075,
         path: '/fieldManagement',
         icon: 'social-windows',
@@ -721,17 +729,8 @@ export const appRouter = [
                     require(['@/views/fieldManagement/commonfield/commonFieldIndex.vue'], resolve);
                 }
             },
-            // {
-            //     // access:6077,
-            //     path: 'accountantOrderField',
-            //     title: '会计到家外勤',
-            //     name:"accountantOrderField_index",
-            //     component: resolve => {
-            //         require(['@/views/accountantWorkOrder/accountantField/accountantField.vue'], resolve);                    
-            //     }
-            // },
             {
-                // access:6078,
+                access:6078,
                 path: 'fieldWarning',
                 title: '外勤预警',
                 name: 'fieldWarning_index',
@@ -741,55 +740,36 @@ export const appRouter = [
             }
         ]
     },
-    // {
-    //     access: 6048,
-    //     path: '/complaintcenter',
-    //     icon: 'social-windows',
-    //     name: 'complaintCenter',
-    //     title: '投诉中心',
-    //     component: Main,
-    //     children: [
-    //         {
-    //             access: 6048,
-    //             path: 'complaintcenter',
-    //             title: '投诉管理',
-    //             name: 'complaintcenter_index',
-    //             component: resolve => {
-    //                 require(['@/views/complaintCenter/complaintcenter_index.vue'], resolve);
-    //             }
-    //         }
-    //     ]
-    // },
-    // {
-    //     access: 6080,
-    //     path: '/stystemcomplaint',
-    //     icon: 'social-windows',
-    //     name: 'stystemcomplaint',
-    //     title: '系统反馈',
-    //     component: Main,
-    //     children: [
-    //         {
-    //             access: 6081,
-    //             path: 'complainAndAdvice',
-    //             title: '意见管理',
-    //             name: 'complainAndAdvice_index',
-    //             component: resolve => {
-    //                 require(['@/views/stystemComplain/complainAndAdvice/complainAndAdvice.vue'], resolve);
-    //             }
-    //         },
-    //         {
-    //             access: 6082,
-    //             path: 'complainReply',
-    //             title: '反馈回复',
-    //             name: 'complainReply_index',
-    //             component: resolve => {
-    //                 require(['@/views/stystemComplain/complainReply/complainReply.vue'], resolve);
-    //             }
-    //         }
-    //     ]
-    // },
-   /* {
-        access: 6027,
+    {
+        access: 6080,
+        path: '/stystemcomplaint',
+        icon: 'social-windows',
+        name: 'stystemcomplaint',
+        title: '系统反馈',
+        component: Main,
+        children: [
+            {
+                access: 6081,
+                path: 'complainAndAdvice',
+                title: '意见管理',
+                name: 'complainAndAdvice_index',
+                component: resolve => {
+                    require(['@/views/stystemComplain/complainAndAdvice/complainAndAdvice.vue'], resolve);
+                }
+            },
+            {
+                access: 6082,
+                path: 'complainReply',
+                title: '反馈回复',
+                name: 'complainReply_index',
+                component: resolve => {
+                    require(['@/views/stystemComplain/complainReply/complainReply.vue'], resolve);
+                }
+            }
+        ]
+    },
+    {
+        // access: 6027,
         path: '/publicPool',
         icon: 'social-windows',
         title: '公海池',
@@ -797,13 +777,19 @@ export const appRouter = [
         component: Main,
         children: [
             {
-                access: 6027,
+                // access: 6027,
                 path: 'index', title: '公海池', name: 'publicPool_index', component: resolve => {
-                require(['@/views/publicPool/publicPool.vue'], resolve);
-            }
+                    require(['@/views/publicPool/index/pubilcPool_table.vue'], resolve);
+                }
+            },
+            {
+                // access: 6027,
+                path: 'rule_index', title: '销售规则管理', name: 'rule_index', component: resolve => {
+                    require(['@/views/publicPool/rule/index.vue'], resolve);
+                }
             }
         ]
-    },*/
+    },
 /*    {
         path: '/admin',
         icon: 'social-windows',

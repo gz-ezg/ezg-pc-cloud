@@ -47,9 +47,9 @@
                 <!-- <Button type="primary" icon="information-circled" @click="scbd">时长变动日志</Button> -->
                 <Button type="primary" icon="ios-color-wand-outline" @click="ksfw">停止服务</Button>
                 <Button type="primary" icon="information-circled" @click="fpkj">变更会计</Button>
-                <!-- <Button type="primary" icon="ios-color-wand-outline" @click="zlwc" v-if="zl">资料完成</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="zzwc" v-if="zz">做账完成</Button> -->
-                <Button type="primary" icon="ios-color-wand-outline" @click="bswc" v-if="bs">设置财务等级</Button>
+                <!-- <Button type="primary" icon="ios-color-wand-outline" @click="zlwc" v-if="zl">资料完成</Button> -->
+                <Button type="primary" icon="ios-color-wand-outline" @click="setLevel">设置财务等级</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="openFollow">客户跟进</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
             </ButtonGroup>
             <!-- <Poptip
@@ -113,15 +113,70 @@
                     placement="top"
                     style="margin-top: 10px"></Page>
         </Row>
+        <Modal
+            v-model="accout_level_open"
+            title="设置账务等级"
+            width="300"
+        >
+            <Row>
+                <center>{{current_row.companyname}}</center>
+            </Row>
+            <Row style="margin-top:20px">
+                <center>
+                    <Select v-model="current_row.accountgrade" type="size" style="width:200px">
+                        <Option v-for="item in financialLevel" :key="item.id" :value="item.typecode">{{item.typename}}</Option>
+                    </Select>
+                </center>
+            </Row>
+            <div slot="footer">
+                <Button @click="set_account_level" type="primary">设置</Button>
+            </div>
+        </Modal>
+        <Modal
+            v-model="finsih_work"
+            title="完成节点"
+            width="500"
+        >
+            <Row>
+                <div v-for="(item,index) in show_img" :key=index>
+                    <Row>
+                        <center>
+                            <img :src="item.src" alt="节点" style="width: 300px;height:300px;"/>
+                        </center>
+                    </Row>
+                    <center>
+                        <Button type="text" @click="fileRemove(item)">移除</Button>
+                    </center>
+                </div>
+                <Upload
+                    ref="upload"
+                    :before-upload="handleUpload"
+                    action=""
+                >
+                    <Button type="ghost" icon="ios-cloud-upload-outline" style="margin:auto">选择文件</Button>
+                </Upload>
+            </Row>
+            <div slot="footer">
+                <Button type="primary"  style="margin:auto" @click="finsih_upload" :loading="finsih_loading">提交</Button>
+            </div>
+        </Modal>
     </Card>
 </template>
 
 <script>
     import Bus from '../../../../../components/bus'
-
+    import { yasuo } from '../../../../../libs/img_beforeUpload'
     export default {
         data() {
             return {
+                finsih_loading:false,
+                upload_id:"",
+                finsih_work:false,
+                img_array:[],
+                show_img:[],
+                // follow_open:false,
+                financialLevel:"",
+                accout_level_open:false,
                 cservicest:"",
                 cservicest_map:new Map(),
                 loading:false,
@@ -196,49 +251,42 @@
                     },
 
                     {
-                        title: '资料接收',
-                        key: 'ziliaojieshou',
+                        title: '联系客户',
+                        key: 'lianxikehu',
                         width: 120,
+                        align: "center",
                         render: (h, params) => {
+                            // console.log(params.row.lianxikehu.confirm_date)
                             let reg=/^[-+]?\d*$/; 
-                            // console.log(reg.test(params.row.ziliaojieshou))
-                            if(reg.test(params.row.ziliaojieshou)){
-                                // let color
-                                // if(params.row.balance_count <= 2){
-                                //     color = 'red'
-                                // }else{
-                                //     color = 'black'
-                                // }
+                            if(params.row.lianxikehu.confirm_date == undefined){
                                 return h('div', [
                                 h('Button', {
                                     props: {
                                         type: 'text',
                                         size: 'small'
                                     },
-                                    // style:{
-                                    //     color: color
-                                    // },
                                     on:{
                                         click:()=>{
-                                            this.zlwc(params.row.ziliaojieshou)
+                                            this.zlwc(params.row.lianxikehu)
                                         }
                                     }
                                 }, '[ 完成 ]'),
                             ]);
                             }else{
-                                return h('div', params.row.ziliaojieshou.slice(0,10))
+                                return h('div', params.row.lianxikehu.confirm_date.slice(0,10))
                             }
                         }
                     },
                     {
-                        title: '增值税',
-                        key: 'zzs',
+                        title: '报税',
+                        key: 'baoshui',
                         width:120,
+                        align: "center",
                         render: (h, params) => {
                             let reg =/^[-+]?\d*$/;
                             // console.log(isNaN(params.row.zlwc))
                             // console.log(reg.test(params.row.zengzhishui))
-                            if(reg.test(params.row.zengzhishui)){
+                            if(params.row.baoshui.confirm_date == undefined){
                                 // let color
                                 // if(params.row.balance_count <= 2){
                                 //     color = 'red'
@@ -256,24 +304,25 @@
                                     // },
                                     on:{
                                         click:()=>{
-                                            this.zlwc(params.row.zengzhishui)
+                                            this.zlwc(params.row.baoshui)
                                         }
                                     }
                                 }, '[ 完成 ]'),
                             ]);
                             }else{
-                                return h('div', params.row.zengzhishui.slice(0,10))
+                                return h('div', params.row.baoshui.confirm_date.slice(0,10))
                             }
                         }
                     },
                     {
-                        title: '所得税',
-                        key: 'suodeshui',
+                        title: '扣款',
+                        key: 'koukuan',
+                        align: "center",
                         width:120,
                         render: (h, params) => {
                             let reg=/^[-+]?\d*$/;                            
                             // console.log(isNaN(params.row.zlwc))
-                            if(reg.test(params.row.suodeshui)){
+                            if(params.row.koukuan.confirm_date == undefined){
                                 // let color
                                 // if(params.row.balance_count <= 2){
                                 //     color = 'red'
@@ -291,133 +340,26 @@
                                     // },
                                     on:{
                                         click:()=>{
-                                            this.zlwc(params.row.suodeshui)
+                                            this.zlwc(params.row.koukuan)
                                         }
                                     }
                                 }, '[ 完成 ]'),
                             ]);
                             }else{
-                                return h('div', params.row.suodeshui.slice(0,10))
-                            }
-                        }
-                    },
-                    {
-                        title: '附加税',
-                        key: 'fujiashui',
-                        width:120,
-                        render: (h, params) => {
-                            let reg=/^[-+]?\d*$/;
-                            
-                            // console.log(isNaN(params.row.zlwc))
-                            if(reg.test(params.row.fujiashui)){
-                                // let color
-                                // if(params.row.balance_count <= 2){
-                                //     color = 'red'
-                                // }else{
-                                //     color = 'black'
-                                // }
-                                return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    // style:{
-                                    //     color: color
-                                    // },
-                                    on:{
-                                        click:()=>{
-                                            this.zlwc(params.row.fujiashui)
-                                        }
-                                    }
-                                }, '[ 完成 ]'),
-                            ]);
-                            }else{
-                                return h('div', params.row.fujiashui.slice(0,10))
-                            }
-                        }
-                    },
-                    {
-                        title: '个税',
-                        key: 'geshui',
-                        width:120,
-                        render: (h, params) => {
-                            let reg=/^[-+]?\d*$/;
-                            
-                            // console.log(isNaN(params.row.zlwc))
-                            if(reg.test(params.row.geshui)){
-                                // let color
-                                // if(params.row.balance_count <= 2){
-                                //     color = 'red'
-                                // }else{
-                                //     color = 'black'
-                                // }
-                                return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    // style:{
-                                    //     color: color
-                                    // },
-                                    on:{
-                                        click:()=>{
-                                            this.zlwc(params.row.geshui)
-                                        }
-                                    }
-                                }, '[ 完成 ]'),
-                            ]);
-                            }else{
-                                return h('div', params.row.geshui.slice(0,10))
-                            }
-                        }
-                    },
-                    {
-                        title: '印花税',
-                        key: 'yinhuashui',
-                        width:120,
-                        render: (h, params) => {
-                            let reg=/^[-+]?\d*$/;
-                            
-                            // console.log(isNaN(params.row.zlwc))
-                            if(reg.test(params.row.yinhuashui)){
-                                // let color
-                                // if(params.row.balance_count <= 2){
-                                //     color = 'red'
-                                // }else{
-                                //     color = 'black'
-                                // }
-                                return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    // style:{
-                                    //     color: color
-                                    // },
-                                    on:{
-                                        click:()=>{
-                                            this.zlwc(params.row.yinhuashui)
-                                        }
-                                    }
-                                }, '[ 完成 ]'),
-                            ]);
-                            }else{
-                                return h('div', params.row.yinhuashui.slice(0,10))
+                                return h('div', params.row.koukuan.confirm_date.slice(0,10))
                             }
                         }
                     },
                     {
                         title: '社保',
                         key: 'shebao',
+                        align: "center",
                         width:120,
                         render: (h, params) => {
                             let reg=/^[-+]?\d*$/;
                             
                             // console.log(isNaN(params.row.zlwc))
-                            if(reg.test(params.row.shebao)){
+                            if(params.row.shebao.confirm_date == undefined){
                                 // let color
                                 // if(params.row.balance_count <= 2){
                                 //     color = 'red'
@@ -441,19 +383,20 @@
                                 }, '[ 完成 ]'),
                             ]);
                             }else{
-                                return h('div', params.row.shebao.slice(0,10))
+                                return h('div', params.row.shebao.confirm_date.slice(0,10))
                             }
                         }
                     },
                     {
                         title: '公积金',
                         key: 'gongjijin',
+                        align: "center",
                         width:120,
                         render: (h, params) => {
                             let reg=/^[-+]?\d*$/;
                             
                             // console.log(isNaN(params.row.zlwc))
-                            if(reg.test(params.row.gongjijin)){
+                            if(params.row.gongjijin.confirm_date == undefined){
                                 // let color
                                 // if(params.row.balance_count <= 2){
                                 //     color = 'red'
@@ -477,127 +420,20 @@
                                 }, '[ 完成 ]'),
                             ]);
                             }else{
-                                return h('div', params.row.gongjijin.slice(0,10))
-                            }
-                        }
-                    },
-                    {
-                        title: '缴款',
-                        key: 'jiaokuan',
-                        width:120,
-                        render: (h, params) => {
-                            let reg=/^[-+]?\d*$/;
-                            
-                            // console.log(isNaN(params.row.zlwc))
-                            if(reg.test(params.row.jiaokuan)){
-                                // let color
-                                // if(params.row.balance_count <= 2){
-                                //     color = 'red'
-                                // }else{
-                                //     color = 'black'
-                                // }
-                                return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    // style:{
-                                    //     color: color
-                                    // },
-                                    on:{
-                                        click:()=>{
-                                            this.zlwc(params.row.jiaokuan)
-                                        }
-                                    }
-                                }, '[ 完成 ]'),
-                            ]);
-                            }else{
-                                return h('div', params.row.jiaokuan.slice(0,10))
-                            }
-                        }
-                    },
-                                        {
-                        title: '抄税清卡',
-                        key: 'chaoshuiqingka',
-                        width:120,
-                        render: (h, params) => {
-                            let reg=/^[-+]?\d*$/;
-                            
-                            // console.log(isNaN(params.row.zlwc))
-                            if(reg.test(params.row.chaoshuiqingka)){
-                                // let color
-                                // if(params.row.balance_count <= 2){
-                                //     color = 'red'
-                                // }else{
-                                //     color = 'black'
-                                // }
-                                return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    // style:{
-                                    //     color: color
-                                    // },
-                                    on:{
-                                        click:()=>{
-                                            this.zlwc(params.row.chaoshuiqingka)
-                                        }
-                                    }
-                                }, '[ 完成 ]'),
-                            ]);
-                            }else{
-                                return h('div', params.row.chaoshuiqingka.slice(0,10))
-                            }
-                        }
-                    },
-                    {
-                        title: '报税',
-                        key: 'baoshuiwancheng',
-                        width: 120,
-                        render: (h, params) => {
-                            let reg=/^[-+]?\d*$/;
-                            
-                            // console.log(isNaN(params.row.zlwc))
-                            if(reg.test(params.row.baoshuiwancheng)){
-                                // let color
-                                // if(params.row.balance_count <= 2){
-                                //     color = 'red'
-                                // }else{
-                                //     color = 'black'
-                                // }
-                                return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    // style:{
-                                    //     color: color
-                                    // },
-                                    on:{
-                                        click:()=>{
-                                            this.zlwc(params.row.baoshuiwancheng)
-                                        }
-                                    }
-                                }, '[ 完成 ]'),
-                            ]);
-                            }else{
-                                return h('div', params.row.baoshuiwancheng.slice(0,10))
+                                return h('div', params.row.gongjijin.confirm_date.slice(0,10))
                             }
                         }
                     },
                     {
                         title: '做账',
-                        key: 'zuozhangwancheng',
-                        width: 120,
+                        key: 'zuozhang',
+                        align: "center",
+                        width:120,
                         render: (h, params) => {
                             let reg=/^[-+]?\d*$/;
                             
                             // console.log(isNaN(params.row.zlwc))
-                            if(reg.test(params.row.zuozhangwancheng)){
+                            if(params.row.zuozhang.confirm_date == undefined){
                                 // let color
                                 // if(params.row.balance_count <= 2){
                                 //     color = 'red'
@@ -615,26 +451,243 @@
                                     // },
                                     on:{
                                         click:()=>{
-                                            this.zlwc(params.row.zuozhangwancheng)
+                                            this.zlwc(params.row.zuozhang)
                                         }
                                     }
                                 }, '[ 完成 ]'),
                             ]);
                             }else{
-                                return h('div', params.row.zuozhangwancheng.slice(0,10))
+                                return h('div', params.row.zuozhang.confirm_date.slice(0,10))
                             }
                         }
                     },
+                    {
+                        title: '扫票',
+                        key: 'saopiao',
+                        align: "center",
+                        width:120,
+                        render: (h, params) => {
+                            let reg=/^[-+]?\d*$/;
+                            
+                            // console.log(isNaN(params.row.zlwc))
+                            if(params.row.saopiao.confirm_date == undefined){
+                                // let color
+                                // if(params.row.balance_count <= 2){
+                                //     color = 'red'
+                                // }else{
+                                //     color = 'black'
+                                // }
+                                return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small'
+                                    },
+                                    // style:{
+                                    //     color: color
+                                    // },
+                                    on:{
+                                        click:()=>{
+                                            this.zlwc(params.row.saopiao)
+                                        }
+                                    }
+                                }, '[ 完成 ]'),
+                            ]);
+                            }else{
+                                return h('div', params.row.saopiao.confirm_date.slice(0,10))
+                            }
+                        }
+                    },
+                    // {
+                    //     title: '公积金',
+                    //     key: 'gongjijin',
+                    //     width:120,
+                    //     render: (h, params) => {
+                    //         let reg=/^[-+]?\d*$/;
+                            
+                    //         // console.log(isNaN(params.row.zlwc))
+                    //         if(reg.test(params.row.gongjijin)){
+                    //             // let color
+                    //             // if(params.row.balance_count <= 2){
+                    //             //     color = 'red'
+                    //             // }else{
+                    //             //     color = 'black'
+                    //             // }
+                    //             return h('div', [
+                    //             h('Button', {
+                    //                 props: {
+                    //                     type: 'text',
+                    //                     size: 'small'
+                    //                 },
+                    //                 // style:{
+                    //                 //     color: color
+                    //                 // },
+                    //                 on:{
+                    //                     click:()=>{
+                    //                         this.zlwc(params.row.gongjijin)
+                    //                     }
+                    //                 }
+                    //             }, '[ 完成 ]'),
+                    //         ]);
+                    //         }else{
+                    //             return h('div', params.row.gongjijin.slice(0,10))
+                    //         }
+                    //     }
+                    // },
+                    // {
+                    //     title: '缴款',
+                    //     key: 'jiaokuan',
+                    //     width:120,
+                    //     render: (h, params) => {
+                    //         let reg=/^[-+]?\d*$/;
+                            
+                    //         // console.log(isNaN(params.row.zlwc))
+                    //         if(reg.test(params.row.jiaokuan)){
+                    //             // let color
+                    //             // if(params.row.balance_count <= 2){
+                    //             //     color = 'red'
+                    //             // }else{
+                    //             //     color = 'black'
+                    //             // }
+                    //             return h('div', [
+                    //             h('Button', {
+                    //                 props: {
+                    //                     type: 'text',
+                    //                     size: 'small'
+                    //                 },
+                    //                 // style:{
+                    //                 //     color: color
+                    //                 // },
+                    //                 on:{
+                    //                     click:()=>{
+                    //                         this.zlwc(params.row.jiaokuan)
+                    //                     }
+                    //                 }
+                    //             }, '[ 完成 ]'),
+                    //         ]);
+                    //         }else{
+                    //             return h('div', params.row.jiaokuan.slice(0,10))
+                    //         }
+                    //     }
+                    // },
+                    //                     {
+                    //     title: '抄税清卡',
+                    //     key: 'chaoshuiqingka',
+                    //     width:120,
+                    //     render: (h, params) => {
+                    //         let reg=/^[-+]?\d*$/;
+                            
+                    //         // console.log(isNaN(params.row.zlwc))
+                    //         if(reg.test(params.row.chaoshuiqingka)){
+                    //             // let color
+                    //             // if(params.row.balance_count <= 2){
+                    //             //     color = 'red'
+                    //             // }else{
+                    //             //     color = 'black'
+                    //             // }
+                    //             return h('div', [
+                    //             h('Button', {
+                    //                 props: {
+                    //                     type: 'text',
+                    //                     size: 'small'
+                    //                 },
+                    //                 // style:{
+                    //                 //     color: color
+                    //                 // },
+                    //                 on:{
+                    //                     click:()=>{
+                    //                         this.zlwc(params.row.chaoshuiqingka)
+                    //                     }
+                    //                 }
+                    //             }, '[ 完成 ]'),
+                    //         ]);
+                    //         }else{
+                    //             return h('div', params.row.chaoshuiqingka.slice(0,10))
+                    //         }
+                    //     }
+                    // },
+                    // {
+                    //     title: '报税',
+                    //     key: 'baoshuiwancheng',
+                    //     width: 120,
+                    //     render: (h, params) => {
+                    //         let reg=/^[-+]?\d*$/;
+                            
+                    //         // console.log(isNaN(params.row.zlwc))
+                    //         if(reg.test(params.row.baoshuiwancheng)){
+                    //             // let color
+                    //             // if(params.row.balance_count <= 2){
+                    //             //     color = 'red'
+                    //             // }else{
+                    //             //     color = 'black'
+                    //             // }
+                    //             return h('div', [
+                    //             h('Button', {
+                    //                 props: {
+                    //                     type: 'text',
+                    //                     size: 'small'
+                    //                 },
+                    //                 // style:{
+                    //                 //     color: color
+                    //                 // },
+                    //                 on:{
+                    //                     click:()=>{
+                    //                         this.zlwc(params.row.baoshuiwancheng)
+                    //                     }
+                    //                 }
+                    //             }, '[ 完成 ]'),
+                    //         ]);
+                    //         }else{
+                    //             return h('div', params.row.baoshuiwancheng.slice(0,10))
+                    //         }
+                    //     }
+                    // },
+                    // {
+                    //     title: '做账',
+                    //     key: 'zuozhangwancheng',
+                    //     width: 120,
+                    //     render: (h, params) => {
+                    //         let reg=/^[-+]?\d*$/;
+                            
+                    //         // console.log(isNaN(params.row.zlwc))
+                    //         if(reg.test(params.row.zuozhangwancheng)){
+                    //             // let color
+                    //             // if(params.row.balance_count <= 2){
+                    //             //     color = 'red'
+                    //             // }else{
+                    //             //     color = 'black'
+                    //             // }
+                    //             return h('div', [
+                    //             h('Button', {
+                    //                 props: {
+                    //                     type: 'text',
+                    //                     size: 'small'
+                    //                 },
+                    //                 // style:{
+                    //                 //     color: color
+                    //                 // },
+                    //                 on:{
+                    //                     click:()=>{
+                    //                         this.zlwc(params.row.zuozhangwancheng)
+                    //                     }
+                    //                 }
+                    //             }, '[ 完成 ]'),
+                    //         ]);
+                    //         }else{
+                    //             return h('div', params.row.zuozhangwancheng.slice(0,10))
+                    //         }
+                    //     }
+                    // },
                     {
                         title: '警戒值',
                         key: 'accounter_security_line',
                         width: 120
                     },
-                    // {
-                    //     title: '账务等级',
-                    //     key: 'account_level',
-                    //     width: 120
-                    // },
+                    {
+                        title: '账务等级',
+                        key: 'accountgrade',
+                        width: 120
+                    },
                     {
                         title: '备注',
                         key: 'memo',
@@ -707,224 +760,6 @@
                     }
                 ]
             }
-            //     header: [
-            //         {
-            //             title: '对应企业',
-            //             key: 'CompanyName',
-            //             width: 250
-            //         },
-            //         {
-            //             title: '产品名称',
-            //             key: 'product',
-            //             width: 160
-            //         },
-            //         {
-            //             title: '国地税报道',
-            //             key: 'gdsreport',
-            //             width: 120
-            //         },
-            //         {
-            //             title: '服务人员',
-            //             key: 'server_realname',
-            //             width: 120
-            //         },
-            //         {
-            //             title: '市场',
-            //             key: 'followby_realname',
-            //             width: 120
-            //         },
-            //         {
-            //             title: '剩余时长',
-            //             key: 'balance_count',
-            //             width: 120
-            //         },
-            //         {
-            //             title: '开始期间',
-            //             key: 'begin_period',
-            //             width: 120
-            //         },
-            //         {
-            //             title: '结束期间',
-            //             key: 'end_period',
-            //             width: 120
-            //         },
-            //         {
-            //             title: '收资料',
-            //             key: 'zl',
-            //             width: 120,
-            //             render: (h, params) => {
-            //                 if(params.row.zl == "" || params.row.zl == null){
-            //                     let color
-            //                     if(params.row.balance_count <= 2){
-            //                         color = 'red'
-            //                     }else{
-            //                         color = 'black'
-            //                     }
-            //                     return h('div', [
-            //                     h('Button', {
-            //                         props: {
-            //                             type: 'text',
-            //                             size: 'small'
-            //                         },
-            //                         style:{
-            //                             color: color
-            //                         },
-            //                         on:{
-            //                             click:()=>{
-            //                                 this.zlwc()
-            //                             }
-            //                         }
-            //                     }, '[ 完成 ]'),
-            //                 ]);
-            //                 }else{
-            //                     return h('div', params.row.zl)
-            //                 }
-            //             }
-            //         },
-            //         {
-            //             title: '做账',
-            //             key: 'zz',
-            //             width: 120,
-            //             render: (h, params) => {
-            //                 if(params.row.zz == "" || params.row.zz == null){
-            //                     let color
-            //                     if(params.row.balance_count <= 2){
-            //                         color = 'red'
-            //                     }else{
-            //                         color = 'black'
-            //                     }
-            //                     return h('div', [
-            //                     h('Button', {
-            //                         props: {
-            //                             type: 'text',
-            //                             size: 'small'
-            //                         },
-            //                         style:{
-            //                             color: color
-            //                         },
-            //                         on:{
-            //                             click:()=>{
-            //                                 this.zzwc()
-            //                             }
-            //                         }
-            //                     }, '[ 完成 ]'),
-            //                 ]);
-            //                 }else{
-            //                     return h('div', params.row.zz)
-            //                 }
-            //             }
-            //         },
-            //         {
-            //             title: '报税',
-            //             key: 'bs',
-            //             width: 120,
-            //             render: (h, params) => {
-            //                 if(params.row.bs == "" || params.row.bs == null){
-            //                     let color
-            //                     if(params.row.balance_count <= 2){
-            //                         color = 'red'
-            //                     }else{
-            //                         color = 'black'
-            //                     }
-            //                     return h('div', [
-            //                     h('Button', {
-            //                         props: {
-            //                             type: 'text',
-            //                             size: 'small'
-            //                         },
-            //                         style:{
-            //                             color: color
-            //                         },
-            //                         on:{
-            //                             click:()=>{
-            //                                 this.bswc()
-            //                             }
-            //                         }
-            //                     }, '[ 完成 ]'),
-            //                 ]);
-            //                 }else{
-            //                     return h('div', params.row.bs)
-            //                 }
-            //             }
-            //         },
-            //         {
-            //             title: '警戒值',
-            //             key: 'accounter_security_line',
-            //             width: 120
-            //         },
-            //         {
-            //             title: '备注',
-            //             key: 'workordermemo',
-            //             width: 120,
-            //             render:(h,params) => {
-            //                 if(params.row.workordermemo == ''||params.row.workordermemo == null){
-            //                     return ''
-            //                 }else if(params.row.workordermemo.length>5){
-            //                     return h('Poptip',{
-            //                         props:{
-            //                             trigger:'hover',
-            //                             placement:'bottom'
-            //                         }
-            //                     },[
-
-            //                         h('span',params.row.workordermemo.slice(0,5)+'...'),
-            //                         h('Icon', {
-            //                             props: {
-            //                                 type: 'arrow-down-b',
-            //                             }
-            //                         }),
-            //                         h('div',{
-            //                             slot:'content',
-                                        
-            //                         },[
-            //                             h('span',params.row.workordermemo)
-            //                         ])
-            //                     ])
-            //                 }else{
-            //                     return h('span',params.row.workordermemo)
-            //                 }
-            //             }
-            //         },
-            //         {
-            //             title: '操作',
-            //             key: 'action',
-            //             fixed: 'right',
-            //             width: 200,
-            //             align: 'center',
-            //             render: (h, params) => {
-            //                 return h('div', [
-            //                     h('Button', {
-            //                         props: {
-            //                             type: 'text',
-            //                             size: 'small'
-            //                         },
-            //                         on: {
-            //                             click: () => {
-            //                                 Bus.$emit('detail', params)
-            //                             }
-            //                         }
-            //                     }, '[查看公司]'),
-            //                     h('Button', {
-            //                         props: {
-            //                             type: 'text',
-            //                             size: 'small'
-            //                         },
-            //                         on: {
-            //                             click: () => {
-            //                                 if(params.row.batchBookId != null){
-            //                                     Bus.$emit('open_yichang_detail',params.row.batchBookId)
-            //                                 }else{
-            //                                     this.$Message.warning('未绑定账本')
-            //                                 }
-                                            
-            //                             }
-            //                         }
-            //                     }, '[查看异常]'),
-            //                 ]);
-            //             }
-            //         }
-            //     ]
-            // }
         },
         methods: {
             downloadExcel(){
@@ -1200,71 +1035,74 @@
 
             //     this.GetData(url, doSuccess)
             // },
-
-            zlwc(e) {
-                // console.log(ease-enter)
-                let _self = this
-                let url = '/order/cycle/month/service/item/finish'
-                let _data = {
-                    monthServiceItemId: e
-                }
-
-                function doSuccess(res) {
-                    _self.$Message.success('提交成功')
-                    // _self.page = 1
-                    _self.getData()
-                }
-
-                this.PostData(url, _data, doSuccess)
+            fileRemove(e) {
+                // console.log(e)
+                this.img_array.splice(this.img_array.indexOf(e), 1);
+                this.show_img.splice(this.show_img.indexOf(e), 1)
+                // this.img_array.splice(this.show_file.indexOf(e), 1);
             },
 
-            // zlwc2(e) {
-            //     // console.log(ease-enter)
-            //     let _self = this
-            //     let url = '/order/cycle/month/service/item/finish'
-            //     let _data = {
-            //         monthServiceItemId: e
-            //     }
+            handleUpload(file){
+                let _self = this
+                // console.log(file)
+                this.img_array.push(file)
+                // console.log(this.img_array)
+                // yasuo(file,_self.img_array)
+                let reader = new FileReader()
+                reader.readAsDataURL(file)
+                let filename = file.name
+                reader.onload = function(file){
+                    var imgMsg = {
+                        name:filename,
+                        src:this.result
+                    }
+                    _self.show_img.push(imgMsg)
+                }
+                return false;
+                
+                },
+            zlwc(e) {
+                let _self = this
+                this.finsih_work = true
+                this.upload_id = e
+            },
 
-            //     function doSuccess(res) {
-            //         _self.$Message.success('提交成功')
-            //         // _self.page = 1
-            //         _self.getData()
-            //     }
+            finsih_upload(){
+                let _self = this
+                if(_self.img_array.length == 1){
+                    _self.finsih_loading = true
 
-            //     this.PostData(url, _data, doSuccess)
-            // },
-            // zzwc() {
-            //     let _self = this
-            //     let url = '/order/cycle/month/service/item/finish'
-            //     let _data = {
-            //         monthServiceItemId: _self.zzid
-            //     }
+                    let formdata = new FormData()
+                    formdata.append("monthServiceItemId",_self.upload_id)
+                    formdata.append("file", _self.img_array[0])
+                    
+                    // console.log(formdata.get("files"))
+                    // console.log(ease-enter)
+                    // let _self = this
+                    let url = `api/order/cycle/month/service/item/finish`
+                    
+                    function success(res){
+                        // console.log(res)
+                        _self.finsih_work = false
+                        _self.finsih_loading = false
+                        _self.img_array = []
+                        _self.show_img = []
+                        _self.getData()
+                    }
 
-            //     function doSuccess(res) {
-            //         _self.$Message.success('提交成功')
-            //         // _self.page = 1
-            //         _self.getData()
-            //     }
+                    function fail(err){
+                        // console.log(err)
+                        _self.finsih_loading = false
+                    }
+                    
+                    this.$Post(url, formdata, success, fail)
+                }else{
+                    // _self.img_array = []
+                    // _self.show_img = []
+                    _self.$Message.warning("请上传图片！(最多上传一张图片)")
+                }
+            },
 
-            //     this.PostData(url, _data, doSuccess)
-            // },
-
-            // bswc() {
-            //     let _self = this
-            //     let url = '/order/cycle/month/service/item/finish'
-            //     let _data = {
-            //         monthServiceItemId: _self.bsid
-            //     }
-
-            //     function doSuccess(res) {
-            //         _self.$Message.success('提交成功')
-            //         // _self.page = 1
-            //         _self.getData()
-            //     }
-
-            //     this.PostData(url, _data, doSuccess)
-            // },
             rowClassName(row, index) {
                 let _self = this
                 if (row.balance_count <= 2) {
@@ -1277,9 +1115,56 @@
                 function finsih(res){
                     _self.cservicest = res.data.data.cservicest
                     _self.cservicest_map = _self.$array2map(_self.cservicest)
-                    console.log(_self.cservicest_map)
+                    // console.log(_self.cservicest_map)
                 }
                 this.$GetDataCenter(config, finsih)
+            },
+            setLevel(){
+                let _self = this
+                if(_self.current_row == "" || _self.current_row == null){
+                    _self.$Message.warning("请选择要设置的记录！")
+                }else{
+                    _self.accout_level_open = true
+                }
+            },
+            set_account_level(){
+                let _self = this
+                let url = `api/order/cycle/saveAccountGradeMsg`
+                let config = {
+                    companyid: _self.current_row.company_id,
+                    accountgrade: _self.current_row.accountgrade
+                }
+
+                function success(res){
+                    _self.$Message.success("更新成功！")
+                    _self.accout_level_open = false
+                }
+
+                function fail(err){
+                    _self.$Message.error(err.data.msg)
+                }
+
+                this.$Post(url,config,success,fail)
+            },
+            getDataCenter(){
+                let _self = url
+                let params = `financialLevel`
+                
+                function success(res){
+                    _self.financialLevel = res.data.data.financialLevel
+                }
+
+                this.$GetDataCenter(url, success)
+            },
+
+
+            openFollow(){
+                let _self = this
+                if(_self.current_row == "" || _self.current_row == null){
+                    _self.$Message.warning("请选择要设置的记录！")
+                }else{
+                    _self.$bus.emit('open_booking_follow',_self.current_row)
+                }
             }
         },
         mounted() {

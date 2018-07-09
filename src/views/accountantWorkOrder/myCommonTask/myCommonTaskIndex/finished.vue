@@ -135,6 +135,7 @@
 import Bus from '../../../../components/bus'
 
 export default {
+    props:['manageStatus'],
     data() {
             return {
                 search_model:"",

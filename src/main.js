@@ -413,12 +413,13 @@ Vue.prototype.matchingFields = function (a){
     }
 }
 
+
 //  路由跳转之前检查是否有权限访问该页面
 // router.beforeEach((to, from, next)=>{
-//     // console.log(to)
+//     
 
 //     let temp = JSON.parse(localStorage.getItem("access_array"))
-//     // console.log(temp)
+//     
 //     if(JSON.stringify(to.meta) == "{}"){
 //         next()
 //     }else{
@@ -435,7 +436,6 @@ Vue.prototype.matchingFields = function (a){
 //             })
 //         }
 //         // console.log(to.meta)
-//         // next()
 //     }
 //     // next()
 // })

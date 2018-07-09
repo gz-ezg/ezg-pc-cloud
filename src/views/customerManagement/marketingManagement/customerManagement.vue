@@ -183,7 +183,6 @@
                 let _self = this
                 if(e[0] == "CustomerContent"){
                     this.isEdit2 = true
-                    // Bus.$emit('openFollowUp_detail',_self.customerid)
                 }else{
                     this.isEdit2 = false
                 }
@@ -259,9 +258,6 @@
                     formdata.append('files', this.file[i])
                 }
                 formdata.append('customerId', this.customerid)
-                // console.log(this.file)
-                // setTimeout(console.log(formdata),2000)
-                
                 function doSuccess(response) {
                     setTimeout(() => {
                         _self.file = [];

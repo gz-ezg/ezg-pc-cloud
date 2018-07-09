@@ -26,11 +26,13 @@
         <order-detail></order-detail>
         <company-cancellation></company-cancellation>
         <detailx></detailx>
+        <book-follow></book-follow>
     </div>
 </template>
 
 <script>
     import Bus from '../../../components/bus'
+    import BookFollow from './BookkeepingAgencyIndex//Table/followUp'
     import CheekError from './BookkeepingAgencyIndex/cheekError'
     import ProductChanges from '../accountantOrder/accountantOrderIndex/productChanges'
     import ChangeTheLength from '../accountantOrder/accountantOrderIndex/changeTheLength'
@@ -62,6 +64,7 @@
             ChangeTheLength,
             ProductChanges,
             CheekError,
+            BookFollow
         },
     }
 </script>

@@ -116,6 +116,11 @@
                                     {{companyInfo.type}}
                                 </FormItem>
                             </Col>
+                            <Col span="10">
+                                <FormItem prop="accountgrade" label="账务等级：" style="margin-bottom:5px">
+                                    {{companyInfo.accountgrade}}
+                                </FormItem>
+                            </Col>
                         </Row>
                         <!-- <Row :gutter="16">
                             <Col span="1" style="visibility:hidden">1</Col>
@@ -364,10 +369,8 @@
                             <Col span="1" style="visibility:hidden">1</Col>
                             <Col span="11">
                                 <FormItem prop="companytype" label="账务等级：" style="margin-bottom:5px">
-                                    <Select transfer v-model="taxManagement.companytype" placeholder="" :disabled="isEditTax">
-                                        <Option value="A">A</Option>
-                                        <Option value="B">B</Option>
-                                        <Option value="C">C</Option>                                        
+                                    <Select transfer v-model="taxManagement.companytype" placeholder="" disabled>
+                                        <Option v-for="item in financialLevel" :value="item.typecode" :key="item.id">{{item.typename}}</Option>                                   
                                     </Select>
                                 </FormItem>
                             </Col>
@@ -503,36 +506,33 @@
                                 </FormItem>
                             </Col>
                         </Row>
-                        <!-- <Row :gutter="16">
+                        <Row :gutter="16">
                             <Col span="1" style="visibility:hidden">1</Col>                            
                             <Col span="11">
-                                <FormItem prop="Providentfund" label="公积金账户名：" style="margin-bottom:5px">
-                                    <Select transfer v-model="taxManagement.Providentfund" placeholder="" :disabled="isEditTax">
-                                        <Option value="Y">需申报</Option>
-                                        <Option value="N">不需申报</Option>                                        
-                                    </Select>
+                                <FormItem prop="Providentfundnum" label="公积金账户名：" style="margin-bottom:5px">
+                                    <Input type="text" v-model="taxManagement.Providentfundnum" placeholder="" :disabled="isEditTax">
+                             
+                                    </Input>
                                 </FormItem>
                             </Col>
                             <Col span="11">
-                                <FormItem prop="taxdisk" label="公积金密码：" style="margin-bottom:5px">
-                                    <Select transfer v-model="taxManagement.taxdisk" placeholder="" :disabled="isEditTax">
-                                        <Option value="Y">有</Option>
-                                        <Option value="N">无</Option>                                        
-                                    </Select>
+                                <FormItem prop="Providentfundpsw" label="公积金密码：" style="margin-bottom:5px">
+                                    <Input type="text" v-model="taxManagement.Providentfundpsw" placeholder="" :disabled="isEditTax">
+                                      
+                                    </Input>
                                 </FormItem>
                             </Col>
                         </Row>
                         <Row :gutter="16">
                             <Col span="1" style="visibility:hidden">1</Col>                            
                             <Col span="11">
-                                <FormItem prop="Providentfund" label="社保密码：" style="margin-bottom:5px">
-                                    <Select transfer v-model="taxManagement.Providentfund" placeholder="" :disabled="isEditTax">
-                                        <Option value="Y">需申报</Option>
-                                        <Option value="N">不需申报</Option>                                        
-                                    </Select>
+                                <FormItem prop="socialsecuritypsw" label="社保密码：" style="margin-bottom:5px">
+                                    <Input type="text" v-model="taxManagement.socialsecuritypsw" placeholder="" :disabled="isEditTax">
+                                     
+                                    </Input>
                                 </FormItem>
                             </Col>
-                        </Row> -->
+                        </Row>
                     </Form>
                 </TabPane>
                 <TabPane label="客户跟进记录" name="name8">
@@ -722,6 +722,7 @@
                 followUpData:[],
                 detail:false,
                 companyid: '',
+                financialLevel:"",
                 companyInfo:{
                     companyname: '',
                     NAME: '',
@@ -779,6 +780,9 @@
                     socialsecurity:'Y',
                     Providentfund:'Y',
                     taxdisk:'Y',
+                    socialsecuritypsw:"",
+                    Providentfundnum:"",
+                    Providentfundpsw:""
                 },
                 dynamic:[],
                 workOrder:[],
@@ -1065,7 +1069,10 @@
                     Stamptax:_self.taxManagement.Stamptax,
                     socialsecurity:_self.taxManagement.socialsecurity,
                     Providentfund:_self.taxManagement.Providentfund,
-                    taxdisk:_self.taxManagement.taxdisk
+                    taxdisk:_self.taxManagement.taxdisk,
+                    Providentfundpsw: _self.taxManagement.Providentfundpsw,
+                    Providentfundnum: _self.taxManagement.Providentfundnum,
+                    socialsecuritypsw: _self.taxManagement.socialsecuritypsw
                 }
                 function success(res){
                     _self.isEditTax = true  
@@ -1089,7 +1096,6 @@
                 this.contentdetail = false
             },
             create_new_followup(){
-                this.GetFollowUpType()
                 this.addcontentdetail = true
             },
             canceladdContent(){
@@ -1127,9 +1133,10 @@
             GetFollowUpType(){
                 var _self = this
                 _self.followTypeText = []
-                let params = "follow_up_type"
+                let params = "follow_up_type,financialLevel"
                 
                 function success(res){
+                    _self.financialLevel = res.data.data.financialLevel
                     for(let i = 0;i<res.data.data.follow_up_type.length;i++){
                         var temp={}
                         if(res.data.data.follow_up_type[i].typecode == 21||res.data.data.follow_up_type[i].typecode == 22){
@@ -1197,7 +1204,7 @@
         },
         created(){
             var _self = this
-            
+            this.GetFollowUpType()            
             Bus.$on('openCompanyDetail',(e)=>{
                 // _self.GetFollowUpType()
                 _self.openTab = "name1"
@@ -1216,7 +1223,7 @@
             })
         },
         beforeDestroy () {
-            this.$bus.off(['VueBusTest'])
+            // this.$bus.off(['VueBusTest'])
         }
     }
 </script>

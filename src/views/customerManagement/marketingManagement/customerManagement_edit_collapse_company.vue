@@ -42,12 +42,11 @@
                         </Option>
                     </Select>
                 </FormItem>
-                <!-- <FormItem label="账务等级" prop="importlevel">
-                    <Select transfer v-model="formValidate.importlevel">
-                        <Option v-for="(item, index) in importlevelValue" :value="item.value" :key=index>{{ item.label }}
-                        </Option>
+                <FormItem label="账务等级" prop="accountgrade">
+                    <Select transfer v-model="taxManagement.accountgrade" disabled>
+                        <Option v-for="item in financialLevel" :value="item.typecode" :key="item.id">{{item.typename}}</Option>                                   
                     </Select>
-                </FormItem> -->
+                </FormItem>
                 <FormItem label="创建人" prop="createby">
                     <Input v-model="formValidate.createby" disabled></Input>
                 </FormItem>
@@ -240,9 +239,14 @@ import Bus from '../../../components/bus.js'
         props: ['customerid', 'customertypeText', 'tel', 'customersource'],
         data() {
             // 企业名称校验
+            let re = /^[\u4e00-\u9fa5]+$/;
             const companynamecheck = (rule, value, callback)=>{
+                    console.log(re.test(value))
+
                 if (value == '' || value == null) {
                     callback(new Error('企业名称不能为空'));
+                }else if(!re.test(value)){
+                    callback(new Error('企业名称必须为汉字'))
                 } else {
                         value = encodeURI(value)
                         // console.log(value)
@@ -259,7 +263,7 @@ import Bus from '../../../components/bus.js'
                     }
                 };
             return {
-                
+                financialLevel:"",
                 companyareadata:[],
                 loading: true,
                 financelevelValue: [],
@@ -532,6 +536,7 @@ import Bus from '../../../components/bus.js'
                             a.CompanyType = response.data.data[i].CompanyType
                             a.RegAddress = response.data.data[i].RegAddress
                             a.financelevel = response.data.data[i].financelevel
+                            a.accountgrade = response.data.data[i].accountgrade
                             if(response.data.data[i].companyname == null || response.data.data[i].companyname == ""){
                                 a.showcompanyname = ""
                             }else{
@@ -573,6 +578,7 @@ import Bus from '../../../components/bus.js'
                 _self.formValidate.createby = e.row.createby
                 _self.formValidate.cluesource = e.row.cluesource
                 _self.formValidate.id = e.row.id
+                _self.formValidate.accountgrade = e.row.accountgrade
                 // _self.formValidate.companyarea = e.row.companyarea.split('-')
                 // _self.formValidate.companyarea[0] = parseInt(_self.formValidate.companyarea[0])
                 // _self.formValidate.companyarea[1] = parseInt(_self.formValidate.companyarea[1])                
@@ -834,7 +840,7 @@ import Bus from '../../../components/bus.js'
             cancel(name) {
                 this.$refs[name].resetFields();
             },
-            GetDataCenter(){
+            GetDataAREA(){
                 let _self = this
                 let url = `api//dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=companyarea`
                 this.$http.get(url).then(function(res){
@@ -857,12 +863,21 @@ import Bus from '../../../components/bus.js'
                     }
                     // console.log(_self.companyareadata)
                 })
+            },
+            GetDataCenter(){
+                let params = `financialLevel`
+
+                function success(res){
+                    _self.financialLevel = res.data.data.financialLevel
+                }
+
+                this.$GetDataCenter(params, success)
             }
         },
         mounted() {
             this.getSelectOptions()
             this.getCompanyData()
-            this.GetDataCenter()
+            this.GetDataAREA()
         }
     }
 </script>

@@ -32,7 +32,7 @@
                     </Col>
                     <Col span="10">
                         <FormItem prop="companyName" label="服务会计">
-                            <Select transfer v-model="accMagid" @on-change="optionChange">
+                            <Select transfer v-model="accMagid" @on-change="optionChange" size="small">
                                 <Option v-for="item in accMag" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select>
                         </FormItem>
@@ -46,14 +46,11 @@
                             </Input>
                         </FormItem>
                     </Col>
-                    <!-- <Col span="10">
-                        <FormItem prop="companyName" label="兼职会计">
-                            <Select transfer v-model="jzAccid" transfer>
-                                <Option value="0">无</Option>
-                                <Option v-for="item in jzAcc" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                            </Select>
+                    <Col span="10">
+                        <FormItem prop="reason" label="变更原因">
+                            <Input type="text" size="small" v-model="task_message.reason" disabled></Input>
                         </FormItem>
-                    </Col> -->
+                    </Col>
                 </Row>
             </Form>
         </Modal>

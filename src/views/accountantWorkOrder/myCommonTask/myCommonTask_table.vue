@@ -2,16 +2,16 @@
     <div>
         <Tabs value="name1">
             <TabPane label="未开始" name="name1">
-                <notbegin :paydir="hash"></notbegin>
+                <notbegin :manageStatus="manageStatus_hash"></notbegin>
             </TabPane>
             <TabPane label="服务中" name="name2">
-                <serving></serving>
+                <serving :manageStatus="manageStatus_hash"></serving>
             </TabPane> 
             <TabPane label="已完结" name="name3">
-                <finished></finished>
+                <finished :manageStatus="manageStatus_hash"></finished>
             </TabPane>
             <TabPane label="全部" name="name4">
-                <all></all>
+                <all :manageStatus="manageStatus_hash"></all>
             </TabPane>
         </Tabs>
         <detail></detail>
@@ -44,7 +44,8 @@ import Notbegin from './myCommonTaskIndex/notbegin'
         },
         data(){
             return{
-                hash:new Map(),
+                manageStatus:"",
+                manageStatus_hash:""
             }
         },
         // methods:{
@@ -70,6 +71,23 @@ import Notbegin from './myCommonTaskIndex/notbegin'
         // created(){
         //     this.getDataCenter()
         // }
+        methods:{
+            getDataCenter(){
+                let _self = this
+                let config = "manageStatus"
+
+                function success(res){
+                    _self.manageStatus = res.data.data.manageStatus
+                    _self.manageStatus_hash = _self.$array2map(_self.manageStatus)
+                } 
+
+                _self.$GetDataCenter(config,success)
+            }
+        },
+        created(){
+            let _self = this
+            _self.getDataCenter()
+        }
 
     }
 </script>

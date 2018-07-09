@@ -39,12 +39,12 @@
                                                 </FormItem>
                                             </Col>
                                             <Col span="8">
-                                                <FormItem prop="createdate" label="创建时间：">
+                                                <FormItem prop="createdate" label="企业录入时间：">
                                                     <DatePicker transfer type="daterange" placement="bottom-start" v-model="searchData.createdate" style="width:100%" size="small"></DatePicker>
                                                 </FormItem>
                                             </Col>
                                             <Col span="8">
-                                                <FormItem prop="updatedate" label="更新时间：">
+                                                <FormItem prop="updatedate" label="内容创建时间：">
                                                     <DatePicker transfer type="daterange" placement="bottom-end" v-model="searchData.updatedate" style="width:100%" size="small"></DatePicker>
                                                 </FormItem>
                                             </Col>

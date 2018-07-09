@@ -141,6 +141,7 @@ export default {
     // components:{
     //     Search
     // },
+    props:['manageStatus'],
     data() {
             return {
                 search_model:"",
@@ -473,6 +474,7 @@ export default {
                         _self.data[i].UpdateDate = _self.data[i].UpdateDate.slice(0,10)
                     }
                 }
+                console.log(_self.manageStatus)
                 _self.Sloading = false
             })
         },

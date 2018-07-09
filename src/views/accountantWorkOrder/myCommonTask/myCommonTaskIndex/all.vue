@@ -136,6 +136,7 @@ export default {
     components:{
         Search
     },
+    props:['manageStatus'],
     data() {
             return {
                 search_model:"",
