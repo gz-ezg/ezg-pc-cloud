@@ -53,7 +53,7 @@
                     <Input size="small" v-model="formValidate.recCustomer" @on-focus="getCustomer" readonly />                    
                 </FormItem>
                 <FormItem label="客户等级" prop="importlevel" style="margin-bottom:0px">
-                    <Select transfer v-model="formValidate.importlevel" size="small" >
+                    <Select transfer v-model="formValidate.importlevel" size="small" :disabled="isOpenEdit">
                         <Option v-for="item in impLevel" :value="item.typecode" :key="item.id">{{ item.typename
                             }}
                         </Option>
@@ -245,6 +245,7 @@
             //     }
             // };
             return {
+                isOpenEdit:false,
                 searchCustomerTEL:"",
                 searchCustomer:"",
                 pageCustomer:1,
@@ -373,7 +374,13 @@
         },
         methods: {
             show(e){
-                //console.log(e)
+                // console.log(e)
+                if(e[0] == "10919"){
+                    // console.log("1")
+                    this.isOpenEdit = true
+                }else{
+                    this.isOpenEdit = false
+                }
             },
             getDataCenter() {
                 var _self = this;
@@ -460,10 +467,6 @@
                     .then(this.$http.spread(function (customerdetailResp,LabelsRes) {
                         // //console.log(res)
                         _self.$backToLogin(customerdetailResp)
-                        //console.log('**********************')
-                        //console.log(customerdetailResp)
-                        // //console.log(LabelsRes)
-                        //console.log('**********************')
                         let data = customerdetailResp.data.data
                         // var LabelsRes = []
                         if(data.customersource == 'xzqd'){
@@ -516,6 +519,11 @@
 
                         if(data.customerType!=""&&data.customerType!=null){
                             var temp = data.customerType.split('-')
+                            // console.log(temp)
+                            if(temp[0] == "10919"){
+                                // console.log('1')
+                                _self.isOpenEdit = true
+                            }
 
                         for(let i = 0; i<_self.customerTypeArr.length;i++){
                             if(temp[1]==""||temp[1]==null){

@@ -411,7 +411,7 @@
                         temp._expanded = false
                         _self.data4.push(temp)
                     }
-                    console.log(_self.data4)
+                    // console.log(_self.data4)
                 })
             //  获取商事部工单
             let url1 = 'api/order/workOrderList?page=1&pageSize=1000&sortField=UpdateDate&nonWorkOrderStatus=60'
@@ -452,7 +452,7 @@
                     _self.data1.push(temp)
                 }
 
-                console.log(_self.data1)
+                // console.log(_self.data1)
             })
             //  获取企划部工单
             let url2 = 'api/order/workOrderList?page=1&pageSize=1000&sortField=UpdateDate&nonWorkOrderStatus=60'
@@ -493,7 +493,7 @@
                     _self.data3.push(temp)
                 }
 
-                console.log(_self.data3)
+                // console.log(_self.data3)
             })
             //  获取会计审计部非周期性工单
             let url3 = 'api/order/workOrderList?page=1&pageSize=1000&sortField=UpdateDate&nonWorkOrderStatus=60'

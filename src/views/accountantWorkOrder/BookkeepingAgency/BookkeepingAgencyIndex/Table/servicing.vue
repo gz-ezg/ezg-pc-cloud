@@ -123,7 +123,7 @@
             </Row>
             <Row style="margin-top:20px">
                 <center>
-                    <Select v-model="current_row.accountgrade" type="size" style="width:200px">
+                    <Select v-model="current_row.accountgrade" type="size" style="width:150px">
                         <Option v-for="item in financialLevel" :key="item.id" :value="item.typecode">{{item.typename}}</Option>
                     </Select>
                 </center>
@@ -214,11 +214,6 @@
                         key: 'product',
                         width: 160
                     },
-                    // {
-                    //     title: '国地税报道',
-                    //     key: 'gdsreport',
-                    //     width: 120
-                    // },
                     {
                         title: '服务人员',
                         key: 'realname',
@@ -229,21 +224,6 @@
                         key: 'service_status',
                         width: 120
                     },
-                    // {
-                    //     title: '市场',
-                    //     key: 'followby_realname',
-                    //     width: 120
-                    // },
-                    // {
-                    //     title: '剩余时长',
-                    //     key: 'balance_count',
-                    //     width: 120
-                    // },
-                    // {
-                    //     title: '开始期间',
-                    //     key: 'begin_period',
-                    //     width: 120
-                    // },
                     {
                         title: '结束期间',
                         key: 'end_period',
@@ -1136,8 +1116,9 @@
                 }
 
                 function success(res){
-                    _self.$Message.success("更新成功！")
+                    // _self.$Message.success("更新成功！")
                     _self.accout_level_open = false
+                    _self.getData()
                 }
 
                 function fail(err){
@@ -1147,14 +1128,14 @@
                 this.$Post(url,config,success,fail)
             },
             getDataCenter(){
-                let _self = url
+                let _self = this
                 let params = `financialLevel`
                 
                 function success(res){
                     _self.financialLevel = res.data.data.financialLevel
                 }
 
-                this.$GetDataCenter(url, success)
+                this.$GetDataCenter(params, success)
             },
 
 
@@ -1169,6 +1150,7 @@
         },
         mounted() {
             this.getData()
+            this.getDataCenter()
         },
         created () {
             let _self = this

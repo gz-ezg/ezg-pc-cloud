@@ -31,6 +31,14 @@
                                     </FormItem>
                                 </Col>
                             </Row>
+                            <Row :gutter="16">
+                                <Col span="8">
+                                    <FormItem prop="updatedate" label="实际完成时间：">
+                                        <DatePicker type="daterange" size="small" transfer v-model="formInline.updatedate" >
+                                        </DatePicker>
+                                    </FormItem>
+                                </Col>
+                            </Row>
                             <FormItem>
                                 <Button type="primary" @click="search">搜索</Button>
                                 <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
@@ -116,7 +124,7 @@
 <script>
 import Search from './search'
 import Bus from '../../../../components/bus'
-
+import {DateFormat} from '../../../../libs/utils'
 
 export default {
     components:{
@@ -132,7 +140,8 @@ export default {
                 formInline:{
                     companyname:'',
                     servicename:'',
-                    product:''
+                    product:'',
+                    updatedate:[]
                 },
                 //  加载中
                 Sloading:false,
@@ -431,7 +440,7 @@ export default {
                     {field:'nextprocess',title:'下个进度'},
                     {field:'ServiceStart',title:'服务开始时间'},
                     {field:'CreateDate',title:'创建时间'},                                                                   
-                    {field:'ServiceEnd',title:'实际完成时间'},                                                                     
+                    {field:'UpdateDate',title:'实际完成时间'},                                                                     
                     {field:'servername',title:'服务人员'},
                     {field:'followname',title:'跟进人'}
                 ]
@@ -443,6 +452,8 @@ export default {
                         companyName:_self.formInline.companyname,
                         serviceName:_self.formInline.servicename,
                         product:_self.formInline.product,
+                        bupdatedate: DateFormat(_self.formInline.updatedate[0]),
+                        eupdatedate: DateFormat(_self.formInline.updatedate[1]),
                         serviceDept:"'BUSSINESS'",
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field))
@@ -463,12 +474,13 @@ export default {
                     companyName:_self.formInline.companyname,
                     serviceName:_self.formInline.servicename,
                     product:_self.formInline.product,
+                    bupdatedate: DateFormat(_self.formInline.updatedate[0]),
+                    eupdatedate: DateFormat(_self.formInline.updatedate[1]),
                     serviceDept:"'BUSSINESS'"
                 }
             }
                 
-            _self.$http.get(url,config).then(function(res){
-                _self.$backToLogin(res)                
+            _self.$http.get(url,config).then(function(res){          
                 // console.log(res.data.data.rows)
                 _self.data = res.data.data.rows
                 _self.pageTotal = res.data.data.total
@@ -516,6 +528,7 @@ export default {
             this.formInline.companyname = ""
             this.formInline.servicename = ""
             this.formInline.product = ""
+            this.formInline.updatedate = []
             this.getData()
         },
         pageChange(e){

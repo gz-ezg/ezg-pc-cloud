@@ -76,7 +76,7 @@
                 <Row :gutter="16">
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="8"><span style="line-height:30px">请您对当前系统进行评分：</span></Col>
-                    <Col span="14"><Rate allow-half v-model="rate.star" show-text></Rate></Col>
+                    <Col span="14"><Rate v-model="rate.star" show-text></Rate></Col>
                 </Row>
                 <Row :gutter="16">
                     <Col span="1" style="visibility:hidden">1</Col>

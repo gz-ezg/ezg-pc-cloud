@@ -3835,9 +3835,9 @@
             getPayDirs(){
                 let _self = this
                 function finsih(res){
-                    console.log(res)
+                    // console.log(res)
                     _self.payDirType = res.data.data.payDirs
-                    console.log(_self.payDirType)
+                    // console.log(_self.payDirType)
                 }
                 this.$GetDataCenter("payDirs",finsih)
             },
@@ -3848,7 +3848,7 @@
                     // console.log(res.data.data.cluesources)
                     _self.cluesources = res.data.data.cluesources
                     _self.cluesources_map = _self.$array2map(_self.cluesources)
-                    console.log(_self.cluesources_map)
+                    // console.log(_self.cluesources_map)
                 }
                 this.$GetDataCenter(config, finish)
             }

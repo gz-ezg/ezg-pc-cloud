@@ -1168,11 +1168,11 @@
                 let _self = this
                 _self.followUp_loading = true
                 if(_self.file_array.length == 0){
-                    _self.uploadCustomerContentNote()
+                    _self.add_workorder_followup()
                 }else{
                     let formdata = new FormData()
                     for(let i = 0;i<_self.file_array.length;i++){
-                        console.log(_self.file_array[i])
+                        // console.log(_self.file_array[i])
                         formdata.append('files',_self.file_array[i],"file_" + Date.parse(new Date()) + ".jpg")
                     }
 
@@ -1183,8 +1183,6 @@
                         if(res.data.msgCode == "40000"){
                             let temp = []
                             for(let j = 0;j<res.data.data.length;j++){
-                            // console.log(res.data.data[])
-
                                 temp.push(res.data.data[j].id)
                             }
                             _self.attIds = temp.toString()

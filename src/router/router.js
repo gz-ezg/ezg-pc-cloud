@@ -695,23 +695,23 @@ export const appRouter = [
             },
         ]
     },
-    {
-        path: '/administrationWorkOrder',
-        icon: 'social-windows',
-        name: 'administrationWorkOrder',
-        title: '行政管理',
-        component: Main,
-        children: [
-            {
-                path: 'administratiotaskmanagement',
-                title: '工单管理',
-                name:"administratiotaskmanagement",
-                component: resolve => {
-                    require(['@/views/administrationManagement/index.vue'], resolve);
-                }
-            },
-        ]
-    },
+    // {
+    //     path: '/administrationWorkOrder',
+    //     icon: 'social-windows',
+    //     name: 'administrationWorkOrder',
+    //     title: '行政管理',
+    //     component: Main,
+    //     children: [
+    //         {
+    //             path: 'administratiotaskmanagement',
+    //             title: '工单管理',
+    //             name:"administratiotaskmanagement",
+    //             component: resolve => {
+    //                 require(['@/views/administrationManagement/index.vue'], resolve);
+    //             }
+    //         },
+    //     ]
+    // },
     {
         access: 6075,
         path: '/fieldManagement',
@@ -782,12 +782,12 @@ export const appRouter = [
                     require(['@/views/publicPool/index/pubilcPool_table.vue'], resolve);
                 }
             },
-            {
-                // access: 6027,
-                path: 'rule_index', title: '销售规则管理', name: 'rule_index', component: resolve => {
-                    require(['@/views/publicPool/rule/index.vue'], resolve);
-                }
-            }
+            // {
+            //     // access: 6027,
+            //     path: 'rule_index', title: '销售规则管理', name: 'rule_index', component: resolve => {
+            //         require(['@/views/publicPool/rule/index.vue'], resolve);
+            //     }
+            // }
         ]
     },
 /*    {

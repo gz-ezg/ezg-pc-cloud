@@ -43,7 +43,7 @@
                     </Select>
                 </FormItem>
                 <FormItem label="账务等级" prop="accountgrade">
-                    <Select transfer v-model="taxManagement.accountgrade" disabled>
+                    <Select transfer v-model="formValidate.accountgrade" disabled>
                         <Option v-for="item in financialLevel" :value="item.typecode" :key="item.id">{{item.typename}}</Option>                                   
                     </Select>
                 </FormItem>
@@ -471,21 +471,23 @@ import Bus from '../../../components/bus.js'
                                         type: 'text',
                                         size: 'small'
                                     }
-                                }, [
-                                    h('Poptip', {
-                                        props: {
-                                            confirm: true,
-                                            title: '您确定要删除此企业信息吗！',
-                                        },
-                                        on: {
-                                            'on-ok': () => {
-                                                this.companyDelete(params)
-                                            },
-                                            'on-cancel': function () {
-                                            }
-                                        }
-                                    }, '删除')
-                                ])
+                                }, 
+                                // [
+                                //     h('Poptip', {
+                                //         props: {
+                                //             confirm: true,
+                                //             title: '您确定要删除此企业信息吗！',
+                                //         },
+                                //         on: {
+                                //             'on-ok': () => {
+                                //                 this.companyDelete(params)
+                                //             },
+                                //             'on-cancel': function () {
+                                //             }
+                                //         }
+                                //     }, '删除')
+                                // ]
+                                )
                             ]);
                         }
                     }
@@ -566,7 +568,7 @@ import Bus from '../../../components/bus.js'
             /*************************修改企业信息********************************/
             amend(e) {
                 var _self = this
-                console.log(e)
+                // console.log(e)
                 _self.modal3 = true
                 _self.formValidate.id = e.row.id
                 _self.formValidate.companyname = e.row.companyname
@@ -725,7 +727,9 @@ import Bus from '../../../components/bus.js'
                                 cluesource: _self.formValidate.cluesource,
                                 companyarea: _self.formValidate.companyarea.join('-'),
                                 //  暂时启用，后期注销
-                                enterprisestatus:_self.formValidate.enterprisestatus
+                                enterprisestatus:_self.formValidate.enterprisestatus,
+                                accountgrade: _self.formValidate.accountgrade
+
                             }
                             this.$http({
                                 method: 'post',
@@ -867,7 +871,10 @@ import Bus from '../../../components/bus.js'
             GetDataCenter(){
                 let params = `financialLevel`
 
+                let _self = this
+
                 function success(res){
+                    console.log(res.data.data.financialLevel)
                     _self.financialLevel = res.data.data.financialLevel
                 }
 
@@ -875,6 +882,7 @@ import Bus from '../../../components/bus.js'
             }
         },
         mounted() {
+            this.GetDataCenter()
             this.getSelectOptions()
             this.getCompanyData()
             this.GetDataAREA()

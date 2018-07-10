@@ -155,7 +155,8 @@ Vue.prototype.$GetDataCenter = function(params, finish){
             _self.$Message.error("请求异常！")
         }
     }).catch(function(err){
-        _self.$Message.error("请求异常！")
+        console.log(err)
+        _self.$Message.error("网络异常！")
     })
 }
 
