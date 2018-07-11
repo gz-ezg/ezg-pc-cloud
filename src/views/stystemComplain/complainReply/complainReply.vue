@@ -1,5 +1,6 @@
 <template>
     <Card>
+        <div slot="title">系统反馈回复</div>
         <Row>
             <ButtonGroup style="float:left">
                 <Button type="primary" icon="information-circled" @click="showdetail">查看</Button>

@@ -782,11 +782,11 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
             },
             getFollowResult(){
                 let _self = this
-                let params = "market_field_type"
+                let params = "market_status"
 
                 function finish(res){
-                    console.log(res.data.data.market_field_type)
-                    _self.market_field_type = res.data.data.market_field_type
+                    // console.log(res.data.data.market_field_type)
+                    _self.market_field_type = res.data.data.market_status
                 }
                 this.$GetDataCenter(params,finish)
             }

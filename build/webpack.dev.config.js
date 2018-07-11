@@ -27,7 +27,7 @@ module.exports = merge(webpackBaseConfig, {
                 // target: 'http://192.168.0.67:9000',
                 // target: 'http://192.168.0.224:9000',          
                 // target: 'http://192.168.0.109:9000',  
-                // target: 'http://192.168.0.67:9000',                                                
+                // target: 'http://192.168.0.236:9000',                                                
                 pathRewrite: {'^/api' : ''},  
                 changeOrigin: true
             }

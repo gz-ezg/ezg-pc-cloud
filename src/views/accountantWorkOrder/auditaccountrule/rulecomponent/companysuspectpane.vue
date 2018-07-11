@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import Bus from '../../../../components/bus.js'
+// import Bus from '../../../../components/bus.js'
 
 export default {
     data(){
@@ -84,12 +84,14 @@ export default {
     },
     methods: {
         add_company_rule(){
-            Bus.$emit('open_audit_page',1)
+            // Bus.$emit('open_audit_page',1)
+            this.$bus.emit('open_audit_page',1)
         },
         edit_company_rule(){
             let _self = this
             if(this.select_row != ""){
-                Bus.$emit('edit_audit_page',_self.select_row)
+                _self.$bus.emit('edit_audit_page',_self.select_row)
+                // Bus.$emit('edit_audit_page',_self.select_row)
             }else{
                 this.$Message.warning('请选择一行进行编辑！');
             }
@@ -97,7 +99,8 @@ export default {
         open_company_rule(){
             let _self = this
             if(this.select_row != ""){
-                Bus.$emit('show_audit_page',_self.select_row)
+                // Bus.$emit('show_audit_page',_self.select_row)
+                _self.$bus.emit('show_audit_page',_self.select_row)
             }else{
                 this.$Message.warning('请选择一行进行查看！');
             }
@@ -143,7 +146,6 @@ export default {
             }
             this.$http.get(url, config).then(function(res){
                 // console.log(res.data.data.rows)
-                _self.$backToLogin(res)  
                 _self.pageTotal = res.data.data.total
                 _self.data = res.data.data.rows
             })
@@ -152,9 +154,12 @@ export default {
     created () {
         let _self = this
         this.getData()
-        Bus.$on('updateauditrule',(e)=>{
+        _self.$bus.on('updateauditrule',(e)=>{
             _self.getData()
         })
+        // Bus.$on('updateauditrule',(e)=>{
+        //     _self.getData()
+        // })
     }
 }
 </script>

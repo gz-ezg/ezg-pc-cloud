@@ -217,13 +217,13 @@ export default {
         role = JSON.parse(role)
         // console.log(role)
         for(let i = 0;i<role.length;i++){
-            if(role[i].rolecode == "salers"){
+            if(role[i] == "salers"){
                 _self.ismarket = false
             }
-            if(role[i].rolecode == "hfgl"){
+            if(role[i] == "hfgl"){
                 _self.isreturn = false
             }
-            if(role[i].rolecode == "kj" || role[i].rolecode == "servicer" || role[i].rolecode == "planner" || role[i].rolecode == "auditing" || role[i].rolecode == "ssbgd" || role[i].rolecode == "kjbgd" || role[i].rolecode == "qhbgd" || role[i].rolecode == "sjbgd"){
+            if(role[i] == "kj" || role[i] == "servicer" || role[i] == "planner" || role[i] == "auditing" || role[i] == "ssbgd" || role[i] == "kjbgd" || role[i] == "qhbgd" || role[i] == "sjbgd"){
                 _self.isservice = false
             }
         }

@@ -13,12 +13,14 @@
     <Button @click="BusTest">Bus测试</Button>    
     <Button @click="openCompanyDetail">展示公司详情</Button>
     <Button @click="openCustomerDetail">展示客户详情</Button>
+    <Button @click="openFollowUPdata">客户跟进记录</Button>
     <company-detail></company-detail>
     <customer-detail></customer-detail>
-    <div v-html="content"></div>
-    <Button @click="downAccoutProductivity">导出会计绩效</Button>
+    <follow-up-data></follow-up-data>
+    <!-- <div v-html="content"></div> -->
+    <!-- <Button @click="downAccoutProductivity">导出会计绩效</Button>
     <Button @click="downMarketProductivityTotal">导出市场绩效统计</Button>
-    <Button @click="downMarketProductivityDetail">导出市场绩效详情</Button>
+    <Button @click="downMarketProductivityDetail">导出市场绩效详情</Button> -->
   </div>
 </template>
 
@@ -29,6 +31,7 @@ import tinymce from 'tinymce';
 import companyDetail  from '../../woa-components/companyDetail/CompanyDetail'
 import Bus from '../../../components/bus.js'
 import customerDetail from '../../woa-components/customerDetail/channelCustomer'
+import followUpData from '../../woa-components/followUpList/followUpIndex'
 
 export default {
     name: "company",
@@ -36,7 +39,8 @@ export default {
         // Button,
         // Tableshow
         companyDetail,
-        customerDetail
+        customerDetail,
+        followUpData
     },
     created: function(){
 
@@ -637,6 +641,9 @@ export default {
                 let toExcel = this.$MergeURL(url, config)
                 console.log(toExcel)
                 window.open(toExcel)
+        },
+        openFollowUPdata(){
+            this.$bus.emit('global_follow_up_list',['36979',"广州时汇日用品有限公司","胡睿","45561"])
         }
     },
     mounted () {

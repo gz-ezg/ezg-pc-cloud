@@ -13,6 +13,8 @@
                             </Input>
                         </FormItem> 
                     </Col>
+                </Row>
+                <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="leftEquation" label="左边公式：">
                             <Input type="textarea" v-model="add.leftEquation">
@@ -40,6 +42,22 @@
                     <Col span="24">
                         <FormItem prop="rightEquation" label="右边公式：">
                             <Input type="textarea" v-model="add.rightEquation">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="16">
+                    <Col span="24">
+                        <FormItem prop="vsupaLeftEquation" label="云算盘左边公式：">
+                            <Input type="textarea" v-model="add.vsupaLeftEquation">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="16">
+                    <Col span="24">
+                        <FormItem prop="vsupaRightEquation" label="云算盘右边公式：">
+                            <Input type="textarea" v-model="add.vsupaRightEquation">
                             </Input>
                         </FormItem>
                     </Col>
@@ -76,7 +94,7 @@
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="taxType" label="做账类型：">
-                            <Select transfer v-model="add.taxType" placeholder="" transfer>
+                            <Select transfer v-model="add.taxType" placeholder="" >
                                 <Option value="all">全部</Option>
                                 <Option value="tax3">小规模</Option>
                                 <Option value="tax17">一般纳税人</Option>
@@ -87,7 +105,7 @@
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="sendMsg" label="发送短信：">
-                            <Select transfer v-model="add.sendMsg" placeholder="" transfer>
+                            <Select transfer v-model="add.sendMsg" placeholder="" >
                                 <Option value="Y">是</Option>
                                 <Option value="N">否</Option>
                             </Select>
@@ -104,7 +122,7 @@
 </template>
 
 <script>
-import Bus from '../../../../components/bus.js'
+// import Bus from '../../../../components/bus.js'
 export default {
     data(){
         return{
@@ -121,7 +139,9 @@ export default {
                 baseMessage:"",	
                 smsMessage:"",
                 sendMsg:"",
-                security_line:""
+                security_line:"",
+                vsupaLeftEquation:"",
+                vsupaRightEquation:""
             }
         }
     },
@@ -140,14 +160,17 @@ export default {
                 baseMessage:_self.add.baseMessage,
                 smsMessage:_self.add.smsMessage,
                 sendMsg:_self.add.sendMsg,
-                security_line:_self.add.security_line
+                security_line:_self.add.security_line,
+                vsupaLeftEquation: _self.add.vsupaLeftEquation,
+                vsupaRightEquation: _self.add.vsupaRightEquation
             }
             console.log(config)
             this.$http.post(url,config).then(function(res){
                 // console.log(res.data.msgCode)
                 if(res.data.msgCode == 40000){
                     _self.$Message.success('添加成功！')
-                    Bus.$emit('updateauditrule',true)
+                    _self.$bus.emit('updateauditrule',true)
+                    // Bus.$emit('updateauditrule',true)
                     _self.open_add_rule = false
                     _self.add.name = "",
                     _self.add.leftEquation = "",
@@ -160,6 +183,8 @@ export default {
                     _self.add.smsMessage = "",
                     _self.add.sendMsg = "",
                     _self.add.security_line = ""
+                    _self.add.vsupaRightEquation = "",
+                    _self.add.vsupaLeftEquation = ""
                 }else{
                     _self.$Message.error('新增失败！')
                 }
@@ -174,7 +199,11 @@ export default {
     },
     created () {
         let _self = this
-        Bus.$on('open_audit_page',(e)=>{
+        // Bus.$on('open_audit_page',(e)=>{
+        //     _self.open_add_rule = true
+        //     _self.type = e
+        // })
+        _self.$bus.on('open_audit_page',(e)=>{
             _self.open_add_rule = true
             _self.type = e
         })

@@ -803,6 +803,7 @@
     export default {
         data() {
             return {
+                old_price:0,
                 cluesources:"",
                 cluesources_map:new Map(),
                 add_order_button_loading:false,
@@ -3494,11 +3495,24 @@
             },
 
             itemOnClick(index,field) {
-                console.log(index)
+                console.log(this.orderItemList[index])
+                // console.log(index)
                 console.log(field)
                 let _self = this
                 let itemGrid
                 let _form
+                // console.log()
+                if(_self.orderItemList[index].unitprice != _self.old_price && _self.orderItemList[index].skuid == "1007"){
+                    if(_self.orderItemList[index].unitprice>=2000){
+                        _self.orderItemList[index].memo = "一年4次外勤、可做减少收入"
+                        _self.old_price = _self.orderItemList[index].unitprice
+                    }else{
+                        _self.orderItemList[index].memo = ""
+                        _self.old_price = _self.orderItemList[index].unitprice
+                    }
+                }else{
+                    _self.old_price = _self.orderItemList[index].unitprice
+                }
 
                 if (_self.isEdit == true) {
                     itemGrid = $("#orderItemList2")
@@ -3656,7 +3670,6 @@
                     valueField: 'type',
                     textField: 'text',
                     onSelect: function (re) {
-
                         targetObjs.departname.combobox("destroy");
                         itemGrid.datagrid('updateRow', {
                             index: index,
@@ -3851,6 +3864,9 @@
                     // console.log(_self.cluesources_map)
                 }
                 this.$GetDataCenter(config, finish)
+            },
+            orderItemList_change(){
+                console.log(this.orderItemList)
             }
         },
         mounted() {
@@ -3860,8 +3876,10 @@
             this.getPayDirs()
         },
         created(){
-            let _self = this
-            
+            let _self = this   
+        },
+        watch:{
+            'orderItemList':'orderItemList_change'
         }
     }
 </script>

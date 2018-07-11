@@ -95,7 +95,7 @@
                             </FormItem>
                         </Col>
                     </Row>
-                    <Row :gutter="16">
+                    <Row :gutter="16" v-if="followupshow">
                         <Col span="1" style="visibility:hidden">1</Col>
                         <Col span="20">
                             <FormItem prop="followUpType" label="跟进类型：" style="margin-bottom:5px">
@@ -125,7 +125,7 @@
                                         :before-upload="handleUpload"
                                         action="/api/customer/addCustomerContentImg"
                                         >
-                                    <Button type="ghost" icon="ios-cloud-upload-outline" :class="{input_warning:warning}">选择文件</Button>
+                                    <Button type="ghost" icon="ios-cloud-upload-outline">选择文件</Button>
                                 </Upload>
                                 <!-- <div v-show="warning" style="color:#ed3f14;height:20px;margin-bottom:5px;line-height:20px">请上传附件</div> -->
                                 <div v-for="(item,index) in show_file" :key=index>{{ item.name }}
@@ -153,6 +153,9 @@ import { yasuo } from '../../../libs/img_beforeUpload'
 export default {
     data(){
         return{
+            followupshow:false,
+            followUp_loading:false,
+            show_file:[],
             loading:false,
             open_follow_list:false,
             contentdetail:false,
@@ -248,10 +251,18 @@ export default {
                 content:"",
                 customerId:"",
                 companyId:""
-            }
+            },
+            companyid:"",
+            file_array:[]
         }
     },
     methods:{
+        create_new_followup(){
+                this.addcontentdetail = true
+        },
+        cancelContent(){
+                this.contentdetail = false
+        },
         getData(){
             let _self = this
             _self.loading = true
@@ -263,7 +274,8 @@ export default {
                 }
             }
             function success(res){
-                _self.loading = true
+                _self.followUpData = res.data.data.customerRecord
+                _self.loading = false
                 _self.$nextTick(() => {
                     _self.scroll = new Bscroll(_self.$refs.wrapper, {
                         scrollbar:{
@@ -316,22 +328,22 @@ export default {
         cancel_workorder_followup(){
             this.addDetailContent.content = ""
             this.addDetailContent.followUpType = ""
-            this.show_file = ""
-            this.file_array = ""
+            this.show_file = []
+            this.file_array = []
         },
         GetFollowUpType(){
             var _self = this
             _self.followTypeText = []
-            let params = "follow_up_type"
+            let params = "markert_follow_up_type"
                 
                 function success(res){
-                    for(let i = 0;i<res.data.data.follow_up_type.length;i++){
+                    for(let i = 0;i<res.data.data.markert_follow_up_type.length;i++){
                         var temp={}
-                        if(res.data.data.follow_up_type[i].typecode == 21||res.data.data.follow_up_type[i].typecode == 22){
+                        if(res.data.data.markert_follow_up_type[i].typecode == 21||res.data.data.markert_follow_up_type[i].typecode == 22){
                         }else{
-                            temp.typecode=res.data.data.follow_up_type[i].typecode
-                            temp.typename=res.data.data.follow_up_type[i].typename
-                            temp.id=res.data.data.follow_up_type[i].id
+                            temp.typecode=res.data.data.markert_follow_up_type[i].typecode
+                            temp.typename=res.data.data.markert_follow_up_type[i].typename
+                            temp.id=res.data.data.markert_follow_up_type[i].id
                             _self.followTypeText.push(temp)
                         }
                     }
@@ -387,12 +399,44 @@ export default {
 
                     })
                 }
+            },
+            getRole(){
+                let _self = this
+                let temp = localStorage.getItem("Main_Role")
+                if(temp == "kuaiji" || temp == "shangshi" || temp == "qihua" || temp == "shenji"){
+                    _self.followupshow = false
+                    switch(temp){
+                        case "kuaiji":
+                            _self.addDetailContent.followUpType = "18"
+                            break;
+                        case "shangshi":
+                            _self.addDetailContent.followUpType = "17"
+                            break;
+                        case "qihua":
+                            _self.addDetailContent.followUpType = "19"
+                            break;
+                        case "shenji":
+                            _self.addDetailContent.followUpType = "23"
+                            break;
+                    }
+                }else{
+                    _self.followupshow = true
+                }
             }
     },
     created(){
         let _self = this
+        this.getRole()
         this.GetFollowUpType()
         this.$bus.on("global_follow_up_list",(e)=>{
+            //  接受方式，公司id，公司名，客户名，客户id
+            _self.companyid = e[0]
+            _self.companyInfo.companyname = e[1]
+            _self.companyInfo.NAME = e[2]
+            _self.open_follow_list = true
+            _self.companyInfo.id = e[0]
+            _self.companyInfo.customerid = e[3]
+            _self.getData()
             console.log(e)
         })
     }

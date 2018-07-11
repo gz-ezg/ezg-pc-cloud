@@ -474,7 +474,7 @@ export default {
             }
                 
             _self.$http.get(url,config).then(function(res){
-                _self.$backToLogin(res)  
+                // _self.$backToLogin(res)  
                 // console.log(res.data.data.rows)
                 _self.data = res.data.data.rows
                 _self.pageTotal = res.data.data.total

@@ -13,6 +13,8 @@
                             </Input>
                         </FormItem> 
                     </Col>
+                </Row>
+                <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="left_equation" label="左边公式：">
                             <Input type="textarea" v-model="add.left_equation">
@@ -23,7 +25,7 @@
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="symbol" label="测算符号：">
-                            <Select transfer v-model="add.symbol" placeholder="" transfer>
+                            <Select transfer v-model="add.symbol" placeholder="" >
                                 <Option value="==">等于</Option>
                                 <Option value=">">大于</Option>
                                 <Option value=">=">大于等于</Option>
@@ -40,6 +42,22 @@
                     <Col span="24">
                         <FormItem prop="right_equation" label="右边公式：">
                             <Input type="textarea" v-model="add.right_equation">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="16">
+                    <Col span="24">
+                        <FormItem prop="vsupa_left_equation" label="云算盘左边公式：">
+                            <Input type="textarea" v-model="add.vsupa_left_equation">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="16">
+                    <Col span="24">
+                        <FormItem prop="vsupa_right_equation" label="云算盘右边公式：">
+                            <Input type="textarea" v-model="add.vsupa_right_equation">
                             </Input>
                         </FormItem>
                     </Col>
@@ -76,7 +94,7 @@
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="tax_type" label="做账类型：">
-                            <Select transfer v-model="add.tax_type" placeholder="" transfer>
+                            <Select transfer v-model="add.tax_type" placeholder="" >
                                 <Option value="all">全部</Option>
                                 <Option value="tax3">小规模</Option>
                                 <Option value="tax17">一般纳税人</Option>
@@ -87,7 +105,7 @@
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="send_msg" label="发送短信：">
-                            <Select transfer v-model="add.send_msg" placeholder="" transfer>
+                            <Select transfer v-model="add.send_msg" placeholder="" >
                                 <Option value="Y">是</Option>
                                 <Option value="N">否</Option>
                             </Select>
@@ -122,7 +140,9 @@ export default {
                 base_message:"",	
                 sms_message:"",
                 send_msg:"",
-                security_line:""
+                security_line:"",
+                vsupa_left_equation:"",
+                vsupa_right_equation:""
             }
         }
     },
@@ -142,13 +162,16 @@ export default {
                 baseMessage:_self.add.base_message,
                 smsMessage:_self.add.sms_message,
                 sendMsg:_self.add.send_msg,
-                security_line:_self.add.security_line
+                security_line:_self.add.security_line,
+                vsupaLeftEquation: _self.add.vsupa_left_equation,
+                vsupaRightEquation: _self.add.vsupa_right_equation
             }
             this.$http.post(url,config).then(function(res){
                 // console.log(res.data.msgCode)
                 if(res.data.msgCode == 40000){
                     _self.$Message.success('修改成功！')
-                    Bus.$emit('updateauditrule',true)
+                    // Bus.$emit('updateauditrule',true)
+                    _self.$bus.emit('updateauditrule',true)
                     _self.open_edit_rule = false
                 }else{
                     _self.$Message.error('修改失败！')
@@ -164,11 +187,16 @@ export default {
     },
     created () {
         let _self = this
-        Bus.$on('edit_audit_page',(e)=>{
-            console.log(e)
+        _self.$bus.on('edit_audit_page',(e)=>{
+            // console.log(e)
             _self.open_edit_rule = true
             _self.add = e
         })
+        // Bus.$on('edit_audit_page',(e)=>{
+        //     console.log(e)
+        //     _self.open_edit_rule = true
+        //     _self.add = e
+        // })
     }
 }
 </script>

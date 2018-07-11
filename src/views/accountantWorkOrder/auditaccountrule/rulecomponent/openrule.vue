@@ -13,6 +13,8 @@
                             </Input>
                         </FormItem> 
                     </Col>
+                </Row>
+                <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="left_equation" label="左边公式：">
                             <Input type="textarea" v-model="add.left_equation" disabled rows=10>
@@ -40,6 +42,22 @@
                     <Col span="24">
                         <FormItem prop="right_equation" label="右边公式：">
                             <Input type="textarea" v-model="add.right_equation" disabled rows=10>
+                            </Input>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="16">
+                    <Col span="24">
+                        <FormItem prop="vsupa_left_equation" label="云算盘左边公式：">
+                            <Input type="textarea" v-model="add.vsupa_left_equation" disabled>
+                            </Input>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="16">
+                    <Col span="24">
+                        <FormItem prop="vsupa_right_equation" label="云算盘右边公式：">
+                            <Input type="textarea" v-model="add.vsupa_right_equation" disabled>
                             </Input>
                         </FormItem>
                     </Col>
@@ -104,7 +122,7 @@
 </template>
 
 <script>
-import Bus from '../../../../components/bus.js'
+// import Bus from '../../../../components/bus.js'
 export default {
     data(){
         return{
@@ -121,49 +139,22 @@ export default {
                 base_message:"",	
                 sms_message:"",
                 send_msg:"",
-                security_line:""
+                security_line:"",
+                vsupa_left_equation:"",
+                vsupa_right_equation:""
             }
         }
     },
     methods: {
-        // edit_rule_company(){
-        //     let _self = this
-        //     let url = `api/order/cycle/finance/analysis/update`
-        //     let config = {
-        //         id:_self.add.id,
-        //         name:_self.add.name,
-        //         leftEquation:_self.add.left_equation,
-        //         rightEquation:_self.add.right_equation,
-        //         symbol:_self.add.symbol,
-        //         type:'1',
-        //         checkPeriod:_self.add.check_period,
-        //         taxType:_self.add.tax_type,
-        //         baseMessage:_self.add.base_message,
-        //         smsMessage:_self.add.sms_message,
-        //         sendMsg:_self.add.send_msg,
-        //         security_line:_self.add.security_line
-        //     }
-        //     this.$http.post(url,config).then(function(res){
-        //         // console.log(res.data.msgCode)
-        //         if(res.data.msgCode == 40000){
-        //             _self.$Message.success('修改成功！')
-        //             Bus.$emit('updateauditrule',true)
-        //             _self.open_edit_rule = false
-        //         }else{
-        //             _self.$Message.error('修改失败！')
-        //         }
-        //     }).catch(function(error){
-        //         _self.$Message.error('修改失败！')
-        //         }
-        //     )},
-        // close_rule_detail(){
-        //     this.add = ""
-        // }
     },
     created () {
         let _self = this
-        Bus.$on('show_audit_page',(e)=>{
-            // console.log(e)
+        // Bus.$on('show_audit_page',(e)=>{
+        //     // console.log(e)
+        //     _self.open_show_rule = true
+        //     _self.add = e
+        // })
+        this.$bus.on('show_audit_page',(e)=>{
             _self.open_show_rule = true
             _self.add = e
         })

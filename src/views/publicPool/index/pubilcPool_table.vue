@@ -131,11 +131,11 @@
           </Row>
             <Row>
                 <ButtonGroup>
-                    <!-- <Button type="primary" icon="plus" @click="isAddChange" v-permission="['marketingM.add']">录入</Button>
-                    <Button type="primary" icon="edit" @click="isEditChange" v-permission="['marketingM.edit']">编辑</Button>
-                    <Button type="primary" icon="ios-crop" @click="change_market" v-permission="['marketingM.change']">变更</Button>
-                    <Button type="primary" icon="trash-b" @click="deleteCustomer" v-permission="['marketingM.delete']">删除</Button>
-                    <Button type="primary" icon="grid" @click="getQRcode">查看二维码</Button> -->
+                    <!-- <Button type="primary" icon="plus" @click="isAddChange" v-permission="['marketingM.add']">录入</Button> -->
+                    <Button type="primary" icon="edit" @click="isEditChange">编辑</Button>
+                    <!-- <Button type="primary" icon="ios-crop" @click="change_market" v-permission="['marketingM.change']">变更</Button>
+                    <Button type="primary" icon="trash-b" @click="deleteCustomer" v-permission="['marketingM.delete']">删除</Button> -->
+                    <Button type="primary" icon="grid" @click="getQRcode">查看二维码</Button>
                     <Button type="primary" icon="ios-color-filter-outline" @click="downloadExcel">导出Excel</Button>
                     <!--<Button type="primary" icon="ios-color-filter-outline">Excel批量导入</Button>-->
                     <!--<Button type="primary" icon="ios-color-filter-outline">导出跟进记录</Button>-->
@@ -187,7 +187,7 @@
                 <Button type="error" size="large" long :loading="modal_loading" @click="deleteCustomer2">删除</Button>
             </div>
         </Modal>
-        <!-- <change-market @update="getTableData"></change-market> -->
+        <customer-edit></customer-edit>
     </div>
 </template>
 
@@ -195,11 +195,12 @@
 import QRCode from "qrcodejs2";
 import Bus from "../../../components/bus";
 import { DateFormat } from '../../../libs/utils'
+import customerEdit from '../../woa-components/customerDetail/channelCustomer'
 
 export default {
-    // components: {
-    //     changeMarket
-    // },
+    components: {
+        customerEdit
+    },
   data() {
     return {
       search_model:"",
@@ -648,13 +649,14 @@ export default {
       var _self = this;
       if (_self.customerid != "") {
         // console.log("iseditchange+" + _self.customerid);
-        this.$emit("isEdit", {
-          customername: _self.customerName,
-          customerid: _self.customerid,
-          customertypeText: _self.customertypeText,
-          tel: _self.tel,
-          customersource: _self.customersource
-        });
+        // this.$emit("isEdit", {
+        //   customername: _self.customerName,
+        //   customerid: _self.customerid,
+        //   customertypeText: _self.customertypeText,
+        //   tel: _self.tel,
+        //   customersource: _self.customersource
+        // });
+        Bus.$emit('Open_customer_detail',_self.customerid)
       } else {
         this.$Message.warning("抱歉，您还没有选择客户");
       }

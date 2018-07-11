@@ -148,8 +148,38 @@
             getUserRole(e){
                 let _self = this
                 this.$http.get('/api/user/checkUserRoleByUserId?userId='+ e).then(function(res){
-                    let str = JSON.stringify(res.data.data)  
-                    localStorage.setItem('Role',str)
+                    // let str = JSON.stringify(res.data.data)  
+                    // localStorage.setItem('Role',str)
+                    if(res.data.msgCode == "40000"){
+                        let temp = []
+                        for(let i = 0;i<res.data.data.length;i++){
+                            temp.push(res.data.data[i].rolecode)
+                        }
+                        for(let j = 0;j<temp.length;j++){
+                            if(temp[j] == "salers"){
+                                localStorage.setItem('Main_Role',"salers")
+                                break
+                            }else if(temp[j] == "kj" || temp[j] == "kjbgd"){
+                                localStorage.setItem('Main_Role',"kuaiji")
+                                break
+                            }else if(temp[j] == "servicer" || temp[j] == "ssbgd"){
+                                localStorage.setItem('Main_Role',"shangshi")
+                                break
+                            }else if(temp[j] == "planner" || temp[j] == "qhbgd"){
+                                localStorage.setItem('Main_Role',"qihua")
+                                break
+                            }else if(temp[j] == "auditing" || temp[j] == "sjbgd"){
+                                localStorage.setItem('Main_Role',"shenji")
+                                break
+                            }else if( j == temp.length - 1){
+                                localStorage.setItem('Main_Role',"other")
+                            }
+                        }
+                        let str = JSON.stringify(temp)
+                        localStorage.setItem('Role',str)
+                    }else{
+                        _self.$Message.error(res.data.msg)
+                    }
                 })
             }
         },
