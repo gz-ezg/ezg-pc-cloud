@@ -5,7 +5,7 @@
                 title="查看详情"
                 width="70%"
             >
-            <Tabs value="name11">
+            <Tabs v-model="tabshow">
                 <TabPane label="任务信息" name="name11">
                     <Collapse v-model="value1">
                         <Panel name="1">
@@ -174,50 +174,56 @@
                     </Row>
                 </TabPane>  -->
                 <TabPane label="相关在服工单" name="name44">
-                    <div v-if="!correlation.length"><center>暂无数据</center></div>
-                    <div v-for="(item, index) in correlation" :key=index >
-                        <Form ref="item" :model="item" :label-width="100" style="margin:10px;padding:5px;padding-top:10px;border:1px solid #EEE9E9">
-                            <Row>
-                                <Col span="1" style="visibility:hidden"></Col>                            
-                                <Col span="10">
-                                <FormItem label="公司名称：">
-                                    <Input v-model="item.companyname" readonly></Input>
-                                </FormItem>
-                                </Col>
-                                <Col span="10">
-                                <FormItem label="所办服务：">
-                                    <Input v-model="item.product" readonly></Input>
-                                </FormItem>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col span="1" style="visibility:hidden"></Col>                            
-                                <Col span="10">
-                                <FormItem label="目前进度：">
-                                    <Input v-model="item.CurrentProcess" readonly></Input>
-                                </FormItem>
-                                </Col>
-                                <Col span="10">
-                                <FormItem label="服务部门：">
-                                    <Input v-model="item.departname" readonly></Input>
-                                </FormItem>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col span="1" style="visibility:hidden"></Col>                            
-                                <Col span="10">
-                                <FormItem label="服务人员：">
-                                    <Input v-model="item.servername" readonly></Input>
-                                </FormItem>
-                                </Col>
-                                <Col span="10">
-                                <FormItem label="联系方式：">
-                                    <Input v-model="item.servertel" readonly></Input>
-                                </FormItem>
-                                </Col>
-                            </Row>
-                        </Form>
-                    </div>
+                    <Row>
+                        <div style="margin-top: 10px;margin-left:10px;margin-right:10px;max-height:500px;overflow:hidden" class="wrapper" ref="wrapper">
+                            <div class="content" style="padding-bottom:10px;">
+                                <div v-if="!correlation.length"><center>暂无数据</center></div>
+                                <div v-for="(item, index) in correlation" :key=index >
+                                    <Form ref="item" :model="item" :label-width="100" style="margin:10px;padding:5px;padding-top:10px;border:1px solid #EEE9E9">
+                                        <Row>
+                                            <Col span="1" style="visibility:hidden"></Col>                            
+                                            <Col span="10">
+                                            <FormItem label="公司名称：">
+                                                <Input v-model="item.companyname" readonly></Input>
+                                            </FormItem>
+                                            </Col>
+                                            <Col span="10">
+                                            <FormItem label="所办服务：">
+                                                <Input v-model="item.product" readonly></Input>
+                                            </FormItem>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col span="1" style="visibility:hidden"></Col>                            
+                                            <Col span="10">
+                                            <FormItem label="目前进度：">
+                                                <Input v-model="item.CurrentProcess" readonly></Input>
+                                            </FormItem>
+                                            </Col>
+                                            <Col span="10">
+                                            <FormItem label="服务部门：">
+                                                <Input v-model="item.departname" readonly></Input>
+                                            </FormItem>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col span="1" style="visibility:hidden"></Col>                            
+                                            <Col span="10">
+                                            <FormItem label="服务人员：">
+                                                <Input v-model="item.servername" readonly></Input>
+                                            </FormItem>
+                                            </Col>
+                                            <Col span="10">
+                                            <FormItem label="联系方式：">
+                                                <Input v-model="item.servertel" readonly></Input>
+                                            </FormItem>
+                                            </Col>
+                                        </Row>
+                                    </Form>
+                                </div>
+                            </div>
+                        </div>
+                    </Row>
                 </TabPane>
             </Tabs>
             <div slot="footer">
@@ -240,11 +246,14 @@
 </template>
 
 <script>
-import Bus from '../../../components/bus'
+// import Bus from '../../../components/bus'
+import Bscroll from 'better-scroll'
+
 
 export default {
     data(){
         return {
+            tabshow:"name11",
             //  当前行
             value1:[1,2],
             current_row:'',
@@ -275,10 +284,11 @@ export default {
     },
     created(){
         var _self = this
-        Bus.$on('openAllotTask',(e)=>{
+        this.$bus.on('openAllotTask',(e)=>{
             // console.log('1111111111')
             _self.show_allot_detail = true
             _self.current_row = e
+            _self.tabshow = "name11"
             _self.getData()
         })
     },
@@ -290,8 +300,20 @@ export default {
                 _self.task_message = res.data.data.taskInfo[0]
                 _self.process = res.data.data.process
                 _self.correlation = res.data.data.correlation
+                _self.$nextTick(() => {
+                _self.scroll = new Bscroll(_self.$refs.wrapper, {
+                    scrollbar:{
+                        fade: false
+                    },
+                    mouseWheel:{
+                        speed: 20,
+                        invert: false,
+                        easeTime: 300
+                        }
+                    })
+                })
             })
-        }
+        }         
     }
 }
 </script>
