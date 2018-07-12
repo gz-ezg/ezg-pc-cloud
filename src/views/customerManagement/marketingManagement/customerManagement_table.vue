@@ -137,7 +137,7 @@
                     <Button type="primary" icon="trash-b" @click="deleteCustomer" v-permission="['marketingM.delete']">删除</Button>
                     <Button type="primary" icon="grid" @click="getQRcode">查看二维码</Button>
                     <Button type="primary" icon="ios-color-filter-outline" @click="downloadExcel">导出Excel</Button>
-                    <!--<Button type="primary" icon="ios-color-filter-outline">Excel批量导入</Button>-->
+                    <Button type="primary" icon="ios-color-filter-outline" v-if="false">设置提成</Button>
                     <!--<Button type="primary" icon="ios-color-filter-outline">导出跟进记录</Button>-->
                     <!--<Button type="primary" icon="ios-color-filter-outline">下载模板</Button>-->
                 </ButtonGroup>

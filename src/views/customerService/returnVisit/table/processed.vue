@@ -312,11 +312,11 @@
                         key: 'serviceranks',
                         width: 120
                     },
-                    // {
-                    //     title:'回访次数',
-                    //     key:'',
-                    //     width: 120
-                    // },
+                    {
+                        title:'回访次数',
+                        key:'num',
+                        width: 120
+                    },
                     {
                         title: '操作',
                         key: 'action',
@@ -493,6 +493,7 @@
                     _self.data = res.data.data.rows
                     _self.pageTotal = res.data.data.total
                     for(let i = 0;i<res.data.data.rows.length;i++){
+                        _self.data[i].num = "1"
                         _self.data[i].company_id = _self.data[i].companyid
                         if(_self.data[i].createdate == null ||_self.data[i].createdate == ""){
 

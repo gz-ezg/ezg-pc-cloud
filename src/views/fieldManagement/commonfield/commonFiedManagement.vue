@@ -232,6 +232,8 @@
         },
         data() {
             return{
+                service_record_status:"",
+                service_record_status_Map:new Map(),
                 fieldClockType:"",
                 fieldClockType_Map:new Map(),
                 loading:false,
@@ -335,11 +337,11 @@
                         key: 'realname',
                         width: 120
                     },
-                    // {
-                    //     title:'结果类型',
-                    //     key:"",
-                    //     width:120
-                    // },
+                    {
+                        title:'外勤结果',
+                        key:"service_record_statusName",
+                        width:120
+                    },
                     {
                         title: '总结',
                         key: 'remark',
@@ -415,6 +417,7 @@
                     _self.data = res.data.data.rows
                     for(let i = 0; i<_self.data.length;i++){
                         _self.data[i].fieldClockTypeName = _self.fieldClockType_Map.get(_self.data[i].fieldtype)
+                        _self.data[i].service_record_statusName =_self.service_record_status_Map.get(_self.data[i].service_record_status)
                         // if(_self.data[i].clocktime == "" ||_self.data[i].clocktime == null){
                         //     return ""
                         // }else{
@@ -469,8 +472,8 @@
                     {field:'endtime',title:'离开打卡时间'},
                     {field:'fieldlength',title:'外勤时长'},
                     {field:'realname',title:'打卡人'},
-                    {field:'remark',title:'总结'}
-                    
+                    {field:'remark',title:'总结'},
+                    {field:'service_record_status',title:'外勤结果',format:'field_total'}
                     ]
                 let _self = this
                 let url = `api/legwork/legworkList`
@@ -528,10 +531,12 @@
                 let _self = this
                 function  success(res){
                     _self.fieldClockType = res.data.data.fieldClockType
+                    _self.service_record_status = res.data.data.field_total
                     _self.fieldClockType_Map = _self.$array2map(_self.fieldClockType)
+                    _self.service_record_status_Map = _self.$array2map(_self.service_record_status)
                     // console.log(_self.fieldClockType_Map)
                 }
-                this.$GetDataCenter("fieldClockType",success)
+                this.$GetDataCenter("fieldClockType,field_total",success)
             }
 
         },

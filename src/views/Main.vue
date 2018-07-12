@@ -34,7 +34,9 @@
                     <lock-screen></lock-screen>
                     <message-tip v-model="mesCount"></message-tip>
                     <theme-switch></theme-switch>-->
-                    
+                    <div style="height:100%">
+                        <Button size="small" type="primary" style="margin-top:18px;margin-left:100px" @click="open_stystem_complain">反馈回复</Button>
+                    </div>
                     <div class="user-dropdown-menu-con">
                         <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
                             <Dropdown transfer trigger="click" @on-click="handleClickUserDropdown">
@@ -64,6 +66,16 @@
                 </keep-alive>
             </div>
         </div>
+            <Modal
+                title="系统反馈"
+                width="60%"
+                v-model="show_stystem_complain"
+                @cancel="close_stystem_complain"
+            >
+
+                <system-complain></system-complain>
+                <div slot="footer"></div>
+            </Modal>
         <!-- 意见收集 -->
         <Modal
                 v-model="tip"
@@ -123,6 +135,7 @@
     import lockScreen from './main-components/lockscreen/lockscreen.vue';
     import messageTip from './main-components/message-tip.vue';
     import themeSwitch from './main-components/theme-switch/theme-switch.vue';
+    import systemComplain from './stystemComplain/complainReply/complainReply'
     import Cookies from 'js-cookie';
     import util from '@/libs/util.js';
     
@@ -134,10 +147,12 @@
             fullScreen,
             lockScreen,
             messageTip,
-            themeSwitch
+            themeSwitch,
+            systemComplain
         },
         data () {
             return {
+                show_stystem_complain:false,
                 submit_button:false,
                 rate:{
                     content:"",
@@ -180,6 +195,13 @@
             }
         },
         methods: {
+            close_stystem_complain(){
+                this.show_stystem_complain = false
+            },
+            open_stystem_complain(){
+                let _self = this
+                this.show_stystem_complain = true
+            },
             init () {
                 let pathArr = util.setCurrentPath(this, this.$route.name);
                 this.$store.commit('updateMenulist');

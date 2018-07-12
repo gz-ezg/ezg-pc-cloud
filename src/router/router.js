@@ -791,12 +791,12 @@ export const appRouter = [
                     require(['@/views/publicPool/index/pubilcPool_table.vue'], resolve);
                 }
             },
-            // {
-            //     // access: 6027,
-            //     path: 'rule_index', title: '销售规则管理', name: 'rule_index', component: resolve => {
-            //         require(['@/views/publicPool/rule/index.vue'], resolve);
-            //     }
-            // }
+            {
+                // access: 6027,
+                path: 'rule_index', title: '销售规则管理', name: 'rule_index', component: resolve => {
+                    require(['@/views/publicPool/rule/index.vue'], resolve);
+                }
+            }
         ]
     },
 /*    {

@@ -310,7 +310,7 @@
                     },
                     {
                         title:'回访次数',
-                        key:'',
+                        key:'num',
                         width: 120
                     },
                     {
@@ -486,6 +486,7 @@
                     _self.data = res.data.data.rows
                     _self.pageTotal = res.data.data.total
                     for(let i = 0;i<res.data.data.rows.length;i++){
+                        _self.data[i].num = "1"
                         _self.data[i].company_id = _self.data[i].companyid
                         if(_self.data[i].createdate == null ||_self.data[i].createdate == ""){
 

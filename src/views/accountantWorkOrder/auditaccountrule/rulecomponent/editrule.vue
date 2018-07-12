@@ -162,7 +162,7 @@ export default {
                 baseMessage:_self.add.base_message,
                 smsMessage:_self.add.sms_message,
                 sendMsg:_self.add.send_msg,
-                security_line:_self.add.security_line,
+                securityLine:_self.add.security_line,
                 vsupaLeftEquation: _self.add.vsupa_left_equation,
                 vsupaRightEquation: _self.add.vsupa_right_equation
             }

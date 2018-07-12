@@ -1,6 +1,5 @@
 <template>
     <Card>
-        <div slot="title">系统反馈回复</div>
         <Row>
             <ButtonGroup style="float:left">
                 <Button type="primary" icon="information-circled" @click="showdetail">查看</Button>
@@ -37,6 +36,7 @@
             title="查看详情"
             v-model="openDetail"
             width="600"
+            :transfer="false"
         >
             <Form :label-width="100">
                 <Row :gutter="16">

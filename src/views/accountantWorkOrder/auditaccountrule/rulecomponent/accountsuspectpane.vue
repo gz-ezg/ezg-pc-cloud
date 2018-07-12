@@ -86,7 +86,7 @@ export default {
     methods: {
         add_company_rule(){
             // Bus.$emit('open_audit_page',2)
-            this.$bus.emit('open_audit_page',2)
+            this.$bus.emit('open_audit_page',1)
         },
         edit_company_rule(){
             let _self = this
@@ -142,7 +142,7 @@ export default {
                 params:{
                     page: _self.page,
                     pageSize: _self.pageSize,
-                    type: '2',
+                    type: '1',
                     name: _self.searchName
                 }
             }

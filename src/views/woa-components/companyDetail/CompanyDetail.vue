@@ -510,14 +510,14 @@
                             <Col span="1" style="visibility:hidden">1</Col>                            
                             <Col span="11">
                                 <FormItem prop="Providentfundnum" label="公积金账户名：" style="margin-bottom:5px">
-                                    <Input type="text" v-model="taxManagement.Providentfundnum" placeholder="" :disabled="isEditTax">
+                                    <Input type="text" v-model="taxManagement.Providentfundnum" placeholder="" disabled>
                              
                                     </Input>
                                 </FormItem>
                             </Col>
                             <Col span="11">
                                 <FormItem prop="Providentfundpsw" label="公积金密码：" style="margin-bottom:5px">
-                                    <Input type="text" v-model="taxManagement.Providentfundpsw" placeholder="" :disabled="isEditTax">
+                                    <Input type="text" v-model="taxManagement.Providentfundpsw" placeholder="" disabled>
                                       
                                     </Input>
                                 </FormItem>
@@ -527,7 +527,7 @@
                             <Col span="1" style="visibility:hidden">1</Col>                            
                             <Col span="11">
                                 <FormItem prop="socialsecuritypsw" label="社保密码：" style="margin-bottom:5px">
-                                    <Input type="text" v-model="taxManagement.socialsecuritypsw" placeholder="" :disabled="isEditTax">
+                                    <Input type="text" v-model="taxManagement.socialsecuritypsw" placeholder="" disabled>
                                      
                                     </Input>
                                 </FormItem>

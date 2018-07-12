@@ -210,6 +210,11 @@
                         width: 250
                     },
                     {
+                        title: '企业经营状态',
+                        key: 'managestatusName',
+                        width: 120
+                    },
+                    {
                         title: '产品名称',
                         key: 'product',
                         width: 160

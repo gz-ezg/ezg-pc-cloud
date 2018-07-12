@@ -46,6 +46,8 @@
                             </Row> -->
                             <Row>
                                 <P>{{ item.serviceContent }}</P>
+                                <!-- 跟进内容根据类型新增class类，待客服跟进内容录入 -->
+                                <!-- <P :class="{warn:item.followType <= 18 && item.userName== '胡小红', error:item.followType == 18 && item.userName == '管理员' }" >{{ item.serviceContent }}</P> -->
                             </Row>
                             <Row v-if="(item.imgurls) &amp;&amp; (item.serviceId == b.serviceId)" v-for="(b,index) in bb" :key=index>
                                 <a target="_blank" :href="b.imgurl"> <img :src="b.imgurl" alt="Ballade" style="width: 100px"/>
@@ -104,7 +106,6 @@
         <Modal
                 v-model="modal33"
                 title="新增跟进"
-                :loading="loading"
                 @on-visible-change="cancel"
                 :mask-closable="false"                
         >
@@ -120,7 +121,7 @@
                             <div style="height:12px;padding-top:4px">请输入公司名称</div>
                         </div> -->
                     </FormItem>
-                <Row :gutter="16">
+                <Row :gutter="16" v-if="followupshow">
                     <Col span="12">
                         <FormItem label="跟进结果" prop="followResult">
                             <Select transfer v-model="formValidate.followResult" size="small">
@@ -229,6 +230,7 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
         props: ['customerid'],
         data() {
             return {
+                followupshow:false,
                 market_field_type:"",
                 // customerid:"",
                 spinShow:false,
@@ -629,107 +631,77 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
             /*************************新增跟进********************************/
             upload(name) {
                 this.image_loading = true
-
                 var _self = this
-                
-                // var formdata = new FormData()
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         if(_self.file.length == 0){
-                            // if(_self.file.length == 0){
-                            //     _self.warning = true;
-                            // }else{
-                            //     _self.warning = false
-                            // }
-                            // if(_self.formValidate.companyId ==''){
-                            //     _self.warning2 = true
-                            // }else{
-                            //     _self.warning2 = false
-                                _self.uploadCustomerContentNote(name)
-                            // }
-                            
-                            _self.loading = false;
-                            
-                        }else{
-                            
-                    var formdata = new FormData()
-                            
+                            _self.uploadCustomerContentNote(name)
+                        }else{  
+                            var formdata = new FormData()
                             for (var i = 0; i < _self.file.length; i++) {
-                                // console.log(_self.file[i])
-                                // console.log(_self.show_file[i])
                                 formdata.append('files', _self.file[i],"file_"+Date.parse(new Date())+".jpg")
-                                // console.log(formdata.getAll('files'))
                             }
-                                
-                                        _self.$http({
-                                            method: 'post',
-                                            url: '/api/customer/addCustomerContentImg',
-                                            // dataType: 'json',
-                                            processData: false,
-                                            contentType: false,
-                                            data: formdata
-                                    }).then(function (response) {
-                                        // console.log(response)
-                                            if (response.data.msgCode == '40000') {
-                                                var a = []
-                                                for (var i = 0; i < response.data.data.length; i++) {
-                                                    a.push(response.data.data[i].id)
-                                                }
-                                                // console.log('1111')
-                                                _self.uploadCustomerContentNote(name)
-                                                // _self.$Message.success('上传成功！')
-                                                // _self.$refs.formValidate.getFileList();
-                                                // console.log(a)
-                                                // _self.$refs['formValidate'].resetFields();
-                                                _self.formValidate.attIds = a.toString()
-                                                // console.log(_self.formValidate.attIds)
-                                                
-                                            } else {
-                                                _self.loading = false;
-                                                _self.$Message.error('更新失败!');
-                                            }
-                                        })
+                            _self.$http({
+                                method: 'post',
+                                url: '/api/customer/addCustomerContentImg',
+                                processData: false,
+                                contentType: false,
+                                data: formdata
+                            }).then(function (response) { 
+                                if (response.data.msgCode == '40000') {
+                                    var a = []
+                                    for (var i = 0; i < response.data.data.length; i++) {
+                                        a.push(response.data.data[i].id)
+                                    }
+                                    _self.uploadCustomerContentNote(name)
+                                    _self.formValidate.attIds = a.toString()       
+                                } else {
+                                    _self.loading = false;
+                                    _self.image_loading = false
+                                    _self.$Message.error('图片上传失败!');
+                                }
+                            }).catch(function(err){
+                                _self.image_loading = false
+                                _self.$Message.error("图片上传失败!")
+                            })
                         }
                     }else {
                         if(this.file.length == 0 || this.formValidate.companyId == ''){
-                            // _self.warning = true;
-                            _self.loading = false;
+                            _self.image_loading = false;
                         }
+                            _self.image_loading = false;
                     }
-                   
-            
-
-            })
-            this.image_loading = false
-        },
+                })
+            },
 
             /*************************新增跟进记录********************************/
             uploadCustomerContentNote(name) {
-                // console.log(name)
                 let _self = this
                 setTimeout(() => {
                     this.loading = false;
                     this.$refs[name].validate((valid) => {
                         if (valid) {
-                            // console.log('123')
-                            let url = '/customer/addCustomerContentNote'
-
+                            let url = 'api/customer/addCustomerContentNote'
                             function doSuccess(response) {
-                                // console.log(response)
-                                _self.$Message.success('新增成功!')
+                                // _self.$Message.success('新增成功!')
                                 _self.openEdi()
                                 _self.formValidate.followupdate = ""
                                 _self.formValidate.followuptime = ""                              
                                 _self.file = []
                                 _self.show_file = []
                                 _self.modal33 = false
+                                _self.image_loading = false
                                 Bus.$emit('add_follow_up_data_to_edit',true)
                             }
-                            this.PostData(url, _self.formValidate, doSuccess)
+
+                            function fail(err){
+                                _self.$Message.error("上传失败！")
+                                this.image_loading = false
+                            }
+                            // this.PostData(url, _self.formValidate, doSuccess)
+                            _self.$Post(url,_self.formValidate,doSuccess,fail)
                         } else {
-                            this.$nextTick(() => {
-                                this.loading = true;
-                            });
+                                this.image_loading = false
                         }
                     })
                 }, 2000);
@@ -743,10 +715,10 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
                 this.warning2 = false;
                 _self.formValidate.followupdate = ""
                 _self.formValidate.followuptime = ""
-                // this.formValidate.companyId= ''
+                this.formValidate.companyId= ''
                 // this.formValidate.followUpType= ''
-                // this.formValidate.content= ''
-                // this.formValidate.attIds= ''
+                this.formValidate.content= ''
+                this.formValidate.attIds= ''
             },
             isWarn(){
                 if(this.formValidate.companyId == ''){
@@ -758,17 +730,17 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
             GetFollowUpType(){
                 var _self = this
                 _self.followTypeText = []
-                var url  = '/api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=follow_up_type'
+                var url  = '/api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=markert_follow_up_type'
                 this.$http.get(url).then(function(res){
                     // _self.followTypeText=res.data.data.follow_up_type
                     // console.log(_self.followTypeText)
-                    for(let i = 0;i<res.data.data.follow_up_type.length;i++){
+                    for(let i = 0;i<res.data.data.markert_follow_up_type.length;i++){
                         var temp={}
-                        if(res.data.data.follow_up_type[i].typecode == 21||res.data.data.follow_up_type[i].typecode == 22){
+                        if(res.data.data.markert_follow_up_type[i].typecode == 21||res.data.data.markert_follow_up_type[i].typecode == 22){
                         }else{
-                            temp.typecode=res.data.data.follow_up_type[i].typecode
-                            temp.typename=res.data.data.follow_up_type[i].typename
-                            temp.id=res.data.data.follow_up_type[i].id
+                            temp.typecode=res.data.data.markert_follow_up_type[i].typecode
+                            temp.typename=res.data.data.markert_follow_up_type[i].typename
+                            temp.id=res.data.data.markert_follow_up_type[i].id
                             _self.followTypeText.push(temp)
                         }
                     }
@@ -789,6 +761,29 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
                     _self.market_field_type = res.data.data.market_status
                 }
                 this.$GetDataCenter(params,finish)
+            },
+            getRole(){
+                let _self = this
+                let temp = localStorage.getItem("Main_Role")
+                if(temp == "kuaiji" || temp == "shangshi" || temp == "qihua" || temp == "shenji"){
+                    _self.followupshow = false
+                    switch(temp){
+                        case "kuaiji":
+                            _self.formValidate.followUpType = "18"
+                            break;
+                        case "shangshi":
+                            _self.formValidate.followUpType = "17"
+                            break;
+                        case "qihua":
+                            _self.formValidate.followUpType = "19"
+                            break;
+                        case "shenji":
+                            _self.formValidate.followUpType = "23"
+                            break;
+                    }
+                }else{
+                    _self.followupshow = true
+                }
             }
         },
         mounted() {
@@ -800,6 +795,7 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
             // console.log(this.customerid)
             
             this.GetFollowUpType()
+            this.getRole()
             this.getFollowResult()
             this.openEdi()
             _self.formValidate.customerId = this.customerid
@@ -829,6 +825,12 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
 }
 .input_warning2{
     border: 1px solid red
+}
+.error{
+    color: red
+}
+.warn{
+    color: yellow
 }
 .upload_before:before{
     content: "*";

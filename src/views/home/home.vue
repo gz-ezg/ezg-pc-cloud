@@ -4,11 +4,6 @@
 </style>
 <template>
     <div class="home-main">
-        <Row :gutter="10">
-            <Col :span="24">
-                <system-complain></system-complain>
-            </Col>
-        </Row>
         <!--<Row :gutter="10">
             <Col :md="24" :lg="8">
                 <Row class-name="home-page-row1" :gutter="10">
@@ -191,7 +186,6 @@ import countUp from './components/countUp.vue';
 import inforCard from './components/inforCard.vue';
 import mapDataTable from './components/mapDataTable.vue';
 import toDoListItem from './components/toDoListItem.vue';
-import systemComplain from '../stystemComplain/complainReply/complainReply'
 
 export default {
     name: 'home',
@@ -205,7 +199,6 @@ export default {
         inforCard,
         mapDataTable,
         toDoListItem,
-        systemComplain
     },
     data () {
         return {

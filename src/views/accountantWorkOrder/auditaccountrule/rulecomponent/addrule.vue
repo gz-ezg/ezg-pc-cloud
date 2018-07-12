@@ -65,7 +65,7 @@
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="security_line" label="警戒值：">
-                            <Input type="textarea" v-model="add.security_line">
+                            <Input type="textarea" v-model="add.securityLine">
                             </Input>
                         </FormItem>
                     </Col>
@@ -139,7 +139,7 @@ export default {
                 baseMessage:"",	
                 smsMessage:"",
                 sendMsg:"",
-                security_line:"",
+                securityLine:"",
                 vsupaLeftEquation:"",
                 vsupaRightEquation:""
             }
@@ -160,7 +160,7 @@ export default {
                 baseMessage:_self.add.baseMessage,
                 smsMessage:_self.add.smsMessage,
                 sendMsg:_self.add.sendMsg,
-                security_line:_self.add.security_line,
+                securityLine:_self.add.securityLine,
                 vsupaLeftEquation: _self.add.vsupaLeftEquation,
                 vsupaRightEquation: _self.add.vsupaRightEquation
             }
@@ -182,7 +182,7 @@ export default {
                     _self.add.baseMessage = "",
                     _self.add.smsMessage = "",
                     _self.add.sendMsg = "",
-                    _self.add.security_line = ""
+                    _self.add.securityLine = ""
                     _self.add.vsupaRightEquation = "",
                     _self.add.vsupaLeftEquation = ""
                 }else{

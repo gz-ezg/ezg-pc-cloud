@@ -20,22 +20,168 @@
                 :columns="columns"
                 :data="data"
                 @on-current-change="selectRow"
-                :loading = "customer_loading"
+                :loading = "rule_loading"
                 @on-row-dblclick="isEditChange"
-                @on-sort-change="sort"
             ></Table>
             <Page
                 size="small"
                 :total="pageTotal"
                 :current.sync="currentPage"
                 show-total
-                show-sizer
                 show-elevator
                 @on-change="pageChange"
-                @on-page-size-change="pageSizeChange"
                 style="margin-top: 10px"></Page>
         </Card>
     </div>
 </template>
 
+<script>
+export default {
+    data(){
+        return{
+            columns:[
+                {
+                    title:'部门',
+                    key:'',
+                    width: 120
+                },
+                {
+                    title:'客户状态',
+                    key:'',
+                    width: 150
+                },
+                {
+                    title:'客户重要性',
+                    key:'',
+                    width: 120
+                },
+                {
+                    title:'行为',
+                    key:'',
+                    width: 120
+                },
+                {
+                    title:'跟进评分',
+                    key:'',
+                    width: 120
+                },
+                {
+                    title:'产品类型',
+                    key:'',
+                    width: 120
+                },
+                {
+                    title:'期限',
+                    key:'',
+                    width: 120
+                },
+                {
+                    title:'惩罚',
+                    key:'',
+                    width: 120
+                },
+                {
+                    title:'提前通知时间',
+                    key:'',
+                    width: 150
+                },
+                {
+                    title:'说明',
+                    key:'',
+                    width: 180,
+                    render:(h,params) => {
+                        if(1){
+                            return h('div','内容')
+                        }else{
+                            return h('Poptip', {
+                                props: {
+                                    trigger: 'hover',
+                                    title: '说明',
+                                    placement: 'bottom'
+                                }
+                            }, [
+                                h('span', this.data[params.index].companyNames[0].name.slice(0,13) + '...'),
+                                h('div', {
+                                    slot: 'content'
+                                },[
+                                    h('span',params.row.address1)
+                                ]
+                                )
+                            ]);
+                        }
+                    }
+                },
+                {
+                    title:'执行状态',
+                    key:'',
+                    width: 120
+                },
+                {
+                        title: '操作',
+                        key: 'action',
+                        fixed: 'right',
+                        width: 200,
+                        align: 'center',
+                        render: (h, params) => {
+                            if(1){
+                                return h('div', [
+                                    h('Button', {
+                                        props: {
+                                            type: 'text',
+                                            size: 'small'
+                                        },
+                                        on: {
+                                            click: () => {
+                                                
+                                            }
+                                        }
+                                    }, '[修改]'),
+                                    h('Button', {
+                                        props: {
+                                            type: 'text',
+                                            size: 'small'
+                                        },
+                                        on: {
+                                            click: () => {
+                                            }
+                                        }
+                                    }, '[执行]'),
+                                ]);
+                            }else{
+                                return h('div', [
+                                    h('Button', {
+                                        props: {
+                                            type: 'text',
+                                            size: 'small'
+                                        },
+                                        on: {
+                                            click: () => {
+                                                
+                                            }
+                                        }
+                                    }, '[修改]'),
+                                    h('Button', {
+                                        props: {
+                                            type: 'text',
+                                            size: 'small'
+                                        },
+                                        on: {
+                                            click: () => {
+                                            }
+                                        }
+                                    }, '[停止]'),
+                                ]);
+                            }
+                        }
+                },
+            ],
+            data:[],
+            rule_loading:false,
+            pageTotal:new Number(),
+            currentPage:1,
+            page:1
+        }
+    }
+}
+</script>
 

@@ -2033,6 +2033,10 @@
                                 response.data.data[0].servicestartdate = res.data.data
                                 
                                 if (_self.isEdit != true) {
+                                    // 判断是否添加备注内容
+                                    if(response.data.data[0].skuid == "1007"){
+                                        response.data.data[0].memo = "一年4次外勤、可做减少收入"
+                                    }
                                     _self.orderItemList.push(response.data.data[0])
                                 } else {
                                     _self.orderItemList2.push(response.data.data[0])
@@ -3495,13 +3499,15 @@
             },
 
             itemOnClick(index,field) {
-                console.log(this.orderItemList[index])
+                // console.log(this.orderItemList[index])
                 // console.log(index)
-                console.log(field)
+                // console.log(field)
                 let _self = this
                 let itemGrid
                 let _form
                 // console.log()
+
+                //  根据最终价格添加备注内容，有部分bug
                 if(_self.orderItemList[index].unitprice != _self.old_price && _self.orderItemList[index].skuid == "1007"){
                     if(_self.orderItemList[index].unitprice>=2000){
                         _self.orderItemList[index].memo = "一年4次外勤、可做减少收入"
@@ -3664,23 +3670,26 @@
                     });
                 }
 
-                var d = eval(row.servicedeparts) == null ? [] : eval(row.servicedeparts);
-                targetObjs.departname.combobox({
-                    data: d,
-                    valueField: 'type',
-                    textField: 'text',
-                    onSelect: function (re) {
-                        targetObjs.departname.combobox("destroy");
-                        itemGrid.datagrid('updateRow', {
-                            index: index,
-                            row: {
-                                departname: re.text,
-                                departid: re.type
+                    if(field == "departname"){
+                        var d = eval(row.servicedeparts) == null ? [] : eval(row.servicedeparts);
+                        // console.log(d)
+                            targetObjs.departname.combobox({
+                            data: d,
+                            valueField: 'type',
+                            textField: 'text',
+                            onSelect: function (re) {
+                                targetObjs.departname.combobox("destroy");
+                                itemGrid.datagrid('updateRow', {
+                                    index: index,
+                                    row: {
+                                        departname: re.text,    
+                                        departid: re.type
+                                    }
+                                });
+                                _self.savePrice(field);
                             }
-                        });
-                            _self.savePrice(field);
+                        })
                     }
-                })
             },
 
             savePrice(field) {
@@ -3879,7 +3888,21 @@
             let _self = this   
         },
         watch:{
-            'orderItemList':'orderItemList_change'
+        //     orderItemList:{
+        //         handler(newValue, oldValue) {
+        //             console.log(newValue)
+        //             console.log(newValue[0].unitprice)
+
+        //             if(newValue[0].unitprice >= 2000.00 ){
+        //                 console.log('#')
+        //                 // newValue[0].memo == "一年4次外勤、可做减少收入"
+        //                 Vue.set(newValue[0],"memo","一年4次外勤、可做减少收入")
+        //             }else{
+        //                 Vue.set(newValue[0],"memo","")
+        //             }
+        //     　　　},
+        //     　　　deep: true
+        //     }
         }
     }
 </script>
