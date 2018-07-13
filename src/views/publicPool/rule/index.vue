@@ -1,6 +1,7 @@
 <template>
     <div>
         <Card>
+            <!-- <Cascader :data="customerTypes" v-model="value1" trigger="hover"></Cascader> -->
             <div slot="title">规则说明</div>
             <div>
                 <Row>
@@ -14,80 +15,100 @@
             </div>
         </Card>
         <Card>
+            <ButtonGroup>
+                <Button type="primary" @click="open_create_pool_rule" style="margin-bottom:10px">新增规则</Button>
+            </ButtonGroup>
             <Table
                 highlight-row
                 size="small"
                 :columns="columns"
                 :data="data"
-                @on-current-change="selectRow"
                 :loading = "rule_loading"
-                @on-row-dblclick="isEditChange"
             ></Table>
             <Page
                 size="small"
                 :total="pageTotal"
-                :current.sync="currentPage"
+                :current.sync="page"
                 show-total
                 show-elevator
                 @on-change="pageChange"
                 style="margin-top: 10px"></Page>
         </Card>
+        <create-rule :type="customerTypes"></create-rule>
+        <update-rule :type="customerTypes"></update-rule>
     </div>
 </template>
 
 <script>
+import createRule from './create_rule'
+import updateRule from './update_rule'
+
 export default {
+    components:{
+        createRule,
+        updateRule
+    },
     data(){
         return{
             columns:[
                 {
                     title:'部门',
-                    key:'',
+                    key:'depart_name',
                     width: 120
                 },
                 {
                     title:'客户状态',
-                    key:'',
+                    key:'customer_status',
                     width: 150
                 },
                 {
-                    title:'客户重要性',
-                    key:'',
+                    title:'客户级别',
+                    key:'customer_level',
                     width: 120
                 },
                 {
+                    title:'客户区域',
+                    key:'customer_area',
+                    width:120
+                },
+                {
+                    title:'客户渠道',
+                    key:'channel_type_name',
+                    width:120
+                },
+                {
                     title:'行为',
-                    key:'',
+                    key:'behavior',
                     width: 120
                 },
                 {
                     title:'跟进评分',
-                    key:'',
+                    key:'follow_ranks',
+                    width: 120
+                },
+                // {
+                //     title:'产品类型',
+                //     key:'',
+                //     width: 120
+                // },
+                {
+                    title:'通知期限',
+                    key:'notify_time',
                     width: 120
                 },
                 {
-                    title:'产品类型',
-                    key:'',
-                    width: 120
-                },
-                {
-                    title:'期限',
-                    key:'',
+                    title:'更改期限',
+                    key:'change_time',
                     width: 120
                 },
                 {
                     title:'惩罚',
-                    key:'',
+                    key:'punishment',
                     width: 120
                 },
                 {
-                    title:'提前通知时间',
-                    key:'',
-                    width: 150
-                },
-                {
-                    title:'说明',
-                    key:'',
+                    title:'规则备注',
+                    key:'rule_memo',
                     width: 180,
                     render:(h,params) => {
                         if(1){
@@ -112,8 +133,8 @@ export default {
                     }
                 },
                 {
-                    title:'执行状态',
-                    key:'',
+                    title:'规则状态',
+                    key:'rule_status',
                     width: 120
                 },
                 {
@@ -178,9 +199,71 @@ export default {
             data:[],
             rule_loading:false,
             pageTotal:new Number(),
-            currentPage:1,
-            page:1
+            page:1,
+            customerTypes:[],
+            customerrating:[],
+            cluesources:[],
+            area:[],
+            customerrating_Map:new Map(),
+            cluesources_Map:new Map(),
+            area_Map:new Map(),
+            customerTypes_Array:[]
         }
+    },
+    methods:{
+        getData(){
+            let _self = this
+            let url = `api/crm/sale/rule/list`
+            _self.rule_loading = true
+            let config = {
+                params:{
+                    page:_self.page,
+                    pageSize:10
+                }
+            }
+
+            function success(res){
+                _self.pageTotal = res.data.data.total
+                _self.data = res.data.data.rows
+                _self.rule_loading = false
+            }
+
+            this.$Get(url, config, success)
+        },
+        pageChange(e){
+            this.page = e
+            this.getData()
+        },
+        getCustomerType(){
+            let _self = this
+            function success(res){
+                _self.customerTypes = _self.$changeCars(res.data.data.customerTypes)
+                _self.customerTypes_Array = _self.$Data2Casr(res.data.data.customerTypes)
+                console.log(_self.customerTypes_Array)
+            }
+            this.$GetDataCenter("customerTypes",success)
+        },
+        getDataCenter(){
+            let _self = this
+            function success(res){
+                _self.customerrating = res.data.data.customerrating
+                _self.area = res.data.data.area
+                _self.cluesources = res.data.data.cluesources
+                _self.customerrating_Map = _self.$array2map(_self.customerrating)
+                _self.area = _self.$array2map(_self.area)
+                _self.cluesources = _self.$array2map(_self.cluesources)
+            }
+
+            this.$GetDataCenter("customerrating,cluesources,area",success)
+        },
+        open_create_pool_rule(){
+            this.$bus.emit('open_create_customer_rule',true)
+        }
+    },
+    created(){
+        this.getDataCenter()
+        this.getCustomerType()
+        this.getData()
     }
 }
 </script>

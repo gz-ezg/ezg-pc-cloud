@@ -29,11 +29,11 @@
                 <Row>
                     <Row :gutter="16">
                         <Col span="10">
-                            <Input v-model="realname" placeholder="输入市场人员名称搜索" @on-enter="getData" size="small">
-                                <Button slot="append" icon="ios-search" @click="getData" size="small">搜索</Button>
+                            <Input v-model="realname" placeholder="输入市场人员名称搜索" @on-enter="getData" >
+                                <Button slot="append" icon="ios-search" @click="getData">搜索</Button>
                             </Input>
                         </Col>
-                        <Col span="14"><span>温馨提示：双击下方列表选择需要变更的市场人员</span></Col>
+                        <Col span="14" style="line-height:32px"><span>温馨提示：双击下方列表选择需要变更的市场人员</span></Col>
                     </Row>
                     <Table
                         style="margin-top: 10px"

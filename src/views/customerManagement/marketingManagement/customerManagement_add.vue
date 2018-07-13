@@ -553,41 +553,41 @@ import Bus from '../../../components/bus'
                     // 二级联动改一级
                     _self.customerTypeArr = []
                     for(let i = 0;i<_self.customerType.length;i++){
-                    var temp = {}
-                    if(_self.customerType[i].children != null){
-                        for(let j = 0;j<_self.customerType[i].children.length; j++ ){
-                        temp = {}
-                        temp.id = _self.customerType[i].children[j].id
-                        temp.typecode = _self.customerType[i].children[j].typecode
-                        temp.typename = _self.customerType[i].children[j].typename
-                        temp.pid = _self.customerType[i].children[j].pid
-                        temp.ptypename = _self.customerType[i].typename
-                        temp.ptypecode = _self.customerType[i].typecode
-                        _self.customerTypeArr.push(temp)
+                        var temp = {}
+                        if(_self.customerType[i].children != null){
+                            for(let j = 0;j<_self.customerType[i].children.length; j++ ){
+                            temp = {}
+                            temp.id = _self.customerType[i].children[j].id
+                            temp.typecode = _self.customerType[i].children[j].typecode
+                            temp.typename = _self.customerType[i].children[j].typename
+                            temp.pid = _self.customerType[i].children[j].pid
+                            temp.ptypename = _self.customerType[i].typename
+                            temp.ptypecode = _self.customerType[i].typecode
+                            _self.customerTypeArr.push(temp)
+                            }
+                        }else{    
+                            temp = {}
+                            temp.id = _self.customerType[i].id
+                            temp.typecode = _self.customerType[i].typecode
+                            temp.ptypename = _self.customerType[i].typename
+                            temp.typename = ''
+                            temp.pid = 0
+                            _self.customerTypeArr.push(temp)
                         }
-                    }else{    
-                        temp = {}
-                        temp.id = _self.customerType[i].id
-                        temp.typecode = _self.customerType[i].typecode
-                        temp.ptypename = _self.customerType[i].typename
-                        temp.typename = ''
-                        temp.pid = 0
-                        _self.customerTypeArr.push(temp)
-                    }
-                    //  修改成规定的模型
-                    _self.customerType[i].value = _self.customerType[i].id
-                    _self.customerType[i].label = _self.customerType[i].typename
-                    if(_self.customerType[i].children != null){
-                        
-                        for(let j = 0;j<_self.customerType[i].children.length; j++ ){
+                        //  修改成规定的模型
+                        _self.customerType[i].value = _self.customerType[i].id
+                        _self.customerType[i].label = _self.customerType[i].typename
+                        if(_self.customerType[i].children != null){
+                            
+                            for(let j = 0;j<_self.customerType[i].children.length; j++ ){
 
-                        _self.customerType[i].children[j].value= _self.customerType[i].children[j].id
-                        _self.customerType[i].children[j].label = _self.customerType[i].children[j].typename
+                            _self.customerType[i].children[j].value= _self.customerType[i].children[j].id
+                            _self.customerType[i].children[j].label = _self.customerType[i].children[j].typename
 
+                            }
                         }
                     }
-                    
-                    }    
+                    console.log(_self.customerType)    
                 })
             },
             // getData() {

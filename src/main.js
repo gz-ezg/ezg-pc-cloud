@@ -14,6 +14,7 @@ import util from '@/libs/util';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import VCharts from 'v-charts';
+// import './my-theme/index.less'
 // import methods from './common/common'
 
 Vue.use(VCharts)
@@ -66,8 +67,8 @@ Vue.prototype.$Data2Casr = function(data){
                 temp.typecode = data[i].children[j].typecode
                 temp.typename = data[i].children[j].typename
                 temp.pid = data[i].children[j].pid
-                temp.ptypename = data[i].children[j].typename
-                temp.ptypecode = data[i].children[j].typecode
+                temp.ptypename = data[i].typename
+                temp.ptypecode = data[i].typecode
                 Casr.push(temp)
             }
         }else{
@@ -92,6 +93,10 @@ Vue.prototype.$changeCars = function(data){
             temp.label = data[i].typename
             temp.children = []
             if(data[i].children != null){
+                let temp3 = {}
+                temp3.value = ""
+                temp3.label = "无"
+                temp.children.push(temp3)
                 for(let j = 0;j<data[i].children.length; j++ ){
                     let temp2 = {}
                     temp2.value = data[i].children[j].id

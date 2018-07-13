@@ -28,6 +28,9 @@
                             <Input v-model="form.code" placeholder="验证码" style="width: 60%"/>
                             <Img id="randCodeImage" src="/api/user/createImg" style="float: right;height: 32px"/>
                         </FormItem>
+                        <FormItem prop="isSave" style="margin-bottom:24px">
+                            <Checkbox v-model="isSave">七天免登陆</Checkbox>
+                        </FormItem>
                         <FormItem>
                             <Button @click="handleSubmit" type="primary" long>登录</Button>
                         </FormItem>
@@ -45,6 +48,7 @@
     export default {
         data() {
             return {
+                isSave:false,
                 form: {
                     userName: '',
                     password: '',
@@ -75,8 +79,13 @@
                     if (valid) {
                         let url = '/user/login/'
                         function doSccess(response) {
-                            Cookies.set('user', _self.form.userName);
-                            Cookies.set('password', _self.form.password);
+                            if(_self.isSave == true){
+                                Cookies.set('user', _self.form.userName, { expires: 7 });
+                                Cookies.set('password', _self.form.password, { expires: 7 });
+                            }else{
+                                Cookies.set('user', _self.form.userName);
+                                Cookies.set('password', _self.form.password);
+                            }
                             localStorage.setItem('realname', response.data.data.user.realname)
                             localStorage.setItem('id', response.data.data.user.id)
                             localStorage.setItem("companyname","")
@@ -189,6 +198,21 @@
                 let img = document.getElementById("randCodeImage");
                 img.src = '/api/user/createImg?a=' + date.getTime();
             });
+            let _self = this
+            let user = Cookies.get('user')
+            let password = Cookies.get('password')
+            console.log(user)
+            console.log(password)
+            if(user == undefined || user == "" || password == undefined || password == ""){
+                console.log('7天免登陆失效！')
+            }else{
+                _self.form.userName = user
+                _self.form.password = password
+                _self.handleSubmit()
+            }
+        },
+        created(){
+            
         }
     };
 </script>

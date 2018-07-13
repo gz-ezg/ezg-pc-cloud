@@ -310,6 +310,7 @@
                         re.data.data[i].title = re.data.data[i].text
                         _self.roleTree.push(re.data.data[i])
                     }
+                    console.log(_self.roleTree)
                 }
 
                 this.GetData(url, doSuccess)

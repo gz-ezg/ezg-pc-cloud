@@ -48,6 +48,7 @@
                                 size="small"
                                 :total="NpageTotal"
                                 placement="top"
+                                :current.sync="Npage"
                                 show-total
                                 show-sizer
                                 show-elevator
@@ -106,6 +107,7 @@
                         <Page
                                 size="small"
                                 :total="YpageTotal"
+                                :current.sync="Ypage"
                                 placement="top"
                                 show-total
                                 show-sizer
@@ -712,6 +714,8 @@ import allotAccountService from './allot_accout_service'
         },
         init(){
             this.local_router_name = this.$route.name
+            this.Npage = 1
+            this.Ypage = 1
             this.getDataY()
             this.getDataN()
         },
@@ -727,6 +731,8 @@ import allotAccountService from './allot_accout_service'
         let _self = this
         _self.$bus.on('update_allot_index',(e)=>{
             _self.init()
+            _self.Ypage = 1
+            _self.Npage = 1
         })
     }
     }

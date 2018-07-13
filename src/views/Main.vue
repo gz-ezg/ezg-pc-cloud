@@ -30,12 +30,12 @@
                     </div>
                 </div>
                 <div class="header-avator-con">
-                    <!--<full-screen v-model="isFullScreen" @on-change="fullscreenChange"></full-screen>
+                    <!-- <full-screen v-model="isFullScreen" @on-change="fullscreenChange"></full-screen>
                     <lock-screen></lock-screen>
-                    <message-tip v-model="mesCount"></message-tip>
-                    <theme-switch></theme-switch>-->
+                    <message-tip v-model="mesCount"></message-tip> -->
+                    <!-- <theme-switch></theme-switch> -->
                     <div style="height:100%">
-                        <Button size="small" type="primary" style="margin-top:18px;margin-left:100px" @click="open_stystem_complain">反馈回复</Button>
+                        <Button size="small" type="primary" style="margin-top:18px;margin-left:110px" @click="open_stystem_complain">反馈</Button>
                     </div>
                     <div class="user-dropdown-menu-con">
                         <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
@@ -47,6 +47,7 @@
                                 <DropdownMenu slot="list">
                                     <!--<DropdownItem name="ownSpace">个人中心</DropdownItem>-->
                                     <DropdownItem>个人中心</DropdownItem>
+                                    <DropdownItem name="stystem_complain" divided>系统反馈</DropdownItem>
                                     <DropdownItem name="loginout" divided>退出登录</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
@@ -242,6 +243,8 @@
                                 
                             }
                         })
+                }else if( name ==='stystem_complain'){
+                    _self.open_stystem_complain()
                 }
             },
             checkTag (name) {

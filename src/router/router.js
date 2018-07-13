@@ -531,8 +531,11 @@ export const appRouter = [
                 path: 'allot',
                 title: '工单分配',
                 name:"'BUSSINESS'",
+                // component: resolve => {
+                //     require(['@/views/taskManagement/allotCommonTask/commonTask_table.vue'], resolve);
+                // }
                 component: resolve => {
-                    require(['@/views/taskManagement/allotCommonTask/commonTask_table.vue'], resolve);
+                    require(['@/views/woa-components/allot-task/allotCommonTask/index.vue'], resolve);
                 }
             },
             {
@@ -621,7 +624,7 @@ export const appRouter = [
                 //     require(['@/views/taskManagement/allotCommonTask/commonTask_table.vue'], resolve);
                 // }
                 component: resolve => {
-                    require(['@/views/taskManagement/allotCommonTask/index.vue'], resolve);
+                    require(['@/views/woa-components/allot-task/allotCommonTask/index.vue'], resolve);
                 }
             },
             {
@@ -695,8 +698,7 @@ export const appRouter = [
                 title: '工单分配',
                 name:"'AUDIT'",
                 component: resolve => {
-                    // require(['@/views/auditManagement/myCommonTask/myCommonTask_table.vue'], resolve);
-                    require(['@/views/taskManagement/allotCommonTask/commonTask_table.vue'], resolve);
+                    require(['@/views/woa-components/allot-task/allotCommonTask/index.vue'], resolve);
                 }
             },
             {
