@@ -60,6 +60,14 @@
                         </FormItem>
                     </Col>
                 </Row>
+                <Row :gutter="16">
+                    <Col span="24">
+                        <FormItem prop="sort" label="字典排序：">
+                            <Input size="small" type="text" v-model="secondAdd.sort" placeholder="">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                </Row>
             </Form>
             <div slot="footer">
                 <Button type="primary" @click="AddMethod" :loading="button_loading">提交</Button>
@@ -96,6 +104,14 @@
                         </FormItem>
                     </Col>
                 </Row>
+                <Row :gutter="16">
+                    <Col span="24">
+                        <FormItem prop="sort" label="字典排序：">
+                            <Input size="small" type="text" v-model="secondAdd.sort" placeholder="">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                </Row>
             </Form>
             <div slot="footer">
                 <Button type="primary" @click="EditMethod" :loading="button_loading">提交</Button>
@@ -110,12 +126,14 @@ export default {
         return{
             secondAdd:{
                 typename:"",
-                typecode:""
+                typecode:"",
+                sort:"0"
             },
             secondEdit:{
                 typename:"",
                 typecode:"",
-                id:""
+                id:"",
+                sort:"0"
             },
             //  弹出录入框
             is_open_add:false,
@@ -135,7 +153,11 @@ export default {
                     key: 'typecode',
                     // width: 200
                 },
-                                    {
+                {
+                    title: '排序',
+                    key:'sort'
+                },
+                {
                     title: '操作',
                     key: 'action',
                     fixed: 'right',
@@ -241,7 +263,8 @@ export default {
                 id: _self.child_id,
                 typegroupid: 10383,
                 typename: _self.secondAdd.typename,
-                typecode: _self.secondAdd.typecode
+                typecode: _self.secondAdd.typecode,
+                sort: _self.secondAdd.sort
             }
 
             function success(res){
@@ -250,6 +273,8 @@ export default {
                 _self.is_open_add = false
                 _self.secondAdd.typename = ""
                 _self.secondAdd.typecode = ""
+                _self.secondAdd.sort = "0"
+
             }
 
             function fail(res){
@@ -265,7 +290,9 @@ export default {
             let config = {
                 id: _self.secondEdit.id,
                 typename: _self.secondEdit.typename,
-                typecode: _self.secondEdit.typecode
+                typecode: _self.secondEdit.typecode,
+                sort: _self.secondEdit.sort
+
             }
 
             function success(res){

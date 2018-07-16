@@ -16,50 +16,10 @@
                 </Row>
                 <Row :gutter="16">
                     <Col span="24">
-                        <FormItem prop="left_equation" label="左边公式：">
-                            <Input type="textarea" v-model="add.left_equation">
+                        <FormItem prop="equation" label="公式：">
+                            <Input type="textarea" v-model="add.equation">
                             </Input>
                         </FormItem> 
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="24">
-                        <FormItem prop="symbol" label="测算符号：">
-                            <Select transfer v-model="add.symbol" placeholder="" >
-                                <Option value="==">等于</Option>
-                                <Option value=">">大于</Option>
-                                <Option value=">=">大于等于</Option>
-                                <Option value="<">小于</Option>
-                                <Option value="<=">小于等于</Option>
-                                <Option value="!=">不等于</Option>
-                                <Option value="||">或者</Option>
-                                <Option value="&&">并且</Option>
-                            </Select>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="24">
-                        <FormItem prop="right_equation" label="右边公式：">
-                            <Input type="textarea" v-model="add.right_equation">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="24">
-                        <FormItem prop="vsupa_left_equation" label="云算盘左边公式：">
-                            <Input type="textarea" v-model="add.vsupa_left_equation">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="24">
-                        <FormItem prop="vsupa_right_equation" label="云算盘右边公式：">
-                            <Input type="textarea" v-model="add.vsupa_right_equation">
-                            </Input>
-                        </FormItem>
                     </Col>
                 </Row>
                 <Row :gutter="16">

@@ -137,9 +137,9 @@
 import Bus from '../../../../components/bus'
 
 export default {
-    // components:{
-    //     Search
-    // },
+    props:{
+        managestatus: Array
+    },
     data() {
             return {
                 sortField:'updatedate',
@@ -216,6 +216,11 @@ export default {
                         title: '提示',
                         key: 'baseorderid',
                         width: 120,
+                    },
+                    {
+                        title: '经营状态',
+                        key:'managestatusName',
+                        width:120
                     },
                     // {
                     //     title: '订单',
@@ -457,6 +462,14 @@ export default {
                 _self.pageTotal = res.data.data.total
                 for(let i = 0;i<res.data.data.rows.length;i++){
                     // console.log(_self.data[i])
+
+                    for(let j = 0;j<_self.managestatus.length;j++){
+                        if(_self.data[i].managestatus == _self.managestatus[j][0]){
+                            _self.data[i].managestatusName = _self.managestatus[j][1]
+                            break
+                        }
+                    }
+                    
                     if(_self.data[i].CreateDate!='' && _self.data[i].CreateDate!=null){
                         _self.data[i].CreateDate = _self.data[i].CreateDate.slice(0,10)
                     }

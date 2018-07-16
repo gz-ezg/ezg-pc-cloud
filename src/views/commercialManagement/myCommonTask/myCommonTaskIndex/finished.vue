@@ -151,6 +151,7 @@ import {DateFormat} from '../../../../libs/utils'
 export default {
     data() {
             return {
+                managestatus:[],
                 sortField:'updatedate',
                 order:'desc',
                 search_model:"",
@@ -224,16 +225,11 @@ export default {
                             }
                         }
                     },
-                    // {
-                    //     title: '提示',
-                    //     key: 'baseorderid',
-                    //     width: 120
-                    // },
-                    // {
-                    //     title: '订单',
-                    //     key: 'ordercode',
-                    //     width: 150
-                    // },
+                    {
+                        title: '经营状态',
+                        key:'managestatusName',
+                        width:120
+                    },
                     {
                         title: '服务部门',
                         key: 'departname',
@@ -488,6 +484,13 @@ export default {
                 _self.data = res.data.data.rows
                 _self.pageTotal = res.data.data.total
                 for(let i = 0;i<res.data.data.rows.length;i++){
+
+                    for(let j = 0;j<_self.managestatus.length;j++){
+                        if(_self.data[i].managestatus == _self.managestatus[j][0]){
+                            _self.data[i].managestatusName = _self.managestatus[j][1]
+                            break
+                        }
+                    }
                     // console.log(_self.data[i])
                     if(_self.data[i].CreateDate!='' && _self.data[i].CreateDate!=null){
                         _self.data[i].CreateDate = _self.data[i].CreateDate.slice(0,10)
@@ -557,9 +560,15 @@ export default {
                 this.$Message.warning('请选择一行查看！')
             }
         },
+        getGlobalDataCenter(){
+            let _self = this
+            let temp = JSON.parse(localStorage.getItem("global_datacenter"))
+            _self.managestatus = temp
+        }
     },
     created(){
         var _self = this
+        this.getGlobalDataCenter()
         this.getData()
         Bus.$on('flowsuccess',(e)=>{
             _self.getData()

@@ -8,6 +8,93 @@
         >
         <Spin fix size="large" v-if="spinShow"></Spin>
             <Tabs v-model="openTab">
+                <TabPane label="客户跟进记录" name="name8">
+                    <!-- <Row style="margin-top:10px;margin-bottom:10px;font-size:16px;margin-left:30px">
+                        <span>公司名称：{{companyInfo.companyname}}</span>
+                        <span style="margin-left:20px">归属客户：{{companyInfo.NAME}}</span>                        
+                    </Row> -->
+                    <Row>
+                        <Form ref="addDetailContent" :model="addDetailContent" :label-width="120">
+                            <Row :gutter="16">
+                                <Col span="20">
+                                    <FormItem prop="followUpType" label="公司名称：" style="margin-bottom:5px">
+                                        {{companyInfo.companyname}}
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row :gutter="16">
+                                <Col span="20">
+                                    <FormItem prop="followUpType" label="归属客户：" style="margin-bottom:5px">
+                                        {{companyInfo.NAME}}
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row :gutter="16" v-if="followupshow">
+                                <Col span="20">
+                                    <FormItem prop="followUpType" label="跟进类型：" style="margin-bottom:5px">
+                                        <!-- <Select transfer v-model="addDetailContent.followUpType" size="small" :disabled="followupshow"> -->
+                                        <Select transfer v-model="addDetailContent.followUpType" size="small">
+                                            <Option v-for="item in followTypeText" :value="item.typecode" :key="item.typecode">{{item.typename}}</Option>
+                                        </Select>
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row :gutter="16">
+                                <Col span="20">
+                                    <FormItem prop="content" label="跟进内容：" style="margin-bottom:5px">
+                                        <Input v-model="addDetailContent.content" type="textarea"></Input>
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row :gutter="16">
+                                    <Col span="20">
+                                    <FormItem style="margin-bottom:5px" label="沟通证据：">
+                                        <!-- class="upload_before" -->
+                                        <Upload
+                                                ref="upload"
+                                                multiple
+                                                :before-upload="handleUpload"
+                                                action="/api/customer/addCustomerContentImg"
+                                                >
+                                            <Button type="ghost" icon="ios-cloud-upload-outline" :class="{input_warning:warning}">选择文件</Button>
+                                        </Upload>
+                                        <!-- <div v-show="warning" style="color:#ed3f14;height:20px;margin-bottom:5px;line-height:20px">请上传附件</div> -->
+                                        <div v-for="(item,index) in show_file" :key=index>{{ item.name }}
+                                            <Button type="text" @click="fileRemove(item)">移除</Button>
+                                        </div>
+                                        
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                        </Form>
+                        <Row>
+                            <Col :push="3"><Button type="primary" @click="upload" :loading="followUp_loading">新增跟进</Button></Col>
+                            <!-- <Button type="primary" @click="add_workorder_followup" :loading="followUp_loading">新增</Button> -->
+                            
+                            <!-- <Button type="ghost" @click="cancel_workorder_followup">重置</Button>  -->
+                        </Row>
+                                               
+                    </Row>
+                    <!-- <Row>
+                        <Button type="primary" @click="create_new_followup" style="margin-left:10px">新增跟进记录</Button>
+                    </Row> -->
+                    <Row>
+                        <div style="margin-top: 20px;margin-left:10px;margin-right:10px;max-height:450px;overflow:hidden" class="wrapper" ref="wrapper">
+                            <div class="content">
+                                <Table
+                                ref="selection"
+                                highlight-row
+                                size="small"
+                                :columns="followUpHeader"
+                                :data="followUpData">
+                                </Table>
+                                <Row>
+                                    <center style="padding-bottom:30px;padding-top:30px">--没有更多记录！--</center>
+                                </Row>
+                            </div>
+                        </div>
+                    </Row>
+                </TabPane>
                 <TabPane label="企业信息" name="name1">
                     <Form ref="companyInfo" :model="companyInfo" :label-width="120">
                         <Row :gutter="16">
@@ -535,31 +622,6 @@
                         </Row>
                     </Form>
                 </TabPane>
-                <TabPane label="客户跟进记录" name="name8">
-                    <Row style="margin-top:10px;margin-bottom:10px;font-size:16px;margin-left:30px">
-                        <span>公司名称：{{companyInfo.companyname}}</span>
-                        <span style="margin-left:20px">归属客户：{{companyInfo.NAME}}</span>                        
-                    </Row>
-                    <Row>
-                        <Button type="primary" @click="create_new_followup" style="margin-left:10px">新增跟进记录</Button>
-                    </Row>
-                    <Row>
-                        <div style="margin-top: 10px;margin-left:10px;margin-right:10px;max-height:450px;overflow:hidden" class="wrapper" ref="wrapper">
-                            <div class="content">
-                                <Table
-                                ref="selection"
-                                highlight-row
-                                size="small"
-                                :columns="followUpHeader"
-                                :data="followUpData">
-                                </Table>
-                                <Row>
-                                    <center style="padding-bottom:30px;padding-top:30px">--没有更多记录！--</center>
-                                </Row>
-                            </div>
-                        </div>
-                    </Row>
-                </TabPane>
             </Tabs>
             <div slot="footer"></div>
         </Modal>
@@ -627,10 +689,11 @@
                             </FormItem>
                         </Col>
                     </Row>
-                    <Row :gutter="16">
+                    <Row :gutter="16" v-if="followupshow">
                         <Col span="1" style="visibility:hidden">1</Col>
                         <Col span="20">
                             <FormItem prop="followUpType" label="跟进类型：" style="margin-bottom:5px">
+                                <!-- <Select transfer v-model="addDetailContent.followUpType" size="small" :disabled="followupshow"> -->
                                 <Select transfer v-model="addDetailContent.followUpType" size="small">
                                     <Option v-for="item in followTypeText" :value="item.typecode" :key="item.typecode">{{item.typename}}</Option>
                                 </Select>
@@ -690,6 +753,7 @@
         props: ['companyId'],
         data(){
             return {
+                followupshow:false,
                 warning:false,
                 //  上传图片相关
                 attIds:"",
@@ -1044,7 +1108,7 @@
 
             cancel () {
                 this.detail = false
-                this.openTab = "name1"
+                this.openTab = "name8"
             },
             editTax(){
                 this.isEditTax = !this.isEditTax
@@ -1149,7 +1213,6 @@
                     }
                 }
                 this.$GetDataCenter(params, success)
-                
             },
             //  新增跟进记录
             handleUpload(file) {
@@ -1197,23 +1260,49 @@
 
                     })
                 }
+            },
+            getRole(){
+                let _self = this
+                let temp = localStorage.getItem("Main_Role")
+                // if(temp == "kuaiji" || temp == "shangshi" || temp == "qihua" || temp == "shenji"){
+                if(_self.$indexOfArray(temp, ["kuaiji","shangshi","qihua","shenji"])){
+                    _self.followupshow = false
+                    switch(temp){
+                        case "kuaiji":
+                            _self.addDetailContent.followUpType = "18"
+                            break;
+                        case "shangshi":
+                            _self.addDetailContent.followUpType = "17"
+                            break;
+                        case "qihua":
+                            _self.addDetailContent.followUpType = "19"
+                            break;
+                        case "shenji":
+                            _self.addDetailContent.followUpType = "23"
+                            break;
+                    }
+                }else{
+                    _self.followupshow = true
+                }
             }
 
         },
         created(){
             var _self = this
+            this.getRole()
             this.GetFollowUpType()            
             Bus.$on('openCompanyDetail',(e)=>{
                 // _self.GetFollowUpType()
-                _self.openTab = "name1"
+                _self.openTab = "name8"
                 _self.detail = true
                 // console.log(e.row.company_id)
                 _self.companyid = e
                 _self.isEditTax = true
+                _self.getRole()
                 _self.getData()
             })
             this.$bus.on('VueBusTest',(e)=>{
-                _self.openTab = "name1"
+                _self.openTab = "name8"
                 _self.detail = true
                 _self.companyid = e
                 _self.isEditTax = true

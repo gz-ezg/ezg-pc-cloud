@@ -62,7 +62,9 @@
                     password: [
                         {required: true, message: '密码不能为空', trigger: 'blur'}
                     ]
-                }
+                },
+                managestatus:[],
+                managestatus_Map: new Map()
             };
         },
         methods: {
@@ -89,6 +91,7 @@
                             localStorage.setItem('realname', response.data.data.user.realname)
                             localStorage.setItem('id', response.data.data.user.id)
                             localStorage.setItem("companyname","")
+                            _self.getManagestatus()
                             _self.getAllTSTypeGroups()
                             _self.getInterfaceItem(response.data.data.user.id)
                             _self.getUserRole(response.data.data.user.id)
@@ -190,6 +193,22 @@
                         _self.$Message.error(res.data.msg)
                     }
                 })
+            },
+            //  获取全局的数据字典
+            getManagestatus(){
+                let _self = this
+                
+                function success(res){
+                    _self.managestatus = res.data.data.managestatus
+                    _self.managestatus_Map = _self.$array2map(_self.managestatus)
+                    console.log(res)
+                    console.log(_self.managestatus)
+                    console.log(_self.managestatus_Map)
+                    let temp = JSON.stringify(_self.managestatus_Map)
+                    localStorage.setItem("global_datacenter",temp)
+                }
+
+                this.$GetDataCenter("managestatus",success)
             }
         },
         mounted() {

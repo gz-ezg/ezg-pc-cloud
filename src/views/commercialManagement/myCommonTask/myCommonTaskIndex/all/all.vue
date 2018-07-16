@@ -2,6 +2,7 @@
     <Card>
         <Row>
             <ButtonGroup style="float:left">
+                <Button type="primary" icon="ios-color-wand-outline">查看跟进记录</Button>
                 <Button type="primary" icon="information-circled" @click="showdetail2">查询详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="showflow2">流转</Button>
                 <Button type="primary" icon="ios-color-wand-outline">导出Excel</Button>

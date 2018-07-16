@@ -109,7 +109,7 @@
                                                 let routeData = this.$router.resolve({
                                                     name:'previewFile',
                                                     params:{
-                                                        id: 12061
+                                                        id: params.row.id
                                                     }
                                                 })
                                                 window.open(routeData.href, '_blank');

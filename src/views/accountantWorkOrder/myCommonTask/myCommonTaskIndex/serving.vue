@@ -41,42 +41,8 @@
                 <Button type="primary" icon="information-circled" @click="company">查看公司</Button>
                 
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
-                <!-- <Button type="primary" icon="ios-color-wand-outline" @click="product_error">产品异常</Button> -->
-                <!-- <Button type="primary" icon="ios-color-wand-outline">批量已读</Button>
-                <Button type="primary" icon="ios-color-wand-outline">批量未读</Button> -->
-                <!-- <Button type="primary" icon="ios-color-wand-outline" @click="foundClues">发现线索</Button>                -->
             </ButtonGroup>
-            <!-- <Poptip 
-                title="筛选" 
-                placement="bottom-end" 
-                width="350" 
-                style="float:right;margin-right:20px"
-                
-                >
-                <Button type="text" size="small" icon="funnel">筛选</Button>
-                <div  slot="content" @keydown.enter="search">
-                <Form ref="formInline" :model="formInline" :label-width="100">
-                    <Row :gutter="16">
-                        <Col span="22">
-                            <FormItem prop="companyName" label="公司名称：">
-                                <Input size="small" type="text"  v-model="formInline.companyname" placeholder="">
-                                </Input>
-                            </FormItem>
-                        </Col>
-                        <Col span="22">
-                            <FormItem prop="servicename" label="服务人员名称：">
-                                <Input size="small" type="text"  v-model="formInline.servicename" placeholder="">
-                                </Input>
-                            </FormItem>
-                        </Col>
-                    </Row>
-                    <FormItem>
-                        <Button type="primary" @click="search">搜索</Button>
-                        <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
-                    </FormItem>
-                </Form>
-                </div>
-            </Poptip> -->
+
         </Row>
         <Row style="margin-top: 10px;">
             <Table
@@ -110,38 +76,16 @@
                 <img :src='flowChartImg'/>
             </center>
         </Modal>
-        <!-- <Modal
-            v-model="pause"
-            title="提示信息"
-        >
-            <div style="font-size:20px;"><Icon type="alert-circled"></Icon>是否暂停/解锁</div>
-            <div slot="footer">
-                <Button type="primary" @click="pausetask">确定</Button>
-                <Button type="ghost" style="margin-left:20px" @click="pause=!pause">取消</Button>
-            </div>
-        </Modal>
-        <Modal
-            v-model="endlife"
-            title="提示信息"
-        >
-            <div style="font-size:20px;"><Icon type="alert-circled"></Icon>是否退款终止</div>
-            <div slot="footer">
-                <Button type="primary" @click="endlifetask">确定</Button>
-                <Button type="ghost" style="margin-left:20px" @click="endlife=!endlife">取消</Button>
-            </div>
-        </Modal> -->
     </Card>
 </template>
 
 <script>
-// import Search from './search'
 import Bus from '../../../../components/bus'
 
 export default {
-    // components:{
-    //     Search
-    // },
-    props:['manageStatus'],
+    props:{
+        managestatus: Array
+    },
     data() {
             return {
                 search_model:"",
@@ -224,6 +168,11 @@ export default {
                     //     key: 'ordercode',
                     //     width: 150
                     // },
+                    {
+                        title: '经营状态',
+                        key:'managestatusName',
+                        width:120
+                    },
                     {
                         title: '服务部门',
                         key: 'departname',
@@ -463,6 +412,12 @@ export default {
                 _self.data = res.data.data.rows
                 _self.pageTotal = res.data.data.total
                 for(let i = 0;i<res.data.data.rows.length;i++){
+                    for(let j = 0;j<_self.managestatus.length;j++){
+                        if(_self.data[i].managestatus == _self.managestatus[j][0]){
+                            _self.data[i].managestatusName = _self.managestatus[j][1]
+                            break
+                        }
+                    }
                     // console.log(_self.data[i])
                     if(_self.data[i].CreateDate!='' && _self.data[i].CreateDate!=null){
                         _self.data[i].CreateDate = _self.data[i].CreateDate.slice(0,10)

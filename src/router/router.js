@@ -547,15 +547,15 @@ export const appRouter = [
                     require(['@/views/commercialManagement/statistical/statistical_index.vue'], resolve);
                 }
             },
-            {
-                access: 6037,
-                path: 'schedule',
-                title: '排程表',
-                name: 'schedule',
-                component: resolve => {
-                    require(['@/views/commercialManagement/schedule/schedule2.vue'], resolve);
-                }
-            },
+            // {
+            //     access: 6037,
+            //     path: 'schedule',
+            //     title: '排程表',
+            //     name: 'schedule',
+            //     component: resolve => {
+            //         require(['@/views/commercialManagement/schedule/schedule2.vue'], resolve);
+            //     }
+            // },
             {
                 access: 6038,
                 path: 'mycommontaskmanagement',
@@ -870,7 +870,7 @@ export const appRouter = [
                 title: '数据字典管理',
                 name: 'datacenterManagement_index',
                 component: resolve => {
-                    require(['@/views/systemManagement/datacenterManagement/dataCenterManagement_index.vue'], resolve);
+                    require(['@/views/systemManagement/dataCenterManagement/dataCenterManagement_index.vue'], resolve);
                 }
             },
             {

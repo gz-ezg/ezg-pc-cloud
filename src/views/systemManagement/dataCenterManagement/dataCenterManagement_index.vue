@@ -12,14 +12,14 @@
                                     <Form ref="searchModel" :model="searchModel" :label-width="100">
                                         <Row :gutter="16">
                                             <Col span="8">
-                                                <FormItem prop="typegroupcode" label="字典编码：">
-                                                    <Input size="small" type="text" v-model="searchModel.typegroupcode" placeholder="">
+                                                <FormItem prop="typegroupname" label="字典名称：">
+                                                    <Input size="small" type="text" v-model="searchModel.typegroupname" placeholder="">
                                                     </Input>
                                                 </FormItem>
                                             </Col>
                                             <Col span="8">
-                                                <FormItem prop="typegroupname" label="字典名称：">
-                                                    <Input size="small" type="text" v-model="searchModel.typegroupname" placeholder="">
+                                                <FormItem prop="typegroupcode" label="字典编码：">
+                                                    <Input size="small" type="text" v-model="searchModel.typegroupcode" placeholder="">
                                                     </Input>
                                                 </FormItem>
                                             </Col>
@@ -155,6 +155,14 @@
                         </FormItem>
                     </Col>
                 </Row>
+                <Row :gutter="16">
+                    <Col span="24">
+                        <FormItem prop="sort" label="字典排序：">
+                            <Input size="small" type="text" v-model="child_data_model.sort" placeholder="">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                </Row>
             </Form>
             <div slot="footer">
                     <Button type="primary" @click="updateChildren" :loading="button_loading">修改</Button>
@@ -188,6 +196,14 @@
                     <Col span="24">
                         <FormItem prop="typecode" label="字典编码：">
                             <Input size="small" type="text" v-model="child_data_model_add.typecode" placeholder="">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="16">
+                    <Col span="24">
+                        <FormItem prop="sort" label="字典排序：">
+                            <Input size="small" type="text" v-model="child_data_model_add.sort" placeholder="">
                             </Input>
                         </FormItem>
                     </Col>
@@ -237,7 +253,11 @@ export default {
                     key: 'typegroupcode',
                     // width: 200
                 },
-                                    {
+                // {
+                //     title: '排序',
+                //     key:'sort'
+                // },
+                {
                     title: '操作',
                     key: 'action',
                     fixed: 'right',
@@ -316,7 +336,8 @@ export default {
                 typegroupname:"",
                 typename:"",
                 typecode:"",
-                id:""
+                id:"",
+                sort:""
             },
             child_data_modelrule:{
                 typecode: [
@@ -349,6 +370,10 @@ export default {
                     title: '类型code',
                     key: 'typecode',
                     // width: 200
+                },
+                {
+                    title: '排序',
+                    key:'sort'
                 },
                                     {
                     title: '操作',
@@ -430,7 +455,8 @@ export default {
                 typename:"",
                 typecode:"",
                 typegroupname:"",
-                id:""
+                id:"",
+                sort:"0"
             }
         }
     },
@@ -599,6 +625,7 @@ export default {
             this.child_data_model.id = e.ID
             this.child_data_model.typename = e.typename
             this.child_data_model.typecode = e.typecode
+            this.child_data_model.sort = e.sort
             this.open_children_data_edit = true
         },
         //  字典type的录入
@@ -617,7 +644,8 @@ export default {
                     let config = {
                         typename: _self.child_data_model_add.typename,
                         typecode: _self.child_data_model_add.typecode,
-                        typegroupid: _self.child_data_model_add.id  
+                        typegroupid: _self.child_data_model_add.id,
+                        sort: _self.child_data_model_add.sort
                     }
 
                     function success(res){
@@ -644,7 +672,8 @@ export default {
                     let config = {
                         typename: _self.child_data_model.typename,
                         typecode: _self.child_data_model.typecode,
-                        id: _self.child_data_model.id
+                        id: _self.child_data_model.id,
+                        sort: _self.child_data_model.sort
                     }
 
                     function success(res){

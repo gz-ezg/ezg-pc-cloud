@@ -10,13 +10,14 @@
                 <Row>
                     <Col span="12">
                         <FormItem label="客户状态" prop="customerStatus">
-                            <Cascader size="small" v-model="formdata.customerStatus" :data="type" style="width:100%" trigger="hover" transfer >
+                            <Cascader size="small" v-model="customerStatus" :data="CUStype" style="width:100%" trigger="hover" transfer >
                             </Cascader >
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="客户等级" prop="customerLevel">
                             <Select transfer size="small" v-model="formdata.customerLevel" style="width:100%">
+                                <Option v-for="item in customerrating" :key="item.id" :value="item.typecode">{{item.typename}}</Option>
                             </Select>
                         </FormItem>
                     </Col>
@@ -25,12 +26,14 @@
                     <Col span="12">
                         <FormItem label="客户地区" prop="customerArea">
                             <Select transfer size="small" v-model="formdata.customerArea" style="width:100%">
+                                <Option v-for="item in area" :key="item.id" :value="item.typecode">{{item.typename}}</Option>
                             </Select>
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="客户渠道" prop="channelTypeId">
                             <Select transfer size="small" v-model="formdata.channelTypeId" style="width:100%">
+                                <Option v-for="item in cluesources" :key="item.id" :value="item.id">{{item.channel_type_name}}</Option>
                             </Select>
                         </FormItem>
                     </Col>
@@ -39,12 +42,14 @@
                     <Col span="12">
                         <FormItem label="行为" prop="behavior">
                             <Select transfer size="small" v-model="formdata.behavior" style="width:100%">
+                                <Option v-for="item in behavior" :key="item.id" :value="item.typecode">{{item.typename}}</Option>
                             </Select>
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="惩罚" prop="punishment">
                             <Select transfer size="small" v-model="formdata.punishment" style="width:100%">
+                                <Option v-for="item in fpunishment" :key="item.id" :value="item.typecode">{{item.typename}}</Option>
                             </Select>
                         </FormItem>
                     </Col>
@@ -53,12 +58,14 @@
                     <Col span="12">
                         <FormItem label="跟进评分" prop="followRanks">
                             <Select transfer size="small" v-model="formdata.followRanks" style="width:100%">
+                                <Option v-for="item in rating" :key="item.id" :value="item.typecode">{{item.typename}}</Option>
                             </Select>
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="产品类型" prop="customersource">
                             <Select transfer size="small" v-model="formdata.customerStatus" style="width:100%">
+                                <Option v-for="item in productType" :key="item.id" :value="item.typecode">{{item.typename}}</Option>
                             </Select>
                         </FormItem>
                     </Col>
@@ -92,7 +99,7 @@
                     <div style="padding-bottom:1px;padding-top:5px">部门：</div>
                     <!--不使用树形结构，数据太复杂了-->
                     <!-- <Tree :data="depart" show-checkbox multiple></Tree> -->
-                    <CheckboxGroup v-model="social">
+                    <!-- <CheckboxGroup v-model="social">
                         <Checkbox label="twitter">
                             <Icon type="social-twitter"></Icon>
                             <span>Twitter</span>
@@ -109,7 +116,7 @@
                             <Icon type="social-snapchat"></Icon>
                             <span>Snapchat</span>
                         </Checkbox>
-                    </CheckboxGroup>
+                    </CheckboxGroup> -->
                 </Row>
             </Col>
         </Row>
@@ -121,13 +128,45 @@
 
 <script>
 export default {
-    props:['type'],
+    props:{
+        CUStype: Array,
+        cluesources: Array,
+        area: Array,
+        behavior: Array,
+        fpunishment: Array,
+        productType: Array,
+        customerrating: Array
+    },
     data(){
         return{
+            customerStatus:[],
+            rating:[
+                {
+                    id:1,
+                    typename:1,
+                    typecode:1
+                },
+                {
+                    id:2,
+                    typename:2,
+                    typecode:2
+                },{
+                    id:3,
+                    typename:3,
+                    typecode:3
+                },{
+                    id:4,
+                    typename:4,
+                    typecode:4
+                },{
+                    id:5,
+                    typename:5,
+                    typecode:5
+                }
+            ],
             customerTypes:[],
             open_create_rule:false,
             formdata:{
-                customerStatus:[]
             },
             depart: [
                 {
@@ -165,13 +204,51 @@ export default {
     },
     methods:{
         create_rule(){
+            let _self = this
+            let url = `api/crm/sale/rule/create`
+            // console.log(_self.formdata.customerStatus)
+            let temp = _self.customerStatus[0] + '-' + _self.customerStatus[1]
+            let config = {
+                customerStatus: temp,
+                customerLevel: _self.formdata.customerLevel,
+                followRanks: _self.formdata.followRanks,
+                punishment: _self.formdata.punishment,
+                changeTime: _self.formdata.changeTime,
+                notifyTime: _self.formdata.notifyTime,
+                departId: "10045",
+                ruleMemo: _self.formdata.ruleMemo,
+                customerArea: _self.formdata.customerArea,
+                channelTypeId: _self.formdata.channelTypeId,
+                behavior: _self.formdata.behavior
+            }
 
+            function success(res){
+                _self.open_create_rule = false
+                _self.$bus.emit('update_customer_rule',true)
+                _self.formdata.customerLevel = ""
+                _self.formdata.followRanks = ""
+                _self.formdata.followRanks = ""
+                _self.formdata.changeTime = ""
+                _self.formdata.notifyTime = ""
+                _self.formdata.ruleMemo = ""
+                _self.formdata.departId = ""
+                _self.formdata.customerArea = ""
+                _self.formdata.channelTypeId = ""
+                _self.formdata.behavior = ""
+                _self.customerStatus = []
+            }
+
+            function fail(err){
+            }
+
+            this.$Post(url, config, success, fail)
         },
     },
     created(){
         // this.getCustomerType()
         let _self = this
         this.$bus.on('open_create_customer_rule',(e)=>{
+            // console.log(_self.CUStype)
             _self.open_create_rule = true
         })
     }

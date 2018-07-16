@@ -169,6 +169,7 @@
     export default {
         data() {
             return {
+                managestatus:[],
                 finsih_loading:false,
                 upload_id:"",
                 finsih_work:false,
@@ -812,87 +813,16 @@
                     _self.pageTotal = res.data.data.total
                     for(let i = 0;i<_self.data.length;i++){
                         _self.data[i].service_status = _self.cservicest_map.get(_self.data[i].service_status)
+                        for(let j = 0;j<_self.managestatus.length;j++){
+                            if(_self.data[i].managestatus == _self.managestatus[j][0]){
+                                _self.data[i].managestatusName = _self.managestatus[j][1]
+                                break
+                            }
+                        }
                     }
                     _self.loading = false
                 })
             },
-            // getData() {
-            //     let _self = this
-            //     _self.loading = true
-            //     let url = '/order/cycle/service/record/list?sortField=updatedate&service_type=dljz&page=' + _self.page + '&pageSize=' + _self.pageSize + '&service_status=inservice&followby_realname='+_self.SearchValidate.followby_realname + '&CompanyName=' + _self.SearchValidate.CompanyName +'&server_realname=' +_self.SearchValidate.server_realname
-            //     // let config ={
-            //     //     params:{
-            //     //         page: _self.page,
-            //     //         pageSize: _self.pageSize,
-            //     //         service_status:
-            //     //     }
-            //     // }
-            //      function doSuccess(res) {
-            //         let _data = res.data.data
-            //         let _ids = []
-            //         _self.pageTotal = _data.total
-            //         _self.data = []
-
-            //         for (let i = 0; i < _data.rows.length; i++) {
-            //             _ids.push(_data.rows[i].month_service_id)
-            //             let _gdsreport = ''
-                        
-            //             if (_data.rows[i].gdsreport == 'ybd') {
-            //                 _gdsreport = '已报道'
-            //             } else if (_data.rows[i].gdsreport == 'wbd') {
-            //                 _gdsreport = '未报道'
-            //             } else if (_data.rows[i].gdsreport == 'bybd') {
-            //                 _gdsreport = '不用报道'
-            //             }
-
-            //             _self.data.push({
-            //                 gdsreport: _gdsreport,                            
-            //                 id: _data.rows[i].id,
-            //                 month_service_id: _data.rows[i].month_service_id,
-            //                 company_id: _data.rows[i].company_id,
-            //                 service_depart_id: _data.rows[i].service_depart_id,
-            //                 service_status: _data.rows[i].service_status,
-            //                 CompanyName: _data.rows[i].CompanyName,
-            //                 begin_period:_data.rows[i].begin_period,
-            //                 end_period:_data.rows[i].end_period,
-            //                 server_realname:_data.rows[i].server_realname,
-            //                 followby_realname:_data.rows[i].followby_realname,
-            //                 balance_count:_data.rows[i].balance_count,
-            //                 workordermemo:_data.rows[i].workordermemo,
-            //                 product:_data.rows[i].product,
-            //                 batchBookId:_data.rows[i].batchBookId,
-            //                 zl: '',
-            //                 zz: '',
-            //                 bs: '',
-            //                 cycle_work_order_id:_data.rows[i].cycle_work_order_id
-                            
-            //             })
-            //         }
-            //         console.log(_ids)
-                    
-
-            //         let _url = '/order/cycle/month/service/item/details?monthServiceIds=' + _ids.join()
-
-            //         function doSuccess2(res2) {
-            //             let _obj = res2.data.data
-
-            //             for (let i = 0; i < _self.data.length; i++) {
-            //                 if (_self.data[i].month_service_id != null) {
-            //                     _self.data[i].zl = res2.data.data[_self.data[i].month_service_id][0].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][0].confirm_date.substr(0,10):''
-            //                     _self.data[i].zz = res2.data.data[_self.data[i].month_service_id][1].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][1].confirm_date.substr(0,10):''
-            //                     _self.data[i].bs = res2.data.data[_self.data[i].month_service_id][2].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][2].confirm_date.substr(0,10):''
-            //                 }
-            //             }
-            //             _self.loading = false
-
-            //         }
-
-            //         _self.GetData(_url, doSuccess2)
-            //     }
-
-            //     this.GetData(url, doSuccess)
-            // },
-
             pageChange(a) {
                 let _self = this
                 _self.page = a
@@ -1151,6 +1081,11 @@
                 }else{
                     _self.$bus.emit('open_booking_follow',_self.current_row)
                 }
+            },
+            getGlobalDataCenter(){
+                let _self = this
+                let temp = JSON.parse(localStorage.getItem("global_datacenter"))
+                _self.managestatus = temp
             }
         },
         mounted() {
@@ -1159,6 +1094,7 @@
         },
         created () {
             let _self = this
+            this.getGlobalDataCenter()
             this.getCservicest()            
             Bus.$on('UPDATE_ALL_ACCOUNT_PAGE',(e)=>{
                 _self.getData()

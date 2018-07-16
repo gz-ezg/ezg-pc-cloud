@@ -159,53 +159,112 @@ export default {
                     fixed: 'right',
                     align: 'center',
                     render: (h, params) => {
-                        return h('div', [
-                            h('Button', {
-                                props: {
-                                    type: 'text',
-                                    size: 'small'
-                                },
-                                style: {
-                                    marginRight: '5px'
-                                },
-                                on: {
-                                    click: () => {
-                                        console.log(params)
-                                        let url = `api/system/resource/download?id=` + params.row.id
-                                        window.open(url)
+                        let temp = params.row.fileName.split(".")
+                        // console.log(temp[temp.length - 1])
+                        // console.log(this.$indexOfArray(temp[temp.length - 1], ['xlsx', 'xls', 'doc', 'docx', 'ppt', 'pptx', 'pdf']))
+                        if(this.$indexOfArray(temp[temp.length - 1], ['xlsx', 'xls', 'doc', 'docx', 'ppt', 'pptx', 'pdf'])){
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        
+                                        click: () => {
+                                            let routeData = this.$router.resolve({
+                                                name:'previewFile',
+                                                params:{
+                                                    id: params.row.id
+                                                }
+                                            })
+                                            window.open(routeData.href, '_blank');
+                                        }
                                     }
-                                }
-                            }, '下载'),
-                            // h('Button', {
-                            //     props: {
-                            //         type: 'text',
-                            //         size: 'small'
-                            //     },
-                            //     on: {
-                            //         click: () => {
-                            //             let _self = this                                        
-                            //             let url = `api/system/resource/depart/resource/manager/del`
-                            //             let config = {
-                            //                 id: params.row.id
-                            //             }
-                            //             this.$http.post(url,config).then(function(res){
-                            //                 _self.$backToLogin(res)
-                            //                 if(res.data.msgCode == '40000'){
-                            //                     _self.$Message.success(res.data.msg)
-                            //                     if(_self.data.length == '1'){
-                            //                         _self.page = _self.page - 1
-                            //                     }
-                            //                     _self.getData()
-                            //                 }else{
-                            //                     _self.$Message.error(res.data.msg)
-                            //                 }
-                            //             })
-                            //         }
-                            //     }
-                            // }, '删除')
-                        ]);
+                                }, '预览'),
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            console.log(params)
+                                            let url = `api/system/resource/download?id=` + params.row.id
+                                            window.open(url)
+                                        }
+                                    }
+                                }, '下载'),
+                            ]);
+                        }else{
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.$Message.error('该文件暂不支持预览！')
+                                        }
+                                    }
+                                }, '预览'),
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            console.log(params)
+                                            let url = `api/system/resource/download?id=` + params.row.id
+                                            window.open(url)
+                                        }
+                                    }
+                                }, '下载'),
+                                // h('Button', {
+                                //     props: {
+                                //         type: 'text',
+                                //         size: 'small'
+                                //     },
+                                //     on: {
+                                //         click: () => {
+                                //             let _self = this                                        
+                                //             let url = `api/system/resource/company/resource/del`
+                                //             let config = {
+                                //                 id: params.row.id
+                                //             }
+                                //             this.$http.post(url,config).then(function(res){
+                                //                 _self.$backToLogin(res)
+                                //                 if(res.data.msgCode == '40000'){
+                                //                     _self.$Message.success(res.data.msg)
+                                //                     if(_self.data.length == '1'){
+                                //                         _self.page = _self.page - 1
+                                //                     }
+                                //                     _self.getData()
+                                //                 }else{
+                                //                     _self.$Message.error(res.data.msg)
+                                //                 }
+                                //             })
+                                //         }
+                                //     }
+                                // }, '删除')
+                            ]);
+                        }
                     }
-                }
+                }        
             ],
             data:[]
         }

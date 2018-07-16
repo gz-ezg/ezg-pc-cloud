@@ -378,6 +378,7 @@
                             product:_data.rows[i].product,
                             batchBookId:_data.rows[i].batchBookId,
                             customername: _data.rows[i].customername,
+                            accounter_security_line: _data.rows[i].accounter_security_line,
                             zl: '',
                             zz: '',
                             bs: '',

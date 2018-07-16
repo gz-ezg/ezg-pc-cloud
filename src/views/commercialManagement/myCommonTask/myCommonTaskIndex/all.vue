@@ -50,6 +50,7 @@
         </Row>
         <Row>
             <ButtonGroup style="float:left">
+                <!-- <Button type="primary" icon="information-circled" @click="showdetail">查看跟进记录</Button> -->
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
@@ -133,6 +134,7 @@ export default {
     props:['companyarea'],
     data() {
             return {
+                managestatus:[],
                 search_model:"",
                 //  触发搜索
                 isSearh:false,
@@ -228,6 +230,11 @@ export default {
                         title: '公司注册地',
                         key:'companyarea',
                         width:120,
+                    },
+                    {
+                        title: '经营状态',
+                        key:'managestatusName',
+                        width:120
                     },
                     {
                         title: '提示',
@@ -341,18 +348,6 @@ export default {
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
-                                // h('Button', {
-                                //     props: {
-                                //         type: 'text',
-                                //         size: 'small'
-                                //     },
-                                //     on: {
-                                //         click: () => {
-                                //             // console.log(params)
-                                //             Bus.$emit('showcompanydetail',params)
-                                //         }
-                                //     }
-                                // }, '[查看公司]'),
                                 h('Button', {
                                     props: {
                                         type: 'text',
@@ -400,17 +395,6 @@ export default {
                                         }
                                     }
                                 }, '[暂停/解锁]'),
-                                // h('Button', {
-                                //     props: {
-                                //         type: 'text',
-                                //         size: 'small'
-                                //     },
-                                //     on: {
-                                //         click: () => {
-                                //             this.endlife = true
-                                //         }
-                                //     }
-                                // }, '[退款终止]'),
                             ]);
                         }
                     }
@@ -485,6 +469,14 @@ export default {
                 _self.data = res.data.data.rows
                 _self.pageTotal = res.data.data.total
                 for(let i = 0;i<res.data.data.rows.length;i++){
+
+                    for(let j = 0;j<_self.managestatus.length;j++){
+                        if(_self.data[i].managestatus == _self.managestatus[j][0]){
+                            _self.data[i].managestatusName = _self.managestatus[j][1]
+                            break
+                        }
+                    }
+
                     // console.log(_self.data[i])
                     if(_self.data[i].CreateDate!='' && _self.data[i].CreateDate!=null){
                         _self.data[i].CreateDate = _self.data[i].CreateDate.slice(0,10)
@@ -588,10 +580,16 @@ export default {
                     _self.workOrderStatus = res.data.workOrderStatus
                     _self.workOrderStatus_map = _self.$array2map(_self.workOrderStatus)
                 })
-            }
+            },
+        getGlobalDataCenter(){
+            let _self = this
+            let temp = JSON.parse(localStorage.getItem("global_datacenter"))
+            _self.managestatus = temp
+        }
     },
     created(){
         var _self = this
+        this.getGlobalDataCenter()
         this.getDataCenter()
         this.getData()
         Bus.$on('flowsuccess',(e)=>{

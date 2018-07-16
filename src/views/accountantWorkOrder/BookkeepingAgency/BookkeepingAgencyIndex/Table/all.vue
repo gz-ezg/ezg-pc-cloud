@@ -97,6 +97,7 @@
     export default {
         data() {
             return {
+                managestatus:[],
                 search_model:"",
                 SearchValidate:{
                     CompanyName:'',
@@ -129,6 +130,11 @@
                         title: '对应企业',
                         key: 'CompanyName',
                         width: 250
+                    },
+                    {
+                        title: '经营状态',
+                        key: 'managestatusName',
+                        width: 120
                     },
                     {
                         title: '产品名称',
@@ -322,6 +328,7 @@
                     for (let i = 0; i < _data.rows.length; i++) {
                         let status = ''
                         let _gdsreport = ''
+                        let managestatusName = ''
                         _ids.push(_data.rows[i].month_service_id)
 
                         if (_data.rows[i].service_status == 'notStarted') {
@@ -338,6 +345,13 @@
                             status = '暂停'
                         } else if (_data.rows[i].service_status == 'abolish') {
                             status = '作废'
+                        }
+
+                        for(let j = 0;j<_self.managestatus.length;j++){
+                            if(_data.rows[i].managestatus == _self.managestatus[j][0]){
+                                managestatusName = _self.managestatus[j][1]
+                                break
+                            }
                         }
 
                         if (_data.rows[i].gdsreport == 'ybd') {
@@ -364,7 +378,9 @@
                             product:_data.rows[i].product,
                             balance_count:_data.rows[i].balance_count,
                             batchBookId:_data.rows[i].batchBookId,
-                            customername: _data.rows[i].customername,                            
+                            customername: _data.rows[i].customername,
+                            accounter_security_line: _data.rows[i].accounter_security_line,
+                            managestatusName: managestatusName,
                             zl: '',
                             zz: '',
                             bs: '',
@@ -591,11 +607,17 @@
                     return 'demo-table-error-row';
                 }
             },
+            getGlobalDataCenter(){
+                let _self = this
+                let temp = JSON.parse(localStorage.getItem("global_datacenter"))
+                _self.managestatus = temp
+            }
         },
         mounted() {
             this.getData()
         },
         created () {
+            this.getGlobalDataCenter()
             let _self = this
             Bus.$on('UPDATE_ALL_ACCOUNT_PAGE',(e)=>{
                 _self.getData()

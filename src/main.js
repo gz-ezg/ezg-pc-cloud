@@ -55,6 +55,17 @@ axios.interceptors.response.use(
     }
 )
 
+//  查询某个值是否在其中
+Vue.prototype.$indexOfArray = function(data, array){
+    let flag = false
+    for(let i = 0; i < array.length; i++){
+        if(data == array[i]){
+            flag = true
+        }
+    }
+    return flag
+}
+
 //  2级联表转一级
 Vue.prototype.$Data2Casr = function(data){
     let Casr = []
@@ -118,9 +129,11 @@ Vue.prototype.$Get = function(url, config, success){
             success(res)
         }else{
             _self.$Message.error(res.data.msg)
+            console.warn(res)
         }
     }).catch(function(err){
         _self.$Message.error('网络异常！')
+        console.error(err)
     })
 }
 
@@ -135,10 +148,12 @@ Vue.prototype.$Post = function(url, config, success, fail){
         }else{
             _self.$Message.error(res.data.msg)
             fail(res)
+            console.warn(res)
         }
     }).catch(function(err){
         fail(err)
         _self.$Message.error('网络异常！')
+        console.error(err)
     })
 }
 

@@ -134,7 +134,7 @@ export default {
             let url = `api/order/cycle/finance/analysis/begin`
             _self.updateButton = true
             let config = {
-                accountBookId: _self.detail.account_book_id,
+                companyId: _self.detail.account_book_id,
                 period: _self.detail.period
             }
             this.$http.post(url, config).then(function(res){

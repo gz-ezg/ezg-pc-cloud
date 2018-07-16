@@ -34,8 +34,8 @@
                 @on-change="pageChange"
                 style="margin-top: 10px"></Page>
         </Card>
-        <create-rule :type="customerTypes"></create-rule>
-        <update-rule :type="customerTypes"></update-rule>
+        <create-rule :CUStype="customerTypes" :cluesources="cluesources" :area="area" :behavior="behavior" :fpunishment="fpunishment" :productType="productType" :customerrating="customerrating"></create-rule>
+        <!-- <update-rule :type="customerTypes"></update-rule> -->
     </div>
 </template>
 
@@ -58,17 +58,17 @@ export default {
                 },
                 {
                     title:'客户状态',
-                    key:'customer_status',
+                    key:'customer_status_name',
                     width: 150
                 },
                 {
                     title:'客户级别',
-                    key:'customer_level',
+                    key:'customer_level_name',
                     width: 120
                 },
                 {
                     title:'客户区域',
-                    key:'customer_area',
+                    key:'customer_area_name',
                     width:120
                 },
                 {
@@ -78,7 +78,7 @@ export default {
                 },
                 {
                     title:'行为',
-                    key:'behavior',
+                    key:'behavior_name',
                     width: 120
                 },
                 {
@@ -103,7 +103,7 @@ export default {
                 },
                 {
                     title:'惩罚',
-                    key:'punishment',
+                    key:'punishment_name',
                     width: 120
                 },
                 {
@@ -201,12 +201,24 @@ export default {
             pageTotal:new Number(),
             page:1,
             customerTypes:[],
+            //  客户等级
             customerrating:[],
+            //  客户渠道
             cluesources:[],
+            //  地区
             area:[],
+            //  行为
+            behavior:[],
+            //  惩罚措施
+            fpunishment:[],
+            //  产品类型
+            productType:[],
             customerrating_Map:new Map(),
             cluesources_Map:new Map(),
             area_Map:new Map(),
+            fpunishment_Map: new Map(),
+            behavior_Map: new Map(),
+            productType_Map: new Map(),
             customerTypes_Array:[]
         }
     },
@@ -226,6 +238,19 @@ export default {
                 _self.pageTotal = res.data.data.total
                 _self.data = res.data.data.rows
                 _self.rule_loading = false
+                for(let i = 0; i<_self.data.length;i++){
+                    _self.data[i].customer_area_name = _self.area_Map.get(_self.data[i].customer_area)
+                    _self.data[i].behavior_name = _self.behavior_Map.get(_self.data[i].behavior)
+                    if(_self.data[i].customer_status != ""){
+                        _self.data[i].customer_status_name = _self.getLocalType(_self.data[i].customer_status)
+                    }
+                    if(_self.data[i].customer_level != null ){
+                        _self.data[i].customer_level_name = _self.customerrating_Map.get(_self.data[i].customer_level.toString())
+                    }
+                    _self.data[i].behavior_name = _self.behavior_Map.get(_self.data[i].behavior)
+                    _self.data[i].punishment_name = _self.fpunishment_Map.get(_self.data[i].punishment)
+                    // if(_self.data[i].chan)
+                }
             }
 
             this.$Get(url, config, success)
@@ -239,31 +264,86 @@ export default {
             function success(res){
                 _self.customerTypes = _self.$changeCars(res.data.data.customerTypes)
                 _self.customerTypes_Array = _self.$Data2Casr(res.data.data.customerTypes)
-                console.log(_self.customerTypes_Array)
+                // console.log(_self.customerTypes_Array)
             }
             this.$GetDataCenter("customerTypes",success)
+        },
+        getLocalType(code){
+            let _self = this
+            tempstart = code.split("-")[0]
+            temp = code.split("-")[1]
+            for(let i = 0;i<_self.customerTypes_Array.length;i++){
+                if(temp == _self.customerTypes_Array[i].id){
+                    return _self.customerTypes_Array[i].ptypename + ' - ' + _self.customerTypes_Array[i].typename
+                }
+            }
+            if(temp==""){
+                for(let j = 0;j<_self.customerTypes_Array.length;j++){
+                    if(tempstart == _self.customerTypes_Array[j].pid){
+                        return _self.customerTypes_Array[j].ptypename + '- 无'
+                    }
+                }
+            }
         },
         getDataCenter(){
             let _self = this
             function success(res){
+                console.log(res.data.data)
                 _self.customerrating = res.data.data.customerrating
                 _self.area = res.data.data.area
-                _self.cluesources = res.data.data.cluesources
+                // _self.cluesources = res.data.data.cluesources
+                _self.behavior = res.data.data.behavior
+                _self.fpunishment = res.data.data.fpunishment
+                _self.productType = res.data.data.productType
                 _self.customerrating_Map = _self.$array2map(_self.customerrating)
-                _self.area = _self.$array2map(_self.area)
-                _self.cluesources = _self.$array2map(_self.cluesources)
+                _self.area_Map = _self.$array2map(_self.area)
+                // _self.cluesources_Map = _self.$array2map(_self.cluesources)
+                _self.behavior_Map = _self.$array2map(_self.behavior)
+                _self.fpunishment_Map = _self.$array2map(_self.fpunishment)
+                _self.productType_Map = _self.$array2map(_self.productType)
             }
 
-            this.$GetDataCenter("customerrating,cluesources,area",success)
+            this.$GetDataCenter("customerrating,cluesources,area,behavior,fpunishment,productType",success)
         },
+        getChannelList(){
+            let url = `api/channel/type/list`
+            let _self = this
+            function success(res){
+                console.log(res.data.data.rows)
+                _self.cluesources = res.data.data.rows
+            }
+            
+            let config = {
+                params: {
+                    page: 1,
+                    pageSize: 1000
+                }
+            }
+
+            this.$Get(url, config, success)
+        },
+        // getLocalChannel(data){
+        //     let _self = this
+        //     for(let i = 0;i<_self.cluesources.length;i++){
+        //         if(data == _self.customerTypes[i].id){
+        //             return _self.customerTypes[i].channel_type_name
+        //         }
+        //     }
+        // },
         open_create_pool_rule(){
             this.$bus.emit('open_create_customer_rule',true)
         }
     },
     created(){
+        this.getChannelList()
         this.getDataCenter()
         this.getCustomerType()
         this.getData()
+
+        let _self = this
+        this.$bus.on('update_customer_rule',(e)=>{
+            _self.getData()
+        })
     }
 }
 </script>
