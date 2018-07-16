@@ -5,7 +5,7 @@
         width="800"
     >
         <Row :gutter="20">
-            <Col span="15">
+            <Col span="12">
             <Form :label-width="90">
                 <Row>
                     <Col span="12">
@@ -90,7 +90,7 @@
                 </Row>
             </Form>
             </Col>
-            <Col span="9">
+            <Col span="12">
                 <Row :gutter="5">
                     <div style="padding-bottom:5px">说明：</div>
                     <Input type="textarea" v-model="formdata.ruleMemo" rows=6></Input>
@@ -98,7 +98,7 @@
                 <Row :gutter="5">
                     <div style="padding-bottom:1px;padding-top:5px">部门：</div>
                     <!--不使用树形结构，数据太复杂了-->
-                    <!-- <Tree :data="depart" show-checkbox multiple></Tree> -->
+                    <Tree :data="departTree" show-checkbox @on-check-change="getCheckedNodes" ></Tree>
                     <!-- <CheckboxGroup v-model="social">
                         <Checkbox label="twitter">
                             <Icon type="social-twitter"></Icon>
@@ -117,6 +117,14 @@
                             <span>Snapchat</span>
                         </Checkbox>
                     </CheckboxGroup> -->
+                    <!-- <RadioGroup v-model="selectDepart">
+                        <Col span="8" v-for="item in allDepart" :key="item.ID">
+                            <Radio :label="item.ID">
+                            <span>{{item.departname}}</span>
+                        </Radio>
+                        </Col>
+                    </RadioGroup> -->
+
                 </Row>
             </Col>
         </Row>
@@ -139,6 +147,10 @@ export default {
     },
     data(){
         return{
+            check_depart_id:"",
+            departTree:[],
+            selectDepart:"",
+            allDepart:[],
             customerStatus:[],
             rating:[
                 {
@@ -206,8 +218,13 @@ export default {
         create_rule(){
             let _self = this
             let url = `api/crm/sale/rule/create`
+            let temp 
             // console.log(_self.formdata.customerStatus)
-            let temp = _self.customerStatus[0] + '-' + _self.customerStatus[1]
+            if(_self.customerStatus != ""){
+                temp = _self.customerStatus[0] + '-' + _self.customerStatus[1]
+            }else{
+                temp = ""
+            }
             let config = {
                 customerStatus: temp,
                 customerLevel: _self.formdata.customerLevel,
@@ -215,7 +232,7 @@ export default {
                 punishment: _self.formdata.punishment,
                 changeTime: _self.formdata.changeTime,
                 notifyTime: _self.formdata.notifyTime,
-                departId: "10045",
+                departId: _self.check_depart_id,
                 ruleMemo: _self.formdata.ruleMemo,
                 customerArea: _self.formdata.customerArea,
                 channelTypeId: _self.formdata.channelTypeId,
@@ -243,10 +260,62 @@ export default {
 
             this.$Post(url, config, success, fail)
         },
+        getAllDepart(){
+            let _self = this
+            let url = `api/system/depart/list`
+            let config = {
+
+            }
+
+            function success(res){
+                _self.allDepart = res.data.data
+                // console.log(_self.allDepart)
+            }
+
+            this.$Get(url,config, success)
+        },
+        getAllDepartTree(){
+            let _self = this
+            let url = `api/system/depart/tree/list`
+            let config = {
+
+            }
+
+            function success(res){
+                _self.departTree = res.data.data
+                // console.log(_self.allDepart)
+                for(let i = 0; i<_self.departTree.length;i++){
+                    _self.departTree[i].title = _self.departTree[i].departname
+                    if(_self.departTree[i].children){
+                        for(let j = 0;j<_self.departTree[i].children.length;j++){
+                            _self.departTree[i].children[j].title = _self.departTree[i].children[j].departname
+                            if(_self.departTree[i].children[j].children){
+                                for(let k = 0;k<_self.departTree[i].children[j].children.length;k++){
+                                    _self.departTree[i].children[j].children[k].title = _self.departTree[i].children[j].children[k].departname
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            this.$Get(url,config, success)
+        },
+        getCheckedNodes(e){
+            let _self = this
+            if(e.length == 0){
+                _self.check_depart_id = ""
+            }else{
+                _self.check_depart_id = e[0].ID
+            }
+            console.log(_self.check_depart_id)
+        }
     },
     created(){
         // this.getCustomerType()
         let _self = this
+        this.getAllDepart()
+        this.getAllDepartTree()
         this.$bus.on('open_create_customer_rule',(e)=>{
             // console.log(_self.CUStype)
             _self.open_create_rule = true

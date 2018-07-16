@@ -53,7 +53,7 @@ export default {
             columns:[
                 {
                     title:'部门',
-                    key:'depart_name',
+                    key:'departname',
                     width: 120
                 },
                 {
