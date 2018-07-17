@@ -366,30 +366,25 @@ export default {
         //   sortable: true,
         },
         {
-          title: "剩余跟进时间",
-          key: "residue_time",
-          width: 120
-        },
-        // {
-        //   title: "商事",
-        //   key: "createby",
-        //   width: 120
-        // },
-        // {
-        //   title: "会计",
-        //   key: "createby",
-        //   width: 120
-        // },
-        // {
-        //   title: "企划",
-        //   key: "createby",
-        //   width: 120
-        // },
-        // {
-        //   title: "审计",
-        //   key: "createby",
-        //   width: 120
-        // }
+          title: "操作",
+          key: 'action',
+          fixed: 'right',
+          width: 90,
+          align: 'center',
+          render: (h,params) => {
+            return h('Button',{
+              props: {
+                type: 'primary',
+                size: 'small'
+              },
+              on:{
+                click: () => {
+                  this.receipt(params.row.ID)
+                }
+              }
+            },'[ 领取 ]')
+          }
+        }
       ],
       data: [],
       pageTotal: new Number(),
@@ -581,6 +576,7 @@ export default {
           a.email = response[i].email;
           a.address = response[i].ADDRESS;
           a.backup = response[i].backup;
+          a.ID = response[i].ID
           if (response[i].companynames != null) {
               if ((response[i].companynames).indexOf(',') != (-1)) {
                   var _data = response[i].companynames.split(',')
@@ -903,6 +899,25 @@ export default {
         }
       }
     },
+    //  公海池领取
+    receipt(id){
+      let _self = this
+      let url = `api/customer/receipt`
+
+      let config = {
+        customerId: id
+      }
+
+      function success(res){
+        _self.getTableData()
+      }
+
+      function fail(err){
+
+      }
+
+      this.$Post(url,config,success,fail)
+    }
     // findchannelTypeName(temp) {}
     /**********************数据字典相关end*********************/
   },

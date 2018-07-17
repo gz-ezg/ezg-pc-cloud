@@ -49,7 +49,7 @@
                                     <ButtonGroup>
                                         <Button type="primary" icon="plus" @click="confirm"  v-permission="['spareM.receipt']">确认收款</Button>
                                         <Button type="primary" icon="edit" @click="add_pay">补交费用</Button>
-                                        <!-- <Button type="primary" icon="edit" @click="edit_pay" v-permission="['spareM.edit']">修改</Button>-->
+                                        <Button type="primary" icon="edit" @click="edit_pay" v-permission="['spareM.edit']">修改</Button>
                                         <Button type="primary" icon="edit" disabled v-permission="['spareM.edit']">驳回</Button>
                                     </ButtonGroup>
                                 </Row>

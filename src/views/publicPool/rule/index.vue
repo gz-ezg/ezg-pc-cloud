@@ -35,7 +35,7 @@
                 style="margin-top: 10px"></Page>
         </Card>
         <create-rule :CUStype="customerTypes" :cluesources="cluesources" :area="area" :behavior="behavior" :fpunishment="fpunishment" :productType="productType" :customerrating="customerrating"></create-rule>
-        <!-- <update-rule :type="customerTypes"></update-rule> -->
+        <update-rule :CUStype="customerTypes" :cluesources="cluesources" :area="area" :behavior="behavior" :fpunishment="fpunishment" :productType="productType" :customerrating="customerrating"></update-rule>
     </div>
 </template>
 
@@ -111,21 +111,21 @@ export default {
                     key:'rule_memo',
                     width: 180,
                     render:(h,params) => {
-                        if(1){
-                            return h('div','内容')
+                        if(params.row.rule_memo.length<10){
+                            return h('div',params.row.rule_memo)
                         }else{
                             return h('Poptip', {
                                 props: {
                                     trigger: 'hover',
-                                    title: '说明',
+                                    title: '详情',
                                     placement: 'bottom'
                                 }
                             }, [
-                                h('span', this.data[params.index].companyNames[0].name.slice(0,13) + '...'),
+                                h('span', params.row.rule_memo.slice(0,10) + '...'),
                                 h('div', {
                                     slot: 'content'
                                 },[
-                                    h('span',params.row.address1)
+                                    h('span',params.row.rule_memo)
                                 ]
                                 )
                             ]);
@@ -134,7 +134,7 @@ export default {
                 },
                 {
                     title:'规则状态',
-                    key:'rule_status',
+                    key:'taskstate',
                     width: 120
                 },
                 {
@@ -144,7 +144,7 @@ export default {
                         width: 200,
                         align: 'center',
                         render: (h, params) => {
-                            if(1){
+                            if(params.row.taskstate == "PAUSED" || params.row.taskstate == null){
                                 return h('div', [
                                     h('Button', {
                                         props: {
@@ -153,7 +153,7 @@ export default {
                                         },
                                         on: {
                                             click: () => {
-                                                
+                                                this.$bus.emit('open_edit_customer_rule',params.row)                                                
                                             }
                                         }
                                     }, '[修改]'),
@@ -164,6 +164,7 @@ export default {
                                         },
                                         on: {
                                             click: () => {
+                                                this.start(params.row.task_id)
                                             }
                                         }
                                     }, '[执行]'),
@@ -177,7 +178,7 @@ export default {
                                         },
                                         on: {
                                             click: () => {
-                                                
+                                                this.$bus.emit('open_edit_customer_rule',params.row)
                                             }
                                         }
                                     }, '[修改]'),
@@ -188,6 +189,7 @@ export default {
                                         },
                                         on: {
                                             click: () => {
+                                                this.stop(params.row.task_id)
                                             }
                                         }
                                     }, '[停止]'),
@@ -223,6 +225,40 @@ export default {
         }
     },
     methods:{
+        start(e){
+            let _self = this
+            let url = `api/system/task/job/begin`
+            let config = {
+                jobId:e
+            }
+
+            function success(res){
+                _self.getData()
+            }
+
+            function fail(err){
+
+            }
+
+            this.$Post(url, config, success, fail)
+        },
+        stop(e){
+            let _self = this
+            let url = `api/system/task/job/pause`
+            let config = {
+                jobId:e
+            }
+
+            function success(res){
+                _self.getData()
+            }
+
+            function fail(err){
+
+            }
+
+            this.$Post(url, config, success, fail)
+        },
         getData(){
             let _self = this
             let url = `api/crm/sale/rule/list`

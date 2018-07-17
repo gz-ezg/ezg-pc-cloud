@@ -138,7 +138,7 @@
                     <Button type="primary" icon="grid" @click="getQRcode">查看二维码</Button>
                     <Button type="primary" icon="ios-color-filter-outline" @click="downloadExcel">导出Excel</Button>
                     <Button type="primary" icon="ios-color-filter-outline" v-if="false">设置提成</Button>
-                    <!--<Button type="primary" icon="ios-color-filter-outline">导出跟进记录</Button>-->
+                    <Button type="primary" icon="ios-color-filter-outline" @click="open_change_log">客户变更日志</Button>
                     <!--<Button type="primary" icon="ios-color-filter-outline">下载模板</Button>-->
                 </ButtonGroup>
                 <!-- <Poptip
@@ -264,6 +264,7 @@
                         :columns="columns"
                         :data="data"
                         @on-current-change="selectRow"
+                        :row-class-name="rowClassName"
                         :loading = "customer_loading"
                         @on-row-dblclick="isEditChange"
                         @on-sort-change="sort"
@@ -303,6 +304,7 @@
             </div>
         </Modal>
         <change-market @update="getTableData"></change-market>
+        <change-log></change-log>
     </div>
 </template>
 
@@ -311,10 +313,12 @@ import QRCode from "qrcodejs2";
 import Bus from "../../../components/bus";
 import {DateFormat} from '../../../libs/utils'
 import changeMarket from './change_market'
+import changeLog from './change_log'
 
 export default {
     components: {
-        changeMarket
+        changeMarket,
+        changeLog
     },
   data() {
     return {
@@ -509,9 +513,9 @@ export default {
         //   sortable: true,
         },
         {
-          title: "剩余跟进时间",
+          title: "剩余跟进时间(天)",
           key: "residue_time",
-          width: 120
+          width: 140
         },
         // {
         //   title: "商事",
@@ -756,7 +760,14 @@ export default {
                   ]
               }
           }
-          a.residue_time = response[i].residue_time
+          
+          if(response[i].residue_time == null){
+
+          }else{
+            let residue_time_temp = response[i].residue_time/1000
+            a.residue_time = (residue_time_temp/(3600*24)).toFixed(1)
+          }
+          
           _self.data.push(a);
         }
         window.scrollTo(0, 0);
@@ -1063,6 +1074,22 @@ export default {
         }
       }
     },
+    open_change_log(){
+        let _self = this
+        if(_self.customerid != ""){
+            _self.$bus.emit('open_customer_change_log',[_self.customerid,_self.customerName])
+        }else{
+            _self.$Message.warning("请选择一行查看！")
+        }
+    },
+    rowClassName(row, index){
+        if (row.residue_time <= 7) {
+            // console.log('1111')
+            return 'demo-table-info-row';
+        } else {
+            return '';
+        }
+    }
     // findchannelTypeName(temp) {}
     /**********************数据字典相关end*********************/
   },
@@ -1087,3 +1114,9 @@ export default {
   }
 };
 </script>
+
+<style>
+    .ivu-table .demo-table-info-row{
+       color: #ff6600;
+    }
+</style>

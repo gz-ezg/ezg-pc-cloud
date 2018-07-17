@@ -416,7 +416,7 @@ export default {
                     companyName:_self.formInline.companyname,
                     serviceName:_self.formInline.servicename,
                     // serviceDept:"'ACCOUNT','AUDIT'",
-                    serviceDept:"'ACCOUNT'",
+                    serviceDept:"'EXECUTIVE'",
                     iscycle:'N'
                 }
             }

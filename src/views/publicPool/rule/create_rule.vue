@@ -2,15 +2,18 @@
     <Modal
         title="新增销售规则"
         v-model="open_create_rule"
-        width="800"
+        width="900"
+        @on-cancel="handleReset('formdata')"
+        :mask-closable="false"
     >
         <Row :gutter="20">
-            <Col span="12">
-            <Form :label-width="90">
+            <Col span="15">
+            <Form :label-width="100" ref="formdata" :rules="formdataRule" :model="formdata" :show-message="false">
                 <Row>
-                    <Col span="12">
-                        <FormItem label="客户状态" prop="customerStatus">
-                            <Cascader size="small" v-model="customerStatus" :data="CUStype" style="width:100%" trigger="hover" transfer >
+                    <Col span="12" >
+                        <FormItem prop="customerStatus" >
+                            <span slot="label" class="warning">客户状态</span>
+                            <Cascader size="small"  v-model="customerStatus" :data="CUStype" style="width:100%" trigger="hover" transfer >
                             </Cascader >
                         </FormItem>
                     </Col>
@@ -62,13 +65,13 @@
                             </Select>
                         </FormItem>
                     </Col>
-                    <Col span="12">
-                        <FormItem label="产品类型" prop="customersource">
-                            <Select transfer size="small" v-model="formdata.customerStatus" style="width:100%">
+                    <!-- <Col span="12">
+                        <FormItem label="产品类型" prop="producttype">
+                            <Select transfer size="small" v-model="formdata.producttype" style="width:100%">
                                 <Option v-for="item in productType" :key="item.id" :value="item.typecode">{{item.typename}}</Option>
                             </Select>
                         </FormItem>
-                    </Col>
+                    </Col> -->
                 </Row>
                 <Row>
                     <Col>
@@ -90,33 +93,15 @@
                 </Row>
             </Form>
             </Col>
-            <Col span="12">
+            <Col span="9">
                 <Row :gutter="5">
                     <div style="padding-bottom:5px">说明：</div>
                     <Input type="textarea" v-model="formdata.ruleMemo" rows=6></Input>
                 </Row>
                 <Row :gutter="5">
-                    <div style="padding-bottom:1px;padding-top:5px">部门：</div>
+                    <div style="padding-bottom:1px;padding-top:5px" class="warning">部门：</div>
                     <!--不使用树形结构，数据太复杂了-->
                     <Tree :data="departTree" show-checkbox @on-check-change="getCheckedNodes" ></Tree>
-                    <!-- <CheckboxGroup v-model="social">
-                        <Checkbox label="twitter">
-                            <Icon type="social-twitter"></Icon>
-                            <span>Twitter</span>
-                        </Checkbox>
-                        <Checkbox label="facebook">
-                            <Icon type="social-facebook"></Icon>
-                            <span>Facebook</span>
-                        </Checkbox>
-                        <Checkbox label="github">
-                            <Icon type="social-github"></Icon>
-                            <span>Github</span>
-                        </Checkbox>
-                        <Checkbox label="snapchat">
-                            <Icon type="social-snapchat"></Icon>
-                            <span>Snapchat</span>
-                        </Checkbox>
-                    </CheckboxGroup> -->
                     <!-- <RadioGroup v-model="selectDepart">
                         <Col span="8" v-for="item in allDepart" :key="item.ID">
                             <Radio :label="item.ID">
@@ -129,7 +114,7 @@
             </Col>
         </Row>
         <div slot="footer">
-            <Button type="primary" @click="create_rule" style="margin-bottom:10px">新增</Button>
+            <Button type="primary" @click="submit" style="margin-bottom:10px">新增</Button>
         </div>
     </Modal>
 </template>
@@ -156,65 +141,71 @@ export default {
                 {
                     id:1,
                     typename:1,
-                    typecode:1
+                    typecode:"1"
                 },
                 {
                     id:2,
                     typename:2,
-                    typecode:2
+                    typecode:"2"
                 },{
                     id:3,
                     typename:3,
-                    typecode:3
+                    typecode:"3"
                 },{
                     id:4,
                     typename:4,
-                    typecode:4
+                    typecode:"4"
                 },{
                     id:5,
                     typename:5,
-                    typecode:5
+                    typecode:"5"
                 }
             ],
             customerTypes:[],
             open_create_rule:false,
             formdata:{
+                customerLevel:"",
+                customerArea:"",
+                channelTypeId:"",
+                behavior:"",
+                punishment:"",
+                followRanks:"",
+                changeTime:"",
+                notifyTime:"",
+                ruleMemo:""
             },
-            depart: [
-                {
-                    title: 'parent 1',
-                    expand: true,
-                    children: [
-                        {
-                            title: 'parent 1-1',
-                            expand: true,
-                            children: [
-                                {
-                                    title: 'leaf 1-1-1'
-                                },
-                                {
-                                    title: 'leaf 1-1-2'
-                                }
-                            ]
-                        },
-                        {
-                            title: 'parent 1-2',
-                            expand: true,
-                            children: [
-                                {
-                                    title: 'leaf 1-2-1'
-                                },
-                                {
-                                    title: 'leaf 1-2-1'
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
+            formdataRule:{
+                customerLevel:{ required: true, message:"客户等级必选！", trigger: 'change' },
+                customerArea:{ required: true, message:"客户地区必选！",  trigger: 'change' },
+                behavior:{ required: true, message:"行为必选！", trigger: 'change' },
+                followRanks:{required: true, message:"跟进评分必选！", trigger: 'change'},
+                punishment:{ required: true, message:"惩罚必选！",  trigger: 'change' },
+                changeTime:{ required: true, message:"划入期限必填！",  trigger: 'blur' },
+                notifyTime:{ required: true, message:"提前通知时间必填！",  trigger: 'blur' },
+            },
         }
     },
     methods:{
+        handleReset (name) {
+            this.$refs[name].resetFields();
+            this.customerStatus = []
+            this.check_depart_id = ""
+            this.getAllDepartTree()
+        },
+        submit(){
+            let _self = this
+            this.$refs['formdata'].validate((valid) => {
+                if (valid) {
+                    if(_self.customerStatus !="" && _self.check_depart_id != ""){
+                        _self.create_rule()
+                    }else{
+                        this.$Message.error('请补全信息！');
+                    }
+                } else {
+                    this.$Message.error('请补全信息！');
+                }
+            })
+        },
         create_rule(){
             let _self = this
             let url = `api/crm/sale/rule/create`
@@ -314,7 +305,7 @@ export default {
     created(){
         // this.getCustomerType()
         let _self = this
-        this.getAllDepart()
+        // this.getAllDepart()
         this.getAllDepartTree()
         this.$bus.on('open_create_customer_rule',(e)=>{
             // console.log(_self.CUStype)
@@ -323,4 +314,17 @@ export default {
     }
 }
 </script>
+
+
+<style scoped>
+.warning::before{
+    content: "*";
+    display: inline-block;
+    margin-right: 4px;
+    line-height: 1;
+    font-family: SimSun;
+    font-size: 12px;
+    color: #ed3f14;
+}
+</style>
 

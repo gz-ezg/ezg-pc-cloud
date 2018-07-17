@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Tabs value="name1">
+        <Tabs v-model="openTab">
             <TabPane label="未开始" name="name1">
                 <notbegin :companyarea="companyarea"></notbegin>
             </TabPane>
@@ -43,6 +43,7 @@ import Notbegin from './myCommonTaskIndex/notbegin'
         },
         data(){
             return{
+                openTab:"name1",
                 // hash:new Map(),
                 companyarea:[]
             }
@@ -62,6 +63,12 @@ import Notbegin from './myCommonTaskIndex/notbegin'
         },
         created(){
             this.getDataCenter()
+            let _self = this
+            //  商事主管
+            let temp = localStorage.getItem("id")
+            if(temp == "10228"){
+                _self.openTab = "name4"
+            }
         }
 
     }

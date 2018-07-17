@@ -152,82 +152,82 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    {
-        path: '/test',
-        icon: 'social-windows',
-        name: 'test',
-        title: 'Test',
-        component: Main,
-        children: [
-            {
-                path: 'test',
-                title: '测试页面',
-                name: 'test_index',
-                component: resolve => {
-                    require(['@/views/test/components/main.vue'], resolve);
-                    // require(['@/views/woa-components/file-preview/index.vue'], resolve);
+    // {
+    //     path: '/test',
+    //     icon: 'social-windows',
+    //     name: 'test',
+    //     title: 'Test',
+    //     component: Main,
+    //     children: [
+    //         {
+    //             path: 'test',
+    //             title: '测试页面',
+    //             name: 'test_index',
+    //             component: resolve => {
+    //                 require(['@/views/test/components/main.vue'], resolve);
+    //                 // require(['@/views/woa-components/file-preview/index.vue'], resolve);
 
-                }
-            }
-        ]
-    },
-    {
-        path: '/allindex',
-        icon: 'social-windows',
-        name: 'allindex',
-        title: '首页',
-        component: Main,
-        children: [
-            {
-                path: 'cannelIndex', 
-                title: '渠道首页', 
-                name: 'cannelIndex_index', 
-                component: resolve => {
-                    require(['@/views/home/cannel_index/cannelIndex.vue'], resolve);
-                }
-            },
-            {
-                path: 'commercialIndex', 
-                title: '商事首页', 
-                name: 'commercialIndex_index', 
-                component: resolve => {
-                    require(['@/views/home/commercial_index/commercialIndex.vue'], resolve);
-                }
-            },
-            {
-                path: 'accountIndex', 
-                title: '会计首页', 
-                name: 'accountIndex_index', 
-                component: resolve => {
-                    require(['@/views/home/account_index/accountIndex.vue'], resolve);
-                }
-            },
-            {
-                path: 'marketIndex', 
-                title: '市场首页', 
-                name: 'marketIndex_index', 
-                component: resolve => {
-                    require(['@/views/home/market_index/marketIndex.vue'], resolve);
-                }
-            },
-            {
-                path: 'auditIndex', 
-                title: '审计首页', 
-                name: 'auditIndex_index', 
-                component: resolve => {
-                    require(['@/views/home/audit_index/auditIndex.vue'], resolve);
-                }
-            },
-            {
-                path: 'planIndex', 
-                title: '企划首页', 
-                name: 'planIndex_index', 
-                component: resolve => {
-                    require(['@/views/home/plan_index/planIndex.vue'], resolve);
-                }
-            },
-        ]
-    },
+    //             }
+    //         }
+    //     ]
+    // },
+    // {
+    //     path: '/allindex',
+    //     icon: 'social-windows',
+    //     name: 'allindex',
+    //     title: '首页',
+    //     component: Main,
+    //     children: [
+    //         {
+    //             path: 'cannelIndex', 
+    //             title: '渠道首页', 
+    //             name: 'cannelIndex_index', 
+    //             component: resolve => {
+    //                 require(['@/views/home/cannel_index/cannelIndex.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             path: 'commercialIndex', 
+    //             title: '商事首页', 
+    //             name: 'commercialIndex_index', 
+    //             component: resolve => {
+    //                 require(['@/views/home/commercial_index/commercialIndex.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             path: 'accountIndex', 
+    //             title: '会计首页', 
+    //             name: 'accountIndex_index', 
+    //             component: resolve => {
+    //                 require(['@/views/home/account_index/accountIndex.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             path: 'marketIndex', 
+    //             title: '市场首页', 
+    //             name: 'marketIndex_index', 
+    //             component: resolve => {
+    //                 require(['@/views/home/market_index/marketIndex.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             path: 'auditIndex', 
+    //             title: '审计首页', 
+    //             name: 'auditIndex_index', 
+    //             component: resolve => {
+    //                 require(['@/views/home/audit_index/auditIndex.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             path: 'planIndex', 
+    //             title: '企划首页', 
+    //             name: 'planIndex_index', 
+    //             component: resolve => {
+    //                 require(['@/views/home/plan_index/planIndex.vue'], resolve);
+    //             }
+    //         },
+    //     ]
+    // },
     {
         access: 6001,
         meta: 6001,
@@ -507,15 +507,15 @@ export const appRouter = [
                     require(['@/views/order/spareManagement/spareManagement.vue'], resolve);
                 }
             },
-            {
-                access:6020,
-                path: 'orderLog',
-                title: '订单变更日志',
-                name: 'orderLog_index',
-                component: resolve => {
-                    require(['@/views/order/orderLog/index.vue'], resolve);
-                }
-            }
+            // {
+            //     access:6020,
+            //     path: 'orderLog',
+            //     title: '订单变更日志',
+            //     name: 'orderLog_index',
+            //     component: resolve => {
+            //         require(['@/views/order/orderLog/index.vue'], resolve);
+            //     }
+            // }
         ]
     },
     {
@@ -717,9 +717,23 @@ export const appRouter = [
         icon: 'social-windows',
         name: 'administrationWorkOrder',
         title: '行政管理',
+        access: 6091,
         component: Main,
         children: [
             {
+                access:6092,
+                path: 'allot',
+                title: '工单分配',
+                name:"'EXECUTIVE'",
+                // component: resolve => {
+                //     require(['@/views/taskManagement/allotCommonTask/commonTask_table.vue'], resolve);
+                // }
+                component: resolve => {
+                    require(['@/views/woa-components/allot-task/allotCommonTask/index.vue'], resolve);
+                }
+            },
+            {
+                access: 6093,
                 path: 'administratiotaskmanagement',
                 title: '工单管理',
                 name:"administratiotaskmanagement",
@@ -786,7 +800,7 @@ export const appRouter = [
         ]
     },
     {
-        // access: 6027,
+        access: 6027,
         path: '/publicPool',
         icon: 'social-windows',
         title: '公海池',
@@ -794,13 +808,13 @@ export const appRouter = [
         component: Main,
         children: [
             {
-                // access: 6027,
+                access: 6089,
                 path: 'index', title: '公海池', name: 'publicPool_index', component: resolve => {
                     require(['@/views/publicPool/index/pubilcPool_table.vue'], resolve);
                 }
             },
             {
-                // access: 6027,
+                access: 6090,
                 path: 'rule_index', title: '销售规则管理', name: 'rule_index', component: resolve => {
                     require(['@/views/publicPool/rule/index.vue'], resolve);
                 }

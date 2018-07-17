@@ -288,6 +288,7 @@ export default {
                 // order:"asc"
                 }
             let toExcel = this.$MergeURL(url, config)
+            console.log(toExcel)
             window.open(toExcel)
         },
         downloadExcelField(){},
