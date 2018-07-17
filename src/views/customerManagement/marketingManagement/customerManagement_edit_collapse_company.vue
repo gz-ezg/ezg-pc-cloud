@@ -239,7 +239,8 @@ import Bus from '../../../components/bus.js'
         props: ['customerid', 'customertypeText', 'tel', 'customersource'],
         data() {
             // 企业名称校验
-            let re = /^[\u4e00-\u9fa5]+$/;
+            // let re = /^[\u4e00-\u9fa5]+|$/;
+            let re = /^[\u4e00-\u9fa5()()]+|$/;
             const companynamecheck = (rule, value, callback)=>{
                     console.log(re.test(value))
 
