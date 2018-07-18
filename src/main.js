@@ -29,18 +29,42 @@ axios.interceptors.response.use(
         // console.log(response.data.msgCode)
         // console.log("这是拦截器弹出的！")
         if(response.data.msgCode == "50003" && Cookies.get('user')!=""){
-            Cookies.set('user', '');
-            Cookies.set('password', '');
-            iView.Message.warning('对不起，您还未登陆！即将回到登陆页面！')
-            // setTimeout(() =>{
-            //     router.push({
-            //         name:'login'
-            //     })
-            // },2000
-            // )
-            router.push({
-                name:'login'
-            })
+            // Cookies.set('user', '');
+            // Cookies.set('password', '');
+            let _self = this
+            let user = Cookies.get('user')
+            let password = Cookies.get('password')
+            if(user == undefined || user == "" || password == undefined || password == ""){
+                iView.Message.warning('对不起，您还未登陆！即将回到登陆页面！')
+                router.push({
+                    name:'login'
+                })
+            }else{
+                let url = `api/user/login/`
+
+                let config = {
+                    username: user,
+                    password: password
+                }
+
+                axios.post(url, config).then(function(res){
+                    if(res.data.msgCode == "40000"){
+                        iView.$Message.success('重新登录成功！')
+                    }else{
+                        Cookies.set('user', '');
+                        Cookies.set('password', '');
+                        router.push({
+                            name:'login'
+                        })
+                    }
+                }).catch(function(err){
+                    Cookies.set('user', '');
+                    Cookies.set('password', '');
+                    router.push({
+                        name:'login'
+                    })
+                })
+            }
         }
         if(response.data.msgCode == '60000'){
             iView.Message.warning('对不起，您没有权限访问该页面！')
@@ -187,8 +211,8 @@ Vue.prototype.$backToLogin = function(res){
     // if(res.data.msgCode == '50003'||res == ""){
     if(res.data.msgCode == '50003'){
         this.$Message.warning('对不起，您还未登陆！即将回到登陆页面！')
-        Cookies.set('user', '');
-        Cookies.set('password', '');
+        // Cookies.set('user', '');
+        // Cookies.set('password', '');
         this.$router.push({
             name:'login'
         })

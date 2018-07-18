@@ -28,9 +28,9 @@
                             <Input v-model="form.code" placeholder="验证码" style="width: 60%"/>
                             <Img id="randCodeImage" src="/api/user/createImg" style="float: right;height: 32px"/>
                         </FormItem>
-                        <!-- <FormItem prop="isSave" style="margin-bottom:24px">
+                        <FormItem prop="isSave" style="margin-bottom:24px">
                             <Checkbox v-model="isSave">七天免登陆</Checkbox>
-                        </FormItem> -->
+                        </FormItem>
                         <FormItem>
                             <Button @click="handleSubmit" type="primary" long>登录</Button>
                         </FormItem>
@@ -201,9 +201,9 @@
                 function success(res){
                     _self.managestatus = res.data.data.managestatus
                     _self.managestatus_Map = _self.$array2map(_self.managestatus)
-                    console.log(res)
-                    console.log(_self.managestatus)
-                    console.log(_self.managestatus_Map)
+                    // console.log(res)
+                    // console.log(_self.managestatus)
+                    // console.log(_self.managestatus_Map)
                     let temp = JSON.stringify(_self.managestatus_Map)
                     localStorage.setItem("global_datacenter",temp)
                 }

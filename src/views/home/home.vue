@@ -259,10 +259,40 @@ export default {
     },
     created(){
         // 跳转各个部门首页
-        // if(localStorage.getItem('realname')=="管理员"){
+        let _self = this
+        let temp = localStorage.getItem('Main_Role')
+        switch(temp){
+            case "kuaiji":
+                this.$router.push({
+                    name:'accountIndex_index'
+                })
+                break
+            case "shangshi":
+                this.$router.push({
+                    name:'commercialIndex_index'
+                })
+                break
+            case "qihua":
+                this.$router.push({
+                    name:'planIndex_index'
+                })
+                break
+            case "shenji":
+                this.$router.push({
+                    name:'auditIndex_index'
+                })
+                break
+            case "salers":
+                this.$router.push({
+                    name:'marketIndex_index'
+                })
+                break
+            default:
+        }
+        // if(localStorage.getItem('Main_Role')=="管理员"){
         //     this.$router.push({
         //          name:'cannelIndex_index'
-        // })
+        //     })
         // }
     }
 };

@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <Row>
+    <div style="min-width:1000px">
+        <Row >
             <Card>
-                <Form ref="SearchValidate" :model="SearchValidate" :label-width="80" style="margin-top: 15px">
-                <Row :gutter="8" style="height:56px">
+                <Form ref="SearchValidate" :model="SearchValidate" :label-width="80" style="margin-top: 15px" >
+                <Row :gutter="8">
                     <Col span="8">
                         <FormItem label="名字：" prop="realname">
                             <Input v-model="SearchValidate.realname" size="small"></Input>
@@ -20,7 +20,7 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="8" style="height:56px">
+                <Row :gutter="8">
                     <Col span="8">
                         <FormItem label="角色ID：" prop="roleid">
                             <Input v-model="SearchValidate.roleid" size="small"></Input>
@@ -39,92 +39,102 @@
                 </Row>
                 <center>
                     <FormItem>
-                        <Button type="primary" @click="Search">搜索</Button>
-                        <Button type="ghost" @click="handleReset" style="margin-left: 8px">
-                            重置
-                        </Button>
+                        <Button type="primary" @click="Search" >搜索</Button>
+                        <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
                     </FormItem>
                 </center>
             </Form>
             </Card>
         </Row>
-        <Row>
-            <Col span="12">
-                <Card>
-                    <Row style="margin-top: 10px;">
-                        <Table
-                                highlight-row
-                                size="small"
-                                :columns="userColumns"
-                                @on-row-click="selectRow"
-                                :data="userData"></Table>
-                        <Page
-                                size="small"
-                                :total="userTotal"
-                                show-total
-                                show-sizer
-                                show-elevator
-                                :current.sync="userPage"
-                                @on-change="pageChange"
-                                @on-page-size-change="pageSizeChange"
-                                style="margin-top: 10px"></Page>
-                    </Row>
-                </Card>
-            </Col>
-            <Col span="12">
-                <Card v-show="isOpen">
-                    <p slot="title">
-                        {{ cardTitle }}
-                    </p>
-                    <Row>
-                        <Col span="8">
-                            <Card>
-                                <p slot="title">
-                                    菜单列表
-                                    <Icon type="android-done-all" style="float: right"
-                                          @click.native="getChecked"></Icon>
-                                </p>
-                                <Button type="ghost" @click="allSelect">全选</Button>
-                                <Button type="ghost" v-if="isRM == false" @click="permissions(userId)">重置</Button>
-                                <Button type="ghost" v-if="isRM == true" @click="permissionsRM(userId)">重置</Button>
-                                <Tree
-                                        :data="roleTree"
-                                        ref="tree"
-                                        show-checkbox
-                                        @on-select-change="roleTreeChange"></Tree>
-                            </Card>
-                        </Col>
-                        <Col span="8">
-                            <Card>
-                                <p slot="title">
-                                    页面控件权限配置
-                                    <Icon type="android-done-all" style="float: right"
-                                          @click.native="postButton"></Icon>
-                                </p>
-                                <CheckboxGroup v-model="setButton" @on-change="buttonSelect">
-                                    <Row v-for="(item, index) in buttonData" :key=index>
-                                        <Checkbox :label="item.id">{{ item.text }}</Checkbox>
-                                    </Row>
-                                </CheckboxGroup>
-                            </Card>
-                        </Col>
-                        <Col span="8">
-                            <Card>
-                                <p slot="title">
-                                    数据规则权限
-                                    <Icon type="android-done-all" style="float: right" @click.native="postRules"></Icon>
-                                </p>
-                                <CheckboxGroup v-model="setRules" @on-change="RulesSelect">
-                                    <Row v-for="(item, index) in rulesData" :key=index>
-                                        <Checkbox :label="item.id">{{ item.text }}</Checkbox>
-                                    </Row>
-                                </CheckboxGroup>
-                            </Card>
-                        </Col>
-                    </Row>
-                </Card>
-            </Col>
-        </Row>
+        <Card>
+            <Row>
+                <ButtonGroup>
+                    <Button type="primary" icon="plus">修改密码</Button>
+                    <Button type="primary" icon="ios-color-wand-outline">删除用户</Button>
+                    <Button type="primary" icon="ios-color-wand-outline">锁定/解锁</Button>
+                </ButtonGroup>
+            </Row>
+            <Row style="margin-top: 10px;">
+                <Col :span="frist_span">
+                    <Card>
+                        <Row style="margin-top: 10px;">
+                            <Table
+                                    highlight-row
+                                    size="small"
+                                    :columns="userColumns"
+                                    @on-row-click="selectRow"
+                                    :data="userData"></Table>
+                            <Page
+                                    size="small"
+                                    :total="userTotal"
+                                    show-total
+                                    show-sizer
+                                    show-elevator
+                                    :current.sync="userPage"
+                                    @on-change="pageChange"
+                                    @on-page-size-change="pageSizeChange"
+                                    style="margin-top: 10px"></Page>
+                        </Row>
+                    </Card>
+                </Col>
+                <Col span="12">
+                    <Card v-show="isOpen">
+                        <p slot="title">
+                            {{ cardTitle }}
+                        </p>
+                        <div slot="extra">
+                            <Icon type="close" @click="isOpen=false;frist_span=24"></Icon>
+                        </div>
+                        <Row>
+                            <Col span="8">
+                                <Card>
+                                    <p slot="title">
+                                        菜单列表
+                                        <Icon type="android-done-all" style="float: right"
+                                            @click.native="getChecked"></Icon>
+                                    </p>
+                                    <Button type="ghost" @click="allSelect">全选</Button>
+                                    <Button type="ghost" v-if="isRM == false" @click="permissions(userId)">重置</Button>
+                                    <Button type="ghost" v-if="isRM == true" @click="permissionsRM(userId)">重置</Button>
+                                    <Tree
+                                            :data="roleTree"
+                                            ref="tree"
+                                            show-checkbox
+                                            @on-select-change="roleTreeChange"></Tree>
+                                </Card>
+                            </Col>
+                            <Col span="8">
+                                <Card>
+                                    <p slot="title">
+                                        页面控件权限配置
+                                        <Icon type="android-done-all" style="float: right"
+                                            @click.native="postButton"></Icon>
+                                    </p>
+                                    <CheckboxGroup v-model="setButton" @on-change="buttonSelect">
+                                        <Row v-for="(item, index) in buttonData" :key=index>
+                                            <Checkbox :label="item.id">{{ item.text }}</Checkbox>
+                                        </Row>
+                                    </CheckboxGroup>
+                                </Card>
+                            </Col>
+                            <Col span="8">
+                                <Card>
+                                    <p slot="title">
+                                        数据规则权限
+                                        <Icon type="android-done-all" style="float: right" @click.native="postRules"></Icon>
+                                    </p>
+                                    <CheckboxGroup v-model="setRules" @on-change="RulesSelect">
+                                        <Row v-for="(item, index) in rulesData" :key=index>
+                                            <Checkbox :label="item.id">{{ item.text }}</Checkbox>
+                                        </Row>
+                                    </CheckboxGroup>
+                                </Card>
+                            </Col>
+                        </Row>
+                    </Card>
+                </Col>
+            </Row>
+        </Card>
     </div>
 </template>
 
@@ -133,6 +143,8 @@
     export default {
         data() {
             return{
+                // 第一个列表的占位：
+                frist_span: "24",
                 SearchValidate:{
                     realname:"",
                     mobilephone:"",
@@ -209,6 +221,9 @@
             }
         },
         methods: {
+            keydown_search(e){
+                console.log(e)
+            },
             Search(){
                 this.userPage = 1
                 this.getUserTable()
@@ -277,6 +292,7 @@
             // 点击【权限设置】 获取菜单列表数据
             permissions(a) {
                 let _self = this
+                _self.frist_span = 12
                 let url = '/user/role/getUserMenusByUserId?userId=' + a
                 _self.userId = a
                 _self.isRM = false
@@ -303,6 +319,7 @@
             // 点击【权限剔除】 获取菜单列表数据
             permissionsRM(a) {
                 let _self = this
+                _self.frist_span = 12
                 let url = '/user/role/getUserRMMenusByUserId?userId=' + a
                 _self.userId = a
                 _self.cardTitle = '权限剔除'

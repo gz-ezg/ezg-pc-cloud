@@ -48,6 +48,7 @@
                                     <!--<DropdownItem name="ownSpace">个人中心</DropdownItem>-->
                                     <DropdownItem>个人中心</DropdownItem>
                                     <DropdownItem name="stystem_complain" divided>系统反馈</DropdownItem>
+                                    <DropdownItem name="updatePassWord" divided>修改密码</DropdownItem>
                                     <DropdownItem name="loginout" divided>退出登录</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
@@ -236,7 +237,9 @@
                             if (response.data.msgCode == '40000') {
                                 // _self.winReload()
                                 // localStorage.setItem('isTip',"N")
-                                _self.$Message.success('注销成功!')                                                             
+                                _self.$Message.success('注销成功!') 
+                                Cookies.set('user', '');
+                                Cookies.set('password', '');                                                            
                                 _self.$router.push({
                                     name: 'login'
                                 });
@@ -245,6 +248,8 @@
                         })
                 }else if( name ==='stystem_complain'){
                     _self.open_stystem_complain()
+                }else if( name === 'updatePassWord'){
+                    _self.$Message.warning("权限不足！")
                 }
             },
             checkTag (name) {
