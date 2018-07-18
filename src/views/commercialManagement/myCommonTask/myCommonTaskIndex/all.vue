@@ -414,7 +414,7 @@ export default {
         },
         downloadExcel(){
                 let field = [
-                    {field:'zhuangtai',title:'工单状态'},
+                    {field:'workOrderStatus',title:'工单状态',format:'workOrderStatus'},
                     {field:'companyname',title:'公司名称'},
                     {field:'companyarea',title:'公司注册地',format:'companyarea'},
                     {field:'baseorderid',title:'提示'},

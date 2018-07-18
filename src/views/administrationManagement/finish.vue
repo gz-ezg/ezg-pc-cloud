@@ -374,7 +374,7 @@ export default {
         },
         downloadExcel(){
                 let field = [
-                    {field:'zhuangtai',title:'工单状态'},
+                    {field:'workOrderStatus',title:'工单状态',format:'workOrderStatus'},
                     {field:'companyname',title:'公司名称'},
                     {field:'baseorderid',title:'提示'},
                     {field:'departname',title:'服务部门'},
@@ -396,7 +396,7 @@ export default {
                         companyName:_self.formInline.companyname,
                         serviceName:_self.formInline.servicename,
                         // serviceDept:"'ACCOUNT','AUDIT'",
-                        serviceDept:"'ACCOUNT'",
+                        serviceDept:"'EXECUTIVE'",
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field))
                 }
