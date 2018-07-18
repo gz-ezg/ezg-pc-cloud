@@ -1315,18 +1315,18 @@
                 this.loading4 = true
                 let _self = this
                 let url = 'api/order/list'
-                if(localStorage.getItem("companyname") != ""){
+                // if(localStorage.getItem("companyname") != ""){
 
-                    let role = JSON.parse(localStorage.getItem("Role"))
-                        for(let i = 0;i<role.length;i++){
-                            if(role[i].rolecode == "cwsp"){
-                                _self.search_model = "1"
-                                _self.formValidateSearch.companyname = localStorage.getItem("companyname")
-                            }
-                        }
-                }else{
-                    localStorage.setItem("companyname",_self.formValidateSearch.companyname)
-                }
+                //     let role = JSON.parse(localStorage.getItem("Role"))
+                //         for(let i = 0;i<role.length;i++){
+                //             if(role[i].rolecode == "cwsp"){
+                //                 _self.search_model = "1"
+                //                 _self.formValidateSearch.companyname = localStorage.getItem("companyname")
+                //             }
+                //         }
+                // }else{
+                //     localStorage.setItem("companyname",_self.formValidateSearch.companyname)
+                // }
                 var keys =[]
                     var config = {
                         params:{

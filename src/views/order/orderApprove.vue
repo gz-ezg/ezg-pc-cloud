@@ -384,6 +384,9 @@
                     <div slot="footer"></div>
                 </Modal>
             </TabPane>
+            <TabPane label="订单列表" name="name3" v-if="orderListShow">
+                <order-list></order-list>
+            </TabPane>
         </Tabs>
     </div>
 </template>
@@ -392,10 +395,15 @@
     import datagrid from '../../libs/easyUI/jquery.easyui.min'
     import combobox from '../../libs/easyUI/jquery.easyui.min'
     import Vue from 'vue';
+    import orderList from './orderList.vue'
 
     export default {
+        components:{
+            orderList
+        },
         data() {
             return{
+                orderListShow:false,
                 button_disable:false,
                 accout_error:false,
                 payDirType:"",
@@ -1349,6 +1357,14 @@
 
         },
         mounted() {
+            //  设置只有财务人员才能看到3个标签页
+            let _self = this
+            let temp = localStorage.getItem('id')
+            if(temp == "10182"){
+                _self.orderListShow = true
+            }else{
+                _self.orderListShow = false
+            }
             this.getPayDirs()
             this.getTableDataY()
             this.getTableDataN()

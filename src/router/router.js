@@ -480,6 +480,15 @@ export const appRouter = [
         },
         component: Main,
         children: [
+            // {
+            //     access: 6019,
+            //     path: 'account_index',
+            //     title: '财务订单列表',
+            //     name: 'account_index',
+            //     component: resolve => {
+            //         require(['@/views/order/accout_user/index.vue'], resolve);
+            //     }
+            // },
             {
                 access: 6018,
                 path: 'orderList',

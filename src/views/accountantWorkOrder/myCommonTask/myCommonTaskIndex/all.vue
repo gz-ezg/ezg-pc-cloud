@@ -174,7 +174,7 @@ export default {
                     {
                         title: '工单状态',
                         key: 'workOrderStatus',
-                        width:100,
+                        width:120,
                         sortable: true,                                                
                         render:(h, params) => {
                             // console.log(params.row.workOrderStatus.toString())

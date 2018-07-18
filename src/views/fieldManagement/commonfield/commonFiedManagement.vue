@@ -206,8 +206,8 @@
                                         <!-- <a target="_blank" :href="'api/assets/' + item.realpath" >
                                             <img :src="'api/assets/' + item.realpath" alt=""  width="100" height="100">
                                         </a> -->
-                                        <a target="_blank" :href="'http://woa.zgcfo.com/' + item.realpath" >
-                                            <img :src="'http://woa.zgcfo.com/' + item.realpath" alt=""  width="100" height="100">
+                                        <a target="_blank" :href="'/api/assets/' + item.realpath" >
+                                            <img :src="'/api/assets/' +item.realpath" alt=""  width="100" height="100">
                                         </a>
                                     </Row>
                                 </FormItem>
@@ -417,7 +417,7 @@
                     _self.data = res.data.data.rows
                     for(let i = 0; i<_self.data.length;i++){
                         _self.data[i].fieldClockTypeName = _self.fieldClockType_Map.get(_self.data[i].fieldtype)
-                        _self.data[i].service_record_statusName =_self.service_record_status_Map.get(_self.data[i].service_record_status)
+                        _self.data[i].service_record_statusName =_self.service_record_status_Map.get(_self.data[i].resulttype)
                         // if(_self.data[i].clocktime == "" ||_self.data[i].clocktime == null){
                         //     return ""
                         // }else{
