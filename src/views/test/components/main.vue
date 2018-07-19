@@ -4,11 +4,16 @@
     <row><Tableshow></Tableshow></row> -->
     <Card shadow>
         <textarea class='tinymce-textarea' id="tinymceEditer"></textarea>
+        
     </Card>
+        <Row>
+            <admin-table></admin-table>
+        </Row>
     <Spin fix v-if="spinShow">
         <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
         <div>加载组件中...</div>
     </Spin>
+    
     <Button @click="show">确定</Button>
     <Button @click="BusTest">Bus测试</Button>    
     <Button @click="openCompanyDetail">展示公司详情</Button>
@@ -17,6 +22,7 @@
     <company-detail></company-detail>
     <customer-detail></customer-detail>
     <follow-up-data></follow-up-data>
+    
     <!-- <div v-html="content"></div> -->
     <!-- <Button @click="downAccoutProductivity">导出会计绩效</Button>
     <Button @click="downMarketProductivityTotal">导出市场绩效统计</Button>
@@ -32,6 +38,7 @@ import companyDetail  from '../../woa-components/companyDetail/CompanyDetail'
 import Bus from '../../../components/bus.js'
 import customerDetail from '../../woa-components/customerDetail/channelCustomer'
 import followUpData from '../../woa-components/followUpList/followUpIndex'
+import adminTable from './tables'
 
 export default {
     name: "company",
@@ -40,7 +47,8 @@ export default {
         // Tableshow
         companyDetail,
         customerDetail,
-        followUpData
+        followUpData,
+        adminTable
     },
     created: function(){
 

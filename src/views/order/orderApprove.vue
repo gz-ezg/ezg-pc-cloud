@@ -172,7 +172,7 @@
                                 <Button type="primary" icon="plus" @click="kuaiji()" v-show="kjdj">查看会计到家服务项</Button>
                             </FormItem>
                         </Row>
-                        <table width="100%" id="orderItemList3"></table>
+                        <table width="100%" id="orderItemList9"></table>
                     </Form>
                     <Tabs style="margin-top: 5px">
                         <TabPane label="任务处理" icon="clipboard">
@@ -379,7 +379,7 @@
                                 <Button type="primary" icon="plus" @click="kuaiji()" v-show="kjdj">查看会计到家服务项</Button>
                             </FormItem>
                         </Row>
-                        <table width="100%" id="orderItemList4"></table>
+                        <table width="100%" id="orderItemList7"></table>
                     </Form>
                     <div slot="footer"></div>
                 </Modal>
@@ -446,7 +446,7 @@
                 },
                 data: [],
                 data3: [],
-                orderItemList3: [],
+                orderItemList9: [],
                 payDirData: [],
                 checkMemodata: [],
                 formValidateDetail: {
@@ -1019,7 +1019,7 @@
 
                 function doSuccess(response) {
                     let _data = response.data.data
-                    _self.orderItemList3 = _data.items
+                    _self.orderItemList9 = _data.items
                     _self.formValidateDetail.CompanyName = _data.CompanyName,
                         _self.formValidateDetail.companyid = _data.companyid,
                         _self.formValidateDetail.NAME = _data.name,
@@ -1031,10 +1031,10 @@
                         _self.formValidateDetail.GDSreport = _data.gdsreport
                         _self.formValidateDetail.performanceMoney = _data.performanceMoney
 
-                    $('#orderItemList4').datagrid({
+                    $('#orderItemList7').datagrid({
                         idField: 'id',
                         title: '',
-                        data: _self.orderItemList3,
+                        data: _self.orderItemList9,
                         rownumbers: true,
                         singleSelect: true,
                         columns: [[
@@ -1132,7 +1132,7 @@
 
                     function doSuccess2(response) {
                         let _data = response.data.data
-                        _self.orderItemList3 = _data.items
+                        _self.orderItemList9 = _data.items
                         _self.formValidateDetail.CompanyName = _data.CompanyName,
                             _self.formValidateDetail.companyid = _data.companyid,
                             _self.formValidateDetail.NAME = _data.name,
@@ -1145,10 +1145,10 @@
                             _self.formValidateDetail.performanceMoney = _data.performanceMoney,
                             _self.formValidateDetail.ticheng = _data.performanceMoney,
 
-                            $('#orderItemList3').datagrid({
+                            $('#orderItemList9').datagrid({
                                 idField: 'id',
                                 title: '',
-                                data: _self.orderItemList3,
+                                data: _self.orderItemList9,
                                 rownumbers: true,
                                 singleSelect: true,
                                 columns: [[
@@ -1279,7 +1279,7 @@
 
                     function doSuccess(response) {
                         let _data = response.data.data
-                        _self.orderItemList3 = _data.items
+                        _self.orderItemList9 = _data.items
                         _self.formValidateDetail.CompanyName = _data.CompanyName,
                             _self.formValidateDetail.companyid = _data.companyid,
                             _self.formValidateDetail.NAME = _data.name,
@@ -1292,10 +1292,10 @@
                             _self.formValidateDetail.performanceMoney = _data.performanceMoney,
                             _self.formValidateDetail.ticheng = _data.performanceMoney,
 
-                            $('#orderItemList3').datagrid({
+                            $('#orderItemList9').datagrid({
                                 idField: 'id',
                                 title: '',
-                                data: _self.orderItemList3,
+                                data: _self.orderItemList9,
                                 rownumbers: true,
                                 singleSelect: true,
                                 columns: [[

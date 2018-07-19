@@ -28,9 +28,9 @@
                             <Input v-model="form.code" placeholder="验证码" style="width: 60%"/>
                             <Img id="randCodeImage" src="/api/user/createImg" style="float: right;height: 32px"/>
                         </FormItem>
-                        <FormItem prop="isSave" style="margin-bottom:24px">
+                        <!-- <FormItem prop="isSave" style="margin-bottom:24px">
                             <Checkbox v-model="isSave">七天免登陆</Checkbox>
-                        </FormItem>
+                        </FormItem> -->
                         <FormItem>
                             <Button @click="handleSubmit" type="primary" long>登录</Button>
                         </FormItem>

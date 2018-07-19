@@ -1,27 +1,27 @@
 <template>
     <div style="min-width:1100px">
-        <Row>
+        <Row style="border-bottom:1px solid #F5F5F5">
             <Col span="16" style="background-color:#FFFFFF;padding:10px">
                 <div>
                     <Col span="24" style="padding:20px"><center><h2>本月个人业绩统计</h2></center></Col>
                     <Col span="5" style="margin:10px 2% 10px 2%;text-align:center">
                         <Card><Icon type="connection-bars" style="margin-right:10px"></Icon>全国销售排名
-                            <Row style="padding-top:10px;"><center>{{index}}</center></Row>
+                            <Row style="padding-top:10px;"><center><h2>{{userTableData.person.rowNo}}</h2></center></Row>
                         </Card>
                     </Col>
                     <Col span="5" style="margin:10px 2% 10px 2%;text-align:center">
-                        <Card><Icon type="person" style="margin-right:10px"></Icon>新增客户数
-                            <Row style="padding-top:10px;"><center>{{count}}</center></Row>
+                        <Card><Icon type="person" style="margin-right:10px"></Icon>新增客户
+                            <Row style="padding-top:10px;"><center><h2>{{userTableData.person.new_customer}}</h2></center></Row>
                         </Card>
                     </Col>        
                     <Col span="5" style="margin:10px 2% 10px 2%;text-align:center">
                         <Card><Icon type="checkmark-circled" style="margin-right:10px"></Icon>交易总额
-                            <Row style="padding-top:10px;"><center>{{validTimes}}</center></Row>                        
+                            <Row style="padding-top:10px;"><center><h2>{{userTableData.person.sumrealnumber}}</h2></center></Row>                        
                         </Card>
                     </Col>         
                     <Col span="5" style="margin:10px 2% 10px 2%;text-align:center">
                         <Card><Icon type="ios-pie" style="margin-right:10px"></Icon>剩余业绩
-                            <Row style="padding-top:10px;"><center>{{avagPersonValid}}</center></Row>                            
+                            <Row style="padding-top:10px;"><center><h2>{{userTableData.person.target_amount}}</h2></center></Row>                            
                         </Card>
                     </Col>    
                 </div>                
@@ -31,86 +31,84 @@
                     <Col span="24" style="padding:20px"><center><h2>本月团队业绩统计</h2></center></Col>            
                     <Col span="11" style="margin:10px 2% 10px 2%;text-align:center">
                         <Card><Icon type="person" style="margin-right:10px"></Icon>新增客户数
-                            <Row style="padding-top:10px;"><center>{{teamCount}}</center></Row>                            
+                            <Row style="padding-top:10px;"><center><h2>{{userTableData.team.new_customer}}</h2></center></Row>                            
                         </Card>
                     </Col>         
                     <Col span="11" style="margin:10px 2% 10px 2%;text-align:center">
                         <Card><Icon type="checkmark-circled" style="margin-right:10px"></Icon>交易总额
-                            <Row style="padding-top:10px;"><center>{{avagTeamValid}}</center></Row>                            
+                            <Row style="padding-top:10px;"><center><h2>{{userTableData.team.sumrealnumber}}</h2></center></Row>                            
+                        </Card>
+                    </Col> 
+                </div>
+            </Col>            
+        </Row>
+        <Row>
+            <Col span="16" style="background-color:#FFFFFF;padding:10px;">
+                <div>
+                    <Col span="24" style="padding:20px"><center><h2>个人销售计划</h2></center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本日销售目标</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本日完成</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本日计划新增客户</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本人新增客户</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本日计划拜访</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本日拜访</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.saleroom}}</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.finish_saleroom}}</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.new_customer_num}}</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.finish_new_customer_num}}</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.visit_num}}</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.finish_visit_num}}</center></Col>
+
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本周销售目标</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本周完成</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本周计划新增客户</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本周新增客户</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本周计划拜访</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本周拜访</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.saleroom}}</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.finish_saleroom}}</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.new_customer_num}}</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.finish_new_customer_num}}</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.visit_num}}</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.finish_visit_num}}</center></Col>
+                </div>                
+            </Col>
+            <Col span="8" style="background-color:#FFFFFF;padding:10px;border-left:1px solid #F5F5F5">
+                <div style="height:227px">
+                    <Col span="24" style="padding:20px"><center><h1>本年销售目标</h1></center></Col>            
+                    <Col span="11" style="margin:10px 2% 10px 2%;text-align:center">
+                        <Card><Icon type="person" style="margin-right:10px"></Icon>本年销售目标
+                            <Row style="padding-top:10px;"><center><h2>{{UserPlanData.year.saleroom}}</h2></center></Row>                            
+                        </Card>
+                    </Col>         
+                    <Col span="11" style="margin:10px 2% 10px 2%;text-align:center">
+                        <Card><Icon type="checkmark-circled" style="margin-right:10px"></Icon>本年已完成
+                            <Row style="padding-top:10px;"><center><h2>{{UserPlanData.year.finish_saleroom}}</h2></center></Row>                            
                         </Card>
                     </Col> 
                 </div>
             </Col>            
         </Row>
         <Row :gutter="10" class="margin-top-10">
-            <Col span="8" :style="{marginBottom: '10px'}">
-                <Card style="height:400px">
+            <Col span="12" :style="{marginBottom: '10px'}">
+                <Card style="height:700px">
                     <p slot="title" class="card-title">
                         <Icon type="android-map"></Icon>
-                        销售分类
+                        客户来源分析
                     </p>
                     <div class="data-source-row">
-                        <!-- <classic></classic> -->
+                        <classic></classic>
                     </div>
                 </Card>
             </Col>
-            <Col span="8" :style="{marginBottom: '10px'}">
-                <Card style="height:400px">
+            <Col span="12" :style="{marginBottom: '10px'}">
+                <Card style="height:700px">
                     <p slot="title" class="card-title">
                         <Icon type="android-map"></Icon>
-                        客户状态
+                        渠道价值分析
                     </p>
                     <div class="data-source-row">
-                        <!-- <attitude></attitude> -->
-                    </div>
-                </Card>
-            </Col>
-            <Col span="8" :style="{marginBottom: '10px'}">
-                <Card style="height:400px">
-                    <p slot="title" class="card-title">
-                        <Icon type="android-map"></Icon>
-                        客户来源占比
-                    </p>
-                    <div class="data-source-row">
-                        <!-- <account></account> -->
-                    </div>
-                </Card>
-            </Col>
-        </Row>
-        <Row :gutter="10" class="margin-top-10" style="height:600px">
-            <Col span="24" :style="{marginBottom: '10px'}">
-                <Card style="height:600px">
-                    <p slot="title" class="card-title">
-                        <Icon type="android-map"></Icon>
-                        业务分析
-                    </p>
-                    <Tabs value="name1" class="data-source-row">
-                        <TabPane label="本月" name="name1">
-                            <!-- <sum></sum> -->
-                        </TabPane>
-                        <TabPane label="半年" name="name2">
-                            <!-- <sum></sum> -->
-                        </TabPane>
-                        <TabPane label="全年" name="name3">
-                            <!-- <sum></sum> -->
-                        </TabPane>
-                    </Tabs>
-                    <!-- <div > -->
-                        <!-- <c-statistical></c-statistical> -->
-                        <!-- <person-sum-table></person-sum-table> -->
-                    <!-- </div> -->
-                </Card>
-            </Col>
-        </Row>
-        <Row :gutter="10" class="margin-top-10" style="height:600px">
-            <Col span="24" :style="{marginBottom: '10px'}">
-                <Card style="height:600px">
-                    <p slot="title" class="card-title">
-                        <Icon type="android-map"></Icon>
-                        业务明细
-                    </p>
-                    <div class="data-source-row">
-                        <!-- <workdetail></workdetail> -->
+                        <attitude></attitude>
                     </div>
                 </Card>
             </Col>
@@ -197,6 +195,83 @@
                     </Card>
                 </Col>
             </Row> -->
+            <Modal
+                title="新增周销售计划"
+                width=400
+                v-model="week_open"
+                :closable="false"
+                :mask-closable="true"
+                transfer
+            >
+                <Form ref="weekTotal" :model="weekTotal" :rules="weekTotalRule">
+                    <Row :gutter="12">
+                        <Col span="12">
+                            <FormItem prop="saleroom" style="margin-bottom:12px">
+                                <Input v-model="weekTotal.saleroom" placeholder="本周销售额" size="small"/>
+                            </FormItem>
+                        </Col>
+                        <Col span="12">
+                             <FormItem prop="new_customer_num" style="margin-bottom:12px">
+                                <Input v-model="weekTotal.new_customer_num" placeholder="本周新增客户" size="small"/>
+                            </FormItem>
+                        </Col>
+                    </Row>
+
+                    <Row :gutter="12">
+                        <Col span="8">
+                            <FormItem prop="Dsaleroom" style="margin-bottom:12px">
+                                <Input v-model="weekTotal.Dsaleroom" placeholder="今日销售额" size="small"/>
+                            </FormItem>
+                        </Col>
+                        <Col span="8">
+                             <FormItem prop="Dnew_customer_num" style="margin-bottom:12px">
+                                <Input v-model="weekTotal.Dnew_customer_num" placeholder="今日新增客户" size="small"/>
+                            </FormItem>
+                        </Col>
+                        <Col span="8">
+                             <FormItem prop="Dvisit_num" style="margin-bottom:12px">
+                                <Input v-model="weekTotal.Dvisit_num" placeholder="今日拜访数量" size="small"/>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                        
+                    </Form>
+                    <div slot="footer">
+                        <Button @click="handleSubmit" type="primary" long>提交</Button>
+                    </div>
+            </Modal>
+            <Modal
+                title="新增每日销售计划"
+                width=400
+                v-model="day_open"
+                :closable="false"
+                :mask-closable="true"
+                transfer
+            >
+                <Form ref="DayTotal" :model="DayTotal" :rules="DayTotalRule">
+                    <Row :gutter="12">
+                        <Col span="8">
+                            <FormItem prop="saleroom" style="margin-bottom:12px">
+                                <Input v-model="DayTotal.saleroom" placeholder="今日销售额" size="small"/>
+                            </FormItem>
+                        </Col>
+                        <Col span="8">
+                             <FormItem prop="new_customer_num" style="margin-bottom:12px">
+                                <Input v-model="DayTotal.new_customer_num" placeholder="今日新增客户" size="small"/>
+                            </FormItem>
+                        </Col>
+                        <Col span="8">
+                             <FormItem prop="visit_num" style="margin-bottom:12px">
+                                <Input v-model="DayTotal.visit_num" placeholder="今日拜访数量" size="small"/>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                        
+                    </Form>
+                    <div slot="footer">
+                        <Button @click="submit" type="primary" long>提交</Button>
+                    </div>
+            </Modal>
     </div>
 </template>
 
@@ -211,9 +286,69 @@ import baojia from './baojia'
 export default {
     data(){
         return{
+            weekTotal:{
+                saleroom:"",
+                new_customer_num:"",
+                Dsaleroom:"",
+                Dnew_customer_num:"",
+                Dvisit_num:""
+            },
+            weekTotalRule:{
+                saleroom:[ {required: true, message: '请完善信息！', trigger: 'blur'} ],
+                new_customer_num:[ {required: true, message: '请完善信息！', trigger: 'blur'} ],
+                Dsaleroom:[ {required: true, message: '请完善信息！', trigger: 'blur'} ],
+                Dnew_customer_num:[ {required: true, message: '请完善信息！', trigger: 'blur'} ],
+                Dvisit_num:[ {required: true, message: '请完善信息！', trigger: 'blur'} ],
+            },
+            DayTotal:{
+                saleroom:"",
+                new_customer_num:"",
+                visit_num:""
+            },
+            DayTotalRule:{
+                saleroom:[ {required: true, message: '请完善信息！', trigger: 'blur'} ],
+                new_customer_num:[ {required: true, message: '请完善信息！', trigger: 'blur'} ],
+                visit_num:[ {required: true, message: '请完善信息！', trigger: 'blur'} ],
+            },
+            week_open:true,
+            day_open:false,
             Cal:false,
             baojia:false,
-            shoukuan:false
+            shoukuan:false,
+            userTableData:{
+                person:{
+                    new_customer: 0,
+                    rowNo: 0,
+                    sumrealnumber: 0,
+                    target_amount: 0
+                },
+                team:{
+                    new_customer: 0,
+                    sumrealnumber: 0
+                }
+            },
+            UserPlanData:{
+                week:{
+                    saleroom: 0,
+                    finish_saleroom:0,
+                    new_customer_num:0,
+                    finish_new_customer_num:0,
+                    visit_num:0,
+                    finish_visit_num:0,
+                },
+                day:{
+                    saleroom:0,
+                    finish_saleroom:0,
+                    new_customer_num:0,
+                    finish_new_customer_num:0,
+                    visit_num:0,
+                    finish_visit_num:0,
+                },
+                year:{
+                    saleroom:0,
+                    finish_saleroom:0
+                }
+            }
         }
     },
     components: {
@@ -227,7 +362,70 @@ export default {
     methods: {
         openCal(){
             this.baojia = true
+        },
+        getUserTableData(){
+            let _self = this
+            let url = `api/crm/sale/index/performance/detail`
+
+            let config = {
+                params: {
+                    saler: "10051"
+                }
+            }
+
+            function success(res){
+                _self.userTableData = res.data.data
+                console.log(res.data.data)
+            }
+
+            this.$Get(url, config, success)
+        },
+        getUserPlanData(){
+            let _self = this
+            let url = `api/crm/sale/index/person/plan/detail`
+
+            let config = {
+                params:{
+
+                }
+            }
+
+            function success(res){
+                if(res.data.data.week){
+                    _self.week_open = true
+                }else{
+                    if(res.data.data.day){
+                        _self.day_open = true
+                    }
+                }
+            }
+        },
+        handleSubmit(){
+            let _self = this
+            _self.week_open = false
+            this.$refs["weekTotal"].validate((valid) => {
+                if (valid) {
+
+                } else {
+                    this.$Message.error('请完善信息！');
+                }
+            })
+        },
+        submit(){
+            let _self = this
+            _self.day_open = false
+            this.$refs["weekTotal"].validate((valid) => {
+                if (valid) {
+
+                } else {
+                    this.$Message.error('请完善信息！');
+                }
+            })
         }
+    },
+    created(){
+        let _self = this
+        _self.getUserTableData()
     }
 }
 </script>

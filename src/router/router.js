@@ -827,6 +827,12 @@ export const appRouter = [
                 path: 'rule_index', title: '销售规则管理', name: 'rule_index', component: resolve => {
                     require(['@/views/publicPool/rule/index.vue'], resolve);
                 }
+            },
+            {
+                // access: 6090,
+                path: 'person_rule_index', title: '销售规则管理', name: 'person_rule_index', component: resolve => {
+                    require(['@/views/publicPool/rule/index.vue'], resolve);
+                }
             }
         ]
     },
