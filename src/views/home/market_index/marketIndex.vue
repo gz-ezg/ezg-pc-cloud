@@ -91,7 +91,7 @@
         </Row>
         <Row :gutter="10" class="margin-top-10">
             <Col span="12" :style="{marginBottom: '10px'}">
-                <Card style="height:700px">
+                <Card style="height:500px">
                     <p slot="title" class="card-title">
                         <Icon type="android-map"></Icon>
                         客户来源分析
@@ -102,7 +102,7 @@
                 </Card>
             </Col>
             <Col span="12" :style="{marginBottom: '10px'}">
-                <Card style="height:700px">
+                <Card style="height:500px">
                     <p slot="title" class="card-title">
                         <Icon type="android-map"></Icon>
                         渠道价值分析
@@ -200,7 +200,7 @@
                 width=400
                 v-model="week_open"
                 :closable="false"
-                :mask-closable="true"
+                :mask-closable="false"
                 transfer
             >
                 <Form ref="weekTotal" :model="weekTotal" :rules="weekTotalRule">
@@ -237,7 +237,7 @@
                         
                     </Form>
                     <div slot="footer">
-                        <Button @click="handleSubmit" type="primary" long>提交</Button>
+                        <Button @click="handleSubmit" type="primary" long :loading="week_loading">提交</Button>
                     </div>
             </Modal>
             <Modal
@@ -245,7 +245,7 @@
                 width=400
                 v-model="day_open"
                 :closable="false"
-                :mask-closable="true"
+                :mask-closable="false"
                 transfer
             >
                 <Form ref="DayTotal" :model="DayTotal" :rules="DayTotalRule">
@@ -269,7 +269,7 @@
                         
                     </Form>
                     <div slot="footer">
-                        <Button @click="submit" type="primary" long>提交</Button>
+                        <Button @click="submit" type="primary" long :loading="day_loading">提交</Button>
                     </div>
             </Modal>
     </div>
@@ -286,6 +286,8 @@ import baojia from './baojia'
 export default {
     data(){
         return{
+            week_loading:false,
+            day_loading:false,
             weekTotal:{
                 saleroom:"",
                 new_customer_num:"",
@@ -369,13 +371,12 @@ export default {
 
             let config = {
                 params: {
-                    saler: "10051"
+                    // saler: "10051"
                 }
             }
 
             function success(res){
                 _self.userTableData = res.data.data
-                console.log(res.data.data)
             }
 
             this.$Get(url, config, success)
@@ -402,10 +403,46 @@ export default {
         },
         handleSubmit(){
             let _self = this
-            _self.week_open = false
+            
             this.$refs["weekTotal"].validate((valid) => {
                 if (valid) {
+                    _self.week_loading = true
+                    let url = `api/crm/sale/index/person/plan/create`
 
+                    let config = {
+                        saleroom: _self.weekTotal.saleroom,
+                        new_customer_num: _self.weekTotal.new_customer_num,
+                        type: "week"
+                    }
+
+                    function success(res){
+                        let url2 = `api/crm/sale/index/person/plan/create`
+
+                        let config2 = {
+                            saleroom: _self.weekTotal.Dsaleroom,
+                            new_customer_num: _self.weekTotal.Dnew_customer_num,
+                            type: "day",
+                            visit_num: _self.weekTotal.Dvisit_num
+                        }
+
+                        function success2(res){
+                            _self.week_open = false
+                            _self.week_loading = false
+                            _self.getUserTableData()
+                        }
+
+                        function fail2(err){
+                            _self.week_loading = false
+                        }
+
+                        _self.$Post(url2, config2, success2, fail2)
+                    }
+
+                    function fail(err){
+                        _self.week_loading = false
+                    }
+
+                    _self.$Post(url, config, success, fail)
                 } else {
                     this.$Message.error('请完善信息！');
                 }
@@ -413,10 +450,31 @@ export default {
         },
         submit(){
             let _self = this
-            _self.day_open = false
-            this.$refs["weekTotal"].validate((valid) => {
+            
+            this.$refs["DayTotal"].validate((valid) => {
                 if (valid) {
+                    _self.day_loading = true
+                    let url2 = `api/crm/sale/index/person/plan/create`
 
+                    let config2 = {
+                        saleroom: _self.DayTotal.saleroom,
+                        new_customer_num: _self.DayTotal.new_customer_num,
+                        type: "day",
+                        visit_num: _self.DayTotal.visit_num
+                    }
+
+                    function success2(res){
+                        _self.day_open = false
+                        _self.day_loading = false
+                        _self.getUserTableData()
+
+                    }
+
+                    function fail2(err){
+                        _self.day_loading = false
+                    }
+
+                    _self.$Post(url2, config2, success2, fail2)
                 } else {
                     this.$Message.error('请完善信息！');
                 }
