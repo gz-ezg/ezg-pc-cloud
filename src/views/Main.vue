@@ -126,10 +126,11 @@
                 </div>
             </Modal>
         <!-- 意见收集 -->
-            
+        <change-password></change-password>
     </div>
 </template>
 <script>
+    import changePassword from './systemManagement/userManagement/change_password'
     import shrinkableMenu from './main-components/shrinkable-menu/shrinkable-menu.vue';
     import tagsPageOpened from './main-components/tags-page-opened.vue';
     import breadcrumbNav from './main-components/breadcrumb-nav.vue';
@@ -150,7 +151,8 @@
             lockScreen,
             messageTip,
             themeSwitch,
-            systemComplain
+            systemComplain,
+            changePassword
         },
         data () {
             return {
@@ -249,7 +251,7 @@
                 }else if( name ==='stystem_complain'){
                     _self.open_stystem_complain()
                 }else if( name === 'updatePassWord'){
-                    _self.$Message.warning("权限不足！")
+                    this.$bus.emit('CHANGE_PASSWORD',{realname:localStorage.getItem("realname"),id:localStorage.getItem("id")})                    
                 }
             },
             checkTag (name) {

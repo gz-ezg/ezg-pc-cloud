@@ -289,7 +289,7 @@ export default {
                             _self.departTree[i].children[j].title = _self.departTree[i].children[j].departname
                             if(_self.departTree[i].children[j].children){
                                 for(let k = 0;k<_self.departTree[i].children[j].children.length;k++){
-                                    if(_self.departTree[i].children[j].ID == _self.check_depart_id){
+                                    if(_self.departTree[i].children[j].children[k].ID == _self.check_depart_id){
                                         _self.departTree[i].children[j].children[k].checked = true
                                     }
                                     _self.departTree[i].children[j].children[k].title = _self.departTree[i].children[j].children[k].departname

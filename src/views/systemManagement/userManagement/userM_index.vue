@@ -63,6 +63,7 @@
                                     highlight-row
                                     size="small"
                                     :columns="userColumns"
+                                    @on-current-change="selectRow"
                                     :data="userData"></Table>
                             <Page
                                     size="small"
@@ -138,6 +139,8 @@
         <create-user></create-user>
         <role-modal></role-modal>
         <organize-modal></organize-modal>
+        <lock-modal></lock-modal>
+        <delete-modal></delete-modal>
     </div>
 </template>
 
@@ -145,15 +148,20 @@
 import CreateUser from './create_user'
 import RoleModal from './role_modal'
 import OrganizeModal from './organize_modal'
+import LockModal from './lock_user'
+import DeleteModal from './delete_user'
 
     export default {
         components:{
             CreateUser,
             RoleModal,
-            OrganizeModal
+            OrganizeModal,
+            LockModal,
+            DeleteModal
         },
         data() {
             return{
+                current_select_row:"",
                 // 第一个列表的占位：
                 frist_span: "24",
                 SearchValidate:{
@@ -184,12 +192,12 @@ import OrganizeModal from './organize_modal'
                     {
                         title: '用户名',
                         key: 'username',
-                        minWidth: 150
+                        minWidth: 120
                     },
                     {
                         title: '真实姓名',
                         key: 'realname',
-                        minWidth: 150
+                        minWidth: 120
                     },
                     {
                         title: '角色',
@@ -297,13 +305,12 @@ import OrganizeModal from './organize_modal'
                             username: _data.rows[i].username,
                             realname: _data.rows[i].realname,
                             userkey: _data.rows[i].userkey,
+                            status: _data.rows[i].status
                         })
                     }
                 }
 
                 this.$Get(url, config, doSuccess)
-                
-                // this.GetData(url, doSuccess)
             },
 
             pageChange(a) {
@@ -523,6 +530,9 @@ import OrganizeModal from './organize_modal'
 
                 this.PostData(url, _data, doSuccess)
             },
+            selectRow(e){
+                this.current_select_row = e
+            },
 
             // 规则选中事件
             RulesSelect(re) {
@@ -537,26 +547,50 @@ import OrganizeModal from './organize_modal'
 
             //  修改密码
             updatePassword(){
-
+                let _self = this
+                if(this.current_select_row){
+                    this.$bus.emit('CHANGE_PASSWORD',_self.current_select_row)                    
+                }else{
+                    this.$Message.warning("请选择一行！")
+                }
             },
 
             //  删除用户
             deleteUser(){
-
+                let _self = this
+                if(this.current_select_row){
+                    this.$bus.emit('DELETE_USER',_self.current_select_row)
+                }else{
+                    this.$Message.warning("请选择一行！")
+                }
             },
 
             //  锁定/接触用户
             lockUser(){
-
+                let _self = this
+                if(this.current_select_row){
+                    this.$bus.emit('LOCK_USER',_self.current_select_row)
+                }else{
+                    this.$Message.warning("请选择一行！")
+                }
             },
 
             //  编辑用户
             updateUser(){
-
+                let _self = this
+                if(this.current_select_row){
+                    this.$bus.emit('LOCK_USER',_self.current_select_row)
+                }else{
+                    this.$Message.warning("请选择一行！")
+                }
             }
         },
-        mounted() {
+        created() {
             this.getUserTable()
+            let _self = this
+            this.$bus.on('UPDATE_USER_TABLE',(e) => {
+                _self.getUserTable()
+            })
         }
     }
 </script>

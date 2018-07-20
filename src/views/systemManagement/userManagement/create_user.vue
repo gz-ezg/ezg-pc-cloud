@@ -36,20 +36,6 @@
                 </Row>
                 <Row>
                     <Col span="12">
-                        <FormItem label="组织机构：" prop="orgIds">
-                            <Input  size="small"  style="margin-right:5px" v-model="formdata.orgIds" @on-focus="openOrganize">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="角色：" prop="roleIds">
-                            <Input  size="small"  style="margin-right:5px" v-model="formdata.roleIds" @on-focus="openRole">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span="12">
                         <FormItem label="手机号码：" prop="mobilePhone">
                             <Input  size="small"  style="margin-right:5px" v-model="formdata.mobilePhone">
                             </Input>
@@ -58,6 +44,20 @@
                     <Col span="12">
                         <FormItem label="邮箱：" prop="email">
                             <Input  size="small"  style="margin-right:5px" v-model="formdata.email">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span="12">
+                        <FormItem label="组织机构：" prop="orgName">
+                            <Input  size="small"  style="margin-right:5px" v-model="formdata.orgName" @on-focus="openOrganize">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                    <Col span="12">
+                        <FormItem label="角色：" prop="roleName">
+                            <Input type="textarea" size="small"  style="margin-right:5px" v-model="formdata.roleName" @on-focus="openRole">
                             </Input>
                         </FormItem>
                     </Col>
@@ -123,7 +123,8 @@ export default {
         const validateTel = (rule, value, callback) => {
             let re = /^1\d{10}$/
             if (value == '') {
-                callback(new Error(' '));
+                // callback(new Error(' '));
+                callback()
             } else {
                 if (re.test(value)) {
                     callback();
@@ -135,7 +136,8 @@ export default {
         const validateEmail= (rule, value, callback) => {
             let re = /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/
             if (value == '') {
-                callback(new Error(' '));
+                // callback(new Error(' '));
+                callback();
             } else {
                 if (re.test(value)) {
                     callback();
@@ -155,15 +157,32 @@ export default {
                 orgIds: "",
                 roleIds: "",
                 mobilePhone: "",
-                email: ""
+                email: "",
+                roleName: "",
+                orgName: ""
             },
             formdataRule:{
-                username:{ message:"格式错误！",validator: validateUsername, trigger: 'blur' },
-                realname:{ message:"格式错误！",validator: validateRealname, trigger: 'blur' },
+                username:[
+                    { message:"格式错误！",required: true, trigger: 'blur' },
+                    { message:"格式错误！",validator: validateUsername, trigger: 'blur' }
+                ],
+                realname:[
+                    { message:"格式错误！",required: true, trigger: 'blur' },
+                    { message:"格式错误！",validator: validateRealname, trigger: 'blur' }
+                ],
                 password:{ message:"请输入密码！", required: true,  trigger: 'blur' },
-                password2:{ message:"两次密码输入不一致！", validator:validatePassword2,  trigger: 'blur' },
-                mobilePhone:{ message:"格式错误！", validator:validateTel,  trigger: 'blur' },
-                email:{ message:"格式错误！", validator:validateEmail,  trigger: 'blur' }
+                password2:[
+                    { message:"格式错误！",required: true, trigger: 'blur' },                    
+                    { message:"两次密码输入不一致！", validator:validatePassword2,  trigger: 'blur' }
+                ],
+                mobilePhone:[
+                    // { message:"格式错误！",required: true, trigger: 'blur' },
+                    { message:"格式错误！", validator:validateTel,  trigger: 'blur' },
+                ],
+                email:[
+                    // { message:"格式错误！",required: true, trigger: 'blur' },
+                    { message:"格式错误！", validator:validateEmail,  trigger: 'blur' }
+                ]
             }
         }
     },
@@ -214,13 +233,14 @@ export default {
 
         //  组织结构弹出框
         openOrganize(){
-
+            let _self = this
+            this.$bus.emit('OPEN_ORGANIZE_TABLE', _self.formdata.orgIds)
         },
         
         //  角色弹出框
         openRole(){
             let _self = this
-            this.$bus.emit('OPEN_ROLE_TABLE',_self.formdata)
+            this.$bus.emit('OPEN_ROLE_TABLE',_self.formdata.roleIds)
         }
     },
     created(){
@@ -228,20 +248,25 @@ export default {
         this.$bus.on("CREATED_USER",(e) => {
             _self.open_create_user = true
         })
+        this.$bus.on("CREATE_USER_ROLE_DATA",(e) => {
+            _self.formdata.roleName = ""
+            _self.formdata.roleIds = ""
+            let tempID = []
+            let tempName = []
+            for(let i = 0; i<e.length;i++){
+                tempID.push(e[i].ID)
+                tempName.push(e[i].rolename)
+            }
+            _self.formdata.roleName = tempName.join(",")
+            _self.formdata.roleIds = tempID.join(",")
+        })
+        this.$bus.on("CREATE_USER_ORG_DATA",(e) => {
+            _self.formdata.orgName = e.departname
+            _self.formdata.orgIds = e.id
+        })
     }
 
 }
 </script>
 
-<style>
-/* .ivu-form-item-label:before {
-    content: "*";
-    display: inline-block;
-    margin-right: 4px;
-    line-height: 1;
-    font-family: SimSun;
-    font-size: 12px;
-    color: #ed3f14;
-} */
-</style>
 
