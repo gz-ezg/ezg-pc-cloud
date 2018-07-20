@@ -294,6 +294,7 @@ export default {
         },
         getCheckedNodes(e){
             let _self = this
+            console.log(e)
             if(e.length == 0){
                 _self.check_depart_id = ""
             }else{

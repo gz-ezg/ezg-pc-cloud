@@ -49,9 +49,10 @@
         <Card>
             <Row>
                 <ButtonGroup>
-                    <Button type="primary" icon="plus">修改密码</Button>
-                    <Button type="primary" icon="ios-color-wand-outline">删除用户</Button>
-                    <Button type="primary" icon="ios-color-wand-outline">锁定/解锁</Button>
+                    <Button type="primary" icon="plus" @click="createdUser">新增用户</Button>
+                    <Button type="primary" icon="plus" @click="updatePassword">修改密码</Button>
+                    <Button type="primary" icon="ios-color-wand-outline" @click="deleteUser">删除用户</Button>
+                    <Button type="primary" icon="ios-color-wand-outline" @click="lockUser">锁定/解锁</Button>
                 </ButtonGroup>
             </Row>
             <Row style="margin-top: 10px;">
@@ -62,7 +63,6 @@
                                     highlight-row
                                     size="small"
                                     :columns="userColumns"
-                                    @on-row-click="selectRow"
                                     :data="userData"></Table>
                             <Page
                                     size="small"
@@ -82,8 +82,8 @@
                         <p slot="title">
                             {{ cardTitle }}
                         </p>
-                        <div slot="extra">
-                            <Icon type="close" @click="isOpen=false;frist_span=24"></Icon>
+                        <div slot="extra" @click="isOpen=false;frist_span=24">
+                            <Icon type="close"></Icon>
                         </div>
                         <Row>
                             <Col span="8">
@@ -135,12 +135,23 @@
                 </Col>
             </Row>
         </Card>
+        <create-user></create-user>
+        <role-modal></role-modal>
+        <organize-modal></organize-modal>
     </div>
 </template>
 
 <script>
+import CreateUser from './create_user'
+import RoleModal from './role_modal'
+import OrganizeModal from './organize_modal'
 
     export default {
+        components:{
+            CreateUser,
+            RoleModal,
+            OrganizeModal
+        },
         data() {
             return{
                 // 第一个列表的占位：
@@ -157,7 +168,7 @@
                 userPageSize: 10,
                 isRM: false,
                 isOpen: false,
-                userTotal: '',
+                userTotal: new Number(),
                 cardTitle: '',
                 userId: '',
                 menuId: '',
@@ -172,21 +183,24 @@
                 userColumns: [
                     {
                         title: '用户名',
-                        key: 'username'
+                        key: 'username',
+                        minWidth: 150
                     },
                     {
                         title: '真实姓名',
-                        key: 'realname'
+                        key: 'realname',
+                        minWidth: 150
                     },
                     {
                         title: '角色',
-                        key: 'userkey'
+                        key: 'userkey',
+                        minWidth: 300
                     },
                     {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        width: 200,
+                        width: 240,
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {
@@ -208,12 +222,27 @@
                                         type: 'primary',
                                         size: 'small'
                                     },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
                                     on: {
                                         click: () => {
                                             this.permissionsRM(params.row.id)
                                         }
                                     }
-                                }, '权限剔除')
+                                }, '权限剔除'),
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            // this.permissions(params.row.id)
+                                            this.updateUser(params.row)
+                                        }
+                                    }
+                                }, '用户编辑'),
                             ]);
                         }
                     }
@@ -500,6 +529,31 @@
                 let _self = this
                 _self.rulesSelectData = re
             },
+
+            //  新增用户
+            createdUser(){
+                this.$bus.emit("CREATED_USER",true)
+            },
+
+            //  修改密码
+            updatePassword(){
+
+            },
+
+            //  删除用户
+            deleteUser(){
+
+            },
+
+            //  锁定/接触用户
+            lockUser(){
+
+            },
+
+            //  编辑用户
+            updateUser(){
+
+            }
         },
         mounted() {
             this.getUserTable()

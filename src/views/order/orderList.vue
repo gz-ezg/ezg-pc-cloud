@@ -1906,7 +1906,7 @@
                                     width: 70,
                                     editor: {type: 'numberbox', options: {precision: 2}}
                                 },
-                                {field: 'memo', title: '备注 ', width: 300, editor: 'text'}
+                                {field: 'memo', title: '备注 ', width: 300, editor: 'textarea'}
                             ]],
                             onClickCell: function (index, field) {
                                 if (_self.endEditing()){
@@ -1987,7 +1987,7 @@
                                     width: 70,
                                     editor: {type: 'numberbox', options: {precision: 2}}
                                 },
-                                {field: 'memo', title: '备注 ', width: 300, editor: 'text'}
+                                {field: 'memo', title: '备注 ', width: 300, editor: 'textarea'}
                             ]],
                             onClickCell: function (index, field) {
                                 if (_self.endEditing()){
@@ -3203,7 +3203,7 @@
                                     width: 70,
                                     editor: {type: 'numberbox', options: {precision: 2}}
                                 },
-                                {field: 'memo', title: '备注 ', width: 300, editor: 'text'}
+                                {field: 'memo', title: '备注 ', width: 300, editor: 'textarea'}
                             ]],
                             onClickCell: function (index, field) {
                                 if (_self.endEditing()){
@@ -3335,7 +3335,7 @@
                                     width: 70,
                                     editor: {type: 'numberbox',  options: {precision: 2}}
                                 },
-                                {field: 'memo', title: '备注 ', width: 300, editor: 'text'}
+                                {field: 'memo', title: '备注 ', width: 300, editor: 'textarea'}
                             ]],
                             onClickCell: function (index, field) {
                                 if (_self.endEditing()){
@@ -3445,7 +3445,7 @@
                                     width: 70,
                                     editor: {type: 'numberbox', options: {precision: 2}}
                                 },
-                                {field: 'memo', title: '备注 ', width: 300, editor: 'text'}
+                                {field: 'memo', title: '备注 ', width: 300, editor: 'textarea'}
                             ]],
                             onClickCell: function (index, field) {
                                 if (_self.endEditing()){

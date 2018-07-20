@@ -51,7 +51,7 @@
                             <div v-if="Discount5">5折报价： {{Discount5}} 元</div>       
                         </center>                     
                     </Row>
-                    <FormItem>
+                    <FormItem style="margin-top:10px">
                             <Button type="primary" @click="search">报价</Button>
                             <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
                     </FormItem>

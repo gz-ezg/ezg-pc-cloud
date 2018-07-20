@@ -3,7 +3,9 @@
         <Row style="border-bottom:1px solid #F5F5F5">
             <Col span="16" style="background-color:#FFFFFF;padding:10px">
                 <div>
-                    <Col span="24" style="padding:20px"><center><h2>本月个人业绩统计</h2></center></Col>
+                    <Col span="24" style="padding:20px"><center><h2>本月个人业绩统计</h2></center> 
+                        <div style="position:absolute;width:150px;height:150px;z-index:100;right:0px;top:0px;" ></div>               
+                    </Col>
                     <Col span="5" style="margin:10px 2% 10px 2%;text-align:center">
                         <Card><Icon type="connection-bars" style="margin-right:10px"></Icon>全国销售排名
                             <Row style="padding-top:10px;"><center><h2>{{userTableData.person.rowNo}}</h2></center></Row>
@@ -24,11 +26,11 @@
                             <Row style="padding-top:10px;"><center><h2>{{userTableData.person.target_amount}}</h2></center></Row>                            
                         </Card>
                     </Col>    
-                </div>                
+                </div> 
             </Col>
             <Col span="8" style="background-color:#FFFFFF;padding:10px;border-left:1px solid #F5F5F5">
                 <div>
-                    <Col span="24" style="padding:20px"><center><h2>本月团队业绩统计</h2></center></Col>            
+                    <Col span="24" style="padding:13px"><center><Button type="text" @click="openTeamTotal"><h2>本月团队业绩统计</h2></Button></center></Col>            
                     <Col span="11" style="margin:10px 2% 10px 2%;text-align:center">
                         <Card><Icon type="person" style="margin-right:10px"></Icon>新增客户数
                             <Row style="padding-top:10px;"><center><h2>{{userTableData.team.new_customer}}</h2></center></Row>                            
@@ -46,6 +48,7 @@
             <Col span="16" style="background-color:#FFFFFF;padding:10px;">
                 <div>
                     <Col span="24" style="padding:20px"><center><h2>个人销售计划</h2></center></Col>
+                    <Col span="24" style="margin-top:-15px"><center><Button size="small" type="text" @click="showHistory">查看历史计划</Button></center></Col>
                     <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本日销售目标</center></Col>
                     <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本日完成</center></Col>
                     <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本日计划新增客户</center></Col>
@@ -65,25 +68,25 @@
                     <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本周新增客户</center></Col>
                     <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本周计划拜访</center></Col>
                     <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本周拜访</center></Col>
-                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.saleroom}}</center></Col>
-                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.finish_saleroom}}</center></Col>
-                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.new_customer_num}}</center></Col>
-                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.finish_new_customer_num}}</center></Col>
-                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.visit_num}}</center></Col>
-                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.finish_visit_num}}</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.week.saleroom}}</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.week.finish_saleroom}}</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.week.new_customer_num}}</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.week.finish_new_customer_num}}</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.week.visit_num}}</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.week.finish_visit_num}}</center></Col>
                 </div>                
             </Col>
             <Col span="8" style="background-color:#FFFFFF;padding:10px;border-left:1px solid #F5F5F5">
-                <div style="height:227px">
+                <div style="height:236px">
                     <Col span="24" style="padding:20px"><center><h1>本年销售目标</h1></center></Col>            
                     <Col span="11" style="margin:10px 2% 10px 2%;text-align:center">
                         <Card><Icon type="person" style="margin-right:10px"></Icon>本年销售目标
-                            <Row style="padding-top:10px;"><center><h2>{{UserPlanData.year.saleroom}}</h2></center></Row>                            
+                            <Row style="padding-top:10px;"><center><h2>{{UserPlanData.year.year_target_num}}</h2></center></Row>                            
                         </Card>
                     </Col>         
                     <Col span="11" style="margin:10px 2% 10px 2%;text-align:center">
                         <Card><Icon type="checkmark-circled" style="margin-right:10px"></Icon>本年已完成
-                            <Row style="padding-top:10px;"><center><h2>{{UserPlanData.year.finish_saleroom}}</h2></center></Row>                            
+                            <Row style="padding-top:10px;"><center><h2>{{UserPlanData.year.year_realnumber}}</h2></center></Row>                            
                         </Card>
                     </Col> 
                 </div>
@@ -114,14 +117,14 @@
             </Col>
         </Row>
         <div class="market_hover">
-            <Card style="width:60px;height:310px;">
-                <div @click="openCal">
+            <Card style="width:60px;height:140px;">
+                <!-- <div @click="openCal">
                     <Row>
                         <Col span="24">
                             <Icon type="clipboard" size="36"></Icon><p style="font-size:10px" >方案</p>
                         </Col>
                     </Row>
-                </div>
+                </div> -->
                 <div @click="openCal">
                     <Row>
                         <Col span="24">
@@ -129,13 +132,13 @@
                         </Col>
                     </Row>
                 </div>
-                <div @click="openCal">
+                <!-- <div @click="openCal">
                     <Row>
                         <Col span="24">
                             <Icon type="edit" size="28"></Icon><p style="font-size:10px" >测评</p>
                         </Col>
                     </Row>
-                </div>
+                </div> -->
                 <div @click="openCal">
                     <Row>
                         <Col span="24">
@@ -143,13 +146,13 @@
                         </Col>
                     </Row>
                 </div>
-                <div @click="openCal">
+                <!-- <div @click="openCal">
                     <Row>
                         <Col span="24">
                             <Icon type="android-contacts" size="28" ></Icon><p style="font-size:10px" >公司交易</p>
                         </Col>
                     </Row>
-                </div>
+                </div> -->
             </Card>
         </div>
         <Modal
@@ -160,41 +163,6 @@
             <baojia></baojia>
             <div slot="footer"></div>
         </Modal>
-        <!-- <Row :gutter="10" class="margin-top-10">
-                <Col span="8" :style="{marginBottom: '10px'}" v-if="Cal">
-                    <Card style="height:400px">
-                        <p slot="title" class="card-title">
-                            <Icon type="android-map"></Icon>
-                            方案工具
-                        </p>
-                        <div class="data-source-row">
-                            <person-sum></person-sum>
-                        </div>
-                    </Card>
-                </Col>
-                <Col span="8" :style="{marginBottom: '10px'}" v-if="baojia">
-                    <Card style="height:400px">
-                        <p slot="title" class="card-title">
-                            <Icon type="android-map"></Icon>
-                            报价
-                        </p>
-                        <div class="data-source-row">
-                            <baojia></baojia>
-                        </div>
-                    </Card>
-                </Col>
-                <Col span="8" :style="{marginBottom: '10px'}" v-if="shoukuan">
-                    <Card style="height:400px">
-                        <p slot="title" class="card-title">
-                            <Icon type="android-map"></Icon>
-                            收款
-                        </p>
-                        <div class="data-source-row">
-                            
-                        </div>
-                    </Card>
-                </Col>
-            </Row> -->
             <Modal
                 title="新增周销售计划"
                 width=400
@@ -205,14 +173,19 @@
             >
                 <Form ref="weekTotal" :model="weekTotal" :rules="weekTotalRule">
                     <Row :gutter="12">
-                        <Col span="12">
+                        <Col span="8">
                             <FormItem prop="saleroom" style="margin-bottom:12px">
                                 <Input v-model="weekTotal.saleroom" placeholder="本周销售额" size="small"/>
                             </FormItem>
                         </Col>
-                        <Col span="12">
+                        <Col span="8">
                              <FormItem prop="new_customer_num" style="margin-bottom:12px">
                                 <Input v-model="weekTotal.new_customer_num" placeholder="本周新增客户" size="small"/>
+                            </FormItem>
+                        </Col>
+                        <Col span="8">
+                             <FormItem prop="visit_num" style="margin-bottom:12px">
+                                <Input v-model="weekTotal.visit_num" placeholder="本周拜访数量" size="small"/>
                             </FormItem>
                         </Col>
                     </Row>
@@ -272,19 +245,32 @@
                         <Button @click="submit" type="primary" long :loading="day_loading">提交</Button>
                     </div>
             </Modal>
+            <team-total-sum></team-total-sum>
+            <person-history></person-history>
     </div>
 </template>
 
 <script>
 import attitude from './attitude'
 import classic from './classic'
-import account from './account'
-import sum from './sum'
-import workdetail from './workdetail'
 import baojia from './baojia'
+import teamTotalSum from './TeamTotalSum';
+import personHistory from './showHistory';
 
 export default {
     data(){
+        const Re = (rule, value, callback) => {
+                let re = /^[1-9]\d*$/
+                if (value == '' || value == null) {
+                    callback();
+                } else {
+                    if (re.test(value)) {
+                        callback();
+                    } else {
+                        callback(new Error('请输入数字！'));
+                    }
+                }
+            };
         return{
             week_loading:false,
             day_loading:false,
@@ -296,11 +282,12 @@ export default {
                 Dvisit_num:""
             },
             weekTotalRule:{
-                saleroom:[ {required: true, message: '请完善信息！', trigger: 'blur'} ],
-                new_customer_num:[ {required: true, message: '请完善信息！', trigger: 'blur'} ],
-                Dsaleroom:[ {required: true, message: '请完善信息！', trigger: 'blur'} ],
-                Dnew_customer_num:[ {required: true, message: '请完善信息！', trigger: 'blur'} ],
-                Dvisit_num:[ {required: true, message: '请完善信息！', trigger: 'blur'} ],
+                saleroom:[ {required: true, message: '请输入数字！', trigger: 'blur', validator: Re} ],
+                new_customer_num:[ {required: true, message: '请输入数字！', trigger: 'blur',validator: Re} ],
+                visit_num:[{required: true, message: '请输入数字！', trigger: 'blur', validator: Re}],
+                Dsaleroom:[ {required: true, message: '请输入数字！', trigger: 'blur', validator: Re} ],
+                Dnew_customer_num:[ {required: true, message: '请输入数字！', trigger: 'blur', validator: Re} ],
+                Dvisit_num:[ {required: true, message: '请输入数字！', trigger: 'blur', validator: Re} ],
             },
             DayTotal:{
                 saleroom:"",
@@ -308,11 +295,11 @@ export default {
                 visit_num:""
             },
             DayTotalRule:{
-                saleroom:[ {required: true, message: '请完善信息！', trigger: 'blur'} ],
-                new_customer_num:[ {required: true, message: '请完善信息！', trigger: 'blur'} ],
-                visit_num:[ {required: true, message: '请完善信息！', trigger: 'blur'} ],
+                saleroom:[ {required: true, message: '请输入数字！', trigger: 'blur', validator: Re} ],
+                new_customer_num:[ {required: true, message: '请输入数字！', trigger: 'blur', validator: Re} ],
+                visit_num:[ {required: true, message: '请输入数字！', trigger: 'blur', validator: Re} ],
             },
-            week_open:true,
+            week_open:false,
             day_open:false,
             Cal:false,
             baojia:false,
@@ -347,8 +334,8 @@ export default {
                     finish_visit_num:0,
                 },
                 year:{
-                    saleroom:0,
-                    finish_saleroom:0
+                    year_target_num:0,
+                    year_realnumber:0
                 }
             }
         }
@@ -356,10 +343,9 @@ export default {
     components: {
         attitude,
         classic,
-        account,
-        sum,
-        workdetail,
-        baojia
+        baojia,
+        teamTotalSum,
+        personHistory
     },
     methods: {
         openCal(){
@@ -392,14 +378,23 @@ export default {
             }
 
             function success(res){
-                if(res.data.data.week){
+                _self.UserPlanData.year = res.data.data.year
+                if(!res.data.data.week){
                     _self.week_open = true
                 }else{
-                    if(res.data.data.day){
+                    if(!res.data.data.day){
+                        _self.UserPlanData.week = res.data.data.week
                         _self.day_open = true
+                    }else{
+                        _self.UserPlanData.week = res.data.data.week
+                        _self.UserPlanData.day = res.data.data.day
+
                     }
+                    
                 }
             }
+
+            this.$Get(url, config, success)
         },
         handleSubmit(){
             let _self = this
@@ -412,6 +407,7 @@ export default {
                     let config = {
                         saleroom: _self.weekTotal.saleroom,
                         new_customer_num: _self.weekTotal.new_customer_num,
+                        visit_num: _self.weekTotal.visit_num,
                         type: "week"
                     }
 
@@ -429,6 +425,7 @@ export default {
                             _self.week_open = false
                             _self.week_loading = false
                             _self.getUserTableData()
+                            _self.getUserPlanData()
                         }
 
                         function fail2(err){
@@ -467,7 +464,7 @@ export default {
                         _self.day_open = false
                         _self.day_loading = false
                         _self.getUserTableData()
-
+                        _self.getUserPlanData()
                     }
 
                     function fail2(err){
@@ -479,10 +476,20 @@ export default {
                     this.$Message.error('请完善信息！');
                 }
             })
+        },
+        //  打开团队统计
+        openTeamTotal(){
+            this.$bus.emit('OPEN_TEAM_RANK_FUNCTION', true)
+        },
+
+        //  打开个人历史计划
+        showHistory(){
+            this.$bus.emit('OPEN_HISTORY_FUNCTION', true)
         }
     },
     created(){
         let _self = this
+        _self.getUserPlanData()
         _self.getUserTableData()
     }
 }
@@ -496,4 +503,8 @@ export default {
         bottom:30px;
         right:30px
     }
+    // #personPlan::after{
+    //     content:"查看历史目标";
+    //     font-size: 10px;
+    // }
 </style>

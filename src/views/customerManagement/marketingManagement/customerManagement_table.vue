@@ -364,6 +364,7 @@ export default {
               width:210,
               sortable: true,                          
               render: (h, params) => {
+
                 // console.log(params)
                 if(params.row.companyNames == ''|| params.row.companyNames == null){
                   return ''
