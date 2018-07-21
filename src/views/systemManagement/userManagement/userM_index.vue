@@ -62,6 +62,7 @@
                             <Table
                                     highlight-row
                                     size="small"
+                                    :loading="user_table_loading"
                                     :columns="userColumns"
                                     @on-current-change="selectRow"
                                     :data="userData"></Table>
@@ -137,6 +138,7 @@
             </Row>
         </Card>
         <create-user></create-user>
+        <edit-modal></edit-modal>
         <role-modal></role-modal>
         <organize-modal></organize-modal>
         <lock-modal></lock-modal>
@@ -150,6 +152,7 @@ import RoleModal from './role_modal'
 import OrganizeModal from './organize_modal'
 import LockModal from './lock_user'
 import DeleteModal from './delete_user'
+import EditModal from './edit_user'
 
     export default {
         components:{
@@ -157,10 +160,12 @@ import DeleteModal from './delete_user'
             RoleModal,
             OrganizeModal,
             LockModal,
-            DeleteModal
+            DeleteModal,
+            EditModal
         },
         data() {
             return{
+                user_table_loading:false,
                 current_select_row:"",
                 // 第一个列表的占位：
                 frist_span: "24",
@@ -282,6 +287,7 @@ import DeleteModal from './delete_user'
             getUserTable() {
                 let _self = this
                 let url = 'api/user/list'
+                _self.user_table_loading = true
                 let config = {
                     params:{
                         page: _self.userPage,
@@ -305,8 +311,11 @@ import DeleteModal from './delete_user'
                             username: _data.rows[i].username,
                             realname: _data.rows[i].realname,
                             userkey: _data.rows[i].userkey,
-                            status: _data.rows[i].status
+                            status: _data.rows[i].status,
+                            mobilephone: _data.rows[i].mobilephone,
+                            email: _data.rows[i].email
                         })
+                    _self.user_table_loading = false                 
                     }
                 }
 
@@ -576,13 +585,8 @@ import DeleteModal from './delete_user'
             },
 
             //  编辑用户
-            updateUser(){
-                let _self = this
-                if(this.current_select_row){
-                    this.$bus.emit('LOCK_USER',_self.current_select_row)
-                }else{
-                    this.$Message.warning("请选择一行！")
-                }
+            updateUser(e){
+                this.$bus.emit('UPDATE_USER',e)
             }
         },
         created() {

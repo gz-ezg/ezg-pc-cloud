@@ -210,7 +210,6 @@ export default {
                 username: _self.formdata.username,
                 realname: _self.formdata.realname,
                 password: _self.formdata.password,
-                username: _self.formdata.username,
                 orgIds: _self.formdata.orgIds,
                 roleIds: _self.formdata.roleIds,
                 mobilePhone: _self.formdata.mobilePhone,
