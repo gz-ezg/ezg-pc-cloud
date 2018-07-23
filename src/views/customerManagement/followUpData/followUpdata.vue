@@ -263,9 +263,9 @@ export default {
                 {field:'servicename',title:'录入人'},
                 {field:'followname',title:'跟进人'},
                 {field:'departname',title:'录入部门'},
-                {field:'createdate',title:'创建时间 '},
+                {field:'createdate',title:'创建时间'},
                 {field:'contentcreatedate',title:'更新时间'},
-                {field:'customertype',title:'客户状态',format:'customerTypes'},
+                {field:'customertype',title:'客户状态'},
                 {field:'customersource',title:'客户来源',format:'cluesources'},
                 {field:'area',title:'区域',format:'area'},
             ]

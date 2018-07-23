@@ -162,7 +162,7 @@
                 submit_button:false,
                 rate:{
                     content:"",
-                    star:new Number()
+                    star:5
                 },
                 file:[],
                 // 是否弹出系统反馈框

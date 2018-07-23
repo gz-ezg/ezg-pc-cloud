@@ -2,12 +2,12 @@
     <div>
         <Modal
             v-model="edit_pay"
-            title="修改记录"
+            title="修改"
             width="340"
         >
             <Form ref="editment" :model="editment" :rules="ruleeditment" :label-width="80">
                 <FormItem label="缴费金额" prop="transcationamount" >
-                    <Input v-model="editment.transcationamount" placeholder="" style="width:200px" disabled></Input>
+                    <Input v-model="editment.transcationamount" placeholder="" style="width:200px" ></Input>
                 </FormItem>
                 <FormItem label="缴费方式" prop="paydir">
                     <Select transfer v-model="editment.paydir" placeholder="" style="width:200px">
@@ -21,7 +21,7 @@
                         <DatePicker type="date" placeholder="" v-model="editment.transcationtime" style="width:200px"></DatePicker>
                 </FormItem>
                 <FormItem>
-                    <Button type="primary" @click="handleSubmit('editment')">修改</Button>
+                    <Button type="primary" @click="handleSubmit('editment')" :loading="edit_loading">修改</Button>
                     <Button type="ghost" @click="edit_pay=false" style="margin-left: 8px">取消</Button>
                 </FormItem>
             </Form>
@@ -46,6 +46,7 @@ export default {
         return{
             // transcationamount:'',
             //  订单ID
+            edit_loading:false,
             current_orderRow:'',
             current_orderId:'',
             //  弹出设置
@@ -101,28 +102,72 @@ export default {
             })
         },
         //  表单提交验证
+        // handleSubmit (name) {
+        //     var _that = this
+        //     console.log(_that.current_orderId)
+        //     console.log(DateFormat(_that.editment.transcationtime))
+        //     this.$refs[name].validate((valid) => {
+        //         if (valid) {
+        //             var url = 'api/order/balance/item/update'
+        //             const params = {
+        //                 'itemId':_that.current_orderId,
+        //                 'paydir':_that.editment.paydir,
+        //                 'transcationtime':DateFormat(_that.editment.transcationtime)
+        //             }
+        //             console.log(params)
+        //             this.$http.post(url, params).then(function(res){
+        //                 if(res.data.msgCode==40000){
+        //                     _that.$Message.success('修改成功');
+        //                     _that.edit_pay = false
+        //                     Bus.$emit('update',true)
+        //                 }else{
+        //                     _that.$Message.error('修改失败，请重新添加!')
+        //                 }
+        //             })     
+        //         } else {
+        //         }
+        //     })
+        // },
         handleSubmit (name) {
-            var _that = this
-            console.log(_that.current_orderId)
-            console.log(DateFormat(_that.editment.transcationtime))
+            var _self = this
+            console.log(_self.current_orderId)
+            console.log(DateFormat(_self.editment.transcationtime))
             this.$refs[name].validate((valid) => {
                 if (valid) {
-                    var url = 'api/order/balance/item/update'
-                    const params = {
-                        'itemId':_that.current_orderId,
-                        'paydir':_that.editment.paydir,
-                        'transcationtime':DateFormat(_that.editment.transcationtime)
+                    var url = 'api/order/balance/updateOaBalanceItem'
+                    _self.edit_loading = true
+                    let params = {
+                        id:_self.current_orderId,
+                        transcationamount:_self.editment.transcationamount,
+                        transcationtime:DateFormat(_self.editment.transcationtime),
+                        itemmemo:"1",
+                        memo:"1"
                     }
                     console.log(params)
-                    this.$http.post(url, params).then(function(res){
-                        if(res.data.msgCode==40000){
-                            _that.$Message.success('修改成功');
-                            _that.edit_pay = false
-                            Bus.$emit('update',true)
-                        }else{
-                            _that.$Message.error('修改失败，请重新添加!')
-                        }
-                    })     
+
+                    // this.$http.post(url, params).then(function(res){
+                    //     if(res.data.msgCode==40000){
+                    //         _self.$Message.success('修改成功');
+                    //         _self.edit_pay = false
+                    //         Bus.$emit('update',true)
+                    //     }else{
+                    //         _self.$Message.error('修改失败，请重新添加!')
+                    //     }
+                    // })
+                    
+                    function success(res){
+                        _self.$Message.success('修改成功');
+                        _self.edit_pay = false
+                        Bus.$emit('update',true)
+                        _self.edit_loading = false
+                    }
+
+                    function fail(err){
+                        _self.edit_loading = false
+                    }
+
+                    _self.$Post(url, params, success, fail)
+                    
                 } else {
                 }
             })

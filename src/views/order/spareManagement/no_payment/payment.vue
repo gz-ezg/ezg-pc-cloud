@@ -50,7 +50,7 @@
                                         <Button type="primary" icon="plus" @click="confirm"  v-permission="['spareM.receipt']">确认收款</Button>
                                         <Button type="primary" icon="edit" @click="add_pay">补交费用</Button>
                                         <Button type="primary" icon="edit" @click="edit_pay" v-permission="['spareM.edit']">修改</Button>
-                                        <Button type="primary" icon="edit" disabled v-permission="['spareM.edit']">驳回</Button>
+                                        <Button type="primary" icon="edit" v-permission="['spareM.edit']" @click="reback" :loading="backup_loading">驳回</Button>
                                     </ButtonGroup>
                                 </Row>
                                 <Row style="margin-top: 10px;">
@@ -77,6 +77,7 @@ import EditPayment from './edit_payment'
 export default {
     data(){
         return{
+            backup_loading:false,
             show:'1',
             py_loading:false,
             //  浮动框弹出
@@ -151,7 +152,7 @@ export default {
             var _that = this
             var url = 'api/order/balance/detail?balanceId='+_that.balanceId
             this.$http.get(url).then(function(res){
-        _that.$backToLogin(res)
+            _that.$backToLogin(res)
                 
                 var temp_data = res.data.data
                 console.log(res.data.data)
@@ -194,7 +195,7 @@ export default {
             if(this.select_balance_row == ''){
                 _that.$Message.error('请选择一行进行确认')
             }else{
-                if(this.select_balance_row.processtype=="待审批"){
+                if(this.select_balance_row.processtype=="待审批" || this.select_balance_row.processtype=="驳回"){
                     var url = 'api/order/balance/confirmReceipt'
                     const params = {
                         "itemId":_that.select_balance_row.id
@@ -213,6 +214,30 @@ export default {
                 }else{
                     _that.$Message.error('此收款已审批，请选择另外一行')
                 }
+            }
+        },
+        reback(){
+            let _self = this
+            if(this.select_balance_row == ''){
+                _that.$Message.error('请选择一行驳回！')
+            }else{
+                let url = `api/order/balance/updateProcesstypeByItemId`
+                _self.backup_loading = true
+                let config = {
+                    itemId: _self.select_balance_row.id,
+                    processType: "bh"
+                }
+
+                function success(res){
+                    _self.backup_loading = false
+                    _self.GetBalanceIdDate()
+                }
+
+                function fail(err){
+                    _self.backup_loading = false
+                }
+
+                _self.$Post(url, config, success, fail)
             }
         },
         //  跳转到增加收款界面

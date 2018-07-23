@@ -8,7 +8,7 @@
                         筛选
                         
                             <div slot="content" @keydown.enter="Search">
-                            <Form ref="formValidate" :model="formValidate" :label-width="75" style="margin-top: 15px">
+                            <Form ref="formValidate" :model="formValidate" :label-width="120" style="margin-top: 15px">
                                 <Row :gutter="16" style="height:56px">
                                     <Col span="8">
                                     <FormItem label="客户名称：" prop="name">
@@ -104,15 +104,21 @@
                                     </FormItem>
                                   </Col>
                                 </Row>
-                                <Row>
+                                <Row :gutter="12" style="height:56px">
                                     <Col span="8">
                                     <FormItem label="客户等级：" prop="importlevel">
-                                        <Select transfer v-model="formValidate.importlevel" size="small" @on-change="Search" style="width:100%">
+                                        <Select transfer v-model="formValidate.importlevel" size="small" @on-change="Search"  style="width:100%">
                                             <Option value="">     </Option>
                                             <Option v-for="item in impLevel" :value="item.typecode" :key="item.id">
                                                 {{ item.typename }}
                                             </Option>
                                         </Select>
+                                    </FormItem>
+                                  </Col>
+                                  <Col span="8">
+                                    <FormItem label="剩余跟进时间：">
+                                        <Input  v-model="formValidate.begin_residue_time" size="small" style="width:30%" number placeholder="起始"></Input> - 
+                                        <Input  v-model="formValidate.end_residue_time" size="small" style="width:30%" number placeholder="结束"></Input>
                                     </FormItem>
                                   </Col>
                                 </Row>
@@ -349,7 +355,9 @@ export default {
         upddate:[],
         customerStatus:'',
         labelName:"",
-        importlevel:""
+        importlevel:"",
+        begin_residue_time:"",
+        end_residue_time:""
       },
       columns: [
         {
@@ -516,7 +524,8 @@ export default {
         {
           title: "剩余跟进时间(天)",
           key: "residue_time",
-          width: 140
+          width: 160,
+          sortable: true,
         },
         // {
         //   title: "商事",
@@ -582,6 +591,9 @@ export default {
             this.sortName = 'AREA'
         }else if(e.key == 'channelTypeNameText'){
             this.sortName = 'channelTypeName'
+        }else if(e.key == 'residue_time'){
+            this.sortName = 'channelTypeName'
+            this.sortName = 'residue_time'
         }else{
             this.sortName = e.key
         }
@@ -656,6 +668,28 @@ export default {
                     temp_status = _self.formValidate.customerType.join('-')
                 }
       var keys = []; //定义一个数组用来接受key
+      let temp_begin_residue_time = ""
+      if(_self.formValidate.begin_residue_time == ""){
+          temp_begin_residue_time = ""
+      }else{
+          if(isNaN(_self.formValidate.begin_residue_time)){
+              _self.$Message.warning("剩余跟进时间请输入数字！")
+              _self.formValidate.begin_residue_time = ""
+          }else{
+            temp_begin_residue_time = _self.formValidate.begin_residue_time *3600*1000*24
+          }
+      }
+      let temp_end_residue_time = ""
+      if(_self.formValidate.end_residue_time == "" ){
+          temp_end_residue_time = ""
+      }else{
+          if(isNaN(_self.formValidate.end_residue_time)){
+              _self.$Message.warning("剩余跟进时间请输入数字！")
+              _self.formValidate.end_residue_time = ""
+          }else{
+            temp_end_residue_time = _self.formValidate.end_residue_time *3600*1000*24
+          }
+      }
       var config = {
         params: {
           order:_self.order,
@@ -677,6 +711,8 @@ export default {
           ecreatedate:DateFormat(_self.formValidate.credate[1]),
           bupdatedate:DateFormat(_self.formValidate.upddate[0]),
           eupdatedate:DateFormat(_self.formValidate.upddate[1]),
+          begin_residue_time: temp_begin_residue_time,
+          end_residue_time: temp_end_residue_time
         }
       };
       // for (var key in _self.formValidate) {
@@ -923,6 +959,8 @@ export default {
       _self.currentPage = 1;
       this.$refs[name].resetFields();
       _self.formValidate.customerType = ''
+      _self.formValidate.begin_residue_time = ""
+      _self.formValidate.end_residue_time = ""
       _self.getTableData();
     },
     ok() {},

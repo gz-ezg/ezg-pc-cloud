@@ -5,7 +5,7 @@
             width="800"
             v-model="open_edit_rule"
         >
-            <Form ref="add" :model="add" :label-width="100" style="width:650px;margin:auto">
+            <Form ref="add" :model="add" :label-width="100" style="width:650px;margin:auto" :rules="addrule">
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="name" label="规则名称：">
@@ -74,7 +74,7 @@
                 </Row>
             </Form>
             <div slot="footer">
-                <Button type="primary" @click="edit_rule_company">修改</Button>
+                <Button type="primary" @click="before_add">修改</Button>
                 <Button type="ghost" @click="close_rule_detail">关闭</Button>
             </div>
         </Modal>
@@ -91,9 +91,7 @@ export default {
                 type:"",
                 id:"",
                 name:"",
-                left_equation:"",
-                right_equation:"",	
-                symbol:"",	
+                equation:"",
                 type:"",	
                 check_period:"",	
                 tax_type:"",
@@ -101,21 +99,37 @@ export default {
                 sms_message:"",
                 send_msg:"",
                 security_line:"",
-                vsupa_left_equation:"",
-                vsupa_right_equation:""
+            },
+            addrule:{
+                name: [{ required: true, message: '必填项！', trigger: 'blur' }],
+                equation: [{ required: true, message: '必填项！', trigger: 'blur' }],
+                check_period: [{ required: true, message: '必填项！', trigger: 'blur' }],
+                tax_type: [{ required: true, message: '必填项！', trigger: 'change' }],
+                base_message: [{ required: true, message: '必填项！', trigger: 'blur' }],
+                sms_message: [{ required: true, message: '必填项！', trigger: 'blur' }],
+                send_msg: [{ required: true, message: '必填项！', trigger: 'change' }],
+                security_line: [{ required: true, message: '必填项！', trigger: 'blur' }]
             }
         }
     },
     methods: {
+        before_add(){
+            let _self = this
+            this.$refs["add"].validate((valid) => {
+                    if (valid) {
+                        _self.edit_rule_company()
+                    } else {
+                        this.$Message.error('请补全数据！');
+                    }
+                })
+        },
         edit_rule_company(){
             let _self = this
             let url = `api/order/cycle/finance/analysis/update`
             let config = {
                 id:_self.add.id,
                 name:_self.add.name,
-                leftEquation:_self.add.left_equation,
-                rightEquation:_self.add.right_equation,
-                symbol:_self.add.symbol,
+                equation:_self.add.left_equation,
                 type:_self.add.type,
                 checkPeriod:_self.add.check_period,
                 taxType:_self.add.tax_type,
@@ -123,8 +137,6 @@ export default {
                 smsMessage:_self.add.sms_message,
                 sendMsg:_self.add.send_msg,
                 securityLine:_self.add.security_line,
-                vsupaLeftEquation: _self.add.vsupa_left_equation,
-                vsupaRightEquation: _self.add.vsupa_right_equation
             }
             this.$http.post(url,config).then(function(res){
                 // console.log(res.data.msgCode)

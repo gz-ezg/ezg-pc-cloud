@@ -48,7 +48,13 @@
                     </Select>
                 </FormItem>
                 <FormItem label="创建人" prop="createby">
-                    <Input v-model="formValidate.createby" disabled></Input>
+                    <!-- <Input v-model="formValidate.createby" disabled></Input> -->
+                    <Select transfer v-model="formValidate.createby" disabled>
+                        <Option value="老板">老板</Option>
+                        <Option value="高层">高层</Option>                            
+                        <Option value="中层">中层</Option>                            
+                        <Option value="基层">基层</Option>                            
+                    </Select>
                 </FormItem>
                 <FormItem label="企业来源" prop="cluesource">
                     <Select transfer v-model="formValidate.cluesource" placement="top">
@@ -93,7 +99,12 @@
                     </Select>
                 </FormItem>
                 <FormItem label="创建人" prop="createby">
-                    <Input v-model="formValidate2.createby" disabled></Input>
+                    <Select transfer v-model="formValidate2.createby">
+                        <Option value="老板">老板</Option>
+                        <Option value="高层">高层</Option>                            
+                        <Option value="中层">中层</Option>                            
+                        <Option value="基层">基层</Option>                            
+                    </Select>
                 </FormItem>
                 <FormItem label="企业来源" prop="cluesource">
                     <Select transfer v-model="formValidate2.cluesource" placement="top">

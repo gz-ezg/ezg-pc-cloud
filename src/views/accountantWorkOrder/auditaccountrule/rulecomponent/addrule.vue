@@ -5,7 +5,7 @@
             width="800"
             v-model="open_add_rule"
         >
-            <Form ref="add" :model="add" :label-width="100" style="margin:auto">
+            <Form ref="add" :model="add" :label-width="100" style="margin:auto" :rules="addrule">
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="name" label="规则名称：">
@@ -43,7 +43,7 @@
                 </Row>
                 <Row :gutter="16">
                     <Col span="24">
-                        <FormItem prop="security_line" label="警戒值：">
+                        <FormItem prop="securityLine" label="警戒值：">
                             <Input type="textarea" size="small" v-model="add.securityLine">
                             </Input>
                         </FormItem>
@@ -93,7 +93,7 @@
                 </Row>
             </Form>
             <div slot="footer">
-                <Button type="primary" @click="add_rule_company">新增</Button>
+                <Button type="primary" @click="before_add">新增</Button>
                 <Button type="ghost" @click="close_rule_detail">关闭</Button>
             </div>
         </Modal>
@@ -109,30 +109,44 @@ export default {
             open_add_rule:false,
             add:{
                 name:"",
-                leftEquation:"",
-                rightEquation:"",	
-                symbol:"",	
-                type:"",	
+                type:"",
+                equation:"",
                 checkPeriod:"",	
                 taxType:"",
                 baseMessage:"",	
                 smsMessage:"",
                 sendMsg:"",
                 securityLine:"",
-                vsupaLeftEquation:"",
-                vsupaRightEquation:""
+            },
+            addrule:{
+                name: [{ required: true, message: '必填项！', trigger: 'blur' }],
+                equation: [{ required: true, message: '必填项！', trigger: 'blur' }],
+                checkPeriod: [{ required: true, message: '必填项！', trigger: 'blur' }],
+                taxType: [{ required: true, message: '必填项！', trigger: 'change' }],
+                baseMessage: [{ required: true, message: '必填项！', trigger: 'blur' }],
+                smsMessage: [{ required: true, message: '必填项！', trigger: 'blur' }],
+                sendMsg: [{ required: true, message: '必填项！', trigger: 'change' }],
+                securityLine: [{ required: true, message: '必填项！', trigger: 'blur' }]
             }
         }
     },
     methods: {
+        before_add(){
+            let _self = this
+            this.$refs["add"].validate((valid) => {
+                    if (valid) {
+                        _self.add_rule_company()
+                    } else {
+                        this.$Message.error('请补全数据!');
+                    }
+                })
+        },
         add_rule_company(){
             let _self = this
             let url = `api/order/cycle/finance/analysis/create`
             let config = {
                 name:_self.add.name,
-                leftEquation:_self.add.leftEquation,
-                rightEquation:_self.add.rightEquation,
-                symbol:_self.add.symbol,
+                equation:_self.add.equation,
                 type:_self.type,
                 checkPeriod:_self.add.checkPeriod,
                 taxType:_self.add.taxType,
@@ -140,8 +154,6 @@ export default {
                 smsMessage:_self.add.smsMessage,
                 sendMsg:_self.add.sendMsg,
                 securityLine:_self.add.securityLine,
-                vsupaLeftEquation: _self.add.vsupaLeftEquation,
-                vsupaRightEquation: _self.add.vsupaRightEquation
             }
             console.log(config)
             this.$http.post(url,config).then(function(res){
@@ -152,9 +164,7 @@ export default {
                     // Bus.$emit('updateauditrule',true)
                     _self.open_add_rule = false
                     _self.add.name = "",
-                    _self.add.leftEquation = "",
-                    _self.add.rightEquation = "",
-                    _self.add.symbol = "",
+                    _self.add.equation = "",
                     _self.type = "",
                     _self.add.checkPeriod = "",
                     _self.add.taxType = "",
@@ -162,8 +172,6 @@ export default {
                     _self.add.smsMessage = "",
                     _self.add.sendMsg = "",
                     _self.add.securityLine = ""
-                    _self.add.vsupaRightEquation = "",
-                    _self.add.vsupaLeftEquation = ""
                 }else{
                     _self.$Message.error('新增失败！')
                 }

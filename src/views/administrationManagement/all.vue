@@ -35,7 +35,7 @@
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
-                <!-- <Button type="primary" icon="ios-color-wand-outline" @click="reCreate" v-permission="['administration.rebuild']">重新生成流程</Button> -->
+                <Button type="primary" icon="ios-color-wand-outline" @click="reCreate" v-permission="['administration.rebuild']">重新生成流程</Button>
             </ButtonGroup>
         </Row>
         <Row style="margin-top: 10px;">
@@ -390,7 +390,6 @@ export default {
                 let _self = this
                 let url = `api/order/workOrderList`
                 let config = {
-                        workOrderStatus:'60',
                         page: '1',
                         pageSize: '1000000',
                         iscycle:'N',                 
@@ -410,7 +409,6 @@ export default {
             var url = "api/order/workOrderList"
             var config = {
                 params:{
-                    workOrderStatus:'60',
                     sortField:_self.sortField,
                     order:_self.order,
                     page:_self.page,

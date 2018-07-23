@@ -36,7 +36,7 @@
                 <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button> -->
                 <Button type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button>                
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="reCreate" v-permission="['administration.rebuild']">重新生成流程</Button>
+                <!-- <Button type="primary" icon="ios-color-wand-outline" @click="reCreate" v-permission="['administration.rebuild']">重新生成流程</Button> -->
             </ButtonGroup>
         </Row>
         <Row style="margin-top: 10px;">
@@ -393,7 +393,8 @@ export default {
                 let config = {
                         page: '1',
                         pageSize: '1000000',
-                        iscycle:'N',                 
+                        iscycle:'N',
+                        workOrderStatus:20,             
                         companyName:_self.formInline.companyname,
                         serviceName:_self.formInline.servicename,
                         // serviceDept:"'ACCOUNT','AUDIT'",
@@ -407,7 +408,7 @@ export default {
         getData(){
             var _self = this
             _self.Sloading = true            
-            var url = "api/order/workOrderList"
+            var url = "api/order/workOrderList&workOrderStatus=20"
             var config = {
                 params:{
                     sortField:_self.sortField,

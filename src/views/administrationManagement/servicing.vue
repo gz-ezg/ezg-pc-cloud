@@ -390,9 +390,9 @@ export default {
                 let _self = this
                 let url = `api/order/workOrderList`
                 let config = {
-                        workOrderStatus:'60',
                         page: '1',
                         pageSize: '1000000',
+                        workOrderStatus:'30',
                         iscycle:'N',                 
                         companyName:_self.formInline.companyname,
                         serviceName:_self.formInline.servicename,
@@ -410,7 +410,7 @@ export default {
             var url = "api/order/workOrderList"
             var config = {
                 params:{
-                    workOrderStatus:'60',
+                    workOrderStatus:'30',
                     sortField:_self.sortField,
                     order:_self.order,
                     page:_self.page,
