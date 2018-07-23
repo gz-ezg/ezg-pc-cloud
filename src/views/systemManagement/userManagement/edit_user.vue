@@ -241,19 +241,40 @@ export default {
         //  角色弹出框
         openRole(){
             let _self = this
+            console.log(_self.formdata.roleIds)
             this.$bus.emit('OPEN_ROLE_TABLE',_self.formdata.roleIds)
+        },
+
+        //  获取角色信息
+        get_role_detail(e){
+            let _self = this
+            let url = `api/user/detail`
+            let config = {
+                params:{
+                    userId:e.id
+                }
+            }
+            
+            this.$refs["formdata"].resetFields();
+            function success(res){
+                _self.formdata.username = res.data.data.userName
+                _self.formdata.realname = res.data.data.realName
+                _self.formdata.id = res.data.data.userId
+                _self.formdata.roleName = res.data.data.userKey
+                _self.formdata.email = res.data.data.email
+                _self.formdata.mobilePhone = res.data.data.mobilePhone
+                _self.formdata.roleIds = res.data.data.roleId
+                _self.formdata.orgIds = res.data.data.orgId 
+            }
+
+            this.$Get(url, config, success)
         }
     },
     created(){
         let _self = this
         this.$bus.on("UPDATE_USER",(e) => {
             console.log(e)
-            _self.formdata.username = e.username
-            _self.formdata.realname = e.realname
-            _self.formdata.id = e.id
-            _self.formdata.roleName = e.userkey
-            _self.formdata.email = e.email
-            _self.formdata.mobilePhone = e.mobilephone
+            _self.get_role_detail(e)
             _self.open_edit_user = true
         })
         this.$bus.on("CREATE_USER_ROLE_DATA",(e) => {

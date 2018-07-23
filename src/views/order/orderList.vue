@@ -2217,8 +2217,10 @@
 
             // 录入订单提交
             ok4(name) {
-                let _self = this
-
+                let eaRows = $('#orderItemList').datagrid('getRows')
+                for(let j = 0;j<eaRows.length;j++){
+                    $('#orderItemList').datagrid('endEdit',j)
+                }
                 setTimeout(() => {
                     this.loading = false;
                     this.$refs[name].validate((valid) => {
@@ -2330,7 +2332,10 @@
             // 编辑订单后提交数据
             editPostFrom(name) {
                 let _self = this
-
+                let eaRows = $('#orderItemList2').datagrid('getRows')
+                for(let j = 0;j<eaRows.length;j++){
+                    $('#orderItemList2').datagrid('endEdit',j)
+                }
                 setTimeout(() => {
                     this.loading2 = false;
                     this.$refs[name].validate((valid) => {
@@ -2478,7 +2483,10 @@
             // 修改之后提交数据
             xiugaiPostFrom(name) {
                 let _self = this
-
+                let eaRows = $('#orderItemList4').datagrid('getRows')
+                for(let j = 0;j<eaRows.length;j++){
+                    $('#orderItemList4').datagrid('endEdit',j)
+                }
                 setTimeout(() => {
                     this.loading3 = false;
                     this.$refs[name].validate((valid) => {
