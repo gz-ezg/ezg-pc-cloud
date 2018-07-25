@@ -283,6 +283,12 @@ export default {
                             if(_self.departTree[i].children[j].children){
                                 for(let k = 0;k<_self.departTree[i].children[j].children.length;k++){
                                     _self.departTree[i].children[j].children[k].title = _self.departTree[i].children[j].children[k].departname
+                                    if(_self.departTree[i].children[j].children[k].children){
+                                        for(let t = 0;t<_self.departTree[i].children[j].children[k].children.length;t++){
+                                            console.log(_self.departTree[i].children[j].children[k].children[t])
+                                            _self.departTree[i].children[j].children[k].children[t].title = _self.departTree[i].children[j].children[k].children[t].departname
+                                        }
+                                    }
                                 }
                             }
                         }

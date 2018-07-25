@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { DateFormat } from '../../../libs/utils.js'
+import { DateFormat2 } from '../../../libs/utils.js'
 
 export default {
     data(){
@@ -76,7 +76,7 @@ export default {
                 },
                 {
                     title: "创建时间",
-                    key: "createdate",
+                    key: "begin_period",
                     width: 150,
                     align: 'center'
                 },
@@ -107,8 +107,8 @@ export default {
 
             let config = {
                 params:{
-                    begin_period: DateFormat(_self.dateRange[0]),
-                    end_period: DateFormat(_self.dateRange[1]),
+                    begin_period: DateFormat2(_self.dateRange[0]),
+                    end_period: DateFormat2(_self.dateRange[1]),
                     page: _self.page,
                     pageSize: _self.pageSize,
                     type: _self.type

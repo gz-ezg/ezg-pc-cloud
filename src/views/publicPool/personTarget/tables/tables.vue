@@ -52,7 +52,7 @@
 <script>
 import TablesEdit from './edit.vue'
 import handleBtns from './handle-btns'
-import './index.less'
+// import './index.less'
 export default {
   name: 'Tables',
   props: {
@@ -154,6 +154,10 @@ export default {
   methods: {
     suportEdit (item, index) {
       item.render = (h, params) => {
+        //  判断是否为空，为空无法编辑
+        if (this.insideTableData[params.index][params.column.key] == "") {
+          this.insideTableData[params.index][params.column.key] = 0
+        }
         return h(TablesEdit, {
           props: {
             params: params,

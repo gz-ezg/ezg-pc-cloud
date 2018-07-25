@@ -293,6 +293,14 @@ export default {
                                         _self.departTree[i].children[j].children[k].checked = true
                                     }
                                     _self.departTree[i].children[j].children[k].title = _self.departTree[i].children[j].children[k].departname
+                                    if(_self.departTree[i].children[j].children[k].children){
+                                        for(let t = 0;t<_self.departTree[i].children[j].children[k].children.length;t++){
+                                            if(_self.departTree[i].children[j].children[k].children[t].ID){
+                                                _self.departTree[i].children[j].children[k].children[t].checked = true
+                                            }
+                                            _self.departTree[i].children[j].children[k].children[t].title = _self.departTree[i].children[j].children[k].children[t].departname
+                                        }
+                                    }
                                 }
                             }
                         }
