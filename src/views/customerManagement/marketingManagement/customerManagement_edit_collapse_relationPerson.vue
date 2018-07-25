@@ -33,7 +33,12 @@
                     <Input v-model="formValidate.email" ></Input>
                 </FormItem>
                 <FormItem label="职位" prop="jobplace" >
-                    <Input v-model="formValidate.jobplace" ></Input>
+                    <Select v-model="formValidate.jobplace">
+                        <Option value="老板">老板</Option>
+                        <Option value="高层">高层</Option>
+                        <Option value="中层">中层</Option>
+                        <Option value="基层">基层</Option>
+                    </Select>
                 </FormItem>
                 <FormItem label="发送信息" prop="sendmsgflag" >
                     <Select transfer v-model="formValidate.sendmsgflag" >
@@ -69,7 +74,13 @@
                     <Input v-model="formValidate2.email"></Input>
                 </FormItem>
                 <FormItem label="职位" prop="jobplace">
-                    <Input v-model="formValidate2.jobplace"></Input>
+                    <!-- <Input v-model="formValidate2.jobplace"></Input> -->
+                    <Select v-model="formValidate2.jobplace">
+                        <Option value="老板">老板</Option>
+                        <Option value="高层">高层</Option>
+                        <Option value="中层">中层</Option>
+                        <Option value="基层">基层</Option>
+                    </Select>
                 </FormItem>
                 <FormItem label="发送信息" prop="sendmsgflag">
                     <Select transfer v-model="formValidate2.sendmsgflag">

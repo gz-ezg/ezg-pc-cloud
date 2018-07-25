@@ -265,7 +265,7 @@ export default {
                 {field:'departname',title:'录入部门'},
                 {field:'createdate',title:'创建时间'},
                 {field:'contentcreatedate',title:'更新时间'},
-                {field:'customertype',title:'客户状态'},
+                {field:'customertype',title:'客户状态',format:'customerTypes'},
                 {field:'customersource',title:'客户来源',format:'cluesources'},
                 {field:'area',title:'区域',format:'area'},
             ]
@@ -288,7 +288,7 @@ export default {
                 // order:"asc"
                 }
             let toExcel = this.$MergeURL(url, config)
-            console.log(toExcel)
+            // console.log(toExcel)
             window.open(toExcel)
         },
         downloadExcelField(){},

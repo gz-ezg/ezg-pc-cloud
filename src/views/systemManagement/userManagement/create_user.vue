@@ -182,6 +182,9 @@ export default {
                 email:[
                     // { message:"格式错误！",required: true, trigger: 'blur' },
                     { message:"格式错误！", validator:validateEmail,  trigger: 'blur' }
+                ],
+                roleName:[
+                    { message:"格式错误！"}
                 ]
             }
         }
@@ -219,6 +222,7 @@ export default {
             function success(res){
                 _self.create_loading = false
                 _self.open_create_user = false
+                _self.$refs['formdata'].resetFields()
                 _self.$bus.emit('UPDATE_USER_TABLE',true)
                 console.log(res)
             }
