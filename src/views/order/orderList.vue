@@ -2955,13 +2955,15 @@
 
             // easyUI 返回归属部门数据
             departnamef(value, row, index) {
-
+                // console.log(value)
+                // console.log(row)
+                // console.log(index)
                 if (row.departid) {
                     return value;
                 } else {
                     var servicedeparts = eval(row.servicedeparts) == null ? []
                         : eval(row.servicedeparts);
-
+                    // console.log(servicedeparts)
                     for (var i = 0; i < servicedeparts.length; i++) {
 
                         if (servicedeparts[i]["departId"]
@@ -3528,25 +3530,31 @@
             },
 
             itemOnClick(index,field) {
-                // console.log(this.orderItemList[index])
                 // console.log(index)
                 // console.log(field)
                 let _self = this
+
                 let itemGrid
                 let _form
                 // console.log()
 
                 //  根据最终价格添加备注内容，有部分bug
-                if(_self.orderItemList[index].unitprice != _self.old_price && _self.orderItemList[index].skuid == "1007"){
-                    if(_self.orderItemList[index].unitprice>=2000){
-                        _self.orderItemList[index].memo = "一年4次外勤、可做减少收入"
-                        _self.old_price = _self.orderItemList[index].unitprice
+                if(_self.isEdit == false && _self.isxiugai == false){
+                    if(_self.orderItemList[index].unitprice != _self.old_price && _self.orderItemList[index].skuid == "1007"){
+                        if(_self.orderItemList[index].unitprice>=2000){
+                            _self.orderItemList[index].memo = "一年4次外勤、可做减少收入"
+                            _self.old_price = _self.orderItemList[index].unitprice
+                        }else{
+                            _self.orderItemList[index].memo = ""
+                            _self.old_price = _self.orderItemList[index].unitprice
+                        }
+                        // let eaRows = $('#orderItemList').datagrid('getRows')
+                        //     for(let j = 0;j<eaRows.length;j++){
+                        //         $('#orderItemList').datagrid('endEdit',j)
+                        //     }
                     }else{
-                        _self.orderItemList[index].memo = ""
                         _self.old_price = _self.orderItemList[index].unitprice
                     }
-                }else{
-                    _self.old_price = _self.orderItemList[index].unitprice
                 }
 
                 if (_self.isEdit == true) {
@@ -3559,6 +3567,8 @@
                     itemGrid = $("#orderItemList")
                     _form = 'orderItemList'
                 }
+                console.log(itemGrid)
+                
 
                 if (field == 'servicestartdate') {
                     _self.selectDate = true
@@ -3701,7 +3711,7 @@
 
                     if(field == "departname"){
                         var d = eval(row.servicedeparts) == null ? [] : eval(row.servicedeparts);
-                        // console.log(d)
+                        console.log("11111111")
                             targetObjs.departname.combobox({
                             data: d,
                             valueField: 'type',
