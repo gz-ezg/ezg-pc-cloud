@@ -152,82 +152,82 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    {
-        path: '/test',
-        icon: 'social-windows',
-        name: 'test',
-        title: 'Test',
-        component: Main,
-        children: [
-            {
-                path: 'test',
-                title: '测试页面',
-                name: 'test_index',
-                component: resolve => {
-                    require(['@/views/test/components/main.vue'], resolve);
-                    // require(['@/views/woa-components/file-preview/index.vue'], resolve);
+    // {
+    //     path: '/test',
+    //     icon: 'social-windows',
+    //     name: 'test',
+    //     title: 'Test',
+    //     component: Main,
+    //     children: [
+    //         {
+    //             path: 'test',
+    //             title: '测试页面',
+    //             name: 'test_index',
+    //             component: resolve => {
+    //                 require(['@/views/test/components/main.vue'], resolve);
+    //                 // require(['@/views/woa-components/file-preview/index.vue'], resolve);
 
-                }
-            }
-        ]
-    },
-    {
-        path: '/allindex',
-        icon: 'social-windows',
-        name: 'allindex',
-        title: '首页',
-        component: Main,
-        children: [
-            {
-                path: 'cannelIndex', 
-                title: '渠道首页', 
-                name: 'cannelIndex_index', 
-                component: resolve => {
-                    require(['@/views/home/cannel_index/cannelIndex.vue'], resolve);
-                }
-            },
-            {
-                path: 'commercialIndex', 
-                title: '商事首页', 
-                name: 'commercialIndex_index', 
-                component: resolve => {
-                    require(['@/views/home/commercial_index/commercialIndex.vue'], resolve);
-                }
-            },
-            {
-                path: 'accountIndex', 
-                title: '会计首页', 
-                name: 'accountIndex_index', 
-                component: resolve => {
-                    require(['@/views/home/account_index/accountIndex.vue'], resolve);
-                }
-            },
-            {
-                path: 'marketIndex', 
-                title: '市场首页', 
-                name: 'marketIndex_index', 
-                component: resolve => {
-                    require(['@/views/home/market_index/marketIndex.vue'], resolve);
-                }
-            },
-            {
-                path: 'auditIndex', 
-                title: '审计首页', 
-                name: 'auditIndex_index', 
-                component: resolve => {
-                    require(['@/views/home/audit_index/auditIndex.vue'], resolve);
-                }
-            },
-            {
-                path: 'planIndex', 
-                title: '企划首页', 
-                name: 'planIndex_index', 
-                component: resolve => {
-                    require(['@/views/home/plan_index/planIndex.vue'], resolve);
-                }
-            },
-        ]
-    },
+    //             }
+    //         }
+    //     ]
+    // },
+    // {
+    //     path: '/allindex',
+    //     icon: 'social-windows',
+    //     name: 'allindex',
+    //     title: '首页',
+    //     component: Main,
+    //     children: [
+    //         {
+    //             path: 'cannelIndex', 
+    //             title: '渠道首页', 
+    //             name: 'cannelIndex_index', 
+    //             component: resolve => {
+    //                 require(['@/views/home/cannel_index/cannelIndex.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             path: 'commercialIndex', 
+    //             title: '商事首页', 
+    //             name: 'commercialIndex_index', 
+    //             component: resolve => {
+    //                 require(['@/views/home/commercial_index/commercialIndex.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             path: 'accountIndex', 
+    //             title: '会计首页', 
+    //             name: 'accountIndex_index', 
+    //             component: resolve => {
+    //                 require(['@/views/home/account_index/accountIndex.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             path: 'marketIndex', 
+    //             title: '市场首页', 
+    //             name: 'marketIndex_index', 
+    //             component: resolve => {
+    //                 require(['@/views/home/market_index/marketIndex.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             path: 'auditIndex', 
+    //             title: '审计首页', 
+    //             name: 'auditIndex_index', 
+    //             component: resolve => {
+    //                 require(['@/views/home/audit_index/auditIndex.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             path: 'planIndex', 
+    //             title: '企划首页', 
+    //             name: 'planIndex_index', 
+    //             component: resolve => {
+    //                 require(['@/views/home/plan_index/planIndex.vue'], resolve);
+    //             }
+    //         },
+    //     ]
+    // },
     {
         access: 6001,
         meta: 6001,
@@ -423,52 +423,52 @@ export const appRouter = [
             },
         ]
     },
-    /*{
-        access: 6012,
-        path: '/product',
-        icon: 'social-windows',
-        name: 'product',
-        title: '产品管理',
-        component: Main,
-        children: [
-            {
-                access: 6013,
-                path: 'productList',
-                title: '产品列表',
-                name: 'productList_index',
-                component: resolve => {
-                    require(['@/views/productManagement/productList/productList.vue'], resolve);
-                }
-            },
-            {
-                access: 6014,
-                path: 'productType',
-                title: '产品类型',
-                name: 'productType_index',
-                component: resolve => {
-                    require(['@/views/productManagement/productType/productType.vue'], resolve);
-                }
-            },
-            {
-                access: 6015,
-                path: 'productAttribute',
-                title: '属性管理',
-                name: 'productAttribute_index',
-                component: resolve => {
-                    require(['@/views/productManagement/productType/attributeManagement.vue'], resolve);
-                }
-            },
-            {
-                access: 6016,
-                path: 'areaManagement',
-                title: '地区管理',
-                name: 'areaManagement_index',
-                component: resolve => {
-                    require(['@/views/productManagement/productType/areaManagement.vue'], resolve);
-                }
-            },
-        ]
-    },*/
+    // {
+    //     access: 6012,
+    //     path: '/product',
+    //     icon: 'social-windows',
+    //     name: 'product',
+    //     title: '产品管理',
+    //     component: Main,
+    //     children: [
+    //         {
+    //             access: 6013,
+    //             path: 'productList',
+    //             title: '产品列表',
+    //             name: 'productList_index',
+    //             component: resolve => {
+    //                 require(['@/views/productManagement/productList/productList.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             access: 6014,
+    //             path: 'productType',
+    //             title: '产品类型',
+    //             name: 'productType_index',
+    //             component: resolve => {
+    //                 require(['@/views/productManagement/productType/productType.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             access: 6015,
+    //             path: 'productAttribute',
+    //             title: '属性管理',
+    //             name: 'productAttribute_index',
+    //             component: resolve => {
+    //                 require(['@/views/productManagement/productType/attributeManagement.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             access: 6016,
+    //             path: 'areaManagement',
+    //             title: '地区管理',
+    //             name: 'areaManagement_index',
+    //             component: resolve => {
+    //                 require(['@/views/productManagement/productType/areaManagement.vue'], resolve);
+    //             }
+    //         },
+    //     ]
+    // },
     {
         access: 6017,
         path: '/orderManagement',

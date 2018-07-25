@@ -204,23 +204,25 @@ export default {
             })
         },
 
-        //  提交新增用户
+        //  提交修改用户
         update_new_user(){
             let _self = this
-            let url = `api/user/updateUserr`
+            let url = `api/user/updateUser`
             let config = {
+                id: _self.formdata.id,
                 username: _self.formdata.username,
                 realname: _self.formdata.realname,
                 // password: _self.formdata.password,
                 orgIds: _self.formdata.orgIds,
                 roleIds: _self.formdata.roleIds,
-                mobilePhone: _self.formdata.mobilePhone,
+                mobilephone: _self.formdata.mobilePhone,
                 email: _self.formdata.email
             }
 
             function success(res){
                 _self.update_loading = false
                 _self.open_edit_user = false
+                _self.$bus.emit('UPDATE_USER_TABLE',true)
                 console.log(res)
             }
 
@@ -250,9 +252,7 @@ export default {
             let _self = this
             let url = `api/user/detail`
             let config = {
-                params:{
-                    userId:e.id
-                }
+                userId:e.id
             }
             
             this.$refs["formdata"].resetFields();
@@ -267,7 +267,11 @@ export default {
                 _self.formdata.orgIds = res.data.data.orgId 
             }
 
-            this.$Get(url, config, success)
+            function fail(err){
+                console.log(err)
+            }
+
+            this.$Post(url, config, success, fail)
         }
     },
     created(){

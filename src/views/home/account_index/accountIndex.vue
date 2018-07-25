@@ -80,9 +80,9 @@ export default {
             let date = new Date()
             _self.year = date.getFullYear()
             if(date.getMonth()<8){
-                _self.month = _self.year + "-0" + (date.getMonth() + 1)
+                _self.month = _self.year + "0" + (date.getMonth() + 1)
             }else{
-                _self.month = _self.year + "-" + (date.getMonth() + 1)
+                _self.month = _self.year + "" + (date.getMonth() + 1)
             }
             _self.day = date.getDate() + 1
         }

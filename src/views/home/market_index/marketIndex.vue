@@ -139,7 +139,7 @@
                         </Col>
                     </Row>
                 </div> -->
-                <div @click="openCal">
+                <div @click="open_pay_code">
                     <Row>
                         <Col span="24">
                             <Icon type="social-yen" size="32"></Icon><p style="font-size:10px" >支付</p>
@@ -245,6 +245,18 @@
                         <Button @click="submit" type="primary" long :loading="day_loading">提交</Button>
                     </div>
             </Modal>
+            <Modal
+                title="微信支付码"
+                v-model="openPayCode"
+                width="300"
+            >
+                <Row>
+                    <center>
+                        <img src="../../../images/weixincode.png" alt="">
+                    </center>
+                </Row>
+                <div slot="footer"></div>
+            </Modal>
             <team-total-sum></team-total-sum>
             <person-history></person-history>
     </div>
@@ -260,7 +272,7 @@ import personHistory from './showHistory';
 export default {
     data(){
         const Re = (rule, value, callback) => {
-                let re = /^[1-9]\d*$/
+                let re = /^[0-9]\d*$/
                 if (value == '' || value == null) {
                     callback();
                 } else {
@@ -272,6 +284,7 @@ export default {
                 }
             };
         return{
+            openPayCode:false,
             week_loading:false,
             day_loading:false,
             weekTotal:{
@@ -485,6 +498,9 @@ export default {
         //  打开个人历史计划
         showHistory(){
             this.$bus.emit('OPEN_HISTORY_FUNCTION', true)
+        },
+        open_pay_code(){
+            this.openPayCode = true
         }
     },
     created(){

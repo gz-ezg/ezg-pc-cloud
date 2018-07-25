@@ -152,8 +152,12 @@ Vue.prototype.$Get = function(url, config, success){
         if(res.data.msgCode == "40000"){
             success(res)
         }else{
-            _self.$Message.error(res.data.msg)
-            console.warn(res)
+            if(res.data.msg){
+                _self.$Message.error(res.data.msg)
+                console.warn(res)
+            }else{
+                console.error(res)
+            }
         }
     }).catch(function(err){
         _self.$Message.error('网络异常！')
@@ -167,7 +171,9 @@ Vue.prototype.$Post = function(url, config, success, fail){
     this.$http.post(url,config).then(function(res){
         // _self.$backToLogin(res)
         if(res.data.msgCode == "40000"){
-            _self.$Message.success(res.data.msg)
+            if(res.data.msg){
+                _self.$Message.success(res.data.msg)
+            }
             success(res)
         }else{
             _self.$Message.error(res.data.msg)

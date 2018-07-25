@@ -236,7 +236,8 @@ export default {
         display(){
             var _that = this
             if(_that.had_pay_current_row_id != ''){
-                Bus.$emit('select_had_pay', _that.had_pay_current_row_id)
+                _that.$bus.emit('select_had_pay', _that.had_pay_current_row_id)
+                // Bus.$emit('select_had_pay', _that.had_pay_current_row_id)
             }else{
                 _that.$Message.warning('请选择一行')
             }
@@ -261,15 +262,24 @@ export default {
     },
     created:function(){
         this.GetTableData()
-        Bus.$on('search1',(e)=>{
+        this.$bus.on('search1',(e)=>{
             this.search(e)
         })
-        Bus.$on('reset1',(e)=>{
+        this.$bus.on('reset1',(e)=>{
             this.reset()
         })
-        Bus.$on('refresh',(e)=>{
+        this.$bus.on('refresh',(e)=>{
             this.GetLocalData()
         })
+        // Bus.$on('search1',(e)=>{
+        //     this.search(e)
+        // })
+        // Bus.$on('reset1',(e)=>{
+        //     this.reset()
+        // })
+        // Bus.$on('refresh',(e)=>{
+        //     this.GetLocalData()
+        // })
     },
     components:{
         Search,

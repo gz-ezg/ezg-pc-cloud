@@ -272,16 +272,16 @@ export default {
                     name:'commercialIndex_index'
                 })
                 break
-            case "qihua":
-                this.$router.push({
-                    name:'planIndex_index'
-                })
-                break
-            case "shenji":
-                this.$router.push({
-                    name:'auditIndex_index'
-                })
-                break
+            // case "qihua":
+            //     this.$router.push({
+            //         name:'planIndex_index'
+            //     })
+            //     break
+            // case "shenji":
+            //     this.$router.push({
+            //         name:'auditIndex_index'
+            //     })
+            //     break
             case "salers":
                 this.$router.push({
                     name:'marketIndex_index'

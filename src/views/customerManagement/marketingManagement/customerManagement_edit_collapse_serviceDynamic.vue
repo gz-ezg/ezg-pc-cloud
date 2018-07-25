@@ -408,6 +408,7 @@
                         temp.balance_count = res.data.data.rows[i].balance_count
                         temp.createdate = res.data.data.rows[i].createdate
                         temp.updatedate = res.data.data.rows[i].updatedate
+                        temp.service_time = res.data.data.rows[i].service_time
                         temp._expanded = false
                         _self.data4.push(temp)
                     }

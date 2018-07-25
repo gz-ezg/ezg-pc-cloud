@@ -93,23 +93,23 @@
             },
 
             optionChange(a) {
-                let _self = this
+                // let _self = this
 
-                for (let i = 0; i < _self.accMag.length; i++) {
-                    if (a == _self.accMag[i].value && _self.accMag[i].link != "null") {
-                        let _data = JSON.parse(_self.accMag[i].link)
-                        _self.jzAcc = []
+                // for (let i = 0; i < _self.accMag.length; i++) {
+                //     if (a == _self.accMag[i].value && _self.accMag[i].link != "null") {
+                //         let _data = JSON.parse(_self.accMag[i].link)
+                //         _self.jzAcc = []
 
-                        for (let j = 0; j < _data.length; j++) {
-                            _self.jzAcc.push({
-                                value: _data[j].id,
-                                label: _data[j].realname
-                            })
-                        }
-                    } else if (a == _self.accMag[i].value && _self.accMag[i].link == "null") {
-                        _self.jzAcc = []
-                    }
-                }
+                //         for (let j = 0; j < _data.length; j++) {
+                //             _self.jzAcc.push({
+                //                 value: _data[j].id,
+                //                 label: _data[j].realname
+                //             })
+                //         }
+                //     } else if (a == _self.accMag[i].value && _self.accMag[i].link == "null") {
+                //         _self.jzAcc = []
+                //     }
+                // }
             },
 
             ok() {

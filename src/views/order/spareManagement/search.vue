@@ -56,14 +56,16 @@ export default {
   },
   methods:{
     search(){
-      Bus.$emit('search',this.formInline)
+			this.$bus.emit('search',this.formInline)
+      // Bus.$emit('search',this.formInline)			
     },
     reset(){
       this.formInline.companyName = ''
       this.formInline.ordercode = ''
       this.formInline.createbyname = ''
       this.formInline.approval = ''
-      Bus.$emit('reset',true)
+      this.$bus.emit('reset',true)
+      // Bus.$emit('reset',true)
     }
   }
 

@@ -45,13 +45,15 @@ export default {
   },
   methods:{
     search(){
-      Bus.$emit('search1',this.formInline)
+      // Bus.$emit('search1',this.formInline)
+      this.$bus.emit('search1',this.formInline)
     },
     reset(){
       this.formInline.companyName = ''
       this.formInline.ordercode = ''
       this.formInline.createbyname = ''
-      Bus.$emit('reset1',true)
+      this.$bus.emit('reset1',true)
+      // Bus.$emit('reset1',true)
     }
   }
 

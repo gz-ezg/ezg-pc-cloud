@@ -38,12 +38,13 @@ export default {
 
             function success(res){
                 _self.loading = false
+                _self.lock_user = false
                 _self.$bus.emit('UPDATE_USER_TABLE', true)
             }
 
             function fail(err){
                 _self.loading = false
-                _self.$bus.emit('UPDATE_USER_TABLE', true)
+                // _self.$bus.emit('UPDATE_USER_TABLE', true)
             }
 
             this.$Post(url, config, success, fail)
@@ -65,7 +66,7 @@ export default {
 
             function fail(err){
                 _self.loading = false
-                _self.$bus.emit('UPDATE_USER_TABLE', true)
+                // _self.$bus.emit('UPDATE_USER_TABLE', true)
             }
 
             this.$Post(url, config, success, fail)

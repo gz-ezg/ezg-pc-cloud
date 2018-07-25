@@ -109,7 +109,7 @@ export default {
             let url = `api/order/accounter/index/bussiness/detail`
             let config = {
                 params: {
-                    // year: _self.current_year
+                    year: _self.current_year
                 }
             }
 

@@ -111,7 +111,7 @@ export default {
                     end_period: DateFormat(_self.dateRange[1]),
                     page: _self.page,
                     pageSize: _self.pageSize,
-                    // type: _self.type
+                    type: _self.type
                 }
             }
 

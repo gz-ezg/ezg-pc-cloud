@@ -127,6 +127,10 @@ export default {
                     {
                         title: '确认收款人',
                         key: 'userName',
+                    },
+                    {
+                        title: '创建人',
+                        key: 'createrealname'
                     }
             ]
         }
@@ -137,13 +141,15 @@ export default {
     methods:{
         //  初始化
         init(){
-            Bus.$on('open_payment',(e)=>{
+            this.$bus.on('open_payment',(e)=>{
+            // Bus.$on('open_payment',(e)=>{
                 this.balanceRow = e
                 this.balanceId = e.id
                 this.payment = true
                 this.GetBalanceIdDate()
             })
-            Bus.$on('update',(e)=>{
+            // Bus.$on('update',(e)=>{
+            this.$bus.on('update',(e)=>{
                 this.GetBalanceIdDate()
             })
         },
@@ -155,7 +161,7 @@ export default {
             _that.$backToLogin(res)
                 
                 var temp_data = res.data.data
-                console.log(res.data.data)
+                // console.log(res.data.data)
                 _that.formValidate = temp_data.balance[0]
                 _that.balanceItem = temp_data.balanceItem
                 _that.balanceItem = _that.balanceItem.reverse()
@@ -176,13 +182,14 @@ export default {
         //  关闭当前弹出框
         close_payment(){
             this.payment = false
-            Bus.$emit('refresh',true)
+            // Bus.$emit('refresh',true)
+            this.$bus.emit('refresh',true)
         },
         //  跳转到变更收款界面
         edit_pay(){
             if(this.select_balance_row!=''){
-                Bus.$emit('edit_pay',this.select_balance_row)
-                console.log(this.select_balance_row)
+                // Bus.$emit('edit_pay',this.select_balance_row)
+                this.$bus.emit('edit_pay',this.select_balance_row)
             }else{
                 this.$Message.error('请选择一行进行修改')
             }
@@ -191,7 +198,6 @@ export default {
         //  确认收款
         confirm(){
             var _that = this
-            console.log(this.select_balance_row)
             if(this.select_balance_row == ''){
                 _that.$Message.error('请选择一行进行确认')
             }else{
@@ -201,9 +207,9 @@ export default {
                         "itemId":_that.select_balance_row.id
                     }
                     this.$http.post(url,params).then(function(res){
-                        console.log(res.data.msgCode)
                         if(res.data.msgCode==40000){
                             _that.$Message.success('审批成功')
+                            _that.$bus.emit('refresh',true)
                             _that.GetBalanceIdDate()
                         }else{
                             _that.$Message.error('审批失败，请重新审批')
@@ -242,7 +248,8 @@ export default {
         },
         //  跳转到增加收款界面
         add_pay(){
-            Bus.$emit('add_pay',this.balanceId)
+            // Bus.$emit('add_pay',this.balanceId)
+            this.$bus.emit('add_pay',this.balanceId)
         }
     },
     components:{

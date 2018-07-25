@@ -81,7 +81,8 @@ export default {
         //  初始化
         init(){
             this.GetLabelList()
-            Bus.$on('edit_pay', (e) => {
+            this.$bus.on('edit_pay', (e) => {
+            // Bus.$on('edit_pay', (e) => {
                 console.log(e)
                 this.edit_pay = true
                 this.current_orderId = e.id
@@ -158,7 +159,8 @@ export default {
                     function success(res){
                         _self.$Message.success('修改成功');
                         _self.edit_pay = false
-                        Bus.$emit('update',true)
+                        // Bus.$emit('update',true)
+                        _self.$bus.emit('update',true)
                         _self.edit_loading = false
                     }
 

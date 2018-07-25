@@ -76,7 +76,8 @@ export default {
         //  初始化
         init(){
             this.GetLabelList()
-            Bus.$on('add_pay', (e) => {
+            this.$bus.on('add_pay', (e) => {
+            // Bus.$on('add_pay', (e) => {
                 this.add_pay = true
                 // console.log(e)
                 this.current_orderId = e
@@ -95,8 +96,6 @@ export default {
         //  表单提交验证
         handleSubmit (name) {
             var _that = this
-            console.log(_that.current_orderId)
-            console.log(DateFormat(_that.payment.transcationtime))
             this.$refs[name].validate((valid) => {
                 if (valid) {
                     var url = 'api/order/balance/item/create'
@@ -111,7 +110,8 @@ export default {
                         if(res.data.msgCode==40000){
                             _that.$Message.success('添加成功');
                             _that.add_pay = false
-                            Bus.$emit('update',true)
+                            _that.$bus.emit('update',true)
+                            // Bus.$emit('update',true)
                         }else{
                             _that.$Message.error('添加失败，请重新添加')
                         }

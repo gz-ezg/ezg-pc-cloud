@@ -43,13 +43,13 @@ export default {
             opacity:0.5
         }
         return{
-            selectDate:"2018-05",
+            selectDate:"",
             chartData:{
                 columns:['name','value'],
                 rows:[]
             },
             tableLoading:false,
-            page:2,
+            page:1,
             tableData:[],
             tableHeader:[
                 {
@@ -58,7 +58,7 @@ export default {
                     // width: 120
                 },
                 {
-                    title:"工作量",
+                    title:"财务问题数量",
                     key:'accounter_accord_number',
                     // width: 120
                 },
@@ -74,7 +74,9 @@ export default {
     methods:{
         date_change(e){
             // console.log(e)
-            this.selectDate = e
+            let temp = e.split("-").join("")
+
+            this.selectDate = temp
             this.get_chart_data()
         },
         get_chart_data(){
@@ -85,7 +87,7 @@ export default {
                 params: {
                     page: _self.page,
                     pageSize: 10,
-                    // period: _self.selectDate
+                    period: _self.selectDate
                 }
             }
 

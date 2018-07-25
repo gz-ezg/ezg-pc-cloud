@@ -105,7 +105,8 @@ export default {
     },
     methods:{
         date_change(e){
-            this.current_year = e
+            let temp = e.split("-").join("")
+            this.current_year = temp
             this.getTableData()
             this.getChartData()
         },
@@ -114,7 +115,7 @@ export default {
             let url = `api/order/accounter/index/job/schedule/report`
             let config = {
                 params: {
-                    // period: _self.current_year
+                    period: _self.current_year
                 }
             }
 
@@ -134,7 +135,7 @@ export default {
                 params: {
                     page: _self.page,
                     pageSize: _self.pageSize,
-                    // period: _self.current_year
+                    period: _self.current_year
                 }
             }
 

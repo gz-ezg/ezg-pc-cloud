@@ -15,6 +15,7 @@
                     <ButtonGroup style="float:left">
                         <Button v-permission="['spareM.approval']" type="primary" icon="ios-crop" @click="pay">补交/审批</Button>
                         <Button v-permission="['spareM.exportN']" type="primary" icon="ios-color-filter-outline" @click="downloadExcel">导出Excel</Button>
+                        <Button v-permission="['spareM.approval']" type="primary" icon="ios-color-filter-outline" @click="GetLocalData">刷新</Button>
                     </ButtonGroup>
                 </div>
             </Row>
@@ -287,7 +288,8 @@ export default {
         pay(){
             var _that = this
             if(_that.select_row != ''){
-                Bus.$emit('open_payment', _that.select_row)
+                _that.$bus.emit('open_payment', _that.select_row)
+                // Bus.$emit('open_payment', _that.select_row)
             }else{
                 _that.$Message.warning('请选择一行')
             }
@@ -328,14 +330,17 @@ export default {
     },
     created:function(){
         this.GetLocalData()
-        Bus.$on('search',(e)=>{
+        this.$bus.on('search',(e)=>{
+        // Bus.$on('search',(e)=>{
             this.search(e)
         })
-        Bus.$on('reset',(e)=>{
+        this.$bus.on('reset',(e)=>{
+        // Bus.$on('reset',(e)=>{
             this.reset()
         })
-        Bus.$on('refresh',(e)=>{
-            console.log('12131313')
+        this.$bus.on('refresh',(e)=>{
+        // Bus.$on('refresh',(e)=>{
+
             this.GetLocalData()
         })
     },

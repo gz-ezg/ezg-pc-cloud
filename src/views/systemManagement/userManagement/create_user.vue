@@ -219,6 +219,7 @@ export default {
             function success(res){
                 _self.create_loading = false
                 _self.open_create_user = false
+                _self.$bus.emit('UPDATE_USER_TABLE',true)
                 console.log(res)
             }
 

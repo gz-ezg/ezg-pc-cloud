@@ -232,13 +232,28 @@ export default {
           temp_1.targetAmount = _self.tableData[i].targetAmount_12
           month_temp.push(temp_1)
         }
-        temp.detail = JSON.stringify(month_temp)
+        temp.detail = month_temp
         console.log(temp)
         obj_data.push(temp)
       }
       // let temp = JSON.stringify(_self.tableData)
       console.log(obj_data)
+      let temp_data = JSON.stringify(obj_data)
+      let url = `api/crm/sale/target/createOrUpdate`
+      let config = {
+        year:2018,
+        dataJson:temp_data
+      }
 
+      function success(res){
+
+      }
+
+      function fail(err){
+
+      }
+
+      this.$Post(url, config, success, fail)
       // console.log(JSON.parse(temp))
 
     },

@@ -116,7 +116,8 @@ export default {
     methods:{
         init(){
             var _that = this
-            Bus.$on('select_had_pay',(e)=>{
+            this.$bus.on('select_had_pay',(e)=>{
+            // Bus.$on('select_had_pay',(e)=>{
                 this.display = true
                 this.balanceId = e
                 this.GetBalanceIdDate()

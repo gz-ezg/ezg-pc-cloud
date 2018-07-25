@@ -29,8 +29,8 @@
             <span class="expand-value">{{ row.accmanager_realname }}</span>
             </Col>
             <Col span="8">
-            <span class="expand-key">剩余时长: </span>
-            <span class="expand-value">{{ row.balance_count }}</span>
+            <span class="expand-key">已服务时长: </span>
+            <span class="expand-value">{{ row.service_time }}</span>
             </Col>
         </Row>
         <Row>
@@ -50,6 +50,11 @@
         props: {
             row: Object
         },
+        // computer:{
+        //     service_time(){
+        //         return row.service_time/3600
+        //     }
+        // },
         created () {
             // console.log(row)
         }

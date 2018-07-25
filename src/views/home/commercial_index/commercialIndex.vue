@@ -1,56 +1,43 @@
 <template>
     <div style="min-width:1100px">
         <Row>
-            <Col span="16" style="background-color:#FFFFFF;padding:10px">
+            <Col span="24" style="background-color:#FFFFFF;padding:10px">
                 <div>
-                    <Col span="24" style="padding:20px"><center><h2>本月个人业绩统计</h2></center></Col>
-                    <Col span="5" style="margin:10px 2% 10px 2%;text-align:center">
-                        <Card><Icon type="connection-bars" style="margin-right:10px"></Icon>全国商事排名
-                            <Row style="padding-top:10px;"><center>{{index}}</center></Row>
-                        </Card>
-                    </Col>
-                    <Col span="5" style="margin:10px 2% 10px 2%;text-align:center">
-                        <Card><Icon type="ios-pie" style="margin-right:10px"></Icon>完成工单数
-                            <Row style="padding-top:10px;"><center>{{count}}</center></Row>
-                        </Card>
-                    </Col>        
-                    <Col span="5" style="margin:10px 2% 10px 2%;text-align:center">
-                        <Card><Icon type="person" style="margin-right:10px"></Icon>有效外勤数
-                            <Row style="padding-top:10px;"><center>{{validTimes}}</center></Row>                        
-                        </Card>
-                    </Col>         
-                    <Col span="5" style="margin:10px 2% 10px 2%;text-align:center">
-                        <Card><Icon type="checkmark-circled" style="margin-right:10px"></Icon>平均有效外勤
-                            <Row style="padding-top:10px;"><center>{{avagPersonValid}}</center></Row>                            
-                        </Card>
+                    <Col span="24" style="padding:20px"><center><h2>外勤及工单分析</h2></center></Col>
+                    <Col span="24" style="padding-bottom:20px">
+                        <center>
+                            <Select v-model="type" size="small" style="width:150px;margin-right:20px" placeholder="所有">
+                                <Option value="">所有</Option>
+                                <Option value="invalid">无效</Option>
+                                <Option value="valid">有效</Option>
+                                <Option value="hit">命中</Option>
+                            </Select>
+                            <DatePicker  size="small" type="daterange" placeholder="选择日期" style="width: 200px" v-model="dataRange" @on-change="date_change" placement="bottom" />
+                        </center>
                     </Col>    
                 </div>                
-            </Col>
-            <Col span="8" style="background-color:#FFFFFF;padding:10px;border-left:1px solid #F5F5F5">
-                <div>
-                    <Col span="24" style="padding:20px"><center><h2>本月团队业绩统计</h2></center></Col>            
-                    <Col span="11" style="margin:10px 2% 10px 2%;text-align:center">
-                        <Card><Icon type="ios-pie" style="margin-right:10px"></Icon>完成工单数
-                            <Row style="padding-top:10px;"><center>{{teamCount}}</center></Row>                            
-                        </Card>
-                    </Col>         
-                    <Col span="11" style="margin:10px 2% 10px 2%;text-align:center">
-                        <Card><Icon type="checkmark-circled" style="margin-right:10px"></Icon>平均有效外企
-                            <Row style="padding-top:10px;"><center>{{avagTeamValid}}</center></Row>                            
-                        </Card>
-                    </Col> 
-                </div>
-            </Col>            
+            </Col>     
         </Row>
         <Row :gutter="10" class="margin-top-10">
-            <Col span="24" :style="{marginBottom: '10px'}">
-                <Card style="height:400px">
+            <Col span="12" :style="{marginBottom: '10px'}">
+                <Card style="height:500px">
                     <p slot="title" class="card-title">
                         <Icon type="android-map"></Icon>
-                        团队完成工单统计
+                        外勤分析
                     </p>
                     <div class="data-source-row">
-                        <person-sum></person-sum>
+                        <field-anaylist :date="dateTemp" :type="type"></field-anaylist>
+                    </div>
+                </Card>
+            </Col>
+            <Col span="12" :style="{marginBottom: '10px'}">
+                <Card style="height:500px">
+                    <p slot="title" class="card-title">
+                        <Icon type="android-map"></Icon>
+                        工单分析
+                    </p>
+                    <div class="data-source-row">
+                        <workorder-anaylist  :date="dateTemp" :type="type"></workorder-anaylist>
                     </div>
                 </Card>
             </Col>
@@ -59,8 +46,7 @@
             <Col span="24" :style="{marginBottom: '10px'}">
                 <Card style="height:600px">
                     <div class="data-source-row">
-                        <!-- <c-statistical></c-statistical> -->
-                        <person-sum-table></person-sum-table>
+                        <person-sum-table  :date="dateTemp" :type="type"></person-sum-table>
                     </div>
                 </Card>
             </Col>
@@ -69,12 +55,14 @@
 </template>
 
 <script>
-import personSum from './personSum'
-import personSumTable from './personSumTable'
+import fieldAnaylist from './field_anaylist';
+import workorderAnaylist from './workorder_anaylist';
+import personSumTable from './personSumTable';
 
 export default {
     components:{
-        personSum,
+        fieldAnaylist,
+        workorderAnaylist,
         personSumTable
     },
     data(){
@@ -86,36 +74,20 @@ export default {
             validTimes:"",
             avagPersonValid:"",
             avagTeamValid:"",
-            details:""
+            details:"",
+            type:"",
+            dataRange:[],
+            dateTemp:[]
         }
     },
     methods: {
-        init(){
-            let _self = this
-            let url = `api/workorder/getFininshWorkOrderSortInfo`
-            let config = {
-                params:{
-                    beginTime:"2018-5-1",
-                    endTime:"2018-6-1",
-                    departId:"11572"
-                }
-            }
-            this.$http.get(url,config).then(function(res){
-                console.log(res.data.data)
-                _self.count = res.data.data.count
-                _self.teamCount = res.data.data.teamCount
-                _self.index = res.data.data.index
-                _self.operatorId = res.data.data.operatorId
-                _self.validTimes = res.data.data.validTimes
-                _self.avagPersonValid = res.data.data.avagPersonValid
-                _self.avagTeamValid = res.data.data.avagTeamValid
-                _self.detail = res.data.data.detail
-            })
-            
+        date_change(e){
+            this.dateTemp = []
+            this.dateTemp.push(e[0])
+            this.dateTemp.push(e[1])
         }
     },
     created () {
-        this.init()
     }
 }
 </script>

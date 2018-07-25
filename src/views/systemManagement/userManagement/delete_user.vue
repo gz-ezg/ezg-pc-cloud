@@ -48,7 +48,7 @@ export default {
 
             function fail(err){
                 _self.loading = false
-                _self.$bus.emit('UPDATE_USER_TABLE', true)
+                // _self.$bus.emit('UPDATE_USER_TABLE', true)
             }
 
             this.$Post(url, config, success, fail)

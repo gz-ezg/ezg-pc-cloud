@@ -49,10 +49,10 @@
         <Card>
             <Row>
                 <ButtonGroup>
-                    <Button type="primary" icon="plus" @click="createdUser">新增用户</Button>
+                    <!-- <Button type="primary" icon="plus" @click="createdUser">新增用户</Button> -->
                     <Button type="primary" icon="plus" @click="updatePassword">修改密码</Button>
-                    <Button type="primary" icon="ios-color-wand-outline" @click="deleteUser">删除用户</Button>
-                    <Button type="primary" icon="ios-color-wand-outline" @click="lockUser">锁定/解锁</Button>
+                    <!-- <Button type="primary" icon="ios-color-wand-outline" @click="deleteUser">删除用户</Button>
+                    <Button type="primary" icon="ios-color-wand-outline" @click="lockUser">锁定/解锁</Button> -->
                 </ButtonGroup>
             </Row>
             <Row style="margin-top: 10px;">
@@ -244,18 +244,18 @@ import EditModal from './edit_user'
                                         }
                                     }
                                 }, '权限剔除'),
-                                h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            // this.permissions(params.row.id)
-                                            this.updateUser(params.row)
-                                        }
-                                    }
-                                }, '用户编辑'),
+                                // h('Button', {
+                                //     props: {
+                                //         type: 'primary',
+                                //         size: 'small'
+                                //     },
+                                //     on: {
+                                //         click: () => {
+                                //             // this.permissions(params.row.id)
+                                //             this.updateUser(params.row)
+                                //         }
+                                //     }
+                                // }, '用户编辑'),
                             ]);
                         }
                     }

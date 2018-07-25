@@ -597,6 +597,7 @@
                     <Button v-permission="['orderL.flowChart']" type="primary" icon="ios-crop" @click="flowChart()">查看流程图</Button>
                     <Button v-permission="['orderL.resubmit']" type="primary" icon="ios-crop" @click="reApplyProcess()">重新提交</Button>
                     <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="xiugaiOpen()">修改</Button>
+                    <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="getTableData">刷新</Button>
                     <!--  ↓ ↓ 该功能暂定，代码勿删  -->
                     <!--<Button type="primary" icon="ios-color-filter-outline" @click="qihuaOpen()">企划(修改)</Button>-->
                     <!--<Button v-permission="['orderL.invalid']" type="primary" icon="ios-color-filter-outline" @click="deleteOrder = true">订单作废</Button>-->
@@ -2221,9 +2222,11 @@
                 for(let j = 0;j<eaRows.length;j++){
                     $('#orderItemList').datagrid('endEdit',j)
                 }
+                let _self = this
                 setTimeout(() => {
                     this.loading = false;
                     this.$refs[name].validate((valid) => {
+                        console.log(valid)
                         if (valid) {
                             if (_self.iscycle == false || _self.isfuwu == true){
                                 for (let i = 0; i < _self.orderItemList.length; i++) {
@@ -2968,8 +2971,25 @@
 
                     }
                 }
+            },
 
+            departnamef2(value, row, index) {
 
+                if (row.departid) {
+                    return value;
+                } else {
+                    var servicedeparts = eval(row.servicedeparts) == null ? []
+                        : eval(row.servicedeparts);
+
+                    for (var i = 0; i < servicedeparts.length; i++) {
+
+                        if (servicedeparts[i]["departId"]
+                            && servicedeparts[i]["departId"] == value) {
+                            return servicedeparts[i]["departName"];
+                        }
+
+                    }
+                }
             },
 
             // 【查看会计到家服务项】按钮 点击事件
@@ -3890,8 +3910,8 @@
         mounted() {
             this.typeGroupId()
             this.getCluesources()
-            this.getTableData()
             this.getPayDirs()
+            this.getTableData()
         },
         created(){
             let _self = this   
