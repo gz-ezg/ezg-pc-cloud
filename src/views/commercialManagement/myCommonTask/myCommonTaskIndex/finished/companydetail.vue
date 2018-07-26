@@ -209,15 +209,26 @@ export default {
     },
     methods:{
         getDataCenter(){
-            let url = 'api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=qyjyzt,enterprisestatus,impLevel,financelevel'
+            // let url = 'api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=qyjyzt,enterprisestatus,impLevel,financelevel'
             let _self = this
-            this.$http.get(url).then(function(res){
-                console.log(res.data.data)
+            // this.$http.get(url).then(function(res){
+            //     console.log(res.data.data)
+            //     _self.qyjyzt = res.data.data.qyjyzt
+            //     _self.enterprisestatus = res.data.data.enterprisestatus
+            //     _self.impLevel = res.data.data.impLevel
+            //     _self.financelevel = res.data.data.financelevel
+            // })
+
+            let params = "qyjyzt,enterprisestatus,impLevel,financelevel"
+
+            function finish(res){
                 _self.qyjyzt = res.data.data.qyjyzt
                 _self.enterprisestatus = res.data.data.enterprisestatus
                 _self.impLevel = res.data.data.impLevel
                 _self.financelevel = res.data.data.financelevel
-            })
+            }
+
+            this.$GetDataCenter(params, finish)
         }
     }
 }

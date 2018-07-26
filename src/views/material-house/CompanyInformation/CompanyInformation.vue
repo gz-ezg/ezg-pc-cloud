@@ -355,17 +355,27 @@ export default {
         },
         getDataCenter(){
             let _self = this
-            let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
-            let config = {
-                params:{
-                    groupCodes:"resourceType"
-                }
-            }
-            this.$http.get(url,config).then(function(res){
+            // let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
+            // let config = {
+            //     params:{
+            //         groupCodes:"resourceType"
+            //     }
+            // }
+            // this.$http.get(url,config).then(function(res){
+            //     _self.resourceType = res.data.data.resourceType
+            //     _self.resourceType_Map = _self.$array2map(_self.resourceType)
+            //     _self.getData()
+            // })
+
+            let params = "resourceType"
+
+            function finish(res){
                 _self.resourceType = res.data.data.resourceType
                 _self.resourceType_Map = _self.$array2map(_self.resourceType)
                 _self.getData()
-            })
+            }
+
+            this.$GetDataCenter(params, finish)
             
         }
     },

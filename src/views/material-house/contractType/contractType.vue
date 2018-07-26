@@ -391,18 +391,26 @@ export default {
         },
         getDataCenter(){
             let _self = this
-            let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
-            let config = {
-                params:{
-                    groupCodes:"contractType"
-                }
-            }
-            this.$http.get(url,config).then(function(res){
+            // let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
+            // let config = {
+            //     params:{
+            //         groupCodes:"contractType"
+            //     }
+            // }
+            // this.$http.get(url,config).then(function(res){
+            //     _self.contractType = res.data.data.contractType
+            //     _self.contractType_Map = _self.$array2map(_self.contractType)
+            //     _self.getData()
+            // })
+            let params = "contractType"
+
+            function finish(res){
                 _self.contractType = res.data.data.contractType
                 _self.contractType_Map = _self.$array2map(_self.contractType)
                 _self.getData()
-            })
+            }
             
+            this.$GetDataCenter(params, finish)
         }
     },
     created () {

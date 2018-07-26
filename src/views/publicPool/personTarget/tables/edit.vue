@@ -5,7 +5,7 @@
       <Button v-if="editable" @click="startEdit" class="tables-edit-btn" style="padding: 2px 4px;" type="text"><Icon type="edit"></Icon></Button>
     </div>
     <div v-else class="tables-editting-con">
-      <Input :value="value" @input="handleInput" class="tables-edit-input"/>
+      <Input :value="value" @input="handleInput" class="tables-edit-input" />
       <Button @click="saveEdit" style="padding: 6px 4px;" type="text"><Icon type="checkmark-round"></Icon></Button>
       <Button @click="canceltEdit" style="padding: 6px 4px;" type="text"><Icon type="close-round"></Icon></Button>
     </div>
@@ -38,6 +38,14 @@ export default {
     },
     canceltEdit () {
       this.$emit('on-cancel-edit', this.params)
+    }
+  },
+  watch:{
+    isEditting:function(val){
+      if(val == 1){
+          // let temp = document.getElementsByClassName("ivu-input")
+          // console.log(temp)
+      }
     }
   }
 }

@@ -3,7 +3,7 @@
         <Modal
                 v-model="rizhi"
                 title="查看变更日志"
-                width="800"
+                width="870"
         >
             <Card>
                 <Row style="margin-top: 10px;">
@@ -12,83 +12,97 @@
                             highlight-row
                             size="small"
                             :columns="header"
+                            :loading="loading"
                             :data="data"></Table>
                     <Page
                             size="small"
                             :total="pageTotal"
+                            :current.sync="page"
                             show-total
-                            show-sizer
                             show-elevator
-                            @on-change="pageChange"
-                            @on-page-size-change="pageSizeChange"
+                            @on-change="page_change"
                             style="margin-top: 10px"></Page>
                 </Row>
             </Card>
+            <div slot="footer"></div>
         </Modal>
     </div>
 </template>
 
 <script>
-    import Bus from '../../../../components/bus'
 
     export default {
         data() {
             return{
+                loading:false,
                 rizhi: false,
-                pageTotal: 2,
-                data:[
-                    {
-                        bglx: 'serviceOrderChange',
-                        bgr: '李小银',
-                        bgq: '未分配',
-                        bgh: '未开始',
-                        bgsj: '2018-01-30',
-                    },
-                    {
-                        bglx: 'serverChange',
-                        bgr: '李小银',
-                        bgq: '',
-                        bgh: '陈春菊',
-                        bgsj: '2018-01-30',
-                    },
-                ],
+                page: 1,
+                pageTotal: new Number(),
+                data:[],
+                cycleid:"",
                 header: [
                     {
-                        title: '变更类型',
-                        key: 'bglx',
+                        title: '变更前服务人员',
+                        key: 'oldname',
+                        width: 160
                     },
                     {
-                        title: '变更人',
-                        key: 'bgr',
-                        width: 120
+                        title: '变更后服务人员',
+                        key: 'newname',
+                        width: 160
                     },
                     {
-                        title: '变更前',
-                        key: 'bgq',
-                        width: 120
-                    },
-                    {
-                        title: '变更后',
-                        key: 'bgh',
-                        width: 120
+                        title: '变更原因',
+                        key: 'remark',
+                        width: 160
                     },
                     {
                         title: '变更时间',
-                        key: 'bgsj',
-                        width: 120
+                        key: 'createdate',
+                        width: 160
+                    },
+                    {
+                        title: '变更操作人',
+                        key: 'createby',
+                        width: 160
                     },
                 ]
             }
         },
         created(){
             var _self = this
-            Bus.$on('rizhi',(e)=>{
+            _self.$bus.on('rizhi',(e)=>{
+                _self.cycleid = e
+                _self.get_data()
                 _self.rizhi = true
             })
         },
         methods: {
-            pageChange(){},
-            pageSizeChange(){}
+            page_change(e){
+                this.page = e
+                this.get_data()
+            },
+            get_data(){
+                let _self = this
+                _self.loading = true
+                let url = `api/order/work/cycleChangeLogList`
+                let config = {
+                    params: {
+                        cycleid:_self.cycleid,
+                        page: _self.page,
+                        pageSize: 10,
+                        sortField:"createdate"
+                    }
+                }
+
+                function success(res){
+                    _self.data = res.data.data.rows
+                    _self.pageTotal = res.data.data.total
+                    _self.loading = false
+                }
+
+                this.$Get(url, config ,success)
+            }
         }
     }
 </script>

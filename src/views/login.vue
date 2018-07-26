@@ -137,12 +137,12 @@
                 this.GetData(url, doSuccess)
             },
             getAllTSTypeGroups () {
-                let _self = this
-                this.$http.get('/api/dataCenter/system/queryAllTSTypeGroups/')
-                    .then(function (response) {
-                        let str = JSON.stringify(response.data)
-                        localStorage.setItem('AllTSTypeGroups', str)
-                    })
+                // let _self = this
+                // this.$http.get('/api/dataCenter/system/queryAllTSTypeGroups/')
+                //     .then(function (response) {
+                //         let str = JSON.stringify(response.data)
+                //         localStorage.setItem('AllTSTypeGroups', str)
+                //     })
             },
             getImg() {
                 let date = new Date();

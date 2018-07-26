@@ -48,6 +48,8 @@
     import Arrears from './BookkeepingAgencyIndex/Table/arrears'
     import Stop from './BookkeepingAgencyIndex/Table/stop'
     import Detailx from '../detail.vue'
+
+    
     export default {
         components:{
             Detailx,

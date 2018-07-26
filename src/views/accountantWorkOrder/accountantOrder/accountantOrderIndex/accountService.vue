@@ -236,7 +236,6 @@ export default {
 },
       getData() {
           let _self = this
-        //   console.log(DateFormat(_self.selectdate[0]))
           let url = '/order/cycle/service/account/door/record/list?sortField=createdate&page=' + _self.page + '&pageSize=' + _self.pageSize + '&cycleServiceRecordId=' + _self.id.id +'&service_record_status='+_self.status +'&type='+ _self.type +'&bbegintime=' + DateFormat(_self.selectdate[0]) +'&ebegintime=' + DateFormat(_self.selectdate[1])
 
           let url2 = '/order/cycle/service/account/door/record/detail?id=' + _self.id.id + '&types=detail,serviceCount,serviceEchelon'
@@ -324,19 +323,16 @@ export default {
           this.PostData(url, _data, doSuccess)
       },
       getDateCenter(){
-          let _self = this
-          let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
-          let config = {
-              params:{
-                  groupCodes:'accountdrrt,serviceres'
-              }
-          }
-          this.$http.get(url,config).then(function(res){
-              _self.$backToLogin(res)
-              console.log(res.data.data)
-              _self.accountdrrt = res.data.data.accountdrrt
-              _self.serviceres = res.data.data.serviceres
-          })
+            let _self = this
+
+            let config = "accountdrrt,serviceres"
+
+            function success(res){
+                _self.accountdrrt = res.data.data.accountdrrt
+                _self.serviceres = res.data.data.serviceres
+            }
+
+            this.$GetDataCenter(config, success)
       }
   },
   created() {

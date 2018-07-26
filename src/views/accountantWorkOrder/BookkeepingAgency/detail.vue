@@ -173,20 +173,28 @@ export default {
     },
     mounted () {
         let _self = this
-        let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=disposes`
-        this.$http.get(url).then(function(res){
-            _self.$backToLogin(res)  
-            // console.log(res.data.data)
+        // let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=disposes`
+        // this.$http.get(url).then(function(res){
+        //     _self.$backToLogin(res)  
+        //     // console.log(res.data.data)
+        //     _self.disposes = res.data.data.disposes
+        // })
+
+        let params = "disposes"
+
+        function finish(res){
             _self.disposes = res.data.data.disposes
-        })
+        }
+
+        this.$GetDataCenter(params, finish)
+
         Bus.$on('open_yichang_detail1',(e)=>{
-            console.log(e)
+            // console.log(e)
             if(e == null||e == ""){
                 _self.$Message.error('当前记录未绑定帐本！')
             }else{
                 _self.local_id = e
                 _self.init()
-            // console.log(e)
             }
             
         })

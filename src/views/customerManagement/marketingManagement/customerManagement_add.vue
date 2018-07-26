@@ -537,9 +537,10 @@ import Bus from '../../../components/bus'
             /*************************初始化下拉框********************************/
             getDataCenter() {
                 var _self = this;
-                var url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=customerTypes,cluesources,customerrating,area,sf_yn`;
-                this.$http.get(url).then(function(res) {
-                    // console.log(res.data.data)
+
+                let params = "customerTypes,cluesources,customerrating,area,sf_yn"
+
+                function finish(res){
                     var temp = res.data.data;
                     _self.area = temp.area;
                     _self.cluesource = temp.cluesources;
@@ -587,122 +588,62 @@ import Bus from '../../../components/bus'
                             }
                         }
                     }
-                    console.log(_self.customerType)    
-                })
+                }
+
+                this.$GetDataCenter(params, finish)
+                // var url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=customerTypes,cluesources,customerrating,area,sf_yn`;
+                // this.$http.get(url).then(function(res) {
+                //     // console.log(res.data.data)
+                //     var temp = res.data.data;
+                //     _self.area = temp.area;
+                //     _self.cluesource = temp.cluesources;
+                //     // console.log(temp.customerType)
+                //     _self.customerType = temp.customerTypes;
+                //     _self.impLevel = temp.customerrating;
+                //     _self.sf_yn = temp.sf_yn;
+                //     _self.area.reverse()
+                //     let temp2 = _self.$changeCars(_self.customerType)
+                //     console.log(temp2)
+                //     // 二级联动改一级
+                //     _self.customerTypeArr = []
+                //     for(let i = 0;i<_self.customerType.length;i++){
+                //         var temp = {}
+                //         if(_self.customerType[i].children != null){
+                //             for(let j = 0;j<_self.customerType[i].children.length; j++ ){
+                //             temp = {}
+                //             temp.id = _self.customerType[i].children[j].id
+                //             temp.typecode = _self.customerType[i].children[j].typecode
+                //             temp.typename = _self.customerType[i].children[j].typename
+                //             temp.pid = _self.customerType[i].children[j].pid
+                //             temp.ptypename = _self.customerType[i].typename
+                //             temp.ptypecode = _self.customerType[i].typecode
+                //             _self.customerTypeArr.push(temp)
+                //             }
+                //         }else{    
+                //             temp = {}
+                //             temp.id = _self.customerType[i].id
+                //             temp.typecode = _self.customerType[i].typecode
+                //             temp.ptypename = _self.customerType[i].typename
+                //             temp.typename = ''
+                //             temp.pid = 0
+                //             _self.customerTypeArr.push(temp)
+                //         }
+                //         //  修改成规定的模型
+                //         _self.customerType[i].value = _self.customerType[i].id
+                //         _self.customerType[i].label = _self.customerType[i].typename
+                //         if(_self.customerType[i].children != null){
+                            
+                //             for(let j = 0;j<_self.customerType[i].children.length; j++ ){
+
+                //             _self.customerType[i].children[j].value= _self.customerType[i].children[j].id
+                //             _self.customerType[i].children[j].label = _self.customerType[i].children[j].typename
+
+                //             }
+                //         }
+                //     }
+                //     console.log(_self.customerType)    
+                // })
             },
-            // getData() {
-            //     let _self = this
-
-            //     this.searchTypegroup('customerType')
-            //     this.searchTypegroup('cluesource')
-            //     this.searchTypegroup('custImport')
-            //     this.searchTypegroup('area')
-            //     this.searchTypegroup('sf_yn')
-
-            //     let _customerTypeArr = JSON.parse(localStorage.getItem('customerType'))
-            //     let _cluesourceArr = JSON.parse(localStorage.getItem('cluesource'))
-            //     let _custImportArr = JSON.parse(localStorage.getItem('custImport'))
-            //     let _areaArr = JSON.parse(localStorage.getItem('area'))
-            //     let _sf_ynArr = JSON.parse(localStorage.getItem('sf_yn'))
-
-            //     // 级联下拉框-客户状态
-            //     let mapdata = new Map()  //用作临时转换
-            //     let subIdToParentMap = new Map()
-            //     let sourceData = _customerTypeArr  //结果集
-            //     let finalArrayData = new Array()   //vue要求的数据格式
-
-            //     for (let i = 0; i < sourceData.length; i++) {
-
-            //         let _sub = new Object()
-            //         _sub.value = sourceData[i].subid.toString()
-            //         _sub.label = sourceData[i].subtypename
-
-            //         subIdToParentMap.set(_sub.value, sourceData[i].id)
-
-            //         let _value = mapdata.get(sourceData[i].id)
-
-            //         if (_value) {
-            //             let _valueArray = _value.children
-            //             _valueArray.push(_sub)
-            //             let _valueObject = new Object()
-            //             _valueObject.value = _value.value.toString()
-            //             _valueObject.label = _value.label
-            //             _valueObject.children = _valueArray
-            //             mapdata.set(sourceData[i].id, _valueObject)
-            //         } else {
-            //             let _child = new Array()
-            //             _child.push(_sub)
-            //             let _main = new Object()
-            //             _main.value = sourceData[i].id.toString()
-            //             _main.label = sourceData[i].typename
-            //             _main.children = _child
-            //             mapdata.set(sourceData[i].id, _main)
-            //         }
-            //     }
-
-            //     mapdata.forEach((value, key) => {
-            //         finalArrayData.push(value)
-            //     });
-
-            //     for (let i = 0; i < finalArrayData.length; i++) {
-            //         for (let j = 0; j < finalArrayData[i].children.length; j++) {
-            //             if ((finalArrayData[i].children[j].value) == (_self.customertype)) {
-            //                 _self.formValidate.customertype[0] = finalArrayData[i].value
-            //                 _self.formValidate.customertype[1] = _self.customertype
-            //             }
-            //         }
-            //     }
-
-            //     _self.customertypeValue = finalArrayData
-
-            //     // 下拉框-客户来源
-            //     for (let i = 0; i < _cluesourceArr.length; i++) {
-
-            //         let customersourceObj = {}
-
-            //         customersourceObj.label = _cluesourceArr[i].typename
-            //         customersourceObj.value = _cluesourceArr[i].typecode
-            //         _self.customersourceValue.push(customersourceObj)
-            //     }
-
-            //     // 下拉框-客户等级
-            //     for (let i = 0; i < _custImportArr.length; i++) {
-
-            //         let importlevelObj = {}
-
-            //         importlevelObj.label = _custImportArr[i].typename
-            //         importlevelObj.value = _custImportArr[i].typecode
-            //         _self.importlevelValue.push(importlevelObj)
-            //     }
-
-            //         // 下拉框-区域
-            //         for (let i = 0; i < _areaArr.length; i++) {
-
-            //             let areaObj = {}
-
-            //             areaObj.label = _areaArr[i].typename
-            //             areaObj.value = _areaArr[i].typecode
-            //             _self.areaValue.push(areaObj)
-            //         }
-
-            //         // 下拉框-发送短信
-            //         for (let i = 0; i < _sf_ynArr.length; i++) {
-
-            //             let issendObj = {}
-
-            //             issendObj.label = _sf_ynArr[i].typename
-            //             issendObj.value = _sf_ynArr[i].typecode
-            //             _self.issendValue.push(issendObj)
-            //         }
-            //         /* this.$http.all([
-            //         this.$http.get('/api/dataCenter/system/queryForTSTypeByGroupId/' + this.searchTypegroupid('sf_yn')),
-            //         this.$http.get('/api/customer/findAllCustomerLabelsByPages/1/10000'),
-            //     ])
-            //         .then(this.$http.spread(function (customertyperesp, customersourceResp, importlevelResp, areaResp, issendResp, LabelsAllRes) {
-            //         })) */
-            // },
-
-            
 
             getLabelData() {
                 var _self = this
@@ -729,7 +670,6 @@ import Bus from '../../../components/bus'
                             }
                             _self.data3.push(reponseObj)
                         }
-                    //    _self.customerlabelGroup = _customerlabelGroup
                     }).catch(function(e){
                         console.log(e)
                     })

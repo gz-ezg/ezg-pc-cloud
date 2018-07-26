@@ -599,13 +599,14 @@
                 _self.getData();
             },
             getDataCenter() {
-                var _self = this;
-                var url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=area,customerTypes`;
-                this.$http.get(url).then(function(res) {
-                    _self.$backToLogin(res)
-                    var temp = res.data.data;
-                    _self.area = temp.area;
-                    _self.customerType = temp.customerTypes;
+                let _self = this;
+
+                let params = "area,customerTypes"
+
+                function success(res){
+                    // let temp = res.data.data;
+                    _self.area = res.data.data.area;
+                    _self.customerType = res.data.data.customerTypes;
                     // 二级联动改一级
                     _self.customerTypeArr = []
                     for(let i = 0;i<_self.customerType.length;i++) {
@@ -644,7 +645,55 @@
                         }
                     }
                     }
-                });
+                }
+
+                this.$GetDataCenter(params, success)
+
+                // var url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=area,customerTypes`;
+                // this.$http.get(url).then(function(res) {
+                //     _self.$backToLogin(res)
+                //     var temp = res.data.data;
+                //     _self.area = temp.area;
+                //     _self.customerType = temp.customerTypes;
+                //     // 二级联动改一级
+                //     _self.customerTypeArr = []
+                //     for(let i = 0;i<_self.customerType.length;i++) {
+                //         var temp = {}
+                //         if (_self.customerType[i].children != null) {
+                //             for (let j = 0; j < _self.customerType[i].children.length; j++) {
+                //                 temp = {}
+                //                 temp.id = _self.customerType[i].children[j].id
+                //                 temp.typecode = _self.customerType[i].children[j].typecode
+                //                 temp.typename = _self.customerType[i].children[j].typename
+                //                 temp.pid = _self.customerType[i].children[j].pid
+                //                 temp.ptypename = _self.customerType[i].typename
+                //                 temp.ptypecode = _self.customerType[i].typecode
+
+                //                 _self.customerTypeArr.push(temp)
+                //             }
+                //         } else {
+                //             temp = {}
+                //             temp.id = _self.customerType[i].id
+                //             temp.typecode = _self.customerType[i].typecode
+                //             temp.ptypename = _self.customerType[i].typename
+                //             temp.typename = ''
+                //             temp.pid = 0
+                //             _self.customerTypeArr.push(temp)
+                //         }
+                //         //  修改成规定的模型
+                //     _self.customerType[i].value = _self.customerType[i].id
+                //     _self.customerType[i].label = _self.customerType[i].typename
+                //     if(_self.customerType[i].children != null){
+
+                //         for(let j = 0;j<_self.customerType[i].children.length; j++ ){
+
+                //         _self.customerType[i].children[j].value= _self.customerType[i].children[j].id
+                //         _self.customerType[i].children[j].label = _self.customerType[i].children[j].typename
+
+                //         }
+                //     }
+                //     }
+                // });
             },
             findAreaText(temp) {
                 var _self = this;
@@ -662,6 +711,7 @@
                     var temp2 = temp.split('-')
                     var _self = this;
                     if(temp2[1]==''||temp2[1]==null){
+                        // console.log(temp2[1])
                         for (let i = 0; i < _self.customerTypeArr.length; i++) {
                         if (_self.customerTypeArr[i].id == temp2[0] && temp2[0] != "") {
                             return _self.customerTypeArr[i].ptypename + ' - ' +_self.customerTypeArr[i].typename
@@ -735,7 +785,10 @@
                 let _self = this
                 _self.table_loading = true
                 let url = 'api/channel/customer/list'
-                let url3 = '/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=channelcluet'
+                // let url3 = '/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=channelcluet'
+
+                let params = "channelcluet"
+
                 let _group = []
                 var keys =[]
                 var temp_status = ''
@@ -816,7 +869,9 @@
                     _group = re.data.data.channelcluet
                 }
 
-                this.GetData(url3, doSuccess3)
+                this.$GetDataCenter(params, doSuccess3)
+
+                // this.GetData(url3, doSuccess3)
 
                 _self.$http.get(url,config).then(function(res){
                     doSuccess(res)
@@ -828,44 +883,6 @@
                 let _self = this
                 _self.page = a
                 this.getData()
-                // let url = '/channel/customer/list?page=' + a + '&pageSize=' + _self.pageSize + '&isAudit=Y&sortField=id&order=desc'
-
-                // _self.data2 = []
-
-                // function doSuccess(response) {
-                //     let _data = response.data.data
-                //     _self.pageTotal = _data.total
-
-                //     for (let i = 0; i < _data.rows.length; i++) {
-                //         _self.data2.push({
-                //             cluestatus: _data.rows[i].cluestatus,
-                //             followbyname: _data.rows[i].followbyname,
-                //             customer_name: _data.rows[i].customer_name,
-                //             channel_name: _data.rows[i].channel_name,
-                //             createdate: _data.rows[i].createdate,
-                //             customer_area: _self.findAreaText(_data.rows[i].area),
-                //             customer_email: _data.rows[i].customer_email,
-                //             customer_level: _data.rows[i].customer_level,
-                //             customer_memo: _data.rows[i].customer_memo,
-                //             customer_status: _self.findCustomerType(_data.rows[i].customertype),
-                //             customer_tags: _data.rows[i].customer_tags,
-                //             customer_id: _data.rows[i].customer_id,
-                //             updatedate: _data.rows[i].updatedate,
-                //             createby: _data.rows[i].createby,
-                //             customer_mobile_phone:_data.rows[i].customer_mobile_phone,
-                //             people: [
-                //                 {
-                //                     customer_mobile_phone: _data.rows[i].customer_mobile_phone,
-                //                     customer_tel: _data.rows[i].customer_tel,
-                //                     customer_wechat: _data.rows[i].customer_wechat,
-                //                     customerqq: _data.rows[i].customerqq,
-                //                 }
-                //             ]
-                //         })                       
-                //     }
-                // }
-
-                // this.GetData(url, doSuccess)
             },
 
             // 改变每页显示的数据条数
@@ -873,45 +890,6 @@
                 let _self = this
                 _self.pageSize = a
                 _self.getData()
-                // let url = '/channel/customer/list?page=1&pageSize='+ a + '&isAudit=Y&sortField=id&order=desc'
-                // _self.pageSize = a
-                // _self.data2 = []
-
-                // function doSuccess(response) {
-                //     let _data = response.data.data
-
-                //     _self.pageTotal = _data.total
-
-                //     for (let i = 0; i < _data.rows.length; i++) {
-                //         _self.data2.push({
-                //             cluestatus: _data.rows[i].cluestatus,
-                //             followbyname: _data.rows[i].followbyname,
-                //             customer_name: _data.rows[i].customer_name,
-                //             channel_name: _data.rows[i].channel_name,
-                //             createdate: _data.rows[i].createdate,
-                //             customer_area: _self.findAreaText(_data.rows[i].area),
-                //             customer_email: _data.rows[i].customer_email,
-                //             customer_level: _data.rows[i].customer_level,
-                //             customer_memo: _data.rows[i].customer_memo,
-                //             customer_status: _self.findCustomerType(_data.rows[i].customertype),
-                //             customer_tags: _data.rows[i].customer_tags,
-                //             customer_id: _data.rows[i].customer_id,
-                //             updatedate: _data.rows[i].updatedate,
-                //             createby: _data.rows[i].createby,
-                //             customer_mobile_phone:_data.rows[i].customer_mobile_phone,
-                //             people: [
-                //                 {
-                //                     customer_mobile_phone: _data.rows[i].customer_mobile_phone,
-                //                     customer_tel: _data.rows[i].customer_tel,
-                //                     customer_wechat: _data.rows[i].customer_wechat,
-                //                     customerqq: _data.rows[i].customerqq,
-                //                 }
-                //             ]
-                //         })
-                //     }
-                // }
-
-                // this.GetData(url, doSuccess)
             },
 
             examine(e) {
@@ -974,40 +952,6 @@
                 this.followbysGroup = []
                 this.$refs[name].resetFields();
             },
-            // downloadExcel() {
-            //     let url = '/channel/customer/channel/1/9999999/list'
-            //     let _objdata = {}
-            //     let _objdataType = {}
-
-            //     let arrdata = [
-            //         {
-            //             field: 'customer_name',title: '客户名称'
-            //         },
-            //         {
-            //             field: 'customer_status',title: '客户状态',format: _objdataType
-            //         },
-            //         {
-            //             field: 'cluestatus',title: '线索状态'
-            //         },
-            //         {
-            //             field:'customer_area',title:'地区',format: _objdata
-            //         },
-            //         {
-            //             field: 'followbyname',title: '销售'
-            //         },
-            //         {
-            //             field: 'createby',title: '创建人'
-            //         },
-            //         {
-            //             field: 'updatedate',title: '更新时间'
-            //         },
-            //         {
-            //             field: 'createdate',title: '创建时间'
-            //         },
-            //         ]
-
-            //     this.DownloadExcel(url, JSON.stringify(arrdata))
-            // },
             //  获取标签信息
             getLabelData() {
                 var _self = this

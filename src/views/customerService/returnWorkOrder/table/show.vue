@@ -152,13 +152,15 @@ export default {
                 //     _self.departAlias = res.data.data.departAlias              
                 //     // console.log(_self.departAlias)
                 // })
+
                 let params = "departAlias"
 
                 function finish(res){
-                    _self.departAlias = res.data.data.departAlias
+                    _self.departAlias = res.data.data.departAlias              
                 }
 
                 this.$GetDataCenter(params, finish)
+
             },
             close_complaint_detail(){
                 this.isOpenShow = false

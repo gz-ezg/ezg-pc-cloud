@@ -51,14 +51,22 @@ import Notbegin from './myCommonTaskIndex/notbegin'
         methods:{
             getDataCenter(){
                 let _self = this
-                let url2 = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=companyarea`
+                // let url2 = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=companyarea`
             
-                _self.$http.get(url2).then(function(res){
-                    // console.log(res.data.data.companyarea.length)
-                    // let len = res.data.data.companyarea.length
-                    _self.companyarea = res.data.data.companyarea
+                // _self.$http.get(url2).then(function(res){
+                //     // console.log(res.data.data.companyarea.length)
+                //     // let len = res.data.data.companyarea.length
+                //     _self.companyarea = res.data.data.companyarea
                     
-                })
+                // })
+
+                let params = "companyarea"
+
+                function finish(res){
+                    _self.companyarea = res.data.data.companyarea
+                }
+
+                this.$GetDataCenter(params, finish)
             }
         },
         created(){

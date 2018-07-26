@@ -183,16 +183,9 @@ export default {
     },
     created () {
         let _self = this
-        // let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=disposes`
-        // this.$http.get(url).then(function(res){
-        //     // console.log(res.data.data)
-        //     _self.disposes = res.data.data.disposes
-        // })
         Bus.$on('open_audit_detail',(e)=>{
-            // console.log(e)
             _self.local_id = e
             _self.init()
-            // console.log(e)
         })
         
     }

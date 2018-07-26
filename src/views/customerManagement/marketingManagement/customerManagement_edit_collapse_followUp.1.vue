@@ -738,10 +738,24 @@ import Bscroll from 'better-scroll'
             GetFollowUpType(){
                 var _self = this
                 _self.followTypeText = []
-                var url  = '/api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=follow_up_type'
-                this.$http.get(url).then(function(res){
-                    // _self.followTypeText=res.data.data.follow_up_type
-                    // console.log(_self.followTypeText)
+                // var url  = '/api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=follow_up_type'
+                // this.$http.get(url).then(function(res){
+                //     // _self.followTypeText=res.data.data.follow_up_type
+                //     // console.log(_self.followTypeText)
+                //     for(let i = 0;i<res.data.data.follow_up_type.length;i++){
+                //         var temp={}
+                //         if(res.data.data.follow_up_type[i].typecode == 21||res.data.data.follow_up_type[i].typecode == 22){
+                //         }else{
+                //             temp.typecode=res.data.data.follow_up_type[i].typecode
+                //             temp.typename=res.data.data.follow_up_type[i].typename
+                //             temp.id=res.data.data.follow_up_type[i].id
+                //             _self.followTypeText.push(temp)
+                //         }
+                //     }
+                //     // console.log(_self.followTypeText)
+                // })
+
+                function finish(res){
                     for(let i = 0;i<res.data.data.follow_up_type.length;i++){
                         var temp={}
                         if(res.data.data.follow_up_type[i].typecode == 21||res.data.data.follow_up_type[i].typecode == 22){
@@ -752,8 +766,11 @@ import Bscroll from 'better-scroll'
                             _self.followTypeText.push(temp)
                         }
                     }
-                    // console.log(_self.followTypeText)
-                })
+                }
+
+                let params = "follow_up_type"
+
+                this.$GetDataCenter(params, finish)
             },
             //  只看市场跟进
             single_check_change(e){

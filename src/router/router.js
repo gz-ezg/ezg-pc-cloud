@@ -323,6 +323,16 @@ export const appRouter = [
                 },
             },
             {
+                path: 'returnWorkOrder',
+                access: 6061,
+                meta: 6061,
+                title: '完结工单回访',
+                name: 'returnWorkOrder_index',
+                component: resolve => {
+                    require(['@/views/customerService/returnWorkOrder/table/returnVisit_table.vue'], resolve);
+                },
+            },
+            {
                 path: 'offlineCustomer',
                 access: 6062,
                 meta: 6062,

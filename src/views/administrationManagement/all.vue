@@ -281,7 +281,7 @@ export default {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        width: 180,
+                        width: 120,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
@@ -308,42 +308,42 @@ export default {
                                         }
                                     }
                                 }, '[流程图]'),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            var _self = this
-                                            console.log(params)
-                                            //  暂停
-                                            if(params.row.resumeFlag == null || params.row.resumeFlag == 3){
-                                                let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=3`
-                                                _self.$backToLogin(res)  
-                                                this.$http.get(url).then(function(res){
-                                                    if(res.data.msgCode == 40000){
-                                                        _self.$Message.success(res.data.msg)
-                                                    }else{
-                                                        _self.$Message.error(res.data.msg)
-                                                    }
-                                                    _self.getData()
-                                                })
-                                            }else if(params.row.resumeFlag == 2){
-                                                let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=2`
-                                                _self.$backToLogin(res)  
-                                                this.$http.get(url).then(function(res){
-                                                    if(res.data.msgCode == 40000){
-                                                        _self.$Message.success(res.data.msg)
-                                                    }else{
-                                                        _self.$Message.error(res.data.msg)
-                                                    }
-                                                    _self.getData()
-                                                })
-                                            }else{}
-                                        }
-                                    }
-                                }, '[暂停/解锁]'),
+                                // h('Button', {
+                                //     props: {
+                                //         type: 'text',
+                                //         size: 'small'
+                                //     },
+                                //     on: {
+                                //         click: () => {
+                                //             var _self = this
+                                //             console.log(params)
+                                //             //  暂停
+                                //             if(params.row.resumeFlag == null || params.row.resumeFlag == 3){
+                                //                 let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=3`
+                                //                 this.$http.get(url).then(function(res){
+                                //                 _self.$backToLogin(res)  
+                                //                     if(res.data.msgCode == 40000){
+                                //                         _self.$Message.success(res.data.msg)
+                                //                     }else{
+                                //                         _self.$Message.error(res.data.msg)
+                                //                     }
+                                //                     _self.getData()
+                                //                 })
+                                //             }else if(params.row.resumeFlag == 2){
+                                //                 let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=2`
+                                //                 this.$http.get(url).then(function(res){
+                                //                 _self.$backToLogin(res)  
+                                //                     if(res.data.msgCode == 40000){
+                                //                         _self.$Message.success(res.data.msg)
+                                //                     }else{
+                                //                         _self.$Message.error(res.data.msg)
+                                //                     }
+                                //                     _self.getData()
+                                //                 })
+                                //             }else{}
+                                //         }
+                                //     }
+                                // }, '[暂停/解锁]'),
                                 // h('Button', {
                                 //     props: {
                                 //         type: 'text',
@@ -519,22 +519,31 @@ export default {
         },
         getDataCenter(){
                 let _self = this
-                let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
-                let config = {
-                    params:{
-                        groupCodes:'workOrderStatus'
-                    }
-                }
-                this.$http.get(url, config).then(function(res){
-                    _self.$backToLogin(res)  
+                // let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
+                // let config = {
+                //     params:{
+                //         groupCodes:'workOrderStatus'
+                //     }
+                // }
+                // this.$http.get(url, config).then(function(res){
+                //     _self.$backToLogin(res)  
+                //     _self.workOrderStatus = res.data.workOrderStatus
+                //     _self.workOrderStatus_map = _self.$array2map(_self.workOrderStatus)
+                // })
+
+                let params = "workOrderStatus"
+
+                function finish(res){
                     _self.workOrderStatus = res.data.workOrderStatus
                     _self.workOrderStatus_map = _self.$array2map(_self.workOrderStatus)
-                })
+                }
+
+                this.$GetDataCenter(params, finish)
             }
     },
     created(){
         var _self = this
-        this.getDataCenter()
+        // this.getDataCenter()
         this.getData()
         this.$bus.on('flowsuccess',(e)=>{
             _self.getData()

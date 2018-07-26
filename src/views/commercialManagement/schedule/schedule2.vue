@@ -401,43 +401,45 @@ import {DateFormat2, arrayToMap} from '../../../libs/utils.js'
             },
             //  获取数据字典同时将其处理成map
             getDateCenter(){
-                let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
+                // let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
                 let _self = this
-                let config = {
-                    params:{
-                        groupCodes:'SAASPropertiesArea,A04Area,A04Addr,SAASProperties,fieldStatus'
-                    }
-                }
-                _self.$http.get(url,config).then(function(res){
-                    console.log(res.data.data)
+                // let config = {
+                //     params:{
+                //         groupCodes:'SAASPropertiesArea,A04Area,A04Addr,SAASProperties,fieldStatus'
+                //     }
+                // }
+                // _self.$http.get(url,config).then(function(res){
+                //     console.log(res.data.data)
+                //     let temp = res.data.data
+                //     _self.SAASProperties = temp.SAASProperties
+                //     _self.SAASPropertiesArea = temp.SAASPropertiesArea
+                //     _self.A04Area = temp.A04Area
+                //     _self.A04Addr = temp.A04Addr
+                //     _self.fieldStatus = temp.fieldStatus
+                //     _self.SAASProperties_map = arrayToMap(_self.SAASProperties)
+                //     _self.SAASPropertiesArea_map = arrayToMap(_self.SAASPropertiesArea)
+                //     _self.A04Area_map = arrayToMap(_self.A04Area)
+                //     _self.A04Addr_map = arrayToMap(_self.A04Addr)
+                //     _self.getAllUserList()
+                // })
+
+                let params = "SAASPropertiesArea,A04Area,A04Addr,SAASProperties,fieldStatus"
+
+                function finish(res){
                     let temp = res.data.data
                     _self.SAASProperties = temp.SAASProperties
                     _self.SAASPropertiesArea = temp.SAASPropertiesArea
                     _self.A04Area = temp.A04Area
                     _self.A04Addr = temp.A04Addr
                     _self.fieldStatus = temp.fieldStatus
-                    // console.log(_self.SAASProperties)
-                    // for(let i = 0; i<_self.SAASProperties.length;i++){
-                    //     _self.SAASProperties_map.set(_self.SAASProperties[i].typecode,_self.SAASProperties[i].typename)
-                    // }
-                    // console.log(_self.SAASProperties_map)
                     _self.SAASProperties_map = arrayToMap(_self.SAASProperties)
                     _self.SAASPropertiesArea_map = arrayToMap(_self.SAASPropertiesArea)
                     _self.A04Area_map = arrayToMap(_self.A04Area)
                     _self.A04Addr_map = arrayToMap(_self.A04Addr)
-                    // console.log('111111')
-                    
-                    //  fieldStatus数据字典为null
-                    // _self.fieldStatus_map = arrayToMap(_self.fieldStatus)
-                    // console.log(_self.fieldStatus_map)
-                    // console.log(_self.SAASProperties)
-                    // console.log(_self.SAASProperties_map)
-                    // console.log(_self.A04Addr_map)
-                    // console.log(_self.A04Area_map)
-                    // console.log(_self.SAASPropertiesArea)
-                    // console.log(_self.SAASPropertiesArea_map)
                     _self.getAllUserList()
-                })
+                }
+
+                this.$GetDataCenter(params, finish)
             },
             //  导出日报表
             exportReport(){

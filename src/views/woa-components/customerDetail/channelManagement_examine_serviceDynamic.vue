@@ -457,13 +457,18 @@
             },
             getDataCenter(){
                 let _self = this
-                let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=workOrderStatus`
-                this.$http.get(url).then(function(res){
-                    // console.log(res.data.data.workOrderStatus)
+                // let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=workOrderStatus`
+                // this.$http.get(url).then(function(res){
+                //     _self.workOrderStatus_map = arrayToMap(res.data.data.workOrderStatus)
+                // })
+
+                let params = "workOrderStatus"
+
+                function finish(res){
                     _self.workOrderStatus_map = arrayToMap(res.data.data.workOrderStatus)
-                    // console.log(_self.workOrderStatus_map)
-                    // console.log(_self.workOrderStatus_map.get(60+""))
-                })
+                }
+
+                this.$GetDataCenter(params, finish)
             }
         },
         mounted() {

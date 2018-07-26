@@ -88,10 +88,18 @@ export default {
         //  获取缴费方式列表
         GetLabelList(){
             var _that = this
-            var url = 'api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=payDirs'
-            this.$http.get(url).then(function(res){
+            // var url = 'api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=payDirs'
+            // this.$http.get(url).then(function(res){
+            //     _that.pay_type_label = res.data.data.payDirs
+            // })
+
+            let params = "payDirs"
+
+            function finish(res){
                 _that.pay_type_label = res.data.data.payDirs
-            })
+            }
+
+            this.$GetDataCenter(params, finish)
         },
         //  表单提交验证
         handleSubmit (name) {

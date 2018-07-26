@@ -20,6 +20,12 @@
                                                     </Input>
                                                 </FormItem>
                                             </Col>
+                                            <Col span="8">
+                                                <FormItem prop="departname" label="服务部门：">
+                                                    <Input type="text" v-model="formInlineN.departname" placeholder="" size="small">
+                                                    </Input>
+                                                </FormItem>
+                                            </Col>
                                         </Row>
                                         <FormItem>
                                             <Button type="primary" @click="searchN">搜索</Button>
@@ -77,6 +83,12 @@
                                             <Col span="8">
                                                 <FormItem prop="servicename" label="服务人员名称：">
                                                     <Input type="text" v-model="formInlineY.servicename" placeholder="" size="small">
+                                                    </Input>
+                                                </FormItem>
+                                            </Col>
+                                            <Col span="8">
+                                                <FormItem prop="departname" label="服务部门：">
+                                                    <Input type="text" v-model="formInlineY.departname" placeholder="" size="small">
                                                     </Input>
                                                 </FormItem>
                                             </Col>
@@ -139,6 +151,7 @@ import allotAccountService from './allot_accout_service'
         },
         data() {
             return {
+                companyarea:"",
                 search_model:"",
                 local_router_name:'',
                 //  加载种处理
@@ -156,12 +169,14 @@ import allotAccountService from './allot_accout_service'
                 // 未分配检索
                 formInlineN:{
                     companyname:'',
-                    servicename:''
+                    servicename:'',
+                    departname:''
                 },
                 // 已分配检索
                 formInlineY:{
                     companyname:'',
-                    servicename:''
+                    servicename:'',
+                    departname:""
                 },
                 //  未分配任务表头
                 columns: [
@@ -203,6 +218,11 @@ import allotAccountService from './allot_accout_service'
                                 return h('span',params.row.companyname)
                             }
                         }
+                    },
+                    {
+                        title: '公司注册地',
+                        key: 'companyarea',
+                        width: 120
                     },
                     {
                         title: '归属客户',
@@ -333,6 +353,11 @@ import allotAccountService from './allot_accout_service'
                                 return h('span',params.row.companyname)
                             }
                         }
+                    },
+                    {
+                        title: '公司注册地',
+                        key: 'companyarea',
+                        width: 120
                     },
                     {
                         title: '归属客户',
@@ -478,6 +503,7 @@ import allotAccountService from './allot_accout_service'
                         workOrderStatus:"10",
                         companyName:_self.formInlineN.companyname,
                         serviceName:_self.formInlineN.servicename,
+                        departname: _self.formInlineN.departname,
                         serviceDept:`${_self.local_router_name}`
                     }
                 }
@@ -494,6 +520,22 @@ import allotAccountService from './allot_accout_service'
                         if(_self.Ndata[i].CreateDate ==null ||_self.Ndata[i].CreateDate == ""){
                         }else{
                             _self.Ndata[i].CreateDate = _self.Ndata[i].CreateDate.slice(0,10)
+                        }
+
+                        if(!_self.Ndata[i].companyarea){
+                            _self.Ndata[i].companyarea = ""
+                        }else{
+                            let temp = _self.Ndata[i].companyarea.split("-")
+                            // console.log(temp)
+                            for(let j = 0;j<_self.companyarea.length;j++){
+                                if(temp[0] == _self.companyarea[j].id){
+                                    for(let k = 0;k<_self.companyarea[j].children.length;k++){
+                                        if(temp[1]== _self.companyarea[j].children[k].id){
+                                            _self.Ndata[i].companyarea = _self.companyarea[j].typename + ' - ' + _self.companyarea[j].children[k].typename
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                     _self.Nloading = false
@@ -518,6 +560,7 @@ import allotAccountService from './allot_accout_service'
                 this.Npage = 1
                 this.formInlineN.companyname = ""
                 this.formInlineN.servicename = ""
+                this.formInlineN.departname = ""
                 this.getDataN()
             },
             //  已分配相关
@@ -532,6 +575,7 @@ import allotAccountService from './allot_accout_service'
                         nonWorkOrderStatus:"10",
                         companyName:_self.formInlineY.companyname,
                         serviceName:_self.formInlineY.servicename,
+                        departname: _self.formInlineY.departname,
                         serviceDept:`${_self.local_router_name}`
                     }
                 }
@@ -559,6 +603,22 @@ import allotAccountService from './allot_accout_service'
                         if(_self.Ydata[i].ServiceEnd==null || _self.Ydata[i].ServiceEnd==""){
                         }else{
                         _self.Ydata[i].ServiceEnd = _self.Ydata[i].ServiceEnd.slice(0,10)                        
+                        }
+
+                        if(!_self.Ydata[i].companyarea){
+                            _self.Ydata[i].companyarea = ""
+                        }else{
+                            let temp = _self.Ydata[i].companyarea.split("-")
+                            // console.log(temp)
+                            for(let j = 0;j<_self.companyarea.length;j++){
+                                if(temp[0] == _self.companyarea[j].id){
+                                    for(let k = 0;k<_self.companyarea[j].children.length;k++){
+                                        if(temp[1]== _self.companyarea[j].children[k].id){
+                                            _self.Ydata[i].companyarea = _self.companyarea[j].typename + ' - ' + _self.companyarea[j].children[k].typename
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                     _self.Yloading = false
@@ -719,6 +779,23 @@ import allotAccountService from './allot_accout_service'
             this.getDataY()
             this.getDataN()
         },
+        getDataCenter(){
+                let _self = this
+                // let url2 = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=companyarea`
+            
+                // _self.$http.get(url2).then(function(res){
+                //     _self.companyarea = res.data.data.companyarea
+                    
+                // })
+
+                let params = "companyarea"
+
+                function finish(res){
+                    _self.companyarea = res.data.data.companyarea
+                }
+
+                this.$GetDataCenter(params, finish)
+            }
     },
     watch:{
         '$route':'init'
@@ -729,6 +806,7 @@ import allotAccountService from './allot_accout_service'
     },
     created(){
         let _self = this
+        _self.getDataCenter()
         _self.$bus.on('update_allot_index',(e)=>{
             _self.init()
             _self.Ypage = 1

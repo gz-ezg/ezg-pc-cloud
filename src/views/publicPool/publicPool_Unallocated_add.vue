@@ -478,27 +478,7 @@
                     issendObj.value = _sf_ynArr[i].typecode
                     _self.issendValue.push(issendObj)
                 }
-                /* this.$http.all([
-                this.$http.get('/api/dataCenter/system/queryForTSTypeByGroupId/' + this.searchTypegroupid('sf_yn')),
-                this.$http.get('/api/customer/findAllCustomerLabelsByPages/1/10000'),
-            ])
-                .then(this.$http.spread(function (customertyperesp, customersourceResp, importlevelResp, areaResp, issendResp, LabelsAllRes) {
-                })) */
             },
-
-            /*            /!*************************标签选择改变********************************!/
-                        checkboxChange(e) {
-                            let _self = this
-                            _self.customerlabel = []
-                            for (let i = 0; i < e.length; i++) {
-                                for (let j = 0; j < _self.customerlabelGroup.length; j++) {
-                                    if (e[i] == _self.customerlabelGroup[j].label) {
-                                        _self.customerlabel.push(_self.customerlabelGroup[j].value)
-                                    }
-                                }
-                            }
-                            _self.formValidate.customerlabel.push(_Obj)
-                        },*/
 
             selectionChange(e) {
                 let _self = this

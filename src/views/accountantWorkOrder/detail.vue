@@ -173,11 +173,20 @@ export default {
     },
     mounted () {
         let _self = this
-        let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=disposes`
-        this.$http.get(url).then(function(res){
-            // console.log(res.data.data)
+        // let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=disposes`
+        // this.$http.get(url).then(function(res){
+        //     // console.log(res.data.data)
+        //     _self.disposes = res.data.data.disposes
+        // })
+
+        let params = "disposes"
+
+        function finish(res){
             _self.disposes = res.data.data.disposes
-        })
+        }
+
+        this.$GetDataCenter(params, finish)
+        
         Bus.$on('open_yichang_detail',(e)=>{
             // console.log(e)
                 _self.local_id = e

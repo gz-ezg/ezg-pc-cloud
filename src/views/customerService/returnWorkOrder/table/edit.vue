@@ -171,7 +171,7 @@ export default {
                 let params = "departAlias"
 
                 function finish(res){
-                    _self.departAlias = res.data.data.departAlias 
+                    _self.departAlias = res.data.data.departAlias              
                 }
 
                 this.$GetDataCenter(params, finish)
@@ -218,7 +218,9 @@ export default {
                 _self.add.depart = _self.add.depart.split(',')
             }
             _self.companyname = e.companyname
-            _self.showTab = "1"   
+            _self.showTab = "1"
+            // console.log(_self.companyname)
+            // console.log(e)      
         })
         let role = localStorage.getItem('Role')
         // console.log(role)

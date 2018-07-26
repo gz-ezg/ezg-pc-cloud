@@ -335,14 +335,15 @@
             
             getData2() { 
                 let _self = this
-                let url = '/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=ywjczq,ywjcmd'
 
-                function doSuccess(res) {
+                let params = "ywjczq,ywjcmd"
+
+                function finish(res) {
                     _self.ywjcmd = res.data.data.ywjcmd
                     _self.ywjczq = res.data.data.ywjczq
                 }
 
-                this.GetData(url, doSuccess)
+                this.$GetDataCenter(params, finish)
             },
 
             ywmb() {

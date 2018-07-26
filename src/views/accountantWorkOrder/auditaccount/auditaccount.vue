@@ -181,14 +181,23 @@ export default {
         let _self =this
         this.init()
         
-        let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=disposes`
-        this.$http.get(url).then(function(res){
-            // console.log(res.data.data)
-            _self.$backToLogin(res)  
+        let params = "disposes"
+
+        function finish(res){
             _self.disposes = res.data.data.disposes
             _self.disposes_map = arrayToMap(_self.disposes)
-            // console.log( _self.disposes_map) 
-        })
+        }
+
+        this.$GetDataCenter(params, finish)
+
+        // let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=disposes`
+        // this.$http.get(url).then(function(res){
+        //     // console.log(res.data.data)
+        //     _self.$backToLogin(res)  
+        //     _self.disposes = res.data.data.disposes
+        //     _self.disposes_map = arrayToMap(_self.disposes)
+        //     // console.log( _self.disposes_map) 
+        // })
     }
 }
 </script>

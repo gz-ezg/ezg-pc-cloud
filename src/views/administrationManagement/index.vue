@@ -15,6 +15,8 @@
             </TabPane>
         </Tabs>
         <flow></flow>
+        <detail></detail>
+        <company-detail></company-detail>
     </div>
 </template>
 
@@ -23,7 +25,10 @@ import unbegin from './unbegin'
 import servicing from './servicing'
 import finish from './finish'
 import all from './all'
-import Flow from './flow'
+
+import detail from './detail'
+// import CompanyDetail from './myCommonTaskIndex/companydetail'
+import CompanyDetail from '../woa-components/companyDetail/CompanyDetail'
 
 export default {
     components:{
@@ -31,7 +36,8 @@ export default {
         servicing,
         finish,
         all,
-        Flow
+        detail,
+        CompanyDetail
     }
 }
 </script>

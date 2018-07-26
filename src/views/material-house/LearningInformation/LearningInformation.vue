@@ -356,18 +356,27 @@ export default {
         },
         getDataCenter(){
             let _self = this
-            let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
-            let config = {
-                params:{
-                    groupCodes:"learnResourceType"
-                }
-            }
-            this.$http.get(url,config).then(function(res){
+            // let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
+            // let config = {
+            //     params:{
+            //         groupCodes:"learnResourceType"
+            //     }
+            // }
+            // this.$http.get(url,config).then(function(res){
+            //     _self.resourceType = res.data.data.learnResourceType
+            //     _self.resourceType_Map = _self.$array2map(_self.resourceType)
+            //     _self.getData()
+            // })
+
+            let params = "learnResourceType"
+
+            function finish(res){
                 _self.resourceType = res.data.data.learnResourceType
                 _self.resourceType_Map = _self.$array2map(_self.resourceType)
                 _self.getData()
-            })
-            
+            }
+
+            this.$GetDataCenter(params, finish)
         }
     },
     created () {

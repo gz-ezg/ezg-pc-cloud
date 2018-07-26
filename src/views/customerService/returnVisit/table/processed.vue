@@ -385,6 +385,7 @@
                         name:_self.YformInline.name,
                         tel:_self.YformInline.tel,
                         sortField:'callbackdate',
+                        datatype: 1,
                         servicename:_self.YformInline.servicename,
                         marketername:_self.YformInline.marketername,
                         depart:_self.YformInline.depart,                     
@@ -476,6 +477,7 @@
                         companyname:_self.YformInline.companyname,
                         name:_self.YformInline.name,
                         tel:_self.YformInline.tel,
+                    	datatype:1,
                         servicename:_self.YformInline.servicename,
                         marketername:_self.YformInline.marketername,
                         depart:_self.YformInline.depart,
@@ -531,39 +533,10 @@
                     _self.loading = false
                 })
             },
-            // getDataCenter(){
-            //     let _self = this
-            //     let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
-            //     let config = {
-            //         params:{
-            //             groupCodes:"hfwtlx,hfzt,departAlias"
-            //         }
-            //     }
-            //     this.$http.get(url, config).then(function(res){
-            //         console.log(res.data.data)
-            //         _self.hfwtlx = res.data.data.hfwtlx
-            //         _self.hfzt = res.data.data.hfzt
-            //         _self.departAlias = res.data.data.departAlias
-            //         _self.hfwtlx_map = _self.$array2map(_self.hfwtlx)
-            //         _self.hfzt_map = _self.$array2map(_self.hfzt)
-            //         _self.departAlias_map = _self.$array2map(_self.departAlias)
-            //         console.log(_self.hfwtlx_map)                 
-            //     })
-
-            // }
-            // init(){
-            //     let _self = this
-            //     _self.hfwtlx_map = _self.$array2map(_self.hfwtlx)
-            //     // _self.hfzt_map = _self.$array2map(_self.hfzt)
-            //     _self.departAlias_map = _self.$array2map(_self.departAlias)
-            //     this.getData()
-            //     console.log(_self.departAlias_map)
-            // }
         },
         created() {
             // this.init()
             let _self = this
-            // this.getDataCenter()
             this.getData()
             Bus.$on('update_returnVisit_edit',(e)=>{
                 _self.getData()

@@ -716,11 +716,20 @@ import {DateFormat} from '../../../libs/utils'
                     var temp = res.data.data;
                     _self.allUser = temp;
                 });
-                var url2 = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=cluetype`;
-                this.$http.get(url2).then(function(res) {
+                // var url2 = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=cluetype`;
+                // this.$http.get(url2).then(function(res) {
+                //     var temp = res.data.data;
+                //     _self.cluetype = temp.cluetype
+                // });
+
+                let params = "cluetype"
+
+                function finish(res){
                     var temp = res.data.data;
                     _self.cluetype = temp.cluetype
-                });
+                }
+
+                this.$GetDataCenter(params, finish)
             },
             findUserText(temp) {
                 var _self = this;

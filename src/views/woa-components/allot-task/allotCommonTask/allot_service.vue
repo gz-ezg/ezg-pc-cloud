@@ -4,7 +4,7 @@
             width="300"
             v-model="common_allot_open"
         >
-            <Form ref="task_detail" :model="task_detail" :label-width="90">
+            <Form :label-width="90">
                 <Row :gutter="16">
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="20">

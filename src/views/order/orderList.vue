@@ -3825,13 +3825,21 @@
 
             typeGroupId() {
                 let _self = this
-                let url = '/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=payDirs'
+                // let url = '/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=payDirs'
 
-                function doSuccess(re) {
+                // function doSuccess(re) {
+                //     _self.payDirData = re.data.data.payDirs
+                // }
+
+                // this.GetData(url, doSuccess)
+
+                let params = "payDirs"
+
+                function finsih(res){
                     _self.payDirData = re.data.data.payDirs
                 }
 
-                this.GetData(url, doSuccess)
+                this.$GetDataCenter(params, finsih)
             },
 
             getStartTime(re) {

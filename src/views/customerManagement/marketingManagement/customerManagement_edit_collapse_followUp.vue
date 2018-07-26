@@ -730,10 +730,27 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
             GetFollowUpType(){
                 var _self = this
                 _self.followTypeText = []
-                var url  = '/api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=markert_follow_up_type'
-                this.$http.get(url).then(function(res){
-                    // _self.followTypeText=res.data.data.follow_up_type
-                    // console.log(_self.followTypeText)
+                // var url  = '/api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=markert_follow_up_type'
+                // this.$http.get(url).then(function(res){
+                //     // _self.followTypeText=res.data.data.follow_up_type
+                //     // console.log(_self.followTypeText)
+                //     for(let i = 0;i<res.data.data.markert_follow_up_type.length;i++){
+                //         var temp={}
+                //         if(res.data.data.markert_follow_up_type[i].typecode == 21||res.data.data.markert_follow_up_type[i].typecode == 22){
+                //         }else{
+                //             temp.typecode=res.data.data.markert_follow_up_type[i].typecode
+                //             temp.typename=res.data.data.markert_follow_up_type[i].typename
+                //             temp.id=res.data.data.markert_follow_up_type[i].id
+                //             _self.followTypeText.push(temp)
+                //         }
+                //     }
+                //     // console.log(_self.followTypeText)
+                // })
+
+                let params = "markert_follow_up_type,market_status"
+
+                function finish(res){
+                    _self.market_field_type = res.data.data.market_status
                     for(let i = 0;i<res.data.data.markert_follow_up_type.length;i++){
                         var temp={}
                         if(res.data.data.markert_follow_up_type[i].typecode == 21||res.data.data.markert_follow_up_type[i].typecode == 22){
@@ -744,24 +761,25 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
                             _self.followTypeText.push(temp)
                         }
                     }
-                    // console.log(_self.followTypeText)
-                })
+                }
+
+                this.$GetDataCenter(params, finish)
             },
             //  只看市场跟进
             single_check_change(e){
                 this.onlymarket = e
                 this.openEdi()
             },
-            getFollowResult(){
-                let _self = this
-                let params = "market_status"
+            // getFollowResult(){
+            //     let _self = this
+            //     let params = "market_status"
 
-                function finish(res){
-                    // console.log(res.data.data.market_field_type)
-                    _self.market_field_type = res.data.data.market_status
-                }
-                this.$GetDataCenter(params,finish)
-            },
+            //     function finish(res){
+            //         // console.log(res.data.data.market_field_type)
+            //         _self.market_field_type = res.data.data.market_status
+            //     }
+            //     this.$GetDataCenter(params,finish)
+            // },
             getRole(){
                 let _self = this
                 let temp = localStorage.getItem("Main_Role")
@@ -796,7 +814,7 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
             
             this.GetFollowUpType()
             this.getRole()
-            this.getFollowResult()
+            // this.getFollowResult()
             this.openEdi()
             _self.formValidate.customerId = this.customerid
             

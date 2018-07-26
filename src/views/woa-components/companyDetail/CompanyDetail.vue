@@ -1301,6 +1301,16 @@
                 _self.getRole()
                 _self.getData()
             })
+            this.$bus.on('openCompanyDetail',(e)=>{
+                // _self.GetFollowUpType()
+                _self.openTab = "name8"
+                _self.detail = true
+                // console.log(e.row.company_id)
+                _self.companyid = e
+                _self.isEditTax = true
+                _self.getRole()
+                _self.getData()
+            })
             this.$bus.on('VueBusTest',(e)=>{
                 _self.openTab = "name8"
                 _self.detail = true

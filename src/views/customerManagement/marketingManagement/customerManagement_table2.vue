@@ -802,17 +802,30 @@
             //  获取数据字典
             getDataCenter(){
                 var _self = this
-                var url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=customerTypes,cluesources,customerrating,area,sf_yn`
-                this.$http.get(url).then(function(res){
-                    // console.log(res.data.data)
+                // var url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=customerTypes,cluesources,customerrating,area,sf_yn`
+                // this.$http.get(url).then(function(res){
+                //     // console.log(res.data.data)
+                //     var temp = res.data.data
+                //     _self.area = temp.area
+                //     _self.cluesource = temp.cluesources
+                //     _self.customerType = temp.customerTypes
+                //     _self.impLevel = temp.customerrating
+                //     _self.sf_yn = temp.sf_yn
+                //     console.log(temp.customerType)
+                // })
+
+                let params = "customerTypes,cluesources,customerrating,area,sf_yn"
+
+                function finish(res){
                     var temp = res.data.data
                     _self.area = temp.area
                     _self.cluesource = temp.cluesources
                     _self.customerType = temp.customerTypes
                     _self.impLevel = temp.customerrating
                     _self.sf_yn = temp.sf_yn
-                    console.log(temp.customerType)
-                })
+                }
+
+                this.$GetDataCenter(params, finish)
             },
             findImpLevel(temp){
                 var _self = this

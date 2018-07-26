@@ -2,9 +2,8 @@
     <div>
         <Modal
                 v-model="fenpei"
-                title="分配会计"
+                title="变更会计"
                 width="800"
-                @on-ok="ok"
         >
             <Form ref="task_message" :model="task_message" :label-width="120">
                 <Row :gutter="16">
@@ -32,7 +31,7 @@
                     </Col>
                     <Col span="10">
                         <FormItem prop="companyName" label="服务会计">
-                            <Select transfer v-model="accMagid" @on-change="optionChange" size="small">
+                            <Select transfer v-model="accMagid" size="small">
                                 <Option v-for="item in accMag" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select>
                         </FormItem>
@@ -47,12 +46,15 @@
                         </FormItem>
                     </Col>
                     <Col span="10">
-                        <FormItem prop="reason" label="变更原因">
-                            <Input type="text" size="small" v-model="task_message.reason" disabled></Input>
+                        <FormItem prop="remark" label="变更原因">
+                            <Input type="text" size="small" v-model="remark"></Input>
                         </FormItem>
                     </Col>
                 </Row>
             </Form>
+            <div slot="footer">
+                <Button type="primary" @click="change_accout" :loading="button_loading">变更</Button>
+            </div>
         </Modal>
     </div>
 </template>
@@ -63,12 +65,14 @@
     export default {
         data(){
             return {
+                button_loading:false,
                 fenpei:false,
                 task_message:{},
                 accMagid: '',
                 jzAccid: '',
                 accMag: [],
-                jzAcc: []
+                jzAcc: [],
+                remark:""
             }
         },
         methods: {
@@ -92,52 +96,48 @@
                 this.GetData(url, doSuccess)
             },
 
-            optionChange(a) {
-                // let _self = this
-
-                // for (let i = 0; i < _self.accMag.length; i++) {
-                //     if (a == _self.accMag[i].value && _self.accMag[i].link != "null") {
-                //         let _data = JSON.parse(_self.accMag[i].link)
-                //         _self.jzAcc = []
-
-                //         for (let j = 0; j < _data.length; j++) {
-                //             _self.jzAcc.push({
-                //                 value: _data[j].id,
-                //                 label: _data[j].realname
-                //             })
-                //         }
-                //     } else if (a == _self.accMag[i].value && _self.accMag[i].link == "null") {
-                //         _self.jzAcc = []
-                //     }
-                // }
-            },
-
-            ok() {
+            change_accout() {
                 let _self = this
-                // let url = '/order/batchUpdateServicer'
-                let url = '/order/work/order/share'
-                let _data = {
-                    workOrderIds: _self.task_message.cycle_work_order_id,
-                    userId:_self.jzAccid,
-                    managerId:_self.accMagid
-                }
+                if(!_self.remark){
+                    _self.$Message.warning("请填写变更原因！")
+                }else{
+                    _self.button_loading = true
+                    // let url = '/order/batchUpdateServicer'
+                    let url = 'api/order/work/order/share'
+                    let _data = {
+                        workOrderIds: _self.task_message.cycle_work_order_id,
+                        userId:_self.jzAccid,
+                        managerId:_self.accMagid,
+                        remark: _self.remark
+                    }
 
-                if (_self.jzAccid != '' && _self.jzAccid != 0) {
-                    _data.userId = _self.jzAccid
-                } else {
-                    _data.userId = _self.accMagid
-                }
+                    if (_self.jzAccid != '' && _self.jzAccid != 0) {
+                        _data.userId = _self.jzAccid
+                    } else {
+                        _data.userId = _self.accMagid
+                    }
 
-                function doSuccess() {
-                    Bus.$emit('UPDATE_ALL_ACCOUNT_PAGE',true)
-                }
+                    function doSuccess(res) {
+                        Bus.$emit('UPDATE_ALL_ACCOUNT_PAGE',true)
+                        _self.button_loading = false
+                        _self.fenpei = false
+                    }
+                    
+                    function fail(err){
+                        _self.button_loading = false
+                    }
 
-                this.PostData(url, _data, doSuccess)
+                    _self.$Post(url, _data, doSuccess)
+                    // this.PostData(url, _data, doSuccess)
+                }
             }
         },
         created(){
             var _self = this
             Bus.$on('fenpei',(e)=>{
+                _self.jzAccid = ""
+                _self.accMagid = ""
+                _self.remark = ""
                 console.log(e)
                 _self.fenpei = true
                 _self.task_message = e

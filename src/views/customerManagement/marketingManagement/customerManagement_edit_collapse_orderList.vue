@@ -3479,16 +3479,16 @@
                 this.GetData(url, doSuccess)
             },
 
-            typeGroupId() {
-                let _self = this
-                let url = '/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=payDir'
+            // typeGroupId() {
+            //     let _self = this
+            //     let url = '/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=payDir'
 
-                function doSuccess(re) {
-                    _self.payDirData = re.data.data.payDir
-                }
+            //     function doSuccess(re) {
+            //         _self.payDirData = re.data.data.payDir
+            //     }
 
-                this.GetData(url, doSuccess)
-            },
+            //     this.GetData(url, doSuccess)
+            // },
 
             getStartTime(re) {
                 this.StartTime1 = re
@@ -3581,6 +3581,7 @@
                 function finsih(res){
                     // console.log(res)
                     _self.payDirType = res.data.data.payDirs
+                    _self.payDirData = res.data.data.payDirs
                     // console.log(_self.payDirType)
                 }
                 this.$GetDataCenter("payDirs",finsih)
@@ -3600,7 +3601,7 @@
         mounted() {
             this.getPayDirs()
             this.getCluesources()
-            this.typeGroupId()
+            // this.typeGroupId()
             this.getCompanyData()
         }
     }

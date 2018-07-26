@@ -337,19 +337,28 @@ export default {
         },
         getDataCenter(){
             let _self = this
-            let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
-            let config = {
-                params:{
-                    groupCodes:"videoType"
-                }
-            }
-            this.$http.get(url,config).then(function(res){
-                _self.$backToLogin(res)                
+            // let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
+            // let config = {
+            //     params:{
+            //         groupCodes:"videoType"
+            //     }
+            // }
+            // this.$http.get(url,config).then(function(res){
+            //     _self.$backToLogin(res)                
+            //     _self.resourceType = res.data.data.videoType
+            //     _self.resourceType_Map = _self.$array2map(_self.resourceType)
+            //     _self.getData()
+            // })
+            
+            let params = "videoType"
+
+            function finish(res){
                 _self.resourceType = res.data.data.videoType
                 _self.resourceType_Map = _self.$array2map(_self.resourceType)
                 _self.getData()
-            })
-            
+            }
+
+            this.$GetDataCenter(params, finish)
         }
     },
     created () {

@@ -49,7 +49,8 @@
                 <Button type="primary" icon="information-circled" @click="fpkj">变更会计</Button>
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="zlwc" v-if="zl">资料完成</Button> -->
                 <Button type="primary" icon="ios-color-wand-outline" @click="setLevel">设置财务等级</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="openFollow">客户跟进</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="openFollow">服务详情</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="open_change_log">变更日志</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
             </ButtonGroup>
             <!-- <Poptip
@@ -1086,6 +1087,15 @@
                 let _self = this
                 let temp = JSON.parse(localStorage.getItem("global_datacenter"))
                 _self.managestatus = temp
+            },
+            open_change_log(){
+                let _self = this
+
+                if (!_self.current_row) {
+                    this.$Message.warning('请选择要查看的项目！')
+                } else {
+                    _self.$bus.emit('rizhi', _self.current_row.cycle_service_record_id)
+                }
             }
         },
         mounted() {

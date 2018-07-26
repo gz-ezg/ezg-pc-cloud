@@ -73,10 +73,11 @@
                     _self.departAlias = res.data.data.departAlias
                     _self.hfwtlx_map = arrayToMap(_self.hfwtlx)
                     _self.hfzt_map = arrayToMap(_self.hfzt)
-                    _self.departAlias_map = arrayToMap(_self.departAlias)    
+                    _self.departAlias_map = arrayToMap(_self.departAlias) 
                 }
 
                 this.$GetDataCenter(params, finish)
+
             }
         },
         created(){

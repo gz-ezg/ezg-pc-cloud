@@ -225,9 +225,58 @@ export default {
         },
         getDataCenter(){
            var _self = this;
-                var url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=customerTypes,cluesources,customerrating,area,sf_yn`;
-                this.$http.get(url).then(function(res) {
-                    // console.log(res.data.data)
+           let params = "customerTypes,cluesources,customerrating,area,sf_yn"
+                // var url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=customerTypes,cluesources,customerrating,area,sf_yn`;
+                // this.$http.get(url).then(function(res) {
+                //     // console.log(res.data.data)
+                //     var temp = res.data.data;
+                //     _self.area = temp.area;
+                //     _self.cluesource = temp.cluesources;
+                //     // console.log(temp.customerType)
+                //     _self.customerType = temp.customerTypes;
+                //     _self.impLevel = temp.customerrating;
+                //     _self.sf_yn = temp.sf_yn;
+                //     _self.area.reverse()
+                //     // 二级联动改一级
+                //     _self.customerTypeArr = []
+                //     for(let i = 0;i<_self.customerType.length;i++){
+                //     var temp = {}
+                //     if(_self.customerType[i].children != null){
+                //         for(let j = 0;j<_self.customerType[i].children.length; j++ ){
+                //         temp = {}
+                //         temp.id = _self.customerType[i].children[j].id
+                //         temp.typecode = _self.customerType[i].children[j].typecode
+                //         temp.typename = _self.customerType[i].children[j].typename
+                //         temp.pid = _self.customerType[i].children[j].pid
+                //         temp.ptypename = _self.customerType[i].typename
+                //         temp.ptypecode = _self.customerType[i].typecode
+                //         _self.customerTypeArr.push(temp)
+                //         }
+                //     }else{    
+                //         temp = {}
+                //         temp.id = _self.customerType[i].id
+                //         temp.typecode = _self.customerType[i].typecode
+                //         temp.ptypename = _self.customerType[i].typename
+                //         temp.typename = ''
+                //         temp.pid = 0
+                //         _self.customerTypeArr.push(temp)
+                //     }
+                //     //  修改成规定的模型
+                //     _self.customerType[i].value = _self.customerType[i].id
+                //     _self.customerType[i].label = _self.customerType[i].typename
+                //     if(_self.customerType[i].children != null){
+                        
+                //         for(let j = 0;j<_self.customerType[i].children.length; j++ ){
+
+                //         _self.customerType[i].children[j].value= _self.customerType[i].children[j].id
+                //         _self.customerType[i].children[j].label = _self.customerType[i].children[j].typename
+
+                //         }
+                //     }
+                //     }    
+                // })
+
+                function finish(res){
                     var temp = res.data.data;
                     _self.area = temp.area;
                     _self.cluesource = temp.cluesources;
@@ -273,7 +322,9 @@ export default {
                         }
                     }
                     }    
-                })
+                }
+
+                this.$GetDataCenter(params, finish)
             },
             getAllLabel(){
                 var _self = this

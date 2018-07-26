@@ -109,7 +109,7 @@
 <script>
     import Bus from '../../../../components/bus'
     import { DateFormat } from '../../../channelManagement/channelCustomer/utils';
-    import { arrayToMap } from '../../../../libs/utils'
+    import {arrayToMap} from '../../../../libs/utils'
 
     export default {
         props:['companyname'],
@@ -470,7 +470,6 @@
                 //     _self.hfzt_map = arrayToMap(_self.hfzt)
                 //     _self.departAlias_map = arrayToMap(_self.departAlias)           
                 // })
-
                 let params = "hfwtlx,hfzt,departAlias"
 
                 function finish(res){
@@ -479,9 +478,9 @@
                     _self.departAlias = res.data.data.departAlias
                     _self.hfwtlx_map = arrayToMap(_self.hfwtlx)
                     _self.hfzt_map = arrayToMap(_self.hfzt)
-                    _self.departAlias_map = arrayToMap(_self.departAlias)
+                    _self.departAlias_map = arrayToMap(_self.departAlias)    
                 }
-                
+
                 this.$GetDataCenter(params, finish)
 
             }

@@ -9,7 +9,7 @@
         title="分配会计"
         width="300"
     >
-            <Form ref="task_message" :model="task_message" :label-width="90">
+            <Form :label-width="90">
                 <Row :gutter="16">
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="20">

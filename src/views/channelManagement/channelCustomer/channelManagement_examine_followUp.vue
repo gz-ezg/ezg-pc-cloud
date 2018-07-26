@@ -98,7 +98,7 @@
                     <Col span="12">
                     <FormItem prop="companyId" >
                         <div slot="label" class="upload_before">公司名称</div>
-                        <Select transfer v-model="formValidate.companyId" size="small" :class="{input_warning:warning2}" @on-change="isWarn" transfer>
+                        <Select transfer v-model="formValidate.companyId" size="small" :class="{input_warning:warning2}" @on-change="isWarn" >
                             <Option v-for="item in companynameArray" :value="item.id" :key="item.id">{{ item.companyname
                                 }}
                             </Option>
@@ -110,7 +110,7 @@
                     </Col>
                     <Col span="12">
                     <FormItem label="跟进类型" prop="followUpType">
-                        <Select transfer v-model="formValidate.followUpType" size="small" transfer>
+                        <Select transfer v-model="formValidate.followUpType" size="small" >
                             <Option v-for="item in followTypeText" :value="item.typecode" :key="item.typecode">{{item.typename}}</Option>
                             <!-- <Option value="11">电话</Option>
                             <Option value="12">QQ</Option>
@@ -577,10 +577,25 @@ import Bus from '../../../components/bus'
             GetFollowUpType(){
                 var _self = this
                 _self.followTypeText = []
-                var url  = '/api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=follow_up_type'
-                this.$http.get(url).then(function(res){
-                    // _self.followTypeText=res.data.data.follow_up_type
-                    // console.log(_self.followTypeText)
+                // var url  = '/api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=follow_up_type'
+                // this.$http.get(url).then(function(res){
+                //     // _self.followTypeText=res.data.data.follow_up_type
+                //     // console.log(_self.followTypeText)
+                //     for(let i = 0;i<res.data.data.follow_up_type.length;i++){
+                //         var temp={}
+                //         if(res.data.data.follow_up_type[i].typecode == 21||res.data.data.follow_up_type[i].typecode == 22){
+                //         }else{
+                //             temp.typecode=res.data.data.follow_up_type[i].typecode
+                //             temp.typename=res.data.data.follow_up_type[i].typename
+                //             temp.id=res.data.data.follow_up_type[i].id
+                //             _self.followTypeText.push(temp)
+                //         }
+                //     }
+                // })
+
+                let params = "follow_up_type"
+
+                function finish(res){
                     for(let i = 0;i<res.data.data.follow_up_type.length;i++){
                         var temp={}
                         if(res.data.data.follow_up_type[i].typecode == 21||res.data.data.follow_up_type[i].typecode == 22){
@@ -591,7 +606,9 @@ import Bus from '../../../components/bus'
                             _self.followTypeText.push(temp)
                         }
                     }
-                })
+                }
+
+                this.$GetDataCenter(params, finish)
             },
             //  只看市场跟进
             single_check_change(e){
@@ -610,7 +627,7 @@ import Bus from '../../../components/bus'
                 _self.openEdi()
             })
             Bus.$on('updateorderlist',(e)=>{
-                console.log('11111111')
+                // console.log('11111111')
                 _self.openEdi()
             })
         }

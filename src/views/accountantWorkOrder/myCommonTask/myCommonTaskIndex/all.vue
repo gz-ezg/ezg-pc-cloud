@@ -580,23 +580,32 @@ export default {
         },
         getDataCenter(){
                 let _self = this
-                let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
-                let config = {
-                    params:{
-                        groupCodes:'workOrderStatus'
-                    }
-                }
-                this.$http.get(url, config).then(function(res){
-                    _self.$backToLogin(res)  
-                    // console.log(res.data.data.workOrderStatus)
+                // let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
+                // let config = {
+                //     params:{
+                //         groupCodes:'workOrderStatus'
+                //     }
+                // }
+                // this.$http.get(url, config).then(function(res){
+                //     _self.$backToLogin(res)  
+                //     // console.log(res.data.data.workOrderStatus)
+                //     _self.workOrderStatus = res.data.workOrderStatus
+                //     _self.workOrderStatus_map = _self.$array2map(_self.workOrderStatus)
+                // })
+
+                let params = "workOrderStatus"
+
+                function finish(res){
                     _self.workOrderStatus = res.data.workOrderStatus
                     _self.workOrderStatus_map = _self.$array2map(_self.workOrderStatus)
-                })
+                }
+
+                this.$GetDataCenter(params, res)
             }
     },
     created(){
         var _self = this
-        this.getDataCenter()
+        // this.getDataCenter()
         this.getData()
         Bus.$on('flowsuccess',(e)=>{
             _self.getData()

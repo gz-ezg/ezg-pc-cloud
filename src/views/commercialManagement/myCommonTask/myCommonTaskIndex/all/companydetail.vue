@@ -207,8 +207,6 @@ export default {
     created(){
         var _self = this
         Bus.$on('showcompanydetail4',(e)=>{
-            console.log(e)
-            console.log('1111')
             _self.showcompanydetail4 = true
             _self.current_row4 = e
             _self.getDataCenter() 
@@ -216,15 +214,26 @@ export default {
     },
     methods:{
         getDataCenter(){
-            let url = 'api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=qyjyzt,enterprisestatus,impLevel,financelevel'
+            // let url = 'api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=qyjyzt,enterprisestatus,impLevel,financelevel'
             let _self = this
-            this.$http.get(url).then(function(res){
-                console.log(res.data.data)
+            // this.$http.get(url).then(function(res){
+            //     console.log(res.data.data)
+            //     _self.qyjyzt = res.data.data.qyjyzt
+            //     _self.enterprisestatus = res.data.data.enterprisestatus
+            //     _self.impLevel = res.data.data.impLevel
+            //     _self.financelevel = res.data.data.financelevel
+            // })
+
+            let params = "qyjyzt,enterprisestatus,impLevel,financelevel"
+
+            function finish(res){
                 _self.qyjyzt = res.data.data.qyjyzt
                 _self.enterprisestatus = res.data.data.enterprisestatus
                 _self.impLevel = res.data.data.impLevel
                 _self.financelevel = res.data.data.financelevel
-            })
+            }
+
+            this.$GetDataCenter(params, finish)
         }
     }
 }

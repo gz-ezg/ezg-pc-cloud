@@ -240,6 +240,31 @@
                 </Row>
             </Form>
         </Modal>
+        <Modal
+            v-model="openComNameLog"
+            width = "680"
+            title = "公司名称变更日志"             
+            >
+            <Row style="margin-top: 10px;">
+                <Table
+                    ref="selection"
+                    highlight-row
+                    size="small"
+                    :columns="changeHeader"
+                    :loading="changeLoading"
+                    :data="changeData"></Table>
+                <Page
+                    size="small"
+                    :total="pageTotal"
+                    :current.sync="changePage"
+                    show-total
+                    show-elevator
+                    @on-change="change_page_change"
+                    style="margin-top: 10px">
+                </Page>
+            </Row>
+            <div slot="footer"></div>
+        </Modal>
     </div>
 </template>
 
@@ -275,6 +300,34 @@ import Bus from '../../../components/bus.js'
                     }
                 };
             return {
+                openComNameLog:false,
+                pageTotal: new Number(),
+                changeHeader: [
+                    {
+                        title:"变更前公司名称",
+                        key: 'oldValue',
+                        width: 160
+                    },
+                    {
+                        title: "变更后公司名称",
+                        key: 'newValue',
+                        width: 160
+                    },
+                    {
+                        title: "修改时间",
+                        key: 'updateDate',
+                        width: 160
+                    },
+                    {
+                        title: "操作人员",
+                        key: 'realname',
+                        width: 160
+                    }
+                ],
+                changeLoading:false,
+                changeData:[],
+                changePage:1,
+
                 financialLevel:"",
                 companyareadata:[],
                 loading: true,
@@ -482,8 +535,22 @@ import Bus from '../../../components/bus.js'
                                     props: {
                                         type: 'text',
                                         size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.get_company_name_change_log(params)
+                                        }
                                     }
-                                }, 
+                                }, '名称变更日志'),
+                                // h('Button', {
+                                //     props: {
+                                //         type: 'text',
+                                //         size: 'small'
+                                //     }
+                                // }, 
                                 // [
                                 //     h('Poptip', {
                                 //         props: {
@@ -499,7 +566,7 @@ import Bus from '../../../components/bus.js'
                                 //         }
                                 //     }, '删除')
                                 // ]
-                                )
+                                // )
                             ]);
                         }
                     }
@@ -525,7 +592,30 @@ import Bus from '../../../components/bus.js'
             }
         },
         methods: {
+            /*****获取公司名称变更日志*****/
+            get_company_name_change_log(e){
+                let _self = this
+                _self.openComNameLog = true
+                _self.changeLoading = true
+                let url = `api/customer/company/companyNameChangeLogList`
 
+                let config = {
+                    params:{
+                        companyid:e.row.id,
+                        page:_self.changePage,
+                        pageSize: 10,
+                        sortField: "updateDate"
+                    }
+                }
+
+                function success(res){
+                        _self.pageTotal = res.data.data.total
+                        _self.changeData = res.data.data.rows
+                        _self.changeLoading = false
+                }
+
+                this.$Get(url,config,success)
+            },
             /*************************初始化企业列表********************************/
             getCompanyData() {
                 var _self = this
@@ -663,63 +753,111 @@ import Bus from '../../../components/bus.js'
                 _self.enterprisestatusValue = []
                 _self.taxtypeValue = []
 
-                this.searchTypegroup('cluesource')
-                this.searchTypegroup('importlevel')
-                this.searchTypegroup('enterprisestatus')
-                this.searchTypegroup('taxtype')
+                // this.searchTypegroup('cluesource')
+                // this.searchTypegroup('importlevel')
+                // this.searchTypegroup('enterprisestatus')
+                // this.searchTypegroup('taxtype')
                 
-                let url2 = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=cluesources`
-                let _cluesourceArr = ""
-                this.$http.get(url2).then(function(res){
-                    // console.log(res.data.data.cluesources)
-                    _cluesourceArr = res.data.data.cluesources
-                    // console.log(_cluesourceArr.length)
-                    for (var i = 0; i < _cluesourceArr.length; i++) {
-                    var customersourceObj = {}
+                // let url2 = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=cluesources`
 
-                    customersourceObj.label = _cluesourceArr[i].typename
-                    customersourceObj.value = _cluesourceArr[i].typecode
-                    _self.customersourceValue.push(customersourceObj)
+                let params = "cluesources,importlevel,enterprisestatus,taxtype,financialLevel"
+
+                function finish(res){
+
+                    let _cluesourceArr = res.data.data.cluesources
+                    let _importlevelArr = res.data.data.importlevel
+                    let _enterprisestatusArr = res.data.data.enterprisestatus
+                    let _taxtypeArr = res.data.data.taxtype
+                    
+                    _self.financialLevel = res.data.data.financialLevel
+
+                    for (var i = 0; i < _cluesourceArr.length; i++) {
+                        var customersourceObj = {}
+
+                        customersourceObj.label = _cluesourceArr[i].typename
+                        customersourceObj.value = _cluesourceArr[i].typecode
+                        _self.customersourceValue.push(customersourceObj)
+                    }
+
+                    for (var i = 0; i < _importlevelArr.length; i++) {
+
+                        var customersourceObj = {}
+
+                        customersourceObj.label = _importlevelArr[i].typename
+                        customersourceObj.value = _importlevelArr[i].typecode
+                        _self.importlevelValue.push(customersourceObj)
+                    }
+
+                    // 下拉框-企业状态
+                    for (var i = 0; i < _enterprisestatusArr.length; i++) {
+
+                        var customersourceObj = {}
+
+                        customersourceObj.label = _enterprisestatusArr[i].typename
+                        customersourceObj.value = _enterprisestatusArr[i].typecode
+                        _self.enterprisestatusValue.push(customersourceObj)
+                    }
+
+                    // 下拉框-企业纳税类型
+                    for (var i = 0; i < _taxtypeArr.length; i++) {
+
+                        var customersourceObj = {}
+
+                        customersourceObj.label = _taxtypeArr[i].typename
+                        customersourceObj.value = _taxtypeArr[i].typecode
+                        _self.taxtypeValue.push(customersourceObj)
+                    }
                 }
-                })
+
+                this.$GetDataCenter(params, finish)
+                // this.$http.get(url2).then(function(res){
+                //     // console.log(res.data.data.cluesources)
+                //     _cluesourceArr = res.data.data.cluesources
+                //     // console.log(_cluesourceArr.length)
+                //     for (var i = 0; i < _cluesourceArr.length; i++) {
+                //         var customersourceObj = {}
+
+                //         customersourceObj.label = _cluesourceArr[i].typename
+                //         customersourceObj.value = _cluesourceArr[i].typecode
+                //         _self.customersourceValue.push(customersourceObj)
+                //     }
+                // })
                 // let _cluesourceArr = JSON.parse(localStorage.getItem('cluesource'))
-                let _importlevelArr = JSON.parse(localStorage.getItem('importlevel'))
-                let _enterprisestatusArr = JSON.parse(localStorage.getItem('enterprisestatus'))
-                let _taxtypeArr = JSON.parse(localStorage.getItem('taxtype'))
+                
                     
                 
                 // 下拉框-企业来源
                 
 
                 // 下拉框-重要等级
-                for (var i = 0; i < _importlevelArr.length; i++) {
+                // for (var i = 0; i < _importlevelArr.length; i++) {
 
-                    var customersourceObj = {}
+                //     var customersourceObj = {}
 
-                    customersourceObj.label = _importlevelArr[i].typename
-                    customersourceObj.value = _importlevelArr[i].typecode
-                    _self.importlevelValue.push(customersourceObj)
-                }
+                //     customersourceObj.label = _importlevelArr[i].typename
+                //     customersourceObj.value = _importlevelArr[i].typecode
+                //     _self.importlevelValue.push(customersourceObj)
+                // }
 
-                // 下拉框-企业状态
-                for (var i = 0; i < _enterprisestatusArr.length; i++) {
+                // // 下拉框-企业状态
+                // for (var i = 0; i < _enterprisestatusArr.length; i++) {
 
-                    var customersourceObj = {}
+                //     var customersourceObj = {}
 
-                    customersourceObj.label = _enterprisestatusArr[i].typename
-                    customersourceObj.value = _enterprisestatusArr[i].typecode
-                    _self.enterprisestatusValue.push(customersourceObj)
-                }
+                //     customersourceObj.label = _enterprisestatusArr[i].typename
+                //     customersourceObj.value = _enterprisestatusArr[i].typecode
+                //     _self.enterprisestatusValue.push(customersourceObj)
+                // }
 
-                // 下拉框-企业纳税类型
-                for (var i = 0; i < _taxtypeArr.length; i++) {
+                // // 下拉框-企业纳税类型
+                // for (var i = 0; i < _taxtypeArr.length; i++) {
 
-                    var customersourceObj = {}
+                //     var customersourceObj = {}
 
-                    customersourceObj.label = _taxtypeArr[i].typename
-                    customersourceObj.value = _taxtypeArr[i].typecode
-                    _self.taxtypeValue.push(customersourceObj)
-                }
+                //     customersourceObj.label = _taxtypeArr[i].typename
+                //     customersourceObj.value = _taxtypeArr[i].typecode
+                //     _self.taxtypeValue.push(customersourceObj)
+                // }
             },
 
             /*************************提交修改后的企业信息********************************/
@@ -858,9 +996,30 @@ import Bus from '../../../components/bus.js'
             },
             GetDataAREA(){
                 let _self = this
-                let url = `api//dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=companyarea`
-                this.$http.get(url).then(function(res){
-                    // console.log(res.data.data.companyarea)
+                // let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=companyarea`
+                // this.$http.get(url).then(function(res){
+                //     // console.log(res.data.data.companyarea)
+                //     let temp = res.data.data.companyarea
+                //     for(let i = 0;i<res.data.data.companyarea.length;i++){
+                //         let com = {}
+                //         com.value = res.data.data.companyarea[i].id
+                //         com.typecode = res.data.data.companyarea[i].typecode
+                //         com.label = res.data.data.companyarea[i].typename
+                //         com.children = []
+                //         for(let j = 0;j<res.data.data.companyarea[i].children.length;j++){
+                //             let com_child = {}
+                //             com_child.value = res.data.data.companyarea[i].children[j].id
+                //             com_child.typecode = res.data.data.companyarea[i].children[j].typecode
+                //             com_child.label = res.data.data.companyarea[i].children[j].typename
+                //             com.children.push(com_child)
+                //         }
+                //         _self.companyareadata.push(com)
+                //     }
+                //     // console.log(_self.companyareadata)
+                // })
+                let params = "companyarea"
+
+                function finish(res){
                     let temp = res.data.data.companyarea
                     for(let i = 0;i<res.data.data.companyarea.length;i++){
                         let com = {}
@@ -877,27 +1036,32 @@ import Bus from '../../../components/bus.js'
                         }
                         _self.companyareadata.push(com)
                     }
-                    // console.log(_self.companyareadata)
-                })
-            },
-            GetDataCenter(){
-                let params = `financialLevel`
-
-                let _self = this
-
-                function success(res){
-                    console.log(res.data.data.financialLevel)
-                    _self.financialLevel = res.data.data.financialLevel
                 }
 
-                this.$GetDataCenter(params, success)
+                this.$GetDataCenter(params, finish)
+
+            },
+            // GetDataCenter(){
+            //     let params = `financialLevel`
+
+            //     let _self = this
+
+            //     function success(res){
+            //         console.log(res.data.data.financialLevel)
+            //         _self.financialLevel = res.data.data.financialLevel
+            //     }
+
+            //     this.$GetDataCenter(params, success)
+            // },
+            change_page_change(e){
+
             }
         },
         mounted() {
-            this.GetDataCenter()
+            // this.GetDataCenter()
             this.getSelectOptions()
-            this.getCompanyData()
             this.GetDataAREA()
+            this.getCompanyData()
         }
     }
 </script>
