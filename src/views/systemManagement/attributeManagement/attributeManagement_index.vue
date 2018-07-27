@@ -118,7 +118,7 @@ export default {
         },
         getData(){
             let _self = this
-            let url = `api/system/attribute/group/${_self.page}/10/list`
+            let url = `api/datacenter/system/attribute/group/${_self.page}/10/list`
             this.$http.get(url).then(function(res){
                 _self.$backToLogin(res)
                 

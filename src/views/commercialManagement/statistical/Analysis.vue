@@ -43,9 +43,8 @@ export default {
                     title:'总外勤',
                     key:''
                 }
-
-
-            ]
+            ],
+            data1:[]
         }
     }
 }

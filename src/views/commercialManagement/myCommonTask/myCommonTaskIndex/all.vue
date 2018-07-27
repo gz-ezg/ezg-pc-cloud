@@ -33,6 +33,18 @@
                             </Row>
                             <Row :gutter="16">
                                 <Col span="8">
+                                    <FormItem prop="departname" label="服务部门：">
+                                        <Input size="small"  type="text" v-model="formInline.departname" placeholder="">
+                                        </Input>
+                                    </FormItem>
+                                </Col>
+                                <Col span="8">
+                                    <FormItem prop="createdate" label="工单创建时间：">
+                                        <DatePicker type="daterange" size="small" transfer v-model="formInline.createdate" >
+                                        </DatePicker>
+                                    </FormItem>
+                                </Col>
+                                <Col span="8">
                                     <FormItem prop="updatedate" label="实际完成时间：">
                                         <DatePicker type="daterange" size="small" transfer v-model="formInline.updatedate" >
                                         </DatePicker>
@@ -143,7 +155,9 @@ export default {
                     companyname:'',
                     servicename:'',
                     product:'',
-                    updatedate:[]
+                    updatedate:[],
+                    createdate:[],
+                    departname:""
                 },
                 //  加载中
                 Sloading:false,
@@ -426,7 +440,7 @@ export default {
                     {field:'CreateDate',title:'创建时间'},                                                                   
                     {field:'UpdateDate',title:'实际完成时间'},                                                                     
                     {field:'servername',title:'服务人员'},
-                    {field:'followname',title:'跟进人'}
+                    {field:'followname',title:'跟进人'},
                 ]
                 let _self = this
                 let url = `api/order/workOrderList`
@@ -438,12 +452,16 @@ export default {
                         product:_self.formInline.product,
                         bupdatedate: DateFormat(_self.formInline.updatedate[0]),
                         eupdatedate: DateFormat(_self.formInline.updatedate[1]),
+                        bcreatedate: DateFormat(_self.formInline.createdate[0]),
+                        ecreatedate: DateFormat(_self.formInline.createdate[1]),
+                        departname: _self.formInline.departname,
                         serviceDept:"'BUSSINESS'",
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field))
                 }
                 let toExcel = this.$MergeURL(url, config)
                 window.open(toExcel)
+                console.log(toExcel)
             },
         getData(){
             var _self = this
@@ -460,6 +478,9 @@ export default {
                     product:_self.formInline.product,
                     bupdatedate: DateFormat(_self.formInline.updatedate[0]),
                     eupdatedate: DateFormat(_self.formInline.updatedate[1]),
+                    bcreatedate: DateFormat(_self.formInline.createdate[0]),
+                    ecreatedate: DateFormat(_self.formInline.createdate[1]),
+                    departname: _self.formInline.departname,
                     serviceDept:"'BUSSINESS'"
                 }
             }
@@ -521,6 +542,8 @@ export default {
             this.formInline.servicename = ""
             this.formInline.product = ""
             this.formInline.updatedate = []
+            this.formInline.createdate = []
+            this.formInline.departname = ""
             this.getData()
         },
         pageChange(e){
@@ -569,17 +592,6 @@ export default {
         },
         getDataCenter(){
                 let _self = this
-                // let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
-                // let config = {
-                //     params:{
-                //         groupCodes:'workOrderStatus'
-                //     }
-                // }
-                // this.$http.get(url, config).then(function(res){
-                //     // console.log(res.data.data.workOrderStatus)
-                //     _self.workOrderStatus = res.data.workOrderStatus
-                //     _self.workOrderStatus_map = _self.$array2map(_self.workOrderStatus)
-                // })
 
                 let params = "workOrderStatus"
 

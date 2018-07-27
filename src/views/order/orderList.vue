@@ -415,20 +415,6 @@
                     <FormItem label="缴费渠道" prop="payDir">
                         <Select transfer v-model="formValidatexiugai.payDir" style="width:100%" size="small">
                             <Option v-for="(item, index) in payDirType" :key=index :value="item.typecode">{{item.typename}}</Option>                            
-                            
-                            <!-- <Option value="gszfb">公司支付宝</Option>
-                            <Option value="gh">工行</Option>
-                            <Option value="zh">招行</Option>
-                            <Option value="wx">微信公众号</Option>
-                            <Option value="gw">官网</Option>
-                            <Option value="other">其他</Option>
-                            <Option value="cash">现金</Option>
-                            <Option value="jhang">建行</Option>
-                            <Option value="nsh">农商行</Option>
-                            <Option value="tb">淘宝</Option>
-                            <Option value="zgrzh">转个人账户</Option>
-                            <Option value="dgzfb">东莞支付宝</Option>
-                            <Option value="szgh">深圳工行</Option> -->
                         </Select>
                     </FormItem>
                     </Col>
@@ -3279,6 +3265,7 @@
                         } else {
                             _date = ''
                         }
+                        _self.formValidatexiugai.payDir = _data.paydir,
                         _self.formValidatexiugai.CompanyName = _data.CompanyName
                         _self.formValidatexiugai.id = _data.id
                         _self.formValidatexiugai.companyid = _data.companyid
@@ -3836,7 +3823,7 @@
                 let params = "payDirs"
 
                 function finsih(res){
-                    _self.payDirData = re.data.data.payDirs
+                    _self.payDirData = res.data.data.payDirs
                 }
 
                 this.$GetDataCenter(params, finsih)

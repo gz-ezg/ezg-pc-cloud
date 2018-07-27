@@ -48,13 +48,13 @@
                     </Select>
                 </FormItem>
                 <FormItem label="创建人" prop="createby">
-                    <!-- <Input v-model="formValidate.createby" disabled></Input> -->
-                    <Select transfer v-model="formValidate.createby" disabled>
+                    <Input v-model="formValidate.createby" disabled></Input>
+                    <!-- <Select transfer v-model="formValidate.createby" disabled>
                         <Option value="老板">老板</Option>
                         <Option value="高层">高层</Option>                            
                         <Option value="中层">中层</Option>                            
                         <Option value="基层">基层</Option>                            
-                    </Select>
+                    </Select> -->
                 </FormItem>
                 <FormItem label="企业来源" prop="cluesource">
                     <Select transfer v-model="formValidate.cluesource" placement="top">
@@ -99,12 +99,13 @@
                     </Select>
                 </FormItem>
                 <FormItem label="创建人" prop="createby">
-                    <Select transfer v-model="formValidate2.createby">
+                    <Input v-model="formValidate2.createby" disabled></Input>
+                    <!-- <Select transfer v-model="formValidate2.createby">
                         <Option value="老板">老板</Option>
                         <Option value="高层">高层</Option>                            
                         <Option value="中层">中层</Option>                            
                         <Option value="基层">基层</Option>                            
-                    </Select>
+                    </Select> -->
                 </FormItem>
                 <FormItem label="企业来源" prop="cluesource">
                     <Select transfer v-model="formValidate2.cluesource" placement="top">
@@ -114,7 +115,7 @@
                     </Select>
                 </FormItem>
                 <FormItem label="交易状态" prop="enterprisestatus">
-                    <Select transfer v-model="formValidate2.enterprisestatus">
+                    <Select transfer v-model="formValidate2.enterprisestatus" placement="top">
                         <Option v-for="item in enterprisestatusValue" :value="item.value" :key="item.value">
                             {{ item.label }}
                         </Option>

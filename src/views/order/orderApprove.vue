@@ -204,10 +204,10 @@
                     :mask-closable="false"
                     :closable="false"
                 >
-                    <Rpw>
+                    <Row>
                         <center><Icon type="alert" style="color:red;font-size:40px"></Icon></center>
                         <center><h2 style="color:red;margin-top:20px">该订单账期存在异常，请修正！</h2></center>
-                    </Rpw>
+                    </Row>
                     <div slot="footer">
                             <Button type="primary" @click="accout_error = false" :disabled="button_disable">确认</Button>
                     </div>
@@ -302,8 +302,7 @@
                         v-model="detailCustomer"
                         title="查看"
                         :width="1300"
-                        @on-ok="cancel('formValidateDetail')"
-                        @on-cancel="cancel('formValidateDetail')">
+                >
                     <Form ref="formValidateDetail" :model="formValidateDetail" :label-width="100">
                         <Row :gutter="16">
                             <Col span="8">
@@ -1269,7 +1268,7 @@
                 let params = "payDirs"
 
                 function finsih(res){
-                    _self.payDirData = re.data.data.payDirs
+                    _self.payDirData = res.data.data.payDirs
                 }
 
                 this.$GetDataCenter(params, finsih)

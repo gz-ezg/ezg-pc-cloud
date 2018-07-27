@@ -214,6 +214,7 @@ export default {
         Bus.$on('open_returnVisit_edit',(e)=>{
             _self.add = e
             _self.isOpenEdit = true
+            // console.log(_self.add.depart)
             if(_self.add.depart){
                 _self.add.depart = _self.add.depart.split(',')
             }

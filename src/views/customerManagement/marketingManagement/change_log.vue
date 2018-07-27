@@ -34,6 +34,7 @@
 export default {
     data(){
         return{
+            loading:false,
             open_customer_change_log: false,
             id: "",
             page: 1,

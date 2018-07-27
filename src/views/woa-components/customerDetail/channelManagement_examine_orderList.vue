@@ -225,7 +225,7 @@
                 let parmas = "payDirs"
 
                 function finish(res){
-                    _self.payDirData = re.data.data.payDirs
+                    _self.payDirData = res.data.data.payDirs
                 }
 
                 this.$GetDataCenter(parmas, finish)

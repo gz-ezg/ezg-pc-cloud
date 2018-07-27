@@ -317,7 +317,6 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
                 for (var i = 0; i < _self.items.length; i++) {
                     if (_self.items[i].bussinessId == a) {
                         ranks = _self.items[i].ranks * 10
-
                     }
                 }
                 var url = '/customer/addErevaluate'

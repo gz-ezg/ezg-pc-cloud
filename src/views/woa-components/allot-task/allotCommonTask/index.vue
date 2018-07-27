@@ -643,6 +643,7 @@ import allotAccountService from './allot_accout_service'
                 this.Npage = 1
                 this.formInlineY.companyname = ""
                 this.formInlineY.servicename = ""
+                this.formInlineY.departname = ""
                 this.getDataY()
             },
             //  勾选检测
