@@ -66,6 +66,7 @@
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="reset_wordorder_process">重新工单流程</Button>
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="product_error">产品异常</Button> -->
                 <!-- <Button type="primary" icon="ios-color-wand-outline">批量已读</Button>
                 <Button type="primary" icon="ios-color-wand-outline">批量未读</Button> -->
@@ -570,6 +571,28 @@ export default {
             // console.log('111111111')
             if(this.current_row != ''){
                 Bus.$emit('myflow',this.current_row)
+            }else{
+                this.$Message.warning('请选择一行进行流转！')
+            }
+        },
+        reset_wordorder_process(){
+            console.log(this.current_row)
+            let _self = this
+            if(this.current_row != ''){
+                let url = `api/order/resetWorkOrderProcess`
+                let _self = this
+
+                let config = {
+                    params:{
+                        workOrderId: _self.current_row.id
+                    }
+                }
+
+                function success(res){
+                    console.log(res)
+                }
+
+                this.$Get(url, config, success)
             }else{
                 this.$Message.warning('请选择一行进行流转！')
             }

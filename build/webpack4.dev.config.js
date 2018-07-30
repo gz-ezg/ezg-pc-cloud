@@ -19,7 +19,7 @@ module.exports = merge(webpackBaseConfig, {
         port: 9997,
         proxy: {
             '/api': {
-                // target: 'http://cloud.zgcfo.com/',
+                // target: 'http://192.168.0.220:9000/',
                 target: 'http://192.168.0.236:9000/',
                 pathRewrite: {'^/api' : ''},
                 changeOrigin: true

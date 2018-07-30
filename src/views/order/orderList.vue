@@ -584,6 +584,7 @@
                     <Button v-permission="['orderL.resubmit']" type="primary" icon="ios-crop" @click="reApplyProcess()">重新提交</Button>
                     <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="xiugaiOpen()">修改</Button>
                     <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="getTableData">刷新</Button>
+                    <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="refresh">重新生成工单</Button>
                     <!--  ↓ ↓ 该功能暂定，代码勿删  -->
                     <!--<Button type="primary" icon="ios-color-filter-outline" @click="qihuaOpen()">企划(修改)</Button>-->
                     <!--<Button v-permission="['orderL.invalid']" type="primary" icon="ios-color-filter-outline" @click="deleteOrder = true">订单作废</Button>-->
@@ -3858,6 +3859,29 @@
                 } else {
                     _self.flowChart2 = true
                     _self.flowChartImg = '/api/dataCenter/activiti/getResourceInputStreamObj?bussinessKey=' + _self.customerId
+                }
+            },
+            refresh(){
+                let _self = this
+                if (_self.customerId == '') {
+                    _self.$Message.warning('请选择订单项');
+                } else {
+                    let url = `api/order/orderApprovalFinish`
+                    let config = {
+                        params:{
+                            orderId: _self.customerId
+                        }
+                    }
+
+                    function success(res){
+                        console.log(res)
+                    }
+
+                    // function fail(err){
+                    //     console.log(err)
+                    // }
+
+                    _self.$Get(url, config, success)
                 }
             },
 

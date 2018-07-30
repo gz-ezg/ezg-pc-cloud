@@ -25,6 +25,7 @@ import unbegin from './unbegin'
 import servicing from './servicing'
 import finish from './finish'
 import all from './all'
+import flow from './flow'
 
 import detail from './detail'
 // import CompanyDetail from './myCommonTaskIndex/companydetail'
@@ -37,7 +38,8 @@ export default {
         finish,
         all,
         detail,
-        CompanyDetail
+        CompanyDetail,
+        flow
     }
 }
 </script>

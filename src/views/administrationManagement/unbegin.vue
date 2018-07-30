@@ -34,7 +34,8 @@
             <ButtonGroup style="float:left">
                 <!-- <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button> -->
-                <Button type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button>                
+                <Button type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button>        
+                <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="reCreate" v-permission="['administration.rebuild']">重新生成流程</Button> -->
             </ButtonGroup>
@@ -48,7 +49,8 @@
                 :data="data"
                 @on-current-change="save_current_row"
                 @on-row-dblclick="showdetail"
-                @on-sort-change="sort"                  
+                @on-sort-change="sort"
+                @on-selection-change="get_all_selection"
                 ></Table>
             <Page
                 placement="top"
@@ -118,33 +120,11 @@ export default {
                 workOrderStatus:[],
                 workOrderStatus_map:new Map(),
                 header: [
-                    // {
-                    //     title: '工单状态',
-                    //     key: 'workOrderStatus',
-                    //     width:100,
-                    //     sortable: true,                                                
-                    //     render:(h, params) => {
-                    //         // console.log(params.row.workOrderStatus.toString())
-                            
-                    //         // let temp = this.workOrderStatus_map.get(params.row.workOrderStatus.toString())
-                    //         // return h('div',temp)
-                    //         if(params.row.workOrderStatus == '10'){
-                    //             return h('div','未分配')
-                    //         }else if(params.row.workOrderStatus == '20'){
-                    //             return h('div','未开始')
-                    //         }else if(params.row.workOrderStatus == '30'){
-                    //             return h('div','服务中')
-                    //         }else if(params.row.workOrderStatus == '40'){
-                    //             return h('div','暂停')
-                    //         }else if(params.row.workOrderStatus == '50'){
-                    //             return h('div','退款终止')                            
-                    //         }else if(params.row.workOrderStatus == '60'){
-                    //             return h('div','已完结')                                
-                    //         }else{
-                    //             return h('div','无状态')
-                    //         }
-                    //     }                       
-                    // },
+                    {
+                        type: 'selection',
+                        width: 60,
+                        align: 'center'
+                    },
                     {
                         title: '归属公司',
                         key: 'companyname',
@@ -360,10 +340,48 @@ export default {
                             ]);
                         }
                     }
-                ]
+                ],
+                tempArray:[]
             }
         },
     methods:{
+        get_all_selection(e){
+            // console.log(e)
+            this.tempArray = e
+        },
+        flow_all(){
+            let _self = this
+            if(this.tempArray.length == 0){
+                _self.$Message.warning("请选择需要流转的工单！")
+            }else{
+                for(let i = 0; i<this.tempArray.length;i++){
+                    let url = `api/order/next`
+                    let config = {
+                        workOrderId:_self.tempArray[i].id,
+                        backup:"批量流转"
+                    }
+                    function success(res){
+                        console.log("流转成功：" + _self.tempArray[i].id + ' - ' +_self.tempArray[i].companyname +' - ' +_self.tempArray[i].product)
+                        if(_self.tempArray.length == i+1){
+                        _self.$bus.emit('flowsuccess',true)
+
+                            _self.getData()
+                        }
+                    }
+
+                    function fail(err){
+                        console.log("流转失败：" + _self.tempArray[i].id+ ' - ' +_self.tempArray[i].companyname + ' - ' +_self.tempArray[i].product)
+                        if(_self.tempArray.length == i+1){
+                            // _self.getData()
+                        _self.$bus.emit('flowsuccess',true)
+
+                        }
+                    }
+                    _self.$Post(url, config, success, fail)
+                }
+                
+            }
+        },
         sort(e){
             this.sortField = e.key
             if(e.order == 'normal'){
@@ -508,14 +526,14 @@ export default {
                 this.$Message.warning('请选择一行！')
             }
         },
-        showflow(){
-            // console.log('111111111')
-            if(this.current_row != ''){
-                this.$bus.emit('myflow',this.current_row)
-            }else{
-                this.$Message.warning('请选择一行进行流转！')
-            }
-        },
+        // showflow(){
+        //     // console.log('111111111')
+        //     if(this.current_row != ''){
+        //         this.$bus.emit('myflow',this.current_row)
+        //     }else{
+        //         this.$Message.warning('请选择一行进行流转！')
+        //     }
+        // },
         //  流程图
         flowChart(a) {
                 let _self = this
