@@ -905,6 +905,15 @@ export const appRouter = [
             },
             {
                 access: 6032,
+                path: 'smsRuleManagement',
+                title: '短信规则管理',
+                name: 'smsRuleManagement_index',
+                component: resolve => {
+                    require(['@/views/systemManagement/smsRuleManagement/smsRuleManagement_index.vue'], resolve);
+                }
+            },
+            {
+                access: 6032,
                 path: 'datacenterManagement',
                 title: '数据字典管理',
                 name: 'datacenterManagement_index',
