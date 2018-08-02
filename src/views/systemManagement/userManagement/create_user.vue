@@ -183,8 +183,11 @@ export default {
                     // { message:"格式错误！",required: true, trigger: 'blur' },
                     { message:"格式错误！", validator:validateEmail,  trigger: 'blur' }
                 ],
+                orgName:[
+                    { message:"格式错误！",required: true, trigger: 'change' },
+                ],
                 roleName:[
-                    { message:"格式错误！"}
+                    { message:"格式错误！",required: true, trigger: 'change' },
                 ]
             }
         }

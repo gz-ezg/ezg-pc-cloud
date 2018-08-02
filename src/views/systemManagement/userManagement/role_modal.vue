@@ -3,7 +3,7 @@
         <Modal
             title="选择用户角色"
             v-model="open_role_modal"
-            width="530"
+            width="534"
         >
                 <Table
                     border

@@ -37,6 +37,7 @@ export default {
                 _self.departTree = res.data.data
                 for(let i = 0; i<_self.departTree.length;i++){
                     _self.departTree[i].title = _self.departTree[i].departname
+                    _self.departTree[i].level = 1
                     if(_self.departTree[i].ID == _self.check_depart_id){
                         _self.departTree[i].checked = true
                         // _self.departTree[i].expand = true
@@ -49,6 +50,7 @@ export default {
                                 // _self.departTree[i].children[j].expand = true
                             }
                             _self.departTree[i].children[j].title = _self.departTree[i].children[j].departname
+                            _self.departTree[i].children[j].level = 2
                             if(_self.departTree[i].children[j].children){
                                 for(let k = 0;k<_self.departTree[i].children[j].children.length;k++){
                                     // console.log(_self.departTree[i].children[j].children[k])
@@ -59,10 +61,15 @@ export default {
                                         // _self.departTree[i].children[j].expand = true
                                     }
                                     _self.departTree[i].children[j].children[k].title = _self.departTree[i].children[j].children[k].departname
+                                    _self.departTree[i].children[j].children[k].level = 3
                                     // console.log(_self.departTree[i].children[j].children[k].children)
                                     if(_self.departTree[i].children[j].children[k].children){
                                         for(let t = 0;t<_self.departTree[i].children[j].children[k].children.length;t++){
-                                            console.log(_self.departTree[i].children[j].children[k].children[t])
+                                            if(_self.departTree[i].children[j].children[k].children[t].ID == _self.check_depart_id){
+                                                _self.departTree[i].children[j].children[k].children[t].checked = true
+                                            }
+                                            _self.departTree[i].children[j].children[k].children[t].level = 4
+                                            // console.log(_self.departTree[i].children[j].children[k].children[t])
                                             _self.departTree[i].children[j].children[k].children[t].title = _self.departTree[i].children[j].children[k].children[t].departname
                                         }
                                     }
@@ -76,7 +83,24 @@ export default {
             this.$Get(url,config, success)
         },
         getCheckedNodes(e){
+            console.log(e)
             let _self = this
+
+            //  处理多选情况，同一层级的多选
+            let temp = []
+            if(e.length == 0){
+                temp = []
+            }else{
+                // console.log(e[0].level)
+                temp.push(e[0])
+                for(let i = 1; i < e.length; i++){
+                    if(e[0].level == e[i].level){
+                        temp.push(e[i])
+                    }
+                }
+                // console.log(temp)
+            }
+
             if(e.length == 0){
                 _self.check_depart_id = ""
                 _self.check_depart_name = ""

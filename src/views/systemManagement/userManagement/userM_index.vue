@@ -244,18 +244,18 @@ import EditModal from './edit_user'
                                         }
                                     }
                                 }, '权限剔除'),
-                                // h('Button', {
-                                //     props: {
-                                //         type: 'primary',
-                                //         size: 'small'
-                                //     },
-                                //     on: {
-                                //         click: () => {
-                                //             // this.permissions(params.row.id)
-                                //             this.updateUser(params.row)
-                                //         }
-                                //     }
-                                // }, '用户编辑'),
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            // this.permissions(params.row.id)
+                                            this.updateUser(params.row)
+                                        }
+                                    }
+                                }, '用户编辑'),
                             ]);
                         }
                     }
