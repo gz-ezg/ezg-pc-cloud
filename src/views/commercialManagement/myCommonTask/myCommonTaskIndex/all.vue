@@ -66,6 +66,7 @@
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="reset_wordorder_process" v-if="isAdmin">重新工单流程</Button>
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="product_error">产品异常</Button> -->
                 <!-- <Button type="primary" icon="ios-color-wand-outline">批量已读</Button>
                 <Button type="primary" icon="ios-color-wand-outline">批量未读</Button> -->
@@ -146,6 +147,7 @@ export default {
     props:['companyarea'],
     data() {
             return {
+                isAdmin:false,
                 managestatus:[],
                 search_model:"",
                 //  触发搜索
@@ -574,6 +576,29 @@ export default {
                 this.$Message.warning('请选择一行进行流转！')
             }
         },
+        reset_wordorder_process(){
+            console.log(this.current_row)
+            let _self = this
+            if(this.current_row != ''){
+                let url = `api/order/resetWorkOrderProcess`
+                let _self = this
+
+                let config = {
+                    params:{
+                        workOrderId: _self.current_row.id
+                    }
+                }
+
+                function success(res){
+                    console.log(res)
+                    _self.$Message.success(res.data.msg)
+                }
+
+                this.$Get(url, config, success)
+            }else{
+                this.$Message.warning('请选择一行进行流转！')
+            }
+        },
         //  流程图
         flowChart(a) {
                 let _self = this
@@ -616,6 +641,11 @@ export default {
         Bus.$on('flowsuccess',(e)=>{
             _self.getData()
         })
+        if(localStorage.getItem('id')==10059){
+            _self.isAdmin = true
+        }else{
+            _self.isAdmin = false
+        }
     }
 
 }

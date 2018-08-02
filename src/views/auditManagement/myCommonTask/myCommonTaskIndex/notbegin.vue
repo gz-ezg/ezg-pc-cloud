@@ -37,6 +37,7 @@
         <Row>
             <ButtonGroup style="float:left">
                 <Button type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button>
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
@@ -87,6 +88,7 @@
                 :loading="Sloading"
                 @on-row-dblclick="showdetail"
                 @on-sort-change="sort"                  
+                @on-selection-change="get_all_selection"
                 
                 ></Table>
             <Page
@@ -180,6 +182,11 @@ export default {
                     //         return h('div','未开始')
                     //     }   
                     // },
+                    {
+                        type: 'selection',
+                        width: 60,
+                        align: 'center'
+                    },
                     {
                         title: '归属公司',
                         key: 'companyname',
@@ -401,10 +408,48 @@ export default {
                             ]);
                         }
                     }
-                ]
+                ],
+                tempArray:[]
             }
         },
     methods:{
+        get_all_selection(e){
+            // console.log(e)
+            this.tempArray = e
+        },
+        flow_all(){
+            let _self = this
+            if(this.tempArray.length == 0){
+                _self.$Message.warning("请选择需要流转的工单！")
+            }else{
+                for(let i = 0; i<this.tempArray.length;i++){
+                    let url = `api/order/next`
+                    let config = {
+                        workOrderId:_self.tempArray[i].id,
+                        backup:"批量流转"
+                    }
+                    function success(res){
+                        console.log("流转成功：" + _self.tempArray[i].id + ' - ' +_self.tempArray[i].companyname +' - ' +_self.tempArray[i].product)
+                        if(_self.tempArray.length == i+1){
+                            // _self.getData()
+                        _self.$bus.emit('flowsuccess',true)
+
+                        }
+                    }
+
+                    function fail(err){
+                        console.log("流转失败：" + _self.tempArray[i].id+ ' - ' +_self.tempArray[i].companyname + ' - ' +_self.tempArray[i].product)
+                        if(_self.tempArray.length == i+1){
+                            // _self.getData()
+                        _self.$bus.emit('flowsuccess',true)
+
+                        }
+                    }
+                    _self.$Post(url, config, success, fail)
+                }
+                
+            }
+        },
         sort(e){
             this.sortField = e.key
             if(e.order == 'normal'){

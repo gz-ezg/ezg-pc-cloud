@@ -188,6 +188,9 @@ export default {
                 ],
                 roleName:[
                     { message:"格式错误！",required: true, trigger: 'change' },
+                ],
+                orgName:[
+                    { message:"格式错误！",required: true, trigger: 'change' },
                 ]
             }
         }
@@ -254,6 +257,8 @@ export default {
         let _self = this
         this.$bus.on("CREATED_USER",(e) => {
             _self.open_create_user = true
+            // _self.formdata.roleIds = ""
+            // _self.formdata.orgIds = ""
         })
         this.$bus.on("CREATE_USER_ROLE_DATA",(e) => {
             _self.formdata.roleName = ""

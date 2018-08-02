@@ -103,7 +103,7 @@
             </Form>
             <div slot="footer">
                 <Button type="primary" @click="editTag" :loading="edit_loading">编辑</Button>
-                <Button type="ghost" @click="cancel" style="margin-left: 8px">重置</Button>
+                <!-- <Button type="ghost" @click="cancel" style="margin-left: 8px">重置</Button> -->
             </div>
         </Modal>
     </div>

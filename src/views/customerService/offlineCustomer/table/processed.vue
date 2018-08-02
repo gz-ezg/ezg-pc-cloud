@@ -364,7 +364,7 @@
 
             getData() {
                 let _self = this
-                let url = '/customer/customerEndList?page=' + _self.page + '&pageSize=' + _self.pageSize + '&status=Y&companyname=' + _self.YformInline.companyname + '&customername=' + _self.YformInline.name + '&customertel=' + _self.YformInline.tel + '&productname=' + _self.YformInline.product + '&marketer=' + _self.YformInline.marketername + '&servicer=' + _self.YformInline.servicename 
+                let url = '/customer/customerEndList?sortField=id&page=' + _self.page + '&pageSize=' + _self.pageSize + '&status=Y&companyname=' + _self.YformInline.companyname + '&customername=' + _self.YformInline.name + '&customertel=' + _self.YformInline.tel + '&productname=' + _self.YformInline.product + '&marketer=' + _self.YformInline.marketername + '&servicer=' + _self.YformInline.servicename 
                 _self.row = {}
                 function doSuccess(res) {
                     let _data = res.data.data

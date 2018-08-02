@@ -26,10 +26,8 @@
                 v-model="orderAdd"
                 title="录入"
                 width="80%"
-                :loading="loading"
                 :mask-closable="false"                
-                @on-ok="beforeAddOrder=true"
-                @on-cancel="cancel('formValidate')">
+            >
             <Form ref="formValidate" :rules="ruleValidate" :model="formValidate" :label-width="100">
                 <Row :gutter="16">
                     <Col span="8">
@@ -130,12 +128,17 @@
                 </Row>
                 <table width="100%" id="orderItemList"></table>
             </Form>
+            <div slot="footer">
+                <Button type="primary" @click="beforeAddOrder=true" >新增</Button>
+                <Button type="ghost" @click="cancel('formValidate')">取消</Button>
+            </div>
         </Modal>
         <Modal
             v-model="beforeAddOrder"
             title="新增订单提示"
             width="500"
-            :mask-closable="false"           
+            :mask-closable="false"
+            @on-cancel="cancel_before_add_order"           
         >
             <center>
                 <h3>优惠是否有审批？</h3>
@@ -194,49 +197,11 @@
                     <FormItem label="缴费渠道" prop="payDir">
                         <Select transfer v-model="formValidateDetail.payDir" disabled size="small" style="width:100%">
                             <Option v-for="(item, index) in payDirType" :key=index :value="item.typecode">{{item.typename}}</Option>                            
-                            <!-- <Option value="gszfb">公司支付宝</Option>
-                            <Option value="gh">工行</Option>
-                            <Option value="zh">招行</Option>
-                            <Option value="wx">微信公众号</Option>
-                            <Option value="gw">官网</Option>
-                            <Option value="other">其他</Option>
-                            <Option value="cash">现金</Option>
-                            <Option value="jhang">建行</Option>
-                            <Option value="nsh">农商行</Option>
-                            <Option value="tb">淘宝</Option>
-                            <Option value="zht">中衡通</Option>
-                            <Option value="jt">锦涛</Option>
-                            <Option value="wjw">魏建伟</Option>
-                            <Option value="zgrzh">转个人账户</Option>
-                            <Option value="dgzfb">东莞支付宝</Option>
-                            <Option value="szgh">深圳工行</Option> -->
                         </Select>
                     </FormItem>
                     </Col>
                 </Row>
-                <!-- <Row :gutter="16">
-                    <Col span="8">
-                    <FormItem label="提成总额" prop="ticheng">
-                        <Input size="small" v-model="formValidateDetail.ticheng" disabled/>
-                    </FormItem>
-                    </Col>
-                    <Col span="8">
-                    <FormItem label="业绩" prop="performanceMoney">
-                        <Input size="small" v-model="formValidateDetail.performanceMoney" disabled/>
-                    </FormItem>
-                    </Col>
-                    <Col span="8">
-                    <FormItem label="附加流水账" prop="customername">
-                        <Input size="small" v-model="formValidateDetail.customername" disabled/>
-                    </FormItem>
-                    </Col>
-                </Row> -->
                 <Row :gutter="16">
-                    <!-- <Col span="8">
-                    <FormItem label="服务开始税期" prop="serviceBeginDate">
-                        <Input size="small" v-model="formValidateDetail.serviceBeginDate" disabled/>
-                    </FormItem>
-                    </Col> -->
                     <Col span="8">
                     <FormItem label="国地税报道" prop="GDSreport">
                         <Select transfer v-model="formValidateDetail.GDSreport" disabled size="small" style="width:100%">
@@ -305,47 +270,11 @@
                     <FormItem label="缴费渠道" prop="payDir">
                         <Select transfer v-model="formValidateEadit.payDir" style="width:100%" size="small">
                             <Option v-for="(item, index) in payDirType" :key=index :value="item.typecode">{{item.typename}}</Option>                            
-                            
-                            <!-- <Option value="gszfb">公司支付宝</Option>
-                            <Option value="gh">工行</Option>
-                            <Option value="zh">招行</Option>
-                            <Option value="wx">微信公众号</Option>
-                            <Option value="gw">官网</Option>
-                            <Option value="other">其他</Option>
-                            <Option value="cash">现金</Option>
-                            <Option value="jhang">建行</Option>
-                            <Option value="nsh">农商行</Option>
-                            <Option value="tb">淘宝</Option>
-                            <Option value="zgrzh">转个人账户</Option>
-                            <Option value="dgzfb">东莞支付宝</Option>
-                            <Option value="szgh">深圳工行</Option> -->
                         </Select>
                     </FormItem>
                     </Col>
                 </Row>
-                <!-- <Row :gutter="16">
-                    <Col span="8">
-                    <FormItem label="提成总额" prop="ticheng">
-                        <Input size="small" v-model="formValidateEadit.ticheng" disabled/>
-                    </FormItem>
-                    </Col>
-                    <Col span="8">
-                    <FormItem label="业绩" prop="performanceMoney">
-                        <Input size="small" v-model="formValidateEadit.performanceMoney" disabled/>
-                    </FormItem>
-                    </Col>
-                    <Col span="8">
-                    <FormItem label="附加流水账" prop="customername">
-                        <Input size="small" v-model="formValidateEadit.customername"/>
-                    </FormItem>
-                    </Col>
-                </Row> -->
                 <Row :gutter="16">
-                    <!-- <Col span="8">
-                    <FormItem label="服务开始税期" prop="serviceBeginDate">
-                        <DatePicker type="month" style="width: 200px"  @on-change="getStartTime4" v-model="formValidateEadit.serviceBeginDate"></DatePicker>
-                    </FormItem>
-                    </Col> -->
                     <Col span="8">
                     <FormItem label="国地税报道" prop="GDSreport">
                         <Select transfer v-model="formValidateEadit.GDSreport" :disabled="iscycle">
@@ -482,15 +411,6 @@
                 title="查看审批备注"
                 width="70%">
             <Table border :columns="checkMemocolumns" :data="checkMemodata" size="small"></Table>
-           <!-- <Page
-                    size="small"
-                    :total="pageTotalN"
-                    show-total
-                    show-sizer
-                    show-elevator
-                    @on-change="pageChangeN"
-                    @on-page-size-change="pageSizeChangeN"
-                    style="margin-top: 10px"></Page>-->
         </Modal>
         <Card style="min-width:800px">
                     <Row style="margin-bottom:10px">
@@ -527,20 +447,6 @@
                                             <FormItem label="缴费渠道：" prop="customername">
                                                 <Select transfer v-model="formValidateSearch.payDir" size="small">
                                                     <Option v-for="(item, index) in payDirType" :key=index :value="item.typecode">{{item.typename}}</Option>                            
-                                                    
-                                                    <!-- <Option value="gszfb">公司支付宝</Option>
-                                                    <Option value="gh">工行</Option>
-                                                    <Option value="zh">招行</Option>
-                                                    <Option value="wx">微信公众号</Option>
-                                                    <Option value="gw">官网</Option>
-                                                    <Option value="other">其他</Option>
-                                                    <Option value="cash">现金</Option>
-                                                    <Option value="jhang">建行</Option>
-                                                    <Option value="nsh">农商行</Option>
-                                                    <Option value="tb">淘宝</Option>
-                                                    <Option value="zgrzh">转个人账户</Option>
-                                                    <Option value="dgzfb">东莞支付宝</Option>
-                                                    <Option value="szgh">深圳工行</Option> -->
                                                 </Select>
                                             </FormItem>
                                             </Col>
@@ -584,18 +490,12 @@
                     <Button v-permission="['orderL.resubmit']" type="primary" icon="ios-crop" @click="reApplyProcess()">重新提交</Button>
                     <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="xiugaiOpen()">修改</Button>
                     <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="getTableData">刷新</Button>
+                    <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="refresh" v-if="isAdmin">重新生成工单</Button>
                     <!--  ↓ ↓ 该功能暂定，代码勿删  -->
                     <!--<Button type="primary" icon="ios-color-filter-outline" @click="qihuaOpen()">企划(修改)</Button>-->
                     <!--<Button v-permission="['orderL.invalid']" type="primary" icon="ios-color-filter-outline" @click="deleteOrder = true">订单作废</Button>-->
                     <Button v-permission="['orderL.export']" type="primary" icon="ios-color-filter-outline" @click="downloadExcel">导出Excel</Button>
                 </ButtonGroup>
-                <!-- <Poptip
-                        style="float: right"
-                        placement="bottom-end"
-                        width="600">
-                    <Button type="text" icon="funnel">筛选</Button>
-                    
-                </Poptip> -->
             </Row>
             <Row style="margin-top: 10px;">
                 <Table
@@ -608,7 +508,6 @@
 
                         :columns="columns2"
                         :data="data3"></Table>
-                                                <!-- @on-sort-change="sort" -->
                 <Page
                         size="small"
                         :total="pageTotal"
@@ -730,6 +629,7 @@
                             </Col>
                         </Row>
                         <Button type="error" icon="bag" size="large" style="margin-top: 20px" @click="addProduct">立即购买</Button>
+                        <Button type="error" icon="bag" size="large" style="margin-top: 20px" @click="open_flow_img" v-if="isAdmin">查看流程图</Button>
                     </div>
                 </Card>
                 </Col>
@@ -763,7 +663,6 @@
     import {DateFormat} from '../../libs/utils.js'
 
     Vue.use(iviewArea);
-
     $.extend($.fn.datagrid.methods, {
         editCell: function(jq,param){
             return jq.each(function(){
@@ -790,6 +689,7 @@
     export default {
         data() {
             return {
+                isAdmin:false,
                 old_price:0,
                 cluesources:"",
                 cluesources_map:new Map(),
@@ -809,7 +709,7 @@
                 StartTime4: '',
                 StartTime5: '',
                 StartTime6: '',
-                loading: true,
+                loading: false,
                 loading2: true,
                 loading3: true,
                 loading4: true,
@@ -2210,7 +2110,8 @@
                 }
                 let _self = this
                 setTimeout(() => {
-                    this.loading = false;
+                    this.loading = true;
+                    this.add_order_button_loading = true
                     this.$refs[name].validate((valid) => {
                         console.log(valid)
                         if (valid) {
@@ -2218,7 +2119,7 @@
                                 for (let i = 0; i < _self.orderItemList.length; i++) {
                                     if (((_self.orderItemList[i].product.indexOf('代理记账') != -1) || (_self.orderItemList[i].product.indexOf('会计到家') != -1)) && _self.orderItemList[i].servicestartdate == '') {
                                         _self.$nextTick(() => {
-                                            _self.loading = true;
+                                            _self.add_order_button_loading = false;
                                         });
                                         _self.$Message.error('您有周期性产品未选择服务开始税期')
                                         _self.beforeAddOrder = false
@@ -2229,10 +2130,10 @@
 
                             if (_self.iscycle == false && _self.formValidate.GDSreport == '') {
                                 _self.$nextTick(() => {
-                                    _self.loading = true;
+                                    _self.add_order_button_loading = false;
                                 });
                                 _self.$Message.error('请选择是否国地税报道');
-                                        _self.beforeAddOrder = false
+                                _self.beforeAddOrder = false
                                 
                             } 
                             // else if (_self.iscycle == false && _self.formValidate.serviceBeginDate == '') {
@@ -2249,7 +2150,7 @@
                             // }
                              else if (_self.orderItemList.length == 0) {
                                 _self.$nextTick(() => {
-                                    _self.loading = true;
+                                    _self.add_order_button_loading = false;
                                 });
                                 _self.$Message.error('请选择产品');
                                         _self.beforeAddOrder = false
@@ -2261,7 +2162,7 @@
                                     function doSuccess(response) {
                                         if (response.data.data.selectItems == null || response.data.data.selectItems == '') {
                                             _self.$nextTick(() => {
-                                                _self.loading = true;
+                                                _self.add_order_button_loading = false;
                                             });
                                             _self.$Message.error('请勾选服务项');
                                         _self.beforeAddOrder = false                                            
@@ -2311,7 +2212,7 @@
                             }
                         } else {
                             this.$nextTick(() => {
-                                this.loading = true;
+                                this.add_order_button_loading = false;
                             });
                         }
                     })
@@ -3860,6 +3761,28 @@
                     _self.flowChartImg = '/api/dataCenter/activiti/getResourceInputStreamObj?bussinessKey=' + _self.customerId
                 }
             },
+            refresh(){
+                let _self = this
+                if (_self.customerId == '') {
+                    _self.$Message.warning('请选择订单项');
+                } else {
+                    let url = `api/order/orderApprovalFinish`
+                    let config = {
+                        params:{
+                            orderId: _self.customerId
+                        }
+                    }
+
+                    function success(res){
+                    }
+
+                    // function fail(err){
+                    //     console.log(err)
+                    // }
+
+                    _self.$Get(url, config, success)
+                }
+            },
 
             Dateok() {
                 let _self = this
@@ -3910,6 +3833,17 @@
             },
             orderItemList_change(){
                 console.log(this.orderItemList)
+            },
+            open_flow_img(){
+                console.log(this.SKU)
+                let _self = this
+                let url = `api/dataCenter/activiti/getInputStreamBySkuId`
+
+                window.open("/api/dataCenter/activiti/getInputStreamBySkuId?skuId=" + _self.SKU)
+            },
+            cancel_before_add_order(){
+                this.beforeAddOrder = false
+                this.loading = false
             }
         },
         mounted() {
@@ -3920,6 +3854,11 @@
         },
         created(){
             let _self = this   
+            if(localStorage.getItem('id')==10059){
+                _self.isAdmin = true
+            }else{
+                _self.isAdmin = false
+            }
         },
         watch:{
         //     orderItemList:{

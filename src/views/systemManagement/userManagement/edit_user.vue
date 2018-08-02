@@ -51,8 +51,8 @@
                 </Row>
                 <Row>
                     <Col span="12">
-                        <FormItem label="组织机构：" prop="orgName">
-                            <Input  size="small"  style="margin-right:5px" v-model="formdata.orgName" @on-focus="openOrganize">
+                        <FormItem label="组织机构：" prop="departName">
+                            <Input  size="small"  style="margin-right:5px" v-model="formdata.departName" @on-focus="openOrganize">
                             </Input>
                         </FormItem>
                     </Col>
@@ -161,7 +161,7 @@ export default {
                 mobilePhone: "",
                 email: "",
                 roleName: "",
-                orgName: ""
+                departName: ""
             },
             formdataRule:{
                 username:[
@@ -184,6 +184,12 @@ export default {
                 email:[
                     // { message:"格式错误！",required: true, trigger: 'blur' },
                     { message:"格式错误！", validator:validateEmail,  trigger: 'blur' }
+                ],
+                roleName:[
+                    { message:"格式错误！",required: true, trigger: 'blur' },
+                ],
+                orgName:[
+                    { message:"格式错误！",required: true, trigger: 'blur' },
                 ]
             }
         }
@@ -257,6 +263,7 @@ export default {
             
             this.$refs["formdata"].resetFields();
             function success(res){
+                // console.log(res)
                 _self.formdata.username = res.data.data.userName
                 _self.formdata.realname = res.data.data.realName
                 _self.formdata.id = res.data.data.userId
@@ -264,7 +271,8 @@ export default {
                 _self.formdata.email = res.data.data.email
                 _self.formdata.mobilePhone = res.data.data.mobilePhone
                 _self.formdata.roleIds = res.data.data.roleId
-                _self.formdata.orgIds = res.data.data.orgId 
+                _self.formdata.orgIds = res.data.data.orgId
+                _self.formdata.departName = res.data.data.departName
             }
 
             function fail(err){
@@ -277,7 +285,7 @@ export default {
     created(){
         let _self = this
         this.$bus.on("UPDATE_USER",(e) => {
-            console.log(e)
+            // console.log(e)
             _self.get_role_detail(e)
             _self.open_edit_user = true
         })
@@ -294,7 +302,7 @@ export default {
             _self.formdata.roleIds = tempID.join(",")
         })
         this.$bus.on("CREATE_USER_ORG_DATA",(e) => {
-            _self.formdata.orgName = e.departname
+            _self.formdata.departName = e.departname
             _self.formdata.orgIds = e.id
         })
     }

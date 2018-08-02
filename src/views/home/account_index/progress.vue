@@ -2,7 +2,7 @@
     <div>
         <Row>
             <center>
-                服务税期：<DatePicker type="month" placeholder="选择日期" style="width: 150px" v-model="current_year" @on-change="date_change"></DatePicker>
+                服务税期：<DatePicker type="month" placeholder="选择日期" style="width: 150px" value="current_year" @on-change="date_change"></DatePicker>
             </center>
         </Row>
         <Row style="margin-top:20px">
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+
 export default {
     props:{
         month:{
@@ -105,6 +106,7 @@ export default {
     },
     methods:{
         date_change(e){
+            console.log(e)
             let temp = e.split("-").join("")
             this.current_year = temp
             this.getTableData()

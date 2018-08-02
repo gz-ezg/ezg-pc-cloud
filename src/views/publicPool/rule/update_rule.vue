@@ -177,7 +177,7 @@ export default {
             },
             formdataRule:{
                 customerLevel:{ required: true, message:"客户等级必选！", trigger: 'change' },
-                customerArea:{ required: true, message:"客户地区必选！",  trigger: 'change' },
+                // customerArea:{ required: true, message:"客户地区必选！",  trigger: 'change' },
                 behavior:{ required: true, message:"行为必选！", trigger: 'change' },
                 followRanks:{required: true, message:"跟进评分必选！", trigger: 'change'},
                 punishment:{ required: true, message:"惩罚必选！",  trigger: 'change' },
@@ -197,7 +197,7 @@ export default {
             let _self = this
             this.$refs['formdata'].validate((valid) => {
                 if (valid) {
-                    if(_self.customerStatus !="" && _self.check_depart_id != ""){
+                    if(_self.check_depart_id != ""){
                         _self.create_rule()
                     }else{
                         this.$Message.error('请补全信息！');
@@ -364,7 +364,7 @@ export default {
 
 
 <style scoped>
-.warning::before{
+/* .warning::before{
     content: "*";
     display: inline-block;
     margin-right: 4px;
@@ -372,6 +372,6 @@ export default {
     font-family: SimSun;
     font-size: 12px;
     color: #ed3f14;
-}
+} */
 </style>
 

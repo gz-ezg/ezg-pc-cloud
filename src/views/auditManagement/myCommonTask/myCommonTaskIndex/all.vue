@@ -36,9 +36,12 @@
         </Row>
         <Row>
             <ButtonGroup style="float:left">
+                <Button type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button>
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="reCreate" v-if="isAdmin">重新生成流程</Button>
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="product_error">产品异常</Button> -->
                 <!-- <Button type="primary" icon="ios-color-wand-outline">批量已读</Button>
                 <Button type="primary" icon="ios-color-wand-outline">批量未读</Button> -->
@@ -84,7 +87,9 @@
                 :data="data"
                 @on-current-change="save_current_row"
                 @on-row-dblclick="showdetail"
-                @on-sort-change="sort"                  
+                @on-sort-change="sort"   
+                @on-selection-change="get_all_selection"
+
                 ></Table>
             <Page
                 placement="top"
@@ -141,6 +146,7 @@ export default {
     },
     data() {
             return {
+                isAdmin:false,
                 search_model:"",
                 sortField:"updatedate",
                 order:"desc",
@@ -171,6 +177,11 @@ export default {
                 workOrderStatus:[],
                 workOrderStatus_map:new Map(),
                 header: [
+                    {
+                        type: 'selection',
+                        width: 60,
+                        align: 'center'
+                    },
                     {
                         title: '工单状态',
                         key: 'workOrderStatus',
@@ -417,10 +428,48 @@ export default {
                             ]);
                         }
                     }
-                ]
+                ],
+                tempArray:[]
             }
         },
     methods:{
+        get_all_selection(e){
+            // console.log(e)
+            this.tempArray = e
+        },
+        flow_all(){
+            let _self = this
+            if(this.tempArray.length == 0){
+                _self.$Message.warning("请选择需要流转的工单！")
+            }else{
+                for(let i = 0; i<this.tempArray.length;i++){
+                    let url = `api/order/next`
+                    let config = {
+                        workOrderId:_self.tempArray[i].id,
+                        backup:"批量流转"
+                    }
+                    function success(res){
+                        console.log("流转成功：" + _self.tempArray[i].id + ' - ' +_self.tempArray[i].companyname +' - ' +_self.tempArray[i].product)
+                        if(_self.tempArray.length == i+1){
+                            // _self.getData()
+                        _self.$bus.emit('flowsuccess',true)
+
+                        }
+                    }
+
+                    function fail(err){
+                        console.log("流转失败：" + _self.tempArray[i].id+ ' - ' +_self.tempArray[i].companyname + ' - ' +_self.tempArray[i].product)
+                        if(_self.tempArray.length == i+1){
+                            // _self.getData()
+                        _self.$bus.emit('flowsuccess',true)
+
+                        }
+                    }
+                    _self.$Post(url, config, success, fail)
+                }
+                
+            }
+        },
         sort(e){
             this.sortField = e.key
             if(e.order == 'normal'){
@@ -589,7 +638,25 @@ export default {
                 }
 
                 this.$GetDataCenter(params, finish)
+            },
+        reCreate(){
+            let _self = this
+            if(this.current_row != ''){
+                let url = `api/order/resetWorkOrderProcess`
+                let config = {
+                    params:{
+                        workOrderId: _self.current_row.id
+                    }
+                }
+                function success(res){
+                    _self.$Message.success(res.data.msg)
+                }
+                _self.$Get(url,config,success)
+            }else{
+                this.$Message.warning('请选择一行！')
             }
+        },
+            
     },
     created(){
         var _self = this
@@ -598,6 +665,11 @@ export default {
         Bus.$on('flowsuccess',(e)=>{
             _self.getData()
         })
+        if(localStorage.getItem('id')==10059){
+            _self.isAdmin = true
+        }else{
+            _self.isAdmin = false
+        }
     }
 
 }

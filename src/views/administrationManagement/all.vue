@@ -35,7 +35,7 @@
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="reCreate" v-permission="['administration.rebuild']">重新生成流程</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="reCreate" v-if="isAdmin">重新生成流程</Button>
             </ButtonGroup>
         </Row>
         <Row style="margin-top: 10px;">
@@ -87,6 +87,7 @@
 export default {
     data() {
             return {
+                isAdmin:false,
                 search_model:"",
                 sortField:"updatedate",
                 order:"desc",
@@ -479,7 +480,7 @@ export default {
         reCreate(){
             let _self = this
             if(this.current_row != ''){
-                let url = `api/workorder/reCreateWorkOrderProcess`
+                let url = `api/order/resetWorkOrderProcess`
                 let config = {
                     params:{
                         workOrderId: _self.current_row.id
@@ -548,6 +549,12 @@ export default {
         this.$bus.on('flowsuccess',(e)=>{
             _self.getData()
         })
+
+        if(localStorage.getItem('id')==10059){
+            _self.isAdmin = true
+        }else{
+            _self.isAdmin = false
+        }
     }
 
 }

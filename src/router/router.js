@@ -236,9 +236,9 @@ export const appRouter = [
         name: 'customerManagement',
         title: '客户管理',
         component: Main,
-        meta:{
-            keepAlive: false
-        },
+        // meta:{
+        //     keepAlive: false
+        // },
         children: [
             {
                 access: 6002,
@@ -297,9 +297,9 @@ export const appRouter = [
         name: 'customerService',
         access: 6060,
         title: '客服管理',
-        meta:{
-            keepAlive: false
-        },
+        // meta:{
+        //     keepAlive: false
+        // },
         component: Main,
         children: [
             {
@@ -324,8 +324,8 @@ export const appRouter = [
             },
             {
                 path: 'returnWorkOrder',
-                access: 6061,
-                meta: 6061,
+                access: 6100,
+                meta: 6100,
                 title: '完结工单回访',
                 name: 'returnWorkOrder_index',
                 component: resolve => {
@@ -368,9 +368,9 @@ export const appRouter = [
         icon: 'social-windows',
         name: 'channelManagement',
         title: '渠道管理',
-        meta:{
-            keepAlive: false
-        },
+        // meta:{
+        //     keepAlive: false
+        // },
         component: Main,
         children: [
             {
@@ -408,9 +408,9 @@ export const appRouter = [
         icon: 'social-windows',
         name: 'cluesLibrary',
         title: '线索库',
-        meta:{
-            keepAlive: false
-        },
+        // meta:{
+        //     keepAlive: false
+        // },
         component: Main,
         children: [
             {
@@ -485,9 +485,9 @@ export const appRouter = [
         icon: 'social-windows',
         name: 'orderManagement',
         title: '订单管理',
-        meta:{
-            keepAlive: false
-        },
+        // meta:{
+        //     keepAlive: false
+        // },
         component: Main,
         children: [
             // {
@@ -838,12 +838,12 @@ export const appRouter = [
                     require(['@/views/publicPool/rule/index.vue'], resolve);
                 }
             },
-            {
-                access: 6090,
-                path: 'person_target_index', title: '销售目标管理', name: 'person_target_index', component: resolve => {
-                    require(['@/views/publicPool/personTarget/index.vue'], resolve);
-                }
-            }
+            // {
+            //     access: 6101,
+            //     path: 'person_target_index', title: '销售目标管理', name: 'person_target_index', component: resolve => {
+            //         require(['@/views/publicPool/personTarget/index.vue'], resolve);
+            //     }
+            // }
         ]
     },
 /*    {
@@ -862,9 +862,9 @@ export const appRouter = [
         icon: 'social-windows',
         name: 'systemManagement',
         title: '系统管理',
-        meta:{
-            keepAlive: false
-        },
+        // meta:{
+        //     keepAlive: false
+        // },
         component: Main,
         children: [
             {
@@ -903,15 +903,15 @@ export const appRouter = [
                     require(['@/views/sql_admin/main.vue'], resolve);
                 }
             },
-            {
-                access: 6032,
-                path: 'smsRuleManagement',
-                title: '短信规则管理',
-                name: 'smsRuleManagement_index',
-                component: resolve => {
-                    require(['@/views/systemManagement/smsRuleManagement/smsRuleManagement_index.vue'], resolve);
-                }
-            },
+            // {
+            //     access: 6032,
+            //     path: 'smsRuleManagement',
+            //     title: '短信规则管理',
+            //     name: 'smsRuleManagement_index',
+            //     component: resolve => {
+            //         require(['@/views/systemManagement/smsRuleManagement/smsRuleManagement_index.vue'], resolve);
+            //     }
+            // },
             {
                 access: 6032,
                 path: 'datacenterManagement',
@@ -948,7 +948,78 @@ export const appRouter = [
                 component: resolve => {
                     require(['@/views/systemManagement/attributeManagement/attributeManagement_index.vue'], resolve);
                 }
+            },
+            {
+                access: 6102,
+                path: 'stystemLog',
+                title: '系统日志',
+                name: 'stystemLog',
+                component: resolve => {
+                    require(['@/views/systemManagement/stystemLog/stystemLog.vue'], resolve);
+                }
             }
+        ]
+    },
+    {
+        access: 6103,
+        path: '/allindex',
+        icon: 'social-windows',
+        name: 'allindex',
+        title: '数据中心',
+        component: Main,
+        children: [
+            {   
+                access: 6104,
+                path: 'cannelIndex', 
+                title: '渠道首页', 
+                name: 'datacannelIndex_index', 
+                component: resolve => {
+                    require(['@/views/home/cannel_index/cannelIndex.vue'], resolve);
+                }
+            },
+            {
+                access: 6105,
+                path: 'commercialIndex', 
+                title: '商事首页', 
+                name: 'datacommercialIndex_index', 
+                component: resolve => {
+                    require(['@/views/home/commercial_index/commercialIndex.vue'], resolve);
+                }
+            },
+            {
+                access: 6106,
+                path: 'accountIndex', 
+                title: '会计首页', 
+                name: 'dataaccountIndex_index', 
+                component: resolve => {
+                    require(['@/views/home/account_index/accountIndex.vue'], resolve);
+                }
+            },
+            {
+                access: 6107,
+                path: 'marketIndex', 
+                title: '市场首页', 
+                name: 'datamarketIndex_index', 
+                component: resolve => {
+                    require(['@/views/home/market_index/marketIndex.vue'], resolve);
+                }
+            },
+            {
+                path: 'auditIndex', 
+                title: '审计首页', 
+                name: 'dataauditIndex_index', 
+                component: resolve => {
+                    require(['@/views/home/audit_index/auditIndex.vue'], resolve);
+                }
+            },
+            {
+                path: 'planIndex', 
+                title: '企划首页', 
+                name: 'dataplanIndex_index', 
+                component: resolve => {
+                    require(['@/views/home/plan_index/planIndex.vue'], resolve);
+                }
+            },
         ]
     },
     {
@@ -957,9 +1028,9 @@ export const appRouter = [
         icon: 'social-windows',
         name: 'materialHouse',
         title: '资源库',
-        meta:{
-            keepAlive: false
-        },
+        // meta:{
+        //     keepAlive: false
+        // },
         component: Main,
         children: [
             {

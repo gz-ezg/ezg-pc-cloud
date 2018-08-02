@@ -354,7 +354,12 @@ export default {
           _temp.realname = temp[i].realname
           _temp.year_realnummber = temp[i].year_realnummber
           //  数据处理成所需要的格式
+          console.log(temp[i])
+          console.log()
           if(temp[i].detailJson != null){
+            if(temp[i].detailJson[temp[i].detailJson.length-1]!="]"){
+              temp[i].detailJson = temp[i].detailJson + ']'
+            }
             // let json_temp = `[{"month":"8","targetAmount":"125522.00","id":"12"},{"month":"6","targetAmount":"1800.00","id":"13"}]`
             let json_temp = temp[i].detailJson
             let temp2 = JSON.parse(json_temp)

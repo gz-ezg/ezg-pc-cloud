@@ -1,4 +1,4 @@
-//  192.168.0.134
+//  192.168.0.222
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -16,12 +16,19 @@ fs.open('./build/env.js', 'w', function(err, fd) {
 module.exports = merge(webpackBaseConfig, {
     devServer: {
         disableHostCheck: true,
-        port: 9997,
+        port: 9996,
         proxy: {
             '/api': {
-                // target: 'http://192.168.0.220:9000/',
-                target: 'http://192.168.0.236:9000/',
-                pathRewrite: {'^/api' : ''},
+                // target:'http://zgcfo.vipgz1.idcfengye.com/api',
+                // target: 'http://cloud.zgcfo.com/api',
+                // target: 'http://192.168.0.222:9000',
+                target: 'http://192.168.0.221:9000', 
+                // target: 'http://192.168.0.200:9000',
+                // target: 'http://192.168.0.67:9000',
+                // target: 'http://192.168.0.224:9000',          
+                // target: 'http://192.168.0.109:9000',  
+                // target: 'http://192.168.0.236:9000',                                                
+                pathRewrite: {'^/api' : ''},  
                 changeOrigin: true
             }
         }

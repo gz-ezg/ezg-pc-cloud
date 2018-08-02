@@ -252,6 +252,10 @@ import EditModal from './edit_user'
                                     on: {
                                         click: () => {
                                             // this.permissions(params.row.id)
+<<<<<<< HEAD
+=======
+                                            console.log(params.row)
+>>>>>>> 2ffb20f5692c391e14669c1494def2f2296c7f29
                                             this.updateUser(params.row)
                                         }
                                     }
@@ -298,6 +302,7 @@ import EditModal from './edit_user'
                         roleid: _self.SearchValidate.roleid,
                         rolecode: _self.SearchValidate.rolecode,
                         rolename: _self.SearchValidate.rolename
+                        
                     }
                 }
                 function doSuccess(re) {
@@ -313,7 +318,8 @@ import EditModal from './edit_user'
                             userkey: _data.rows[i].userkey,
                             status: _data.rows[i].status,
                             mobilephone: _data.rows[i].mobilephone,
-                            email: _data.rows[i].email
+                            email: _data.rows[i].email,
+                            departname:_data.rows[i].departname
                         })
                     _self.user_table_loading = false                 
                     }

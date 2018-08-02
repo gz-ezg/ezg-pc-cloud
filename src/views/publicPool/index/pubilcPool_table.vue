@@ -132,7 +132,7 @@
             <Row>
                 <ButtonGroup>
                     <!-- <Button type="primary" icon="plus" @click="isAddChange" v-permission="['marketingM.add']">录入</Button> -->
-                    <Button type="primary" icon="edit" @click="isEditChange">编辑</Button>
+                    <Button type="primary" icon="edit" @click="isEditChange">查看</Button>
                     <!-- <Button type="primary" icon="ios-crop" @click="change_market" v-permission="['marketingM.change']">变更</Button>
                     <Button type="primary" icon="trash-b" @click="deleteCustomer" v-permission="['marketingM.delete']">删除</Button> -->
                     <Button type="primary" icon="grid" @click="getQRcode">查看二维码</Button>
