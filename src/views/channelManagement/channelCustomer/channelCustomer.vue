@@ -72,6 +72,7 @@
     import channelServiceDynamic from './channelManagement_examine_serviceDynamic.vue'
 
     export default {
+        name:'channelCustomer_index',
         components: {
             channelTable,
             channelFrom,

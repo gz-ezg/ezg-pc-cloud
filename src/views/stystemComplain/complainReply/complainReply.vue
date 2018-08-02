@@ -101,6 +101,7 @@
 
 <script>
 export default {
+    name:'complainReply_index',
     data(){
         return{
             button_loading:false,

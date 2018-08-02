@@ -252,10 +252,7 @@ import EditModal from './edit_user'
                                     on: {
                                         click: () => {
                                             // this.permissions(params.row.id)
-<<<<<<< HEAD
-=======
                                             console.log(params.row)
->>>>>>> 2ffb20f5692c391e14669c1494def2f2296c7f29
                                             this.updateUser(params.row)
                                         }
                                     }

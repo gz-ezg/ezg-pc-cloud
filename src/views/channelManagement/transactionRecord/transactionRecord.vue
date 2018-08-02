@@ -149,6 +149,7 @@
     import { DateFormat } from './utils'
 
     export default {
+        name:'transactionRecord_index',
         data() {
             return {
                 search_model:'',

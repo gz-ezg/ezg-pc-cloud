@@ -54,6 +54,7 @@
     import detail from '../detail.vue'
 
     export default {
+        name:'accountantOrder_index',
         components:{
             detail,
             ServiceItem,

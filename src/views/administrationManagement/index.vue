@@ -32,6 +32,7 @@ import detail from './detail'
 import CompanyDetail from '../woa-components/companyDetail/CompanyDetail'
 
 export default {
+    name:'administratiotaskmanagement',
     components:{
         unbegin,
         servicing,

@@ -397,6 +397,7 @@
     import orderList from './orderList.vue'
 
     export default {
+        name:'orderApprove_index',
         components:{
             orderList
         },

@@ -198,6 +198,8 @@ import { DateFormat } from '../../../libs/utils'
 import customerEdit from '../../woa-components/customerDetail/channelCustomer'
 
 export default {
+    name:'publicPool_index',
+
     components: {
         customerEdit
     },

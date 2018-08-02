@@ -94,6 +94,7 @@
 import { DateFormat } from '../../../libs/utils.js';
 
 export default {
+    name:'customerFollowUp_index',
     data(){
         return{
             search_model:"",

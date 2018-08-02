@@ -27,6 +27,7 @@
     import companyDetail from '../../../woa-components/companyDetail/CompanyDetail'
 
     export default {
+        name:'returnWorkOrder_index',
         components:{
             Untreated,
             Processed,

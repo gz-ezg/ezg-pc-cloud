@@ -61,6 +61,7 @@ import Bus from '../../../components/bus.js'
 import {arrayToMap} from '../../../libs/utils.js'
 
 export default {
+    name:'auditaccount_index',
     data(){
         return{
             auditdate:"",

@@ -120,6 +120,7 @@
 <script>
 
     export default {
+        name:'serviceTemplate_index',
         data() {
             return{
                 search_model:"",

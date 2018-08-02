@@ -33,6 +33,7 @@ import Finished from './myCommonTaskIndex/finished'
 import Notbegin from './myCommonTaskIndex/notbegin'
 
     export default {
+        name:'accounttaskmanagement_index',
         components:{
             Serving,
             All,

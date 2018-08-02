@@ -687,6 +687,7 @@
     let editIndex = undefined;
 
     export default {
+        name:'orderList_index',
         data() {
             return {
                 isAdmin:false,

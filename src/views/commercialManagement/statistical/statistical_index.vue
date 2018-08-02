@@ -157,6 +157,7 @@ import  TotalClueValue from './TotalClueValue'
 import  WorkSummary from './WorkSummary'
 
 export default {
+    name:'statistical',
     components:{
         Analysis,
         Completion, 

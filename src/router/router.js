@@ -490,15 +490,6 @@ export const appRouter = [
         // },
         component: Main,
         children: [
-            // {
-            //     access: 6019,
-            //     path: 'account_index',
-            //     title: '财务订单列表',
-            //     name: 'account_index',
-            //     component: resolve => {
-            //         require(['@/views/order/accout_user/index.vue'], resolve);
-            //     }
-            // },
             {
                 access: 6018,
                 path: 'orderList',
@@ -579,7 +570,7 @@ export const appRouter = [
                 access: 6038,
                 path: 'mycommontaskmanagement',
                 title: '工单管理',
-                name: 'mycommontaskmanagement',
+                name: 'commercialTaskManagement',
                 component: resolve => {
                     require(['@/views/commercialManagement/myCommonTask/myCommonTask_table.vue'], resolve);
                 }
@@ -588,7 +579,7 @@ export const appRouter = [
                 access: 6039,
                 path: 'rulemanagement',
                 title: '规则管理',
-                name: 'rulemanagement',
+                name: 'commercialRulemanagement',
                 component: resolve => {
                     require(['@/views/commercialManagement/rule.vue'], resolve);
                 }
@@ -838,12 +829,12 @@ export const appRouter = [
                     require(['@/views/publicPool/rule/index.vue'], resolve);
                 }
             },
-            // {
-            //     access: 6101,
-            //     path: 'person_target_index', title: '销售目标管理', name: 'person_target_index', component: resolve => {
-            //         require(['@/views/publicPool/personTarget/index.vue'], resolve);
-            //     }
-            // }
+            {
+                access: 6101,
+                path: 'person_target_index', title: '销售目标管理', name: 'person_target_index', component: resolve => {
+                    require(['@/views/publicPool/personTarget/index.vue'], resolve);
+                }
+            }
         ]
     },
 /*    {
@@ -856,6 +847,16 @@ export const appRouter = [
 
         ]
     },*/
+    /**
+     * 
+     *  以下页面未做缓存
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
     {
         access: 6028,
         path: '/systemManagement',

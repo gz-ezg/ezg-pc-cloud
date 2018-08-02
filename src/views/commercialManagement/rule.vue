@@ -20,3 +20,10 @@
         </Card>
     </div>
 </template>
+
+<script>
+export default {
+    name:'commercialRulemanagement'
+}
+</script>
+

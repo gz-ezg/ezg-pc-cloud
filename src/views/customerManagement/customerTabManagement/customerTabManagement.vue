@@ -11,7 +11,7 @@
         components: {
             indexTable
         },
-        name:"marketingManagement_index",
+        name:"customerTabManagement_index",
         data() {
             return {}
         },

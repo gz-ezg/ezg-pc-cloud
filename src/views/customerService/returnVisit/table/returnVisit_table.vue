@@ -27,6 +27,7 @@
     import companyDetail from '../../../woa-components/companyDetail/CompanyDetail'
 
     export default {
+        name:'returnVisit_index',
         components:{
             Untreated,
             Processed,

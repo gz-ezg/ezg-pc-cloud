@@ -227,6 +227,7 @@
     import { DateFormat } from '../../../libs/utils.js'
 
     export default {
+        name:'fieldWarning_index',
         components: {
             companyDetail
         },

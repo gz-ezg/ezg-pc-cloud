@@ -44,6 +44,7 @@ import createRule from './create_rule'
 import updateRule from './update_rule'
 
 export default {
+    name:'rule_index',
     components:{
         createRule,
         updateRule

@@ -130,6 +130,7 @@
 <script>
 
     export default {
+        name:'cluesLabels_index',
         data() {
             return {
                 isEidt: false,

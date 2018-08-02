@@ -200,6 +200,7 @@
 <script>
 
     export default {
+        name:'channelType_index',
         data() {
             return {
                 searchLabel:'',

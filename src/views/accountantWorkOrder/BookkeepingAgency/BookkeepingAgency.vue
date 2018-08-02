@@ -51,6 +51,7 @@
 
     
     export default {
+        name:'BookkeepingAgency_index',
         components:{
             Detailx,
             Stop,

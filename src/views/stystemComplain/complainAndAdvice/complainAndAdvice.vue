@@ -94,6 +94,7 @@
 
 <script>
 export default {
+    name:'complainAndAdvice_index',
     data(){
         return{
             button_loading:false,

@@ -45,6 +45,7 @@ import accountField from '../../accountantWorkOrder/accountantField/accountantFi
 import commonField from './commonFiedManagement'
 
 export default {
+    name:'commonfieldmanagement_index',
     components:{
         accountField,
         commonField

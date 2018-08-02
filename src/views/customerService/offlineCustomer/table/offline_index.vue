@@ -23,6 +23,7 @@
     import Add from '../add'
 
     export default {
+        name:'offlineCustomer_index',
         components:{
             Untreated,
             Processed,

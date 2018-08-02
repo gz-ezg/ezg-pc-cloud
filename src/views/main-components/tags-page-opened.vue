@@ -26,6 +26,7 @@
                     :name="item.name" 
                     @on-close="closePage"
                     @click.native="linkTo(item)"
+                    @dblclick.native="dblclick(item)"
                     :closable="item.name==='home_index'?false:true"
                     :color="item.children?(item.children[0].name===currentPageName?'blue':'default'):(item.name===currentPageName?'blue':'default')"
                 >{{ itemTitle(item) }}</Tag>
@@ -153,6 +154,11 @@ export default {
                 // 标签在可视区域右侧
                 this.tagBodyLeft = -(tag.offsetLeft - (this.$refs.scrollCon.offsetWidth - 100 - tag.offsetWidth) + 20);
             }
+        },
+        //  双击刷新
+        dblclick(tag){
+            console.log(tag)
+            window.location.reload(); 
         }
     },
     mounted () {

@@ -17,6 +17,7 @@
                 </div>
             </shrinkable-menu>
         </div>
+        <!-- <div>{{keepPage}}</div> -->
         <div class="main-header-con" :style="{paddingLeft: shrink?'60px':'200px'}">
             <div class="main-header">
                 <div class="navicon-con">
@@ -63,7 +64,7 @@
         </div>
         <div class="single-page-con" :style="{left: shrink?'60px':'200px'}">
             <div class="single-page" style="min-width:700px">
-                <keep-alive>
+                <keep-alive :include="keepPage">
                     <!-- <Spin size="large" fix v-if="spin_loading"></Spin> -->
                     <router-view></router-view>
                 </keep-alive>
@@ -199,6 +200,16 @@
             },
             mesCount () {
                 return this.$store.state.app.messageCount;
+            },
+            keepPage () {
+                //  作为keep-alive 的include数组
+                let temp = []
+                for(let i = 0;i<this.$store.state.app.pageOpenedList.length;i++){
+                    temp.push(this.$store.state.app.pageOpenedList[i].name)
+                }
+                // console.log(this.$store.state.app.pageOpenedList)
+                console.log(temp)
+                return temp
             }
         },
         methods: {

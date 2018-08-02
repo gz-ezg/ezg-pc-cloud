@@ -438,6 +438,7 @@
 import {DateFormat} from '../../../libs/utils'
 
     export default {
+        name:'cluesLibrary_index',
         data() {
             const validateTel = (rule, value, callback) => {
                 var re = /^1\d{10}$/

@@ -223,7 +223,7 @@ export default {
     },
   data() {
     return {
-        qrcode2Open:false,
+      qrcode2Open:false,
       search_model:"",
       customerName: '',
       customer_loading: false,

@@ -54,21 +54,15 @@ export default {
                                         _self.departTree[i].children[j].children[k].checked = true
                                     }
                                     _self.departTree[i].children[j].children[k].title = _self.departTree[i].children[j].children[k].departname
-<<<<<<< HEAD
                                     _self.departTree[i].children[j].children[k].level = 3
                                     // console.log(_self.departTree[i].children[j].children[k].children)
-=======
->>>>>>> 2ffb20f5692c391e14669c1494def2f2296c7f29
                                     if(_self.departTree[i].children[j].children[k].children){
                                         for(let t = 0;t<_self.departTree[i].children[j].children[k].children.length;t++){
                                             if(_self.departTree[i].children[j].children[k].children[t].ID == _self.check_depart_id){
                                                 _self.departTree[i].children[j].children[k].children[t].checked = true
                                             }
-<<<<<<< HEAD
                                             _self.departTree[i].children[j].children[k].children[t].level = 4
                                             // console.log(_self.departTree[i].children[j].children[k].children[t])
-=======
->>>>>>> 2ffb20f5692c391e14669c1494def2f2296c7f29
                                             _self.departTree[i].children[j].children[k].children[t].title = _self.departTree[i].children[j].children[k].children[t].departname
                                         }
                                     }

@@ -116,6 +116,7 @@
 <script>
 
     export default {
+        name:'spareManagement_index',
         data() {
             return{
                 value1: 1,

@@ -22,6 +22,7 @@ import EditRule from './rulecomponent/editrule'
 import OpenRule from './rulecomponent/openrule'
 
 export default {
+    name:'auditaccount_rule',
     components: {
         CompanySuspect,
         AccountSuspect,

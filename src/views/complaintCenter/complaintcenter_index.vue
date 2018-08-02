@@ -23,6 +23,7 @@ import addComplaint from './index/add_complaint'
 import {arrayToMap} from '../../libs/utils.js'
 
 export default {
+    name:'complaintcenter_index',
     components:{
         unFinsih,
         finsih,
