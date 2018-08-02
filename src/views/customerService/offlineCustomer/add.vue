@@ -80,6 +80,14 @@
                 </Row>
                 <Row :gutter="16">
                     <Col span="1" style="visibility:hidden">1</Col>
+                    <Col span="10">
+                        <FormItem prop="taxperiod" label="下线税期">
+                            <Input size="small" v-model="task_message.taxperiod" type="text" placeholder="格式：2018-06" :disabled="!isshow" />
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="16">
+                    <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="20">
                         <FormItem prop="reasonformarketer" label="市场通知下线原因">
                             <Input size="small" v-model="task_message.reasonformarketer" type="textarea" :autosize="{minRows: 2,maxRows: 5}" :disabled="!isshow"/>
@@ -124,7 +132,7 @@
             <Page
                     size="small"
                     :total="pageTotal3"
-                    :current.sync="currentPage"
+                    :current.sync="page3"
                     show-total
                     show-elevator
                     @on-change="pageChange3"
@@ -155,7 +163,7 @@
             <Page
                     size="small"
                     :total="pageTotal33"
-                    :current.sync="currentPage"
+                    :current.sync="page33"
                     show-total
                     show-elevator
                     @on-change="pageChange33"
@@ -185,6 +193,7 @@
                     :total="pageTotala"
                     show-total
                     show-elevator
+                    :current.sync="pagea"
                     @on-change="pageChangea"
                     style="margin-top: 10px"></Page>
                     <div slot="footer"></div>
@@ -204,8 +213,9 @@
                 searchFollow:"",
                 add:false,
                 task_message: {
-                    marketername: localStorage.getItem('realname'),
-                    marketer: localStorage.getItem('realnameId'),
+                    taxperiod:"",
+                    marketername: "",
+                    marketer: "",
                     company:"",
                     product:"",
                     customer:"",
@@ -216,8 +226,10 @@
                     endreason:"",
                     reasonformarketer:"",
                     reasonforcallback:"",
+                    tel:""
                 },
                 task_message_rule:{
+                    taxperiod:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
                     company:[{ required: true, message: '必选项！', trigger: 'change', type:'string' },],
                     product:[{ required: true, message: '必选项！', trigger: 'change', type:'string' },],
                     enddate:[{ required: true, message: '必选项！', trigger: 'change', type:'date' },],
@@ -304,7 +316,21 @@
             Bus.$on('add', (e)=>{
                 if(e.type == 'add') {
                     _self.title = '录入'
-                    _self.isshow = true                                        
+                    _self.isshow = true  
+                    _self.task_message.company = ""
+                    _self.task_message.product = ""
+                    _self.task_message.customer = ""
+                    _self.task_message.id = ""
+                    _self.task_message.servicebegindate = ""
+                    _self.task_message.enddate = ""
+                    _self.task_message.callbackdate = ""
+                    _self.task_message.endreason = ""
+                    _self.task_message.reasonformarketer = ""
+                    _self.task_message.reasonforcallback = ""
+                    _self.task_message.marketername = ""
+                    _self.task_message.servicername = ""
+                    _self.task_message.tel = ""
+                    _self.task_message.taxperiod = ""                                      
                 } else if(e.type == 'edit') {
                     _self.isshow = true                    
                     _self.title = '编辑'
@@ -318,6 +344,11 @@
                     _self.task_message.endreason = e.endreason
                     _self.task_message.reasonformarketer = e.reasonformarketer
                     _self.task_message.reasonforcallback = e.reasonforcallback
+                    _self.task_message.marketername = e.marketer
+                    _self.task_message.servicername = e.servicer
+                    _self.task_message.tel = e.TEL
+                    _self.task_message.taxperiod = e.taxperiod                                     
+
                 } else if(e.type == 'check') {
                     _self.isshow = false                    
                     _self.title = '查看'
@@ -334,6 +365,11 @@
                     _self.task_message.endreason = e.endreason
                     _self.task_message.reasonformarketer = e.reasonformarketer
                     _self.task_message.reasonforcallback = e.reasonforcallback
+                    _self.task_message.marketername = e.marketer
+                    _self.task_message.servicername = e.servicer
+                    _self.task_message.taxperiod = e.taxperiod                                     
+                    _self.task_message.tel = e.TEL
+
                 }
 
                 _self.add = true
@@ -385,7 +421,14 @@
                 let _self = this
                 _self.selectCompany = true
                 let url = ''
-                url = '/customer/company/list?page='+_self.page3+'&pageSize=10&companyname=' + _self.searchCompany                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+                url = 'api/customer/company/list'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+                let config = {
+                    params:{
+                        page: _self.page3,
+                        pageSize: 10,
+                        companyname: _self.searchCompany
+                    }
+                }
 
                 function doSuccess(response) {
                     let _res = response.data.data
@@ -410,11 +453,13 @@
                             cpid: _res.rows[i].id,
                             balance: _res.rows[i].balance,
                             gdsreport: _gds,
+                            followby:_res.rows[i].followby,
+                            followbyid: _res.rows[i].followbyid
                         })
                     }
                 }
 
-                this.GetData(url, doSuccess)
+                this.$Get(url, config, doSuccess)
             },
             close(){
                 this.add = false
@@ -425,7 +470,15 @@
             },
             getProduct() {
                 let _self = this
-                let url = '/product/list?page='+_self.page33+'&pageSize=10&product=' + _self.searchProduct
+                let url = 'api/product/list'
+                let config = {
+                    params:{
+                        page: _self.page33,
+                        pageSize: 10,
+                        product: _self.searchProduct
+                    }
+                }
+
                 _self.selectProduct = true
 
                 function doSuccess(response) {
@@ -437,18 +490,20 @@
                         _self.data33.push(_res.rows[i])
                     }
                 }
-
-                this.GetData(url, doSuccess)
+                this.$Get(url, config, doSuccess)
+                // this.GetData(url, doSuccess)
             },
 
             rowSelect(a) {
                 let _self = this
-
+                console.log(a)
                 _self.selectCompany = false
                 _self.task_message.company = a.CompanyName
                 _self.task_message.customer = a.NAME
                 _self.task_message.tel = a.TEL
                 _self.task_message.companyid = a.cpid
+                _self.task_message.marketername = a.followby
+                _self.task_message.marketer = a.followbyid
             },
 
             rowSelect33(a) {
@@ -461,8 +516,15 @@
 
             getUser() {
                 let _self = this
-                let url = '/user/list?page='+_self.pagea+'&pageSize=10&realname=' +_self.searchFollow
+                let url = 'api/user/list'
 
+                let config = {
+                    params:{
+                        page: _self.pagea,
+                        pageSize: 10,
+                        realname: _self.searchFollow
+                    }
+                }
                 _self.followbysTag = true
 
                 function doSuccess(re) {
@@ -475,7 +537,9 @@
                     }
                 }
 
-                this.GetData(url, doSuccess)
+                this.$Get(url, config, doSuccess)
+
+                // this.GetData(url, doSuccess)
             },
 
             rowSelect3(a) {
@@ -510,12 +574,19 @@
 
                     
                 }else{
-                    _self.postDataEdit()
+                    this.$refs['task_message'].validate((valid) => {
+                        // console.log(valid)
+                        if (valid) {
+                            _self.postDataEdit()
+                        } else {
+                            this.$Message.error('请填写必选项！');
+                        }
+                    })
                 }
             },
             postData() {
                 let _self = this
-                let url = '/customer/createCustomerEnd'
+                let url = 'api/customer/createCustomerEnd'
                 let _data = {
                     companyid: _self.task_message.companyid,
                     productid: _self.task_message.productid,
@@ -527,23 +598,50 @@
                     reasonformarketer: _self.task_message.reasonformarketer,
                     reasonforcallback: _self.task_message.reasonforcallback,
                     endreason: _self.task_message.endreason,
+                    taxperiod: _self.task_message.taxperiod
                 }
 
                 
 
                 function doSuccess(res) {
-                    _self.add = false
-                    _self.$Message.success(res.data.msg)
+                    
+                    // _self.$Message.success(res.data.msg)
                     Bus.$emit('updateofflinecustomer',true)
+                    if(res.data.data.cycleid){
+                        let url = `/api/order/cycle/service/record/update`
+
+                        let config = {
+                            id: res.data.data.cycleid,
+                            serviceStatus: "stop"
+                        }
+
+                        function success(res){
+                            _self.add = false
+                        }
+
+                        function fail(err){
+
+                        }
+
+                        _self.$Post(url, config, success, fail)
+                    }else{
+                        _self.add = false
+                    }
+
                     
                 }
 
-                this.PostData(url, _data, doSuccess)
+                function fail(err){
+                    console.log(err)
+                }
+
+                // this.PostData(url, _data, doSuccess)
+                this.$Post(url, _data, doSuccess, fail)
             },
             
             postDataEdit() {
                 let _self = this
-                let url = '/customer/updateCustomerEnd'
+                let url = 'api/customer/updateCustomerEnd'
                 let _data = {
                     id: _self.task_message.id,
                     companyid: _self.task_message.companyid,
@@ -556,15 +654,19 @@
                     reasonformarketer: _self.task_message.reasonformarketer,
                     reasonforcallback: _self.task_message.reasonforcallback,
                     endreason: _self.task_message.endreason,
+                    taxperiod: _self.task_message.taxperiod
                 }
 
                 function doSuccess(res) {
                     _self.add = false
-                    _self.$Message.success(res.data.msg)
+                    // _self.$Message.success(res.data.msg)
                     Bus.$emit('updateofflinecustomer',true)
                 }
-
-                this.PostData(url, _data, doSuccess)
+                function fail(err){
+                    console.log(err)
+                }
+                // this.PostData(url, _data, doSuccess)
+                this.$Post(url, _data, doSuccess, fail)
             }
         }
     }

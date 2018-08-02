@@ -69,7 +69,7 @@
                         <Col span="24">
                             <FormItem prop="depart" label="责任部门：">
                                 <CheckboxGroup v-model="add.depart">
-                                    <span v-for="item in departAlias" :key=item.id>
+                                    <span v-for="item in departAlias" :key="item.id">
                                         <Checkbox :label="item.typecode" :disabled="isreturn">
                                             <span>{{item.typename}}</span>
                                         </Checkbox>
@@ -171,7 +171,13 @@ export default {
                 let params = "departAlias"
 
                 function finish(res){
-                    _self.departAlias = res.data.data.departAlias 
+                    _self.departAlias = []
+                    // _self.departAlias = res.data.data.departAlias
+                    for(let i = 0;i<res.data.data.departAlias.length; i++){
+                        _self.departAlias.push(res.data.data.departAlias[i])
+                    }
+                    console.log(typeof(_self.departAlias))
+                    console.log(_self.departAlias)
                 }
 
                 this.$GetDataCenter(params, finish)
@@ -180,12 +186,16 @@ export default {
             add_complaint_detail(){
                 let _self = this
                 let url = `api/customer/updateCustomerCallback`
+                let depart = ""
+                if(_self.add.depart){
+                    depart = _self.add.depart.join(',')
+                }
                 let config = {
                     callbackdate:DateFormat(_self.add.callbackdate),
                     id:_self.add.id,
                     solutionbymarketer:_self.add.solutionbymarketer,
                     solutionbyservicer:_self.add.solutionbyservicer,
-                    depart:_self.add.depart.join(','),
+                    depart: depart,
                     serviceranks:_self.add.serviceranks,
                     calltype :_self.add.calltype,
                     callbackstatus:_self.add.callbackstatus,
@@ -217,6 +227,8 @@ export default {
             // console.log(_self.add.depart)
             if(_self.add.depart){
                 _self.add.depart = _self.add.depart.split(',')
+            }else{
+                _self.add.depart = []
             }
             _self.companyname = e.companyname
             _self.showTab = "1"   

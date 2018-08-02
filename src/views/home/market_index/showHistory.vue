@@ -7,7 +7,7 @@
         >
             <Row :gutter="16" type="flex" justify="space-around">
                 <Col span="10">
-                    <DatePicker type="daterange" v-model="dateRange" placement="bottom" placeholder="选择日期" style="width: 200px" size="small" @on-change="getHistoryData()"></DatePicker>
+                    <DatePicker type="daterange" v-model="dateRange" placement="bottom" placeholder="选择日期" style="width: 200px" size="small" @on-change="date_change"></DatePicker>
                 </Col>
                 <Col span="6">
                     <Select v-model="type" size="small" @on-change="getHistoryData()">
@@ -96,11 +96,18 @@ export default {
         }
     },
     methods:{
+        date_change(e){
+            console.log(e)
+            this.dateRange[0] = e[0]
+            this.dateRange[1] = e[1]
+            this.getHistoryData()
+        },
         pageChange(e){
             this.page = e
             this.getHistoryData()
         },
         getHistoryData(){
+            // console.log(e)
             let _self = this
             _self.tableLoading = true
             let url = `api/crm/sale/index/person/plan/list`

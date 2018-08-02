@@ -142,6 +142,7 @@
                     <Button type="primary" icon="ios-crop" @click="change_market" v-permission="['marketingM.change']">变更</Button>
                     <Button type="primary" icon="trash-b" @click="deleteCustomer" v-permission="['marketingM.delete']">删除</Button>
                     <Button type="primary" icon="grid" @click="getQRcode">查看二维码</Button>
+                    <Button type="primary" icon="grid" @click="getQRcode2">查看二维码2</Button>
                     <Button type="primary" icon="ios-color-filter-outline" @click="downloadExcel">导出Excel</Button>
                     <Button type="primary" icon="ios-color-filter-outline" v-if="false">设置提成</Button>
                     <Button type="primary" icon="ios-color-filter-outline" @click="open_change_log">客户变更日志</Button>
@@ -181,6 +182,15 @@
                 <div id="qrcode"></div>
             </center>
         </Modal>
+        <Modal
+            v-model="qrcode2Open"
+            title="查看二维码"
+        >
+            <center>
+                <div id="qrcode2"></div>
+            </center>
+            <div slot="footer"></div>
+        </Modal>
         <Modal v-model="modal2" width="360">
             <p slot="header" style="color:#f60;text-align:center">
                 <Icon type="information-circled"></Icon>
@@ -213,6 +223,7 @@ export default {
     },
   data() {
     return {
+        qrcode2Open:false,
       search_model:"",
       customerName: '',
       customer_loading: false,
@@ -387,6 +398,11 @@ export default {
           width: 160,
           sortable: true,
         },
+        {
+            title:"市场最后跟进时间",
+            key: "lastfollowdate",
+            width: 200
+        }
         // {
         //   title: "商事",
         //   key: "createby",
@@ -466,11 +482,12 @@ export default {
         this.getTableData()
       },
         downloadExcel(){
+                
                 let field = [
                     {field:'NAME',title:'姓名'},
                     {field:'companynames',title:'公司'},
                     // {field:'TEL',title:'电话'},
-                    {field:'customerType',title:'客户状态',format:'customerTypes'},
+                    {field:'customerType',title:'客户状态'},
                     {field:'customersource',title:'客户来源',format:'cluesources'},
                     {field:'importlevel',title:'客户等级',format:'importlevel'},  
                     {field:'AREA',title:'地区',format:'area'},
@@ -478,16 +495,23 @@ export default {
                     {field:'followbyname',title:'跟进人'},
                     {field:'CREATEDATE',title:'创建时间'},
                     {field:'updatedate',title:'更新时间'},
-                    {field:'isbound',title:'微信绑定',format:'sf_yn'}
+                    {field:'isbound',title:'微信绑定',format:'sf_yn'},
+                    {field:'lastfollowdate',title:'市场最后跟进时间'}
                     ]
                 let _self = this
+                var temp_status = ''
+                if(_self.formValidate.customerType	==''||_self.formValidate.customerType	==null){
+                    temp_status = ''
+                }else{
+                    temp_status = _self.formValidate.customerType.join('-')
+                }
                 let url = `api/customer/list`
                 let config = {
                         page: '1',
                         pageSize: '1000000',
                         name: _self.formValidate.name,
                         tel: _self.formValidate.tel,
-                        // customerType	:temp_status,
+                        customerType:temp_status,
                         channelTypeName: _self.formValidate.channelTypeName,
                         followbyname: _self.formValidate.followbyname,
                         isbound: _self.formValidate.isbound,
@@ -558,7 +582,7 @@ export default {
           sortField: _self.sortName,
           name: _self.formValidate.name,
           tel: _self.formValidate.tel,
-          customerType	:temp_status,
+          customerType:temp_status,
           channelTypeName: _self.formValidate.channelTypeName,
           followbyname: _self.formValidate.followbyname,
           isbound: _self.formValidate.isbound,
@@ -594,6 +618,7 @@ export default {
         _self.data = [];
         for (var i = 0; i < response.length; i++) {
           var a = {};
+          a.lastfollowdate = response[i].lastfollowdate,
           a.name = response[i].NAME;
           a.tel = response[i].TEL;
           // 第一个是数据字典，第二个是数据字符串
@@ -768,6 +793,40 @@ export default {
           colorLight: "#ffffff",
           correctLevel: QRCode.CorrectLevel.H
         });
+      } else {
+        this.$Message.warning("抱歉，您还没有选择客户");
+      }
+    },
+    getQRcode2() {
+      var _self = this;
+
+      if (_self.tel != "") {
+        _self.qrcode2Open = true;
+
+        document.getElementById("qrcode2").innerHTML = "";
+
+        let url = `api/customer/bind/image/create`
+
+        let config = {
+            params:{
+                customerId: _self.customerid
+            }
+        }
+
+        function success(res){
+            console.log(res.data.data)
+            let qr = new QRCode("qrcode2", {
+                text: res.data.data,
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        this.$Get(url, config, success)
+        
       } else {
         this.$Message.warning("抱歉，您还没有选择客户");
       }

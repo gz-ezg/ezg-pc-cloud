@@ -216,6 +216,8 @@ export default {
             _self.isOpenEdit = true
             if(_self.add.depart){
                 _self.add.depart = _self.add.depart.split(',')
+            }else{
+                _self.add.depart = []
             }
             _self.companyname = e.companyname
             _self.showTab = "1"

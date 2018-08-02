@@ -39,6 +39,7 @@
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="reCreate" v-if="isAdmin">重新生成流程</Button>
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="product_error">产品异常</Button> -->
                 <!-- <Button type="primary" icon="ios-color-wand-outline">批量已读</Button>
                 <Button type="primary" icon="ios-color-wand-outline">批量未读</Button> -->
@@ -141,6 +142,7 @@ export default {
     },
     data() {
             return {
+                isAdmin:false,
                 sortField:'updatedate',
                 order:'desc',
                 search_model:"",
@@ -594,7 +596,24 @@ export default {
                 }
 
                 this.$GetDataCenter(params, finish)
+            },
+        reCreate(){
+            let _self = this
+            if(this.current_row != ''){
+                let url = `api/order/resetWorkOrderProcess`
+                let config = {
+                    params:{
+                        workOrderId: _self.current_row.id
+                    }
+                }
+                function success(res){
+                    _self.$Message.success(res.data.msg)
+                }
+                _self.$Get(url,config,success)
+            }else{
+                this.$Message.warning('请选择一行！')
             }
+        },
     },
     created(){
         var _self = this
@@ -603,6 +622,11 @@ export default {
         Bus.$on('flowsuccess',(e)=>{
             _self.getData()
         })
+        if(localStorage.getItem('id')==10059){
+            _self.isAdmin = true
+        }else{
+            _self.isAdmin = false
+        }
     }
 
 }

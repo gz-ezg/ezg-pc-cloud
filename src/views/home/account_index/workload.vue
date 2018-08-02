@@ -2,7 +2,7 @@
     <div>
         <Row>
             <center>
-                日期：<DatePicker type="month" placeholder="选择日期" style="width: 150px" v-model="selectDate" @on-change="date_change"></DatePicker>
+                日期：<DatePicker type="month" placeholder="选择日期" style="width: 150px" value="selectDate" @on-change="date_change"></DatePicker>
             </center>
         </Row>
         <Row style="margin-top:10px">

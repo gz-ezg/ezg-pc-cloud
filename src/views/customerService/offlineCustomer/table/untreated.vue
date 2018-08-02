@@ -88,87 +88,14 @@
                     style="margin-top: 10px"></Page>
         </Row>
 
-        <!-- <Modal
-                v-model="modal"
-                width="100%"
-                :styles="{height: '100%', top: '0px'}"
-                title="客户详情"
-                @on-cancel="cancel"                
-                >
-            <Row>
-                <Col span="6">
-                <channel-from v-if="isExamine" :customerid='customerid'></channel-from>
-                </Col>
-                <Col span="18">
-                <Card>
-                    <Collapse accordion>
-                        <Panel name="Company">
-                            企业信息
-                            <P slot="content">
-                                <channel-company
-                                        v-if="isExamine"
-                                        :customerid='customerid'></channel-company>
-                            </P>
-                        </Panel>
-                        <Panel name="CustomerContent">
-                            客户跟进记录
-                            <P slot="content">
-                                <channel-fllow-up v-if="isExamine"
-                                                  :customerid='customerid'></channel-fllow-up>
-                            </P>
-                        </Panel>
-                        <Panel name="Order">
-                            订单详情
-                            <P slot="content">
-                                <channel-order-list v-if="isExamine"
-                                                     :customerid='customerid'></channel-order-list>
-                            </P>
-                        </Panel>
-                        <Panel name="CustomerRelation">
-                            客户关系人
-                            <P slot="content">
-                                <channel-relation-person v-if="isExamine"
-                                                         :customerid='customerid'></channel-relation-person>
-                            </P>
-                        </Panel>
-                        <Panel name="CustomerWorkOrder">
-                            服务动态
-                            <P slot="content">
-                                <channel-service-dynamic v-if="isExamine"
-                                                         :customerid='customerid'></channel-service-dynamic>
-                            </P>
-                        </Panel>
-                    </Collapse>
-                </Card>
-                </Col>
-            </Row>
-        </Modal> -->
-        <!-- <customer-detail></customer-detail>
-        <company-detail></company-detail> -->
     </Card>
 </template>
 
 <script>
     import Bus from '../../../../components/bus'
-    // import customerDetail from '../../../woa-components/customerDetail/channelCustomer'
-    // import companyDetail from '../../../woa-components/companyDetail/CompanyDetail'
-    // import channelFrom from '../../../channelManagement/channelCustomer/channelManagement_examine_from.vue'
-    // import channelCompany from '../../../channelManagement/channelCustomer/channelManagement_examine_company.vue'
-    // import channelOrderList from '../../../channelManagement/channelCustomer/channelManagement_examine_orderList.vue'
-    // import channelFllowUp from '../../../channelManagement/channelCustomer/channelManagement_examine_followUp.vue'
-    // import channelRelationPerson from '../../../channelManagement/channelCustomer/channelManagement_examine_relationPerson.vue'
-    // import channelServiceDynamic from '../../../channelManagement/channelCustomer/channelManagement_examine_serviceDynamic.vue'
 
     export default {
         components: {
-            // customerDetail,
-            // companyDetail
-            // channelFrom,
-            // channelCompany,
-            // channelOrderList,
-            // channelFllowUp,
-            // channelRelationPerson,
-            // channelServiceDynamic,
         },
         data() {
             return {
@@ -366,7 +293,7 @@
 
             getData() {
                 let _self = this
-                let url = '/customer/customerEndList?page=' + _self.page + '&pageSize=' + _self.pageSize + '&status=N&companyname=' + _self.NformInline.companyname + '&customername=' + _self.NformInline.name + '&customertel=' + _self.NformInline.tel + '&productname=' + _self.NformInline.product + '&marketer=' + _self.NformInline.marketername + '&servicer=' + _self.NformInline.servicename 
+                let url = '/customer/customerEndList?sortField=id&page=' + _self.page + '&pageSize=' + _self.pageSize + '&status=N&companyname=' + _self.NformInline.companyname + '&customername=' + _self.NformInline.name + '&customertel=' + _self.NformInline.tel + '&productname=' + _self.NformInline.product + '&marketer=' + _self.NformInline.marketername + '&servicer=' + _self.NformInline.servicename 
                 _self.row = {}
                 function doSuccess(res) {
                     let _data = res.data.data

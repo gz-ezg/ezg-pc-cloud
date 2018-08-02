@@ -300,7 +300,12 @@ export default {
             function success(res){
                 _self.customerTypes = _self.$changeCars(res.data.data.customerTypes)
                 _self.customerTypes_Array = _self.$Data2Casr(res.data.data.customerTypes)
-                // console.log(_self.customerTypes_Array)
+                // _self.customerTypes_Array.push("{}")
+                let temp = {
+                    label:"空"
+                }
+                _self.customerTypes.push(temp)
+                console.log(_self.customerTypes)
             }
             this.$GetDataCenter("customerTypes",success)
         },
@@ -327,6 +332,11 @@ export default {
                 console.log(res.data.data)
                 _self.customerrating = res.data.data.customerrating
                 _self.area = res.data.data.area
+                let temp_area = {
+                    typename:"空"
+                }
+                _self.area.push(temp_area)
+                // console.log(_self.area)
                 // _self.cluesources = res.data.data.cluesources
                 _self.behavior = res.data.data.behavior
                 _self.fpunishment = res.data.data.fpunishment
@@ -347,6 +357,10 @@ export default {
             function success(res){
                 console.log(res.data.data.rows)
                 _self.cluesources = res.data.data.rows
+                let temp = {
+                    channel_type_name:"空"
+                }
+                _self.cluesources.push(temp)
             }
             
             let config = {

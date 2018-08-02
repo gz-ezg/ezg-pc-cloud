@@ -124,7 +124,6 @@
                     <Button size="small" type="ghost" style="margin-left:20px" @click="close">关闭</Button>
                 </div>
         </Modal>
-        <!-- 添加用户 -->
         <Modal
             title="添加用户"
             width="600"
@@ -235,7 +234,6 @@ export default {
       button_loading: false,
       //  页面展示方式相关
       showwidth: 24,
-      //   isOpenDetail: false,
       //  筛选相关
       search_model: "",
       searchModel: {
@@ -314,7 +312,8 @@ export default {
       addModel: {
         id: "",
         realname: "",
-        departname: ""
+        departname: "",
+        departids: ""
       },
       addModelRule: {
         realname: [
@@ -327,7 +326,6 @@ export default {
       // 选中用户表格
       current_child_row: [],
       // 选择用户
-      // selectionUserName: [],
       current_user_row: [],
       userTotal: new Number(),
       userPage: 1,
@@ -376,7 +374,6 @@ export default {
   methods: {
     search() {
       this.page = 1;
-      // this.pageSize = 10;
       this.getData();
     },
     reset() {
@@ -400,7 +397,7 @@ export default {
       this.pageSize = e;
       this.getData();
     },
-   
+
     getData() {
       let _self = this;
       let url = "api/system/queryMsgrule/list";
@@ -413,11 +410,11 @@ export default {
           msgruleCode: _self.searchModel.msgrulecode
         }
       };
-      this.$http.get(url, config).then(function(res) {
+      _self.$http.get(url, config).then(function(res) {
         _self.$backToLogin(res);
         if (res.data.msgCode == "40000") {
-          _self.fatherData = res.data.data.rows;
           _self.pageTotal = res.data.data.total;
+          _self.fatherData = res.data.data.rows;
         } else {
           _self.$Message.error(res.data.msg);
         }
@@ -427,25 +424,47 @@ export default {
     selectFatherRow(e) {
       this.current_father_row = e;
     },
-    selectChildRow(e){
+    selectChildRow(e) {
       this.current_child_row = e;
-      console.log(this.current_child_row);
     },
     dataAdd() {
       this.open_father_data = true;
       this.father_detail_title = "录入";
       this.isADD = true;
       this.$refs["dataModel"].resetFields();
+      this.childData = [];
+      this.childTotal = 0;
     },
     dataEdit() {
-      if (this.current_father_row == "" || this.current_father_row == null) {
-        this.$Message.warning("请选择一行进行编辑！");
+      _self = this;
+      if (_self.current_father_row == "" || _self.current_father_row == null) {
+        _self.$Message.warning("请选择一行进行编辑！");
       } else {
-        this.open_father_data = true;
-        this.dataModel = this.current_father_row;
-        this.father_detail_title = "编辑";
-        this.isADD = true;
+        _self.open_father_data = true;
+        _self.dataModel = _self.current_father_row;
+        _self.father_detail_title = "编辑";
+        _self.isADD = true;
+        _self.getChildData();
       }
+    },
+    getChildData() {
+      _self = this;
+      let url = "api/system/shwoMsgRuleLinkedList";
+      config = {
+        msgruleid: this.current_father_row.id,
+        page: 1,
+        pageSize: 10
+        // pageSize:1
+      };
+      this.$http.post(url, config).then(function(res) {
+        _self.$backToLogin(res);
+        if (res.data.msgCode == "40000") {
+          _self.childData = res.data.data.rows;
+          _self.childTotal = res.data.data.total;
+        } else {
+          _self.$Message.error(res.data.msg);
+        }
+      });
     },
     dataCheck() {
       if (this.current_father_row == "" || this.current_father_row == null) {
@@ -455,31 +474,63 @@ export default {
         this.dataModel = this.current_father_row;
         this.father_detail_title = "查看";
         this.isADD = false;
+        let _self = this;
+        let url = "api/system/shwoMsgRuleLinkedList";
+        config = {
+          msgruleid: _self.current_father_row.id,
+          page: 1,
+          pageSize: 10
+        };
+        this.$http.post(url, config).then(function(res) {
+          _self.$backToLogin(res);
+          if (res.data.msgCode == "40000") {
+            _self.childData = res.data.data.rows;
+            console.log(_self.childData);
+            _self.childTotal = res.data.data.total;
+          } else {
+            _self.$Message.error(res.data.msg);
+          }
+        });
       }
     },
     // 确定
-     save() {
+    save() {
       let _self = this;
-      // console.log(this.dataModel)
       this.$refs["dataModel"].validate(valid => {
         if (valid) {
           _self.button_loading = true;
           let url = "";
           let config = "";
-          if (_self.isADD) {
+          let tempData = [];
+          for (let index = 0; index < _self.childData.length; index++) {
+            const element = _self.childData[index];
+            element.link_id = "";
+            element.link_memo = "";
+            element.deleteflag = "0";
+            tempData.push(element);
+          }
+          let temp = JSON.stringify(tempData);
+          console.log(tempData);
+          if (_self.father_detail_title == "录入") {
             //  录入
-            url = `api/system/saveTSTypeGroup`;
+            url = `api/system/addMsgruleAndLinked`;
             config = {
-              typegroupcode: _self.dataModel.typegroupcode,
-              typegroupname: _self.dataModel.typegroupname
+              msgrulename: _self.dataModel.msgrulename,
+              msgruledetail: _self.dataModel.msgruledetail,
+              msgrulecode: _self.dataModel.msgrulecode,
+              msgmemo: "",
+              list: temp
             };
-          } else {
+          } else if (_self.father_detail_title == "编辑") {
             //  编辑
-            url = `api/system/updateTSTypeGroup`;
+            url = `api/system/updateMsgrule`;
             config = {
-              id: _self.dataModel.ID,
-              typegroupcode: _self.dataModel.typegroupcode,
-              typegroupname: _self.dataModel.typegroupname
+              id: _self.current_father_row.id,
+              msgrulename: _self.dataModel.msgrulename,
+              msgruledetail: _self.dataModel.msgruledetail,
+              msgrulecode: _self.dataModel.msgrulecode,
+              memo: "",
+              list: temp
             };
           }
           _self.$http
@@ -506,54 +557,6 @@ export default {
         }
       });
     },
-    // save() {
-    //   let _self = this;
-    //   // console.log(this.dataModel)
-    //   this.$refs["dataModel"].validate(valid => {
-    //     if (valid) {
-    //       _self.button_loading = true;
-    //       let url = "";
-    //       let config = "";
-    //       if (_self.isADD) {
-    //         //  录入
-    //         url = `api/system/saveTSTypeGroup`;
-    //         config = {
-    //           typegroupcode: _self.dataModel.typegroupcode,
-    //           typegroupname: _self.dataModel.typegroupname
-    //         };
-    //       } else {
-    //         //  编辑
-    //         url = `api/system/updateTSTypeGroup`;
-    //         config = {
-    //           id: _self.dataModel.ID,
-    //           typegroupcode: _self.dataModel.typegroupcode,
-    //           typegroupname: _self.dataModel.typegroupname
-    //         };
-    //       }
-    //       _self.$http
-    //         .post(url, config)
-    //         .then(function(res) {
-    //           _self.$backToLogin(res);
-    //           if (res.data.msgCode == "40000") {
-    //             _self.$Message.success(res.data.msg);
-    //             _self.button_loading = false;
-    //             _self.open_father_data = false;
-    //             _self.current_father_row = "";
-    //             _self.getData();
-    //           } else {
-    //             _self.$Message.error(res.data.msg);
-    //             _self.button_loading = false;
-    //           }
-    //         })
-    //         .catch(function(res) {
-    //           _self.$Message.error("网络错误！");
-    //           _self.button_loading = false;
-    //         });
-    //     } else {
-    //       _self.$Message.warning("请输入信息！");
-    //     }
-    //   });
-    // },
     // 关闭
     close() {
       this.open_father_data = false;
@@ -567,23 +570,26 @@ export default {
       this.$refs["addModel"].resetFields();
     },
     // 删除短信联系人
-    deleteUser(){
-      console.log("删除");
-
-      
-
+    deleteUser() {
+      _childArray = this.childData;
+      this.childData = [];
+      for (let index = 0; index < _childArray.length; index++) {
+        if (this.current_child_row.id !== _childArray[index].id) {
+          this.childData.push(_childArray[index]);
+        }
+      }
     },
     // 添加用户确定按钮
     saveUserData() {
-      // console.log("添加用户确定按钮");
       let _self = this;
-      _self.open_add_user = false;
-      console.log(_self.childData);
-      
-      // console.log(_self.addModel);
-      
-      _self.childData.push(_self.addModel);
-      
+      if (!this.addModel.realname || !this.addModel.departname) {
+        _self.$Message.warning("请输入信息！");
+      } else {
+        _self.open_add_user = false;
+        let _temp = _self.addModel;
+        _self.addModel = {};
+        _self.childData.push(_temp);
+      }
     },
     close_add_user() {
       this.open_add_user = false;
@@ -594,26 +600,16 @@ export default {
     // 选择用户
     selectUserData() {
       this.open_select_user = true;
-      // this.getUserData();
+      this.getUserData();
     },
     selectUserRow(e) {
       this.current_user_row = e;
     },
-    
-    // userSelection(e){
-    //   // let _self = this;
-    //   // _self.selectionUserName = [];
-    //   // for (let i = 0; i < e.length; i++) {
-    //   //   let _group = {};
-    //   //   _group.realname = e[i].realname;
-    //   //   _group.id = e[i].id;
-    //   //   _self.selectionUserName.push(_group);
-    //   // }
-    // },
     addsSelectUser() {
       console.log(this.current_user_row);
       this.open_select_user = false;
       this.addModel.realname = this.current_user_row.realname;
+      this.addModel.linkuser = this.current_user_row.id;
     },
     // 查询用户
     userSearch() {
@@ -652,6 +648,8 @@ export default {
       this.$http.get(url, config).then(function(res) {
         _self.$backToLogin(res);
         if (res.data.msgCode == "40000") {
+          console.log(res.data)
+          _self.userTotal = parseInt(res.data.data.total)
           let userArray = res.data.data.rows;
           for (let i = 0; i < userArray.length; i++) {
             const element = userArray[i];
@@ -662,7 +660,6 @@ export default {
             }
           }
           _self.userData = userArray;
-          _self.userTotal = res.data.data.total;
         } else {
           _self.$Message.error(res.data.msg);
         }
@@ -676,6 +673,7 @@ export default {
       } else {
         _self.check_depart_id = e[0].ID;
       }
+      _self.userPage = 1;
       this.getUserData();
     },
     getGroupCheckedNodes(e) {
@@ -688,7 +686,8 @@ export default {
         for (let i = 0; i < e.length; i++) {
           let _group = {};
           _group.departname = e[i].departname;
-          _group.ID = e[i].ID;
+          _group.departids = e[i].ID;
+          console.log(e);
           _self.groupNameArr.push(_group);
         }
       }
@@ -697,10 +696,8 @@ export default {
       let _self = this;
       let url = `api/system/depart/tree/list`;
       let config = {};
-
       function success(res) {
         _self.departTree = res.data.data;
-        // console.log(_self.allDepart)
         for (let i = 0; i < _self.departTree.length; i++) {
           _self.departTree[i].title = _self.departTree[i].departname;
           if (_self.departTree[i].children) {
@@ -744,10 +741,8 @@ export default {
       let _self = this;
       let url = `api/system/depart/tree/list`;
       let config = {};
-
       function success(res) {
         _self.groupTree = res.data.data;
-        // console.log(_self.allDepart)
         for (let i = 0; i < _self.groupTree.length; i++) {
           _self.groupTree[i].title = _self.groupTree[i].departname;
           if (_self.groupTree[i].children) {
@@ -794,23 +789,22 @@ export default {
     close_select_group() {
       this.open_select_group = false;
     },
-    closeGroup(){
+    closeGroup() {
       this.open_select_group = false;
     },
-    addGroup(){
+    addGroup() {
       this.open_select_group = false;
-      console.log(this.groupNameArr);
       this.addModel.departname = this.groupNameArr[0].departname;
+      this.addModel.departids = this.groupNameArr[0].departids;
     }
   },
   mounted() {
     this.getAllDepartTree();
     this.getAllGroupTree();
-    // this.getTableData()
   },
   created() {
     this.getData();
-    this.getUserData();
+    // this.getUserData();
     let _self = this;
     this.$bus.on("open_groups_data", e => {
       _self.groupDataCenter = true;

@@ -9,6 +9,8 @@
     "dev3": "webpack-dev-server --content-base ./ --open --inline --hot --compress --config build/webpack3.dev.config.js --host",
     "dev2": "webpack-dev-server --content-base ./ --open --inline --hot --compress --config build/webpack2.dev.config.js --host",
     "dev": "webpack-dev-server --content-base ./ --open --inline --hot --compress --config build/webpack.dev.config.js --host",
+    "dev5": "webpack-dev-server --content-base ./ --open --inline --hot --compress --config build/webpack5.dev.config.js --host",
+
     "build": "webpack --progress --hide-modules --config build/webpack.prod.config.js",
     "lint": "eslint --fix --ext .js,.vue src",
     "test": "npm run lint"

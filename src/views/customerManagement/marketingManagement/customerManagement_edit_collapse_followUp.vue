@@ -355,7 +355,7 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
                 if(_self.onlymarket == false){
                     var url = 'api/customer/findCustomerContentById?customerId=' + _self.customerid
                 }else{
-                    var url = 'api/customer/findCustomerContentById?customerId=' + _self.customerid + '&followUpType=11,12,13,14'
+                    var url = 'api/customer/findCustomerContentById?customerId=' + _self.customerid + '&followUpType=11,12,13,14,15'
                 }
                 
                 this.$http.get(url).then(function(response){

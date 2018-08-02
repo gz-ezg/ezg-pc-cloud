@@ -654,6 +654,7 @@
                     }
                     if (valid) {
                         let _customertypeStr = _self.formValidate.customertype.join('-')
+                        console.log(_customertypeStr)
                         if ((_self.formValidate.tel == '' || _self.formValidate.tel == null) && (_self.formValidate.fixedphone == '' || _self.formValidate.fixedphone == null) && (_self.formValidate.qq == '' || _self.formValidate.qq == null) && (_self.formValidate.weixin == '' || _self.formValidate.weixin == null)) {
                             this.$nextTick(() => {
                                 this.loading = true;

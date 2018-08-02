@@ -244,18 +244,19 @@ import EditModal from './edit_user'
                                         }
                                     }
                                 }, '权限剔除'),
-                                // h('Button', {
-                                //     props: {
-                                //         type: 'primary',
-                                //         size: 'small'
-                                //     },
-                                //     on: {
-                                //         click: () => {
-                                //             // this.permissions(params.row.id)
-                                //             this.updateUser(params.row)
-                                //         }
-                                //     }
-                                // }, '用户编辑'),
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            // this.permissions(params.row.id)
+                                            console.log(params.row)
+                                            this.updateUser(params.row)
+                                        }
+                                    }
+                                }, '用户编辑'),
                             ]);
                         }
                     }
@@ -298,6 +299,7 @@ import EditModal from './edit_user'
                         roleid: _self.SearchValidate.roleid,
                         rolecode: _self.SearchValidate.rolecode,
                         rolename: _self.SearchValidate.rolename
+                        
                     }
                 }
                 function doSuccess(re) {
@@ -313,7 +315,8 @@ import EditModal from './edit_user'
                             userkey: _data.rows[i].userkey,
                             status: _data.rows[i].status,
                             mobilephone: _data.rows[i].mobilephone,
-                            email: _data.rows[i].email
+                            email: _data.rows[i].email,
+                            departname:_data.rows[i].departname
                         })
                     _self.user_table_loading = false                 
                     }

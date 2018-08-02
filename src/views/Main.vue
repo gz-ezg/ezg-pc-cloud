@@ -63,8 +63,8 @@
         </div>
         <div class="single-page-con" :style="{left: shrink?'60px':'200px'}">
             <div class="single-page" style="min-width:700px">
-                <keep-alive :include="cachePage">
-                    <Spin size="large" fix v-if="spin_loading"></Spin>
+                <keep-alive>
+                    <!-- <Spin size="large" fix v-if="spin_loading"></Spin> -->
                     <router-view></router-view>
                 </keep-alive>
             </div>
@@ -179,6 +179,7 @@
                 return this.$store.state.app.menuList;
             },
             pageTagsList () {
+                console.log(this.$store.state.app.pageOpenedList)
                 return this.$store.state.app.pageOpenedList; // 打开的页面的页面对象
             },
             currentPath () {
