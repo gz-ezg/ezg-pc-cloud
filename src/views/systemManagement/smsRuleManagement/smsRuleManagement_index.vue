@@ -106,6 +106,7 @@
                 <Row style="margin-top: 10px;">
                         <Table 
                                 highlight-row
+                                border
                                 :columns="childDataHeader"
                                 :data="childData"
                                 @on-current-change="selectChildRow"></Table>
@@ -216,7 +217,7 @@
             v-model="open_select_group"
             @on-cancel="close_select_group">
             <Row :gutter="16" style="margin-top: 10px;">
-                 <Tree :data="groupTree" show-checkbox  @on-check-change="getGroupCheckedNodes"></Tree>
+                <Tree :data="departTree" show-checkbox @on-check-change="getCheckedNodes" ></Tree>
             </Row>
             <div slot="footer">
                     <Button size="small" type="primary" v-if="isADD" :loading="button_loading" @click="addGroup">确定</Button>
@@ -367,8 +368,7 @@ export default {
       userData: [],
       // 选择组织
       open_select_group: false,
-      close_select_grop: false,
-      groupNameArr: []
+      close_select_grop: false
     };
   },
   methods: {
@@ -387,7 +387,8 @@ export default {
       this.getData();
     },
     childPageChange(e) {
-      console.log("1111111111");
+      this.childPage = e;
+      this.getChildData();
     },
     userPageChange(e) {
       this.userPage = e;
@@ -397,7 +398,6 @@ export default {
       this.pageSize = e;
       this.getData();
     },
-
     getData() {
       let _self = this;
       let url = "api/system/queryMsgrule/list";
@@ -410,15 +410,11 @@ export default {
           msgruleCode: _self.searchModel.msgrulecode
         }
       };
-      _self.$http.get(url, config).then(function(res) {
-        _self.$backToLogin(res);
-        if (res.data.msgCode == "40000") {
-          _self.pageTotal = res.data.data.total;
-          _self.fatherData = res.data.data.rows;
-        } else {
-          _self.$Message.error(res.data.msg);
-        }
-      });
+      function doSuccess(res) {
+        _self.fatherData = res.data.data.rows;
+        _self.pageTotal = res.data.data.total;
+      }
+      _self.$Get(url, config, doSuccess);
     },
     //  获取当前点击行
     selectFatherRow(e) {
@@ -431,12 +427,13 @@ export default {
       this.open_father_data = true;
       this.father_detail_title = "录入";
       this.isADD = true;
-      this.$refs["dataModel"].resetFields();
+      this.dataModel = {};
       this.childData = [];
       this.childTotal = 0;
     },
     dataEdit() {
       _self = this;
+      _self.childPage = 1;
       if (_self.current_father_row == "" || _self.current_father_row == null) {
         _self.$Message.warning("请选择一行进行编辑！");
       } else {
@@ -451,52 +448,34 @@ export default {
       _self = this;
       let url = "api/system/shwoMsgRuleLinkedList";
       config = {
-        msgruleid: this.current_father_row.id,
-        page: 1,
+        msgruleid: _self.current_father_row.id,
+        page: _self.childPage,
         pageSize: 10
-        // pageSize:1
       };
-      this.$http.post(url, config).then(function(res) {
-        _self.$backToLogin(res);
-        if (res.data.msgCode == "40000") {
-          _self.childData = res.data.data.rows;
-          _self.childTotal = res.data.data.total;
-        } else {
-          _self.$Message.error(res.data.msg);
-        }
-      });
+      function success(res) {
+        _self.childData = res.data.data.rows;
+        _self.childTotal = res.data.data.total;
+      }
+      function fail(res) {}
+      _self.$Post(url, config, success, fail);
     },
     dataCheck() {
-      if (this.current_father_row == "" || this.current_father_row == null) {
-        this.$Message.warning("请选择一行进行查看！");
+      let _self = this;
+      _self.childPage = 1;
+      if (_self.current_father_row == "" || _self.current_father_row == null) {
+        _self.$Message.warning("请选择一行进行查看！");
       } else {
-        this.open_father_data = true;
-        this.dataModel = this.current_father_row;
-        this.father_detail_title = "查看";
-        this.isADD = false;
-        let _self = this;
-        let url = "api/system/shwoMsgRuleLinkedList";
-        config = {
-          msgruleid: _self.current_father_row.id,
-          page: 1,
-          pageSize: 10
-        };
-        this.$http.post(url, config).then(function(res) {
-          _self.$backToLogin(res);
-          if (res.data.msgCode == "40000") {
-            _self.childData = res.data.data.rows;
-            console.log(_self.childData);
-            _self.childTotal = res.data.data.total;
-          } else {
-            _self.$Message.error(res.data.msg);
-          }
-        });
+        _self.open_father_data = true;
+        _self.dataModel = _self.current_father_row;
+        _self.father_detail_title = "查看";
+        _self.isADD = false;
+        _self.getChildData();
       }
     },
     // 确定
     save() {
       let _self = this;
-      this.$refs["dataModel"].validate(valid => {
+      _self.$refs["dataModel"].validate(valid => {
         if (valid) {
           _self.button_loading = true;
           let url = "";
@@ -510,7 +489,6 @@ export default {
             tempData.push(element);
           }
           let temp = JSON.stringify(tempData);
-          console.log(tempData);
           if (_self.father_detail_title == "录入") {
             //  录入
             url = `api/system/addMsgruleAndLinked`;
@@ -533,25 +511,16 @@ export default {
               list: temp
             };
           }
-          _self.$http
-            .post(url, config)
-            .then(function(res) {
-              _self.$backToLogin(res);
-              if (res.data.msgCode == "40000") {
-                _self.$Message.success(res.data.msg);
-                _self.button_loading = false;
-                _self.open_father_data = false;
-                _self.current_father_row = "";
-                _self.getData();
-              } else {
-                _self.$Message.error(res.data.msg);
-                _self.button_loading = false;
-              }
-            })
-            .catch(function(res) {
-              _self.$Message.error("网络错误！");
-              _self.button_loading = false;
-            });
+          function success(res) {
+            _self.$Message.success(res.data.msg);
+            _self.button_loading = false;
+            _self.open_father_data = false;
+            _self.current_father_row = "";
+            _self.page = 1;
+            _self.getData();
+          }
+          function fail(res) {}
+          _self.$Post(url, config, success, fail);
         } else {
           _self.$Message.warning("请输入信息！");
         }
@@ -582,7 +551,7 @@ export default {
     // 添加用户确定按钮
     saveUserData() {
       let _self = this;
-      if (!this.addModel.realname || !this.addModel.departname) {
+      if (!_self.addModel.realname || !_self.addModel.departname) {
         _self.$Message.warning("请输入信息！");
       } else {
         _self.open_add_user = false;
@@ -600,13 +569,16 @@ export default {
     // 选择用户
     selectUserData() {
       this.open_select_user = true;
+      this.addModel.realname = "";
+      this.addModel.linkuser = "";
       this.getUserData();
+      this.departTree = [];
+      this.getAllDepartTree();
     },
     selectUserRow(e) {
       this.current_user_row = e;
     },
     addsSelectUser() {
-      console.log(this.current_user_row);
       this.open_select_user = false;
       this.addModel.realname = this.current_user_row.realname;
       this.addModel.linkuser = this.current_user_row.id;
@@ -645,25 +617,21 @@ export default {
           departid: _self.check_depart_id
         }
       };
-      this.$http.get(url, config).then(function(res) {
-        _self.$backToLogin(res);
-        if (res.data.msgCode == "40000") {
-          console.log(res.data)
-          _self.userTotal = parseInt(res.data.data.total)
-          let userArray = res.data.data.rows;
-          for (let i = 0; i < userArray.length; i++) {
-            const element = userArray[i];
-            if (element.status == "1") {
-              element.status = "激活";
-            } else {
-              element.status = "未激活";
-            }
+      function success(res) {
+        _self.check_depart_id = "";
+        let userArray = res.data.data.rows;
+        for (let i = 0; i < userArray.length; i++) {
+          const element = userArray[i];
+          if (element.status == "1") {
+            element.status = "激活";
+          } else {
+            element.status = "未激活";
           }
-          _self.userData = userArray;
-        } else {
-          _self.$Message.error(res.data.msg);
         }
-      });
+        _self.userData = userArray;
+        _self.userTotal = res.data.data.total;
+      }
+      _self.$Get(url, config, success);
     },
 
     getCheckedNodes(e) {
@@ -671,24 +639,13 @@ export default {
       if (e.length == 0) {
         _self.check_depart_id = "";
       } else {
-        _self.check_depart_id = e[0].ID;
-      }
-      _self.userPage = 1;
-      this.getUserData();
-    },
-    getGroupCheckedNodes(e) {
-      let _self = this;
-      if (e.length == 0) {
-        console.log("部门为空");
-        _self.groupNameArr = [];
-      } else {
-        _self.groupNameArr = [];
-        for (let i = 0; i < e.length; i++) {
-          let _group = {};
-          _group.departname = e[i].departname;
-          _group.departids = e[i].ID;
-          console.log(e);
-          _self.groupNameArr.push(_group);
+        if (_self.open_select_user) {
+          _self.check_depart_id = e[0].ID;
+          _self.userPage = 1;
+          _self.getUserData();
+        } else {
+          _self.check_depart_id = e[0].ID;
+          _self.addModel.departname = e[0].departname;
         }
       }
     },
@@ -734,57 +691,15 @@ export default {
           }
         }
       }
-
-      this.$Get(url, config, success);
-    },
-    getAllGroupTree() {
-      let _self = this;
-      let url = `api/system/depart/tree/list`;
-      let config = {};
-      function success(res) {
-        _self.groupTree = res.data.data;
-        for (let i = 0; i < _self.groupTree.length; i++) {
-          _self.groupTree[i].title = _self.groupTree[i].departname;
-          if (_self.groupTree[i].children) {
-            for (let j = 0; j < _self.groupTree[i].children.length; j++) {
-              _self.groupTree[i].children[j].title =
-                _self.groupTree[i].children[j].departname;
-              if (_self.groupTree[i].children[j].children) {
-                for (
-                  let k = 0;
-                  k < _self.groupTree[i].children[j].children.length;
-                  k++
-                ) {
-                  _self.groupTree[i].children[j].children[k].title =
-                    _self.groupTree[i].children[j].children[k].departname;
-                  if (_self.groupTree[i].children[j].children[k].children) {
-                    for (
-                      let t = 0;
-                      t <
-                      _self.groupTree[i].children[j].children[k].children
-                        .length;
-                      t++
-                    ) {
-                      _self.groupTree[i].children[j].children[k].children[
-                        t
-                      ].title =
-                        _self.groupTree[i].children[j].children[k].children[
-                          t
-                        ].departname;
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-
-      this.$Get(url, config, success);
+      _self.$Get(url, config, success);
     },
     // 选择组织
     selectGroupData() {
       this.open_select_group = true;
+      this.addModel.departids = "";
+      this.addModel.departname = "";
+      this.departTree = [];
+      this.getAllDepartTree();
     },
     close_select_group() {
       this.open_select_group = false;
@@ -794,19 +709,15 @@ export default {
     },
     addGroup() {
       this.open_select_group = false;
-      this.addModel.departname = this.groupNameArr[0].departname;
-      this.addModel.departids = this.groupNameArr[0].departids;
+      this.addModel.departids = this.check_depart_id;
+      this.addModel.departname = this.addModel.departname;
+      this.check_depart_id = "";
     }
   },
-  mounted() {
-    this.getAllDepartTree();
-    this.getAllGroupTree();
-  },
   created() {
-    this.getData();
-    // this.getUserData();
     let _self = this;
-    this.$bus.on("open_groups_data", e => {
+    _self.getData();
+    _self.$bus.on("open_groups_data", e => {
       _self.groupDataCenter = true;
     });
   }
