@@ -90,6 +90,13 @@
                             <span>天（有效天数，非工作日）</span>
                         </FormItem>
                     </Col>
+                    <Col span="12" >
+                        <FormItem prop="exclude_customer_status" >
+                            <span slot="label" class="warning">排除客户状态</span>
+                            <Cascader size="small"  v-model="exclude_customer_status" :data="CUStype" style="width:100%" trigger="hover" transfer >
+                            </Cascader >
+                        </FormItem>
+                    </Col>
                 </Row>
             </Form>
             </Col>
@@ -109,7 +116,6 @@
                         </Radio>
                         </Col>
                     </RadioGroup> -->
-
                 </Row>
             </Col>
         </Row>
@@ -132,6 +138,7 @@ export default {
     },
     data(){
         return{
+            exclude_customer_status:[],
             check_depart_id:"",
             departTree:[],
             selectDepart:"",
@@ -190,6 +197,7 @@ export default {
             this.$refs[name].resetFields();
             this.customerStatus = []
             this.check_depart_id = ""
+            this.exclude_customer_status = []
             this.getAllDepartTree()
         },
         submit(){
@@ -216,6 +224,12 @@ export default {
             }else{
                 temp = ""
             }
+            let temp2 
+            if(_self.exclude_customer_status != ""){
+                temp2 = _self.exclude_customer_status[0] + '-' + _self.exclude_customer_status[1]
+            }else{
+                temp = ""
+            }
             let config = {
                 customerStatus: temp,
                 customerLevel: _self.formdata.customerLevel,
@@ -227,7 +241,8 @@ export default {
                 ruleMemo: _self.formdata.ruleMemo,
                 customerArea: _self.formdata.customerArea,
                 channelTypeId: _self.formdata.channelTypeId,
-                behavior: _self.formdata.behavior
+                behavior: _self.formdata.behavior,
+                excludeCustomerStatus: temp2
             }
 
             function success(res){
@@ -274,19 +289,21 @@ export default {
 
             function success(res){
                 _self.departTree = res.data.data
-                // console.log(_self.allDepart)
                 for(let i = 0; i<_self.departTree.length;i++){
                     _self.departTree[i].title = _self.departTree[i].departname
+                    _self.departTree[i].level = 1
                     if(_self.departTree[i].children){
                         for(let j = 0;j<_self.departTree[i].children.length;j++){
                             _self.departTree[i].children[j].title = _self.departTree[i].children[j].departname
+                            _self.departTree[i].children[j].level = 2
                             if(_self.departTree[i].children[j].children){
                                 for(let k = 0;k<_self.departTree[i].children[j].children.length;k++){
                                     _self.departTree[i].children[j].children[k].title = _self.departTree[i].children[j].children[k].departname
+                                    _self.departTree[i].children[j].children[k].level = 3
                                     if(_self.departTree[i].children[j].children[k].children){
                                         for(let t = 0;t<_self.departTree[i].children[j].children[k].children.length;t++){
-                                            console.log(_self.departTree[i].children[j].children[k].children[t])
                                             _self.departTree[i].children[j].children[k].children[t].title = _self.departTree[i].children[j].children[k].children[t].departname
+                                            _self.departTree[i].children[j].children[k].children[t].level = 4
                                         }
                                     }
                                 }
@@ -301,12 +318,27 @@ export default {
         getCheckedNodes(e){
             let _self = this
             console.log(e)
+            let temp = []
             if(e.length == 0){
-                _self.check_depart_id = ""
+                temp = []
             }else{
-                _self.check_depart_id = e[0].ID
+                temp.push(e[0].ID)
+                for(let i = 1; i < e.length; i++){
+                    if(e[0].level == e[i].level){
+                        temp.push(e[i].ID)
+                    }
+                }
+                // console.log(temp)
             }
+            _self.check_depart_id = temp.join(",")
             console.log(_self.check_depart_id)
+            // if(e.length == 0){
+            //     _self.check_depart_id = ""
+            //     _self.check_depart_name = ""
+            // }else{
+            //     _self.check_depart_id = e[0].ID
+            //     _self.check_depart_name = e[0].departname
+            // }
         }
     },
     created(){

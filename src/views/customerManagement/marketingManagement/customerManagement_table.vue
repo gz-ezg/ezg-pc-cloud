@@ -401,7 +401,8 @@ export default {
         {
             title:"市场最后跟进时间",
             key: "lastfollowdate",
-            width: 200
+            width: 200,
+            sortable: true
         }
         // {
         //   title: "商事",
@@ -457,6 +458,8 @@ export default {
         //   console.log(e)
         if(e.key == 'showcompanyNames'){
             this.sortName = 'companyNames'
+        }else if(e.key == 'lastfollowdate'){
+            this.sortName = 'lastfollowdate'
         }else if(e.key == 'customertypeText'){
             this.sortName = 'customertype'            
         }else if(e.key == 'customersourceText'){
@@ -468,7 +471,7 @@ export default {
         }else if(e.key == 'channelTypeNameText'){
             this.sortName = 'channelTypeName'
         }else if(e.key == 'residue_time'){
-            this.sortName = 'channelTypeName'
+            // this.sortName = 'channelTypeName'
             this.sortName = 'residue_time'
         }else{
             this.sortName = e.key
@@ -1119,6 +1122,13 @@ export default {
   },
   created() {
     var _self = this
+    let temp = localStorage.getItem("Main_Role")
+    if(temp == "salers"){
+        _self.sortName = "lastfollowdate"
+    }else{
+        _self.sortName = "updatedate"
+    }
+    console.log(temp)
     // this._customerTypeArr = JSON.parse(localStorage.getItem('customerType'))
     // this.getSelectOptions()
     this.getDataCenter();

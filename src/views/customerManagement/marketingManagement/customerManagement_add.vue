@@ -500,9 +500,11 @@ import Bus from '../../../components/bus'
                                 let url = '/customer/saveCustomer'
                                 function doSuccess(response) {
                                     _self.$Message.success('更新成功!')
-                                    // _self.getData()
                                     _self.$emit('hideAddPanel', 'false');
                                     Bus.$emit('addsuccess',true)
+                                    // console.log(response.data.data)
+                                    _self.$bus.emit('ADD_NEW_CUMSTOMER',response.data.data.id)
+
                                 }
                                 this.PostData(url, _self.formValidate, doSuccess)
                             }

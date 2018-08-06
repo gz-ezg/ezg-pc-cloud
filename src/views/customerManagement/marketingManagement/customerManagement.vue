@@ -201,6 +201,7 @@
                 _self.isEdit = false
                 _self.showPanel = ''
                 _self.isEdit2 = false
+                this.$bus.emit("CLOSE_CUSTOMER_EDIT", true)
             },
 
             /*************************打开【编辑】弹窗********************************/
@@ -283,6 +284,15 @@
             }
         },
         mounted() {
+        },
+        created(){
+            let _self = this
+            this.$bus.on("ADD_NEW_CUMSTOMER",(e)=>{
+                _self.edit_loading = true
+                _self.customerid = e
+                _self.edi = true
+                _self.isEdit = true
+            })
         }
     }
 </script>

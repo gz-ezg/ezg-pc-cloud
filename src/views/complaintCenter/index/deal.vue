@@ -64,6 +64,13 @@
                         </FormItem> 
                     </Col>
                 </Row>
+                <Row :gutter="16">
+                    <Col span="24">
+                        <FormItem prop="complaintManage" label="客服反馈：">
+                            <Input type="textarea" v-model="deal.complaintManage" rows=4 ></Input>
+                        </FormItem> 
+                    </Col>
+                </Row>
             </Form>
             <div slot="footer">
                 <Button type="primary" @click="deal_complaint_detail">处理</Button>
@@ -116,7 +123,8 @@ export default {
             let config = {
                 id: _self.deal.id,
                 rx: _self.deal.rx,
-                processtype:_self.deal.processType
+                processtype:_self.deal.processType,
+                complaintManage:_self.deal.complaintManage
             }
             this.$http.post(url,config).then(function(res){
                 // console.log(res)

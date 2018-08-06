@@ -143,8 +143,8 @@ export default {
                         width: 100
                     },
                     {
-                        title: '销售人员',
-                        key: 'createbyname',
+                        title: '跟进人',
+                        key: 'followbyname',
                         width: 100
                     }
                 ]
@@ -160,7 +160,7 @@ export default {
                     {field:'paynumber',title:'已补余款'},
                     {field:'unpaidamount',title:'剩余余款'},
                     {field:'approvalpendingamount',title:'待审批金额'},
-                    {field:'createbyname',title:'创建人'}                                                                      
+                    {field:'followbyname',title:'创建人'}                                                                      
                     ]
                 let _that = this
                 let url = `api/order/balance/list`

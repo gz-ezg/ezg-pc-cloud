@@ -840,6 +840,9 @@
                 console.log('1111111')
                 _self.getAllLabel()
             })
+            this.$bus.on('CLOSE_CUSTOMER_EDIT',(e)=>{
+                _self.handleSubmit('formValidate')
+            })
         }
     }
 </script>

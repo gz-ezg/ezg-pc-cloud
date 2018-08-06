@@ -64,6 +64,13 @@
                         </FormItem> 
                     </Col>
                 </Row>
+                <Row :gutter="16">
+                    <Col span="24">
+                        <FormItem prop="complaintManage" label="客服反馈：">
+                            <Input type="textarea" v-model="show.complaintManage" rows=4 ></Input>
+                        </FormItem> 
+                    </Col>
+                </Row>
             </Form>
             <div slot="footer">
                 <!-- <Button type="primary" @click="show_complaint_detail">处理</Button> -->

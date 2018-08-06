@@ -43,7 +43,7 @@
         <Row>
             <ButtonGroup style="float:left">
                 <Button type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button>
+                <!-- <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button> -->
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
                 <Button type="primary" icon="information-circled" @click="company">查看公司</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
@@ -179,11 +179,11 @@ export default {
                 pageSize:'10',
                 data:[],
                 header: [
-                    {
-                        type: 'selection',
-                        width: 60,
-                        align: 'center'
-                    },
+                    // {
+                    //     type: 'selection',
+                    //     width: 60,
+                    //     align: 'center'
+                    // },
                     // {
                     //     title: '工单状态',
                     //     key: 'zhuangtai',
