@@ -141,8 +141,8 @@
                     <Button type="primary" icon="edit" @click="isEditChange" v-permission="['marketingM.edit']">编辑</Button>
                     <Button type="primary" icon="ios-crop" @click="change_market" v-permission="['marketingM.change']">变更</Button>
                     <Button type="primary" icon="trash-b" @click="deleteCustomer" v-permission="['marketingM.delete']">删除</Button>
-                    <Button type="primary" icon="grid" @click="getQRcode">查看二维码</Button>
-                    <Button type="primary" icon="grid" @click="getQRcode2">查看二维码2</Button>
+                    <!-- <Button type="primary" icon="grid" @click="getQRcode">查看二维码</Button> -->
+                    <Button type="primary" icon="grid" @click="getQRcode2">查看二维码</Button>
                     <Button type="primary" icon="ios-color-filter-outline" @click="downloadExcel">导出Excel</Button>
                     <Button type="primary" icon="ios-color-filter-outline" v-if="false">设置提成</Button>
                     <Button type="primary" icon="ios-color-filter-outline" @click="open_change_log">客户变更日志</Button>

@@ -16,7 +16,7 @@
         </Tabs>
         <detail></detail>
         <company-detail></company-detail>
-        <flow></flow>
+        <!-- <flow></flow> -->
     </div>
 </template>
 

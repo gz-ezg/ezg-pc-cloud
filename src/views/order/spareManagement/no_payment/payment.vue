@@ -3,7 +3,7 @@
         <Modal
             v-model="payment"
             title="补交/审批"
-            :width="900"
+            :width="950"
         >
             <Form ref="formValidate" :model="formValidate" :label-width="120">
                 <Row :gutter="16">
@@ -50,7 +50,7 @@
                                         <Button type="primary" icon="plus" @click="confirm"  v-permission="['spareM.receipt']">确认收款</Button>
                                         <Button type="primary" icon="edit" @click="add_pay">补交费用</Button>
                                         <Button type="primary" icon="edit" @click="edit_pay">修改</Button>
-                                        <Button type="primary" icon="edit" v-permission="['spareM.edit']" @click="reback" :loading="backup_loading">驳回</Button>
+                                        <Button type="primary" icon="edit" v-permission="['spareM.edit']" @click="openreback" >驳回</Button>
                                     </ButtonGroup>
                                 </Row>
                                 <Row style="margin-top: 10px;">
@@ -65,6 +65,21 @@
                 <Button type="ghost" @click="close_payment">关闭</Button>
             </div>
         </Modal>
+        <Modal
+            v-model="openRebackModal"
+            title="驳回"
+            :width="400"
+        >   
+            <Row>
+                驳回原因：
+            </Row>
+            <Row>
+                <Input v-model="memo" type="textarea" placeholder="请输入驳回原因！（非必选项）"></Input>
+            </Row>
+            <div slot="footer">
+                <Button type="primary" icon="edit" :loading="backup_loading" @click="reback">驳回</Button>
+            </div>
+        </Modal>
         <AddPayment></AddPayment>
         <EditPayment></EditPayment>
     </div>
@@ -77,6 +92,8 @@ import EditPayment from './edit_payment'
 export default {
     data(){
         return{
+            memo:"",
+            openRebackModal:false,
             backup_loading:false,
             show:'1',
             py_loading:false,
@@ -113,6 +130,10 @@ export default {
                         key: 'processtype',
                     },
                     {
+                        title: '驳回原因',
+                        key:'memo'
+                    },
+                    {
                         title: '缴费渠道',
                         key: 'paydir',
                     },
@@ -142,13 +163,11 @@ export default {
         //  初始化
         init(){
             this.$bus.on('open_payment',(e)=>{
-            // Bus.$on('open_payment',(e)=>{
                 this.balanceRow = e
                 this.balanceId = e.id
                 this.payment = true
                 this.GetBalanceIdDate()
             })
-            // Bus.$on('update',(e)=>{
             this.$bus.on('update',(e)=>{
                 this.GetBalanceIdDate()
             })
@@ -161,7 +180,6 @@ export default {
             _that.$backToLogin(res)
                 
                 var temp_data = res.data.data
-                // console.log(res.data.data)
                 _that.formValidate = temp_data.balance[0]
                 _that.balanceItem = temp_data.balanceItem
                 _that.balanceItem = _that.balanceItem.reverse()
@@ -182,13 +200,11 @@ export default {
         //  关闭当前弹出框
         close_payment(){
             this.payment = false
-            // Bus.$emit('refresh',true)
             this.$bus.emit('refresh',true)
         },
         //  跳转到变更收款界面
         edit_pay(){
             if(this.select_balance_row!=''){
-                // Bus.$emit('edit_pay',this.select_balance_row)
                 this.$bus.emit('edit_pay',this.select_balance_row)
             }else{
                 this.$Message.error('请选择一行进行修改')
@@ -222,29 +238,39 @@ export default {
                 }
             }
         },
-        reback(){
+        //  打开驳回modal
+        openreback(){
             let _self = this
             if(this.select_balance_row == ''){
-                _that.$Message.error('请选择一行驳回！')
+                _self.$Message.error('请选择一行驳回！')
             }else{
-                let url = `api/order/balance/updateProcesstypeByItemId`
-                _self.backup_loading = true
-                let config = {
-                    itemId: _self.select_balance_row.id,
-                    processType: "bh"
-                }
-
-                function success(res){
-                    _self.backup_loading = false
-                    _self.GetBalanceIdDate()
-                }
-
-                function fail(err){
-                    _self.backup_loading = false
-                }
-
-                _self.$Post(url, config, success, fail)
+                _self.openRebackModal = true
+                console.log(this.select_balance_row)
             }
+        },
+        reback(){
+            let _self = this
+            
+            let url = `api/order/balance/updateProcesstypeByItemId`
+            _self.backup_loading = true
+            let config = {
+                itemId: _self.select_balance_row.id,
+                processType: "bh",
+                memo: _self.memo
+            }
+
+            function success(res){
+                _self.backup_loading = false
+                _self.openRebackModal = false
+                _self.memo = ""
+                _self.GetBalanceIdDate()
+            }
+
+            function fail(err){
+                _self.backup_loading = false
+            }
+
+            _self.$Post(url, config, success, fail)
         },
         //  跳转到增加收款界面
         add_pay(){

@@ -64,7 +64,8 @@ export default {
     },
     methods:{
         getAllUserList(){
-            let url = 'api/user/getUserListByDepartId?departId='+ this.ServiceDeptID
+            // let url = 'api/user/getUserListByDepartId?departId='+ this.ServiceDeptID
+            let url = 'api/user/getAllUserListByDepartId?departId='+ this.ServiceDeptID
             // 11572
             let _self = this
             this.$http.get(url).then(function(res){

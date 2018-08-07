@@ -219,6 +219,7 @@ export default {
             let url = `api/crm/sale/rule/create`
             let temp 
             // console.log(_self.formdata.customerStatus)
+            console.log(_self.customerStatus)
             if(_self.customerStatus != ""){
                 temp = _self.customerStatus[0] + '-' + _self.customerStatus[1]
             }else{
@@ -228,7 +229,7 @@ export default {
             if(_self.exclude_customer_status != ""){
                 temp2 = _self.exclude_customer_status[0] + '-' + _self.exclude_customer_status[1]
             }else{
-                temp = ""
+                temp2 = ""
             }
             let config = {
                 customerStatus: temp,

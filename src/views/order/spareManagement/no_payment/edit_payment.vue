@@ -149,8 +149,8 @@ export default {
                         id:_self.current_orderId,
                         transcationamount:_self.editment.transcationamount,
                         transcationtime:DateFormat(_self.editment.transcationtime),
-                        itemmemo:"1",
-                        memo:"1"
+                        itemmemo:"",
+                        memo:""
                     }
                     console.log(params)
 

@@ -36,7 +36,7 @@
                     <message-tip v-model="mesCount"></message-tip> -->
                     <!-- <theme-switch></theme-switch> -->
                     <div style="height:100%">
-                        <Button size="small" type="primary" style="margin-top:18px;margin-left:110px" @click="open_stystem_complain">反馈</Button>
+                        <Button size="small" type="primary" style="margin-top:18px;margin-left:110px" @click="tip=true;tipColse=true">我要反馈</Button>
                     </div>
                     <div class="user-dropdown-menu-con">
                         <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
@@ -87,7 +87,7 @@
                 width="500"
                 @on-ok="submit"
                 :mask-closable="false"
-                :closable="false"
+                :closable="tipColse"
             >
                 <Row :gutter="16">
                     <Col span="1" style="visibility:hidden">1</Col>
@@ -129,6 +129,7 @@
             </Modal>
         <!-- 意见收集 -->
         <change-password></change-password>
+        <next></next>
     </div>
 </template>
 <script>
@@ -143,6 +144,7 @@
     import systemComplain from './stystemComplain/complainReply/complainReply'
     import Cookies from 'js-cookie';
     import util from '@/libs/util.js';
+    import next from './woa-components/next/flow.vue';
     
     export default {
         components: {
@@ -154,10 +156,12 @@
             messageTip,
             themeSwitch,
             systemComplain,
-            changePassword
+            changePassword,
+            next
         },
         data () {
             return {
+                tipColse:false,
                 spin_loading:true,
                 show_stystem_complain:false,
                 submit_button:false,
@@ -380,18 +384,18 @@
             this.spin_loading = false
         },
         beforeUpdate(){
-            console.log("beforeUpdate")
+            // console.log("beforeUpdate")
             // this.spin_loading = true
         },
         updated(){
-            console.log("updated")
+            // console.log("updated")
             // this.spin_loading = false
         },
         beforeDestroy(){
-            console.log("beforeDestroy")
+            // console.log("beforeDestroy")
         },
         destroyed(){
-            console.log('destroyed')
+            // console.log('destroyed')
         },
         created () {
             // 显示打开的页面的列表

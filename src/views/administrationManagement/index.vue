@@ -14,7 +14,7 @@
                 <all></all>
             </TabPane>
         </Tabs>
-        <flow></flow>
+        <!-- <flow></flow> -->
         <detail></detail>
         <company-detail></company-detail>
     </div>

@@ -261,15 +261,16 @@ export default {
         },
     },
     created:function(){
+        let _self = this
         this.GetTableData()
         this.$bus.on('search1',(e)=>{
-            this.search(e)
+            _self.search(e)
         })
         this.$bus.on('reset1',(e)=>{
-            this.reset()
+            _self.reset()
         })
         this.$bus.on('refresh',(e)=>{
-            this.GetLocalData()
+            _self.GetTableData()
         })
         // Bus.$on('search1',(e)=>{
         //     this.search(e)
