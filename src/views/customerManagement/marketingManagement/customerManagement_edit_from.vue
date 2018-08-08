@@ -436,56 +436,6 @@
                     } 
                 }
                 this.$GetDataCenter(params, finish)
-                // this.$http.get(url).then(function(res) {
-                //     // //console.log(res.data.data)
-                //     var temp = res.data.data;
-                //     _self.area = temp.area;
-                //     _self.cluesource = temp.cluesources;
-                //     // console.log(temp.customerType)
-                //     _self.customerType = temp.customerTypes;
-                //     _self.impLevel = temp.customerrating;
-                //     _self.sf_yn = temp.sf_yn;
-                //     _self.area.reverse()
-                //     // 二级联动改一级
-                //     _self.customerTypeArr = []
-                //     for(let i = 0;i<_self.customerType.length;i++){
-                //     var temp = {}
-                //     if(_self.customerType[i].children != null){
-                //         for(let j = 0;j<_self.customerType[i].children.length; j++ ){
-                //         temp = {}
-                //         temp.id = _self.customerType[i].children[j].id
-                //         temp.typecode = _self.customerType[i].children[j].typecode
-                //         temp.typename = _self.customerType[i].children[j].typename
-                //         temp.pid = _self.customerType[i].children[j].pid
-                //         temp.ptypename = _self.customerType[i].typename
-                //         temp.ptypecode = _self.customerType[i].typecode
-                //         _self.customerTypeArr.push(temp)
-                //         }
-                //     }else{    
-                //         temp = {}
-                //         temp.id = _self.customerType[i].id
-                //         temp.typecode = _self.customerType[i].typecode
-                //         temp.ptypename = _self.customerType[i].typename
-                //         temp.typename = ''
-                //         temp.pid = 0
-                //         _self.customerTypeArr.push(temp)
-                //     }
-
-                //     //  修改成规定的模型
-                //     _self.customerType[i].value = _self.customerType[i].id
-                //     _self.customerType[i].label = _self.customerType[i].typename
-                //     if(_self.customerType[i].children != null){
-                        
-                //         for(let j = 0;j<_self.customerType[i].children.length; j++ ){
-
-                //         _self.customerType[i].children[j].value= _self.customerType[i].children[j].id
-                //         _self.customerType[i].children[j].label = _self.customerType[i].children[j].typename
-
-                //         }
-                //     }
-                    
-                //     } 
-                // })
                 },
             getAllLabel(){
                 //  获取标签菜单
@@ -516,10 +466,8 @@
                     this.$http.get('/api/customer/findAllCustomerLabelsByCustomerId/' + _self.customerid),
                 ])
                     .then(this.$http.spread(function (customerdetailResp,LabelsRes) {
-                        // //console.log(res)
                         _self.$backToLogin(customerdetailResp)
                         let data = customerdetailResp.data.data
-                        // var LabelsRes = []
                         if(data.customersource == 'xzqd'){
                             _self.channel_show = true
                         }else{
@@ -535,9 +483,6 @@
                         }else{
                             _self.leader_show = false
                         }
-                        // LabelsRes = data.labels
-                        // //console.log(LabelsRes)
-                        // //console.log(LabelsRes.length)
                         _self.formValidate.id = data.ID
                         _self.formValidate.channelsource = data.channelsource
                         _self.formValidate.email = data.email
@@ -568,14 +513,15 @@
                         _self.formValidate.updatedate = data.updatedate
                         _self.formValidate.backup = data.backup
 
-                        if(data.customerType!=""&&data.customerType!=null){
+                        if(data.customerType!="" && data.customerType!=null){
+                            let temp = ""
                             var temp = data.customerType.split('-')
                             // console.log(temp)
                             if(temp[0] == "10919"){
                                 // console.log('1')
                                 _self.isOpenEdit = true
                             }
-
+                        _self.formValidate.customertype = []
                         for(let i = 0; i<_self.customerTypeArr.length;i++){
                             if(temp[1]==""||temp[1]==null){
                                 if(temp[0] == _self.customerTypeArr[i].id){
@@ -592,10 +538,8 @@
                                 }else{
                                     _self.formValidate.customertype.push(_self.customerTypeArr[i].pid,_self.customerTypeArr[i].id)
                                 }
-                                
                             }
                             }
-
                         }
                         }
                         
@@ -650,44 +594,50 @@
                     // //console.log(_self.customerlabel.length)
                     for (let i = 0; i < _self.customerlabel.length; i++) {
                         labelIds.push(_self.customerlabel[i].id)
-
                     }
                     if (valid) {
-                        let _customertypeStr = _self.formValidate.customertype.join('-')
-                        console.log(_customertypeStr)
                         if ((_self.formValidate.tel == '' || _self.formValidate.tel == null) && (_self.formValidate.fixedphone == '' || _self.formValidate.fixedphone == null) && (_self.formValidate.qq == '' || _self.formValidate.qq == null) && (_self.formValidate.weixin == '' || _self.formValidate.weixin == null)) {
                             this.$nextTick(() => {
                                 this.loading = true;
                             });
                             this.$Message.error('电话、固话、QQ、微信必须填写一个');
                         } else {
-
-                            const config = {
-                            'id':_self.formValidate.id,
-                            'name':_self.formValidate.name,
-                            'tel':_self.formValidate.tel,
-                            'fixedphone':_self.formValidate.fixedphone,
-                            'qq':_self.formValidate.qq,
-                            'weixin':_self.formValidate.weixin,
-                            'address':_self.formValidate.address,
-                            'customertype':_self.formValidate.customertype.join('-'),
-                            // 'customertype':_customertypeStr,
-                            'customersource':_self.formValidate.customersource,
-                            'importlevel':_self.formValidate.importlevel,
-                            'area':_self.formValidate.area,
-                            'issend':_self.formValidate.issend,
-                            'labels':labelIds.toString(),
-                            // 'CREATEDATE':_self.formValidate.createdate,
-                            // 'updatedate':_self.formValidate.updatedate,
-                            'backup':_self.formValidate.backup,
-                            'sourcesubdivision':_self.formValidate.sourcesubdivision,
-                            'isbound':_self.formValidate.isbound,
-                            'email':_self.formValidate.email,
-                            // 'channelsource':_self.formValidate.channelsource,
-                            'channelTypeId':_self.formValidate.channelTypeId,
-                            'recCustomer':_self.formValidate.recCustomer
+                            let customerTemp = ""
+                            if(_self.formValidate.customertype.length){
+                                console.log(_self.formValidate.customertype.length)
+                                customerTemp = _self.formValidate.customertype[0] + "-" + _self.formValidate.customertype[1]
+                            }else{
+                                customerTemp = ""
                             }
-                            //console.log(config)
+                            console.log("_________________________________________")
+                            console.log(customerTemp)
+                            const config = {
+                                'id':_self.formValidate.id,
+                                'name':_self.formValidate.name,
+                                'tel':_self.formValidate.tel,
+                                'fixedphone':_self.formValidate.fixedphone,
+                                'qq':_self.formValidate.qq,
+                                'weixin':_self.formValidate.weixin,
+                                'address':_self.formValidate.address,
+                                'customertype':customerTemp,
+                                // 'customertype':_self.formValidate.customertype.join('-'),
+                                'customersource':_self.formValidate.customersource,
+                                'importlevel':_self.formValidate.importlevel,
+                                'area':_self.formValidate.area,
+                                'issend':_self.formValidate.issend,
+                                'labels':labelIds.toString(),
+                                // 'CREATEDATE':_self.formValidate.createdate,
+                                // 'updatedate':_self.formValidate.updatedate,
+                                'backup':_self.formValidate.backup,
+                                'sourcesubdivision':_self.formValidate.sourcesubdivision,
+                                'isbound':_self.formValidate.isbound,
+                                'email':_self.formValidate.email,
+                                // 'channelsource':_self.formValidate.channelsource,
+                                'channelTypeId':_self.formValidate.channelTypeId,
+                                'recCustomer':_self.formValidate.recCustomer
+                                }
+                            console.log("_____________config__________________")
+                            console.log(config.customertype)
                             _self.$http({
                                 method: 'post',
                                 url: '/api/customer/updateCustomer',
@@ -840,6 +790,7 @@
                 console.log('1111111')
                 _self.getAllLabel()
             })
+            this.$bus.off('CLOSE_CUSTOMER_EDIT')
             this.$bus.on('CLOSE_CUSTOMER_EDIT',(e)=>{
                 _self.handleSubmit('formValidate')
             })

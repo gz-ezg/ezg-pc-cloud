@@ -772,6 +772,7 @@
                         period:"",
                         companyname: _self.SearchValidate.CompanyName,
                         realname: _self.SearchValidate.server_realname,
+                        sortField:"updatedate",
                         followbyrealname: _self.SearchValidate.followby_realname,
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field))
@@ -804,6 +805,7 @@
                         page: _self.page,
                         pageSize: _self.pageSize,
                         period:"",
+                        sortField:"updatedate",
                         companyname: _self.SearchValidate.CompanyName,
                         realname: _self.SearchValidate.server_realname,
                         followbyrealname: _self.SearchValidate.followby_realname,
@@ -1088,13 +1090,20 @@
                 let temp = JSON.parse(localStorage.getItem("global_datacenter"))
                 _self.managestatus = temp
             },
+
+            //  打开会计变更日志（由于接口问题，暂时关闭，等接口修复完成后发布）
             open_change_log(){
                 let _self = this
 
                 if (!_self.current_row) {
                     this.$Message.warning('请选择要查看的项目！')
                 } else {
-                    _self.$bus.emit('rizhi', _self.current_row.cycle_service_record_id)
+                    if(localStorage.getItem("realname")=="管理员")
+                    {
+                        _self.$bus.emit('rizhi', _self.current_row.cycle_service_record_id)
+                    }else{
+                        _self.$Message.error("该功能暂时关闭！如需查看请联系技术部！")
+                    }
                 }
             }
         },

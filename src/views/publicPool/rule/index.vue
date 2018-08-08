@@ -63,6 +63,11 @@ export default {
                     width: 150
                 },
                 {
+                    title:'排除客户状态',
+                    key:'exculde_customer_status_name',
+                    width: 150
+                },
+                {
                     title:'客户级别',
                     key:'customer_level_name',
                     width: 120
@@ -280,6 +285,9 @@ export default {
                     _self.data[i].behavior_name = _self.behavior_Map.get(_self.data[i].behavior)
                     if(_self.data[i].customer_status != ""){
                         _self.data[i].customer_status_name = _self.getLocalType(_self.data[i].customer_status)
+                    }
+                    if(_self.data[i].exclude_customer_status){
+                        _self.data[i].exculde_customer_status_name = _self.getLocalType(_self.data[i].exclude_customer_status)
                     }
                     if(_self.data[i].customer_level != null ){
                         _self.data[i].customer_level_name = _self.customerrating_Map.get(_self.data[i].customer_level.toString())

@@ -259,21 +259,17 @@ export default {
         {
           title: "姓名",
           key: "name",
-          sortable: true,
+          sortable: "custom",
           width: 120
         },
           {
               title: '归属公司',
               key: 'showcompanyNames',
-              width:210,
-              sortable: true,                          
+              width:210,                  
               render: (h, params) => {
-
-                // console.log(params)
                 if(params.row.companyNames == ''|| params.row.companyNames == null){
                   return ''
                 }else{
-                  // console.log(this.data[params.index].companyNames[0].name.length)
                   if(this.data[params.index].companyNames[0].name.length>13){
                     return h('Poptip', {
                       props: {
@@ -329,101 +325,78 @@ export default {
                   }
                 }
 
-              }
-          },
+            }
+        },
+        {
+            title:"市场最后跟进时间",
+            key: "lastfollowdate",
+            width: 180,
+            sortable: "custom"
+        },
         {
           title: "电话",
           key: "tel",
-          width: 120,
-        //   sortable: true,                          
-          
+          width: 120,                           
         },
         {
           title: "客户状态",
           key: "customertypeText",
           width: 140,
-          sortable: true,
+          sortable: "custom",
         },
         {
           title: "客户来源",
           key: "customersourceText",
           width: 120,
-          sortable: true,
+          sortable: "custom",
         },
         {
           title: "客户等级",
           key: "importLevelText",
           width: 120,
-          sortable: true,
+          sortable: "custom",
         },
         {
           title: "区域",
           key: "areaText",
           width: 80,
-          sortable: true,
+          sortable: "custom",
         },
         {
           title: "渠道名称",
           key: "channelTypeNameText",
           width: 140,
-          sortable: true,
+          sortable: "custom",
         },
         {
           title: "跟进人",
           key: "followby",
           width: 120,
-          sortable: true,
+          sortable: "custom",
         },
         {
           title: "创建时间",
           key: "createdate",
           width: 120,
-          sortable: true,
+          sortable: "custom",
         },
         {
           title: "更新时间",
           key: "updatedate",
           width: 120,
-          sortable: true,
+          sortable: "custom",
         },
         {
           title: "微信绑定",
           key: "isbound",
-          width: 130,
-        //   sortable: true,
+          width: 90,
         },
         {
-          title: "剩余跟进时间(天)",
-          key: "residue_time",
-          width: 160,
-          sortable: true,
+            title: "剩余时间(天)",
+            key: "residue_time",
+            width: 130,
+            sortable: "custom",
         },
-        {
-            title:"市场最后跟进时间",
-            key: "lastfollowdate",
-            width: 200,
-            sortable: true
-        }
-        // {
-        //   title: "商事",
-        //   key: "createby",
-        //   width: 120
-        // },
-        // {
-        //   title: "会计",
-        //   key: "createby",
-        //   width: 120
-        // },
-        // {
-        //   title: "企划",
-        //   key: "createby",
-        //   width: 120
-        // },
-        // {
-        //   title: "审计",
-        //   key: "createby",
-        //   width: 120
-        // }
       ],
       data: [],
       pageTotal: new Number(),
@@ -609,11 +582,6 @@ export default {
       // }
 
       this.$http.get(url, config).then(function(res) {
-        // console.log(res)
-        // console.log(res.data.msgCode)
-        // if(res.data.msgCode == '50003'){
-        //     _self.$backToLogin()
-        // }
         _self.$backToLogin(res)
 
         _self.pageTotal = res.data.data.total;
@@ -688,14 +656,14 @@ export default {
           
           if(response[i].residue_time == null){
 
-          }else{
-            let residue_time_temp = response[i].residue_time/1000
-            a.residue_time = (residue_time_temp/(3600*24)).toFixed(1)
-          }
-          
+            }else{
+                let residue_time_temp = response[i].residue_time/1000
+                a.residue_time = (residue_time_temp/(3600*24)).toFixed(1)
+            }
+        //   console.log(a)
           _self.data.push(a);
+        //   console.log(_self.data)
         }
-        window.scrollTo(0, 0);
         _self.customer_loading = false;
         _self.customerid = "";
       });

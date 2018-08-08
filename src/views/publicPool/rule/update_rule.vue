@@ -90,6 +90,13 @@
                             <span>天（有效天数，非工作日）</span>
                         </FormItem>
                     </Col>
+                    <Col span="12" >
+                        <FormItem prop="exclude_customer_status" >
+                            <span slot="label" class="warning">排除客户状态</span>
+                            <Cascader size="small"  v-model="exclude_customer_status" :data="CUStype" style="width:100%" trigger="hover" transfer >
+                            </Cascader >
+                        </FormItem>
+                    </Col>
                 </Row>
             </Form>
             </Col>
@@ -137,6 +144,7 @@ export default {
             selectDepart:"",
             allDepart:[],
             customerStatus:[],
+            exclude_customer_status:[],
             rating:[
                 {
                     id:1,
@@ -210,11 +218,17 @@ export default {
         create_rule(){
             let _self = this
             let url = `api/crm/sale/rule/update`
-            let temp 
+            let temp = "" 
             if(_self.customerStatus != ""){
                 temp = _self.customerStatus[0] + '-' + _self.customerStatus[1]
             }else{
                 temp = ""
+            }
+            let temp2 = ""
+            if(_self.exclude_customer_status != ""){
+                temp2 = _self.exclude_customer_status[0] + '-' + _self.exclude_customer_status[1]
+            }else{
+                temp2 = ""
             }
             let config = {
                 id: _self.formdata.id,
@@ -228,7 +242,8 @@ export default {
                 ruleMemo: _self.formdata.ruleMemo,
                 customerArea: _self.formdata.customerArea,
                 channelTypeId: _self.formdata.channelTypeId,
-                behavior: _self.formdata.behavior
+                behavior: _self.formdata.behavior,
+                excludeCustomerStatus: temp2
             }
 
             function success(res){
@@ -244,6 +259,7 @@ export default {
                 _self.formdata.channelTypeId = ""
                 _self.formdata.behavior = ""
                 _self.customerStatus = []
+                _self.exclude_customer_status = []
                 _self.edit_create_rule = false
             }
 
@@ -344,16 +360,18 @@ export default {
             _self.formdata.behavior = e.behavior
             _self.formdata.punishment = e.punishment
             _self.formdata.ruleMemo = e.rule_memo
-            // _self.customerStatus = e.customer_status.split("-")
             if(e.customer_status){
                 let temp1 = parseInt(e.customer_status.split("-")[0])
                 let temp2 = parseInt(e.customer_status.split("-")[1])
-                // console.log(temp1)
-                // console.log(temp2)
                 _self.customerStatus.push(temp1)
                 _self.customerStatus.push(temp2)
             }
-            // console.log(_self.customerStatus)
+            if(e.exclude_customer_status){
+                let temp3 = parseInt(e.exclude_customer_status.split("-")[0])
+                let temp4 = parseInt(e.exclude_customer_status.split("-")[1])
+                _self.exclude_customer_status.push(temp3)
+                _self.exclude_customer_status.push(temp4)
+            }
             
             _self.edit_create_rule = true
             this.getAllDepartTree()

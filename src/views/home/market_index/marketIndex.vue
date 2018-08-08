@@ -158,7 +158,7 @@
         <Modal
             v-model="baojia"
             title="报价工具"
-            width="400"
+            width="500"
         >
             <baojia></baojia>
             <div slot="footer"></div>
