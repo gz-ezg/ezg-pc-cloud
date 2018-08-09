@@ -3227,7 +3227,8 @@
                                 {
                                     field: 'paynumber',
                                     title: '销售价格',
-                                    width: 80                                    
+                                    width: 80,
+                                    // editor: {type: 'numberbox',  options: {precision: 2}}                               
                                 },
                                 {field: 'givethenumber', title: '赠送数量', width: 100}, 
                                         

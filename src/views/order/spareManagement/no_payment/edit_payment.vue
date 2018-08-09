@@ -150,7 +150,8 @@ export default {
                         transcationamount:_self.editment.transcationamount,
                         transcationtime:DateFormat(_self.editment.transcationtime),
                         itemmemo:"",
-                        memo:""
+                        memo:"",
+                        paydir: _self.editment.paydir
                     }
                     console.log(params)
 
