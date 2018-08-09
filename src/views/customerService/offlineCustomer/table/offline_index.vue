@@ -21,6 +21,7 @@
     import companyDetail from '../../../woa-components/companyDetail/CompanyDetail'
     // import companyDetail from '../../../accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/CompanyDetail'
     import Add from '../add'
+    import Bus from '../../../../components/bus.js'
 
     export default {
         name:'offlineCustomer_index',
@@ -31,6 +32,13 @@
             companyDetail,
             // companyDetail,
             Add
+        },
+        data(){
+            return{
+                isOpen:false
+            }
+        },
+        created(){
         }
     }
 </script>

@@ -109,7 +109,6 @@
                 <Button type="ghost" @click="close" v-show="isshow">关闭</Button>
             </div>
         </Modal>
-
         <Modal
                 v-model="selectCompany"
                 title="选择公司"
@@ -214,6 +213,7 @@
                 searchFollow:"",
                 add:false,
                 task_message: {
+                    companyid:"",
                     taxperiod:"",
                     marketername: "",
                     marketer: "",
@@ -296,18 +296,6 @@
                         key: 'product',
                         width:300
                     }
-                    // {
-                    //     title: '是否是周期产品',
-                    //     key: 'iscycle'
-                    // },
-                    // {
-                    //     title: '是否上架',
-                    //     key: 'shangjia'
-                    // },
-                    // {
-                    //     title: '服务部门',
-                    //     key: 'departalias'
-                    // },
                 ],
             }
         },
@@ -331,8 +319,9 @@
                     _self.task_message.marketername = ""
                     _self.task_message.servicername = ""
                     _self.task_message.tel = ""
-                    _self.task_message.taxperiod = ""                                      
+                    _self.task_message.taxperiod = ""                             
                 } else if(e.type == 'edit') {
+                    console.log(e)
                     _self.isshow = true                    
                     _self.title = '编辑'
                     _self.task_message.company = e.CompanyName
@@ -348,8 +337,7 @@
                     _self.task_message.marketername = e.marketer
                     _self.task_message.servicername = e.servicer
                     _self.task_message.tel = e.TEL
-                    _self.task_message.taxperiod = e.taxperiod                                     
-
+                    _self.task_message.taxperiod = e.taxperiod
                 } else if(e.type == 'check') {
                     _self.isshow = false                    
                     _self.title = '查看'
@@ -379,17 +367,21 @@
         methods: {
             cancel(){
                     let _self = this
-                    this.$refs['task_message'].resetFields();
-                    _self.task_message.company = ""
-                    _self.task_message.product = ""
-                    _self.task_message.customer = ""
+                    _self.isshow = false
+                    console.log("点击了取消！")
+                    this.$refs["task_message"].resetFields();
+                    _self.task_message.companyid = ""
+                    console.log(_self.task_message.companyid)
+                    // _self.task_message.company = ""
+                    // _self.task_message.product = ""
+                    // _self.task_message.customer = ""
                     _self.task_message.id = ""
-                    _self.task_message.servicebegindate = ""
-                    _self.task_message.enddate = ""
-                    _self.task_message.callbackdate = ""
-                    _self.task_message.endreason = ""
-                    _self.task_message.reasonformarketer = ""
-                    _self.task_message.reasonforcallback = ""
+                    // _self.task_message.servicebegindate = ""
+                    // _self.task_message.enddate = ""
+                    // _self.task_message.callbackdate = ""
+                    // _self.task_message.endreason = ""
+                    // _self.task_message.reasonformarketer = ""
+                    // _self.task_message.reasonforcallback = ""
             },
             keydown3(e){
                 if(e.key == 'Enter'){
@@ -463,6 +455,7 @@
                 this.$Get(url, config, doSuccess)
             },
             close(){
+                this.cancel()
                 this.add = false
                 this.task_message.company = ""
                 this.task_message.product = ""
@@ -628,8 +621,7 @@
                     }else{
                         _self.add = false
                     }
-
-                    
+                    _self.cancel()
                 }
 
                 function fail(err){
@@ -645,7 +637,7 @@
                 let url = 'api/customer/updateCustomerEnd'
                 let _data = {
                     id: _self.task_message.id,
-                    companyid: _self.task_message.companyid,
+                    // companyid: _self.task_message.companyid,
                     productid: _self.task_message.productid,
                     servicer: _self.task_message.servicer,
                     marketer: _self.task_message.marketer,
@@ -662,6 +654,7 @@
                     _self.add = false
                     // _self.$Message.success(res.data.msg)
                     Bus.$emit('updateofflinecustomer',true)
+                    _self.cancel()
                 }
                 function fail(err){
                     console.log(err)

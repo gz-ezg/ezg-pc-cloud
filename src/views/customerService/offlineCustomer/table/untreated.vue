@@ -293,7 +293,7 @@
 
             getData() {
                 let _self = this
-                let url = '/customer/customerEndList?sortField=id&page=' + _self.page + '&pageSize=' + _self.pageSize + '&status=N&companyname=' + _self.NformInline.companyname + '&customername=' + _self.NformInline.name + '&customertel=' + _self.NformInline.tel + '&productname=' + _self.NformInline.product + '&marketer=' + _self.NformInline.marketername + '&servicer=' + _self.NformInline.servicename 
+                let url = '/customer/customerEndList?sortField=id&page=' + _self.page + '&pageSize=' + _self.pageSize + '&companyname=' + _self.NformInline.companyname + '&customername=' + _self.NformInline.name + '&customertel=' + _self.NformInline.tel + '&productname=' + _self.NformInline.product + '&marketer=' + _self.NformInline.marketername + '&servicer=' + _self.NformInline.servicename 
                 _self.row = {}
                 function doSuccess(res) {
                     let _data = res.data.data
