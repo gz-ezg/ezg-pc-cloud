@@ -1,7 +1,7 @@
 <style>
     /*@import '../../../libs/easyUI/demo.css';*/
-    @import '../../libs/easyUI/easyui.css';
-    @import '../../libs/easyUI/icon.css';
+    /* @import '../../libs/easyUI/easyui.css';
+    @import '../../libs/easyUI/icon.css'; */
     @import './css/productDetail.min.css';
     .ivu-table .demo-table-error-row td {
         background-color: #ff6600;
@@ -656,13 +656,13 @@
 </template>
 
 <script>
-    import datagrid from '../../libs/easyUI/jquery.easyui.min'
-    import combobox from '../../libs/easyUI/jquery.easyui.min'
-    import Vue from 'vue';
-    import iviewArea from 'iview-area';
+    // import datagrid from '../../libs/easyUI/jquery.easyui.min'
+    // import combobox from '../../libs/easyUI/jquery.easyui.min'
+    // import Vue from 'vue';
+    // import iviewArea from 'iview-area';
     import {DateFormat} from '../../libs/utils.js'
 
-    Vue.use(iviewArea);
+    // Vue.use(iviewArea);
     $.extend($.fn.datagrid.methods, {
         editCell: function(jq,param){
             return jq.each(function(){

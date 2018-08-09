@@ -1,7 +1,7 @@
 <style>
     /*@import '../../../libs/easyUI/demo.css';*/
-    @import '../../../libs/easyUI/easyui.css';
-    @import '../../../libs/easyUI/icon.css';
+    /* @import '../../../libs/easyUI/easyui.css';
+    @import '../../../libs/easyUI/icon.css'; */
 </style>
 <template>
     <div>

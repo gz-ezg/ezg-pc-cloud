@@ -14,13 +14,18 @@ import util from '@/libs/util';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import VCharts from 'v-charts';
-// import './my-theme/index.less'
-// import methods from './common/common'
+// import echarts from 'echarts';
+
+import iviewArea from 'iview-area';
+
+import datagrid from './libs/easyUI/jquery.easyui.min'
+import combobox from './libs/easyUI/jquery.easyui.min'
 
 Vue.use(VCharts)
 Vue.use(VueI18n);
 Vue.use(iView);
 Vue.use(VueBus);
+Vue.use(iviewArea)
 
 //  axios 拦截器
 axios.interceptors.response.use(

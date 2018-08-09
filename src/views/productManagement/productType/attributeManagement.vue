@@ -1,8 +1,8 @@
 <style lang="less">
     @import '../../../styles/common.less';
     @import '../../my-components/markdown-editor/markdown-editor.less';
-    @import '../../../libs/easyUI/easyui.css';
-    @import '../../../libs/easyUI/icon.css';
+    // @import '../../../libs/easyUI/easyui.css';
+    // @import '../../../libs/easyUI/icon.css';
 </style>
 <style>
     @import '../../databaseManagement/superTables.css';

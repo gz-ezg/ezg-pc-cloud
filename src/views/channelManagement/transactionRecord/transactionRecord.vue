@@ -11,8 +11,8 @@
 </style>
 <style>
     /*@import '../../../libs/easyUI/demo.css';*/
-    @import '../../../libs/easyUI/easyui.css';
-    @import '../../../libs/easyUI/icon.css';
+    /* @import '../../../libs/easyUI/easyui.css';
+    @import '../../../libs/easyUI/icon.css'; */
     .datagrid-row {
         height: 42px;
     }
@@ -144,8 +144,8 @@
 </template>
 
 <script>
-    import datagrid from '../../../libs/easyUI/jquery.easyui.min'
-    import combobox from '../../../libs/easyUI/jquery.easyui.min'
+    // import datagrid from '../../../libs/easyUI/jquery.easyui.min'
+    // import combobox from '../../../libs/easyUI/jquery.easyui.min'
     import { DateFormat } from './utils'
 
     export default {

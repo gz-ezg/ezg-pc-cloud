@@ -1,6 +1,6 @@
 <style>
-    @import '../../../libs/easyUI/easyui.css';
-    @import '../../../libs/easyUI/icon.css';
+    /* @import '../../../libs/easyUI/easyui.css';
+    @import '../../../libs/easyUI/icon.css'; */
     @import '../../order/css/productDetail.min.css';
 
     .ivu-table .demo-table-error-row td {
@@ -111,7 +111,7 @@
 </template>
 
 <script>
-    import datagrid from '../../../libs/easyUI/jquery.easyui.min'
+    // import datagrid from '../../../libs/easyUI/jquery.easyui.min'
 
     export default {
         props: ['customerid'],

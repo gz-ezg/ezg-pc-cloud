@@ -3,8 +3,8 @@
     @import '../../../styles/common.less';
 </style>
 <style scoped>
-    @import '../../../libs/easyUI/easyui.css';
-    @import '../../../libs/easyUI/icon.css';
+    /* @import '../../../libs/easyUI/easyui.css';
+    @import '../../../libs/easyUI/icon.css'; */
     @import '../../order/css/productDetail.min.css';
 
     .ivu-table .demo-table-error-row td {
@@ -654,15 +654,15 @@
 </template>
 
 <script>
-    import datagrid from '../../../libs/easyUI/jquery.easyui.min'
-    import combobox from '../../../libs/easyUI/jquery.easyui.min'
-    import Vue from 'vue';
-    import iviewArea from 'iview-area';
+    // import datagrid from '../../../libs/easyUI/jquery.easyui.min'
+    // import combobox from '../../../libs/easyUI/jquery.easyui.min'
+    // import Vue from 'vue';
+    // import iviewArea from 'iview-area';
     import Bus from '../../../components/bus'
     import ADDmoney from './add_money'
     import MoneyList from './money_list'
 
-    Vue.use(iviewArea);
+    // Vue.use(iviewArea);
 
     $.extend($.fn.datagrid.methods, {
         editCell: function (jq, param) {

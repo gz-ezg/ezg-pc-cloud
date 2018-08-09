@@ -10,7 +10,6 @@
     "dev2": "webpack-dev-server --content-base ./ --open --inline --hot --compress --config build/webpack2.dev.config.js --host",
     "dev": "webpack-dev-server --content-base ./ --open --inline --hot --compress --config build/webpack.dev.config.js --host",
     "dev5": "webpack-dev-server --content-base ./ --open --inline --hot --compress --config build/webpack5.dev.config.js --host",
-
     "build": "webpack --progress --hide-modules --config build/webpack.prod.config.js",
     "lint": "eslint --fix --ext .js,.vue src",
     "test": "npm run lint"
@@ -89,6 +88,7 @@
     "vue-style-loader": "^3.0.3",
     "vue-template-compiler": "^2.5.13",
     "webpack": "^3.10.0",
+    "webpack-bundle-analyzer": "^2.13.1",
     "webpack-dev-server": "^2.9.7",
     "webpack-merge": "^4.1.1",
     "webpack-uglify-parallel": "^0.1.4"

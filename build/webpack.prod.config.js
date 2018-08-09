@@ -21,15 +21,15 @@ module.exports = merge(webpackBaseConfig, {
         // publicPath: 'http://cloud.zgcfo.com/dist/',  // 修改 https://iv...admin 这部分为你的服务器域名
         // publicPath: 'http://192.168.0.220:8089/dist/',
         publicPath:'/dist/', //可以配置成这样，相对路径，由服务器处理
-        filename: '[name].[hash].js',
-        chunkFilename: '[name].[hash].chunk.js'
+        filename: '[name].[chunkhash].js',
+        chunkFilename: '[name].[chunkhash].chunk.js'
     },
     plugins: [
         new cleanWebpackPlugin(['dist/*'], {
             root: path.resolve(__dirname, '../')
         }),
         new ExtractTextPlugin({
-            filename: '[name].[hash].css',
+            filename: '[name].[chunkhash].css',
             allChunks: true
         }),
         new webpack.optimize.CommonsChunkPlugin({

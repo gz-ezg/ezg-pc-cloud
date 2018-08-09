@@ -4,8 +4,8 @@
 </style>
 <style>
     @import '../../databaseManagement/superTables.css';
-    @import '../../../libs/easyUI/easyui.css';
-    @import '../../../libs/easyUI/icon.css';
+    /* @import '../../../libs/easyUI/easyui.css';
+    @import '../../../libs/easyUI/icon.css'; */
 </style>
 <style lang="scss">
     .edit-table {

@@ -1,6 +1,6 @@
 <style>
-    @import '../../libs/easyUI/easyui.css';
-    @import '../../libs/easyUI/icon.css';
+    /* @import '../../libs/easyUI/easyui.css';
+    @import '../../libs/easyUI/icon.css'; */
     .datagrid-row {
         height: 42px;
     }
@@ -391,9 +391,9 @@
 </template>
 
 <script>
-    import datagrid from '../../libs/easyUI/jquery.easyui.min'
-    import combobox from '../../libs/easyUI/jquery.easyui.min'
-    import Vue from 'vue';
+    // import datagrid from '../../libs/easyUI/jquery.easyui.min'
+    // import combobox from '../../libs/easyUI/jquery.easyui.min'
+    // import Vue from 'vue';
     import orderList from './orderList.vue'
 
     export default {

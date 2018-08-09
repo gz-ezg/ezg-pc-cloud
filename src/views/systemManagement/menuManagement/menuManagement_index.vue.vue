@@ -1,6 +1,6 @@
 <style>
-    @import '../../../libs/easyUI/easyui.css';
-    @import '../../../libs/easyUI/icon.css';
+    /* @import '../../../libs/easyUI/easyui.css';
+    @import '../../../libs/easyUI/icon.css'; */
 </style>
 <template>
     <div>
@@ -34,9 +34,9 @@
 
 <script>
     // import Utils from './util'
-    import datagrid from '../../../libs/easyUI/jquery.easyui.min'
-    import treegrid from '../../../libs/easyUI/jquery.easyui.min'
-    import Vue from 'vue'
+    // import datagrid from '../../../libs/easyUI/jquery.easyui.min'
+    // import treegrid from '../../../libs/easyUI/jquery.easyui.min'
+    // import Vue from 'vue'
     import Menu from './menu_add.vue'
     import Bus from '../../../components/bus'
     import DateRule from './data_rule.vue'

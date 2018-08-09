@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HappyPack = require('happypack');
 var happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 function resolve (dir) {
     return path.join(__dirname, dir);
@@ -14,7 +15,8 @@ module.exports = {
         main: '@/main',
         'vender-base': '@/vendors/vendors.base.js',
         'vender-exten': '@/vendors/vendors.exten.js',
-        // 'host':'http://192.168.0.222:9000/'
+        // 'vender-exten2': '@/vendors/vendors.exten2.js',
+        // 'vender-vchart': '@/vendors/vendors.vchart.js'
     },
     output: {
         path: path.resolve(__dirname, '../dist/dist')
@@ -98,7 +100,9 @@ module.exports = {
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery"
-        })
+        }),
+        //  查看打包大小
+        new BundleAnalyzerPlugin()
     ],
     resolve: {
         extensions: ['.js', '.vue'],
