@@ -328,11 +328,17 @@ export default {
             }
         },
         {
-            title:"市场最后跟进时间",
-            key: "lastfollowdate",
-            width: 180,
-            sortable: "custom"
+            title: "剩余时间(天)",
+            key: "residue_time",
+            width: 130,
+            sortable: "custom",
         },
+        // {
+        //     title:"市场最后跟进时间",
+        //     key: "lastfollowdate",
+        //     width: 180,
+        //     sortable: "custom"
+        // },
         {
           title: "电话",
           key: "tel",
@@ -391,12 +397,7 @@ export default {
           key: "isbound",
           width: 90,
         },
-        {
-            title: "剩余时间(天)",
-            key: "residue_time",
-            width: 130,
-            sortable: "custom",
-        },
+
       ],
       data: [],
       pageTotal: new Number(),
@@ -536,7 +537,7 @@ export default {
               _self.$Message.warning("剩余跟进时间请输入数字！")
               _self.formValidate.begin_residue_time = ""
           }else{
-            temp_begin_residue_time = _self.formValidate.begin_residue_time *3600*1000*24
+            temp_begin_residue_time = _self.formValidate.begin_residue_time
           }
       }
       let temp_end_residue_time = ""
@@ -547,7 +548,7 @@ export default {
               _self.$Message.warning("剩余跟进时间请输入数字！")
               _self.formValidate.end_residue_time = ""
           }else{
-            temp_end_residue_time = _self.formValidate.end_residue_time *3600*1000*24
+            temp_end_residue_time = _self.formValidate.end_residue_time
           }
       }
       var config = {
@@ -653,12 +654,20 @@ export default {
                   ]
               }
           }
-          
+          a.residue_time_real = response[i].residue_time
+
           if(response[i].residue_time == null){
 
             }else{
-                let residue_time_temp = response[i].residue_time/1000
-                a.residue_time = (residue_time_temp/(3600*24)).toFixed(1)
+                if(response[i].residue_time<1){
+                    let time = new Date()
+                    let hour = 24 - time.getHours()
+                    a.residue_time = hour + "小时"
+                    // console.log(typeof(a.residue_time))
+                }else{
+                    a.residue_time = response[i].residue_time
+                    // a.residue_time = (residue_time_temp/(3600*24)).toFixed(1)
+                }
             }
         //   console.log(a)
           _self.data.push(a);
@@ -1078,7 +1087,8 @@ export default {
         }
     },
     rowClassName(row, index){
-        if (row.residue_time <= 7) {
+        console.log()
+        if (row.residue_time <= 7 || typeof(row.residue_time)=="string") {
             // console.log('1111')
             return 'demo-table-info-row';
         } else {

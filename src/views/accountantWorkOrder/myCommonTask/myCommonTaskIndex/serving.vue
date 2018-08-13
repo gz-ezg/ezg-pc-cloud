@@ -37,7 +37,8 @@
         <Row>
             <ButtonGroup style="float:left">
                 <Button type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="open_set_time">设置计划完成时间</Button>
+                <!-- <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button> -->
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
                 <Button type="primary" icon="information-circled" @click="company">查看公司</Button>
                 
@@ -117,11 +118,11 @@ export default {
                 pageSize:'10',
                 data:[],
                 header: [
-                    {
-                        type: 'selection',
-                        width: 60,
-                        align: 'center'
-                    },
+                    // {
+                    //     type: 'selection',
+                    //     width: 60,
+                    //     align: 'center'
+                    // },
                     // {
                     //     title: '工单状态',
                     //     key: 'zhuangtai',
@@ -237,6 +238,11 @@ export default {
                         key: 'nextprocess',
                         width: 120,
                         sortable: true,                                                                        
+                    },
+                    {
+                        title: '计划完成时间',
+                        key: 'person_plan_finish_date',
+                        width: 140,
                     },
                     {
                         title: '服务开始时间',
@@ -522,6 +528,14 @@ export default {
                     Bus.$emit('myflow',this.current_row)
                 }
                 
+            }else{
+                this.$Message.warning('请选择一行进行流转！')
+            }
+        },
+        open_set_time(){
+            let _self = this
+            if(this.current_row != ''){
+                _self.$bus.emit("OPEN_SET_FINISH_TIME",this.current_row)
             }else{
                 this.$Message.warning('请选择一行进行流转！')
             }

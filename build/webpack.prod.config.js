@@ -10,6 +10,8 @@ const os = require('os');
 const fs = require('fs');
 const path = require('path');
 const package = require('../package.json');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 fs.open('./build/env.js', 'w', function(err, fd) {
     const buf = 'export default "production";';
@@ -57,6 +59,8 @@ module.exports = merge(webpackBaseConfig, {
         //       drop_debugger: true
         //      }
         // }),
+        //  查看打包大小,图片展示，在生产环境下配置
+        new BundleAnalyzerPlugin(),
         new CopyWebpackPlugin([
             {
                 from: 'td_icon.ico'

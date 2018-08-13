@@ -37,7 +37,8 @@
         <Row>
             <ButtonGroup style="float:left">
                 <Button type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="open_set_time">设置计划完成时间</Button>
+                <!-- <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button> -->
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
@@ -109,36 +110,15 @@
                 <img :src='flowChartImg'/>
             </center>
         </Modal>
-        <!-- <Modal
-            v-model="pause"
-            title="提示信息"
-        >
-            <div style="font-size:20px;"><Icon type="alert-circled"></Icon>是否暂停/解锁</div>
-            <div slot="footer">
-                <Button type="primary" @click="pausetask">确定</Button>
-                <Button type="ghost" style="margin-left:20px" @click="pause=!pause">取消</Button>
-            </div>
-        </Modal>
-        <Modal
-            v-model="endlife"
-            title="提示信息"
-        >
-            <div style="font-size:20px;"><Icon type="alert-circled"></Icon>是否退款终止</div>
-            <div slot="footer">
-                <Button type="primary" @click="endlifetask">确定</Button>
-                <Button type="ghost" style="margin-left:20px" @click="endlife=!endlife">取消</Button>
-            </div>
-        </Modal> -->
     </Card>
 </template>
 
 <script>
 // import Search from './search'
 import Bus from '../../../../components/bus'
-
 export default {
     // components:{
-    //     Search
+    //     setFinishTime
     // },
     props:{
         managestatus: Array
@@ -182,11 +162,11 @@ export default {
                     //         return h('div','未开始')
                     //     }   
                     // },
-                    {
-                        type: 'selection',
-                        width: 60,
-                        align: 'center'
-                    },
+                    // {
+                    //     type: 'selection',
+                    //     width: 60,
+                    //     align: 'center'
+                    // },
                     {
                         title: '归属公司',
                         key: 'companyname',
@@ -297,11 +277,15 @@ export default {
                         
                     },
                     {
+                        title: '计划完成时间',
+                        key: 'person_plan_finish_date',
+                        width: 140,
+                    },
+                    {
                         title: '服务开始时间',
                         key: 'ServiceStart',
                         width: 140,
                         sortable: true,                                                
-                        
                     },
                     {
                         title: '创建时间',
@@ -584,6 +568,14 @@ export default {
                     Bus.$emit('myflow',this.current_row)
                 }
                 
+            }else{
+                this.$Message.warning('请选择一行进行流转！')
+            }
+        },
+        open_set_time(){
+            let _self = this
+            if(this.current_row != ''){
+                _self.$bus.emit("OPEN_SET_FINISH_TIME",this.current_row)
             }else{
                 this.$Message.warning('请选择一行进行流转！')
             }

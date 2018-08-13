@@ -16,11 +16,14 @@
         </Tabs>
         <detail></detail>
         <company-detail></company-detail>
+        <set-finish-time></set-finish-time>
         <!-- <flow></flow> -->
     </div>
 </template>
 
 <script>
+import setFinishTime from './myCommonTaskIndex/setFinishTime';
+
 import Detail from './myCommonTaskIndex/detail'
 // import CompanyDetail from './myCommonTaskIndex/companydetail'
 import CompanyDetail from '../../woa-components/companyDetail/CompanyDetail'
@@ -41,7 +44,8 @@ import Notbegin from './myCommonTaskIndex/notbegin'
             Notbegin,
             Detail,
             CompanyDetail,
-            Flow
+            Flow,
+            setFinishTime
         },
         data(){
             return{

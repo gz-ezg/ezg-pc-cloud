@@ -4,7 +4,6 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HappyPack = require('happypack');
 var happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 function resolve (dir) {
     return path.join(__dirname, dir);
@@ -101,8 +100,7 @@ module.exports = {
             $: "jquery",
             jQuery: "jquery"
         }),
-        //  查看打包大小
-        new BundleAnalyzerPlugin()
+
     ],
     resolve: {
         extensions: ['.js', '.vue'],
