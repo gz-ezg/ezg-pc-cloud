@@ -1106,7 +1106,7 @@ export default {
     }else{
         _self.sortName = "updatedate"
     }
-    console.log(temp)
+    // console.log(temp)
     // this._customerTypeArr = JSON.parse(localStorage.getItem('customerType'))
     // this.getSelectOptions()
     this.getDataCenter();

@@ -49,12 +49,12 @@
                 <div>
                     <Col span="24" style="padding:20px"><center><h2>个人销售计划</h2></center></Col>
                     <Col span="24" style="margin-top:-15px"><center><Button size="small" type="text" @click="showHistory">查看历史计划</Button></center></Col>
-                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本日销售目标</center></Col>
-                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本日完成</center></Col>
-                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本日计划新增客户</center></Col>
-                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本人新增客户</center></Col>
-                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本日计划拜访</center></Col>
-                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本日拜访</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5;background-color:#F5F5F5"><center style="padding:10px">本日销售目标</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5;background-color:#F5F5F5"><center style="padding:10px">本日完成</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5;background-color:#F5F5F5"><center style="padding:10px">本日计划新增客户</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5;background-color:#F5F5F5"><center style="padding:10px">本人新增客户</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5;background-color:#F5F5F5"><center style="padding:10px">本日计划拜访</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5;background-color:#F5F5F5"><center style="padding:10px">本日拜访</center></Col>
                     <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.saleroom}}</center></Col>
                     <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.finish_saleroom}}</center></Col>
                     <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.new_customer_num}}</center></Col>
@@ -62,12 +62,12 @@
                     <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.visit_num}}</center></Col>
                     <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.finish_visit_num}}</center></Col>
 
-                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本周销售目标</center></Col>
-                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本周完成</center></Col>
-                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本周计划新增客户</center></Col>
-                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本周新增客户</center></Col>
-                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本周计划拜访</center></Col>
-                    <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">本周拜访</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5;background-color:#F5F5F5"><center style="padding:10px">本周销售目标</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5;background-color:#F5F5F5"><center style="padding:10px">本周完成</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5;background-color:#F5F5F5"><center style="padding:10px">本周计划新增客户</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5;background-color:#F5F5F5"><center style="padding:10px">本周新增客户</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5;background-color:#F5F5F5"><center style="padding:10px">本周计划拜访</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5;background-color:#F5F5F5"><center style="padding:10px">本周拜访</center></Col>
                     <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.week.saleroom}}</center></Col>
                     <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.week.finish_saleroom}}</center></Col>
                     <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.week.new_customer_num}}</center></Col>
@@ -350,7 +350,8 @@ export default {
                     year_target_num:0,
                     year_realnumber:0
                 }
-            }
+            },
+            saler:""
         }
     },
     components: {
@@ -370,7 +371,7 @@ export default {
 
             let config = {
                 params: {
-                    // saler: "10051"
+                    saler: _self.saler
                 }
             }
 
@@ -386,24 +387,26 @@ export default {
 
             let config = {
                 params:{
-
+                    saler: _self.saler
                 }
             }
 
             function success(res){
                 _self.UserPlanData.year = res.data.data.year
-                if(!res.data.data.week){
-                    _self.week_open = true
-                }else{
-                    if(!res.data.data.day){
-                        _self.UserPlanData.week = res.data.data.week
-                        _self.day_open = true
-                    }else{
-                        _self.UserPlanData.week = res.data.data.week
-                        _self.UserPlanData.day = res.data.data.day
+                if(_self.$route.path == "/allindex/marketIndex"){
 
+                }else{
+                    if(!res.data.data.week){
+                        _self.week_open = true
+                    }else{
+                        if(!res.data.data.day){
+                            _self.UserPlanData.week = res.data.data.week
+                            _self.day_open = true
+                        }else{
+                            _self.UserPlanData.week = res.data.data.week
+                            _self.UserPlanData.day = res.data.data.day
+                        }
                     }
-                    
                 }
             }
 
@@ -497,7 +500,7 @@ export default {
 
         //  打开个人历史计划
         showHistory(){
-            this.$bus.emit('OPEN_HISTORY_FUNCTION', true)
+            this.$bus.emit('OPEN_HISTORY_FUNCTION', this.saler)
         },
         open_pay_code(){
             this.openPayCode = true
@@ -505,8 +508,20 @@ export default {
     },
     created(){
         let _self = this
-        _self.getUserPlanData()
-        _self.getUserTableData()
+        // console.log(this.$route.path)
+        
+        if(this.$route.path == "/allindex/marketIndex"){
+            // console.log("111")
+        }else{
+            _self.getUserPlanData()
+            _self.getUserTableData()
+        }
+
+        _self.$bus.on("UPDATE_MARKET_INDEX",(e)=>{
+            _self.saler = e
+            _self.getUserPlanData()
+            _self.getUserTableData()
+        })
     }
 }
 </script>

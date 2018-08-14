@@ -112,7 +112,7 @@
     import { arrayToMap } from '../../../../libs/utils'
 
     export default {
-        props:['companyname'],
+        props:['name'],
         components: {
             // channelFrom,
             // channelCompany,
@@ -396,7 +396,7 @@
                         page:_self.page,
                         pageSize:_self.pageSize,
                         // status:'Y',
-                        companyname:_self.companyname,
+                        name:_self.name,
                         // name:_self.YformInline.name,
                         // tel:_self.YformInline.tel,
                         // servicename:_self.YformInline.servicename,
@@ -515,7 +515,7 @@
             // }
         },
         watch:{
-            'companyname':'getData'
+            'name':'getData'
         },
         created() {
             // this.init()

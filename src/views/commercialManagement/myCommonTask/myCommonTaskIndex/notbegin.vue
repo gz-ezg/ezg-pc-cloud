@@ -285,6 +285,11 @@ export default {
                         }
                     },
                     {
+                        title: '产品数量',
+                        key: 'productnumber',
+                        width: 120,
+                    },
+                    {
                         title: '目前进度',
                         key: 'CurrentProcess',
                         width: 140,

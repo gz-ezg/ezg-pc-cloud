@@ -184,7 +184,7 @@
                 return this.$store.state.app.menuList;
             },
             pageTagsList () {
-                console.log(this.$store.state.app.pageOpenedList)
+                // console.log(this.$store.state.app.pageOpenedList)
                 return this.$store.state.app.pageOpenedList; // 打开的页面的页面对象
             },
             currentPath () {
@@ -212,7 +212,7 @@
                     temp.push(this.$store.state.app.pageOpenedList[i].name)
                 }
                 // console.log(this.$store.state.app.pageOpenedList)
-                console.log(temp)
+                // console.log(temp)
                 return temp
             }
         },

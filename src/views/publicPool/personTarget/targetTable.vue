@@ -9,7 +9,7 @@
 	  <Row>
 		  <Col span="6">
 		  	<div style="padding-bottom:30px;padding-top:15px">部门：</div>
-		  	<Tree :data="departTree" show-checkbox @on-check-change="getCheckedNodes" ></Tree>
+		  	<Tree :data="departTree" show-checkbox @on-check-change="getCheckedNodes"></Tree>
 		  </Col>
 		  <Col span="18">
 		  	<Button style="margin: 10px 0;" type="primary" @click="updateTarget">保存</Button>
@@ -113,8 +113,8 @@ export default {
                         _self.departTree[i].children[j].title = _self.departTree[i].children[j].departname
                         if(_self.departTree[i].children[j].children){
                             for(let k = 0;k<_self.departTree[i].children[j].children.length;k++){
-								_self.departTree[i].children[j].children[k].title = _self.departTree[i].children[j].children[k].departname
-								if(_self.departTree[i].children[j].children[k].children){
+                                _self.departTree[i].children[j].children[k].title = _self.departTree[i].children[j].children[k].departname
+                                if(_self.departTree[i].children[j].children[k].children){
                                     for(let t = 0;t<_self.departTree[i].children[j].children[k].children.length;t++){
                                         _self.departTree[i].children[j].children[k].children[t].title = _self.departTree[i].children[j].children[k].children[t].departname
                                     }

@@ -116,7 +116,7 @@
                     </Form>
                 </TabPane>
                 <TabPane label="历史回访记录" name="2">
-                    <history-list :companyname="companyname"></history-list>
+                    <history-list :name="name"></history-list>
                 </TabPane>
             </Tabs>
             
@@ -149,6 +149,7 @@ export default {
             isreturn:true,
             departAlias:[],
             isOpenEdit:false,
+            name:"",
             add:{
                 
             }
@@ -230,7 +231,9 @@ export default {
             }else{
                 _self.add.depart = []
             }
+            console.log(e)
             _self.companyname = e.companyname
+            _self.name = e.name
             _self.showTab = "1"   
         })
         let role = localStorage.getItem('Role')

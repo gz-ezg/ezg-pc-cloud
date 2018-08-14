@@ -18,7 +18,8 @@ module.exports = {
         // 'vender-vchart': '@/vendors/vendors.vchart.js'
     },
     output: {
-        path: path.resolve(__dirname, '../dist/dist')
+        path: path.resolve(__dirname, '../dist/dist'),
+        filename: '[name].js'
     },
     module: {
         rules: [

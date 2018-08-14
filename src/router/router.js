@@ -260,16 +260,16 @@ export const appRouter = [
                     require(['@/views/customerManagement/customerTabManagement/customerTabManagement.vue'], resolve);
                 }
             },
-            {
-                access: 6088,
-                meta: 6088,
-                path: 'customerFollowUp',
-                title: '跟进记录管理',
-                name: 'customerFollowUp_index',
-                component: resolve => {
-                    require(['@/views/customerManagement/followUpData/followUpdata.vue'], resolve);
-                }
-            }
+            // {
+            //     access: 6088,
+            //     meta: 6088,
+            //     path: 'customerFollowUp',
+            //     title: '跟进记录管理',
+            //     name: 'customerFollowUp_index',
+            //     component: resolve => {
+            //         require(['@/views/customerManagement/followUpData/followUpdata.vue'], resolve);
+            //     }
+            // }
         ]
     },
     // {
@@ -291,6 +291,44 @@ export const appRouter = [
     //         }
     //     ]
     // },
+    {
+        access: 6110,
+        path: '/marketplaceManagement',
+        icon: 'social-windows',
+        name: 'marketplaceManagement',
+        title: '市场管理',
+        component:Main,
+        children:[
+            {
+                access: 6111,
+                // meta: 6088,
+                path: 'customerFollowUp',
+                title: '跟进记录管理',
+                name: 'customerFollowUp_index',
+                component: resolve => {
+                    require(['@/views/customerManagement/followUpData/followUpdata.vue'], resolve);
+                }
+            },
+            {
+                access: 6112,
+                path: 'market_rule_index', 
+                title: '销售规则管理', 
+                name: 'market_rule_index', 
+                component: resolve => {
+                    require(['@/views/publicPool/rule/index.vue'], resolve);
+                }
+            },
+            {
+                access: 6113,
+                path: 'person_target_index', 
+                title: '销售目标管理', 
+                name: 'person_target_index', 
+                component: resolve => {
+                    require(['@/views/publicPool/personTarget/index.vue'], resolve);
+                }
+            }
+        ]
+    },
     {
         path: '/customerService',
         icon: 'social-windows',
@@ -823,18 +861,18 @@ export const appRouter = [
                     require(['@/views/publicPool/index/pubilcPool_table.vue'], resolve);
                 }
             },
-            {
-                access: 6090,
-                path: 'rule_index', title: '销售规则管理', name: 'rule_index', component: resolve => {
-                    require(['@/views/publicPool/rule/index.vue'], resolve);
-                }
-            },
-            {
-                access: 6101,
-                path: 'person_target_index', title: '销售目标管理', name: 'person_target_index', component: resolve => {
-                    require(['@/views/publicPool/personTarget/index.vue'], resolve);
-                }
-            }
+            // {
+            //     access: 6090,
+            //     path: 'rule_index', title: '销售规则管理', name: 'rule_index', component: resolve => {
+            //         require(['@/views/publicPool/rule/index.vue'], resolve);
+            //     }
+            // },
+            // {
+            //     access: 6101,
+            //     path: 'person_target_index', title: '销售目标管理', name: 'person_target_index', component: resolve => {
+            //         require(['@/views/publicPool/personTarget/index.vue'], resolve);
+            //     }
+            // }
         ]
     },
 /*    {
@@ -1005,22 +1043,22 @@ export const appRouter = [
                     require(['@/views/home/market_index/marketIndex.vue'], resolve);
                 }
             },
-            {
-                path: 'auditIndex', 
-                title: '审计首页', 
-                name: 'dataauditIndex_index', 
-                component: resolve => {
-                    require(['@/views/home/audit_index/auditIndex.vue'], resolve);
-                }
-            },
-            {
-                path: 'planIndex', 
-                title: '企划首页', 
-                name: 'dataplanIndex_index', 
-                component: resolve => {
-                    require(['@/views/home/plan_index/planIndex.vue'], resolve);
-                }
-            },
+            // {
+            //     path: 'auditIndex', 
+            //     title: '审计首页', 
+            //     name: 'dataauditIndex_index', 
+            //     component: resolve => {
+            //         require(['@/views/home/audit_index/auditIndex.vue'], resolve);
+            //     }
+            // },
+            // {
+            //     path: 'planIndex', 
+            //     title: '企划首页', 
+            //     name: 'dataplanIndex_index', 
+            //     component: resolve => {
+            //         require(['@/views/home/plan_index/planIndex.vue'], resolve);
+            //     }
+            // },
         ]
     },
     {

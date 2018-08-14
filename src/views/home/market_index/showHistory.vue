@@ -92,12 +92,13 @@ export default {
             page: 1,
             pageSize: 10,
             CommonresultType:"",
-            CommonresultType_Map:new Map()
+            CommonresultType_Map:new Map(),
+            saler:""
         }
     },
     methods:{
         date_change(e){
-            console.log(e)
+            // console.log(e)
             this.dateRange[0] = e[0]
             this.dateRange[1] = e[1]
             this.getHistoryData()
@@ -118,7 +119,8 @@ export default {
                     end_period: DateFormat2(_self.dateRange[1]),
                     page: _self.page,
                     pageSize: _self.pageSize,
-                    type: _self.type
+                    type: _self.type,
+                    saler: _self.saler
                 }
             }
 
@@ -152,6 +154,8 @@ export default {
         let _self = this
         _self.getDataCenter()
         this.$bus.on('OPEN_HISTORY_FUNCTION',(e)=>{
+            // console.log(e)
+            _self.saler = e
             _self.open_person_history = true
             _self.getHistoryData()
         })
