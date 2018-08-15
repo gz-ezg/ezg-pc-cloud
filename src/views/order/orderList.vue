@@ -491,6 +491,7 @@
                     <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="xiugaiOpen()">修改</Button>
                     <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="getTableData">刷新</Button>
                     <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="refresh" v-if="isAdmin">重新生成工单</Button>
+                    <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="refresh_order" v-if="isAdmin">重置订单流程</Button>
                     <!--  ↓ ↓ 该功能暂定，代码勿删  -->
                     <!--<Button type="primary" icon="ios-color-filter-outline" @click="qihuaOpen()">企划(修改)</Button>-->
                     <!--<Button v-permission="['orderL.invalid']" type="primary" icon="ios-color-filter-outline" @click="deleteOrder = true">订单作废</Button>-->
@@ -3776,11 +3777,29 @@
                     }
 
                     function success(res){
+                        _self.$Message.success(res.data.msg)
                     }
 
-                    // function fail(err){
-                    //     console.log(err)
-                    // }
+                    _self.$Get(url, config, success)
+                }
+            },
+
+            refresh_order(){
+                let _self = this
+                if (_self.customerId == '') {
+                    _self.$Message.warning('请选择订单项');
+                } else {
+                    let url = `api/order/resetOrderProcess`
+                    let config = {
+                        params:{
+                            orderId: _self.customerId
+                        }
+                    }
+
+                    function success(res){
+                        _self.$Message.success(res.data.msg)
+                        _self.getTableData()
+                    }
 
                     _self.$Get(url, config, success)
                 }

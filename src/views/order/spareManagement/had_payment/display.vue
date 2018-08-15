@@ -41,7 +41,7 @@
                     </Col>
                 </Row>
                 <Row>
-                    <Collapse>
+                    <Collapse v-model="show">
                         <Panel name="1">
                             补交明细
                             <div slot="content">
@@ -66,6 +66,7 @@ import Bus from '../bus'
 export default {
     data(){
         return{
+            show:'1',
             display:false,
             balanceId:'',
             // 上方表格的模型

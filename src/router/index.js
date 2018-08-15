@@ -4,6 +4,8 @@ import Util from '../libs/util';
 import VueRouter from 'vue-router';
 import Cookies from 'js-cookie';
 import {routers, otherRouter, appRouter} from './router';
+import axios from 'axios';
+
 
 Vue.use(VueRouter);
 
@@ -24,6 +26,18 @@ router.beforeEach((to, from, next) => {
     console.log(from)
     console.log("======= next =======")
     console.log(next)
+
+    // let url = 'api/system/showClickOnInfo'
+    
+    // let config = {
+    //     menuId: to.meta
+    // }
+
+    // axios.post(url,config).then(function(res){
+    //     console.log(res)
+    // }).catch(function(err){
+    //     console.log(err)
+    // })
 
     if (Cookies.get('locking') === '1' && to.name !== 'locking') { // 判断当前是否是锁定状态
         next({

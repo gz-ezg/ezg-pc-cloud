@@ -382,6 +382,10 @@
             this.init();
             this.rate_start()
             this.spin_loading = false
+            //  全局监听click事件，并获取dom元素
+            // document.addEventListener("click",function(e){
+            //     console.log(e.path)
+            // })
         },
         beforeUpdate(){
             // console.log("beforeUpdate")

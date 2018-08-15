@@ -293,6 +293,7 @@ export const appRouter = [
     // },
     {
         access: 6110,
+        meta: 6110,
         path: '/marketplaceManagement',
         icon: 'social-windows',
         name: 'marketplaceManagement',
@@ -301,7 +302,7 @@ export const appRouter = [
         children:[
             {
                 access: 6111,
-                // meta: 6088,
+                meta: 6111,
                 path: 'customerFollowUp',
                 title: '跟进记录管理',
                 name: 'customerFollowUp_index',
@@ -311,6 +312,7 @@ export const appRouter = [
             },
             {
                 access: 6112,
+                meta: 6112,
                 path: 'market_rule_index', 
                 title: '销售规则管理', 
                 name: 'market_rule_index', 
@@ -320,6 +322,7 @@ export const appRouter = [
             },
             {
                 access: 6113,
+                meta: 6113,
                 path: 'person_target_index', 
                 title: '销售目标管理', 
                 name: 'person_target_index', 
@@ -333,6 +336,7 @@ export const appRouter = [
         path: '/customerService',
         icon: 'social-windows',
         name: 'customerService',
+        meta: 6060,
         access: 6060,
         title: '客服管理',
         // meta:{
@@ -402,6 +406,7 @@ export const appRouter = [
     },
     {
         access: 6005,
+        meta: 6005,
         path: '/channelManagement',
         icon: 'social-windows',
         name: 'channelManagement',
@@ -413,6 +418,7 @@ export const appRouter = [
         children: [
             {
                 access: 6006,
+                meta: 6006,
                 path: 'channelCustomer',
                 title: '渠道客户管理',
                 name: 'channelCustomer_index',
@@ -422,6 +428,7 @@ export const appRouter = [
             },
             {
                 access: 6007,
+                meta: 6007,
                 path: 'channelType',
                 title: '渠道类型管理',
                 name: 'channelType_index',
@@ -431,6 +438,7 @@ export const appRouter = [
             },
             {
                 access: 6008,
+                meta: 6008,
                 path: 'transactionRecord',
                 title: '交易查询',
                 name: 'transactionRecord_index',
@@ -442,6 +450,7 @@ export const appRouter = [
     },
     {
         access: 6009,
+        meta: 6009,
         path: '/cluesLibrary',
         icon: 'social-windows',
         name: 'cluesLibrary',
@@ -453,6 +462,7 @@ export const appRouter = [
         children: [
             {
                 access: 6010,
+                meta: 6010,
                 path: 'cluesLibraryM',
                 title: '线索库管理',
                 name: 'cluesLibrary_index',
@@ -462,6 +472,7 @@ export const appRouter = [
             },
             {
                 access: 6011,
+                meta: 6011,
                 path: 'cluesLabels',
                 title: '线索标签管理',
                 name: 'cluesLabels_index',
@@ -519,6 +530,7 @@ export const appRouter = [
     // },
     {
         access: 6017,
+        meta: 6017,
         path: '/orderManagement',
         icon: 'social-windows',
         name: 'orderManagement',
@@ -529,6 +541,7 @@ export const appRouter = [
         component: Main,
         children: [
             {
+                meta: 6018,
                 access: 6018,
                 path: 'orderList',
                 title: '订单列表',
@@ -539,6 +552,7 @@ export const appRouter = [
             },
             {
                 access: 6019,
+                meta: 6019,
                 path: 'orderApprove',
                 title: '订单审批',
                 name: 'orderApprove_index',
@@ -548,6 +562,7 @@ export const appRouter = [
             },
             {
                 access: 6020,
+                meta: 6020,
                 path: 'spareManagement',
                 title: '余款管理',
                 name: 'spareManagement_index',
@@ -568,6 +583,7 @@ export const appRouter = [
     },
     {
         access: 6035,
+        meta: 6035,
         path: '/commercialmanagement',
         icon: 'social-windows',
         title: '商事管理',
@@ -576,6 +592,7 @@ export const appRouter = [
         children: [
             {
                 access:6049,
+                meta: 6049,
                 path: 'allot',
                 title: '工单分配',
                 name:"'BUSSINESS'",
@@ -588,6 +605,7 @@ export const appRouter = [
             },
             {
                 access:6036,
+                meta: 6036,
                 path: 'statistical',
                 title: '外勤统计',
                 name: 'statistical',
@@ -606,6 +624,7 @@ export const appRouter = [
             // },
             {
                 access: 6038,
+                meta: 6038,
                 path: 'mycommontaskmanagement',
                 title: '工单管理',
                 name: 'commercialTaskManagement',
@@ -615,6 +634,7 @@ export const appRouter = [
             },
             {
                 access: 6039,
+                meta: 6039,
                 path: 'rulemanagement',
                 title: '规则管理',
                 name: 'commercialRulemanagement',
@@ -626,6 +646,7 @@ export const appRouter = [
     },
     {
         access: 6040,
+        meta: 6040,
         path: '/planmanagement',
         icon: 'social-windows',
         title: '企划管理',
@@ -634,6 +655,7 @@ export const appRouter = [
         children:[
             {
                 access:6051,
+                meta: 6051,
                 path: 'allot',
                 title: '工单分配',
                 name:"'PLAN'",
@@ -646,6 +668,7 @@ export const appRouter = [
             },
             {
                 access:6052,
+                meta: 6052,
                 path: 'plantaskmanagement',
                 title: '工单管理',
                 name: 'plantaskmanagement',
@@ -657,6 +680,7 @@ export const appRouter = [
     },
     {
         access: 6042,
+        meta: 6042,
         path: '/accountantWorkOrder',
         icon: 'social-windows',
         name: 'accountantWorkOrder',
@@ -665,6 +689,7 @@ export const appRouter = [
         children: [
             {
                 access:6050,
+                meta: 6050,
                 path: 'allot',
                 title: '工单分配',
                 name:"'ACCOUNT'",
@@ -677,6 +702,7 @@ export const appRouter = [
             },
             {
                 access:6043,
+                meta: 6043,
                 path: 'accounttaskmanagement',
                 title: '工单管理',
                 name: 'accounttaskmanagement_index',
@@ -686,6 +712,7 @@ export const appRouter = [
             },
             {
                 access: 6044,
+                meta: 6044,
                 path: 'BookkeepingAgency',
                 title: '代理记账管理',
                 name: 'BookkeepingAgency_index',
@@ -695,6 +722,7 @@ export const appRouter = [
             },
             {
                 access: 6046,
+                meta: 6046,
                 path: 'accountantOrder',
                 title: '会计到家工单管理',
                 name: 'accountantOrder_index',
@@ -704,6 +732,7 @@ export const appRouter = [
             },
             {
                 access: 6047,
+                meta: 6047,
                 path: 'serviceTemplate',
                 title: '服务总结模板',
                 name: 'serviceTemplate_index',
@@ -713,6 +742,7 @@ export const appRouter = [
             },
             {
                 access: 6053,
+                meta: 6053,
                 path: 'auditaccount',
                 title: '审账',
                 name: 'auditaccount_index',
@@ -722,6 +752,7 @@ export const appRouter = [
             },
             {
                 access: 6054,
+                meta: 6054,
                 path: 'auditaccountrule',
                 title: '审账规则',
                 name: 'auditaccount_rule',
@@ -734,6 +765,7 @@ export const appRouter = [
     },
     {
         access: 6071,
+        meta: 6071,
         path: '/auditWorkOrder',
         icon: 'social-windows',
         name: 'auditWorkOrder',
@@ -742,6 +774,7 @@ export const appRouter = [
         children: [
             {
                 access:6072,
+                meta: 6072,
                 path: 'allot',
                 title: '工单分配',
                 name:"'AUDIT'",
@@ -751,6 +784,7 @@ export const appRouter = [
             },
             {
                 access:6073,
+                meta: 6073,
                 path: 'audittaskmanagement',
                 title: '工单管理',
                 name:"audittaskmanagement_index",
@@ -766,10 +800,12 @@ export const appRouter = [
         name: 'administrationWorkOrder',
         title: '行政管理',
         access: 6091,
+        meta: 6091,
         component: Main,
         children: [
             {
                 access:6092,
+                meta: 6092,
                 path: 'allot',
                 title: '工单分配',
                 name:"'EXECUTIVE'",
@@ -782,6 +818,7 @@ export const appRouter = [
             },
             {
                 access: 6093,
+                meta: 6093,
                 path: 'administratiotaskmanagement',
                 title: '工单管理',
                 name:"administratiotaskmanagement",
@@ -793,6 +830,7 @@ export const appRouter = [
     },
     {
         access: 6075,
+        meta: 6075,
         path: '/fieldManagement',
         icon: 'social-windows',
         name: 'fieldManagement',
@@ -801,6 +839,7 @@ export const appRouter = [
         children: [
             {
                 access:6076,
+                meta: 6076,
                 path: 'commonfieldmanagement',
                 title: '外勤管理',
                 name:"commonfieldmanagement_index",
@@ -810,6 +849,7 @@ export const appRouter = [
             },
             {
                 access:6078,
+                meta: 6078,
                 path: 'fieldWarning',
                 title: '外勤预警',
                 name: 'fieldWarning_index',
@@ -821,6 +861,7 @@ export const appRouter = [
     },
     {
         access: 6080,
+        meta: 6080,
         path: '/stystemcomplaint',
         icon: 'social-windows',
         name: 'stystemcomplaint',
@@ -829,6 +870,7 @@ export const appRouter = [
         children: [
             {
                 access: 6081,
+                meta: 6081,
                 path: 'complainAndAdvice',
                 title: '意见管理',
                 name: 'complainAndAdvice_index',
@@ -838,6 +880,7 @@ export const appRouter = [
             },
             {
                 access: 6082,
+                meta: 6082,
                 path: 'complainReply',
                 title: '反馈回复',
                 name: 'complainReply_index',
@@ -849,6 +892,7 @@ export const appRouter = [
     },
     {
         access: 6027,
+        meta: 6027,
         path: '/publicPool',
         icon: 'social-windows',
         title: '公海池',
@@ -857,6 +901,7 @@ export const appRouter = [
         children: [
             {
                 access: 6089,
+                meta: 6089,
                 path: 'index', title: '公海池', name: 'publicPool_index', component: resolve => {
                     require(['@/views/publicPool/index/pubilcPool_table.vue'], resolve);
                 }
@@ -897,6 +942,7 @@ export const appRouter = [
      */
     {
         access: 6028,
+        meta: 6028,
         path: '/systemManagement',
         icon: 'social-windows',
         name: 'systemManagement',
@@ -908,6 +954,7 @@ export const appRouter = [
         children: [
             {
                 access: 6029,
+                meta: 6029,
                 path: 'menuMangement',
                 title: '菜单管理',
                 name: 'menuMangement_index',
@@ -917,6 +964,7 @@ export const appRouter = [
             },
             {
                 access: 6030,
+                meta: 6030,
                 path: 'roleMangement',
                 title: '角色管理',
                 name: 'roleMangement_index',
@@ -926,6 +974,7 @@ export const appRouter = [
             },
             {
                 access: 6031,
+                meta: 6031,
                 path: 'userManagement',
                 title: '用户管理',
                 name: 'userManagement_index',
@@ -935,6 +984,7 @@ export const appRouter = [
             },
             {
                 access: 6032,
+                meta: 6032,
                 path: 'sqlDeal',
                 title: '管理SQL',
                 name: 'admin_sql_deal',
@@ -952,7 +1002,8 @@ export const appRouter = [
             //     }
             // },
             {
-                access: 6032,
+                access: 6085,
+                meta: 6085,
                 path: 'datacenterManagement',
                 title: '数据字典管理',
                 name: 'datacenterManagement_index',
@@ -962,6 +1013,7 @@ export const appRouter = [
             },
             {
                 access: 6033,
+                meta: 6033,
                 path: 'systemparamsManagement',
                 title: '系统参数管理',
                 name: 'systemparamsManagement_index',
@@ -971,6 +1023,7 @@ export const appRouter = [
             },
             {
                 access: 6034,
+                meta: 6034,
                 path: 'timetaskManagement',
                 title: '定时任务',
                 name: 'timetaskManagement',
@@ -981,6 +1034,7 @@ export const appRouter = [
             {
                 //  未配置，暂时使用
                 access: 6086,
+                meta: 6086,
                 path: 'attributeManagement',
                 title: '属性管理',
                 name: 'attributeManagement',
@@ -990,6 +1044,7 @@ export const appRouter = [
             },
             {
                 access: 6102,
+                meta: 6102,
                 path: 'stystemLog',
                 title: '系统日志',
                 name: 'stystemLog',
@@ -1001,6 +1056,7 @@ export const appRouter = [
     },
     {
         access: 6103,
+        meta: 6103,
         path: '/allindex',
         icon: 'social-windows',
         name: 'allindex',
@@ -1009,6 +1065,7 @@ export const appRouter = [
         children: [
             {   
                 access: 6104,
+                meta: 6104,
                 path: 'cannelIndex', 
                 title: '渠道首页', 
                 name: 'datacannelIndex_index', 
@@ -1018,6 +1075,7 @@ export const appRouter = [
             },
             {
                 access: 6105,
+                meta: 6105,
                 path: 'commercialIndex', 
                 title: '商事首页', 
                 name: 'datacommercialIndex_index', 
@@ -1027,6 +1085,7 @@ export const appRouter = [
             },
             {
                 access: 6106,
+                meta: 6106,
                 path: 'accountIndex', 
                 title: '会计首页', 
                 name: 'dataaccountIndex_index', 
@@ -1036,6 +1095,7 @@ export const appRouter = [
             },
             {
                 access: 6107,
+                meta: 6107,
                 path: 'marketIndex', 
                 title: '市场首页', 
                 name: 'datamarketIndex_index', 
@@ -1063,6 +1123,7 @@ export const appRouter = [
     },
     {
         access: 6065,
+        meta: 6065,
         path: '/materialHouse',
         icon: 'social-windows',
         name: 'materialHouse',
@@ -1074,6 +1135,7 @@ export const appRouter = [
         children: [
             {
                 access: 6066,
+                meta: 6066,
                 path: 'CompanyInformation',
                 title: '公司资料',
                 name: 'CompanyInformation_index',
@@ -1083,6 +1145,7 @@ export const appRouter = [
             },
             {
                 access: 6067,
+                meta: 6067,
                 path: 'contractType',
                 title: '合同类型',
                 name: 'contractType_index',
@@ -1092,6 +1155,7 @@ export const appRouter = [
             },
             {
                 access: 6068,
+                meta: 6068,
                 path: 'DepartmentInformation',
                 title: '部门资料',
                 name: 'DepartmentInformation_index',
@@ -1101,6 +1165,7 @@ export const appRouter = [
             },
             {
                 access: 6069,
+                meta: 6069,
                 path: 'LearningInformation',
                 title: '学习资料',
                 name: 'LearningInformation_index',
@@ -1110,6 +1175,7 @@ export const appRouter = [
             },
             {
                 access: 6070,
+                meta: 6070,
                 path: 'VideoData',
                 title: '视频资料',
                 name: 'VideoData_index',

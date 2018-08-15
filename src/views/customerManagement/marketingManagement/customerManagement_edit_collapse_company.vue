@@ -24,15 +24,15 @@
                 <FormItem label="跟进销售" prop="followby">
                     <Input v-model="formValidate.followby" disabled></Input>
                 </FormItem>
-                <FormItem label="交易状态" prop="enterprisestatus">
+                <!-- <FormItem label="交易状态" prop="enterprisestatus"> -->
                     <!-- 暂时注销，后期不允许修改 -->
                     <!-- <Input v-model="formValidate.enterprisestatus" disabled></Input> -->
-                    <Select transfer v-model="formValidate.enterprisestatus">
+                    <!-- <Select transfer v-model="formValidate.enterprisestatus">
                         <Option v-for="item in enterprisestatusValue" :value="item.value" :key="item.value">
                             {{ item.label }}
                         </Option>
                     </Select>
-                </FormItem>
+                </FormItem> -->
                 <FormItem label="法人" prop="legalrepresentative">
                     <Input v-model="formValidate.legalrepresentative"></Input>
                 </FormItem>
@@ -114,13 +114,13 @@
                         </Option>
                     </Select>
                 </FormItem>
-                <FormItem label="交易状态" prop="enterprisestatus">
+                <!-- <FormItem label="交易状态" prop="enterprisestatus">
                     <Select transfer v-model="formValidate2.enterprisestatus" placement="top">
                         <Option v-for="item in enterprisestatusValue" :value="item.value" :key="item.value">
                             {{ item.label }}
                         </Option>
                     </Select>
-                </FormItem>
+                </FormItem> -->
                 <FormItem label="企业纳税类型" prop="taxtype">
                     <Select transfer v-model="formValidate2.taxtype">
                         <Option v-for="item in taxtypeValue" :value="item.value" :key="item.value">{{ item.label }}
@@ -347,7 +347,7 @@ import Bus from '../../../components/bus.js'
                     companyarea:[]              
                 },
                 formValidate2: {
-                    taxtype: '',
+                    taxtype: 'tax13',
                     tel: this.tel,
                     companyname: '',
                     followby: localStorage.getItem('realname'),
@@ -390,9 +390,9 @@ import Bus from '../../../components/bus.js'
                     cluesource: [
                         {required: true,trigger: 'change',message:'企业来源不能为空'}
                     ],
-                    enterprisestatus: [
-                        {required: true, trigger: 'change',message:'企业状态不能为空'}
-                    ],
+                    // enterprisestatus: [
+                    //     {required: true, trigger: 'change',message:'企业状态不能为空'}
+                    // ],
                     taxtype: [
                         {required: true,message: '企业纳税类型不能为空', trigger: 'change'}
                     ],
@@ -413,9 +413,9 @@ import Bus from '../../../components/bus.js'
                     cluesource: [
                         {required: true,trigger: 'change',message: '企业来源不能为空'}
                     ],
-                    enterprisestatus: [
-                        {required: true, trigger: 'change',message: '企业状态不能为空'}
-                    ],
+                    // enterprisestatus: [
+                    //     {required: true, trigger: 'change',message: '企业状态不能为空'}
+                    // ],
                     taxtype: [
                         {required: true,message: '企业纳税类型不能为空', trigger: 'change'}
                     ],
@@ -878,7 +878,7 @@ import Bus from '../../../components/bus.js'
                                 cluesource: _self.formValidate.cluesource,
                                 companyarea: _self.formValidate.companyarea.join('-'),
                                 //  暂时启用，后期注销
-                                enterprisestatus:_self.formValidate.enterprisestatus,
+                                // enterprisestatus:_self.formValidate.enterprisestatus,
                                 accountgrade: _self.formValidate.accountgrade
 
                             }
@@ -922,7 +922,7 @@ import Bus from '../../../components/bus.js'
                                 legalrepresentative: _self.formValidate2.legalrepresentative,
                                 importlevel: _self.formValidate2.importlevel,
                                 cluesource: _self.formValidate2.cluesource,
-                                enterprisestatus: _self.formValidate2.enterprisestatus,
+                                // enterprisestatus: _self.formValidate2.enterprisestatus,
                                 taxtype: _self.formValidate2.taxtype,
                                 companyarea:_self.formValidate2.companyarea.join('-'),
                                 tel: _self.formValidate2.tel,

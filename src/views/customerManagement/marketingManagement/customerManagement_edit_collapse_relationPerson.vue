@@ -169,7 +169,7 @@
                     wechat: '',
                     email: '',
                     jobplace: '',
-                    sendmsgflag: '',
+                    sendmsgflag: '0',
                     memo: '',
                     customerid: this.customerid
                 },
