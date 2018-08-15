@@ -85,7 +85,7 @@
                 <Row :gutter="16" style="margin-bottom:5px">
                     <Col span="24">
                     <FormItem label="备注：" prop="backup">
-                        <Input size="small" v-model="formValidate.backup" readonly type="textarea" rows="7" />
+                        <Input size="small" v-model="formValidate.backup" readonly type="textarea" :rows="7" />
                     </FormItem>
                     </Col>
                     

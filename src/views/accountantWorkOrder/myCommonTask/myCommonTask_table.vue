@@ -16,13 +16,13 @@
         </Tabs>
         <detail></detail>
         <company-detail></company-detail>
-        <set-finish-time></set-finish-time>
+        <!-- <set-finish-time></set-finish-time> -->
         <!-- <flow></flow> -->
     </div>
 </template>
 
 <script>
-import setFinishTime from './myCommonTaskIndex/setFinishTime';
+// import setFinishTime from './myCommonTaskIndex/setFinishTime';
 
 import Detail from './myCommonTaskIndex/detail'
 // import CompanyDetail from './myCommonTaskIndex/companydetail'
@@ -45,7 +45,7 @@ import Notbegin from './myCommonTaskIndex/notbegin'
             Detail,
             CompanyDetail,
             Flow,
-            setFinishTime
+            // setFinishTime
         },
         data(){
             return{

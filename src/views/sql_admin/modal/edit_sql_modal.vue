@@ -15,13 +15,13 @@
             :rules="SQL_rule"
         >
             <FormItem label="SQL查询" prop="sqlSelect">
-                <Input v-model="SQL_item.sqlSelect" placeholder="" type="textarea" rows=2></Input>
+                <Input v-model="SQL_item.sqlSelect" placeholder="" type="textarea" :rows="2"></Input>
             </FormItem>
             <FormItem label="SQL组" prop="sqlGroup" >
                 <Input v-model="SQL_item.sqlGroup" placeholder="" type="textarea" ></Input>
             </FormItem>
             <FormItem label="SQL主体" prop="sqlMain">
-                <Input v-model="SQL_item.sqlMain" placeholder="" type="textarea" rows=10></Input>
+                <Input v-model="SQL_item.sqlMain" placeholder="" type="textarea" :rows="10"></Input>
             </FormItem>
             <FormItem label="跳过权限设置" prop="skipPermissionCheck">
                 <Input v-model="SQL_item.skipPermissionCheck" placeholder="" type="textarea"></Input>

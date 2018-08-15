@@ -15,12 +15,15 @@
             </TabPane>
         </Tabs>
         <detail></detail>
+        <over-due-reason></over-due-reason>
+
         <company-detail></company-detail>
         <!-- <flow></flow> -->
     </div>
 </template>
 
 <script>
+import overDueReason from './myCommonTaskIndex/overdueReason'
 import Detail from './myCommonTaskIndex/detail'
 // import CompanyDetail from './myCommonTaskIndex/companydetail'
 import CompanyDetail from '../../woa-components/companyDetail/CompanyDetail'
@@ -40,7 +43,8 @@ import Notbegin from './myCommonTaskIndex/notbegin'
             Notbegin,
             Detail,
             CompanyDetail,
-            Flow
+            Flow,
+            overDueReason
         },
         data(){
             return{
@@ -52,14 +56,6 @@ import Notbegin from './myCommonTaskIndex/notbegin'
         methods:{
             getDataCenter(){
                 let _self = this
-                // let url2 = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=companyarea`
-            
-                // _self.$http.get(url2).then(function(res){
-                //     // console.log(res.data.data.companyarea.length)
-                //     // let len = res.data.data.companyarea.length
-                //     _self.companyarea = res.data.data.companyarea
-                    
-                // })
 
                 let params = "companyarea"
 

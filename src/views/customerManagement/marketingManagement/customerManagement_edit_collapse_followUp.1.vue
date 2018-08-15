@@ -193,10 +193,10 @@
                         </Col>
                     </Row> 
                     <FormItem label="服务评价：" prop="legalrepresentative" style="margin-bottom:15px">
-                        <Input v-model="huifangValidate.legalrepresentative" type="textarea" readonly rows=4 ></Input>
+                        <Input v-model="huifangValidate.legalrepresentative" type="textarea" readonly :rows="4" ></Input>
                     </FormItem>
                     <FormItem label="原因及措施：" prop="importlevel" style="margin-bottom:15px">
-                        <Input v-model="huifangValidate.createby" readonly type="textarea" rows=4 ></Input>
+                        <Input v-model="huifangValidate.createby" readonly type="textarea" :rows="4" ></Input>
                     </FormItem>
                 </Form>
                 <div slot="footer"></div>

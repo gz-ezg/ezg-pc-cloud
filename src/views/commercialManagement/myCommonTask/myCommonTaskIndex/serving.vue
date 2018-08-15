@@ -43,6 +43,9 @@
         <Row>
             <ButtonGroup style="float:left">
                 <Button type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="open_set_time">设置计划完成时间</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="over_due_reason">逾期原因</Button>
+
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button> -->
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
                 <Button type="primary" icon="information-circled" @click="company">查看公司</Button>
@@ -234,11 +237,11 @@ export default {
                         width: 120,
                         sortable: true                        
                     },
-                    {
-                        title: '经营状态',
-                        key:'managestatusName',
-                        width:120
-                    },
+                    // {
+                    //     title: '经营状态',
+                    //     key:'managestatusName',
+                    //     width:120
+                    // },
                     // {
                     //     title: '订单',
                     //     key: 'ordercode',
@@ -303,28 +306,33 @@ export default {
                         sortable: true                        
                     },
                     {
+                        title: '计划完成时间',
+                        key: 'person_plan_finish_date',
+                        width: 140,
+                    },
+                    {
                         title: '服务开始时间',
                         key: 'ServiceStart',
                         width: 140,
                         sortable: true                        
                     },
-                    {
-                        title: '创建时间',
-                        key: 'CreateDate',
-                        width: 140,
-                        sortable: true                        
-                    },
+                    // {
+                    //     title: '创建时间',
+                    //     key: 'CreateDate',
+                    //     width: 140,
+                    //     sortable: true                        
+                    // },
                     // {
                     //     title: '预计完成时间',
                     //     key: 'baseorderid',
                     //     width: 120
                     // },
-                    {
-                        title: '实际完成时间',
-                        key: 'UpdateDate',
-                        sortable: true,                        
-                        width: 140
-                    },
+                    // {
+                    //     title: '实际完成时间',
+                    //     key: 'UpdateDate',
+                    //     sortable: true,                        
+                    //     width: 140
+                    // },
                     {
                         title: '服务人员',
                         key: 'servername',
@@ -596,6 +604,22 @@ export default {
                     Bus.$emit('myflow',this.current_row)
                 }
                 
+            }else{
+                this.$Message.warning('请选择一行进行流转！')
+            }
+        },
+        open_set_time(){
+            let _self = this
+            if(this.current_row != ''){
+                _self.$bus.emit("OPEN_SET_FINISH_TIME",this.current_row)
+            }else{
+                this.$Message.warning('请选择一行进行流转！')
+            }
+        },
+        over_due_reason(){
+            let _self = this
+            if(this.current_row != ''){
+                _self.$bus.emit("OPEN_OVER_DUE_REASON",this.current_row)
             }else{
                 this.$Message.warning('请选择一行进行流转！')
             }

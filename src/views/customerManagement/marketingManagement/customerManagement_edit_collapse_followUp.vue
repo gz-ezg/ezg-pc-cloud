@@ -206,10 +206,10 @@
                         </Col>
                     </Row> 
                     <FormItem label="服务评价：" prop="legalrepresentative" style="margin-bottom:15px">
-                        <Input v-model="huifangValidate.legalrepresentative" type="textarea" readonly rows=4 ></Input>
+                        <Input v-model="huifangValidate.legalrepresentative" type="textarea" readonly :rows="4" ></Input>
                     </FormItem>
                     <FormItem label="原因及措施：" prop="importlevel" style="margin-bottom:15px">
-                        <Input v-model="huifangValidate.createby" readonly type="textarea" rows=4 ></Input>
+                        <Input v-model="huifangValidate.createby" readonly type="textarea" :rows="4" ></Input>
                     </FormItem>
                 </Form>
                 <div slot="footer"></div>
@@ -229,6 +229,13 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
 
         props: ['customerid'],
         data() {
+            const validateResult = (rule, value, callback) => {
+                if (value === '' && this.followupshow == true) {
+                    callback(new Error('必选项！'));
+                } else {
+                    callback();
+                }
+            };
             return {
                 followupshow:false,
                 market_field_type:"",
@@ -269,11 +276,14 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
                     //     {  required: true, trigger: 'change', message: '公司名为必须' }
                     // ],
                     content:[
-                        {   required:true,trigger:'blur',message:'跟进记录内容为必须'}
+                        {   required:true,trigger:'change',message:'跟进记录内容为必须'}
                     ],
                     followUpType:[{
-                        required:true,trigger:'blur',message:'跟进类型为必须'
-                    }]
+                        required:true,trigger:'change',message:'跟进类型为必须'
+                    }],
+                    followResult: [
+                        { required:true, validator: validateResult, trigger: 'change' }
+                    ],
             }
         }},
         methods: {

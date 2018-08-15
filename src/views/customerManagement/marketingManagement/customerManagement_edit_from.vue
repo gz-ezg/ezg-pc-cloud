@@ -59,6 +59,11 @@
                         </Option>
                     </Select>
                 </FormItem>
+                <FormItem label="客户重要性" prop="importlevel" style="margin-bottom:0px">
+                    <Select transfer v-model="formValidate.importance" size="small">
+                        <Option v-for="item in importance" :value="item.typecode" :key="item.id">{{ item.typename}}</Option>
+                    </Select>
+                </FormItem>
                 <FormItem label="区域" prop="area" style="margin-bottom:0px">
                     <Select transfer v-model="formValidate.area" size="small" >
                         <Option v-for="item in area" :value="item.typecode" :key="item.id">{{ item.typename }}
@@ -359,6 +364,7 @@
                     channelTypeId:'',
                     TJleader:'',
                     recCustomer:'',
+                    importance:''
                     // customertuijianId:''
                 },
                 customerlabel: [],
@@ -369,10 +375,12 @@
                 customerType: [],
                 impLevel: [],
                 sf_yn: [],
-                customerTypeArr:[]
+                customerTypeArr:[],
+                importance:[]
             }
         },
         methods: {
+            //  控制客户等级是否变更
             show(e){
                 // console.log(e)
                 if(e[0] == "10919"){
@@ -386,7 +394,7 @@
                 var _self = this;
                 // var url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=customerTypes,cluesources,customerrating,area,sf_yn`;
 
-                let params = "customerTypes,cluesources,customerrating,area,sf_yn"
+                let params = "customerTypes,cluesources,customerrating,area,sf_yn,importance"
                 function finish(res){
                     var temp = res.data.data;
                     _self.area = temp.area;
@@ -395,6 +403,7 @@
                     _self.customerType = temp.customerTypes;
                     _self.impLevel = temp.customerrating;
                     _self.sf_yn = temp.sf_yn;
+                    _self.importance = temp.importance;
                     _self.area.reverse()
                     // 二级联动改一级
                     _self.customerTypeArr = []
@@ -498,6 +507,7 @@
                         _self.formValidate.area = data.AREA
                         _self.formValidate.labels = data.labels
                         _self.formValidate.recCustomer = data.rec_customer
+                        // _self.formValidate.importance = data.importance
                         
                         _self.formValidate.customersource = data.customersource
                         if(data.importlevel != null){
@@ -604,13 +614,10 @@
                         } else {
                             let customerTemp = ""
                             if(_self.formValidate.customertype.length){
-                                console.log(_self.formValidate.customertype.length)
                                 customerTemp = _self.formValidate.customertype[0] + "-" + _self.formValidate.customertype[1]
                             }else{
                                 customerTemp = ""
                             }
-                            console.log("_________________________________________")
-                            console.log(customerTemp)
                             const config = {
                                 'id':_self.formValidate.id,
                                 'name':_self.formValidate.name,
@@ -636,8 +643,8 @@
                                 'channelTypeId':_self.formValidate.channelTypeId,
                                 'recCustomer':_self.formValidate.recCustomer
                                 }
-                            console.log("_____________config__________________")
-                            console.log(config.customertype)
+                            // console.log("_____________config__________________")
+                            // console.log(config.customertype)
                             _self.$http({
                                 method: 'post',
                                 url: '/api/customer/updateCustomer',

@@ -30,7 +30,7 @@
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="record" label="投诉内容：" >
-                            <Input type="textarea" v-model="show.record" rows="4" readonly></Input>
+                            <Input type="textarea" v-model="show.record" :rows="4" readonly></Input>
                         </FormItem> 
                     </Col>
                 </Row>
@@ -46,7 +46,7 @@
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="rx" label="解决方案：">
-                            <Input type="textarea" v-model="show.rx" rows="4" readonly></Input>
+                            <Input type="textarea" v-model="show.rx" :rows="4" readonly></Input>
                         </FormItem> 
                     </Col>
                 </Row>
@@ -67,7 +67,7 @@
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="complaintManage" label="客服反馈：">
-                            <Input type="textarea" v-model="show.complaintManage" rows=4 ></Input>
+                            <Input type="textarea" v-model="show.complaintManage" :rows="4" ></Input>
                         </FormItem> 
                     </Col>
                 </Row>

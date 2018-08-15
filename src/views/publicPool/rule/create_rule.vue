@@ -103,7 +103,7 @@
             <Col span="9">
                 <Row :gutter="5">
                     <div style="padding-bottom:5px">说明：</div>
-                    <Input type="textarea" v-model="formdata.ruleMemo" rows=6></Input>
+                    <Input type="textarea" v-model="formdata.ruleMemo" :rows="6"></Input>
                 </Row>
                 <Row :gutter="5">
                     <div style="padding-bottom:1px;padding-top:5px" class="warning">部门：</div>

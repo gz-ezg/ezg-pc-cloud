@@ -247,11 +247,11 @@ export default {
                         key:'companyarea',
                         width:120,
                     },
-                    {
-                        title: '经营状态',
-                        key:'managestatusName',
-                        width:120
-                    },
+                    // {
+                    //     title: '经营状态',
+                    //     key:'managestatusName',
+                    //     width:120
+                    // },
                     {
                         title: '提示',
                         key: 'baseorderid',
@@ -328,13 +328,13 @@ export default {
                         sortable: true
                         
                     },
-                    {
-                        title: '创建时间',
-                        key: 'CreateDate',
-                        width: 140,
-                        sortable: true
+                    // {
+                    //     title: '创建时间',
+                    //     key: 'CreateDate',
+                    //     width: 140,
+                    //     sortable: true
                         
-                    },
+                    // },
                     // {
                     //     title: '预计完成时间',
                     //     key: 'baseorderid',

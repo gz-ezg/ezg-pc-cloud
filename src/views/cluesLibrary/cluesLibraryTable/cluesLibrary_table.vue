@@ -218,7 +218,7 @@
                 </Card>
             </TabPane>
         </Tabs>
-        <Modal
+        <!-- <Modal
             v-model="chooseTypeOpen"
             title="选择客户类型"
             width="400"
@@ -230,7 +230,7 @@
             <div slot="footer">
                 <Button type="primary" @click="submit_customer" long >确认</Button>
             </div>
-        </Modal>
+        </Modal> -->
         <Modal
                 v-model="modal2"
                 title="新增线索"
@@ -241,6 +241,7 @@
                 @on-ok="ok22('formValidate')"
                 @on-cancel="cancel('formValidate')">
             <Form ref="formValidate" :model="formValidate"  :rules="ruleValidate" :label-width="90">
+                <!-- <p>{{isOldCustomer}}</p> -->
                 <FormItem label="客户类型" prop="neworold">
                     <RadioGroup v-model="formValidate.neworold" size="large">
                         <Radio label="0">老客户</Radio>
@@ -248,13 +249,13 @@
                     </RadioGroup>
                 </FormItem>
                 <FormItem label="客户名称" prop="customerName">
-                    <Input v-model="formValidate.customerName" size="small"></Input>
+                    <Input v-model="formValidate.customerName" size="small" :readonly="isOldCustomer" @on-focus="get_customer"></Input>
                 </FormItem>
                 <FormItem label="公司名称" prop="companyname">
-                    <Input v-model="formValidate.companyname" @on-focus="getCompany" readonly size="small">></Input>
+                    <Input v-model="formValidate.companyname" @on-focus="getCompany" readonly size="small"></Input>
                 </FormItem>
                 <FormItem label="客户电话" prop="customerTel">
-                    <Input v-model="formValidate.customerTel"></Input>
+                    <Input v-model="formValidate.customerTel" size="small" @on-focus="get_customer" :readonly="isOldCustomer"></Input>
                 </FormItem>
                 <FormItem label="标签" prop="labels">
                     <Tag v-for="item in customerlabelGroup" :key="item" :name="item" :id="item.id" closable
@@ -404,7 +405,8 @@
             <Modal
                 v-model="selectCompany"
                 title="选择公司"
-                width="80%">
+                width="80%"
+            >
                 <Row :gutter="16">
                     <Col span="8">
                     <Input v-model="searchCompany" placeholder="输入公司名称搜索" @on-keydown="keydown1">
@@ -436,6 +438,7 @@
 
 <script>
 import {DateFormat} from '../../../libs/utils'
+import flowVue from '../../woa-components/next/flow.vue';
 
     export default {
         name:'cluesLibrary_index',
@@ -453,6 +456,7 @@ import {DateFormat} from '../../../libs/utils'
                 }
             };
             return {
+                flag:false,
                 searchCompany:"",
                 page3:1,
                 selectCompany:false,
@@ -498,24 +502,24 @@ import {DateFormat} from '../../../libs/utils'
                         { required: true, message: '请选择客户类型', trigger: 'change'}
                     ],
                     customerName: [
-                        { required: true, message: '请填写客户名称', trigger: 'blur'}
+                        { required: true, message: '请填写客户名称', trigger: 'change'}
                     ],
                     customerTel: [
-                        { required: true, trigger: 'blur', validator: validateTel}
+                        { required: true, trigger: 'change', validator: validateTel}
                     ],
                     clueMemo: [
-                        { required: true, message: '请填写线索说明', trigger: 'blur' },
+                        { required: true, message: '请填写线索说明', trigger: 'change' },
                     ]
                 },
                 ruleValidate22: {
                     customerName: [
-                        { required: true, message: '请填写客户名称', trigger: 'blur'}
+                        { required: true, message: '请填写客户名称', trigger: 'change'}
                     ],
                     customerTel: [
-                        { required: true, trigger: 'blur', validator: validateTel}
+                        { required: true, trigger: 'change', validator: validateTel}
                     ],
                     clueMemo: [
-                        { required: true, message: '请填写线索说明', trigger: 'blur' },
+                        { required: true, message: '请填写线索说明', trigger: 'change' },
                     ]
                 },
                 formValidate: {
@@ -719,6 +723,14 @@ import {DateFormat} from '../../../libs/utils'
                         title: '公司名称',
                         key: 'CompanyName'
                     },
+                    {
+                        title: '客户名称',
+                        key: 'NAME'
+                    },
+                    {
+                        title: '联系方式',
+                        key: 'TEL'
+                    },
                 ],
                 data: [],
                 data1: [],
@@ -862,7 +874,7 @@ import {DateFormat} from '../../../libs/utils'
                         }
                         let type = ""
                         if(response.data.data.rows[i].neworold){
-                            console.log("1111")
+                            // console.log("1111")  
                             if(response.data.data.rows[i].neworold == 0){
                                 type = "老客户"
                             }else{
@@ -933,7 +945,7 @@ import {DateFormat} from '../../../libs/utils'
                     for (let i = 0; i < response.data.data.rows.length; i++) {
                         let type = ""
                         if(response.data.data.rows[i].neworold){
-                            console.log("1111")
+                            // console.log("1111")
                             if(response.data.data.rows[i].neworold == 0){
                                 type = "老客户"
                             }else{
@@ -1349,6 +1361,8 @@ import {DateFormat} from '../../../libs/utils'
                 let _self = this
                 _self.formValidate.companyname =  _self.companyDetail.CompanyName
                 _self.formValidate.companyid =  _self.companyDetail.cpid
+                // _self.formValidate.customerName = _self.companyDetail.customerName
+                // _self.formValidate.customerTel = _self.companyDetail.customerTel
             },
 
             pageChange3(a) {
@@ -1397,6 +1411,8 @@ import {DateFormat} from '../../../libs/utils'
                         _self.data4.push({
                             CompanyName: _res.rows[i].CompanyName,
                             cpid: _res.rows[i].cpid,
+                            customerTel: _res.rows[i].customerTel,
+                            customerName: _res.rows[i].customerName
                         })
                     }
                 }
@@ -1543,15 +1559,37 @@ import {DateFormat} from '../../../libs/utils'
                 console.log(a)
                 _self.formValidate.companyname = a.CompanyName
                 _self.formValidate.companyid = a.cpid
+                _self.formValidate.customerTel = a.TEL
+                _self.formValidate.customerName = a.NAME
                 _self.selectCompany = false
-                
-
+                this.flag = false
+            },
+            get_customer(){
+                    
+                console.log(this.formValidate.neworold == 0 && this.flag == false)
+                if(this.formValidate.neworold == 0  && this.flag == false){
+                    //  老客户
+                    this.getCompany()
+                }else{
+                    //  新客户
+                    console.log("1234")
+                }
             },
         },
         mounted() {
             this.getDataCenter()
             this.getTableData()
             this.getTableData2()
+        },
+        computed:{
+            //  新老客户状态判断    
+            isOldCustomer(){
+                if(this.formValidate.neworold == 0){
+                    return true
+                }else{
+                    return false
+                }
+            }
         }
     }
 </script>

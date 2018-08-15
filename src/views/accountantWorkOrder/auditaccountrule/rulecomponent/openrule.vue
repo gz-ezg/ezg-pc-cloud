@@ -17,7 +17,7 @@
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="equation" label="左边公式：">
-                            <Input type="textarea" v-model="add.equation" disabled rows="5">
+                            <Input type="textarea" v-model="add.equation" disabled :rows="5">
                             </Input>
                         </FormItem> 
                     </Col>

@@ -30,7 +30,7 @@
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="record" label="投诉内容：" >
-                            <Input type="textarea" v-model="deal.record" rows=rows readonly></Input>
+                            <Input type="textarea" v-model="deal.record" :rows="4" readonly></Input>
                         </FormItem> 
                     </Col>
                 </Row>
@@ -46,28 +46,28 @@
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="rx" label="解决方案：">
-                            <Input type="textarea" v-model="deal.rx" rows="4"></Input>
+                            <Input type="textarea" v-model="deal.rx" :rows="4"></Input>
                         </FormItem> 
                     </Col>
                 </Row>
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="receiving" label="受理人：" >
-                            <Input type="text" v-model="deal.receiving" rows="4" readonly></Input>
+                            <Input type="text" v-model="deal.receiving" :rows="4" readonly></Input>
                         </FormItem> 
                     </Col>
                 </Row>
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="createby" label="创建人：" >
-                            <Input type="text" v-model="deal.createby" rows="4" readonly></Input>
+                            <Input type="text" v-model="deal.createby" :rows="4" readonly></Input>
                         </FormItem> 
                     </Col>
                 </Row>
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="complaintManage" label="客服反馈：">
-                            <Input type="textarea" v-model="deal.complaintManage" rows=4 ></Input>
+                            <Input type="textarea" v-model="deal.complaintManage" :rows=4 ></Input>
                         </FormItem> 
                     </Col>
                 </Row>
@@ -87,7 +87,6 @@ export default {
     props:['complaintType','processType'],
     data(){
         return{
-            rows:new Number("4"),
             deal_complaint:false,
             //  新增数据
             deal:{

@@ -103,7 +103,7 @@
                 <Row :gutter="24" style="margin-top:5px">
                     <Col span="1" style="visibility:hidden">1</Col>                    
                     <Col span="22">
-                        <Input type="textarea" v-model="rate.content" placeholder="" size="small" rows="5">
+                        <Input type="textarea" v-model="rate.content" placeholder="" size="small" :rows="5">
                         </Input>
                     </Col>
                 </Row>
@@ -129,7 +129,9 @@
             </Modal>
         <!-- 意见收集 -->
         <change-password></change-password>
+        <!-- 工单相关 -->
         <next></next>
+        <set-finish-time></set-finish-time>
     </div>
 </template>
 <script>
@@ -145,6 +147,7 @@
     import Cookies from 'js-cookie';
     import util from '@/libs/util.js';
     import next from './woa-components/next/flow.vue';
+    import setFinishTime from './woa-components/setFinishTime/setFinishTime'
     
     export default {
         components: {
@@ -157,7 +160,8 @@
             themeSwitch,
             systemComplain,
             changePassword,
-            next
+            next,
+            setFinishTime
         },
         data () {
             return {

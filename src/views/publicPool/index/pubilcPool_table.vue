@@ -104,17 +104,22 @@
                                     </FormItem>
                                   </Col>
                                 </Row>
-                                <Row>
+                                <Row :gutter="12">
                                     <Col span="8">
-                                    <FormItem label="客户等级：" prop="importlevel">
-                                        <Select transfer v-model="formValidate.importlevel" size="small" @on-change="Search" style="width:100%">
-                                            <Option value="">     </Option>
-                                            <Option v-for="item in impLevel" :value="item.typecode" :key="item.id">
-                                                {{ item.typename }}
-                                            </Option>
-                                        </Select>
-                                    </FormItem>
-                                  </Col>
+                                      <FormItem label="客户等级：" prop="importlevel">
+                                          <Select transfer v-model="formValidate.importlevel" size="small" @on-change="Search" style="width:100%">
+                                              <Option value="">     </Option>
+                                              <Option v-for="item in impLevel" :value="item.typecode" :key="item.id">
+                                                  {{ item.typename }}
+                                              </Option>
+                                          </Select>
+                                      </FormItem>
+                                    </Col>
+                                    <Col span="8">
+                                      <FormItem label="回滚时间：" prop="importlevel">
+                                          
+                                      </FormItem>
+                                    </Col>
                                 </Row>
                                 <center>
                                     <FormItem style="margin-top:10px">
