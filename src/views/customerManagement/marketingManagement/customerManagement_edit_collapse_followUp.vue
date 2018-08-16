@@ -2,7 +2,7 @@
     <div @click="show11111" >
         <!-- <div style="width:100%;height:30px;background-color:yellow;margin-top:-10px"></div> -->
         <Row>
-            <Button type="ghost" shape="circle" icon="plus" @click="getSelectOptons();modal33 = true">新增</Button>
+            <Button name="marketingManagement_index_followUp_add" type="ghost" shape="circle" icon="plus" @click="getSelectOptons();modal33 = true">新增</Button>
             <Checkbox v-model="single" style="float:right" @on-change="single_check_change">只看市场跟进</Checkbox>
             <Spin fix v-if="spinShow">
                 <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
@@ -161,15 +161,15 @@
                             :before-upload="handleUpload"
                             action="/api/customer/addCustomerContentImg"
                             >
-                        <Button type="ghost" icon="ios-cloud-upload-outline" :class="{input_warning:warning}">选择文件</Button>
+                        <Button name="marketingManagement_index_followUp_selectfile" type="ghost" icon="ios-cloud-upload-outline" :class="{input_warning:warning}">选择文件</Button>
                     </Upload>
                     <!-- <div v-show="warning" style="color:#ed3f14;height:20px;margin-bottom:5px;line-height:20px">请上传附件</div> -->
                     <div v-for="(item,index) in show_file" :key=index>{{ item.name }}
-                        <Button type="text" @click="fileRemove(item)">移除</Button>
+                        <Button name="marketingManagement_index_followUp_removefile" type="text" @click="fileRemove(item)">移除</Button>
                     </div>
                 </FormItem>
                 <FormItem>
-                    <Button type="primary" @click="upload('formValidate')" :loading="image_loading">提交</Button>
+                    <Button name="marketingManagement_index_followUp_submit" type="primary" @click="upload('formValidate')" :loading="image_loading">提交</Button>
                     <Button type="ghost" @click="cancel('formValidate')" style="margin-left: 8px">重置</Button>
                 </FormItem>
             </Form>
@@ -563,9 +563,10 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
             },
             /*************************获取下拉框的值********************************/
             getSelectOptons() {
-                var _self = this
-                var url = '/customer/findCompanysByCustomerId/' + +_self.customerid
-                _self.companynameArray = []
+                var _self = this;
+                _self.$ButtonCollect("marketingManagement_index_followUp_add");
+                var url = '/customer/findCompanysByCustomerId/' + +_self.customerid;
+                _self.companynameArray = [];
                 function doSuccess(response) {
                     // console.log(response)
                     for (var i = 0; i < response.data.data.length; i++) {
@@ -583,12 +584,14 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
             //@augments移除没有实现
             fileRemove(e) {
                 // console.log(e)
+                this.$ButtonCollect("marketingManagement_index_followUp_removefile");
                 this.file.splice(this.file.indexOf(e), 1);
                 this.show_file.splice(this.show_file.indexOf(e), 1);
             },
 
             /*************************添加文件********************************/
             handleUpload(file) {
+                this.$ButtonCollect("marketingManagement_index_followUp_selectfile");
                 this.show_file.push(file)
                 // console.log(file)
                 var that = this
@@ -640,7 +643,8 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
             /*************************新增跟进********************************/
             upload(name) {
                 this.image_loading = true
-                var _self = this
+                var _self = this;
+                _self.$ButtonCollect("marketingManagement_index_followUp_submit");
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         if(_self.file.length == 0){

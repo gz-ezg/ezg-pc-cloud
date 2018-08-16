@@ -10,7 +10,7 @@ import permission from './directive/permission'
 import VueBus from './directive/vue-bus'
 import '@/locale';
 import VueI18n from 'vue-i18n';
-import util from '@/libs/util';
+import util from '@/libs/util'; 
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import VCharts from 'v-charts';
@@ -83,6 +83,29 @@ axios.interceptors.response.use(
         return Promise.reject(error)
     }
 )
+// 按钮采集
+Vue.prototype.$ButtonCollect = function(name){
+    let _self = this;
+    let url = 'api/system/addGather';
+    let config = {
+        params:{
+            code : name
+        }
+    }
+    this.$http.get(url,config).then(function(res){
+        if(res.data.msgCode == "40000"){
+            if(res.data.msg){
+                // _self.$Message.success(res.data.msg)
+                console.log("采集成功");
+            }
+        }else{
+            // _self.$Message.error(res.data.msg)
+            console.warn(res)
+        }
+    }).catch(function(err){
+        console.error(err)
+    })
+}
 
 //  查询某个值是否在其中
 Vue.prototype.$indexOfArray = function(data, array){

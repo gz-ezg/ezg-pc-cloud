@@ -51,6 +51,14 @@
                 </Row>
                 <Row>
                     <Col span="12">
+                        <FormItem label="工号：" prop="userAliasId">
+                            <Input  size="small"  style="margin-right:5px" v-model="formdata.userAliasId">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span="12">
                         <FormItem label="组织机构：" prop="departName">
                             <Input  size="small"  style="margin-right:5px" v-model="formdata.departName" @on-focus="openOrganize">
                             </Input>
@@ -63,6 +71,7 @@
                         </FormItem>
                     </Col>
                 </Row>
+                
             </Form>
             <div slot="footer">
                 <Button type="primary" @click="submit" :loading="update_loading">修改</Button>
@@ -161,15 +170,16 @@ export default {
                 mobilePhone: "",
                 email: "",
                 roleName: "",
-                departName: ""
+                departName: "",
+                userAliasId: ""
             },
             formdataRule:{
                 username:[
-                    { message:"格式错误！",required: true, trigger: 'blur' },
+                    { message:"格式错误！",required: true, trigger: 'change' },
                     { message:"格式错误！",validator: validateUsername, trigger: 'blur' }
                 ],
                 realname:[
-                    { message:"格式错误！",required: true, trigger: 'blur' },
+                    { message:"格式错误！",required: true, trigger: 'change' },
                     { message:"格式错误！",validator: validateRealname, trigger: 'blur' }
                 ],
                 // password:{ message:"请输入密码！", required: true,  trigger: 'blur' },
@@ -179,17 +189,20 @@ export default {
                 // ],
                 mobilePhone:[
                     // { message:"格式错误！",required: true, trigger: 'blur' },
-                    { message:"格式错误！", validator:validateTel,  trigger: 'blur' },
+                    { message:"格式错误！", validator:validateTel,  trigger: 'change' },
                 ],
                 email:[
                     // { message:"格式错误！",required: true, trigger: 'blur' },
-                    { message:"格式错误！", validator:validateEmail,  trigger: 'blur' }
+                    { message:"格式错误！", validator:validateEmail,  trigger: 'change' }
                 ],
                 roleName:[
-                    { message:"格式错误！",required: true, trigger: 'blur' },
+                    { message:"格式错误！",required: true, trigger: 'change' },
                 ],
                 orgName:[
-                    { message:"格式错误！",required: true, trigger: 'blur' },
+                    { message:"格式错误！",required: true, trigger: 'change' },
+                ],
+                userAliasId:[
+                    { message:"格式错误！",required: true, trigger: 'change' },
                 ]
             }
         }
@@ -222,7 +235,8 @@ export default {
                 orgIds: _self.formdata.orgIds,
                 roleIds: _self.formdata.roleIds,
                 mobilephone: _self.formdata.mobilePhone,
-                email: _self.formdata.email
+                email: _self.formdata.email,
+                userAliasId: _self.formdata.userAliasId
             }
 
             function success(res){
@@ -273,6 +287,7 @@ export default {
                 _self.formdata.roleIds = res.data.data.roleId
                 _self.formdata.orgIds = res.data.data.orgId
                 _self.formdata.departName = res.data.data.departName
+                _self.formdata.userAliasId = res.data.data.userAliasId
             }
 
             function fail(err){

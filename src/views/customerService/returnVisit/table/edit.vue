@@ -116,7 +116,7 @@
                     </Form>
                 </TabPane>
                 <TabPane label="历史回访记录" name="2">
-                    <history-list :name="name"></history-list>
+                    <history-list :tel="tel"></history-list>
                 </TabPane>
             </Tabs>
             
@@ -234,6 +234,7 @@ export default {
             console.log(e)
             _self.companyname = e.companyname
             _self.name = e.name
+            _self.tel = e.tel
             _self.showTab = "1"   
         })
         let role = localStorage.getItem('Role')

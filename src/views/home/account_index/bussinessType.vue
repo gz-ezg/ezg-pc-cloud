@@ -38,7 +38,15 @@ export default {
     },
     data(){
         this.chartSettings = {
-            legendName: {
+            // legendName: {
+            //     'period': '月份',
+            //     'lsb': '零申报',
+            //     'xgm': '小规模',
+            //     'xgmgx': '小规模高新',
+            //     'ybnsr': '一般纳税人'
+            // },
+            //  数据别名
+            labelMap: {
                 'period': '月份',
                 'lsb': '零申报',
                 'xgm': '小规模',

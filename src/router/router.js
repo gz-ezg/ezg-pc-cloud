@@ -826,6 +826,16 @@ export const appRouter = [
                     require(['@/views/administrationManagement/index.vue'], resolve);
                 }
             },
+            {
+                access: 6093,
+                meta: 6093,
+                path: 'clockin',
+                title: '考勤管理',
+                name:"clockin_index",
+                component: resolve => {
+                    require(['@/views/administrationManagement/clockin/index.vue'], resolve);
+                }
+            },
         ]
     },
     {
@@ -1185,59 +1195,61 @@ export const appRouter = [
             }
         ]
     },
-    // {
-    //     access: 6065,
-    //     path: '/logManagement',
-    //     icon: 'social-windows',
-    //     name: 'logManagement',
-    //     title: '日志管理', 
-    //     meta:{
-    //         keepAlive: false
-    //     },
-    //     component: Main,
-    //     children: [
-    //         {
-    //             access: 6066,
-    //             path: '/systemLog',
-    //             title: '系统日志', 
-    //             name: 'systemLog',
-    //             component: resolve => {
-    //                 require(['@/views/logManagement/systemLog.vue'], resolve);
-    //             }
-    //         },
-    //         {
-    //             access: 6066,
-    //             path: '/WeChatPushLog',
-    //             title: '微信推送客户日志', 
-    //             name: 'WeChatPushLog/log_index',
-    //             component: resolve => {
-    //                 require(['@/views/logManagement/WeChatPushLog/log_index.vue'], resolve);
-    //             }
-    //         },
-    //         {
-    //             access: 6066,
-    //             path: '/smsSendLog',
-    //             title: '短信发送日志', 
-    //             name: 'smsSendLog',
-    //             component: resolve => {
-    //                 require(['@/views/logManagement/smsSendLog.vue'], resolve);
-    //             }
-    //         },
-             
-    //         {
-    //             access: 6066,
-    //             path: '/internalPushLog',
-    //             title: '微信内部推送日志', 
-    //             name: 'internalPushLog',
-    //             component: resolve => {
-    //                 require(['@/views/logManagement/internalPushLog.vue'], resolve);
-    //             }
-    //         },
-            
-            
-         
-    //     ]
-    // },
+    {
+        access: 6065,
+        path: '/logManagement',
+        icon: 'social-windows',
+        name: 'logManagement',
+        title: '日志管理', 
+        component: Main,
+        children: [
+            {
+                access: 6066,
+                path: '/MQLog',
+                title: '系统日志', 
+                name: 'MQ_index',
+                component: resolve => {
+                    require(['@/views/logManagement/MQlog/index.vue'], resolve);
+                }
+            },
+            // {
+            //     access: 6066,
+            //     path: '/systemLog',
+            //     title: '系统日志', 
+            //     name: 'systemLog',
+            //     component: resolve => {
+            //         require(['@/views/logManagement/systemLog.vue'], resolve);
+            //     }
+            // },
+            // {
+            //     access: 6066,
+            //     path: '/WeChatPushLog',
+            //     title: '微信推送客户日志', 
+            //     name: 'WeChatPushLog/log_index',
+            //     component: resolve => {
+            //         require(['@/views/logManagement/WeChatPushLog/log_index.vue'], resolve);
+            //     }
+            // },
+            // {
+            //     access: 6066,
+            //     path: '/smsSendLog',
+            //     title: '短信发送日志', 
+            //     name: 'smsSendLog',
+            //     component: resolve => {
+            //         require(['@/views/logManagement/smsSendLog.vue'], resolve);
+            //     }
+            // },
+            // {
+            //     access: 6066,
+            //     path: '/internalPushLog',
+            //     title: '微信内部推送日志', 
+            //     name: 'internalPushLog',
+            //     component: resolve => {
+            //         require(['@/views/logManagement/internalPushLog.vue'], resolve);
+            //     }
+            // },
+        ]
+    },
 ];
 
 // 所有上面定义的路由都要写在下面的routers里

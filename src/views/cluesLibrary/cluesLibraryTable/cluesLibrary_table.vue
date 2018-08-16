@@ -252,7 +252,7 @@
                     <Input v-model="formValidate.customerName" size="small" :readonly="isOldCustomer" @on-focus="get_customer"></Input>
                 </FormItem>
                 <FormItem label="公司名称" prop="companyname">
-                    <Input v-model="formValidate.companyname" @on-focus="getCompany" readonly size="small"></Input>
+                    <Input v-model="formValidate.companyname" @on-focus="get_customer" :readonly="isOldCustomer" size="small"></Input>
                 </FormItem>
                 <FormItem label="客户电话" prop="customerTel">
                     <Input v-model="formValidate.customerTel" size="small" @on-focus="get_customer" :readonly="isOldCustomer"></Input>
@@ -602,9 +602,10 @@ import flowVue from '../../woa-components/next/flow.vue';
                     },
                     {
                         title: '操作',
+                        align: 'center',
                         key: 'action',
                         fixed: 'right',
-                        width: 60,
+                        width: 120,
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {

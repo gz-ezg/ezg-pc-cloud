@@ -110,17 +110,17 @@
 </template>
 <script>
     // import HFdetail from './huifang_detail'
-    import addFrom from './customerManagement_add.vue'
-    import editFrom from './customerManagement_edit_from.vue'
-    import editCollapseCompany from './customerManagement_edit_collapse_company.vue'
-    import editCollapseFollowUp from './customerManagement_edit_collapse_followUp.vue'
-    import editTable from './customerManagement_table.vue'
+    import addFrom from './customerManagement_add.vue'; 
+    import editFrom from './customerManagement_edit_from.vue';
+    import editCollapseCompany from './customerManagement_edit_collapse_company.vue';
+    import editCollapseFollowUp from './customerManagement_edit_collapse_followUp.vue';
+    import editTable from './customerManagement_table.vue';//
     import editCollapseOrder from './customerManagement_edit_collapse_order.vue'
-    import editCollapseOrderList from './customerManagement_edit_collapse_orderList.vue'
-    import editCollapseRelationPerson from './customerManagement_edit_collapse_relationPerson.vue'
-    import editCollapseServiceDynamic from './customerManagement_edit_collapse_serviceDynamic.vue'
-    import editCollapseAccessory from './customerManagement_edit_collapse_accessory.vue'
-    import editCollapseUpload from './customerManagement_edit_collapse_upload.vue'
+    import editCollapseOrderList from './customerManagement_edit_collapse_orderList.vue';
+    import editCollapseRelationPerson from './customerManagement_edit_collapse_relationPerson.vue';
+    import editCollapseServiceDynamic from './customerManagement_edit_collapse_serviceDynamic.vue';
+    import editCollapseAccessory from './customerManagement_edit_collapse_accessory.vue';
+    import editCollapseUpload from './customerManagement_edit_collapse_upload.vue';
     import Bus from '../../../components/bus'
 
     export default {
@@ -244,6 +244,7 @@
 
             /*************************打开相对应的DIV********************************/
             handleUpload(file) {
+                this.$ButtonCollect("marketingManagement_index_uploadfile_file");
                 this.file.push(file)
                 return false;
             },
@@ -251,7 +252,8 @@
             /*************************上传附件********************************/
             upload() {
                 
-                var _self = this
+                var _self = this;
+                _self.$ButtonCollect("marketingManagement_index_uploadfile_upload");
                 _self.upload_loading = true
                 var formdata = new FormData()
                 var url = '/zuul/customer/customerFilesUploadById/' + this.customerid
@@ -276,6 +278,7 @@
 
             /*************************附件上传移除********************************/
             fileRemove(e) {
+                this.$ButtonCollect("marketingManagement_index_uploadfile_remove");
                 this.file.splice(this.file.indexOf(e), 1);
             },
             editStopLoading(e){

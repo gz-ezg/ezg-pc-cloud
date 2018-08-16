@@ -50,6 +50,14 @@
                 </Row>
                 <Row>
                     <Col span="12">
+                        <FormItem label="工号：" prop="userAliasId">
+                            <Input  size="small"  style="margin-right:5px" v-model="formdata.userAliasId">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span="12">
                         <FormItem label="组织机构：" prop="orgName">
                             <Input  size="small"  style="margin-right:5px" v-model="formdata.orgName" @on-focus="openOrganize">
                             </Input>
@@ -62,6 +70,7 @@
                         </FormItem>
                     </Col>
                 </Row>
+                
             </Form>
             <div slot="footer">
                 <Button type="primary" @click="submit" :loading="create_loading">新增</Button>
@@ -159,29 +168,30 @@ export default {
                 mobilePhone: "",
                 email: "",
                 roleName: "",
-                orgName: ""
+                orgName: "",
+                userAliasId:""
             },
             formdataRule:{
                 username:[
-                    { message:"格式错误！",required: true, trigger: 'blur' },
-                    { message:"格式错误！",validator: validateUsername, trigger: 'blur' }
+                    { message:"格式错误！",required: true, trigger: 'change' },
+                    { message:"格式错误！",validator: validateUsername, trigger: 'change' }
                 ],
                 realname:[
-                    { message:"格式错误！",required: true, trigger: 'blur' },
-                    { message:"格式错误！",validator: validateRealname, trigger: 'blur' }
+                    { message:"格式错误！",required: true, trigger: 'change' },
+                    { message:"格式错误！",validator: validateRealname, trigger: 'change' }
                 ],
-                password:{ message:"请输入密码！", required: true,  trigger: 'blur' },
+                password:{ message:"请输入密码！", required: true,  trigger: 'change' },
                 password2:[
-                    { message:"格式错误！",required: true, trigger: 'blur' },                    
-                    { message:"两次密码输入不一致！", validator:validatePassword2,  trigger: 'blur' }
+                    { message:"格式错误！",required: true, trigger: 'change' },                    
+                    { message:"两次密码输入不一致！", validator:validatePassword2,  trigger: 'change' }
                 ],
                 mobilePhone:[
                     // { message:"格式错误！",required: true, trigger: 'blur' },
-                    { message:"格式错误！", validator:validateTel,  trigger: 'blur' },
+                    { message:"格式错误！", validator:validateTel,  trigger: 'change' },
                 ],
                 email:[
                     // { message:"格式错误！",required: true, trigger: 'blur' },
-                    { message:"格式错误！", validator:validateEmail,  trigger: 'blur' }
+                    { message:"格式错误！", validator:validateEmail,  trigger: 'change' }
                 ],
                 orgName:[
                     { message:"格式错误！",required: true, trigger: 'change' },
@@ -189,7 +199,10 @@ export default {
                 roleName:[
                     { message:"格式错误！",required: true, trigger: 'change' },
                 ],
-                orgName:[
+                // orgName:[
+                //     { message:"格式错误！",required: true, trigger: 'change' },
+                // ],
+                userAliasId:[
                     { message:"格式错误！",required: true, trigger: 'change' },
                 ]
             }
@@ -222,7 +235,8 @@ export default {
                 orgIds: _self.formdata.orgIds,
                 roleIds: _self.formdata.roleIds,
                 mobilePhone: _self.formdata.mobilePhone,
-                email: _self.formdata.email
+                email: _self.formdata.email,
+                userAliasId: _self.formdata.userAliasId
             }
 
             function success(res){

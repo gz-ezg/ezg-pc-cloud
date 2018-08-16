@@ -112,14 +112,8 @@
     import { arrayToMap } from '../../../../libs/utils'
 
     export default {
-        props:['name'],
+        props:['tel'],
         components: {
-            // channelFrom,
-            // channelCompany,
-            // channelOrderList,
-            // channelFllowUp,
-            // channelRelationPerson,
-            // channelServiceDynamic,
         },
         data() {
             return {
@@ -279,69 +273,6 @@
             }
         },
         methods: {
-            // downloadExcel(){
-            //     let field = [
-            //         {field:'name',title:'客户名称'},
-            //         {field:'companyname',title:'公司名称'},
-            //         // {field:'baseorderid',title:'提示'},
-            //         {field:'product',title:'产品名称'},
-            //         {field:'calltype',title:'问题类型',format:'hfwtlx'},
-            //         {field:'createdate',title:'创建时间'},
-            //         {field:'callbackdate',title:'回访时间'},
-            //         // {field:'ServiceStart',title:'服务开始时间'},
-            //         {field:'callbackstatus',title:'回访状态',format:'hfzt'},
-            //         {field:'servicename',title:'服务人员'},                                                                   
-            //         {field:'marketername',title:'市场人员'},                                                                     
-            //         {field:'depart',title:'责任部门',format:'departAlias'},
-            //         {field:'serviceranks',title:'服务评分'},
-            //         // {field:'product',title:'产品名称'}
-            //     ]
-            //     let _self = this
-            //     let url = `api/customer/customerCallbackList`
-            //     let config = {
-            //             page: '1',
-            //             pageSize: '1000000',
-            //             status:"Y",
-            //             export: 'Y',
-            //             exportField: encodeURI(JSON.stringify(field)),
-            //             companyname:_self.YformInline.companyname,
-            //             name:_self.YformInline.name,
-            //             tel:_self.YformInline.tel,
-            //             sortField:'callbackdate',
-            //             servicename:_self.YformInline.servicename,
-            //             marketername:_self.YformInline.marketername,
-            //             depart:_self.YformInline.depart,                     
-            //             bcreatedate:DateFormat(_self.YformInline.createdate[0]),
-            //             ecreatedate:DateFormat(_self.YformInline.createdate[1]),
-            //             bcallbackdate:DateFormat(_self.YformInline.updatedate[0]),
-            //             ecallbackdate:DateFormat(_self.YformInline.updatedate[1]),
-            //             productname:_self.YformInline.productname
-            //     }
-            //     console.log(config)
-            //     let toExcel = this.$MergeURL(url, config)
-            //     // console.log(toExcel)
-            //     // console.log(toExcel)
-            //     window.open(toExcel)
-            // },
-            // search(){
-            //     this.page = 1
-            //     this.getData()
-            // },
-            // reset(){
-            //     this.page = 1
-            //         this.YformInline.companyname = ""
-            //         this.YformInline.name = ""
-            //         this.YformInline.tel = ""
-            //         this.YformInline.servicename = ""
-            //         this.YformInline.marketername = ""
-            //         this.YformInline.depart = ""
-            //         this.YformInline.createdate = []
-            //         this.YformInline.updatedate = []
-            //         this.YformInline.productname = ""
-
-
-            //     this.getData()
-            // },
             pageChange(e) {
                 this.page = e
                 this.getData()
@@ -396,7 +327,7 @@
                         page:_self.page,
                         pageSize:_self.pageSize,
                         // status:'Y',
-                        name:_self.name,
+                        tel:_self.tel,
                         // name:_self.YformInline.name,
                         // tel:_self.YformInline.tel,
                         // servicename:_self.YformInline.servicename,
@@ -455,21 +386,6 @@
             },
             getDataCenter(){
                 let _self = this
-                // let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
-                // let config = {
-                //     params:{
-                //         groupCodes:"hfwtlx,hfzt,departAlias"
-                //     }
-                // }
-                // this.$http.get(url, config).then(function(res){
-                //     // console.log(res.data.data)
-                //     _self.hfwtlx = res.data.data.hfwtlx
-                //     _self.hfzt = res.data.data.hfzt
-                //     _self.departAlias = res.data.data.departAlias
-                //     _self.hfwtlx_map = arrayToMap(_self.hfwtlx)
-                //     _self.hfzt_map = arrayToMap(_self.hfzt)
-                //     _self.departAlias_map = arrayToMap(_self.departAlias)           
-                // })
 
                 let params = "hfwtlx,hfzt,departAlias"
 
@@ -485,37 +401,9 @@
                 this.$GetDataCenter(params, finish)
 
             }
-            // getDataCenter(){
-            //     let _self = this
-            //     let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
-            //     let config = {
-            //         params:{
-            //             groupCodes:"hfwtlx,hfzt,departAlias"
-            //         }
-            //     }
-            //     this.$http.get(url, config).then(function(res){
-            //         console.log(res.data.data)
-            //         _self.hfwtlx = res.data.data.hfwtlx
-            //         _self.hfzt = res.data.data.hfzt
-            //         _self.departAlias = res.data.data.departAlias
-            //         _self.hfwtlx_map = _self.$array2map(_self.hfwtlx)
-            //         _self.hfzt_map = _self.$array2map(_self.hfzt)
-            //         _self.departAlias_map = _self.$array2map(_self.departAlias)
-            //         console.log(_self.hfwtlx_map)                 
-            //     })
-
-            // }
-            // init(){
-            //     let _self = this
-            //     _self.hfwtlx_map = _self.$array2map(_self.hfwtlx)
-            //     // _self.hfzt_map = _self.$array2map(_self.hfzt)
-            //     _self.departAlias_map = _self.$array2map(_self.departAlias)
-            //     this.getData()
-            //     console.log(_self.departAlias_map)
-            // }
         },
         watch:{
-            'name':'getData'
+            'tel':'getData'
         },
         created() {
             // this.init()

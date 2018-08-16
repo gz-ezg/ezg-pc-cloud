@@ -340,8 +340,8 @@
 
             /*************************提交录入表单********************************/
             ok(name) {
-                var _self = this
-                //
+                var _self = this;
+                _self.$ButtonCollect("marketingManagement_index_client_add");
                 setTimeout(() => {
                     this.loading = false;
                     this.$refs[name].validate((valid) => {
@@ -380,7 +380,8 @@
 
             /*************************删除客户关系人********************************/
             remove(e) {
-                var _self = this
+                var _self = this;
+                _self.$ButtonCollect("marketingManagement_index_client_delect");
                 this.$http.get('/api/customer/delCustomerRelation/' + e.row.id)
                     .then(function (response) {
                         if (response.data.msgCode == '40000') {
@@ -389,7 +390,7 @@
                     })
             },
             edit(e) {
-                var _self = this
+                var _self = this;
                 _self.modal4 = true
                 if (e.row.sendmsgflag == '否') {
                     _self.formValidate2.sendmsgflag = '0'
@@ -406,8 +407,8 @@
                 _self.formValidate2.id = e.row.id
             },
             editRelationPerson(name) {
-                var _self = this
-
+                var _self = this;
+                _self.$ButtonCollect("marketingManagement_index_client_edit");
                 setTimeout(() => {
                     this.loading = false;
                     this.$refs[name].validate((valid) => {

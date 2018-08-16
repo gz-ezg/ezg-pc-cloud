@@ -49,48 +49,48 @@ export default {
                 {
                     title: "服务人员",
                     key: "realname",
-                    width: 100
+
                 },
                 {
                     title: "总客户数",
                     key: "amount",
-                    width: 100
+
                 },
-                {
-                    title: "联系客户",
-                    key: "lianxikehu",
-                    width: 100
-                },
+                // {
+                //     title: "联系客户",
+                //     key: "lianxikehu",
+                //     width: 100
+                // },
                 {
                     title: "报税",
                     key: "baoshui",
-                    width: 80
+
                 },
-                {
-                    title: "扣款",
-                    key: "koukuan",
-                    width: 80
-                },
+                // {
+                //     title: "扣款",
+                //     key: "koukuan",
+                //     width: 80
+                // },
                 {
                     title: "社保",
                     key: "shebao",
-                    width: 80
+
                 },
                 {
                     title: "公积金",
                     key: "gongjijin",
-                    width: 80
+
                 },
                 {
                     title: "做账",
                     key: "zuozhang",
-                    width: 80
+
                 },
-                {
-                    title: "扫票",
-                    key: "saopiao",
-                    width: 80
-                }
+                // {
+                //     title: "扫票",
+                //     key: "saopiao",
+                //     width: 80
+                // }
             ],
             tableData:[],
             chartData:{

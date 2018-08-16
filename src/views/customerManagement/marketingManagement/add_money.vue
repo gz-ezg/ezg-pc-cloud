@@ -78,7 +78,7 @@
                     <DatePicker type="date" placeholder="" v-model="payment.transcationtime" style="width:200px"></DatePicker>
                 </FormItem>
                 <FormItem style="margin-bottom:30px">
-                    <Button type="primary" @click="handleSubmit('payment')">新增</Button>
+                    <Button type="primary" name="marketingManagement_index_orderlist_payfees_add" @click="handleSubmit('payment')">新增</Button>
                     <Button type="ghost" @click="handleReset('payment')" style="margin-left: 8px">重置</Button>
                 </FormItem>
             </Form>
@@ -220,7 +220,8 @@ export default {
         },
         //  表单提交验证
         handleSubmit (name) {
-            var _that = this
+            var _that = this;
+            _that.$ButtonCollect("marketingManagement_index_orderlist_payfees_add");
             this.$refs[name].validate((valid) => {
                 if (valid) {
                     var url = 'api/order/balance/item/create'

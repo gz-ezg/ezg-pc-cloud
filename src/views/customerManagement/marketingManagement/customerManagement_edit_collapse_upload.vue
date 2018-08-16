@@ -42,7 +42,7 @@
                                         type: 'ghost',
                                     },
                                     },[
-                                        h('Button',{
+                                        h('Button',{ 
                                             props: {
                                                 type: 'text',
                                                 size: 'small',
@@ -182,7 +182,8 @@
                     })
             },
             filesDelete (e) {
-                var _self = this
+                var _self = this;
+                _self.$ButtonCollect("marketingManagement_index_uploadfile_delect");
                 this.$http.get('/api/customer/customerFileRemove/' + e.row.id)
                     .then(function (response) {
                         if (response.data.msgCode == '40000') {
@@ -191,6 +192,7 @@
                     })
             },
             fileDownload (e) {
+                this.$ButtonCollect("marketingManagement_index_uploadfile_download");
                 //  二进制想多了
 //                this.getFileList()
             //    this.$http({

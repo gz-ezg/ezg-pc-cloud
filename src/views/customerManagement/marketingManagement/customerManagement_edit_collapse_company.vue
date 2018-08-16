@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Button type="ghost" shape="circle" icon="plus" @click="modal33 = true">新增</Button>
+        <Button name="marketingManagement_index_company_add" type="ghost" shape="circle" icon="plus" @click="companyAdd">新增</Button>
         <Table
                 border
                 :columns="columns7"
@@ -514,7 +514,7 @@ import Bus from '../../../components/bus.js'
                                     on: {
                                         click: () => {
                                             // console.log(params)
-                                            this.amend(params)
+                                            this.amend(params);
                                         }
                                     }
                                 }, '修改'),
@@ -528,7 +528,8 @@ import Bus from '../../../components/bus.js'
                                     },
                                     on: {
                                         click: () => {
-                                            this.edit(params)
+                                            this.edit(params);
+
                                         }
                                     }
                                 }, '工商信息'),
@@ -593,9 +594,14 @@ import Bus from '../../../components/bus.js'
             }
         },
         methods: {
+            companyAdd(){
+                this.modal33 = true;
+                this.$ButtonCollect("marketingManagement_index_company_add");
+            },
             /*****获取公司名称变更日志*****/
             get_company_name_change_log(e){
-                let _self = this
+                let _self = this;
+                _self.$ButtonCollect("marketingManagement_index_company_businessinfo_namelog");
                 _self.openComNameLog = true
                 _self.changeLoading = true
                 let url = `api/customer/company/companyNameChangeLogList`
@@ -670,7 +676,8 @@ import Bus from '../../../components/bus.js'
 
             /*************************修改企业信息********************************/
             amend(e) {
-                var _self = this
+                var _self = this;
+                _self.$ButtonCollect("marketingManagement_index_company_edit");
                 // console.log(e)
                 _self.modal3 = true
                 _self.formValidate.id = e.row.id
@@ -702,10 +709,9 @@ import Bus from '../../../components/bus.js'
 
             /*************************编辑企业信息********************************/
             edit(e) {
-                var _self = this
-
+                var _self = this;
+                _self.$ButtonCollect("marketingManagement_index_company_businessinfo");
                 _self.modal8 = true
-
                 _self.formValidate3.companyname = e.row.companyname
                 _self.formValidate3.regnumber = e.row.RegNumber
                 _self.formValidate3.creditcode = e.row.CreditCode
@@ -863,7 +869,8 @@ import Bus from '../../../components/bus.js'
 
             /*************************提交修改后的企业信息********************************/
             ok(name) {
-                var _self = this
+                var _self = this;
+                _self.$ButtonCollect("marketingManagement_index_company_edit_save");
                 setTimeout(() => {
                     this.loading = false;
                     this.$refs[name].validate((valid) => {
@@ -910,7 +917,8 @@ import Bus from '../../../components/bus.js'
 
             /*************************提交新增的企业信息********************************/
             okSubmit(name) {
-                var _self = this
+                var _self = this;
+                _self.$ButtonCollect("marketingManagement_index_company_save");
                 console.log(_self.formValidate2)
                 setTimeout(() => {
                     this.loading = false;
@@ -960,7 +968,8 @@ import Bus from '../../../components/bus.js'
 
             /*************************提交编辑后的企业信息********************************/
             EditCompany() {
-                var _self = this
+                var _self = this;
+                _self.$ButtonCollect("marketingManagement_index_company_businessinfo_save");
                 this.$http({
                     method: 'post',
                     url: '/api/customer/updateCompany',

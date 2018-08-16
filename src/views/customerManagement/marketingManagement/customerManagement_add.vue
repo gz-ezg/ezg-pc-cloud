@@ -141,7 +141,7 @@
                             @on-close="handleClose2">
                             {{ item.labelName }}
                         </Tag>
-                        <Button icon="ios-plus-empty" type="dashed" size="small" @click="getLabelData();addTag = true">添加</Button>
+                        <Button name="marketingManagement_index_entry_add" icon="ios-plus-empty" type="dashed" size="small" @click="getLabelData();addTag = true">添加</Button>
                     </FormItem>
                     </Col>
                 </Row>
@@ -195,7 +195,7 @@
                     </Input>
                 </Col>
                 <Col span="4">
-                    <Button icon="ios-search" @click="getCustomer">搜索</Button>
+                    <Button name="marketingManagement_index_entry_recommend_client" icon="ios-search" @click="getCustomer">搜索</Button>
                 </Col>
             </Row>
             <Table
@@ -218,627 +218,620 @@
 </template>
 
 <script>
-import Bus from '../../../components/bus'
-    export default {
-        props: ['modal5'],
-        data() {
-            const validateCascader = (rule, value, callback) => {
-                if (value == '') {
-                    callback(new Error('请选择客户状态'));
-                } else {
-                    callback();
-                }
-            };
-            // 电话号码校验
-            const validateTel = (rule, value, callback) => {
-                let re = /^1\d{10}$/
-                if (value == '' || value == null) {
-                    callback();
-                } else {
-                    if (re.test(value)) {
-                        let url = '/customer/findCustomerByTel?tel=' + value
+import Bus from "../../../components/bus";
+export default {
+  props: ["modal5"],
+  data() {
+    const validateCascader = (rule, value, callback) => {
+      if (value == "") {
+        callback(new Error("请选择客户状态"));
+      } else {
+        callback();
+      }
+    };
+    // 电话号码校验
+    const validateTel = (rule, value, callback) => {
+      let re = /^1\d{10}$/;
+      if (value == "" || value == null) {
+        callback();
+      } else {
+        if (re.test(value)) {
+          let url = "/customer/findCustomerByTel?tel=" + value;
 
-                        function doSuccess(response) {
-                            console.log(response.data);
-                            if (response.data.data != null) {
-                                callback(new Error('抱歉，电话号码重复'));
-                            } else {
-                                callback();
-                            }
-                        }
-                        this.GetData(url, doSuccess)
-                    } else {
-                        callback(new Error('电话格式不正确'));
-                    }
-                }
-            };
-            const validateFixedphone = (rule, value, callback) => {
-                let re = /\d{3}-\d{8}|\d{4}-\d{7}/
-                if (value == '' || value == null) {
-                    callback();
-                } else {
-                    if (re.test(value)) {
-                        callback();
-                    } else {
-                        callback(new Error('固话格式不正确'));
-                    }
-                }
-            };
-            const validateChannel = (rule, value, callback) => {
-                if(this.formValidate.customersource == 'xzqd'){
-                    if(value == ''||value ==null){
-                        callback('请输入来源渠道')
-                    }else{
-                        callback()
-                    }
-                }
-            };
-            const validateQQ = (rule, value, callback) => {
-                let re = /^[1-9]\d{4,10}$/
-                if (value == '' || value == null) {
-                    callback();
-                } else {
-                    if (re.test(value)) {
-                        callback();
-                    } else {
-                        callback(new Error('QQ格式不正确'));
-                    }
-                }
-            };
-            // const validateWX = (rule, value, callback) => {
-            //     let re = /[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}+/
-            //     if (value == '' || value == null) {
-            //         callback();
-            //     } else {
-            //         if (re.test(value)) {
-            //             callback();
-            //         } else {
-            //             callback(new Error('QQ格式不正确'));
-            //         }
-            //     }
-            // };
-            const validateWX = (rule, value, callback) =>{
-                // let re = /^[a-z_\d]+$/
-                if (value == '' || value == null) {
-                    callback();
-                } else {
-                    if (1) {
-                        callback();
-                    } else {
-                        callback(new Error('微信格式不正确'));
-                    }
-                }
-            };
-            return {
-                pageCustomer:1,
-                customerColumns:[
-                    {
-                        title: '客户名称',
-                        key: 'NAME'
-                    },
-                    {
-                        title: '客户电话',
-                        key: 'TEL'
-                    }
-                ],
-                customerLoading:false,
-                customerData:[],
-                pageTotalCustomer:new Number(),
-                showCustomer:false,
-                searchCustomer:"",
-                searchCustomerTEL:"",
-                labelRow:[],
-                isshowchannel:false,
-                ChannelType:[],
-                addTag:false,
-                loading: true,
-                customerlabelGroup: [],
-                importlevelValue: [],
-                issendValue: [],
-                areaValue: [],
-                customertypeValue: [],
-                customersourceValue: [],
-                data3: [],
-                page2:1,
-                page2size:10,
-                pageTotal2: new Number,
-                formValidate: {
-                    id: '',
-                    name: '',
-                    tel: '',
-                    fixedphone: '',
-                    qq: '',
-                    weixin: '',
-                    address: '',
-                    customertype: [],
-                    customersource: '',
-                    importlevel: '',
-                    area: '',
-                    issend: 'Y',
-                    customerlabel: [],
-                    createdate: '',
-                    updatedate: '',
-                    gxr: '',
-                    backup: '',
-                    sourcesubdivision: '',
-                    isbound: '',
-                    email: '',
-                    channelsource: '',
-                    channelTypeId:'',
-                    TJleader:'',
-                    recCustomer:'',
-                    // customertuijianId:''
-                },
-                area:[],
-                cluesource:[],
-                // console.log(temp.customerType)
-                customerType:[],
-                impLevel:[],
-                sf_yn:[],
-                customerTypeArr:[],
+          function doSuccess(response) {
+            console.log(response.data);
+            if (response.data.data != null) {
+              callback(new Error("抱歉，电话号码重复"));
+            } else {
+              callback();
+            }
+          }
+          this.GetData(url, doSuccess);
+        } else {
+          callback(new Error("电话格式不正确"));
+        }
+      }
+    };
+    const validateFixedphone = (rule, value, callback) => {
+      let re = /\d{3}-\d{8}|\d{4}-\d{7}/;
+      if (value == "" || value == null) {
+        callback();
+      } else {
+        if (re.test(value)) {
+          callback();
+        } else {
+          callback(new Error("固话格式不正确"));
+        }
+      }
+    };
+    const validateChannel = (rule, value, callback) => {
+      if (this.formValidate.customersource == "xzqd") {
+        if (value == "" || value == null) {
+          callback("请输入来源渠道");
+        } else {
+          callback();
+        }
+      }
+    };
+    const validateQQ = (rule, value, callback) => {
+      let re = /^[1-9]\d{4,10}$/;
+      if (value == "" || value == null) {
+        callback();
+      } else {
+        if (re.test(value)) {
+          callback();
+        } else {
+          callback(new Error("QQ格式不正确"));
+        }
+      }
+    };
+    // const validateWX = (rule, value, callback) => {
+    //     let re = /[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}+/
+    //     if (value == '' || value == null) {
+    //         callback();
+    //     } else {
+    //         if (re.test(value)) {
+    //             callback();
+    //         } else {
+    //             callback(new Error('QQ格式不正确'));
+    //         }
+    //     }
+    // };
+    const validateWX = (rule, value, callback) => {
+      // let re = /^[a-z_\d]+$/
+      if (value == "" || value == null) {
+        callback();
+      } else {
+        if (1) {
+          callback();
+        } else {
+          callback(new Error("微信格式不正确"));
+        }
+      }
+    };
+    return {
+      pageCustomer: 1,
+      customerColumns: [
+        {
+          title: "客户名称",
+          key: "NAME"
+        },
+        {
+          title: "客户电话",
+          key: "TEL"
+        }
+      ],
+      customerLoading: false,
+      customerData: [],
+      pageTotalCustomer: new Number(),
+      showCustomer: false,
+      searchCustomer: "",
+      searchCustomerTEL: "",
+      labelRow: [],
+      isshowchannel: false,
+      ChannelType: [],
+      addTag: false,
+      loading: true,
+      customerlabelGroup: [],
+      importlevelValue: [],
+      issendValue: [],
+      areaValue: [],
+      customertypeValue: [],
+      customersourceValue: [],
+      data3: [],
+      page2: 1,
+      page2size: 10,
+      pageTotal2: new Number(),
+      formValidate: {
+        id: "",
+        name: "",
+        tel: "",
+        fixedphone: "",
+        qq: "",
+        weixin: "",
+        address: "",
+        customertype: [],
+        customersource: "",
+        importlevel: "",
+        area: "",
+        issend: "Y",
+        customerlabel: [],
+        createdate: "",
+        updatedate: "",
+        gxr: "",
+        backup: "",
+        sourcesubdivision: "",
+        isbound: "",
+        email: "",
+        channelsource: "",
+        channelTypeId: "",
+        TJleader: "",
+        recCustomer: ""
+        // customertuijianId:''
+      },
+      area: [],
+      cluesource: [],
+      // console.log(temp.customerType)
+      customerType: [],
+      impLevel: [],
+      sf_yn: [],
+      customerTypeArr: [],
 
-                ruleValidate: {
-                    name: [
-                        {required: true, trigger: 'blur', message: '姓名不能为空'}
-                    ],
-                    customertype: [
-                        {required: true, validator: validateCascader, trigger: 'change'}
-                    ],
-                    customersource: [
-                        {required: true, trigger: 'change', message: '请选择客户来源'}
-                    ],
-                    tel: [
-                        {validator: validateTel, trigger: 'blur'}
-                    ],
-                    fixedphone: [
-                        {validator: validateFixedphone, trigger: 'blur'}
-                    ],
-                    importlevel: [
-                        {required: true, trigger: 'change', message: '请选择客户等级'}
-                    ],
-                    area: [
-                        {required: true, trigger: 'change', message: '请选择区域'}
-                    ],
-                  /*  channelTypeId:[
+      ruleValidate: {
+        name: [{ required: true, trigger: "blur", message: "姓名不能为空" }],
+        customertype: [
+          { required: true, validator: validateCascader, trigger: "change" }
+        ],
+        customersource: [
+          { required: true, trigger: "change", message: "请选择客户来源" }
+        ],
+        tel: [{ validator: validateTel, trigger: "blur" }],
+        fixedphone: [{ validator: validateFixedphone, trigger: "blur" }],
+        importlevel: [
+          { required: true, trigger: "change", message: "请选择客户等级" }
+        ],
+        area: [{ required: true, trigger: "change", message: "请选择区域" }],
+        /*  channelTypeId:[
                         {required: true, trigger: 'blur', message:'请选择渠道来源'}
                     ],*/
-                    email:[
-                        {type:'email',trigger:'blur',message:'邮箱格式不正确'}
-                    ],
-                    qq: [
-                        {validator: validateQQ, trigger: 'blur'}
-                    ],
-                    weixin: [
-                        {validator: validateWX, trigger: 'blur'}
-                    ]
-                },
-                columns4: [
-                    {
-                        type: 'selection',
-                        width: 60,
-                        align: 'center'
-                    },
-                    {
-                        title: '标签',
-                        key: 'labelName'
-                    },
-                ],
-                leader_show:false,
-                customer_show:false
-            }
+        email: [{ type: "email", trigger: "blur", message: "邮箱格式不正确" }],
+        qq: [{ validator: validateQQ, trigger: "blur" }],
+        weixin: [{ validator: validateWX, trigger: "blur" }]
+      },
+      columns4: [
+        {
+          type: "selection",
+          width: 60,
+          align: "center"
         },
-        methods: {
-            keydown3(e){
-                if(e.key == 'Enter'){
-                    this.pageCustomer = 1
-                    this.getCustomer()
-                }
-            },
-            getCustomer(){
-                let _self = this
-                this.showCustomer = true
-                this.customerLoading = true
-                let url = `api/customer/list`
-                let config = {
-                    params:{
-                        page: _self.pageCustomer,
-                        name: _self.searchCustomer,
-                        tel: _self.searchCustomerTEL,
-                        pageSize: 10
-                    }
-                }
-                this.$http.get(url, config).then(function(res){
-                    _self.pageTotalCustomer = res.data.data.total
-                    _self.customerData = res.data.data.rows
-                    _self.customerLoading = false
-                })
-            },
-            pageChangeCustomer(e){
-                this.pageCustomer = e
-                this.getCustomer()
-            },
-            rowSelectCustomer(e){
-                this.formValidate.recCustomer = e.NAME,
-                // this.formValidate.customertuijianId = e.id,
-                this.showCustomer = false
-            },
-            ok2(){
-
-            },
-
-            cancel2(){
-                
-            },
-
-            /*************************录入提交验证********************************/
-            ok(name) {
-                let _self = this
-                setTimeout(() => {
-                    console.log(_self.formValidate)
-                    this.loading = false;
-                    this.$refs[name].validate((valid) => {
-                        if (valid) {
-                            if (_self.customerlabelGroup != undefined) {
-                                let labelIds = []
-                                for (let i = 0; i < _self.customerlabelGroup.length; i++) {
-                                    labelIds.push(_self.customerlabelGroup[i].id)
-                                }
-                                _self.formValidate.labels = labelIds.toString()
-                            }
-                            let _customertypeStr = _self.formValidate.customertype.join('-')
-                            // let _customertypeStr = _self.formValidate.customertype[1]
-                            // console.log(_customertypeStr)
-                            _self.formValidate.customertype = _customertypeStr
-
-                            if (_self.formValidate.tel == '' && _self.formValidate.fixedphone == '' && _self.formValidate.qq == '' && _self.formValidate.weixin == '') {
-                                this.$nextTick(() => {
-                                    this.loading = true;
-                                });
-                                this.$Message.error('电话、固话、QQ、微信必须填写一个');
-                                console.log(_self.formValidate)
-                            } else {
-                                let url = '/customer/saveCustomer'
-                                function doSuccess(response) {
-                                    _self.$Message.success('更新成功!')
-                                    _self.$emit('hideAddPanel', 'false');
-                                    Bus.$emit('addsuccess',true)
-                                    // console.log(response.data.data)
-                                    _self.$bus.emit('ADD_NEW_CUMSTOMER',response.data.data.id)
-
-                                }
-                                this.PostData(url, _self.formValidate, doSuccess)
-                            }
-                        } else {
-                            this.$nextTick(() => {
-                                this.loading = true;
-                            });
-                        }
-                    })
-                }, 2000);
-            },
-
-            /*************************取消录入，重置表单********************************/
-            cancel() {
-                let _self = this
-                this.$emit('hideAddPanel', 'false');
-            },
-
-            /*************************移除标签********************************/
-            handleClose2(event, name) {
-                let _self = this
-                for (let i = 0; i < _self.customerlabelGroup.length; i++) {
-                    if (_self.customerlabelGroup[i] == name) {
-                        let index = _self.customerlabelGroup.indexOf(name);
-                        if (index > -1) {
-                            _self.customerlabelGroup.splice(index, 1);
-                        }
-                    }
-                }
-            },
-
-            /*************************初始化下拉框********************************/
-            getDataCenter() {
-                var _self = this;
-
-                let params = "customerTypes,cluesources,customerrating,area,sf_yn"
-
-                function finish(res){
-                    var temp = res.data.data;
-                    _self.area = temp.area;
-                    _self.cluesource = temp.cluesources;
-                    // console.log(temp.customerType)
-                    _self.customerType = temp.customerTypes;
-                    _self.impLevel = temp.customerrating;
-                    _self.sf_yn = temp.sf_yn;
-                    _self.area.reverse()
-                    let temp2 = _self.$changeCars(_self.customerType)
-                    console.log(temp2)
-                    // 二级联动改一级
-                    _self.customerTypeArr = []
-                    for(let i = 0;i<_self.customerType.length;i++){
-                        var temp = {}
-                        if(_self.customerType[i].children != null){
-                            for(let j = 0;j<_self.customerType[i].children.length; j++ ){
-                            temp = {}
-                            temp.id = _self.customerType[i].children[j].id
-                            temp.typecode = _self.customerType[i].children[j].typecode
-                            temp.typename = _self.customerType[i].children[j].typename
-                            temp.pid = _self.customerType[i].children[j].pid
-                            temp.ptypename = _self.customerType[i].typename
-                            temp.ptypecode = _self.customerType[i].typecode
-                            _self.customerTypeArr.push(temp)
-                            }
-                        }else{    
-                            temp = {}
-                            temp.id = _self.customerType[i].id
-                            temp.typecode = _self.customerType[i].typecode
-                            temp.ptypename = _self.customerType[i].typename
-                            temp.typename = ''
-                            temp.pid = 0
-                            _self.customerTypeArr.push(temp)
-                        }
-                        //  修改成规定的模型
-                        _self.customerType[i].value = _self.customerType[i].id
-                        _self.customerType[i].label = _self.customerType[i].typename
-                        if(_self.customerType[i].children != null){
-                            
-                            for(let j = 0;j<_self.customerType[i].children.length; j++ ){
-
-                            _self.customerType[i].children[j].value= _self.customerType[i].children[j].id
-                            _self.customerType[i].children[j].label = _self.customerType[i].children[j].typename
-
-                            }
-                        }
-                    }
-                }
-
-                this.$GetDataCenter(params, finish)
-                // var url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=customerTypes,cluesources,customerrating,area,sf_yn`;
-                // this.$http.get(url).then(function(res) {
-                //     // console.log(res.data.data)
-                //     var temp = res.data.data;
-                //     _self.area = temp.area;
-                //     _self.cluesource = temp.cluesources;
-                //     // console.log(temp.customerType)
-                //     _self.customerType = temp.customerTypes;
-                //     _self.impLevel = temp.customerrating;
-                //     _self.sf_yn = temp.sf_yn;
-                //     _self.area.reverse()
-                //     let temp2 = _self.$changeCars(_self.customerType)
-                //     console.log(temp2)
-                //     // 二级联动改一级
-                //     _self.customerTypeArr = []
-                //     for(let i = 0;i<_self.customerType.length;i++){
-                //         var temp = {}
-                //         if(_self.customerType[i].children != null){
-                //             for(let j = 0;j<_self.customerType[i].children.length; j++ ){
-                //             temp = {}
-                //             temp.id = _self.customerType[i].children[j].id
-                //             temp.typecode = _self.customerType[i].children[j].typecode
-                //             temp.typename = _self.customerType[i].children[j].typename
-                //             temp.pid = _self.customerType[i].children[j].pid
-                //             temp.ptypename = _self.customerType[i].typename
-                //             temp.ptypecode = _self.customerType[i].typecode
-                //             _self.customerTypeArr.push(temp)
-                //             }
-                //         }else{    
-                //             temp = {}
-                //             temp.id = _self.customerType[i].id
-                //             temp.typecode = _self.customerType[i].typecode
-                //             temp.ptypename = _self.customerType[i].typename
-                //             temp.typename = ''
-                //             temp.pid = 0
-                //             _self.customerTypeArr.push(temp)
-                //         }
-                //         //  修改成规定的模型
-                //         _self.customerType[i].value = _self.customerType[i].id
-                //         _self.customerType[i].label = _self.customerType[i].typename
-                //         if(_self.customerType[i].children != null){
-                            
-                //             for(let j = 0;j<_self.customerType[i].children.length; j++ ){
-
-                //             _self.customerType[i].children[j].value= _self.customerType[i].children[j].id
-                //             _self.customerType[i].children[j].label = _self.customerType[i].children[j].typename
-
-                //             }
-                //         }
-                //     }
-                //     console.log(_self.customerType)    
-                // })
-            },
-
-            getLabelData() {
-                var _self = this
-                _self.data3 = []
-                this.$http.get('/api/system/label/list?page=1&pageSize=10')
-                    .then(function (data) {
-
-                        var response = data.data.data.rows
-
-                        var length = response.length
-                        _self.pageTotal2 = data.data.data.total
-
-                        let _customerlabelGroup = []
-                        for (var i = 0; i < length; i++) {
-
-                            var reponseObj = {}
-                            reponseObj.labelName = response[i].labelName
-                            reponseObj.id = response[i].id
-                            for (let i = 0; i < _self.customerlabelGroup.length; i++) {
-                                if (reponseObj.labelName == _self.customerlabelGroup[i].labelName) {
-                                    reponseObj._checked = true
-                                    _customerlabelGroup.push(reponseObj)
-                                }
-                            }
-                            _self.data3.push(reponseObj)
-                        }
-                    }).catch(function(e){
-                        console.log(e)
-                    })
-
-            },
-            selectionChange(e) {
-                let _self = this
-                if (_self.customerlabelGroup.length == 0) {
-                    _self.customerlabelGroup = e
-                } else {
-                    for (let i = 0; i < e.length; i++) {
-                        let _count = 0
-                       for (let j = 0; j < _self.customerlabelGroup.length; j++) {
-                           if (e[i].id == _self.customerlabelGroup[j].id) {
-                               break;
-                           } else {
-                               _count++
-                           }
-                       }
-                       if (_count == _self.customerlabelGroup.length) {
-                           _self.customerlabelGroup.push({
-                               id: e[i].id,
-                               labelName: e[i].labelName,
-                           })
-                       }
-                    }
-                }
-            },
-
-            selectCancel(selection, row) {
-                let _self = this
-
-                outer:
-                    for (let i = 0; i <  _self.customerlabelGroup.length; i++) {
-                        if (row.id == _self.customerlabelGroup[i].id) {
-                            _self.customerlabelGroup.splice(i,1)
-                            break outer;
-                        }
-                    }
-            },
-
-            /*************************标签选择改变********************************/
-            checkboxChange(e) {
-                let _self = this
-                _self.customerlabel = []
-                // console.log(e)
-                for (let i = 0; i < e.length; i++) {
-                    for (let j = 0; j < _self.customerlabelGroup.length; j++) {
-                        if (e[i] == _self.customerlabelGroup[j].label) {
-                            _self.customerlabel.push(_self.customerlabelGroup[j].value)
-                        }
-                    }
-                }
-                _self.formValidate.customerlabel.push(_Obj)
-                console.log(_self.formValidate.customerlabel)
-            },
-
-            pageChange2(index){
-                var _self = this
-                _self.page2 = index
-                _self.data3 = []                
-                var url = `/api/system/label/list?page=${_self.page2}&pageSize=${_self.page2size}`
-                this.$http.get(url)
-                    .then(function (data) {
-                        var response = data.data.data
-                        // console.log('11111111111111111111111111')
-                        // console.log(response)
-                        var length = response.rows.length
-                        _self.pageTotal2 = response.total
-                        let _customerlabelGroup = []
-                        for (var i = 0; i < length; i++) {
-                            var reponseObj = {}
-                            reponseObj.labelName = response.rows[i].labelName
-                            reponseObj.id = response.rows[i].id
-                            for (let i = 0; i < _self.customerlabelGroup.length; i++) {
-                                if (reponseObj.labelName == _self.customerlabelGroup[i].labelName) {
-                                    reponseObj._checked = true
-                                    _customerlabelGroup.push(reponseObj)
-                                }
-                            }
-                            _self.data3.push(reponseObj)
-                        }
-                    //    _self.customerlabelGroup = _customerlabelGroup
-                    })
-            },
-            pageSizeChange2(index){
-                var _self = this
-                _self.page2size = index
-                _self.data3 = []                    
-                var url = `/api/system/label/list?page=${_self.page2}&pageSize=${_self.page2size}`
-                this.$http.get(url)
-                    .then(function (data) {
-                        var response = data.data.data
-                        var length = response.rows.length
-                        _self.pageTotal2 = response.total
-                        let _customerlabelGroup = []
-                        for (var i = 0; i < length; i++) {
-                            var reponseObj = {}
-                            reponseObj.labelName = response.rows[i].labelName
-                            reponseObj.id = response.rows[i].id
-                            for (let i = 0; i < _self.customerlabelGroup.length; i++) {
-                                if (reponseObj.labelName == _self.customerlabelGroup[i].labelName) {
-                                    reponseObj._checked = true
-                                    _customerlabelGroup.push(reponseObj)
-                                }
-                            }
-                            _self.data3.push(reponseObj)
-                        }
-                    //    _self.customerlabelGroup = _customerlabelGroup
-                    })
-
-            },
-            //  新增渠道第二选项
-            // checkchannel(e){
-            //         var _self = this
-            //         if(e == 'xzqd'){
-            //             // _self.getChannelType()
-            //         _self.isshowchannel = true
-            //         }else{
-            //             _self.isshowchannel = false
-            //         }
-            // },
-            checkchannel(e){
-                // this.getChannelType()
-                // //console.log(e)
-                if(e == 'xzqd'){
-                    this.channel_show = true
-                }else{
-                    this.channel_show = false
-                    this.formValidate.channelTypeId = ""
-                }
-                if(e == 'khtj'){
-                    this.customer_show = true
-                }else{
-                    this.customer_show = false
-                }
-                if(e == 'ldtj'){
-                    this.leader_show = true
-                }else{
-                    this.leader_show = false
-                }
-            },
-            //  获取渠道类型
-            getChannelType(){
-                var _self = this
-                _self.ChannelType = []
-                this.$http.get('api/channel/type/queryUserChannel?type=xs').then(function(data){
-                    // console.log(data.data.data)
-                    for(let i = 0; i<data.data.data.length;i++){
-                        var temp={}
-                        temp.channel_type_name = data.data.data[i].channel_type_name
-                        temp.channel_type_code = data.data.data[i].channel_type_code
-                        temp.id = data.data.data[i].id
-                        _self.ChannelType.push(temp)
-                    }
-                    
-                })
-            }
-        },
-        mounted() {
-            this.getChannelType()
-            this.getLabelData()
-            this.getDataCenter()
-        },
-        created(){
+        {
+          title: "标签",
+          key: "labelName"
         }
+      ],
+      leader_show: false,
+      customer_show: false
+    };
+  },
+  methods: {
+    keydown3(e) {
+      if (e.key == "Enter") {
+        this.pageCustomer = 1;
+        this.getCustomer();
+      }
+    },
+    getCustomer() {
+      let _self = this;
+      _self.$ButtonCollect("marketingManagement_index_entry_recommend_client");
+      this.showCustomer = true;
+      this.customerLoading = true;
+      let url = `api/customer/list`;
+      let config = {
+        params: {
+          page: _self.pageCustomer,
+          name: _self.searchCustomer,
+          tel: _self.searchCustomerTEL,
+          pageSize: 10
+        }
+      };
+      this.$http.get(url, config).then(function(res) {
+        _self.pageTotalCustomer = res.data.data.total;
+        _self.customerData = res.data.data.rows;
+        _self.customerLoading = false;
+      });
+    },
+    pageChangeCustomer(e) {
+      this.pageCustomer = e;
+      this.getCustomer();
+    },
+    rowSelectCustomer(e) {
+      (this.formValidate.recCustomer = e.NAME),
+        // this.formValidate.customertuijianId = e.id,
+        (this.showCustomer = false);
+    },
+    ok2() {
+      this.$ButtonCollect("marketingManagement_index_entry_addtag_save");
+    },
+    cancel2() {
+      this.$ButtonCollect("marketingManagement_index_entry_addtag_cancel");
+    },
+
+    /*************************录入提交验证********************************/
+    ok(name) {
+      let _self = this;
+      _self.$ButtonCollect("marketingManagement_index_entry_save");
+      setTimeout(() => {
+        console.log(_self.formValidate);
+        this.loading = false;
+        this.$refs[name].validate(valid => {
+          if (valid) {
+            if (_self.customerlabelGroup != undefined) {
+              let labelIds = [];
+              for (let i = 0; i < _self.customerlabelGroup.length; i++) {
+                labelIds.push(_self.customerlabelGroup[i].id);
+              }
+              _self.formValidate.labels = labelIds.toString();
+            }
+            let _customertypeStr = _self.formValidate.customertype.join("-");
+            // let _customertypeStr = _self.formValidate.customertype[1]
+            // console.log(_customertypeStr)
+            _self.formValidate.customertype = _customertypeStr;
+
+            if (
+              _self.formValidate.tel == "" &&
+              _self.formValidate.fixedphone == "" &&
+              _self.formValidate.qq == "" &&
+              _self.formValidate.weixin == ""
+            ) {
+              this.$nextTick(() => {
+                this.loading = true;
+              });
+              this.$Message.error("电话、固话、QQ、微信必须填写一个");
+              console.log(_self.formValidate);
+            } else {
+              let url = "/customer/saveCustomer";
+              function doSuccess(response) {
+                _self.$Message.success("更新成功!");
+                _self.$emit("hideAddPanel", "false");
+                Bus.$emit("addsuccess", true);
+                // console.log(response.data.data)
+                _self.$bus.emit("ADD_NEW_CUMSTOMER", response.data.data.id);
+              }
+              this.PostData(url, _self.formValidate, doSuccess);
+            }
+          } else {
+            this.$nextTick(() => {
+              this.loading = true;
+            });
+          }
+        });
+      }, 2000);
+    },
+
+    /*************************取消录入，重置表单********************************/
+    cancel() {
+      let _self = this;
+      _self.$ButtonCollect("marketingManagement_index_entry_addtag_cancel");
+      _self.$emit("hideAddPanel", "false");
+    },
+
+    /*************************移除标签********************************/
+    handleClose2(event, name) {
+      let _self = this;
+      for (let i = 0; i < _self.customerlabelGroup.length; i++) {
+        if (_self.customerlabelGroup[i] == name) {
+          let index = _self.customerlabelGroup.indexOf(name);
+          if (index > -1) {
+            _self.customerlabelGroup.splice(index, 1);
+          }
+        }
+      }
+    },
+
+    /*************************初始化下拉框********************************/
+    getDataCenter() {
+      var _self = this;
+
+      let params = "customerTypes,cluesources,customerrating,area,sf_yn";
+
+      function finish(res) {
+        var temp = res.data.data;
+        _self.area = temp.area;
+        _self.cluesource = temp.cluesources;
+        // console.log(temp.customerType)
+        _self.customerType = temp.customerTypes;
+        _self.impLevel = temp.customerrating;
+        _self.sf_yn = temp.sf_yn;
+        _self.area.reverse();
+        let temp2 = _self.$changeCars(_self.customerType);
+        console.log(temp2);
+        // 二级联动改一级
+        _self.customerTypeArr = [];
+        for (let i = 0; i < _self.customerType.length; i++) {
+          var temp = {};
+          if (_self.customerType[i].children != null) {
+            for (let j = 0; j < _self.customerType[i].children.length; j++) {
+              temp = {};
+              temp.id = _self.customerType[i].children[j].id;
+              temp.typecode = _self.customerType[i].children[j].typecode;
+              temp.typename = _self.customerType[i].children[j].typename;
+              temp.pid = _self.customerType[i].children[j].pid;
+              temp.ptypename = _self.customerType[i].typename;
+              temp.ptypecode = _self.customerType[i].typecode;
+              _self.customerTypeArr.push(temp);
+            }
+          } else {
+            temp = {};
+            temp.id = _self.customerType[i].id;
+            temp.typecode = _self.customerType[i].typecode;
+            temp.ptypename = _self.customerType[i].typename;
+            temp.typename = "";
+            temp.pid = 0;
+            _self.customerTypeArr.push(temp);
+          }
+          //  修改成规定的模型
+          _self.customerType[i].value = _self.customerType[i].id;
+          _self.customerType[i].label = _self.customerType[i].typename;
+          if (_self.customerType[i].children != null) {
+            for (let j = 0; j < _self.customerType[i].children.length; j++) {
+              _self.customerType[i].children[j].value =
+                _self.customerType[i].children[j].id;
+              _self.customerType[i].children[j].label =
+                _self.customerType[i].children[j].typename;
+            }
+          }
+        }
+      }
+
+      this.$GetDataCenter(params, finish);
+      // var url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=customerTypes,cluesources,customerrating,area,sf_yn`;
+      // this.$http.get(url).then(function(res) {
+      //     // console.log(res.data.data)
+      //     var temp = res.data.data;
+      //     _self.area = temp.area;
+      //     _self.cluesource = temp.cluesources;
+      //     // console.log(temp.customerType)
+      //     _self.customerType = temp.customerTypes;
+      //     _self.impLevel = temp.customerrating;
+      //     _self.sf_yn = temp.sf_yn;
+      //     _self.area.reverse()
+      //     let temp2 = _self.$changeCars(_self.customerType)
+      //     console.log(temp2)
+      //     // 二级联动改一级
+      //     _self.customerTypeArr = []
+      //     for(let i = 0;i<_self.customerType.length;i++){
+      //         var temp = {}
+      //         if(_self.customerType[i].children != null){
+      //             for(let j = 0;j<_self.customerType[i].children.length; j++ ){
+      //             temp = {}
+      //             temp.id = _self.customerType[i].children[j].id
+      //             temp.typecode = _self.customerType[i].children[j].typecode
+      //             temp.typename = _self.customerType[i].children[j].typename
+      //             temp.pid = _self.customerType[i].children[j].pid
+      //             temp.ptypename = _self.customerType[i].typename
+      //             temp.ptypecode = _self.customerType[i].typecode
+      //             _self.customerTypeArr.push(temp)
+      //             }
+      //         }else{
+      //             temp = {}
+      //             temp.id = _self.customerType[i].id
+      //             temp.typecode = _self.customerType[i].typecode
+      //             temp.ptypename = _self.customerType[i].typename
+      //             temp.typename = ''
+      //             temp.pid = 0
+      //             _self.customerTypeArr.push(temp)
+      //         }
+      //         //  修改成规定的模型
+      //         _self.customerType[i].value = _self.customerType[i].id
+      //         _self.customerType[i].label = _self.customerType[i].typename
+      //         if(_self.customerType[i].children != null){
+
+      //             for(let j = 0;j<_self.customerType[i].children.length; j++ ){
+
+      //             _self.customerType[i].children[j].value= _self.customerType[i].children[j].id
+      //             _self.customerType[i].children[j].label = _self.customerType[i].children[j].typename
+
+      //             }
+      //         }
+      //     }
+      //     console.log(_self.customerType)
+      // })
+    },
+
+    getLabelData() {
+      var _self = this;
+      _self.$ButtonCollect("marketingManagement_index_entry_add");
+      _self.data3 = [];
+      this.$http
+        .get("/api/system/label/list?page=1&pageSize=10")
+        .then(function(data) {
+          var response = data.data.data.rows;
+
+          var length = response.length;
+          _self.pageTotal2 = data.data.data.total;
+
+          let _customerlabelGroup = [];
+          for (var i = 0; i < length; i++) {
+            var reponseObj = {};
+            reponseObj.labelName = response[i].labelName;
+            reponseObj.id = response[i].id;
+            for (let i = 0; i < _self.customerlabelGroup.length; i++) {
+              if (
+                reponseObj.labelName == _self.customerlabelGroup[i].labelName
+              ) {
+                reponseObj._checked = true;
+                _customerlabelGroup.push(reponseObj);
+              }
+            }
+            _self.data3.push(reponseObj);
+          }
+        })
+        .catch(function(e) {
+          console.log(e);
+        });
+    },
+    selectionChange(e) {
+      let _self = this;
+      if (_self.customerlabelGroup.length == 0) {
+        _self.customerlabelGroup = e;
+      } else {
+        for (let i = 0; i < e.length; i++) {
+          let _count = 0;
+          for (let j = 0; j < _self.customerlabelGroup.length; j++) {
+            if (e[i].id == _self.customerlabelGroup[j].id) {
+              break;
+            } else {
+              _count++;
+            }
+          }
+          if (_count == _self.customerlabelGroup.length) {
+            _self.customerlabelGroup.push({
+              id: e[i].id,
+              labelName: e[i].labelName
+            });
+          }
+        }
+      }
+    },
+
+    selectCancel(selection, row) {
+      let _self = this;
+
+      outer: for (let i = 0; i < _self.customerlabelGroup.length; i++) {
+        if (row.id == _self.customerlabelGroup[i].id) {
+          _self.customerlabelGroup.splice(i, 1);
+          break outer;
+        }
+      }
+    },
+
+    /*************************标签选择改变********************************/
+    checkboxChange(e) {
+      let _self = this;
+      _self.customerlabel = [];
+      // console.log(e)
+      for (let i = 0; i < e.length; i++) {
+        for (let j = 0; j < _self.customerlabelGroup.length; j++) {
+          if (e[i] == _self.customerlabelGroup[j].label) {
+            _self.customerlabel.push(_self.customerlabelGroup[j].value);
+          }
+        }
+      }
+      _self.formValidate.customerlabel.push(_Obj);
+      console.log(_self.formValidate.customerlabel);
+    },
+
+    pageChange2(index) {
+      var _self = this;
+      _self.page2 = index;
+      _self.data3 = [];
+      var url = `/api/system/label/list?page=${_self.page2}&pageSize=${
+        _self.page2size
+      }`;
+      this.$http.get(url).then(function(data) {
+        var response = data.data.data;
+        // console.log('11111111111111111111111111')
+        // console.log(response)
+        var length = response.rows.length;
+        _self.pageTotal2 = response.total;
+        let _customerlabelGroup = [];
+        for (var i = 0; i < length; i++) {
+          var reponseObj = {};
+          reponseObj.labelName = response.rows[i].labelName;
+          reponseObj.id = response.rows[i].id;
+          for (let i = 0; i < _self.customerlabelGroup.length; i++) {
+            if (reponseObj.labelName == _self.customerlabelGroup[i].labelName) {
+              reponseObj._checked = true;
+              _customerlabelGroup.push(reponseObj);
+            }
+          }
+          _self.data3.push(reponseObj);
+        }
+        //    _self.customerlabelGroup = _customerlabelGroup
+      });
+    },
+    pageSizeChange2(index) {
+      var _self = this;
+      _self.page2size = index;
+      _self.data3 = [];
+      var url = `/api/system/label/list?page=${_self.page2}&pageSize=${
+        _self.page2size
+      }`;
+      this.$http.get(url).then(function(data) {
+        var response = data.data.data;
+        var length = response.rows.length;
+        _self.pageTotal2 = response.total;
+        let _customerlabelGroup = [];
+        for (var i = 0; i < length; i++) {
+          var reponseObj = {};
+          reponseObj.labelName = response.rows[i].labelName;
+          reponseObj.id = response.rows[i].id;
+          for (let i = 0; i < _self.customerlabelGroup.length; i++) {
+            if (reponseObj.labelName == _self.customerlabelGroup[i].labelName) {
+              reponseObj._checked = true;
+              _customerlabelGroup.push(reponseObj);
+            }
+          }
+          _self.data3.push(reponseObj);
+        }
+        //    _self.customerlabelGroup = _customerlabelGroup
+      });
+    },
+    //  新增渠道第二选项
+    // checkchannel(e){
+    //         var _self = this
+    //         if(e == 'xzqd'){
+    //             // _self.getChannelType()
+    //         _self.isshowchannel = true
+    //         }else{
+    //             _self.isshowchannel = false
+    //         }
+    // },
+    checkchannel(e) {
+      // this.getChannelType()
+      // //console.log(e)
+      if (e == "xzqd") {
+        this.channel_show = true;
+      } else {
+        this.channel_show = false;
+        this.formValidate.channelTypeId = "";
+      }
+      if (e == "khtj") {
+        this.customer_show = true;
+      } else {
+        this.customer_show = false;
+      }
+      if (e == "ldtj") {
+        this.leader_show = true;
+      } else {
+        this.leader_show = false;
+      }
+    },
+    //  获取渠道类型
+    getChannelType() {
+      var _self = this;
+      _self.ChannelType = [];
+      this.$http
+        .get("api/channel/type/queryUserChannel?type=xs")
+        .then(function(data) {
+          // console.log(data.data.data)
+          for (let i = 0; i < data.data.data.length; i++) {
+            var temp = {};
+            temp.channel_type_name = data.data.data[i].channel_type_name;
+            temp.channel_type_code = data.data.data[i].channel_type_code;
+            temp.id = data.data.data[i].id;
+            _self.ChannelType.push(temp);
+          }
+        });
     }
+  },
+  mounted() {
+    this.getChannelType();
+    this.getLabelData();
+    this.getDataCenter();
+  },
+  created() {}
+};
 </script>
 
 
