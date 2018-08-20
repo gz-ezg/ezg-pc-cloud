@@ -39,15 +39,18 @@ export default {
             let _self = this
             _self.loading = true
 
-            let url = "api/"
+            let url = "api/order/work/order/setOverdueCause"
 
             let config = {
-                id:"",
-                reason:_self.content
+                params:{
+                    id: _self.selectRow.id,
+                    reason:_self.content
+                }
             }
 
             function success(res){
                 _self.loading = false
+                _self.overdueOpen = false
                 Bus.$emit('flowsuccess', true)
             }
 
@@ -55,7 +58,7 @@ export default {
                 _self.loading = false
             }
 
-            this.$Post(url, config ,success, fail)
+            this.$Get(url, config ,success, fail)
         }
     },
     computed:{
@@ -70,6 +73,7 @@ export default {
     created(){
         let _self = this
         _self.$bus.on("OPEN_OVER_DUE_REASON",(e)=>{
+            console.log(e)
             _self.selectRow = {}
             _self.overdueOpen = true
             _self.selectRow = e

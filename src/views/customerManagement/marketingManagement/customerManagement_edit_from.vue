@@ -59,7 +59,7 @@
                         </Option>
                     </Select>
                 </FormItem>
-                <FormItem label="客户重要性" prop="importlevel" style="margin-bottom:0px">
+                <FormItem label="重要性" prop="importance" style="margin-bottom:0px">
                     <Select transfer v-model="formValidate.importance" size="small">
                         <Option v-for="item in importance" :value="item.typecode" :key="item.id">{{ item.typename}}</Option>
                     </Select>
@@ -495,6 +495,7 @@ export default {
             _self.formValidate.area = data.AREA;
             _self.formValidate.labels = data.labels;
             _self.formValidate.recCustomer = data.rec_customer;
+            _self.formValidate.importance = data.importance;
 
             _self.formValidate.customersource = data.customersource;
             if (data.importlevel != null) {
@@ -651,7 +652,8 @@ export default {
               email: _self.formValidate.email,
               // 'channelsource':_self.formValidate.channelsource,
               channelTypeId: _self.formValidate.channelTypeId,
-              recCustomer: _self.formValidate.recCustomer
+              recCustomer: _self.formValidate.recCustomer,
+              importance: _self.formValidate.importance,
             };
             console.log("_____________config__________________");
             console.log(config.customertype);
@@ -814,10 +816,10 @@ export default {
       console.log("1111111");
       _self.getAllLabel();
     });
-    this.$bus.off("CLOSE_CUSTOMER_EDIT");
-    this.$bus.on("CLOSE_CUSTOMER_EDIT", e => {
-      _self.handleSubmit("formValidate");
-    });
+  //   this.$bus.off("CLOSE_CUSTOMER_EDIT");
+  //   this.$bus.on("CLOSE_CUSTOMER_EDIT", e => {
+  //     _self.handleSubmit("formValidate");
+  //   });
   }
 };
 </script>

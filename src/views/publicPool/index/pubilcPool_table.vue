@@ -94,7 +94,7 @@
                                     </FormItem>
                                   </Col>
                                   <Col span="8">
-                                    <FormItem label="更新时间：" prop="upddate">
+                                    <FormItem label="回滚时间：" prop="upddate">
                                         <DatePicker type="daterange"  transfer v-model="formValidate.upddate" placement="bottom-start" size="small" style="width:100%"></DatePicker>
                                     </FormItem>
                                   </Col>
@@ -113,11 +113,6 @@
                                                   {{ item.typename }}
                                               </Option>
                                           </Select>
-                                      </FormItem>
-                                    </Col>
-                                    <Col span="8">
-                                      <FormItem label="回滚时间：" prop="importlevel">
-                                          
                                       </FormItem>
                                     </Col>
                                 </Row>
@@ -140,7 +135,7 @@
                     <Button type="primary" icon="edit" @click="isEditChange">查看</Button>
                     <!-- <Button type="primary" icon="ios-crop" @click="change_market" v-permission="['marketingM.change']">变更</Button>
                     <Button type="primary" icon="trash-b" @click="deleteCustomer" v-permission="['marketingM.delete']">删除</Button> -->
-                    <Button type="primary" icon="grid" @click="getQRcode">查看二维码</Button>
+                    <!-- <Button type="primary" icon="grid" @click="getQRcode">查看二维码</Button> -->
                     <Button type="primary" icon="ios-color-filter-outline" @click="downloadExcel">导出Excel</Button>
                     <!--<Button type="primary" icon="ios-color-filter-outline">Excel批量导入</Button>-->
                     <!--<Button type="primary" icon="ios-color-filter-outline">导出跟进记录</Button>-->
@@ -243,14 +238,13 @@ export default {
         {
           title: "姓名",
           key: "name",
-          sortable: true,
+          sortable: "custom",
           width: 120
         },
           {
               title: '归属公司',
               key: 'showcompanyNames',
-              width:210,
-              sortable: true,                          
+              width:210,                     
               render: (h, params) => {
                 // console.log(params)
                 if(params.row.companyNames == ''|| params.row.companyNames == null){
@@ -322,49 +316,49 @@ export default {
           title: "客户状态",
           key: "customertypeText",
           width: 140,
-          sortable: true,
+          sortable: "custom",
         },
         {
           title: "客户来源",
           key: "customersourceText",
           width: 120,
-          sortable: true,
+          sortable: "custom",
         },
         {
           title: "客户等级",
           key: "importLevelText",
           width: 120,
-          sortable: true,
+          sortable: "custom",
         },
         {
           title: "区域",
           key: "areaText",
           width: 80,
-          sortable: true,
+          sortable: "custom",
         },
         {
           title: "渠道名称",
           key: "channelTypeNameText",
           width: 140,
-          sortable: true,
+          sortable: "custom",
         },
         {
           title: "跟进人",
           key: "followby",
           width: 120,
-          sortable: true,
+          sortable: "custom",
         },
         {
           title: "创建时间",
           key: "createdate",
           width: 120,
-          sortable: true,
+          sortable: "custom",
         },
         {
-          title: "更新时间",
+          title: "回滚时间",
           key: "updatedate",
           width: 120,
-          sortable: true,
+          sortable: "custom",
         },
         {
           title: "微信绑定",
@@ -459,7 +453,7 @@ export default {
                     {field:'channelTypeName',title:'渠道名称'},
                     {field:'followbyname',title:'跟进人'},
                     {field:'CREATEDATE',title:'创建时间'},
-                    {field:'updatedate',title:'更新时间'},
+                    {field:'updatedate',title:'回滚时间'},
                     {field:'isbound',title:'微信绑定',format:'sf_yn'}
                     ]
                 let _self = this

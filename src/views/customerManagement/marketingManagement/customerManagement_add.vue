@@ -135,6 +135,16 @@
                     </Col>
                 </Row>
                 <Row :gutter="16">
+                    <Col span="12">
+                    <FormItem label="客户重要性" prop="importance">
+                        <Select transfer v-model="formValidate.importance" size="small">
+                            <Option v-for="item in importance" :value="item.typecode" :key="item.id">{{ item.typename }}
+                            </Option>
+                        </Select>
+                    </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="16">
                     <Col span="24">
                     <FormItem label="标签" prop="customerTags" style="margin-top:5px;margin-bottom:10px">
                         <Tag v-for="item in customerlabelGroup" :key="item" :name="item" :id="item.id" closable
@@ -310,6 +320,7 @@ export default {
       }
     };
     return {
+      importance:[],
       pageCustomer: 1,
       customerColumns: [
         {
@@ -532,7 +543,7 @@ export default {
     getDataCenter() {
       var _self = this;
 
-      let params = "customerTypes,cluesources,customerrating,area,sf_yn";
+      let params = "customerTypes,cluesources,customerrating,area,sf_yn,importance";
 
       function finish(res) {
         var temp = res.data.data;
@@ -542,6 +553,7 @@ export default {
         _self.customerType = temp.customerTypes;
         _self.impLevel = temp.customerrating;
         _self.sf_yn = temp.sf_yn;
+        _self.importance = temp.importance;
         _self.area.reverse();
         let temp2 = _self.$changeCars(_self.customerType);
         console.log(temp2);

@@ -121,6 +121,16 @@
                                         <Input  v-model="formValidate.end_residue_time" size="small" style="width:30%" number placeholder="结束"></Input>
                                     </FormItem>
                                   </Col>
+                                  <Col span="8">
+                                    <FormItem label="客户重要性：" prop="importance">
+                                        <Select transfer v-model="formValidate.importance" size="small" @on-change="Search"  style="width:100%">
+                                            <Option value="">     </Option>
+                                            <Option v-for="item in importance" :value="item.typecode" :key="item.id">
+                                                {{ item.typename }}
+                                            </Option>
+                                        </Select>
+                                    </FormItem>
+                                  </Col>
                                 </Row>
                                 <center>
                                     <FormItem style="margin-top:10px">
@@ -401,6 +411,11 @@ export default {
           sortable: "custom"
         },
         {
+          title: "客户重要性",
+          key: "importance",
+          width: 120,
+        },
+        {
           title: "区域",
           key: "areaText",
           width: 80,
@@ -459,6 +474,8 @@ export default {
       cluesource_map: new Map(),
       impLevel_map: new Array(),
       sf_yn_map: new Map(),
+      importance: [],
+      importance_map: new Map(),
       // 排序方式
       sortName: "updatedate",
       order: "desc"
@@ -509,7 +526,8 @@ export default {
         { field: "CREATEDATE", title: "创建时间" },
         { field: "updatedate", title: "更新时间" },
         { field: "isbound", title: "微信绑定", format: "sf_yn" },
-        { field: "lastfollowdate", title: "市场最后跟进时间" }
+        { field: "lastfollowdate", title: "市场最后跟进时间" },
+        { field: "importance", title:"客户重要性", format: "importance"}
       ];
       let _self = this;
       _self.$ButtonCollect("marketingManagement_index_edit_excel");
@@ -537,6 +555,7 @@ export default {
         companyname: _self.formValidate.companyname,
         labelName: _self.formValidate.labelName,
         importlevel: _self.formValidate.importlevel,
+        importance: _self.formValidate.importance,
         bcreatedate: DateFormat(_self.formValidate.credate[0]),
         ecreatedate: DateFormat(_self.formValidate.credate[1]),
         bupdatedate: DateFormat(_self.formValidate.upddate[0]),
@@ -610,6 +629,7 @@ export default {
           labelName: _self.formValidate.labelName,
           importlevel: _self.formValidate.importlevel,
           companyName: _self.formValidate.companyname,
+          importance: _self.formValidate.importance,
           bcreatedate: DateFormat(_self.formValidate.credate[0]),
           ecreatedate: DateFormat(_self.formValidate.credate[1]),
           bupdatedate: DateFormat(_self.formValidate.upddate[0]),
@@ -675,6 +695,7 @@ export default {
           a.email = response[i].email;
           a.address = response[i].ADDRESS;
           a.backup = response[i].backup;
+          a.importance = _self.importance_map.get(response[i].importance)
           if (response[i].companynames != null) {
             if (response[i].companynames.indexOf(",") != -1) {
               // console.log(response[i].companynames)
@@ -919,7 +940,7 @@ export default {
 
       // var url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=customerType,cluesource,impLevel,area,sf_yn`;
 
-      let params = "customerTypes,cluesources,customerrating,area,sf_yn";
+      let params = "customerTypes,cluesources,customerrating,area,sf_yn,importance";
 
       function finish(res) {
         var temp = res.data.data;
@@ -928,7 +949,10 @@ export default {
         _self.customerType = temp.customerTypes;
         _self.impLevel = temp.customerrating;
         _self.sf_yn = temp.sf_yn;
+        _self.importance = temp.importance;
         _self.area.reverse();
+        _self.importance_map = _self.$array2map(_self.importance)
+        console.log(_self.importance_map)
         for (let i = 0; i < _self.area.length; i++) {
           _self.area_map.set(_self.area[i].typecode, _self.area[i].typename);
         }

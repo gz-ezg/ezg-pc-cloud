@@ -201,7 +201,7 @@
                 _self.isEdit = false
                 _self.showPanel = ''
                 _self.isEdit2 = false
-                this.$bus.emit("CLOSE_CUSTOMER_EDIT", true)
+                // this.$bus.emit("CLOSE_CUSTOMER_EDIT", true)
             },
 
             /*************************打开【编辑】弹窗********************************/

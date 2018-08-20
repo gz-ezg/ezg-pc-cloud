@@ -4,9 +4,9 @@
             <TabPane label="普通外勤" name="name1">
                 <common-field></common-field>
             </TabPane>
-            <TabPane label="会计到家外勤" name="name2">
+            <!-- <TabPane label="会计到家外勤" name="name2">
                 <account-field></account-field>
-            </TabPane>
+            </TabPane> -->
         </Tabs>
         <!-- <Modal
             title="查看详情"

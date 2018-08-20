@@ -152,10 +152,12 @@
                                 </FormItem>
                             </Col>
                             <Col span="11">
-                                <FormItem prop="fieldtype" label="外勤类型：" style="margin-bottom:5px">
-                                    <Select type="text" v-model="fiedDetail.fieldtype"  disabled>
+                                <FormItem prop="assiststatus" label="外勤类型：" style="margin-bottom:5px">
+                                    <!-- <Select type="text" v-model="fiedDetail.fieldtype"  disabled>
                                         <Option v-for="(item,index) in fieldClockType" :key=index :value="item.typecode">{{item.typename}}</Option>
-                                    </Select>
+                                    </Select> -->
+                                    <Input type="text" v-model="fiedDetail.assiststatus"  disabled>
+                                    </Input>
                                 </FormItem>
                             </Col>
                         </Row>
@@ -348,11 +350,11 @@
                         key: 'remark',
                         width: 150
                     },
-                    // {
-                    //     title: '外勤状态',
-                    //     key: 'result',
-                    //     width: 150
-                    // },
+                    {
+                        title: '外勤类型',
+                        key: 'assiststatus',
+                        width: 150
+                    },
                     {
                         title: '操作',
                         key: 'action',
@@ -419,6 +421,11 @@
                     for(let i = 0; i<_self.data.length;i++){
                         _self.data[i].fieldClockTypeName = _self.fieldClockType_Map.get(_self.data[i].fieldtype)
                         _self.data[i].service_record_statusName =_self.service_record_status_Map.get(_self.data[i].resulttype)
+                        if(_self.data[i].assiststatus == "" || _self.data[i].assiststatus == "N"){
+                            _self.data[i].assiststatus = "非协助外勤"
+                        }else{
+                            _self.data[i].assiststatus = "协助外勤"
+                        }
                         // if(_self.data[i].clocktime == "" ||_self.data[i].clocktime == null){
                         //     return ""
                         // }else{

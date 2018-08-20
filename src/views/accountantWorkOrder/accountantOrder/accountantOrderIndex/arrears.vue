@@ -52,7 +52,7 @@
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="bgmx">会计变更明细</Button> -->
                 <!--<Button type="primary" icon="ios-color-wand-outline" @click="gszx">公司注销详情</Button>-->
                 <Button type="primary" icon="ios-color-wand-outline" @click="fuwuxiang">查看会计到家服务项目</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="kjfw">会计到家服务</Button>
+                <!-- <Button type="primary" icon="ios-color-wand-outline" @click="kjfw">会计到家服务</Button> -->
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="yfwjh">查看服务计划</Button> -->
                 <Button type="primary" icon="ios-color-wand-outline" @click="ydzj">查看月度总结</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>

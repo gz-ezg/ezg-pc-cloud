@@ -264,6 +264,11 @@ import allotAccountService from './allot_accout_service'
                         }
                     },
                     {
+                        title:'产品数量',
+                        key: 'productnumber',
+                        width: 120
+                    },
+                    {
                         title: '订单号',
                         key: 'ordercode',
                         width: 150

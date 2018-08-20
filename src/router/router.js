@@ -260,16 +260,16 @@ export const appRouter = [
                     require(['@/views/customerManagement/customerTabManagement/customerTabManagement.vue'], resolve);
                 }
             },
-            // {
-            //     access: 6088,
-            //     meta: 6088,
-            //     path: 'customerFollowUp',
-            //     title: '跟进记录管理',
-            //     name: 'customerFollowUp_index',
-            //     component: resolve => {
-            //         require(['@/views/customerManagement/followUpData/followUpdata.vue'], resolve);
-            //     }
-            // }
+            {
+                access: 6114,
+                meta: 6114,
+                path: 'customerLog',
+                title: '客户日志',
+                name: 'customerLog_index',
+                component: resolve => {
+                    require(['@/views/customerManagement/customerLog/index.vue'], resolve);
+                }
+            }
         ]
     },
     // {
@@ -827,8 +827,8 @@ export const appRouter = [
                 }
             },
             {
-                access: 6093,
-                meta: 6093,
+                access: 6094,
+                meta: 6094,
                 path: 'clockin',
                 title: '考勤管理',
                 name:"clockin_index",
@@ -1196,7 +1196,8 @@ export const appRouter = [
         ]
     },
     {
-        access: 6065,
+        access: 6120,
+        meta: 6120,
         path: '/logManagement',
         icon: 'social-windows',
         name: 'logManagement',
@@ -1204,12 +1205,23 @@ export const appRouter = [
         component: Main,
         children: [
             {
-                access: 6066,
+                access: 6121,
+                meta: 6122,
                 path: '/MQLog',
-                title: '系统日志', 
+                title: '消息队列日志', 
                 name: 'MQ_index',
                 component: resolve => {
                     require(['@/views/logManagement/MQlog/index.vue'], resolve);
+                }
+            },
+            {
+                access: 6122,
+                meta: 6122,
+                path: '/opLog',
+                title: '操作统计', 
+                name: 'OP_index',
+                component: resolve => {
+                    require(['@/views/logManagement/opLog/index.vue'], resolve);
                 }
             },
             // {

@@ -27,17 +27,19 @@ router.beforeEach((to, from, next) => {
     console.log("======= next =======")
     console.log(next)
 
-    // let url = 'api/system/showClickOnInfo'
+    let url = 'api/system/addGather'
     
-    // let config = {
-    //     menuId: to.meta
-    // }
+    let config = {
+        params:{
+            code: to.name
+        }
+    }
 
-    // axios.post(url,config).then(function(res){
-    //     console.log(res)
-    // }).catch(function(err){
-    //     console.log(err)
-    // })
+    axios.get(url,config).then(function(res){
+        console.log(res)
+    }).catch(function(err){
+        console.log(err)
+    })
 
     if (Cookies.get('locking') === '1' && to.name !== 'locking') { // 判断当前是否是锁定状态
         next({

@@ -502,11 +502,13 @@ import Bus from '../../../components/bus.js'
                         width: 250,
                         align: 'center',
                         render: (h, params) => {
+                            console.log(params)
                             return h('div', [
                                 h('Button', {
                                     props: {
                                         type: 'text',
-                                        size: 'small'
+                                        size: 'small',
+                                        disabled: params.row.status
                                     },
                                     style: {
                                         marginRight: '5px'
@@ -529,7 +531,6 @@ import Bus from '../../../components/bus.js'
                                     on: {
                                         click: () => {
                                             this.edit(params);
-
                                         }
                                     }
                                 }, '工商信息'),
@@ -669,6 +670,15 @@ import Bus from '../../../components/bus.js'
                             a.cluesource = response.data.data[i].cluesource
                             a.id = response.data.data[i].id
                             a.companyarea = response.data.data[i].companyarea
+                            if(response.data.data[i].status){
+                                if(response.data.data[i].status == "readonly"){
+                                    a.status = true
+                                }else{
+                                    a.status = false
+                                }
+                            }else{
+                                a.status = false
+                            }
                             _self.data6.push(a)
                         }
                     })
@@ -884,6 +894,7 @@ import Bus from '../../../components/bus.js'
                                 importlevel: _self.formValidate.importlevel,
                                 cluesource: _self.formValidate.cluesource,
                                 companyarea: _self.formValidate.companyarea.join('-'),
+                                legalrepresentative: _self.formValidate.legalrepresentative,
                                 //  暂时启用，后期注销
                                 // enterprisestatus:_self.formValidate.enterprisestatus,
                                 accountgrade: _self.formValidate.accountgrade

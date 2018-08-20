@@ -151,8 +151,9 @@ export default {
             isOpenEdit:false,
             name:"",
             add:{
-                
-            }
+
+            },
+            tel:""
         }
     },
     methods: {
@@ -177,8 +178,8 @@ export default {
                     for(let i = 0;i<res.data.data.departAlias.length; i++){
                         _self.departAlias.push(res.data.data.departAlias[i])
                     }
-                    console.log(typeof(_self.departAlias))
-                    console.log(_self.departAlias)
+                    // console.log(typeof(_self.departAlias))
+                    // console.log(_self.departAlias)
                 }
 
                 this.$GetDataCenter(params, finish)

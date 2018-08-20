@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Card title="上传考勤机考勤表">
+        <Card title="上传考勤表">
             <Row style="margin-bottom:10px;">
                 <Form ref="formValidate" :model="formValidate" :label-width="120">
                 <FormItem prop="companyId" >
@@ -21,7 +21,7 @@
                     </div>
                 </FormItem>
                 <FormItem>
-                    <Button type="primary" @click="upload" :loading="submit_loading">上传</Button>
+                    <Button type="primary" @click="submit" :loading="submit_loading">上传</Button>
                     <!-- <Button type="ghost" @click="cancel" style="margin-left: 8px">取消</Button> -->
                 </FormItem>
             </Form>
@@ -52,7 +52,8 @@ export default {
     data(){
         return{
             file: [],
-            yearmonth: new Date(),
+            // yearmonth: new Date(),
+            yearmonth: "",
             submit_loading: false,
             formValidate:{}
         }
@@ -65,6 +66,14 @@ export default {
         },
         fileRemove(e) {
             this.file.splice(this.file.indexOf(e), 1);
+        },
+        submit() {
+            let _self = this
+            if(!_self.yearmonth){
+                _self.$Message.error("请输入考勤日期！")
+            }else{
+                _self.upload()
+            }
         },
         upload() {
             var _self = this
@@ -92,7 +101,54 @@ export default {
 
         },
         download(){
-            
+            let field = [
+                    {field:'user_alias_id',title:'工号',},
+                    {field:'usre_alias_name',title:'姓名'},
+                    {field:'yearmonth',title:'考勤月份'},
+                    {field:'st1',title:'1'},
+                    {field:'nd2',title:'2'},
+                    {field:'rd3',title:'3'},
+                    {field:'th4',title:'4'},
+                    {field:'th5',title:'5'},
+                    {field:'th6',title:'6'},
+                    {field:'th7',title:'7'},                                                                   
+                    {field:'th8',title:'8'},                                                                     
+                    {field:'th9',title:'9'},
+                    {field:'th10',title:'10'},
+                    {field:'th11',title:'11'},
+                    {field:'th12',title:'12'},
+                    {field:'th13',title:'13'},
+                    {field:'th14',title:'14'},
+                    {field:'th15',title:'15'},
+                    {field:'th16',title:'16'},
+                    {field:'th17',title:'17'},                                                                   
+                    {field:'th18',title:'18'},                                                                     
+                    {field:'th19',title:'19'},
+                    {field:'th20',title:'20'},
+                    {field:'st21',title:'21'},
+                    {field:'nd22',title:'22'},
+                    {field:'rd23',title:'23'},
+                    {field:'th24',title:'24'},
+                    {field:'th25',title:'25'},
+                    {field:'th26',title:'26'},
+                    {field:'th27',title:'27'},                                                                   
+                    {field:'th28',title:'28'},                                                                     
+                    {field:'th29',title:'29'},
+                    {field:'th30',title:'30'},
+                    {field:'st31',title:'31'},
+                ]
+                let _self = this
+                let url = "api/legwork/exportLegworkMsg"
+                let config = {
+                        page: '1',
+                        pageSize: '1000',
+                        yearmonth: DateFormatYearMonth(_self.yearmonth),
+                        export: 'Y',
+                        exportField: encodeURI(JSON.stringify(field))
+                }
+                let toExcel = this.$MergeURL(url, config)
+                // console.log(toExcel)
+                window.open(toExcel)
         }
     }
 }
