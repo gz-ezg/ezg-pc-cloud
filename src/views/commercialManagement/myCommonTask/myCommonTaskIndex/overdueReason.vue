@@ -44,7 +44,7 @@ export default {
             let config = {
                 params:{
                     id: _self.selectRow.id,
-                    reason:_self.content
+                    overdueCause:_self.content
                 }
             }
 
