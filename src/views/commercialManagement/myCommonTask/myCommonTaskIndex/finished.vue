@@ -261,6 +261,10 @@ export default {
                                     }),
                                     h('div',{
                                         slot:'content',
+                                        style:{
+                                            width:"200px",
+                                            whiteSpace: "normal"
+                                        }
                                         
                                     },[
                                         h('span',params.row.product)

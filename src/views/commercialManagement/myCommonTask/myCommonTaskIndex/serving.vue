@@ -55,37 +55,6 @@
                 <Button type="primary" icon="ios-color-wand-outline">批量未读</Button> -->
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="foundClues">发现线索</Button>                -->
             </ButtonGroup>
-            <!-- <Poptip 
-                title="筛选" 
-                placement="bottom-end" 
-                width="350" 
-                style="float:right;margin-right:20px"
-                
-                >
-                <Button type="text" size="small" icon="funnel">筛选</Button>
-                <div  slot="content" @keydown.enter="search">
-                <Form ref="formInline" :model="formInline" :label-width="100">
-                    <Row :gutter="16">
-                        <Col span="22">
-                            <FormItem prop="companyName" label="公司名称：">
-                                <Input size="small"  type="text" v-model="formInline.companyname" placeholder="">
-                                </Input>
-                            </FormItem>
-                        </Col>
-                        <Col span="22">
-                            <FormItem prop="servicename" label="服务人员名称：">
-                                <Input size="small"  type="text" v-model="formInline.servicename" placeholder="">
-                                </Input>
-                            </FormItem>
-                        </Col>
-                    </Row>
-                    <FormItem>
-                        <Button type="primary" @click="search">搜索</Button>
-                        <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
-                    </FormItem>
-                </Form>
-                </div>
-            </Poptip> -->
         </Row>
         <Row style="margin-top: 10px;">
             <Table
@@ -231,12 +200,12 @@ export default {
                             }
                         }
                     },
-                    {
-                        title: '提示',
-                        key: 'baseorderid',
-                        width: 120,
-                        sortable: true                        
-                    },
+                    // {
+                    //     title: '提示',
+                    //     key: 'baseorderid',
+                    //     width: 120,
+                    //     sortable: true                        
+                    // },
                     // {
                     //     title: '经营状态',
                     //     key:'managestatusName',
@@ -340,11 +309,85 @@ export default {
                         sortable: true                        
                     },
                     {
+                        title: '逾期原因',
+                        key: 'overdue_cause',
+                        width: 150,
+                        render:(h, params) => {
+                            // console.log(params)
+                            if(params.row.overdue_cause == ''||params.row.overdue_cause == null){
+                                return ''
+                            }else if(params.row.overdue_cause.length>10){
+                                return h('Poptip',{
+                                    props:{
+                                        trigger:'hover',
+                                        placement:'bottom'
+                                    }
+                                },[
+
+                                    h('span',params.row.overdue_cause.slice(0,10)+'...'),
+                                    h('Icon', {
+                                        props: {
+                                            type: 'arrow-down-b',
+                                        }
+                                    }),
+                                    h('div',{
+                                        slot:'content',
+                                        style:{
+                                            width:"200px",
+                                            whiteSpace: "normal"
+                                        }
+                                    },[
+                                        h('span',params.row.overdue_cause)
+                                    ])
+                                ])
+                            }else{
+                                return h('span',params.row.overdue_cause)
+                            }
+                        }
+                    },
+                    {
                         title: '跟进人',
                         key: 'followname',
                         width: 120,
-                        sortable: true
-                        
+                        sortable: true      
+                    },
+                    {
+                        title: '备注',
+                        key: 'memo',
+                        width: 150,
+                        render:(h, params) => {
+                            // console.log(params)
+                            if(params.row.memo == ''||params.row.memo == null){
+                                return ''
+                            }else if(params.row.memo.length>10){
+                                return h('Poptip',{
+                                    props:{
+                                        trigger:'hover',
+                                        placement:'bottom'
+                                    }
+                                },[
+
+                                    h('span',params.row.memo.slice(0,10)+'...'),
+                                    h('Icon', {
+                                        props: {
+                                            type: 'arrow-down-b',
+                                        }
+                                    }),
+                                    h('div',{
+                                        slot:'content',
+                                        style:{
+                                            width:"200px",
+                                            whiteSpace: "normal"
+                                        }
+                                        
+                                    },[
+                                        h('span',params.row.memo)
+                                    ])
+                                ])
+                            }else{
+                                return h('span',params.row.memo)
+                            }
+                        }
                     },
                     {
                         title: '操作',
@@ -493,7 +536,7 @@ export default {
                 let field = [
                     // {field:'workOrderStatus',title:'工单状态',format:'workOrderStatus'},
                     {field:'companyname',title:'公司名称'},
-                    {field:'baseorderid',title:'提示'},
+                    // {field:'baseorderid',title:'提示'},
                     {field:'departname',title:'服务部门'},
                     {field:'product',title:'产品全称'},
                     {field:'CurrentProcess',title:'目前进度'},

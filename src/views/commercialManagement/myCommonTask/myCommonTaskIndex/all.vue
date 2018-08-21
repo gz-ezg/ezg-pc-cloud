@@ -252,11 +252,11 @@ export default {
                     //     key:'managestatusName',
                     //     width:120
                     // },
-                    {
-                        title: '提示',
-                        key: 'baseorderid',
-                        width: 120,                    
-                    },
+                    // {
+                    //     title: '提示',
+                    //     key: 'baseorderid',
+                    //     width: 120,                    
+                    // },
                     // {
                     //     title: '订单',
                     //     key: 'ordercode',
@@ -355,11 +355,85 @@ export default {
                         
                     },
                     {
+                        title: '逾期原因',
+                        key: 'overdue_cause',
+                        width: 150,
+                        render:(h, params) => {
+                            // console.log(params)
+                            if(params.row.overdue_cause == ''||params.row.overdue_cause == null){
+                                return ''
+                            }else if(params.row.overdue_cause.length>10){
+                                return h('Poptip',{
+                                    props:{
+                                        trigger:'hover',
+                                        placement:'bottom'
+                                    }
+                                },[
+
+                                    h('span',params.row.overdue_cause.slice(0,10)+'...'),
+                                    h('Icon', {
+                                        props: {
+                                            type: 'arrow-down-b',
+                                        }
+                                    }),
+                                    h('div',{
+                                        slot:'content',
+                                        style:{
+                                            width:"200px",
+                                            whiteSpace: "normal"
+                                        }
+                                    },[
+                                        h('span',params.row.overdue_cause)
+                                    ])
+                                ])
+                            }else{
+                                return h('span',params.row.overdue_cause)
+                            }
+                        }
+                    },
+                    {
                         title: '跟进人',
                         key: 'followname',
                         width: 120,
                         sortable: true
                         
+                    },
+                    {
+                        title: '备注',
+                        key: 'memo',
+                        width: 150,
+                        render:(h, params) => {
+                            // console.log(params)
+                            if(params.row.memo == ''||params.row.memo == null){
+                                return ''
+                            }else if(params.row.memo.length>10){
+                                return h('Poptip',{
+                                    props:{
+                                        trigger:'hover',
+                                        placement:'bottom'
+                                    }
+                                },[
+
+                                    h('span',params.row.memo.slice(0,10)+'...'),
+                                    h('Icon', {
+                                        props: {
+                                            type: 'arrow-down-b',
+                                        }
+                                    }),
+                                    h('div',{
+                                        slot:'content',
+                                        style:{
+                                            width:"200px",
+                                            whiteSpace: "normal"
+                                        }
+                                    },[
+                                        h('span',params.row.memo)
+                                    ])
+                                ])
+                            }else{
+                                return h('span',params.row.memo)
+                            }
+                        }
                     },
                     {
                         title: '操作',

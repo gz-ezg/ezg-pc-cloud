@@ -283,6 +283,7 @@
                     <Row>
                         <ButtonGroup>
                             <Button v-permission="['orderA.exportY']" type="primary" icon="ios-color-filter-outline" @click="downloadExcelY">导出Excel</Button>
+                            <Button type="primary" icon="ios-color-filter-outline" @click="getTableDataY">刷新</Button>  
                         </ButtonGroup>
                     </Row>
                     <Row style="margin-top: 10px;">
@@ -293,6 +294,7 @@
                                 show-total
                                 show-sizer
                                 show-elevator
+                                :loading="loadingY"
                                 @on-change="pageChangeY"
                                 @on-page-size-change="pageSizeChangeY"
                                 style="margin-top: 10px"></Page>
@@ -403,6 +405,7 @@
         },
         data() {
             return{
+                loadingY:false,
                 orderListShow:false,
                 button_disable:false,
                 accout_error:false,
@@ -833,7 +836,7 @@
             getTableDataY() {
                 let _self = this
                 let url = 'api/order/auditList'
-
+                _self.loadingY = true
                 var keys =[]
                     var config = {
                         params:{
@@ -888,6 +891,7 @@
                             realnumber: _data.rows[i].realnumber,
                         })
                     }
+                    _self.loadingY = false
                 }
 
                 this.$http.get(url,config).then(function(res){

@@ -422,7 +422,8 @@
                         ref="selection"
                         :columns="columns44"
                         :data="data4"
-                        @on-row-dblclick="rowSelect"></Table>
+                        @on-row-dblclick="rowSelect"
+                        :loading="companyLoading"></Table>
                 <Page
                         size="small"
                         :total="pageTotal3"
@@ -456,6 +457,7 @@ import flowVue from '../../woa-components/next/flow.vue';
                 }
             };
             return {
+                companyLoading:false,
                 flag:false,
                 searchCompany:"",
                 page3:1,
@@ -1324,35 +1326,6 @@ import flowVue from '../../woa-components/next/flow.vue';
                 }, 2000);
             },
 
-            getCompany() {
-                let _self = this
-                let url = ''
-                _self.currentPage = 1
-
-                if (_self.isSearch == false) {
-                    url = '/cluesLibrary/loadCompany/1/10/1'
-                } else {
-                    url = '/cluesLibrary/loadCompany/1/10/' + _self.searchCompany
-                }
-
-                _self.selectCompany = true
-
-                function doSuccess(response) {
-                    let _res = response.data.data
-
-                    _self.data4 = []
-                    _self.pageTotal3 = _res.total
-                    for (let i = 0; i < _res.rows.length; i++) {
-                        _self.data4.push({
-                            CompanyName: _res.rows[i].CompanyName,
-                            cpid: _res.rows[i].cpid,
-                        })
-                    }
-                }
-
-                this.GetData(url, doSuccess)
-            },
-
             rowSelect(a) {
                 let _self = this
                 _self.companyDetail = a
@@ -1367,58 +1340,8 @@ import flowVue from '../../woa-components/next/flow.vue';
             },
 
             pageChange3(a) {
-                let _self = this
-                let url = ''
-                if (_self.isSearch == false) {
-                    url = '/cluesLibrary/loadCompany/' + a + '/' + _self.pageSize + '/1'
-                } else {
-                    url = '/cluesLibrary/loadCompany/' + a + '/' + _self.pageSize + '/' + _self.searchCompany
-                }
-
-                function doSuccess(response) {
-                    let _res = response.data.data
-
-                    _self.data4 = []
-                    _self.pageTotal3 = _res.total
-                    for (let i = 0; i < _res.rows.length; i++) {
-                        _self.data4.push({
-                            CompanyName: _res.rows[i].CompanyName,
-                            cpid: _res.rows[i].cpid,
-                        })
-                    }
-                }
-
-                this.GetData(url, doSuccess)
-            },
-
-            // 改变每页显示的数据条数
-            pageSizeChange3(a) {
-                let _self = this
-                let url = ''
-                _self.pageSize = a
-
-                if (_self.isSearch == false) {
-                    url = '/cluesLibrary/loadCompany/1/' + _self.pageSize + '/1'
-                } else {
-                    url = '/cluesLibrary/loadCompany/1/' + _self.pageSize + '/' + _self.searchCompany
-                }
-
-                function doSuccess(response) {
-                    let _res = response.data.data
-
-                    _self.data4 = []
-                    _self.pageTotal3 = _res.total
-                    for (let i = 0; i < _res.rows.length; i++) {
-                        _self.data4.push({
-                            CompanyName: _res.rows[i].CompanyName,
-                            cpid: _res.rows[i].cpid,
-                            customerTel: _res.rows[i].customerTel,
-                            customerName: _res.rows[i].customerName
-                        })
-                    }
-                }
-
-                this.GetData(url, doSuccess)
+                this.page3 = a
+                this.getCompany()
             },
 
             cancel(name) {
@@ -1513,6 +1436,7 @@ import flowVue from '../../woa-components/next/flow.vue';
             },
             getCompany() {
                 let _self = this
+                _self.companyLoading = true
                 _self.selectCompany = true
                 let url = ''
                 url = 'api/customer/company/list'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
@@ -1526,7 +1450,7 @@ import flowVue from '../../woa-components/next/flow.vue';
 
                 function doSuccess(response) {
                     let _res = response.data.data
-
+                    _self.companyLoading = false
                     _self.data4 = []
                     _self.pageTotal3 = _res.total
                     for (let i = 0; i < _res.rows.length; i++) {

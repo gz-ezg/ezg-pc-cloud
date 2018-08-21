@@ -20,12 +20,12 @@ export const router = new VueRouter(RouterConfig);
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start();
     Util.title(to.meta.title);
-    console.log("======= to =======")
-    console.log(to)
-    console.log("======= from =======")
-    console.log(from)
-    console.log("======= next =======")
-    console.log(next)
+    // console.log("======= to =======")
+    // console.log(to)
+    // console.log("======= from =======")
+    // console.log(from)
+    // console.log("======= next =======")
+    // console.log(next)
 
     let url = 'api/system/addGather'
     

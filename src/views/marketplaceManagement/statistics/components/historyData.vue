@@ -1,13 +1,16 @@
 <template>
     <div>
-        <Modal
-            title="个人历史计划"
-            v-model="open_person_history"
-            width="858"
+        <Card
+            title="个人计划"
         >
             <Row :gutter="16" type="flex" justify="space-around">
-                <Col span="10">
-                    <DatePicker type="daterange" v-model="dateRange" placement="bottom" placeholder="选择日期" style="width: 200px" size="small" @on-change="date_change"></DatePicker>
+                <Col span="6">
+                    <Select v-model="saler" size="small" @on-change="getHistoryData()" placeholder="请选择人员">
+                        <Option v-for="item in allSaler" :key=item.id :value=item.id >{{item.realname}}</Option>
+                    </Select>
+                </Col>
+                <Col span="8">
+                    <DatePicker type="daterange" v-model="dateRange" placement="bottom" placeholder="选择日期" style="width:100%" size="small" @on-change="date_change" transfer></DatePicker>
                 </Col>
                 <Col span="6">
                     <Select v-model="type" size="small" @on-change="getHistoryData()">
@@ -35,17 +38,18 @@
             <div slot="footer">
 
             </div>
-        </Modal>
+        </Card>
     </div>
 </template>
 
 <script>
-import { DateFormat2 } from '../../../libs/utils.js'
+import { DateFormat2 } from '../../../../libs/utils.js'
 
 export default {
     data(){
         return{
             type:"day",
+            // dateRange:[new Date(),new Date()],
             dateRange:[],
             tableLoading:false,
             open_person_history:false,
@@ -53,43 +57,48 @@ export default {
                 {
                     title: "销售人员",
                     key: "realname",
-                    width: 120,
+                    // width: 120,
+                    align: 'center'
+                },
+                 {
+                    title: "创建时间",
+                    key: "begin_period",
+                    // width: 150,
+                    align: 'center'
+                },
+                // {
+                //     title: "计划周期",
+                //     key: "type",
+                //     align: 'center'
+                // },
+                {
+                    title: "是否完成",
+                    key: "statusName",
+                    // width: 120,
                     align: 'center'
                 },
                 {
                     title: "计划销售额",
                     key: "saleroom",
-                    width: 120,
+                    // width: 120,
                     align: 'center'
                 },
                 {
                     title: "实际销售额",
                     key: "finish_saleroom",
-                    width: 120,
+                    // width: 120,
                     align: 'center'
                 },
                 {
                     title: "计划新增客户数",
                     key: "new_customer_num",
-                    width: 150,
+                    // width: 150,
                     align: 'center'
                 },
                 {
                     title: "实际新增客户数",
                     key: "finish_new_customer_num",
-                    width: 150,
-                    align: 'center'
-                },
-                {
-                    title: "创建时间",
-                    key: "begin_period",
-                    width: 150,
-                    align: 'center'
-                },
-                {
-                    title: "是否完成",
-                    key: "statusName",
-                    width: 150,
+                    // width: 150,
                     align: 'center'
                 }
             ],
@@ -99,7 +108,8 @@ export default {
             pageSize: 10,
             CommonresultType:"",
             CommonresultType_Map:new Map(),
-            saler:""
+            saler:"",
+            allSaler:[]
         }
     },
     methods:{
@@ -126,7 +136,8 @@ export default {
                     page: _self.page,
                     pageSize: _self.pageSize,
                     type: _self.type,
-                    saler: _self.saler
+                    saler: _self.saler,
+                    sortField:"begin_period"
                 }
             }
 
@@ -154,17 +165,34 @@ export default {
             }
 
             this.$GetDataCenter(config, success)
+        },
+        get_all_saler(){
+            let _self = this
+
+            let url = `api/user/getAllUserListByDepartId`
+            let config = {
+                params:{
+                    departId:11532
+                }
+            }
+
+            function success(res){
+                _self.allSaler = res.data.data
+                _self.allSaler.push({
+                    id:"",
+                    realname:""
+                })
+                // console.log(_self.allSaler)
+            }
+
+            this.$Get(url, config, success)
         }
     },
     created(){
         let _self = this
         _self.getDataCenter()
-        this.$bus.on('OPEN_HISTORY_FUNCTION',(e)=>{
-            // console.log(e)
-            _self.saler = e
-            _self.open_person_history = true
-            _self.getHistoryData()
-        })
+        _self.get_all_saler()
+        _self.getHistoryData()
     }
 }
 </script>

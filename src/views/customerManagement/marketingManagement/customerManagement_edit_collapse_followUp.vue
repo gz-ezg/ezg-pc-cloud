@@ -45,7 +45,9 @@
                                 <Col span="12"><P style="text-align:right;line-height: 32px;">通知时间：{{item.createDate}}</P></Col>
                             </Row> -->
                             <Row>
-                                <P>{{ item.serviceContent }}</P>
+                                <Col span="20"><P>{{ item.serviceContent }}</P></Col>
+                                <Col span="4" v-if="item.followType=='22'"><Button type="primary" @click.native="open_detail(item.id)" style="float:right">查看详情</Button></Col>
+                                
                                 <!-- 跟进内容根据类型新增class类，待客服跟进内容录入 -->
                                 <!-- <P :class="{warn:item.followType <= 18 && item.userName== '胡小红', error:item.followType == 18 && item.userName == '管理员' }" >{{ item.serviceContent }}</P> -->
                             </Row>
@@ -214,7 +216,101 @@
                 </Form>
                 <div slot="footer"></div>
             </Modal>
-        
+            <Modal
+                title="查看外勤详情"
+                v-model="openAllDetail"
+                width="600"
+            >
+                <Form ref="fiedDetail" :model="fiedDetail" :label-width="120">
+                        <Row :gutter="16">
+                            <Col span="1" style="visibility:hidden">1</Col>
+                            <Col span="11">
+                                <FormItem prop="clocktime" label="上门时间：" style="margin-bottom:5px">
+                                    <Input type="text" v-model="fiedDetail.clocktime"  disabled>
+                                    </Input>
+                                </FormItem>
+                            </Col>
+                            <Col span="11">
+                                <FormItem prop="endtime" label="离开时间：" style="margin-bottom:5px">
+                                    <Input type="text" v-model="fiedDetail.endtime"  disabled>
+                                    </Input>
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <Row :gutter="16">
+                            <Col span="1" style="visibility:hidden">1</Col>
+                            <Col span="11">
+                                <FormItem prop="fieldlength" label="外勤时长：" style="margin-bottom:5px">
+                                    <Input type="text" v-model="fiedDetail.fieldlength"  disabled>
+                                    </Input>
+                                </FormItem>
+                            </Col>
+                            <Col span="11">
+                                <FormItem prop="assiststatus" label="外勤类型：" style="margin-bottom:5px">
+                                    <!-- <Select type="text" v-model="fiedDetail.fieldtype"  disabled>
+                                        <Option v-for="(item,index) in fieldClockType" :key=index :value="item.typecode">{{item.typename}}</Option>
+                                    </Select> -->
+                                    <Select type="text" v-model="fiedDetail.assiststatus"  disabled>
+                                        <Option value="N">非协助外勤</Option>
+                                        <Option value="Y">协助外勤</Option>
+                                    </Select>
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <Row :gutter="16">
+                            <Col span="1" style="visibility:hidden">1</Col>                            
+                            <Col span="22">
+                                <FormItem prop="clockshows" label="打卡说明：" style="margin-bottom:5px">
+                                    <Input type="text" v-model="fiedDetail.clockshows"  disabled>
+                                    </Input>
+                                </FormItem>
+                            </Col>
+    
+                        </Row>
+                        <Row :gutter="16">
+                            <Col span="1" style="visibility:hidden">1</Col>                            
+                            <Col span="22">
+                                <FormItem prop="address1" label="第一次打卡地址：" style="margin-bottom:5px">
+                                    <Input type="text" v-model="fiedDetail.address1" disabled>
+                                    </Input>
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <Row :gutter="16">
+                            <Col span="1" style="visibility:hidden">1</Col>                                                        
+                            <Col span="22">
+                                <FormItem prop="address2" label="第二次打卡地址：" style="margin-bottom:5px">
+                                    <Input type="text" v-model="fiedDetail.address2"  disabled>
+                                    </Input>
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <Row :gutter="16">
+                            <Col span="1" style="visibility:hidden">1</Col>                            
+                            <!-- <Col span="11" style="visibility:hidden"> -->
+                            <!-- </Col> -->
+                            <Col span="22">
+                                <FormItem prop="remark" label="备注总结：" style="margin-bottom:5px">
+                                    <Input type="text" v-model="fiedDetail.remark"  disabled>
+                                    </Input>
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <Row :gutter="16">
+                            <Col span="1" style="visibility:hidden">1</Col>                            
+                            <Col span="11">
+                                <FormItem prop="Providentfund" label="附件：" style="margin:5px" disabled >
+                                    <Row v-for="(item,index) in fiedDetail.imgs " :key="index">
+                                        <a target="_blank" :href="'/api/assets/' + item" >
+                                            <img :src="'/api/assets/' +item" alt=""  width="100" height="100">
+                                        </a>
+                                    </Row>
+                                </FormItem>
+                            </Col>
+                        </Row>
+                    </Form>
+                    <div slot="footer"></div>
+            </Modal>
     </div>
 </template>
 
@@ -237,6 +333,18 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
                 }
             };
             return {
+                openAllDetail:false,
+                fiedDetail:{
+                    clocktime:"",
+                    endtime:"",
+                    fieldlength:"",
+                    assiststatus:"",
+                    clockshows:"",
+                    address1:"",
+                    address2:"",
+                    remark:"",
+                    imgs:[]
+                },
                 followupshow:false,
                 market_field_type:"",
                 // customerid:"",
@@ -372,6 +480,7 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
                     // console.log(response)
                     for (var i = 0; i < response.data.data.length; i++) {
                         var a = {}
+                        a.id = response.data.data[i].id
                         a.createDate = response.data.data[i].createDate
                         a.followType = response.data.data[i].followType
                         a.userName = response.data.data[i].userName
@@ -815,6 +924,30 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
                 }else{
                     _self.followupshow = true
                 }
+            },
+            open_detail(e){
+                console.log(e)
+                let _self = this
+                let url = 'api/customer/follow/record/detail'
+                _self.openAllDetail = true
+                let config = {
+                    params:{
+                        followRecordId:20218
+                    }
+                }
+
+                function success(res){
+                    console.log(res.data.data)
+                    let temp = res.data.data
+                    _self.fiedDetail = res.data.data
+                    if(res.data.data.pictureURl){
+                        let pic = ""
+                        pic = _self.fiedDetail.pictureURl.split(",")
+                        _self.fiedDetail.imgs = pic
+                    }
+                }
+
+                this.$Get(url, config, success)
             }
         },
         mounted() {

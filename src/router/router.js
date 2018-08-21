@@ -329,6 +329,16 @@ export const appRouter = [
                 component: resolve => {
                     require(['@/views/publicPool/personTarget/index.vue'], resolve);
                 }
+            },
+            {
+                access: 6115,
+                meta: 6115,
+                path:'statistics',
+                title:'销售统计',
+                name:"statistics_index",
+                component: resolve => {
+                    require(['@/views/marketplaceManagement/statistics/index.vue'], resolve);
+                }
             }
         ]
     },
