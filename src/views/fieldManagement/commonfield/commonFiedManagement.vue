@@ -381,6 +381,7 @@
                                     },
                                     on: {
                                         click: () => {
+                                            // console.log(params.row.customerid)
                                             Bus.$emit('Open_customer_detail',params.row.customerid)
                                         }
                                     }

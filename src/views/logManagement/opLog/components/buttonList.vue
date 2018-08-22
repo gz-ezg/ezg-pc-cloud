@@ -58,6 +58,7 @@ export default {
     name:'MQ_index',
     data(){
         return{
+            search_model:"",
             searchModel:{
                 
             },

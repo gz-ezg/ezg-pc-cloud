@@ -36,19 +36,23 @@
             </Row>
             <div slot="footer"></div>
         </Modal> -->
+
+        <customer-detail></customer-detail>
     </div>
 </template>
 
 <script>
 import Bus from '../../../components/bus.js'
-import accountField from '../../accountantWorkOrder/accountantField/accountantField'
+import customerDetail from '../../woa-components/customerDetail/channelCustomer'
+// import accountField from '../../accountantWorkOrder/accountantField/accountantField'
 import commonField from './commonFiedManagement'
 
 export default {
     name:'commonfieldmanagement_index',
     components:{
-        accountField,
-        commonField
+        // accountField,
+        commonField,
+        customerDetail
     },
     data(){
         return{

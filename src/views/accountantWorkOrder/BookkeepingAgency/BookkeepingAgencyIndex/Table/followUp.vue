@@ -229,32 +229,9 @@ export default {
                         }
                     },
                     {
-                        title: '扫票',
-                        key: 'saopiao',
-                        align: "center",
-                        width:120,
-                        render: (h, params) => {
-                            let reg=/^[-+]?\d*$/;
-                            if(params.row.saopiao.confirm_date == undefined){
-                                return h('div','[ 未完成 ]');
-                            }else{
-                                return h('div', [
-                                    h('img',{
-                                        domProps:{
-                                            height: 120,
-                                            src: '/api/assets/'+params.row.saopiao.image_url,
-                                        },
-                                        on:{
-                                            click:() => {
-                                                    window.open('/api/assets/'+params.row.saopiao.image_url)
-                                                }
-                                        
-                                        }
-                                    }),
-                                    h('div',params.row.saopiao.slice(0,10))
-                                ])
-                            }
-                        }
+                        title: '警戒值',
+                        key: 'accounter_security_line',
+                        width: 120
                     },
                 {
                     title:"财务等级",

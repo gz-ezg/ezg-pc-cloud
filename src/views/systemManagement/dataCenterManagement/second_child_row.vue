@@ -217,13 +217,13 @@ export default {
         secondDataAdd(){
             this.is_open_add = true
         },
-        secondchildpageChange(){},
         closeSecondData(){
             this.$bus.emit('open_groups_data',true)
             this.isOpenSecondDetail = false
         },
         secondchildpageChange(e){
             this.second_child_page = e
+            this.getSecondData()
         },
         getSecondData(){
             let _self = this

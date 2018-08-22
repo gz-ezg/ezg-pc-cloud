@@ -659,16 +659,6 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
             loading_end(){
                 let _self = this
                 _self.spinShow = false  
-                //     setTimeout(_self.scroll = new Bscroll(_self.$refs.wrapper, {
-                //             scrollbar:{
-                //                 fade: false
-                //             },
-                //             mouseWheel:{
-                //                 speed: 20,
-                //                 invert: false,
-                //                 easeTime: 300
-                //             }
-                //         }),console.log(_self.scroll),2000)
             },
             /*************************获取下拉框的值********************************/
             getSelectOptons() {
@@ -852,22 +842,6 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
             GetFollowUpType(){
                 var _self = this
                 _self.followTypeText = []
-                // var url  = '/api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=markert_follow_up_type'
-                // this.$http.get(url).then(function(res){
-                //     // _self.followTypeText=res.data.data.follow_up_type
-                //     // console.log(_self.followTypeText)
-                //     for(let i = 0;i<res.data.data.markert_follow_up_type.length;i++){
-                //         var temp={}
-                //         if(res.data.data.markert_follow_up_type[i].typecode == 21||res.data.data.markert_follow_up_type[i].typecode == 22){
-                //         }else{
-                //             temp.typecode=res.data.data.markert_follow_up_type[i].typecode
-                //             temp.typename=res.data.data.markert_follow_up_type[i].typename
-                //             temp.id=res.data.data.markert_follow_up_type[i].id
-                //             _self.followTypeText.push(temp)
-                //         }
-                //     }
-                //     // console.log(_self.followTypeText)
-                // })
 
                 let params = "markert_follow_up_type,market_status"
 
@@ -940,9 +914,12 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
                     let temp = res.data.data
                     _self.fiedDetail = res.data.data
                     if(res.data.data.pictureURl){
+                        _self.fiedDetail.imgs = []
                         let pic = ""
                         pic = _self.fiedDetail.pictureURl.split(",")
-                        _self.fiedDetail.imgs = pic
+                        for(let i = 0;i<pic.length;i++){
+                            _self.fiedDetail.imgs.push(pic[i])
+                        }
                     }
                 }
 
