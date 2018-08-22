@@ -33,6 +33,15 @@
                                         </FormItem>
                                     </Col>
                                 </Row>
+                                <Row :gutter="12">
+                                    <Col span="8">
+                                    <FormItem label="结束账期：" prop="followby_realname">
+                                        <Input v-model="formInline.begin_end_period" size="small" style="width:40%" placeholder="201807"></Input>
+                                        -
+                                        <Input v-model="formInline.end_end_period" size="small" style="width:40%" placeholder="201807"></Input>
+                                    </FormItem>
+                                    </Col>
+                                </Row>
                                 <FormItem>
                                     <Button type="primary" @click="search">搜索</Button>
                                     <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
@@ -110,11 +119,14 @@
     export default {
         data() {
             return {
+                search_model:"",
                 formInline:{
                     companyName:"",
                     server_realname:"",
                     accmanager_realname:"",
-                    followby_realname:""
+                    followby_realname:"",
+                    begin_end_period: "",
+                    end_end_period: ""
                 },
                 tiaozheng: false,
                 page: 1,
@@ -307,6 +319,8 @@
                         server_realname: _self.formInline.server_realname,
                         accmanager_realname: _self.formInline.accmanager_realname,
                         followby_realname: _self.formInline.followby_realname,
+                        begin_end_period: _self.formInline.begin_end_period,
+                        end_end_period: _self.formInline.end_end_period,
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field))
                 }
@@ -327,11 +341,13 @@
                 this.formInline.server_realname = ""
                 this.formInline.accmanager_realname = ""
                 this.formInline.followby_realname = ""
+                this.formInline.begin_end_period = ""
+                this.formInline.end_end_period = ""
                 this.getData()
             },
             getData() {
                 let _self = this
-                let url = '/order/cycle/service/record/list?sortField=createdate&service_type=kjdj&page=' + _self.page + '&pageSize=' + _self.pageSize + '&service_status=notStarted'+'&companyName=' + _self.formInline.companyName + '&server_realname=' + _self.formInline.server_realname + '&accmanager_realname=' + _self.formInline.accmanager_realname + '&followby_realname=' + _self.formInline.followby_realname
+                let url = '/order/cycle/service/record/list?sortField=createdate&service_type=kjdj&page=' + _self.page + '&pageSize=' + _self.pageSize + '&service_status=notStarted'+'&companyName=' + _self.formInline.companyName + '&server_realname=' + _self.formInline.server_realname + '&accmanager_realname=' + _self.formInline.accmanager_realname + '&followby_realname=' + _self.formInline.followby_realname + '&begin_end_period=' + _self.formInline.begin_end_period + "&end_end_period=" + _self.formInline.end_end_period
 
                 function doSuccess(res) {
                     let _data = res.data.data

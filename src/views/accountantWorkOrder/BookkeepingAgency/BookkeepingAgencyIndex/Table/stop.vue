@@ -41,6 +41,13 @@
                                         </Select>
                                     </FormItem>
                                     </Col>
+                                    <Col span="8">
+                                    <FormItem label="结束账期：" prop="followby_realname">
+                                        <Input v-model="SearchValidate.begin_end_period" size="small" style="width:40%" placeholder="201807"></Input>
+                                        -
+                                        <Input v-model="SearchValidate.end_end_period" size="small" style="width:40%" placeholder="201807"></Input>
+                                    </FormItem>
+                                    </Col>
                                 </Row>
                                 <center>
                                     <FormItem>
@@ -62,45 +69,6 @@
                 <Button type="primary" icon="information-circled" @click="fpkj">变更会计</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
             </ButtonGroup>
-            <!-- <Poptip
-                        style="float: right"
-                        placement="bottom-end"
-                        width="400">
-                    <Button type="text" icon="funnel">筛选</Button>
-                    <div slot="content" @keydown="show">
-                        <Form ref="SearchValidate" :model="SearchValidate" :label-width="120" style="margin-top: 15px">
-                            <Row :gutter="16" style="height:56px">
-                                <Col span="22">
-                                <FormItem label="企业名称：" prop="CompanyName">
-                                    <Input v-model="SearchValidate.CompanyName" size="small"></Input>
-                                </FormItem>
-                                </Col>
-                            </Row>
-                            <Row :gutter="16" style="height:56px">
-                                <Col span="22">
-                                <FormItem label="服务人员：" prop="server_realname">
-                                    <Input v-model="SearchValidate.server_realname" size="small"></Input>
-                                </FormItem>
-                                </Col>
-                            </Row>
-                            <Row :gutter="16" style="height:56px">
-                                <Col span="22">
-                                <FormItem label="跟进人：" prop="followby_realname">
-                                    <Input v-model="SearchValidate.followby_realname" size="small"></Input>
-                                </FormItem>
-                                </Col>
-                            </Row>
-                            <center>
-                                <FormItem style="margin-top:10px">
-                                    <Button type="primary" @click="Search">搜索</Button>
-                                    <Button type="ghost" @click="handleReset" style="margin-left: 8px">
-                                        重置
-                                    </Button>
-                                </FormItem>
-                            </center>
-                        </Form>
-                    </div>
-                </Poptip> -->
         </Row>
         <Row style="margin-top: 10px;">
             <Table
@@ -135,7 +103,9 @@
                     CompanyName:'',
                     server_realname:'',
                     followby_realname:'',
-                    departname:''
+                    departname:'',
+                    begin_end_period: '',
+                    end_end_period: ''
                 },
                 page: 1,
                 pageSize: 10,
@@ -312,6 +282,8 @@
                         CompanyName: _self.SearchValidate.CompanyName,
                         server_realname: _self.SearchValidate.server_realname,
                         followby_realname: _self.SearchValidate.followby_realname,
+                        begin_end_period: _self.SearchValidate.begin_end_period,
+                        end_end_period: _self.SearchValidate.end_end_period,
                         departname: _self.SearchValidate.departname,
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field))
@@ -324,6 +296,8 @@
                 this.SearchValidate.server_realname = ""
                 this.SearchValidate.followby_realname = "" 
                 this.SearchValidate.departname = ""
+                this.SearchValidate.begin_end_period = ""
+                this.SearchValidate.end_end_period = ""
                 this.Search()               
             },
             Search(){
@@ -338,7 +312,7 @@
             },
             getData() {
                 let _self = this
-                let url = '/order/cycle/service/record/list?sortField=updatedate&service_type=dljz&page=' + _self.page + '&pageSize=' + _self.pageSize + '&service_status=stop&followby_realname='+_self.SearchValidate.followby_realname + '&CompanyName=' + _self.SearchValidate.CompanyName +'&server_realname=' +_self.SearchValidate.server_realname +'&departname='+ _self.SearchValidate.departname
+                let url = '/order/cycle/service/record/list?sortField=updatedate&service_type=dljz&page=' + _self.page + '&pageSize=' + _self.pageSize + '&service_status=stop&followby_realname='+_self.SearchValidate.followby_realname + '&CompanyName=' + _self.SearchValidate.CompanyName +'&server_realname=' +_self.SearchValidate.server_realname +'&departname='+ _self.SearchValidate.departname  + '&begin_end_period=' + _self.SearchValidate.begin_end_period + "&end_end_period=" + _self.SearchValidate.end_end_period
 
                  function doSuccess(res) {
                     let _data = res.data.data

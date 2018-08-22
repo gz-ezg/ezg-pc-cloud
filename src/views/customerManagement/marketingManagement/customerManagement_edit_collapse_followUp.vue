@@ -913,10 +913,10 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
                     // console.log(res.data.data)
                     let temp = res.data.data
                     _self.fiedDetail = res.data.data
-                    if(res.data.data.pictureURl){
+                    if(res.data.data.realpaths){
                         _self.fiedDetail.imgs = []
                         let pic = ""
-                        pic = _self.fiedDetail.pictureURl.split(",")
+                        pic = _self.fiedDetail.realpaths.split(",")
                         for(let i = 0;i<pic.length;i++){
                             _self.fiedDetail.imgs.push(pic[i])
                         }

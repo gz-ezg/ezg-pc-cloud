@@ -36,6 +36,13 @@
                                         </Select>
                                     </FormItem>
                                     </Col>
+                                    <Col span="8">
+                                    <FormItem label="结束账期：" prop="followby_realname">
+                                        <Input v-model="SearchValidate.begin_end_period" size="small" style="width:40%" placeholder="201807"></Input>
+                                        -
+                                        <Input v-model="SearchValidate.end_end_period" size="small" style="width:40%" placeholder="201807"></Input>
+                                    </FormItem>
+                                    </Col>
                                 </Row>
                                 <center>
                                     <FormItem>
@@ -103,7 +110,9 @@
                     CompanyName:'',
                     server_realname:'',
                     followby_realname:'',
-                    departname:''
+                    departname:'',
+                    begin_end_period:"",
+                    end_end_period:""
                 },
                 page: 1,
                 pageSize: 10,
@@ -292,6 +301,8 @@
                         server_realname: _self.SearchValidate.server_realname,
                         followby_realname: _self.SearchValidate.followby_realname,
                         departname: _self.SearchValidate.departname,
+                        begin_end_period: _self.SearchValidate.begin_end_period,
+                        end_end_period: _self.SearchValidate.end_end_period,
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field))
                 }
@@ -303,6 +314,8 @@
                 this.SearchValidate.server_realname = ""
                 this.SearchValidate.followby_realname = "" 
                 this.SearchValidate.departname = ""
+                this.SearchValidate.end_end_period = ""
+                this.SearchValidate.begin_end_period = ""
                 this.Search()               
             },
             Search(){
@@ -317,7 +330,7 @@
             },
             getData() {
                 let _self = this
-                let url = '/order/cycle/service/record/list?sortField=updatedate&service_type=dljz&page=' + _self.page + '&pageSize=' + _self.pageSize +'&followby_realname='+_self.SearchValidate.followby_realname + '&CompanyName=' + _self.SearchValidate.CompanyName +'&server_realname=' +_self.SearchValidate.server_realname +'&departname='+ _self.SearchValidate.departname
+                let url = '/order/cycle/service/record/list?sortField=updatedate&service_type=dljz&page=' + _self.page + '&pageSize=' + _self.pageSize +'&followby_realname='+_self.SearchValidate.followby_realname + '&CompanyName=' + _self.SearchValidate.CompanyName +'&server_realname=' +_self.SearchValidate.server_realname +'&departname='+ _self.SearchValidate.departname + '&begin_end_period=' + _self.SearchValidate.begin_end_period + "&end_end_period=" + _self.SearchValidate.end_end_period
 
                 function doSuccess(res) {
                     let _data = res.data.data
