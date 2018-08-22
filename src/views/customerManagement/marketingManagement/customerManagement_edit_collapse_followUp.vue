@@ -46,7 +46,7 @@
                             </Row> -->
                             <Row>
                                 <Col span="20"><P>{{ item.serviceContent }}</P></Col>
-                                <Col span="4" v-if="item.followType=='22'"><Button type="primary" @click.native="open_detail(item.id)" style="float:right">查看详情</Button></Col>
+                                <Col span="4" v-if="item.followType=='22'"><Button type="primary" @click.native="open_detail(item.id,$event)" style="float:right">查看详情</Button></Col>
                                 
                                 <!-- 跟进内容根据类型新增class类，待客服跟进内容录入 -->
                                 <!-- <P :class="{warn:item.followType <= 18 && item.userName== '胡小红', error:item.followType == 18 && item.userName == '管理员' }" >{{ item.serviceContent }}</P> -->
@@ -925,19 +925,18 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
                     _self.followupshow = true
                 }
             },
-            open_detail(e){
-                console.log(e)
+            open_detail(e,event){
                 let _self = this
                 let url = 'api/customer/follow/record/detail'
                 _self.openAllDetail = true
                 let config = {
                     params:{
-                        followRecordId:20218
+                        followRecordId:e
                     }
                 }
 
                 function success(res){
-                    console.log(res.data.data)
+                    // console.log(res.data.data)
                     let temp = res.data.data
                     _self.fiedDetail = res.data.data
                     if(res.data.data.pictureURl){

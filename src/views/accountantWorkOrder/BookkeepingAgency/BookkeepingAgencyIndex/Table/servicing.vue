@@ -18,13 +18,15 @@
                                         <Input v-model="SearchValidate.server_realname" size="small"></Input>
                                     </FormItem>
                                     </Col>
-                                    <!-- <Col span="8">
-                                    <FormItem label="结束账期起始：" prop="followby_realname">
-                                        <Input v-model="SearchValidate.followby_realname" size="small"></Input>
+                                    <Col span="8">
+                                    <FormItem label="结束账期：" prop="followby_realname">
+                                        <Input v-model="SearchValidate.begin_end_period" size="small" style="width:40%" placeholder="201807"></Input>
+                                        -
+                                        <Input v-model="SearchValidate.end_end_period" size="small" style="width:40%" placeholder="201807"></Input>
                                     </FormItem>
-                                    </Col> -->
+                                    </Col>
                                     <!-- <Col span="8">
-                                    <FormItem label="结束账期终止：" prop="followby_realname">
+                                    <FormItem label="结束账期：" prop="followby_realname">
                                         <Input v-model="SearchValidate.followby_realname" size="small"></Input>
                                     </FormItem>
                                     </Col> -->
@@ -146,7 +148,9 @@
                 SearchValidate:{
                     CompanyName:'',
                     server_realname:'',
-                    followby_realname:''
+                    followby_realname:'',
+                    begin_end_period:"",
+                    end_end_period:""
                 },
                 current_row:"",
                 page: 1,
@@ -519,11 +523,13 @@
                 let config = {
                         page: '1',
                         pageSize: '1000000',
-                        period:"",
+                        period:_self.time,
                         companyname: _self.SearchValidate.CompanyName,
                         realname: _self.SearchValidate.server_realname,
                         sortField:"updatedate",
                         followbyrealname: _self.SearchValidate.followby_realname,
+                        begin_end_period: _self.SearchValidate.begin_end_period,
+                        end_end_period: _self.SearchValidate.end_end_period,
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field))
                 }
@@ -533,7 +539,9 @@
             handleReset(){
                 this.SearchValidate.CompanyName = ""
                 this.SearchValidate.server_realname = ""
-                this.SearchValidate.followby_realname = "" 
+                this.SearchValidate.followby_realname = ""
+                this.SearchValidate.begin_end_period = ""
+                this.SearchValidate.end_end_period = "" 
                 this.Search()               
             },
             Search(){
@@ -554,12 +562,13 @@
                     params:{
                         page: _self.page,
                         pageSize: _self.pageSize,
-                        period:"",
+                        period:_self.time,
                         sortField:"updatedate",
                         companyname: _self.SearchValidate.CompanyName,
                         realname: _self.SearchValidate.server_realname,
                         followbyrealname: _self.SearchValidate.followby_realname,
-                        begin_end_period: _self.time,
+                        begin_end_period: _self.SearchValidate.begin_end_period,
+                        end_end_period: _self.SearchValidate.end_end_period,
                     }
                 }
                 this.$http.get(url,config).then(function(res){
@@ -667,6 +676,7 @@
                 let _self = this
                 // console.log(file)
                 this.img_array.push(file)
+                // yasuo(file,_self.img_array)
                 let reader = new FileReader()
                 reader.readAsDataURL(file)
                 let filename = file.name
@@ -683,6 +693,8 @@
             zlwc(e) {
                 let _self = this
                 this.finsih_work = true
+                this.img_array = []
+                this.show_img = []
                 this.upload_id = e
             },
 
@@ -693,6 +705,7 @@
 
                     let formdata = new FormData()
                     formdata.append("monthServiceItemId",_self.upload_id)
+                    console.log(_self.img_array[0])
                     formdata.append("file", _self.img_array[0])
                     
                     let url = `api/order/cycle/month/service/item/finish`
@@ -707,14 +720,11 @@
                     }
 
                     function fail(err){
-                        // console.log(err)
                         _self.finsih_loading = false
                     }
                     
                     this.$Post(url, formdata, success, fail)
                 }else{
-                    // _self.img_array = []
-                    // _self.show_img = []
                     _self.$Message.warning("请上传图片！(最多上传一张图片)")
                 }
             },
@@ -822,8 +832,6 @@
                     month = now.getMonth()
                 }
             }
-            console.log(year)
-            console.log(month)
             _self.time = year + month
             Bus.$on('UPDATE_ALL_ACCOUNT_PAGE',(e)=>{
                 _self.getData()

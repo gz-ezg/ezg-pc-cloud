@@ -217,6 +217,7 @@
         </Modal>
         <change-market @update="getTableData"></change-market>
         <change-log></change-log>
+        <info-change-log></info-change-log>
     </div>
 </template>
 
@@ -226,11 +227,13 @@ import Bus from "../../../components/bus";
 import { DateFormat } from "../../../libs/utils";
 import changeMarket from "./change_market";
 import changeLog from "./change_log";
+import infoChangeLog from './customerInfoChangeLog'
 
 export default {
   components: {
     changeMarket,
-    changeLog
+    changeLog,
+    infoChangeLog
   },
   data() {
     return {
@@ -953,7 +956,7 @@ export default {
         _self.importance = temp.importance;
         _self.area.reverse();
         _self.importance_map = _self.$array2map(_self.importance)
-        console.log(_self.importance_map)
+        // console.log(_self.importance_map)
         for (let i = 0; i < _self.area.length; i++) {
           _self.area_map.set(_self.area[i].typecode, _self.area[i].typename);
         }
@@ -1169,7 +1172,9 @@ export default {
     open_change_info_log(){
       let _self = this
       if(_self.customerid != ""){
-        
+        _self.$bus.emit('OPEN_CUSTOMER_INFO_LOG',[ 
+          _self.customerid,
+          _self.customerName ])
       }else{
         _self.$Message.warning("请选择一行查看！");
       }
