@@ -386,25 +386,30 @@
             this.init();
             this.rate_start()
             this.spin_loading = false
+            console.log("dom_mounted")
             //  全局监听click事件，并获取dom元素
             // document.addEventListener("click",function(e){
             //     console.log(e.path)
             // })
         },
-        beforeUpdate(){
-            // console.log("beforeUpdate")
-            // this.spin_loading = true
-        },
+        // beforeUpdate(){
+        //     console.log("dom_mbeforeUpdate")
+        //     // this.spin_loading = true
+        // },
         updated(){
-            // console.log("updated")
+            // console.log("dom_mupdated")
+            // 记录性能时间
+            // let loadingTime = ""
+            // loadingTime = window.performance.getEntriesByType("navigation")
+            // console.log(loadingTime)
             // this.spin_loading = false
         },
-        beforeDestroy(){
-            // console.log("beforeDestroy")
-        },
-        destroyed(){
-            // console.log('destroyed')
-        },
+        // beforeDestroy(){
+        //     // console.log("beforeDestroy")
+        // },
+        // destroyed(){
+        //     // console.log('destroyed')
+        // },
         created () {
             // 显示打开的页面的列表
             this.$store.commit('setOpenedList');

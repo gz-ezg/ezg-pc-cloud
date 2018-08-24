@@ -343,78 +343,6 @@ export const appRouter = [
         ]
     },
     {
-        path: '/customerService',
-        icon: 'social-windows',
-        name: 'customerService',
-        meta: 6060,
-        access: 6060,
-        title: '客服管理',
-        // meta:{
-        //     keepAlive: false
-        // },
-        component: Main,
-        children: [
-            {
-                access: 6048,
-                path: 'complaintcenter',
-                title: '投诉管理',
-                meta: 6048,
-                name: 'complaintcenter_index',
-                component: resolve => {
-                    require(['@/views/complaintCenter/complaintcenter_index.vue'], resolve);
-                }
-            },
-            {
-                path: 'returnVisit',
-                access: 6061,
-                meta: 6061,
-                title: '客户回访',
-                name: 'returnVisit_index',
-                component: resolve => {
-                    require(['@/views/customerService/returnVisit/table/returnVisit_table.vue'], resolve);
-                },
-            },
-            {
-                path: 'returnWorkOrder',
-                access: 6100,
-                meta: 6100,
-                title: '完结工单回访',
-                name: 'returnWorkOrder_index',
-                component: resolve => {
-                    require(['@/views/customerService/returnWorkOrder/table/returnVisit_table.vue'], resolve);
-                },
-            },
-            {
-                path: 'offlineCustomer',
-                access: 6062,
-                meta: 6062,
-                title: '下线客户',
-                name: 'offlineCustomer_index',
-                component: resolve => {
-                    require(['@/views/customerService/offlineCustomer/table/offline_index.vue'], resolve);
-                },
-            },
-            // {
-            //     path: 'customerFollowUp_1',
-            //     access: 6063,                
-            //     title: '客户跟进记录',
-            //     name: 'customerFollowUp_index_1',
-            //     component: resolve => {
-            //         require(['@/views/customerService/followUp/followUp_index.vue'], resolve);
-            //     },
-            // },
-            // {
-            //     path: 'temp',
-            //     access: 6064,                
-            //     title: '临时导出外勤记录',
-            //     name: 'temp',
-            //     component: resolve => {
-            //         require(['@/views/customerService/followUp/temp.vue'], resolve);
-            //     },
-            // },
-        ]
-    },
-    {
         access: 6005,
         meta: 6005,
         path: '/channelManagement',
@@ -489,6 +417,60 @@ export const appRouter = [
                 component: resolve => {
                     require(['@/views/cluesLibrary/cluesLabelManagement/cluesLabels.vue'], resolve);
                 }
+            },
+        ]
+    },
+    {
+        path: '/customerService',
+        icon: 'social-windows', 
+        name: 'customerService',
+        meta: 6060,
+        access: 6060,
+        title: '客服管理',
+        // meta:{
+        //     keepAlive: false
+        // },
+        component: Main,
+        children: [
+            {
+                access: 6048,
+                path: 'complaintcenter',
+                title: '投诉管理',
+                meta: 6048,
+                name: 'complaintcenter_index',
+                component: resolve => {
+                    require(['@/views/complaintCenter/complaintcenter_index.vue'], resolve);
+                }
+            },
+            {
+                path: 'returnVisit',
+                access: 6061,
+                meta: 6061,
+                title: '客户回访',
+                name: 'returnVisit_index',
+                component: resolve => {
+                    require(['@/views/customerService/returnVisit/table/returnVisit_table.vue'], resolve);
+                },
+            },
+            {
+                path: 'returnWorkOrder',
+                access: 6100,
+                meta: 6100,
+                title: '完结工单回访',
+                name: 'returnWorkOrder_index',
+                component: resolve => {
+                    require(['@/views/customerService/returnWorkOrder/table/returnVisit_table.vue'], resolve);
+                },
+            },
+            {
+                path: 'offlineCustomer',
+                access: 6062,
+                meta: 6062,
+                title: '下线客户',
+                name: 'offlineCustomer_index',
+                component: resolve => {
+                    require(['@/views/customerService/offlineCustomer/table/offline_index.vue'], resolve);
+                },
             },
         ]
     },

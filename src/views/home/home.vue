@@ -287,6 +287,10 @@ export default {
                     name:'marketIndex_index'
                 })
                 break
+            case "qudao":
+                this.$router.push({
+                    name: 'cannelIndex_index'
+                })
             default:
         }
         // if(localStorage.getItem('Main_Role')=="管理员"){

@@ -1904,6 +1904,9 @@
                 let url = '/order/queryItemDetail?productSkuIds=' + _self.SKU + '&areaId=' + _self.res1[2]
 
                 function doSuccess(response) {
+                    // if(response.data.data[0].skuid == 1047 || response.data.data[0].skuid == 1048 || response.data.data[0].skuid == 1049 || response.data.data[0].skuid == 1050 ){
+                    //     response.data.data[0].productnumber = 12
+                    // }
                     let _department = JSON.parse(response.data.data[0].servicedeparts)
                     if (response.data.data[0].iscycle != 'N' && response.data.data[0].product != '会计到家') {
                         let _error = ''
@@ -1921,7 +1924,7 @@
 
                             function doSuccess2(res) {
                                 response.data.data[0].servicestartdate = res.data.data
-                                
+
                                 if (_self.isEdit != true) {
                                     // 判断是否添加备注内容
                                     if(response.data.data[0].skuid == "1007"){
@@ -2186,6 +2189,13 @@
                                     _data.payDir = _self.formValidate.payDir
                                     _data.orderPayNumber = _self.formValidate.orderPayNumber
                                     _data.GDSreport = _self.formValidate.GDSreport
+                                    for(let i = 0; i<_self.orderItemList.length; i++){
+                                        if(_self.orderItemList[i].skuid == 1047 || _self.orderItemList[i].skuid == 1048 || _self.orderItemList[i].skuid == 1049 || _self.orderItemList[i].skuid == 1050){
+                                            _self.orderItemList[i].productnumber = _self.orderItemList[i].productnumber * 12
+                                        }
+                                    }
+                                    console.log(_self.orderItemList)
+
                                     _data.orderitems = JSON.stringify(_self.orderItemList)
                                     _data.payTime = _self.StartTime1
                                     _data.isornotkp = _self.formValidate.isornotkp

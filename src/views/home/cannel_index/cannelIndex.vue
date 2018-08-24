@@ -55,7 +55,7 @@
         </Row>
         <Row :gutter="10" class="margin-top-10">
             <Col span="12" :style="{marginBottom: '10px'}">
-                <Card style="height:600px">
+                <Card style="height:700px">
                     <p slot="title" class="card-title">
                         <Icon type="android-map"></Icon>
                         最新30天新增客户
@@ -66,7 +66,7 @@
                 </Card>
             </Col>
             <Col span="12" :style="{marginBottom: '10px'}">
-                <Card style="height:600px">
+                <Card style="height:700px">
                     <p slot="title" class="card-title">
                         <Icon type="android-map"></Icon>
                         近30天成交

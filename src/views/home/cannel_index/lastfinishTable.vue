@@ -1,19 +1,23 @@
 <template>
     <div>
-        <Table
-            size="small"
-            :columns="header"
-            :data="data"
-            :total="total"
-            @on-row-dblclick="show_detail"            
-        ></Table>
-        <Page
-            :total="total"
-            show-elevator
-            size="small"
-            @page-change="pagechange"
-        >
-        </Page>
+        <Row :gutter="16">
+            <Table
+                size="small"
+                :columns="header"
+                :data="data"
+                :total="total"
+                @on-row-dblclick="show_detail"            
+            ></Table>
+            <Page
+                style="margin-top:10px"
+                :total="total"
+                show-total
+                show-elevator
+                size="small"
+                @on-change="pagechange"
+            >
+            </Page>
+        </Row>
         <Modal
             title="交易详情"
             v-model="isshow"
@@ -107,13 +111,13 @@ export default {
                 {
                     title:'公司名称',
                     key:'companyname',
-                    width:120
+                    width:250
                 },
                 {
                     title:'客户名称',
                     //此字段没有给出
                     key:'name',
-                    width:200
+                    width:120
                 },
                 {
                     title:'客户电话',
@@ -139,7 +143,7 @@ export default {
             data:[],
             page:1,
             pageSize:10,
-            total:''
+            total:10
         }
     },
     methods:{
@@ -155,7 +159,6 @@ export default {
                     let url2 = '/order/list?channelTypeId='+re.data.data[0].id+'&page=' + _self.page + '&pageSize=' + _self.pageSize +'&sortField=createdate'
                     
                     function doSuccess2(re) {
-                        console.log(re)
                         let _data = re.data.data
                         // console.log(_data)
                         _self.total = _data.total

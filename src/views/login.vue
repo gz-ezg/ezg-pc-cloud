@@ -183,6 +183,9 @@
                             }else if(temp[j] == "auditing" || temp[j] == "sjbgd"){
                                 localStorage.setItem('Main_Role',"shenji")
                                 break
+                            }else if(temp[j] == "jianzhi"){
+                                localStorage.setItem('Main_Role',"qudao")
+                                break
                             }else if( j == temp.length - 1){
                                 localStorage.setItem('Main_Role',"other")
                             }

@@ -156,7 +156,7 @@
                     <Button type="primary" name="marketingManagement_index_edit_excel" icon="ios-color-filter-outline" @click="downloadExcel">导出Excel</Button>
                     <Button type="primary" icon="ios-color-filter-outline" v-if="false">设置提成</Button>
                     <Button type="primary" name="marketingManagement_index_info_log" icon="ios-color-filter-outline" @click="open_change_log">销售变更日志</Button>
-                    <Button type="primary" name="marketingManagement_index_edit_log" icon="ios-color-filter-outline" @click="open_change_info_log">客户变更日志</Button>
+                    <!-- <Button type="primary" name="marketingManagement_index_edit_log" icon="ios-color-filter-outline" @click="open_change_info_log">客户变更日志</Button> -->
                     <!--<Button type="primary" icon="ios-color-filter-outline">下载模板</Button>-->
                 </ButtonGroup>
             </Row>
@@ -267,7 +267,8 @@ export default {
         labelName: "",
         importlevel: "",
         begin_residue_time: "",
-        end_residue_time: ""
+        end_residue_time: "",
+        importance:""
       },
       columns: [
         {
@@ -572,6 +573,7 @@ export default {
         exportField: encodeURI(JSON.stringify(field))
       };
       let toExcel = this.$MergeURL(url, config);
+      console.log(toExcel)
       window.open(toExcel);
     },
     ok() {},
@@ -1215,7 +1217,18 @@ export default {
       this.getTableData();
       this.currentPage = 1;
     });
-  }
+  },
+  // mounted(){
+  //   console.log("customer_mounted")
+  // },
+  // beforeUpdate(){
+  //   console.log("customer_beforeUpdate")
+  //   // this.spin_loading = true
+  // },
+  // updated(){
+  //   console.log("customer_updated")
+  //   // this.spin_loading = false
+  // },
 };
 </script>
 

@@ -1,19 +1,23 @@
 <template>
     <div>
-        <Table
+        <Row :gutter="16">
+            <Table
             size="small"
             :columns="header"
             :data="data"
             :total="total"
             @on-row-dblclick="show_detail"
-        ></Table>
-        <Page
-            :total="total"
-            show-elevator
-            size="small"
-            @page-change="pagechange"
-        >
-        </Page>        
+            ></Table>
+            <Page
+                style="margin-top:10px"
+                :total="total"
+                show-elevator
+                show-total
+                size="small"
+                @page-change="pagechange"
+            >
+            </Page>  
+        </Row>      
         <Modal
             title="交易详情"
             v-model="isshow"
@@ -105,10 +109,6 @@ export default {
             isshow:false,
             header:[
                 {
-                    type:'index',
-                    width:70
-                },
-                {
                     title:'客户名称',
                     key:'NAME',
                     width:100
@@ -147,7 +147,7 @@ export default {
             data:[],
             page:1,
             pageSize:10,
-            total:'',
+            total:10,
             area:[],
             cluesource:[],
             customerType:[],
