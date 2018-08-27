@@ -23,9 +23,7 @@
                                         </Col>
                                         <Col span="8">
                                         <FormItem label="客户状态：" prop="customerStatus">
-                                            <!-- <Input v-model="SearchValidate.customerStatus" size="small"></Input> -->
-                                        <Cascader trigger="hover" transfer :data="customerType" v-model="SearchValidate.customerStatus" size="small" style="margin-top:5px;width:100%"></Cascader>
-                                            
+                                            <Cascader trigger="hover" transfer :data="customerType" v-model="SearchValidate.customerStatus" size="small" style="margin-top:5px;width:100%"></Cascader>  
                                         </FormItem>
                                         </Col>
                                     </Row>
@@ -47,19 +45,6 @@
                                             </FormItem>
                                         </Col>
                                     </Row>
-                                    <!--<Row :gutter="16" style="height:56px">
-                                        &lt;!&ndash; <Col span="12">
-                                        <FormItem label="销售：" prop="customer_name">
-                                            <Input v-model="SearchValidate.customer_name" size="small"></Input>
-                                        </FormItem>
-                                        </Col> &ndash;&gt;
-                                        <Col span="12">
-                                        <FormItem label="创建时间：" prop="date">
-                                            <DatePicker type="daterange" style="width: 200px" v-model="SearchValidate.date"></DatePicker>
-                                        </FormItem>
-                                        </Col>
-
-                                    </Row>-->
                                             <center>
                                                 <FormItem style="margin-top:5px">
                                                     <Button type="primary" @click="Search">搜索</Button>
@@ -78,14 +63,6 @@
                     <Button v-permission="['channelC.add']" type="primary" icon="plus" @click="getCannelType();modal_add = true">录入</Button>
                     <!-- <Button v-permission="['channelC.export']" type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button> -->
                 </ButtonGroup>
-                <!-- <Poptip
-                        style="float: right"
-                        placement="bottom-end"
-                        width="600">
-                    <Button type="text" icon="funnel">筛选</Button>
-                    
-                </Poptip> -->
-            <!-- </Row> -->
             <Row style="margin-top: 10px;">
                 <Table
                         highlight-row
@@ -112,9 +89,7 @@
         <Modal
                 v-model="modal_add"
                 title="录入"
-                :loading="loading"
-                @on-ok="handleSubmit('formValidate')"
-                @on-cancel="cancel('formValidate')">
+        >
             <Form ref="formValidate" :rules="ruleValidate" :model="formValidate" :label-width="80">
                 <Row :gutter="16" style="height:56px">
                     <Col span="12">
@@ -153,8 +128,7 @@
                     </Col>
                 </Row>
                 <FormItem label="标签" prop="customerTags">
-                    <Tag v-for="item in customerlabelGroup" :key="item" :name="item" :id="item.id" closable
-                         @on-close="handleClose2">
+                    <Tag v-for="item in customerlabelGroup" :key="item.id" :name="item.id" :id="item.id" closable @on-close="handleClose2(item)">
                         {{ item.labelName }}
                     </Tag>
                     <Button icon="ios-plus-empty" type="dashed" size="small" @click="getLabelData();addTag = true">添加</Button>
@@ -164,19 +138,14 @@
                         <Radio :label="items2.id" v-for="items2 in qudaotype" :id="items2.id" :key="items2.id">{{ items2.channel_type_name }}</Radio>
                     </RadioGroup>
                 </FormItem>
-<!--                <FormItem label="跟进人" prop="followbys" style="height:56px" v-if="isXiaoshou">
-                    <CheckboxGroup v-model="formValidate.followbys">
-                        <Checkbox :label="items3.user_id" v-for="items3 in xiaoshou">{{ items3.realname }}</Checkbox>
-                    </CheckboxGroup>
-                 &lt;!&ndash;   <Tag v-for="items in followbysGroup3" :key="items" :name="items" :id="items.id" closable
-                         @on-close="handleClose2">
-                        {{ items.realname }}
-                    </Tag>&ndash;&gt;
-                </FormItem>-->
                 <FormItem label="备注" prop="customerMemo">
                     <Input size="small" type="textarea" v-model="formValidate.customerMemo"/>
                 </FormItem>
             </Form>
+            <div slot="footer">
+                <Button type="primary" @click="handleSubmit('formValidate')" :loading="loading">新增</Button>
+                <Button type="ghost" @click="cancel('formValidate')">重置</Button>
+            </div>
         </Modal>
         <Modal
                 v-model="addTag"
@@ -243,7 +212,6 @@
                 } else {
                     if (re.test(value)) {
                         let url = '/channel/customer/phoneIsExist?customerMobilePhone=' + value
-
                         function doSuccess(response) {
                             if (response.data.data == true) {
                                 callback(new Error('抱歉，该号码已经存在'));
@@ -251,9 +219,7 @@
                                 callback();
                             }
                         }
-
                         this.GetData(url, doSuccess)
-
                     } else {
                         callback(new Error('电话格式不正确'));
                     }
@@ -316,7 +282,7 @@
                     date:[],
                     customer_name:'',
                     customer_mobile_phone:'',
-                    customerStatus:'',
+                    customerStatus:[],
                     customer_area:''
                 },
                 ishandleSubmit:false,
@@ -324,7 +290,7 @@
                 modal_add: false,
                 addTag: false,
                 followbysTag: false,
-                loading: true,
+                loading: false,
                 pageTotal: new Number(),
                 pageTotal2: new Number(),
                 customerid: '',
@@ -361,7 +327,7 @@
                     customerTags: '',
                     customerMemo: '',
                     channelTypeId: '',
-                    customerStatus: []
+                    // customerStatus: []
                 },
                 columns3: [
                     {
@@ -395,19 +361,19 @@
                 ],
                 ruleValidate: {
                     customerTel: [
-                        {validator: validateFixedphone, trigger: 'blur'}
+                        {validator: validateFixedphone, trigger: 'change'}
                     ],
                     customerQQ: [
-                        {validator: validateQQ, trigger: 'blur'}
+                        {validator: validateQQ, trigger: 'change'}
                     ],
                     customerWechat: [
-                        {validator: validateWechat, trigger: 'blur'}
+                        {validator: validateWechat, trigger: 'change'}
                     ],
                     customerEmail: [
-                        {validator: validateEmail, trigger: 'blur'}
+                        {validator: validateEmail, trigger: 'change'}
                     ],
                     customerName: [
-                        {required: true, trigger: 'blur', message: '客户名称不能为空'}
+                        {required: true, trigger: 'change', message: '客户名称不能为空'}
                     ],
                     customerArea: [
                         {required: true, trigger: 'change', message: '请选择区域'}
@@ -416,11 +382,8 @@
                         {required: true, validator: validateCascader, trigger: 'change'}
                     ],
                     customerMobilePhone: [
-                        {required: true, validator: validateTel, trigger: 'blur'}
+                        {required: true, validator: validateTel, trigger: 'change'}
                     ],
-             /*       channelTypeId: [
-                        { required: true, message: '请选择渠道类型', trigger: 'change' }
-                    ],*/
                 },
                 columns: [
                     {
@@ -558,7 +521,6 @@
         },
         methods: {
             sort(e){
-                console.log(e)
                 if(e.key == ""){
                     this.sortField = 'updatedate'   
                 }else{
@@ -576,7 +538,6 @@
                 }else{
                     this.order = e.order
                 }
-                
                 this.getData()
             },
             handleReset(){
@@ -590,12 +551,8 @@
                 _self.ishandleSubmit = false
             },
             Search() {
-                var _self = this;
-                if (_self.ishandleSubmit == false) {
-                    _self.page = 1;
-                    // console.log("1111s");
-                }
-                _self.ishandleSubmit = true;
+                let _self = this
+                _self.page = 1;
                 _self.getData();
             },
             getDataCenter() {
@@ -604,7 +561,6 @@
                 let params = "area,customerTypes"
 
                 function success(res){
-                    // let temp = res.data.data;
                     _self.area = res.data.data.area;
                     _self.customerType = res.data.data.customerTypes;
                     // 二级联动改一级
@@ -648,52 +604,6 @@
                 }
 
                 this.$GetDataCenter(params, success)
-
-                // var url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=area,customerTypes`;
-                // this.$http.get(url).then(function(res) {
-                //     _self.$backToLogin(res)
-                //     var temp = res.data.data;
-                //     _self.area = temp.area;
-                //     _self.customerType = temp.customerTypes;
-                //     // 二级联动改一级
-                //     _self.customerTypeArr = []
-                //     for(let i = 0;i<_self.customerType.length;i++) {
-                //         var temp = {}
-                //         if (_self.customerType[i].children != null) {
-                //             for (let j = 0; j < _self.customerType[i].children.length; j++) {
-                //                 temp = {}
-                //                 temp.id = _self.customerType[i].children[j].id
-                //                 temp.typecode = _self.customerType[i].children[j].typecode
-                //                 temp.typename = _self.customerType[i].children[j].typename
-                //                 temp.pid = _self.customerType[i].children[j].pid
-                //                 temp.ptypename = _self.customerType[i].typename
-                //                 temp.ptypecode = _self.customerType[i].typecode
-
-                //                 _self.customerTypeArr.push(temp)
-                //             }
-                //         } else {
-                //             temp = {}
-                //             temp.id = _self.customerType[i].id
-                //             temp.typecode = _self.customerType[i].typecode
-                //             temp.ptypename = _self.customerType[i].typename
-                //             temp.typename = ''
-                //             temp.pid = 0
-                //             _self.customerTypeArr.push(temp)
-                //         }
-                //         //  修改成规定的模型
-                //     _self.customerType[i].value = _self.customerType[i].id
-                //     _self.customerType[i].label = _self.customerType[i].typename
-                //     if(_self.customerType[i].children != null){
-
-                //         for(let j = 0;j<_self.customerType[i].children.length; j++ ){
-
-                //         _self.customerType[i].children[j].value= _self.customerType[i].children[j].id
-                //         _self.customerType[i].children[j].label = _self.customerType[i].children[j].typename
-
-                //         }
-                //     }
-                //     }
-                // });
             },
             findAreaText(temp) {
                 var _self = this;
@@ -731,10 +641,14 @@
             },
             getCannelType() {
                 let _self = this
-                let url2 = '/channel/type/queryUserChannel?type=qdyh'
+                let url2 = 'api/channel/type/queryUserChannel'
 
-
-                function doSuccess2(re) {
+                let config = {
+                    params:{
+                        type: "qdyh"
+                    }
+                }
+                function success(re){
                     _self.formValidate.channelTypeId = re.data.data[0].id
                     _self.qudaotype = []
                     for (let i = 0; i < re.data.data.length; i++) {
@@ -742,18 +656,13 @@
                     }
                 }
 
-                this.GetData(url2, doSuccess2)
+                this.$Get(url2, config, success)
             },
             downloadExcel(){
                 let field = [
                     {field:'customer_name',title:'客户名称'},
-                    // {field:'customer_mobile_phone',title:'电话'},
-                    // {field:'customer_tel',title:'固话'},
-                    // {field:'customerqq',title:'QQ'},
-                    // {field:'customer_wechat',title:'微信'},
                     {field:'customertype',title:'客户状态',format:'customerType'},
                     {field:'clue_status',title:'线索状态',format:'channelcluet'},
-                    // {field:'importlevel',title:'客户等级',format:'importlevel'},
                     {field:'area',title:'地区',format:'area'},
                     {field:'followbyname',title:'销售'},
                     {field:'createrealname',title:'创建人'},
@@ -786,7 +695,6 @@
                 _self.table_loading = true
                 let url = 'api/channel/customer/list'
                 // let url3 = '/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=channelcluet'
-
                 let params = "channelcluet"
 
                 let _group = []
@@ -811,20 +719,11 @@
                             customer_area:_self.SearchValidate.customer_area
                         }
                     }
-                //     for (var key in _self.SearchValidate) {
-                //         if (_self.SearchValidate[key] == "" || _self.SearchValidate[key] == null) {
-                //             delete config.params[key];
-                //         }
-                //         if(_self.SearchValidate.date == "" || _self.SearchValidate.date == null ){
-                //             delete config.params.eUpdatedate
-                //             delete config.params.eUpdatedate
-                //         }
-                // }
 
                 function doSuccess(response) {
                     let _data = response.data.data
 
-                    _self.pageTotal = Number(_data.total)
+                    _self.pageTotal = _data.total
                     _self.data2 = []
 
                     for (let i = 0; i < _data.rows.length; i++) {
@@ -834,7 +733,6 @@
                                 a = _group[k].typename
                             }
                         }
-                        // console.log('11111')
                         _self.data2.push({
                             cluestatus: _data.rows[i].cluestatus,
                             followbyname: _data.rows[i].followbyname,
@@ -871,8 +769,6 @@
 
                 this.$GetDataCenter(params, doSuccess3)
 
-                // this.GetData(url3, doSuccess3)
-
                 _self.$http.get(url,config).then(function(res){
                     doSuccess(res)
                 })
@@ -904,48 +800,41 @@
             },
             handleSubmit(name) {
                 let _self = this
-                setTimeout(() => {
-                    this.loading = false;
-                    this.$refs[name].validate((valid) => {
-                        if (valid) {
-                            if (_self.customerlabelGroup != undefined) {
-                                let labelIds = []
-                                for (let i = 0; i < _self.customerlabelGroup.length; i++) {
-                                    labelIds.push(_self.customerlabelGroup[i].id)
-                                }
-                                _self.formValidate.customerTags = labelIds.toString()
+                this.loading = true;
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        if (_self.customerlabelGroup != undefined) {
+                            let labelIds = []
+                            for (let i = 0; i < _self.customerlabelGroup.length; i++) {
+                                labelIds.push(_self.customerlabelGroup[i].id)
                             }
-                            let _customertypeStr = _self.formValidate.customerStatus[1]
-                            _self.formValidate.customerStatus = _customertypeStr
-                            if ((_self.formValidate.customerTel == '' || _self.formValidate.customerTel == null) && (_self.formValidate.customerMobilePhone == '' || _self.formValidate.customerMobilePhone == null) && (_self.formValidate.customerWechat == '' || _self.formValidate.customerWechat == null) && (_self.formValidate.customerQQ == '' || _self.formValidate.weixin == null)) {
-                                this.$nextTick(() => {
-                                    this.loading = true;
-                                });
-                                this.$Message.error('电话、固话、QQ、微信必须填写一个');
-                            } else {
-                                // _self.formValidate.followbys = _self.formValidate.followbys.toString()
-                                _self.loading = true
-                                this.$http({
-                                    method: 'post',
-                                    url: '/api/channel/customer/create',
-                                    data: _self.formValidate,
-                                })
-                                    .then(function (response) {
-                                        if (response.data.msgCode == '40000') {
-                                            _self.$Message.success('新增成功!')
-                                            _self.cancel('formValidate')
-                                            _self.getData()
-                                            _self.modal_add = false
-                                        }
-                                    })
-                            }
-                        } else {
-                            this.$nextTick(() => {
-                                this.loading = true;
-                            });
+                            _self.formValidate.customerTags = labelIds.toString()
                         }
-                    })
-                }, 2000)
+                        // let _customertypeStr = _self.formValidate.customerStatus[1]
+                        // _self.formValidate.customerStatus = _customertypeStr
+                        if ((_self.formValidate.customerTel == '' || _self.formValidate.customerTel == null) && (_self.formValidate.customerMobilePhone == '' || _self.formValidate.customerMobilePhone == null) && (_self.formValidate.customerWechat == '' || _self.formValidate.customerWechat == null) && (_self.formValidate.customerQQ == '' || _self.formValidate.weixin == null)) {
+                            this.loading = false;
+                            this.$Message.error('电话、固话、QQ、微信必须填写一个');
+                        } else {
+                            _self.$Post(url, _self.formValidate, success, fail)
+                        }
+                    } else {
+                        this.loading = false;
+                    }
+                })
+
+                let url = "/api/channel/customer/create"
+                function success(res){
+                    _self.getData()
+                    _self.modal_add = false
+                    _self.loading = false
+                    _self.cancel('formValidate')
+
+                }
+
+                function fail(err){
+                    _self.loading = false
+                }
             },
             cancel(name) {
                 this.customerlabelGroup = []
@@ -958,7 +847,6 @@
                 _self.data3 = []
                 this.$http.get('/api/system/label/list?page=1&pageSize=10')
                     .then(function (data) {
-                        _self.$backToLogin(data)  
                         var response = data.data.data
                         var length = response.rows.length
                         _self.pageTotal2 = response.total
@@ -1151,24 +1039,32 @@
 
             radioChange(a) {
                 let _self = this
-                let url = '/channel/user/queryChannelUser?channelTypeId=' + a + '&type=xs'
+                let url = 'api/channel/user/queryChannelUser'
 
-                function doSuccess(re) {
+                let config = {
+                    params:{
+                        channelTypeId: a,
+                        type: "xs"
+                    }
+                }
+
+                function success(re){
                     for (let i = 0; i < re.data.data.length; i++) {
                         _self.isXiaoshou = true
                         _self.xiaoshou.push(re.data.data[i])
                     }
                 }
 
-                this.GetData(url, doSuccess)
+                this.$Get(url, config, success)
             },
 
             /*************************移除标签********************************/
-            handleClose2(event, name) {
+            handleClose2(item) {
                 let _self = this
                 for (let i = 0; i < _self.customerlabelGroup.length; i++) {
-                    if (_self.customerlabelGroup[i].labelname == name.labelname) {
-                        let index = _self.customerlabelGroup.indexOf(name);
+                    // if (_self.customerlabelGroup[i].labelname == name.labelname) {
+                    if (_self.customerlabelGroup[i].labelname == item.name) {
+                        let index = _self.customerlabelGroup.indexOf(item);
                         if (index > -1) {
                             _self.customerlabelGroup.splice(index, 1);
                         }
