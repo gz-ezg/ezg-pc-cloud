@@ -156,7 +156,8 @@
                     <Button type="primary" name="marketingManagement_index_edit_excel" icon="ios-color-filter-outline" @click="downloadExcel">导出Excel</Button>
                     <Button type="primary" icon="ios-color-filter-outline" v-if="false">设置提成</Button>
                     <Button type="primary" name="marketingManagement_index_info_log" icon="ios-color-filter-outline" @click="open_change_log">销售变更日志</Button>
-                    <!-- <Button type="primary" name="marketingManagement_index_edit_log" icon="ios-color-filter-outline" @click="open_change_info_log">客户变更日志</Button> -->
+                    <Button type="primary" name="marketingManagement_index_edit_log" icon="ios-color-filter-outline" @click="open_change_info_log">客户动态</Button>
+                    <Button type="primary" name="marketingManagement_index_field_log" icon="ios-color-filter-outline" @click="open_field_info_log">客户外勤</Button>
                     <!--<Button type="primary" icon="ios-color-filter-outline">下载模板</Button>-->
                 </ButtonGroup>
             </Row>
@@ -218,6 +219,7 @@
         <change-market @update="getTableData"></change-market>
         <change-log></change-log>
         <info-change-log></info-change-log>
+        <field-log></field-log>
     </div>
 </template>
 
@@ -228,12 +230,14 @@ import { DateFormat } from "../../../libs/utils";
 import changeMarket from "./change_market";
 import changeLog from "./change_log";
 import infoChangeLog from './customerInfoChangeLog'
+import fieldLog from './field_log'
 
 export default {
   components: {
     changeMarket,
     changeLog,
-    infoChangeLog
+    infoChangeLog,
+    fieldLog
   },
   data() {
     return {
@@ -1175,6 +1179,17 @@ export default {
       _self.$ButtonCollect("marketingManagement_index_info_log")
       if(_self.customerid != ""){
         _self.$bus.emit('OPEN_CUSTOMER_INFO_LOG',[ 
+          _self.customerid,
+          _self.customerName ])
+      }else{
+        _self.$Message.warning("请选择一行查看！");
+      }
+    },
+    open_field_info_log(){
+      let _self = this
+      _self.$ButtonCollect("marketingManagement_index_field_log")
+      if(_self.customerid != ""){
+        _self.$bus.emit('OPEN_CUSTOMER_FIELD_LOG',[ 
           _self.customerid,
           _self.customerName ])
       }else{

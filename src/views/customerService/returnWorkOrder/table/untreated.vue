@@ -269,6 +269,11 @@
                         width: 150
                     },
                     {
+                        title: '完结状态',
+                        key: 'isFinish',
+                        width: 120
+                    },
+                    {
                         title: '问题类型',
                         key: 'calltypeNAME',
                         width: 120

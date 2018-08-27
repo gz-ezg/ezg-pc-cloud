@@ -52,7 +52,7 @@
             <ButtonGroup style="float:left">
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
                 <Button type="primary" icon="information-circled" @click="company">查看公司</Button>                
-                <!-- <Button type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button> -->
+                <Button type="primary" icon="ios-color-wand-outline" @click="finish_workorder">完结证明</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="product_error">产品异常</Button> -->
                 <!-- <Button type="primary" icon="ios-color-wand-outline">批量已读</Button>
@@ -141,14 +141,19 @@
                 <Button type="ghost" style="margin-left:20px" @click="endlife=!endlife">取消</Button>
             </div>
         </Modal> -->
+        <finish-workorder></finish-workorder>
     </Card>
 </template>
 
 <script>
 import Bus from '../../../../components/bus'
 import {DateFormat} from '../../../../libs/utils'
+import finishWorkorder from './finishWorkorder'
 
 export default {
+    components:{
+        finishWorkorder
+    },
     data() {
             return {
                 managestatus:[],
@@ -564,6 +569,17 @@ export default {
         company(){
             if(this.current_row != ''){
                 Bus.$emit('openCompanyDetail',this.current_row.company_id)
+            }else{
+                this.$Message.warning('请选择一行查看！')
+            }
+        },
+
+        //  完结证明
+        finish_workorder(){
+            let _self = this
+            if(this.current_row != ''){
+                // console.log(this.current_row)
+                _self.$bus.emit('OPEN_FINISH_WORKORDER',_self.current_row.id)
             }else{
                 this.$Message.warning('请选择一行查看！')
             }

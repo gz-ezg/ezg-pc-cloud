@@ -51,6 +51,31 @@
                 </Card>
             </Col>
         </Row>
+        <Modal
+            title="工单提醒"
+            width="400"
+            v-model="workorderTip"
+            :closable="false"
+            :mask-closable="false"
+        >
+            <Row :gutter="16">
+                <Table
+                    ref="selection"
+                    highlight-row
+                    size="small"
+                    :columns="header"
+                    :data="dataAnalyz"
+                >
+                </Table>
+            </Row>
+            <Row :gutter="16" style="margin-top:20px">
+                <center>
+                    <Button type="error" @click="workorderTip=false">我知道了！</Button>
+                    <Button type="primary" @click="to_workorder_list" style="margin-left:20px">查看详情</Button>
+                </center>
+            </Row>
+            <div slot="footer"></div>
+        </Modal>
     </div>
 </template>
 
@@ -77,7 +102,19 @@ export default {
             details:"",
             type:"",
             dataRange:[],
-            dateTemp:[]
+            dateTemp:[],
+            dataAnalyz:[],
+            workorderTip: false,
+            header:[
+                {
+                    title:"工单状态",
+                    key:"name",
+                },
+                {
+                    title:"数量",
+                    key:"value",
+                }
+            ]
         }
     },
     methods: {
@@ -85,9 +122,32 @@ export default {
             this.dateTemp = []
             this.dateTemp.push(e[0])
             this.dateTemp.push(e[1])
+        },
+        open_every_analyz(){
+            let url = "api/order/bussiness/index/work/order/analysis/dataReport"
+            let _self = this
+
+            this.$http.get(url).then(function(res){
+                if(res.data.msgCode == "40000"){
+                    _self.workorderTip = true
+                    _self.dataAnalyz = res.data.data
+                    console.log(_self.dataAnalyz)
+                }else{
+                    _self.workorderTip = false
+                }
+            }).catch(function(err){
+                _self.workorderTip = false
+                console.err(err)
+            })
+        },
+        to_workorder_list(){
+            this.$router.push({
+                name:"commercialTaskManagement"
+            })
         }
     },
     created () {
+        this.open_every_analyz()
     }
 }
 </script>

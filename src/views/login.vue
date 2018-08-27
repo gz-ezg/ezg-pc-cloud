@@ -212,6 +212,34 @@
                 }
 
                 this.$GetDataCenter("managestatus",success)
+            },
+            sso_login(userName, timeStamp, token){
+                let _self = this
+                let url = 'api/user/ssoLogin'
+
+                config = {
+                    userName: userName,
+                    timeStamp: timeStamp,
+                    token: token
+                }
+
+                function success(response){
+                    Cookies.set('user', userName);
+                    Cookies.set('password', "123456");
+                    localStorage.setItem('realname', response.data.data.user.realname)
+                    localStorage.setItem('id', response.data.data.user.id)
+                    localStorage.setItem("companyname","")
+                    _self.getManagestatus()
+                    _self.getAllTSTypeGroups()
+                    _self.getInterfaceItem(response.data.data.user.id)
+                    _self.getUserRole(response.data.data.user.id)
+                }
+
+                function fail(err){
+                    _self.$Message.error("登录失败！请输入账号密码登录！")
+                }
+                
+                this.$Post(url, config, success, fail)
             }
         },
         mounted() {
@@ -223,10 +251,10 @@
             let _self = this
             let user = Cookies.get('user')
             let password = Cookies.get('password')
-            console.log(user)
-            console.log(password)
+            // console.log(user)
+            // console.log(password)
             if(user == undefined || user == "" || password == undefined || password == ""){
-                console.log('7天免登陆失效！')
+                // console.log('7天免登陆失效！')
             }else{
                 _self.form.userName = user
                 _self.form.password = password
@@ -234,7 +262,17 @@
             }
         },
         created(){
-            
+            let _self = this
+            // console.log(location.href)
+            let temp = location.href
+            params = temp.split("?")
+            console.log(params)
+            if(params.length>1){
+                console.log("SSO登录！")
+                _self.sso_login()
+            }else{
+                console.log("正常登录！")
+            }
         }
     };
 </script>

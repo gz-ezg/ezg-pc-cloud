@@ -166,7 +166,6 @@ export default {
                 }
 
                 this.$GetDataCenter(params, success)
-                
             })
         }
     },

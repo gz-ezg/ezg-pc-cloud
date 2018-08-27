@@ -484,6 +484,21 @@
                         <Row :gutter="16">
                             <Col span="1" style="visibility:hidden">1</Col>
                             <Col span="11">
+                                <FormItem prop="nationalnum" label="电子税务局账号：" style="margin-bottom:5px">
+                                    <Input type="text" v-model="taxManagement.nationalnum"  :disabled="isEditTax">
+                                    </Input>
+                                </FormItem>
+                            </Col>
+                            <Col span="11">
+                                <FormItem prop="nationalpsw" label="电子税务局密码：" style="margin-bottom:5px">
+                                    <Input type="text" v-model="taxManagement.nationalpsw"  :disabled="isEditTax">
+                                    </Input>
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <!-- <Row :gutter="16">
+                            <Col span="1" style="visibility:hidden">1</Col>
+                            <Col span="11">
                                 <FormItem prop="nationalnum" label="国税号码：" style="margin-bottom:5px">
                                     <Input type="text" v-model="taxManagement.nationalnum"  :disabled="isEditTax">
                                     </Input>
@@ -510,7 +525,7 @@
                                     </Input>
                                 </FormItem>
                             </Col>
-                        </Row>
+                        </Row> -->
                         <Row :gutter="16">
                             <Col span="1" style="visibility:hidden">1</Col>                            
                             <Col span="11">
