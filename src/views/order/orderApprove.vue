@@ -1048,7 +1048,7 @@
                             {field: 'product', title: '产品名', width: 150},
                             {field: 'propertys', title: '产品属性', width: 250},
                             {field: 'oaprice', title: '产品价格', width: 100},
-                            {field: 'productnumber', title: '产品数量', width: 80,},
+                            {field: 'productnumber', title: '产品数量（个/月）', width: 80,},
                             {
                                 field: 'paynumber',
                                 title: '销售价格',
@@ -1162,7 +1162,7 @@
                                     {field: 'product', title: '产品名', width: 150},
                                     {field: 'propertys', title: '产品属性', width: 250},
                                     {field: 'oaprice', title: '产品价格', width: 100},
-                                    {field: 'productnumber', title: '产品数量', width: 80,},
+                                    {field: 'productnumber', title: '产品数量（个/月）', width: 80,},
                                     {
                                         field: 'paynumber',
                                         title: '销售价格',
@@ -1317,7 +1317,7 @@
                                     {field: 'product', title: '产品名', width: 150},
                                     {field: 'propertys', title: '产品属性', width: 250},
                                     {field: 'oaprice', title: '产品价格', width: 100},
-                                    {field: 'productnumber', title: '产品数量', width: 80,},
+                                    {field: 'productnumber', title: '产品数量（个/月）', width: 80,},
                                     {
                                         field: 'paynumber',
                                         title: '销售价格',

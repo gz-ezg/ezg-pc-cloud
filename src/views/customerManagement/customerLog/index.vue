@@ -170,6 +170,7 @@ export default {
     },
     methods:{
         Search(){
+            this.page = 1
             this.get_data()
         },
         handleReset(){

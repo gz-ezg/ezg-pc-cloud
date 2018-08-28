@@ -100,7 +100,7 @@ Vue.prototype.$ButtonCollect = function(name){
             }
         }else{
             // _self.$Message.error(res.data.msg)
-            console.warn(res)
+            console.warn(res.data.msg)
         }
     }).catch(function(err){
         console.error(err)

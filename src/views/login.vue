@@ -218,12 +218,15 @@
                 let url = 'api/user/ssoLogin'
 
                 config = {
-                    userName: userName,
-                    timeStamp: timeStamp,
-                    token: token
+                    params:{
+                        userName: userName,
+                        timeStamp: timeStamp,
+                        token: token
+                    }
                 }
 
                 function success(response){
+                    console.log(response)
                     Cookies.set('user', userName);
                     Cookies.set('password', "123456");
                     localStorage.setItem('realname', response.data.data.user.realname)
@@ -236,10 +239,10 @@
                 }
 
                 function fail(err){
-                    _self.$Message.error("登录失败！请输入账号密码登录！")
+                    _self.$Message.error("请输入账号密码登录！")
                 }
                 
-                this.$Post(url, config, success, fail)
+                this.$Get(url, config, success)
             }
         },
         mounted() {
@@ -266,10 +269,23 @@
             // console.log(location.href)
             let temp = location.href
             params = temp.split("?")
-            console.log(params)
+            // console.log(params)
             if(params.length>1){
-                console.log("SSO登录！")
-                _self.sso_login()
+                let config = params[1].split("&")
+                if(config.length == 3){
+                    try {
+                        let userName = config[0].split("=")[1]
+                        let timeStamp = config[1].split("=")[1]
+                        let token = config[2].split("=")[1]
+                        console.log(userName, timeStamp, token)
+                        console.log("SSO登录！")
+                        _self.sso_login(userName, timeStamp, token)
+                    } catch (error) {
+                        // console.log(error)
+                        _self.$Message.error(error)
+                    }
+                }
+                // console.log(config)
             }else{
                 console.log("正常登录！")
             }

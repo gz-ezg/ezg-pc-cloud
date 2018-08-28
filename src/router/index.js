@@ -27,19 +27,23 @@ router.beforeEach((to, from, next) => {
     // console.log("======= next =======")
     // console.log(next)
 
-    let url = 'api/system/addGather'
+    if(to.name == "login"){
+        
+    }else{
+        let url = 'api/system/addGather'
     
-    let config = {
-        params:{
-            code: to.name
+        let config = {
+            params:{
+                code: to.name
+            }
         }
+
+        axios.get(url,config).then(function(res){
+
+        }).catch(function(err){
+            console.log(err)
+        })
     }
-
-    axios.get(url,config).then(function(res){
-
-    }).catch(function(err){
-        console.log(err)
-    })
 
     if (Cookies.get('locking') === '1' && to.name !== 'locking') { // 判断当前是否是锁定状态
         next({

@@ -173,6 +173,7 @@ export default {
             this.getData()
         },
          Search(){
+            this.page = 1
             this.getData()
         },
         handleReset(name){

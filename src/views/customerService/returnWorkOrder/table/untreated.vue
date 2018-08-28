@@ -270,7 +270,7 @@
                     },
                     {
                         title: '完结状态',
-                        key: 'isFinish',
+                        key: 'isfinish',
                         width: 120
                     },
                     {
