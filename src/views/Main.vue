@@ -127,6 +127,9 @@
                     <Button type="ghost" @click="reset">重置</Button>
                 </div>
             </Modal>
+        <!--
+            引入的弹出层界面，全局化
+        -->
         <!-- 意见收集 -->
         <change-password></change-password>
         <!-- 工单相关 -->
