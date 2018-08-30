@@ -14,6 +14,7 @@ import util from '@/libs/util';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import VCharts from 'v-charts';
+// import "@babel/polyfill";
 // import echarts from 'echarts';
 
 import iviewArea from 'iview-area';

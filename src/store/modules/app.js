@@ -43,18 +43,23 @@ const app = {
             let menuList = [];
             // console.log(appRouter)
             appRouter.forEach((item, index) => {
+                // console.log(item)
                 if (item.access !== undefined) {
                     let _data = (Cookies.get('access')).split(',')
                     // console.log(_data)
                     for (let i = 0; i < _data.length; i++) {
                         let accessCode = parseInt(_data[i])
                         if (Util.showThisRoute(item.access, accessCode)) {
+                            //  父级菜单下面只有一个菜单的，默认给所有！
                             if (item.children.length === 1) {
                                 menuList.push(item);
                             } else {
+                                //  父级菜单下面有多个自己菜单的
+                                // menuList.push(item)
+                                // let len = menuList.length
+                                // 等价于下面这句。。
                                 let len = menuList.push(item);
                                 let childrenArr = [];
-                                // console.log(item.children.length)
                                 for (let k = 0; k < item.children.length; k++) {
                                     for (let j = 0; j < _data.length; j++) {
                                         let accessCode2 = parseInt(_data[j])
@@ -62,14 +67,16 @@ const app = {
                                         if (item.children[k].access !== undefined) {
                                             if (item.children[k].access === accessCode2) {
                                                 childrenArr.push(item.children[k])
-                                                // console.log(item.children[k])
                                             }
                                         }
                                     }
                                 }
-                                if (childrenArr.length == 1) {
-                                    menuList[len - 1].title = childrenArr[0].title
-                                }
+                                // if (childrenArr.length == 1) {
+                                //     console.log(childrenArr)
+                                //     menuList[len - 1].title = childrenArr[0].title
+                                // }
+                                // console.log(menuList[len-1])
+                                //  直接替换孩纸
                                 menuList[len - 1].children = childrenArr;
                             }
                         }
@@ -96,6 +103,7 @@ const app = {
                 }
             });
             state.menuList = menuList;
+            // console.log(menuList)
         },
         changeMenuTheme (state, theme) {
             state.menuTheme = theme;

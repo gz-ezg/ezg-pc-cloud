@@ -784,6 +784,8 @@ import allotAccountService from './allot_accout_service'
             this.Ypage = 1
             this.getDataY()
             this.getDataN()
+            this.change_rowN = []
+            this.change_rowY = []
         },
         getDataCenter(){
                 let _self = this

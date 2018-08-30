@@ -153,8 +153,8 @@
                 <Row :gutter="16">
                     <FormItem label="选择产品">
                         <Button name="marketingManagement_index_orderlist_product_add" type="primary" icon="plus" @click="orderAddProducts()">新增</Button>
-                        <Button type="marketingManagement_index_orderlist_product_delect" icon="plus" @click="removeRows()">删除</Button>
-                        <Button type="marketingManagement_index_orderlist_product_check" icon="plus" @click="kuaiji()" v-show="kjdj">查看会计到家服务项</Button>
+                        <Button name="marketingManagement_index_orderlist_product_delect" icon="plus" @click="removeRows()">删除</Button>
+                        <Button name="marketingManagement_index_orderlist_product_check" icon="plus" @click="kuaiji()" v-show="kjdj">查看会计到家服务项</Button>
                     </FormItem>
                 </Row>
                 <table width="100%" id="orderItemList"></table>

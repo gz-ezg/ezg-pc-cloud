@@ -783,11 +783,7 @@ export default {
     Search() {
       var _self = this;
       _self.$ButtonCollect("marketingManagement_index_edit_search");
-      if (_self.ishandleSubmit == false) {
-        _self.currentPage = 1;
-        // console.log("1111s");
-      }
-      _self.ishandleSubmit = true;
+      _self.currentPage = 1;
       _self.getTableData();
     },
 

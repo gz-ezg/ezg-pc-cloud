@@ -1,5 +1,5 @@
 <template>
-    <div @click="show11111" >
+    <div>
         <!-- <div style="width:100%;height:30px;background-color:yellow;margin-top:-10px"></div> -->
         <Row>
             <Button name="marketingManagement_index_followUp_add" type="ghost" shape="circle" icon="plus" @click="getSelectOptons();modal33 = true">新增</Button>
@@ -9,9 +9,11 @@
                 <div>加载跟进记录中...</div>
             </Spin>
         </Row>
-        <Row>
-            <div  style="max-height:500px;overflow:hidden" class="wrapper" ref="wrapper">
-                <Timeline style="margin-top: 15px">
+        <Scroll height="500">
+        <!-- <Row>
+            
+            <div  style="max-height:500px;overflow:hidden" class="wrapper" ref="wrapper"> -->
+                <Timeline style="margin-top: 15px;margin-right:10px">
                     <div class="content">
                         <TimelineItem color="blue" v-for="(item,index) in items" :key="index" >
                         <Icon v-if="item.followType == '11'" type="ios-telephone" slot="dot"></Icon>
@@ -46,7 +48,7 @@
                             </Row> -->
                             <Row>
                                 <Col span="20"><P>{{ item.serviceContent }}</P></Col>
-                                <Col span="4" v-if="item.followType=='22'"><Button type="primary" @click.native="open_detail(item.id,$event)" style="float:right">查看详情</Button></Col>
+                                <Col span="4" v-if="item.followType=='22'"><Button type="primary" @click="open_detail(item.id,$event)" style="float:right">查看详情</Button></Col>
                                 
                                 <!-- 跟进内容根据类型新增class类，待客服跟进内容录入 -->
                                 <!-- <P :class="{warn:item.followType <= 18 && item.userName== '胡小红', error:item.followType == 18 && item.userName == '管理员' }" >{{ item.serviceContent }}</P> -->
@@ -57,8 +59,12 @@
                             </Row>
                             <Div v-if="(item.followType == '11') || (item.followType == '12') || (item.followType == '13')">
                                 <Row>
-                                    <Button type="ghost" @click="openEvaluate(item.serviceId)">评价（{{ item.num }}）</Button>
-                                    <Rate style="float: right" allow-half v-model="item.ranks"></Rate>
+                                    <Col span="18">
+                                        <Button type="ghost" @click="openEvaluate(item.serviceId,$event)">评价（{{ item.num }}）</Button>
+                                    </Col>
+                                    <Col span="6">
+                                        <Rate style="float: right" allow-half v-model="item.ranks"></Rate>
+                                    </Col>
                                 </Row>
                                 <Div style="display: none" :id="item.serviceId">
                                     <Div :id="item.bussinessId">
@@ -79,7 +85,7 @@
                                         <Input v-model="pinglun" type="textarea" :autosize="true" placeholder="请输入您要评价的内容" :key="index"/>
                                         </Col>
                                         <Col span="2">
-                                        <Button style="float: right" type="primary" @click="send(item.bussinessId,index)">评价</Button>
+                                        <Button style="float: right" type="primary" @click="send(item.bussinessId,index,$event)">评价</Button>
                                         </Col>
                                     </Row>
                                 </Div>
@@ -100,11 +106,10 @@
                     </TimelineItem>
                     <div><center style="padding-bottom:30px">没有更多数据了！</center></div>
                     </div>
-                    
                 </Timeline>
-            
-        </div>
-        </Row>
+            </Scroll>
+            <!-- </div>
+        </Row> -->
         <Modal
                 v-model="modal33"
                 title="新增跟进"
@@ -317,12 +322,10 @@
 <script>
 import {FULLDateFormat} from './utils'
 import Bus from '../../../components/bus'
-import Bscroll from 'better-scroll'
+// import Bscroll from 'better-scroll'
 import { yasuo } from '../../../libs/img_beforeUpload.js'
 
     export default {
-        
-
         props: ['customerid'],
         data() {
             const validateResult = (rule, value, callback) => {
@@ -395,9 +398,6 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
             }
         }},
         methods: {
-            show11111(){
-                this.scroll.refresh()
-            },
             detail_show(e){
                 var _self = this
                 if(e.buttonText == "查看详情"){
@@ -428,13 +428,19 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
             },
 
             /*************************提交评价********************************/
-            send(a,index) {
-                var _self = this
+            send(a,index,e) {
+                // console.log(e._constructed)
+                // if (!e._constructed) { 
+                //     return; 
+                // } 
+                let _self = this
                 // console.log(a)
                 // console.log(index)
                 for (var i = 0; i < _self.items.length; i++) {
+                    // console.log(_self.items) 
                     if (_self.items[i].bussinessId == a) {
                         ranks = _self.items[i].ranks * 10
+                        break;
                     }
                 }
                 var url = '/customer/addErevaluate'
@@ -533,129 +539,9 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
                         _self.items.push(a)
                     }
                     _self.loading_end()
-                        _self.scroll = new Bscroll(_self.$refs.wrapper, {
-                            scrollbar:{
-                                fade: false
-                            },
-                            mouseWheel:{
-                                speed: 20,
-                                invert: false,
-                                easeTime: 300
-                            },
-                            click:true                            
-                        })
-                    _self.$nextTick(() => {
-                        // console.log('start')
-                        _self.scroll = new Bscroll(_self.$refs.wrapper, {
-                            scrollbar:{
-                                fade: false
-                            },
-                            mouseWheel:{
-                                speed: 20,
-                                invert: false,
-                                easeTime: 300
-                            },
-                            click:true
-                        })
-                        _self.scroll.refresh()
-                })
-                // setTimeout(console.log('11111'),20)
-                // setTimeout(_self.scroll.refresh(),100)
                 })
             },
-                //  32734 可用数据id
-                // function doSuccess(response) {
 
-                //     // console.log(response)
-                //     for (var i = 0; i < response.data.data.length; i++) {
-                //         var a = {}
-                //         a.createDate = response.data.data[i].createDate
-                //         a.followType = response.data.data[i].followType
-                //         a.userName = response.data.data[i].userName
-                //         a.followTypeName = response.data.data[i].followTypeName
-                //         a.companyName = response.data.data[i].companyName
-                //         a.serviceContent = response.data.data[i].serviceContent
-                //         a.imgurls = response.data.data[i].imgurls
-                //         a.serviceId = response.data.data[i].serviceId
-                //         a.bussinessId = response.data.data[i].bussinessId
-                //         a.ranks = ''
-
-                //         if (response.data.data[i].imgurls) {
-                //             var d1 = response.data.data[i].imgurls.split(',')
-                //             for (var j = 0; j < d1.length; j++) {
-                //                 var d = {}
-                //                 d.serviceId = response.data.data[i].serviceId
-                //                 d.imgurl = 'api/assets/' + d1[j].split('``')[1]
-                //                 _self.bb.push(d)
-                //             }
-                //         }
-
-                //         if (response.data.data[i].buttons) {
-                //             var a1 = response.data.data[i].buttons.split(',')
-                //             for (var j = 0; j < a1.length; j++) {
-                //                 var b = {}
-                //                 b.serviceId = response.data.data[i].serviceId
-                //                 b.buttonsZt = a1[j].split('``')[3]
-                //                 b.buttonsdetail = a1[j].split('``')[2]
-                //                 b.buttonText = a1[j].split('``')[1]
-                //                 // console.log(b)
-                //                 _self.itemss.push(b)
-                //             }
-                //         }
-
-                //         if (response.data.data[i].evaluatecontents != null) {
-                //             var b1 = response.data.data[i].evaluatecontents.split(',')
-                //             a.num = b1.length
-                //             for (var j = 0; j < b1.length; j++) {
-                //                 var c = {}
-                //                 c.length = b1.length
-                //                 c.serviceId = response.data.data[i].serviceId
-                //                 c.content = b1[j].split('``')[3]
-                //                 c.date = b1[j].split('``')[2]
-                //                 c.name = b1[j].split('``')[1]
-                //                 _self.chats.push(c)
-                //             }
-                //         } else {
-                //             a.num = 0
-                //         }
-                //         _self.items.push(a)
-                //     }
-                //     _self.loading_end()
-                //     _self.$nextTick(() => {
-                //         console.log('start')
-                //         _self.scroll = new Bscroll(_self.$refs.wrapper, {
-                //             scrollbar:{
-                //                 fade: false
-                //             },
-                //             mouseWheel:{
-                //                 speed: 20,
-                //                 invert: false,
-                //                 easeTime: 300
-                //             }
-                //         })
-                //         // _self.scroll.hasVerticalScroll = true
-                //         // _self.scroll.scrollerHeight = 1000
-                //         console.log(_self.scroll)
-                //     })
-                    
-                //     // _self.spinShow = false
-                //     // setTimeout(_self.scroll = new Bscroll(_self.$refs.wrapper, {
-                //     //         scrollbar:{
-                //     //             fade: false
-                //     //         },
-                //     //         mouseWheel:{
-                //     //             speed: 20,
-                //     //             invert: false,
-                //     //             easeTime: 300
-                //     //         }
-                //     //     }),1000)
-                // }
-
-                // this.GetData(url, doSuccess)
-                // console.log(_self.chats)
-                
-                
-            // },
             loading_end(){
                 let _self = this
                 _self.spinShow = false  
@@ -912,15 +798,18 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
                 function success(res){
                     // console.log(res.data.data)
                     let temp = res.data.data
-                    _self.fiedDetail = res.data.data
-                    if(res.data.data.realpaths){
-                        _self.fiedDetail.imgs = []
-                        let pic = ""
-                        pic = _self.fiedDetail.realpaths.split(",")
-                        for(let i = 0;i<pic.length;i++){
-                            _self.fiedDetail.imgs.push(pic[i])
+                    if(res.data.data != null){
+                        _self.fiedDetail = res.data.data
+                        if(res.data.data.realpaths){
+                            _self.fiedDetail.imgs = []
+                            let pic = ""
+                            pic = _self.fiedDetail.realpaths.split(",")
+                            for(let i = 0;i<pic.length;i++){
+                                _self.fiedDetail.imgs.push(pic[i])
+                            }
                         }
                     }
+                    
                 }
 
                 this.$Get(url, config, success)
@@ -981,4 +870,7 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
     font-size: 12px;
     color: #ed3f14;
 }
+/* .bubbleItem{
+    height: 100px;
+} */
 </style>

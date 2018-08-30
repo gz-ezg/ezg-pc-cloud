@@ -13,8 +13,9 @@
             </Spin>
         </Row>
         <Row>
-            <div style="margin-top: 10px;margin-left:10px;margin-right:10px;max-height:500px;overflow:hidden" class="wrapper" ref="wrapper">
-                <div class="content">
+            <!-- <div style="margin-top: 10px;margin-left:10px;margin-right:10px;max-height:500px;overflow:hidden" class="wrapper" ref="wrapper">
+                <div class="content"> -->
+                    <Scroll height="500">
                     <Timeline style="margin-top: 15px">
                         <TimelineItem color="blue" v-for="(item,index) in items" :key="index">
                             <Icon v-if="item.followType == '11'" type="ios-telephone" slot="dot"></Icon>
@@ -98,8 +99,9 @@
                         </TimelineItem>
                         <div><center style="padding-bottom:30px">没有更多数据了！</center></div>
                     </Timeline>
-                </div>
-            </div>
+                <!-- </div>
+            </div> -->
+            </Scroll>
         </Row>
         <Modal
                 v-model="modal33"
@@ -212,7 +214,7 @@
 <script>
 import {FULLDateFormat} from './utils'
 import Bus from '../../../components/bus'
-import Bscroll from 'better-scroll'
+// import Bscroll from 'better-scroll'
 
     export default {
         props: ['customerid'],
@@ -395,20 +397,20 @@ import Bscroll from 'better-scroll'
                         //         easeTime: 300
                         //     }
                         // })
-                        _self.$nextTick(() => {
-                        // console.log('start')
-                        _self.scroll = new Bscroll(_self.$refs.wrapper, {
-                            scrollbar:{
-                                fade: false
-                            },
-                            mouseWheel:{
-                                speed: 20,
-                                invert: false,
-                                easeTime: 300
-                            }
-                        })
-                        _self.scroll.refresh()
-                })
+                        // _self.$nextTick(() => {
+                        // // console.log('start')
+                        // _self.scroll = new Bscroll(_self.$refs.wrapper, {
+                        //     scrollbar:{
+                        //         fade: false
+                        //     },
+                        //     mouseWheel:{
+                        //         speed: 20,
+                        //         invert: false,
+                        //         easeTime: 300
+                        //     }
+                        // })
+                        // _self.scroll.refresh()
+                // })
                 _self.spinShow = false
                 }
                 this.GetData(url, doSuccess)

@@ -58,7 +58,7 @@
                 </Row> -->
             </Form>
             <div slot="footer">
-                <Button type="primary" @click="save_flow">确定</Button>
+                <Button type="primary" @click="save_flow" :loading="loading">确定</Button>
                 <Button type="ghost" @click="flow_show=false">关闭</Button>
             </div>
         </Modal>
@@ -77,12 +77,14 @@ export default {
             flow_show:false,
             flow_message:{
                 companyName:''
-            }
+            },
+            loading:false,
         }
     },
     methods:{
         save_flow(){
             let _self = this
+            _self.loading = true
             let url = `api/order/next`
             let config = {
                 workOrderId:_self.current_row.id,
@@ -93,10 +95,12 @@ export default {
                     if(res.data.msg =="流转成功"){
                         _self.$Message.success(res.data.msg)
                         _self.flow_show = false
+                        _self.loading = false
                         // _self.backup = ''
                         Bus.$emit('flowsuccess',true)
                     }else{
                         _self.$Message.warning(res.data.msg)
+                        _self.loading = false
                     }
                     
                 }else{

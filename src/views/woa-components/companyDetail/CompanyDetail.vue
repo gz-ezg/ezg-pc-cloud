@@ -79,20 +79,24 @@
                         <Button type="primary" @click="create_new_followup" style="margin-left:10px">新增跟进记录</Button>
                     </Row> -->
                     <Row>
-                        <div style="margin-top: 20px;margin-left:10px;margin-right:10px;max-height:450px;overflow:hidden" class="wrapper" ref="wrapper">
-                            <div class="content">
-                                <Table
+                        <!-- <div style="margin-top: 20px;margin-left:10px;margin-right:10px;max-height:450px;overflow:hidden" class="wrapper" ref="wrapper">
+                            <div class="content"> -->
+                            <!-- <Scroll height="300" style="margin-top:15px"> -->
+                            <Table
+                                style="margin-top:15px"
+                                height="300"
                                 ref="selection"
                                 highlight-row
                                 size="small"
                                 :columns="followUpHeader"
                                 :data="followUpData">
-                                </Table>
-                                <Row>
+                            </Table>
+                                <!-- <Row>
                                     <center style="padding-bottom:30px;padding-top:30px">--没有更多记录！--</center>
-                                </Row>
-                            </div>
-                        </div>
+                                </Row> -->
+                            <!-- </Scroll> -->
+                            <!-- </div>
+                        </div> -->
                     </Row>
                 </TabPane>
                 <TabPane label="企业信息" name="name1">
@@ -245,10 +249,11 @@
                 </TabPane>
                 <TabPane label="主体信息" name="name2">
                     <Row>
-                        <div style="margin-top: 10px;margin-left:10px;margin-right:10px;max-height:500px;overflow:hidden" class="wrapper1" ref="wrapper1">
-                        <div class="content1">
+                        <!-- <div style="margin-top: 10px;margin-left:10px;margin-right:10px;max-height:500px;overflow:hidden" class="wrapper1" ref="wrapper1">
+                        <div class="content1"> -->
+                        <Scroll height="500">
                             <!-- <div style="height:1000px"></div> -->
-                            <Form ref="mainInfo" :model="mainInfo" :label-width="120">
+                    <Form ref="mainInfo" :model="mainInfo" :label-width="120">
                         <Row :gutter="16">
                             <Col span="1" style="visibility:hidden">1</Col>
                             <Col span="10">
@@ -384,23 +389,28 @@
                             </Col>
                         </Row>
                     </Form>
-                        </div>
-                    </div>
+                    </Scroll>
+                        <!-- </div>
+                    </div> -->
                     </Row>
                 </TabPane>
                 <TabPane label="工单信息" name="name3">
                     <Row style="margin-top: 10px;margin-left:10px">
                         <Row>
-                        <div style="margin-top: 10px;margin-left:10px;margin-right:10px;max-height:500px;overflow:hidden" class="wrapper2" ref="wrapper2">
-                            <div class="content2">
+                        <!-- <div style="margin-top: 10px;margin-left:10px;margin-right:10px;max-height:500px;overflow:hidden" class="wrapper2" ref="wrapper2">
+                            <div class="content2"> -->
+                            <!-- <Scroll height="500"> -->
                                 <Table
+                                    height="400"
+                                    style="margin-top:15px"
                                         ref="selection"
                                         highlight-row
                                         size="small"
                                         :columns="workOrderHeader"
                                         :data="workOrder"></Table>
-                            </div>
-                        </div>
+                            <!-- </div> -->
+                        <!-- </div> -->
+                        <!-- </Scroll> -->
                         </Row>
                     </Row>
                 </TabPane>
@@ -758,7 +768,7 @@
 
 <script>
     import Bus from '../../../components/bus.js'
-    import Bscroll from 'better-scroll'
+    // import Bscroll from 'better-scroll'
     // import { yasuo } from '../../../libs/img_beforeUpload.js'
     import { yasuo } from '../../../libs/img_beforeUpload'
 
@@ -1074,48 +1084,48 @@
                     //         easeTime: 300
                     //     }
                     // })
-                    _self.$nextTick(() => {
-                        // console.log('start')
-                        _self.scroll = new Bscroll(_self.$refs.wrapper, {
-                            scrollbar:{
-                                fade: false
-                            },
-                            mouseWheel:{
-                                speed: 20,
-                                invert: false,
-                                easeTime: 300
-                            }
-                        })
-                        // _self.scroll.refresh()
-                    })
-                    _self.$nextTick(() => {
-                        // console.log('start')
-                        _self.scroll = new Bscroll(_self.$refs.wrapper1, {
-                            scrollbar:{
-                                fade: false
-                            },
-                            mouseWheel:{
-                                speed: 20,
-                                invert: false,
-                                easeTime: 300
-                            }
-                        })
-                        // _self.scroll.refresh()
-                })
-                    _self.$nextTick(() => {
-                        // console.log('start')
-                        _self.scroll = new Bscroll(_self.$refs.wrapper2, {
-                            scrollbar:{
-                                fade: false
-                            },
-                            mouseWheel:{
-                                speed: 20,
-                                invert: false,
-                                easeTime: 300
-                            }
-                        })
-                        // _self.scroll.refresh()
-                })
+                //     _self.$nextTick(() => {
+                //         // console.log('start')
+                //         _self.scroll = new Bscroll(_self.$refs.wrapper, {
+                //             scrollbar:{
+                //                 fade: false
+                //             },
+                //             mouseWheel:{
+                //                 speed: 20,
+                //                 invert: false,
+                //                 easeTime: 300
+                //             }
+                //         })
+                //         // _self.scroll.refresh()
+                //     })
+                //     _self.$nextTick(() => {
+                //         // console.log('start')
+                //         _self.scroll = new Bscroll(_self.$refs.wrapper1, {
+                //             scrollbar:{
+                //                 fade: false
+                //             },
+                //             mouseWheel:{
+                //                 speed: 20,
+                //                 invert: false,
+                //                 easeTime: 300
+                //             }
+                //         })
+                //         // _self.scroll.refresh()
+                // })
+                //     _self.$nextTick(() => {
+                //         // console.log('start')
+                //         _self.scroll = new Bscroll(_self.$refs.wrapper2, {
+                //             scrollbar:{
+                //                 fade: false
+                //             },
+                //             mouseWheel:{
+                //                 speed: 20,
+                //                 invert: false,
+                //                 easeTime: 300
+                //             }
+                //         })
+                //         // _self.scroll.refresh()
+                // })
                 }
                 this.$Get(url, config, doSuccess)
                 // this.GetData(url, doSuccess)

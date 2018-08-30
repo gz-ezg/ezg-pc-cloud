@@ -14,6 +14,9 @@ module.exports = {
         main: '@/main',
         'vender-base': '@/vendors/vendors.base.js',
         'vender-exten': '@/vendors/vendors.exten.js',
+        // main: ["@babel/polyfill",'@/main'],
+        // 'vender-base': ["@babel/polyfill",'@/vendors/vendors.base.js'],
+        // 'vender-exten': ["@babel/polyfill",'@/vendors/vendors.exten.js'],
         // 'vender-exten2': '@/vendors/vendors.exten2.js',
         // 'vender-vchart': '@/vendors/vendors.vchart.js'
     },

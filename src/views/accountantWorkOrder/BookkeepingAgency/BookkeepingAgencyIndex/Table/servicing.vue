@@ -196,7 +196,7 @@
                         width: 120
                     },
                     {
-                        title: '结束期间',
+                        title: '结束税期',
                         key: 'end_period',
                         width: 120
                     },

@@ -86,6 +86,9 @@ export default {
     watch:{
         //  监听路由变化
         // '$route':'test'
-    }
+    },
+    mounted() {
+        // console.log(this.menuList)
+    },
 };
 </script>

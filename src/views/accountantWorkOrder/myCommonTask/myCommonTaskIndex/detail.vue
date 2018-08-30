@@ -89,95 +89,11 @@
                                 </Form>
                             </div>
                         </Panel>
-                        <!-- <Panel name="3">
-                            相关资料
-                            <p slot="content"></p>
-                        </Panel> -->
                     </Collapse>
                 </TabPane>
-                <!-- <TabPane label="工单流程管理" name="name22">
-                    <Row >
-                        <Form :label-width="120">
-                            <Col span="12">
-                                <FormItem label="预计完成时间：">
-                                </FormItem>
-                            </Col>
-                            <Col span="12">
-                                <FormItem label="接单时间：">
-                                </FormItem>
-                            </Col>
-                        </Form>
-                    </Row>
-                    <div v-for="(item,index) in process" :key="index" style="margin:15px 10px;border:1px solid #CFCFCF">
-                        <Form :model="item" :label-width="120" style="margin:15px;">
-                        <Row>
-                            <Col span="24">
-                            <FormItem label="当前流程：" prop="Input">
-                                <Input size="small" v-model="item.process" readonly></Input>
-                            </FormItem>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span="12">
-                            <FormItem label="预计开始时间：" prop="Input">
-                                <Input size="small" v-model="item.prestartdate" readonly></Input>
-                            </FormItem>
-                            </Col>
-                            <Col span="12">
-                            <FormItem label="实际开始时间：" prop="Input">
-                                <Input size="small" v-model="item.startdate" readonly></Input>
-                            </FormItem>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span="12">
-                            <FormItem label="预计完成时间：" prop="Input">
-                                <Input size="small" v-model="item.preenddate" readonly></Input>
-                            </FormItem>
-                            </Col>
-                            <Col span="12">
-                            <FormItem label="实际完成时间：" prop="Input">
-                                <Input size="small" v-model="item.enddate" readonly></Input>
-                            </FormItem>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span="24">
-                            <FormItem label="服务备注：" prop="customerMemo">
-                                <Input  size="small" type="textarea" v-model="item.backup" readonly></Input>
-                            </FormItem>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span="24">
-                            <FormItem label="停滞原因：" prop="Input">
-                                <Input size="small" v-model="item.outTimeReason" readonly></Input>
-                            </FormItem>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span="24">
-                            <FormItem label="解决方案：" prop="Input">
-                                <Input size="small" v-model="item.resolvePlan" readonly></Input>
-                            </FormItem>
-                            </Col>
-                        </Row>
-                    </Form>
-                    </div>
-                </TabPane> -->
-                <!-- <TabPane label="服务记录动态" name="name33">
-                    <Row>
-                        <ButtonGroup>
-                            <Button type="primary" icon="ios-color-wand-outline" @click="huashu = true">话术管理</Button>
-                            <Button type="primary" icon="plus" @click="downloadExcel">添加记录</Button>
-                        </ButtonGroup>
-                    </Row>
-                </TabPane>  -->
                 <TabPane label="相关在服工单" name="name44" >
-                        <!-- <div style="height:60px;width:100%;z-index:100"></div> -->
+                        <Scroll height="500">
                         <div v-if="!correlation.length"><center>暂无数据</center></div>
-                        <div class="wrapper" ref="wrapper" style="height:500px;overflow:hidden">
-                        <div class="content">
                             <div v-for="(item, index) in correlation" :key=index>
                                 <Form ref="item" :model="item" :label-width="100" style="margin:10px;padding:5px;padding-top:10px;border:1px solid #EEE9E9" >
                                     <Row>
@@ -222,8 +138,7 @@
                                 </Form>
                             </div>
                             <div v-if="correlation.length" style="padding-bottom:10px"><center>没有更多数据了！</center></div>
-                        </div>
-                    </div>
+                    </Scroll>
                 </TabPane>
             </Tabs>
             <div slot="footer">
@@ -247,7 +162,7 @@
 
 <script>
 import Bus from '../../../../components/bus'
-import Bscroll   from 'better-scroll'
+// import Bscroll   from 'better-scroll'
 
 export default {
     data(){
@@ -297,18 +212,18 @@ export default {
                 _self.task_message = res.data.data.taskInfo[0]
                 _self.process = res.data.data.process
                 _self.correlation = res.data.data.correlation
-                _self.$nextTick(() => {
-                    _self.scroll = new Bscroll(_self.$refs.wrapper, {
-                        // scrollbar:{
-                        //     fade: false
-                        // },
-                        mouseWheel:{
-                            speed: 20,
-                            invert: false,
-                            easeTime: 300
-                        }
-                    })
-                })
+                // _self.$nextTick(() => {
+                //     _self.scroll = new Bscroll(_self.$refs.wrapper, {
+                //         // scrollbar:{
+                //         //     fade: false
+                //         // },
+                //         mouseWheel:{
+                //             speed: 20,
+                //             invert: false,
+                //             easeTime: 300
+                //         }
+                //     })
+                // })
             })
         }
     }

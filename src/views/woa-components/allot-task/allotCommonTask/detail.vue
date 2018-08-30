@@ -175,8 +175,9 @@
                 </TabPane>  -->
                 <TabPane label="相关在服工单" name="name44">
                     <Row>
-                        <div style="margin-top: 10px;margin-left:10px;margin-right:10px;max-height:500px;overflow:hidden" class="wrapper" ref="wrapper">
-                            <div class="content" style="padding-bottom:10px;">
+                        <Scroll height="500">
+                        <!-- <div style="margin-top: 10px;margin-left:10px;margin-right:10px;max-height:500px;overflow:hidden" class="wrapper" ref="wrapper">
+                            <div class="content" style="padding-bottom:10px;"> -->
                                 <div v-if="!correlation.length"><center>暂无数据</center></div>
                                 <div v-for="(item, index) in correlation" :key=index >
                                     <Form ref="item" :model="item" :label-width="100" style="margin:10px;padding:5px;padding-top:10px;border:1px solid #EEE9E9">
@@ -221,8 +222,9 @@
                                         </Row>
                                     </Form>
                                 </div>
-                            </div>
-                        </div>
+                            <!-- </div>
+                        </div> -->
+                        </Scroll>
                     </Row>
                 </TabPane>
             </Tabs>
@@ -247,7 +249,7 @@
 
 <script>
 // import Bus from '../../../components/bus'
-import Bscroll from 'better-scroll'
+// import Bscroll from 'better-scroll'
 
 
 export default {
@@ -300,18 +302,18 @@ export default {
                 _self.task_message = res.data.data.taskInfo[0]
                 _self.process = res.data.data.process
                 _self.correlation = res.data.data.correlation
-                _self.$nextTick(() => {
-                _self.scroll = new Bscroll(_self.$refs.wrapper, {
-                    scrollbar:{
-                        fade: false
-                    },
-                    mouseWheel:{
-                        speed: 20,
-                        invert: false,
-                        easeTime: 300
-                        }
-                    })
-                })
+                // _self.$nextTick(() => {
+                // _self.scroll = new Bscroll(_self.$refs.wrapper, {
+                //     scrollbar:{
+                //         fade: false
+                //     },
+                //     mouseWheel:{
+                //         speed: 20,
+                //         invert: false,
+                //         easeTime: 300
+                //         }
+                //     })
+                // })
             })
         }         
     }

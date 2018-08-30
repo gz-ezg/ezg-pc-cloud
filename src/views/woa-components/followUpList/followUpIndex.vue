@@ -14,9 +14,11 @@
                     <Button type="primary" @click="create_new_followup" style="margin-left:10px">新增跟进记录</Button>
                 </Row>
                 <Row>
-                    <div style="margin-top: 10px;margin-left:10px;margin-right:10px;max-height:450px;overflow:hidden" class="wrapper" ref="wrapper">
-                        <div class="content">
+                    <!-- <div style="margin-top: 10px;margin-left:10px;margin-right:10px;max-height:450px;overflow:hidden" class="wrapper" ref="wrapper">
+                        <div class="content"> -->
                             <Table
+
+                                height="500"
                                 ref="selection"
                                 highlight-row
                                 :loading="loading"
@@ -27,8 +29,8 @@
                             <Row>
                                 <center style="padding-bottom:30px;padding-top:30px">--没有更多记录！--</center>
                             </Row>
-                        </div>
-                    </div>
+                        <!-- </div> -->
+                    <!-- </div> -->
                 </Row>
             </Row>
         </Modal>
@@ -147,7 +149,7 @@
 </template>
 
 <script>
-import Bscroll from 'better-scroll'
+// import Bscroll from 'better-scroll'
 import { yasuo } from '../../../libs/img_beforeUpload'
 
 export default {
@@ -276,18 +278,18 @@ export default {
             function success(res){
                 _self.followUpData = res.data.data.customerRecord
                 _self.loading = false
-                _self.$nextTick(() => {
-                    _self.scroll = new Bscroll(_self.$refs.wrapper, {
-                        scrollbar:{
-                            fade: false
-                        },
-                        mouseWheel:{
-                            speed: 20,
-                            invert: false,
-                            easeTime: 300
-                        }
-                    })
-                })
+                // _self.$nextTick(() => {
+                //     _self.scroll = new Bscroll(_self.$refs.wrapper, {
+                //         scrollbar:{
+                //             fade: false
+                //         },
+                //         mouseWheel:{
+                //             speed: 20,
+                //             invert: false,
+                //             easeTime: 300
+                //         }
+                //     })
+                // })
             }
             this.$Get(url,config,success)
         },
