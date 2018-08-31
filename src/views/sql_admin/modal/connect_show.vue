@@ -4,10 +4,6 @@
         v-model="connect_detail_show"
         title="添加映射"
         width="810"
-        :loading = "connect_detail_loading"
-        @on-ok = "conncet_detail_sql"
-        @on-cancel = "cancel"
-        ok-text = "确定"
         :mask-closable="false"
     >
         <Form 
@@ -41,14 +37,12 @@
                 </Card> -->
             </div>            
         </Form>
+        <div slot="footer"></div>
     </Modal>
     <Modal
         v-model="edit"
         title="编辑"
         width="810"
-        @on-ok="edit_connect"
-        @on-cancel="cancel_edit"
-        ok-text="提交"
         :mask-closable="false"        
     >
         <Form 
@@ -71,12 +65,16 @@
                 </Select>
             </FormItem>
         </Form>
+        <div slot="footer">
+            <Button type="ghost" @click="cancel_edit">取消</Button>
+            <Button type="primary" @click="edit_connect" :loading="loading">修改</Button>
+        </div>
     </Modal>
     </div>
 </template>
 
 <script>
-import Bus from '../bus'
+// import Bus from '../bus'
 
 export default {
     data(){
@@ -91,6 +89,7 @@ export default {
                 }
         }
         return{
+            loading: false,
             SQL_item:{},
             edit:false,
             tableShowData:[],
@@ -210,17 +209,23 @@ export default {
         init(){
             var _that = this
             _that.role = []
-            Bus.$on('connect_detail_sql_user',(e)=>{
+            _that.$bus.on('connect_detail_sql_user',(e)=>{
                 _that.connect_detail_show = true
                 _that.connect_detail_item.sqlMain = e.sql_main
                 _that.connect_detail_item.id = e.id
                 _that.load_role_list()
             })
             //  获取角色信息
-            var url = 'api/user/role/list?page=1&pageSize=100'
-            this.$http.get(url).then(function(res){
-                _that.$backToLogin(res)
-                
+            var url = 'api/user/role/list'
+
+            let config = {
+                params:{
+                    page: 1,
+                    pageSize: 100
+                }
+            }
+
+            function success(res){
                 for(let i = 0; i<res.data.data.total;i++){
                     var temp = {}
                     temp.id = res.data.data.rows[i].ID
@@ -228,25 +233,30 @@ export default {
                     _that.role.push(temp)
                 }
                 Object.freeze(_that.role)
-            })
+            }
+
+            this.$Get(url, config, success)
         },
         //  查询角色列表
         load_role_list(){
             var _that = this
-            var url = "api/system/sqlTemplateRoleByTemplateId?sqlTemplateId=" + _that.connect_detail_item.id
-            this.$http.get(url).then(function(res){
-                if(res.data.msgCode =="40000"){
-                    _that.tableShowData = res.data.data
-                    _that.connect_detail_item.roleId = []
-                    for(let i = 0;i<res.data.data.length;i++){
-                        _that.connect_detail_item.roleId.push(parseInt(res.data.data[i].role_id))
-                    }
-                }else{
-                    _that.$Message.error('查询失败')
+            var url = "api/system/sqlTemplateRoleByTemplateId"
+
+            let config = {
+                params:{
+                    sqlTemplateId: _that.connect_detail_item.id
                 }
-            }).catch(function(err){
-                _that.$Message.error('查询失败')
-            })
+            }
+
+            function success(res){
+                _that.tableShowData = res.data.data
+                _that.connect_detail_item.roleId = []
+                for(let i = 0;i<res.data.data.length;i++){
+                    _that.connect_detail_item.roleId.push(parseInt(res.data.data[i].role_id))
+                }
+            }
+
+            this.$Get(url, config, success)
         },
         cancel(){
             this.connect_detail_show = false
@@ -272,28 +282,32 @@ export default {
                 sqlTemplateRoleName:_self.SQL_item.sql_template_role_name,
                 roleIdMustAll:_self.SQL_item.role_id_must_all
             }
-            this.$http.post(url,config).then(function(res){
-                console.log(res)
-                if(res.data.msgCode == 40000){
-                    _self.$Message.success(res.data.msg)
-                }else{
-                    _self.$Message.error(res.data.msg)
-                }
-            })
+
+            function success(res){
+                _self.edit = false
+            }
+
+            function fail(err){
+
+            }
+
+            this.$Post(url, config, success, fail)
         },
         delete(e){
             let url = 'api/system/delSqlTemplateRole'
             let config = {
                 id:e
             }
-            this.$http.post(url,config).then(function(res){
-                console.log(res)
-                if(res.data.msgCode == 40000){
-                    _self.$Message.success(res.data.msg)
-                }else{
-                    _self.$Message.error(res.data.msg)
-                }
-            })
+
+            function success(res){
+
+            }
+
+            function fail(err){
+
+            }
+
+            this.$Post(url, config, success, fail)
         }
     }
 }

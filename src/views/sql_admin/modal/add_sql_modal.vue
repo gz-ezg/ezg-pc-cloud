@@ -3,10 +3,6 @@
         v-model="add_show"
         title="添加SQL模板"
         width="600"
-        @on-ok="add_sql"
-        @on-cancel="cancel"
-        :loading = "add_loading"
-        ok-text = "添加"
         :mask-closable="false"
         
     >
@@ -36,22 +32,25 @@
             <FormItem label="对应函数名称" prop="sqlFunctionName">
                 <Input v-model="SQL_item.sqlFunctionName" placeholder=""></Input>
             </FormItem>
+            <FormItem label="附加or条件" prop="paramsOr">
+                <Input v-model="SQL_item.paramsOr" placeholder="" type="textarea"></Input>
+            </FormItem>
             <FormItem label="包含角色权限" prop="mustRolePermission">
-                <Select transfer v-model="SQL_item.must_rolePermission" placeholder="">
+                <Select transfer v-model="SQL_item.mustRolePermission" placeholder="">
                     <Option value="Y">包含</Option>
                     <Option value="N">不包含</Option>
                 </Select>
             </FormItem>
         </Form>
-        <!-- <div slot="footer">
+        <div slot="footer">
             <Button type="ghost" @click="cancel">取消</Button>
             <Button type="primary" @click="add_sql" :loading="add_loading">添加</Button>
-        </div> -->
+        </div>
     </Modal>
 </template>
 
 <script>
-import Bus from '../bus'
+// import Bus from '../bus'
 
 export default {
     data(){
@@ -66,7 +65,8 @@ export default {
                 sqlName:'',
                 sqlFunctionName:'',
                 mustRolePermission:"",
-                skipPermissionCheck:""
+                skipPermissionCheck:"",
+                paramsOr:""
             },
             SQL_rule:{
                 sqlSelect:[
@@ -94,7 +94,7 @@ export default {
     methods:{
         init(){
             var _that = this
-            Bus.$on('add_sql',(e)=>{
+            this.$bus.on('add_sql',(e)=>{
                 _that.add_show = true
             })
         },
@@ -102,36 +102,51 @@ export default {
             var _that = this
             _that.add_loading = true
             var url = 'api/system/createSqlTemplate'
-            var temp = JSON.stringify(this.SQL_item)
-            let config ={
-                headers:{
-                    'content-type': 'application/json;charset=UTF-8'
-                }
+
+            let config = {
+                
+                sqlSelect: _that.SQL_item.sqlSelect,
+                sqlGroup: _that.SQL_item.sqlGroup,
+                sqlMain: _that.SQL_item.sqlMain,
+                sqlCode: _that.SQL_item.sqlCode,
+                sqlName: _that.SQL_item.sqlName,
+                sqlFunctionName: _that.SQL_item.sqlFunctionName,
+                mustRolePermission: _that.SQL_item.mustRolePermission,
+                skipPermissionCheck: _that.SQL_item.skipPermissionCheck,
+                paramsOr: _that.SQL_item.paramsOr
             }
-            this.$http.post(url,temp,config).then(function(res){
-                if(res.data.msgCode =="40000"){
-                    _that.add_loading = false
-                    _that.$Message.success('新增成功')
-                    _that.SQL_item.sqlSelect = '',
-                    _that.SQL_item.sqlGroup = '',
-                    _that.SQL_item.sqlMain = '',
-                    _that.SQL_item.sqlCode = '',
-                    _that.SQL_item.sqlName = ''
-                    _that.SQL_item.sqlFunctionName = ''
-                    _that.SQL_item.mustRolePermission = ""
-                    _that.SQL_item.skipPermissionCheck = ""
-                }else{
-                    _that.add_loading = false
-                    _that.$Message.error('新增失败')
-                    _that.add_show = true
-                }
-            }).catch(function(err){
-                _that.$Message.error('新增失败')
+
+
+            function success(res){
                 _that.add_loading = false
-            })                
+                _that.add_show = false
+                _that.SQL_item.sqlSelect = ''
+                _that.SQL_item.sqlMain = ''
+                _that.SQL_item.sqlCode = ''
+                _that.SQL_item.sqlName = ''
+                _that.SQL_item.sqlFunctionName = ''
+                _that.SQL_item.mustRolePermission = ""
+                _that.SQL_item.skipPermissionCheck = ""
+                _that.SQL_item.paramsOr = ""
+                _that.SQL_item.sqlGroup = ''
+            }
+
+            function fail(err){
+                _that.add_loading = false                
+            }
+            this.$Post(url, config, success, fail)
         },
         cancel(){
-            this.add_show = false
+            _that.add_show = false
+            _that.SQL_item.sqlSelect = ''
+            _that.SQL_item.sqlMain = ''
+            _that.SQL_item.sqlCode = ''
+            _that.SQL_item.sqlName = ''
+            _that.SQL_item.sqlFunctionName = ''
+            _that.SQL_item.mustRolePermission = ""
+            _that.SQL_item.skipPermissionCheck = ""
+            _that.SQL_item.paramsOr = ""
+            _that.SQL_item.sqlGroup = ''
         }
     }
 }

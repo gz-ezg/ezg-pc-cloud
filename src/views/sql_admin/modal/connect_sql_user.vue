@@ -3,10 +3,6 @@
         v-model="connect_show"
         title="添加映射"
         width="600"
-        :loading = "connect_loading"
-        @on-ok = "conncet_sql"
-        @on-cancel = "cancel"
-        ok-text = "添加"
         :mask-closable="false"
     >
         <Form 
@@ -43,11 +39,15 @@
                 </Select>
             </FormItem>
         </Form>
+        <div slot="footer">
+            <Button type="ghost" @click="cancel">取消</Button>
+            <Button type="primary" @click="conncet_sql" :loading="connect_loading">添加</Button>
+        </div>
     </Modal>
 </template>
 
 <script>
-import Bus from '../bus'
+// import Bus from '../bus'
 
 export default {
     data(){
@@ -103,56 +103,63 @@ export default {
     methods:{
         init(){
             var _that = this
-            Bus.$on('connect_sql_user',(e)=>{
+            _that.$bus.on('connect_sql_user',(e)=>{
                 _that.connect_show = true
                 _that.connect_item.sqlTemplateId = e.id
             })
             //  获取角色信息
             var url = 'api/user/role/list?page=1&pageSize=100'
-            this.$http.get(url).then(function(res){
-                _that.$backToLogin(res)
-                
-                console.log(res)
+            
+            let config = {
+                page: 1,
+                pageSize: 100
+            }
+
+            function success(res){
                 for(let i = 0; i<res.data.data.total;i++){
                     var temp = {}
                     temp.id = res.data.data.rows[i].ID
                     temp.value = res.data.data.rows[i].rolename
                     _that.role.push(temp)
                 }
-                // console.log(role)
-            })
+            }
+
+            this.$Get(url, config, success)
+
 
         },
         conncet_sql(){
             var _that = this
             var url = 'api/system/createSqlTemplateRole'
-            var temp = JSON.stringify(this.connect_item)
-            console.log(temp)
-            let config ={
-                headers:{
-                    'content-type': 'application/json;charset=UTF-8'
-                }
+
+            let config = {
+                sqlMain: _that.connect_item.sqlMain,
+                roleId: _that.connect_item.roleId.join(","),
+                sqlTemplateId: _that.connect_item.sqlTemplateId,
+                sqlTemplateRoleName: _that.connect_item.sqlTemplateRoleName,
+                sort: _that.connect_item.sort,
+                roleIdMustAll: _that.connect_item.roleIdMustAll,
             }
-            this.$http.post(url,temp,config).then(function(res){
-                if(res.data.msgCode =="40000"){
-                    _that.connect_loading = false
-                    _that.$Message.success('新增成功')
-                    _that.connect_item.sqlMain = '',
-                    _that.connect_item.roleId = [],
-                    _that.connect_item.sqlTemplateId = '',
-                    _that.connect_item.sqlTemplateRoleName = '',
-                    _that.connect_item.sort = ''
-                    _that.connect_item.roleIdMustAll = ''
-                }else{
-                    _that.connect_loading = false
-                    _that.$Message.error('新增失败')
-                    _that.connect_show = true
-                }
-            }).catch(function(err){
-                _that.$Message.error('新增失败')
+
+
+            function success(res){
                 _that.connect_loading = false
-                _that.connect_show = true
-            })                
+                _that.connect_show = false
+                // _that.$Message.success('新增成功')
+                _that.connect_item.sqlMain = '',
+                _that.connect_item.roleId = [],
+                _that.connect_item.sqlTemplateId = '',
+                _that.connect_item.sqlTemplateRoleName = '',
+                _that.connect_item.sort = ''
+                _that.connect_item.roleIdMustAll = ''
+            }
+
+            function fail(err){
+                _that.connect_loading = false
+            }
+
+            this.$Post(url, config, success, fail)
+             
             
         },
         cancel(){

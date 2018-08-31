@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Bus from '../bus'
+// import Bus from '../bus'
 
 export default {
     data(){
@@ -43,7 +43,7 @@ export default {
     methods:{
         init(){
             var _that = this
-            Bus.$on('isshow',(e)=>{
+            _that.$bus.on('isshow',(e)=>{
                 _that.SQL_item.id = e.id
                 _that.SQL_item.sqlSelect = e.sql_select
                 _that.SQL_item.sqlCount = e.sql_count
@@ -53,6 +53,7 @@ export default {
                 _that.SQL_item.sqlFunctionName = e.sql_function_name
                 _that.SQL_item.mustRolePermission = e.must_role_permission
                 _that.SQL_item.skipPermissionCheck = e.skip_permission_check
+                _that.SQL_item.paramsOr = e.params_or
                 if(e.must_role_permission == 'Y'){
                     _that.SQL_item.mustRolePermission = "包含"
                 }else{

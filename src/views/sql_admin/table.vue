@@ -7,7 +7,7 @@
             @on-current-change="select_row"	 
             >
         </Table>
-    <div style="margin: 10px;overflow: hidden">
+    <div style="margin: 10px;">
         <div style="float: left;">
             <Page :total="total_Num"
                 :loading = "sql_loading"
@@ -17,6 +17,7 @@
                 @on-change="changePage" 
                 show-sizer
                 show-elevator
+                size="small"
                 >
             </Page>
         </div>
@@ -24,7 +25,7 @@
     </div>
 </template>
 <script>
-    import Bus from './bus'
+    // import Bus from './bus'
     export default {
         name:'Tableshow',
         data () {
@@ -98,7 +99,7 @@
                                             this.detail_show(params)
                                         }
                                     }
-                                }, '查看详情')
+                                }, '查看SQL详情')
                             ]);
                         }
                     },
@@ -106,7 +107,7 @@
                         title:'#',
                         key:'createDate',
                         align:'center',
-                        width:150,
+                        width:200,
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {
@@ -122,7 +123,7 @@
                                             this.connect_detail_show(params)
                                         }
                                     }
-                                }, '查看关联用户')
+                                }, '查看用户权限组')
                             ]);
                         }
                     }
@@ -132,21 +133,22 @@
         created: function(){
             this.GetTableData()
             var _that = this
-            Bus.$on('refresh',e =>{
+            _that.$bus.on('refresh',e =>{
+                _that.current_page = 1
                 _that.GetTableData()
             })
         },
         methods:{
             connect_detail_show(e){
-                Bus.$emit('connect_detail_sql_user',e.row)
+                this.$bus.emit('connect_detail_sql_user',e.row)
             },
             //  传出点击的行
             select_row(e){
-                Bus.$emit('select_row',e)
+                this.$bus.emit('select_row',e)
             },
             //  列表查看按钮弹出
             detail_show(e){
-                Bus.$emit('isshow',e.row)
+                this.$bus.emit('isshow',e.row)
             },
             //  改变页号
             changePage(index){
@@ -163,18 +165,22 @@
             GetTableData(){
                 var _that = this
                 _that.sql_loading = true 
-                var url = '/api/system/sqlTemplateList?page='+ _that.current_page + '&pageSize=' + _that.pageSize
-                this.$http.get(url).then(function(res){
-                    _that.$backToLogin(res)
-                    
+                var url = '/api/system/sqlTemplateList'
+
+                let config = {
+                    params:{
+                        page: _that.current_page,
+                        pageSize: _that.pageSize
+                    }
+                }
+
+                function success(res){
                     _that.total_Num = res.data.data.total
                     _that.tableShowData = res.data.data.rows
-                    // for(let i=0;i<res.data.data.rows.length;i++){
-                    //     _that.tableShowData[i].sql_main_show = _that.tableShowData[i].sql_main.slice(0,130) + '...'
-                    // }
                     _that.sql_loading = false
-                }).catch(function(err){
-                })
+                }
+
+                this.$Get(url, config, success)
             }
         }
     }
