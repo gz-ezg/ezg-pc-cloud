@@ -36,8 +36,8 @@ module.exports = merge(webpackBaseConfig, {
         }),
         new webpack.optimize.CommonsChunkPlugin({
             // name: 'vendors',
-            // filename: 'vendors.[hash].js'Z
-            name: ['vender-exten', 'vender-base'],
+            // filename: 'vendors.[hash].js'
+            name: ['vender-exten', 'vender-base','vender-exten2','vender-vchart'],
             minChunks: Infinity
         }),
         new webpack.DefinePlugin({
@@ -81,11 +81,11 @@ module.exports = merge(webpackBaseConfig, {
             ]
         }),
         new HtmlWebpackPlugin({
-            title: 'iView admin v' + package.version,
+            title: '亿账柜信息管理平台',
             favicon: './td_icon.ico',
             filename: '../index.html',
             template: './src/template/index.ejs',
             inject: false
-        })
+        }),
     ]
 });

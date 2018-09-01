@@ -17,8 +17,8 @@ module.exports = {
         // main: ["@babel/polyfill",'@/main'],
         // 'vender-base': ["@babel/polyfill",'@/vendors/vendors.base.js'],
         // 'vender-exten': ["@babel/polyfill",'@/vendors/vendors.exten.js'],
-        // 'vender-exten2': '@/vendors/vendors.exten2.js',
-        // 'vender-vchart': '@/vendors/vendors.vchart.js'
+        'vender-exten2': '@/vendors/vendors.exten2.js',
+        'vender-vchart': '@/vendors/vendors.vchart.js'
     },
     output: {
         path: path.resolve(__dirname, '../dist/dist'),

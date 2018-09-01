@@ -1,9 +1,13 @@
+<!DOCTYPE html>
+
 <html>
 <head>
     <title><%= htmlWebpackPlugin.options.title %></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
     <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css[0] %>">
+    <link rel="icon" href="<%= htmlWebpackPlugin.files.favicon %>" type="image/x-icon" />
+
     <link rel="stylesheet" name="theme" href="">
 </head>
 
@@ -13,6 +17,9 @@
     <script type="text/javascript" src="<%= htmlWebpackPlugin.files.js[0] %>"></script>
     <script type="text/javascript" src="<%= htmlWebpackPlugin.files.js[1] %>"></script>
     <script type="text/javascript" src="<%= htmlWebpackPlugin.files.js[2] %>"></script>
+    <script type="text/javascript" src="<%= htmlWebpackPlugin.files.js[3] %>"></script>
+    <script type="text/javascript" src="<%= htmlWebpackPlugin.files.js[4] %>"></script>
+
 </body>
 
 </html>
