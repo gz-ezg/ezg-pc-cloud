@@ -10,6 +10,7 @@
                     5<span class="error500-0-span"><Icon type="social-freebsd-devil"></Icon></span><span class="error500-0-span"><Icon type="social-freebsd-devil"></Icon></span>
                 </div>
                 <p class="error500-body-con-message">Oops! the server is wrong</p>
+                <p class="error500-body-con-message">对不起！服务器异常！我们正在处理！</p>
                 <div class="error500-btn-con">
                     <Button @click="goHome" size="large" style="width: 200px;" type="text">返回首页</Button>
                     <Button @click="backPage" size="large" style="width: 200px;margin-left: 40px;" type="primary">返回上一页</Button>

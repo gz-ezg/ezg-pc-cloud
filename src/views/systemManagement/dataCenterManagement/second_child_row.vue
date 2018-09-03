@@ -311,6 +311,7 @@ export default {
     created () {
         let _self = this
         this.$bus.on('open_second_child',(e)=>{
+            _self.second_child_page = 1
             _self.isOpenSecondDetail = true
             _self.child_id = e.ID
             _self.child_name = e.typename

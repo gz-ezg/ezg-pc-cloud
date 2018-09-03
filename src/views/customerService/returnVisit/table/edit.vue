@@ -224,15 +224,18 @@ export default {
         let _self = this
         // console.log(this.departAlias)
         Bus.$on('open_returnVisit_edit',(e)=>{
+            console.log(e)
             _self.add = e
             _self.isOpenEdit = true
+            _self.add.serviceranks = parseInt(_self.add.serviceranks)
+            // console.log(_self.add.depart)
             // console.log(_self.add.depart)
             if(_self.add.depart){
-                _self.add.depart = _self.add.depart.split(',')
+                _self.add.depart = _self.add.depart.split(",")
             }else{
                 _self.add.depart = []
             }
-            console.log(e)
+            // console.log(e)
             _self.companyname = e.companyname
             _self.name = e.name
             _self.tel = e.tel

@@ -87,12 +87,7 @@
                     </Col>
                     <Col span="12">
                         <FormItem prop="callbackdate" label="回访时间：" >
-                            
-                                <DatePicker transfer type="date" placeholder="选择日期" style="width:100%" v-model="add.callbackdate" disabled></DatePicker>
-                            <!-- <Col span="1" style="text-align: center">-</Col>
-                            <Col span="4">
-                                <TimePicker  transfer type="time" placeholder="选择时间" style="width:100%" hide-disabled-options :disabled-hours="[0,1,2,3,4,5,6,7]"></TimePicker>
-                            </Col> -->
+                            <DatePicker transfer type="date" placeholder="选择日期" style="width:100%" v-model="add.callbackdate" readonly></DatePicker>
                         </FormItem>
                     </Col>
                 </Row>

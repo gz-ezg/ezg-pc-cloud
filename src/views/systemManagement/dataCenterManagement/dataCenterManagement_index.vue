@@ -579,6 +579,7 @@ export default {
             // console.log(e)
             this.isOpenDetail = true
             this.showwidth = 12
+            this.child_page = 1
             this.current_data_id = e.ID
             this.child_data_model.typegroupname = e.typegroupname
             this.child_data_model_add.id = e.ID

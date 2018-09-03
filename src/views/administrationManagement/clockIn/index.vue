@@ -89,6 +89,7 @@ export default {
 
             function success(res){
                 _self.submit_loading = false
+                _self.file = []
                 console.log(res)
             }
 

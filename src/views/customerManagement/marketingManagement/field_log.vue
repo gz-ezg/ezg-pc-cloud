@@ -24,11 +24,12 @@
                                         </FormItem>
                                         </Col>
                                         <Col span="8">
-                                        <FormItem label="外勤结果：" prop="resulttype">
-                                            <Select v-model="formValidate.resulttype" size="small" @on-change="Search">
+                                        <FormItem label="外勤类型：" prop="fieldtype">
+                                            <Select v-model="formValidate.fieldtype" size="small" @on-change="Search">
                                                 <Option value="">全部</Option>
-                                                <Option value="valid">有效</Option>
-                                                <Option value="invalid">无效</Option>
+                                                <Option v-for="item in allTypes" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
+                                                <!-- <Option value="valid">有效</Option>
+                                                <Option value="invalid">无效</Option> -->
                                             </Select>
                                         </FormItem>
                                         </Col>
@@ -83,10 +84,11 @@ import {DateFormat} from '../../../libs/utils.js'
 export default {
     data(){
         return{
+            allTypes:[],
             search_model:"",
             formValidate:{
-                depart: "",
-                resulttype: "",
+                depart: "N",
+                fieldtype: "",
                 clocktime: []
             },
             loading:false,
@@ -148,7 +150,7 @@ export default {
                     pageSize: _self.pageSize,
                     customerId: _self.id,
                     isNeed: _self.formValidate.depart,
-                    resulttype: _self.formValidate.resulttype,
+                    fieldtype: _self.formValidate.fieldtype,
                     bclocktime: DateFormat(_self.formValidate.clocktime[0]),
                     eclocktime: DateFormat(_self.formValidate.clocktime[1]),
                     sortField: "clocktime",
@@ -172,17 +174,29 @@ export default {
             this.page = e
             this.getData()
         },
-         Search(){
+        Search(){
             this.page = 1
             this.getData()
         },
         handleReset(name){
             this.$refs[name].resetFields();
             this.Search()
+        },
+        get_all_field_type(){
+
+            let _self = this
+            let params = "fieldClockType"
+
+            function success(res){
+                _self.allTypes = res.data.data.fieldClockType
+            }
+
+            this.$GetDataCenter(params, success)
         }
     },
     created(){
         let _self = this
+        this.get_all_field_type()
         this.$bus.on('OPEN_CUSTOMER_FIELD_LOG',(e)=>{
             _self.open_customer_field_log = true
             _self.id = e[0]

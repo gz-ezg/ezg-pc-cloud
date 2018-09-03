@@ -211,9 +211,11 @@ export default {
         this.getDataCenter()
         let _self = this
         // console.log(this.departAlias)
-        Bus.$on('open_returnVisit_edit',(e)=>{
+        Bus.$on('open_workorderVisit_edit',(e)=>{
+            console.log(e)
             _self.add = e
             _self.isOpenEdit = true
+            _self.add.serviceranks = parseInt(_self.add.serviceranks)
             if(_self.add.depart){
                 _self.add.depart = _self.add.depart.split(',')
             }else{

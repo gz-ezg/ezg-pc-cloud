@@ -14,6 +14,8 @@ import util from '@/libs/util';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import VCharts from 'v-charts';
+//  引入自定义主题文件
+// import './my-theme/index.less';
 // import "@babel/polyfill";
 // import echarts from 'echarts';
 
@@ -175,7 +177,7 @@ Vue.prototype.$changeCars = function(data){
 }
 
 //  this.$http.get()
-Vue.prototype.$Get = function(url, config, success){
+Vue.prototype.$Get = function(url, config, success, fail=function(err){console.log(err);_self.$Message.error(res.data.msg)}){
     let _self = this
     this.$http.get(url,config).then(function(res){
         // _self.$backToLogin(res)
@@ -183,8 +185,7 @@ Vue.prototype.$Get = function(url, config, success){
             success(res)
         }else{
             if(res.data.msg){
-                _self.$Message.error(res.data.msg)
-                console.warn(res)
+                fail(res)
             }else{
                 console.error(res)
             }
@@ -314,7 +315,7 @@ Vue.prototype.searchTypegroup = function (code){
 }
 
 //  获取数据GetData方法
-Vue.prototype.GetData = function (url, doSuccess, otherConditions){
+Vue.prototype.GetData = function (url, doSuccess, otherConditions=function(err){console.log(err)}){
 
     let _self = this
 

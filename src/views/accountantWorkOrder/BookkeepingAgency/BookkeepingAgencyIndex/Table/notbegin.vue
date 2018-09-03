@@ -401,21 +401,21 @@
                         })
                     }
 
-                    let _url = '/order/cycle/month/service/item/details?monthServiceIds=' + _ids.join()
+                    // let _url = '/order/cycle/month/service/item/details?monthServiceIds=' + _ids.join()
 
-                    function doSuccess2(res2) {
-                        let _obj = res2.data.data
+                    // function doSuccess2(res2) {
+                    //     let _obj = res2.data.data
 
-                        for (let i = 0; i < _self.data.length; i++) {
-                            if (_self.data[i].month_service_id != null) {
-                                _self.data[i].zl = res2.data.data[_self.data[i].month_service_id][0].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][0].confirm_date.substr(0,10):''
-                                _self.data[i].zz = res2.data.data[_self.data[i].month_service_id][1].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][1].confirm_date.substr(0,10):''
-                                _self.data[i].bs = res2.data.data[_self.data[i].month_service_id][2].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][2].confirm_date.substr(0,10):''
-                            }
-                        }
-                    }
+                    //     for (let i = 0; i < _self.data.length; i++) {
+                    //         if (_self.data[i].month_service_id != null) {
+                    //             _self.data[i].zl = res2.data.data[_self.data[i].month_service_id][0].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][0].confirm_date.substr(0,10):''
+                    //             _self.data[i].zz = res2.data.data[_self.data[i].month_service_id][1].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][1].confirm_date.substr(0,10):''
+                    //             _self.data[i].bs = res2.data.data[_self.data[i].month_service_id][2].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][2].confirm_date.substr(0,10):''
+                    //         }
+                    //     }
+                    // }
 
-                    _self.GetData(_url, doSuccess2)
+                    // _self.GetData(_url, doSuccess2)
                 }
 
                 this.GetData(url, doSuccess)

@@ -60,7 +60,7 @@
         <Row>
             <ButtonGroup>
                 <!-- <Button type="primary" icon="information-circled" @click="scbd">时长变动日志</Button> -->
-                <Button type="primary" icon="ios-color-wand-outline" @click="ksfw">停止服务</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="ksfw" v-permission="['bookkeepingAgency.stop']">停止服务</Button>
                 <Button type="primary" icon="information-circled" @click="fpkj">变更会计</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="zlwc" v-if="zl">资料完成</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="zzwc" v-if="zz">做账完成</Button>
@@ -397,21 +397,21 @@
                         })
                     }
 
-                    let _url = '/order/cycle/month/service/item/details?monthServiceIds=' + _ids.join()
+                    // let _url = '/order/cycle/month/service/item/details?monthServiceIds=' + _ids.join()
 
-                    function doSuccess2(res2) {
-                        let _obj = res2.data.data
+                    // function doSuccess2(res2) {
+                    //     let _obj = res2.data.data
 
-                        for (let i = 0; i < _self.data.length; i++) {
-                            if (_self.data[i].month_service_id != null) {
-                                _self.data[i].zl = res2.data.data[_self.data[i].month_service_id][0].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][0].confirm_date.substr(0,10):''
-                                _self.data[i].zz = res2.data.data[_self.data[i].month_service_id][1].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][1].confirm_date.substr(0,10):''
-                                _self.data[i].bs = res2.data.data[_self.data[i].month_service_id][2].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][2].confirm_date.substr(0,10):''
-                            }
-                        }
-                    }
+                    //     for (let i = 0; i < _self.data.length; i++) {
+                    //         if (_self.data[i].month_service_id != null) {
+                    //             _self.data[i].zl = res2.data.data[_self.data[i].month_service_id][0].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][0].confirm_date.substr(0,10):''
+                    //             _self.data[i].zz = res2.data.data[_self.data[i].month_service_id][1].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][1].confirm_date.substr(0,10):''
+                    //             _self.data[i].bs = res2.data.data[_self.data[i].month_service_id][2].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][2].confirm_date.substr(0,10):''
+                    //         }
+                    //     }
+                    // }
 
-                    _self.GetData(_url, doSuccess2)
+                    // _self.GetData(_url, doSuccess2)
                 }
 
                 this.GetData(url, doSuccess)

@@ -46,10 +46,11 @@
             </Row>
         <Row>
             <ButtonGroup>
-                <Button type="primary" icon="ios-color-wand-outline" @click="ksfw">停止服务</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="ksfw" v-permission="['bookkeepingAgency.stop']">停止服务</Button>
                 <Button type="primary" icon="information-circled" @click="fpkj">变更会计</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="setLevel">设置财务等级</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="openFollow">服务详情</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="openFieldByCompanyId">外勤详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="open_change_log">变更日志</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
             </ButtonGroup>
@@ -807,6 +808,17 @@
                     this.$Message.warning('请选择要查看的项目！')
                 } else {
                     _self.$bus.emit('rizhi', _self.current_row.cycle_service_record_id)
+                }
+            },
+            //  打开外勤信息
+            openFieldByCompanyId(){
+                let _self = this
+
+                if (!_self.current_row) {
+                    this.$Message.warning('请选择要查看的项目！')
+                } else {
+                    console.log(_self.current_row)
+                    _self.$bus.emit('OPEN_FIELD_LIST_BY_COMPANYID', [_self.current_row.company_id,_self.current_row.companyname])
                 }
             }
         },

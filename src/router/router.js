@@ -48,6 +48,7 @@ export const page500 = {
     }
 };
 
+//  文章预览
 export const preview = {
     path: '/preview',
     name: 'preview',
@@ -56,6 +57,7 @@ export const preview = {
     }
 };
 
+//  锁屏
 export const locking = {
     path: '/locking',
     name: 'locking',
@@ -64,12 +66,13 @@ export const locking = {
     }
 };
 
+//  文件预览
 export const previewFile = {
     path: '/previewFile/:id',
     name: 'previewFile',
     component: resolve => {
         // require(['@/views/test/components/main.vue'], resolve);
-        require(['@/views/woa-components/file-preview/index.vue'], resolve);
+        require(['@/views/woa-components/filePreview/index.vue'], resolve);
     }
 }
 
@@ -82,7 +85,7 @@ export const otherRouter = {
     children: [
         {
             path: 'home', title: {i18n: 'home'}, name: 'home_index', component: resolve => {
-            require(['@/views/home/home.vue'], resolve);
+                require(['@/views/home/common_index/home.vue'], resolve);
         }
         },
         {
@@ -120,16 +123,16 @@ export const otherRouter = {
             require(['@/views/own-space/own-space.vue'], resolve);
         }
         },
-        {
-            path: 'order/:order_id', title: '订单详情', name: 'order-info', component: resolve => {
-            require(['@/views/advanced-router/component/order-info.vue'], resolve);
-        }
-        }, // 用于展示动态路由
-        {
-            path: 'shopping', title: '购物详情', name: 'shopping', component: resolve => {
-            require(['@/views/advanced-router/component/shopping-info.vue'], resolve);
-        }
-        }, // 用于展示带参路由
+        // {
+        //     path: 'order/:order_id', title: '订单详情', name: 'order-info', component: resolve => {
+        //     require(['@/views/advanced-router/component/order-info.vue'], resolve);
+        // }
+        // }, // 用于展示动态路由
+        // {
+        //     path: 'shopping', title: '购物详情', name: 'shopping', component: resolve => {
+        //     require(['@/views/advanced-router/component/shopping-info.vue'], resolve);
+        // }
+        // }, // 用于展示带参路由
         {
             path: 'message', title: '消息中心', name: 'message_index', component: resolve => {
             require(['@/views/message/message.vue'], resolve);
@@ -165,7 +168,7 @@ export const appRouter = [
     //             name: 'test_index',
     //             component: resolve => {
     //                 require(['@/views/test/components/main.vue'], resolve);
-    //                 // require(['@/views/woa-components/file-preview/index.vue'], resolve);
+    //                 // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
     //             }
     //         }
@@ -307,7 +310,7 @@ export const appRouter = [
                 title: '跟进记录管理',
                 name: 'customerFollowUp_index',
                 component: resolve => {
-                    require(['@/views/customerManagement/followUpData/followUpdata.vue'], resolve);
+                    require(['@/views/marketplaceManagement/followUpData/followUpdata.vue'], resolve);
                 }
             },
             {
@@ -317,7 +320,7 @@ export const appRouter = [
                 title: '销售规则管理', 
                 name: 'market_rule_index', 
                 component: resolve => {
-                    require(['@/views/publicPool/rule/index.vue'], resolve);
+                    require(['@/views/marketplaceManagement/rule/index.vue'], resolve);
                 }
             },
             {
@@ -327,7 +330,7 @@ export const appRouter = [
                 title: '销售目标管理', 
                 name: 'person_target_index', 
                 component: resolve => {
-                    require(['@/views/publicPool/personTarget/index.vue'], resolve);
+                    require(['@/views/marketplaceManagement/personTarget/index.vue'], resolve);
                 }
             },
             {
@@ -439,7 +442,7 @@ export const appRouter = [
                 meta: 6048,
                 name: 'complaintcenter_index',
                 component: resolve => {
-                    require(['@/views/complaintCenter/complaintcenter_index.vue'], resolve);
+                    require(['@/views/customerService/complaintCenter/complaintcenter_index.vue'], resolve);
                 }
             },
             {
@@ -595,16 +598,16 @@ export const appRouter = [
                     require(['@/views/woa-components/allot-task/allotCommonTask/index.vue'], resolve);
                 }
             },
-            {
-                access:6036,
-                meta: 6036,
-                path: 'statistical',
-                title: '外勤统计',
-                name: 'statistical',
-                component: resolve => {
-                    require(['@/views/commercialManagement/statistical/statistical_index.vue'], resolve);
-                }
-            },
+            // {
+            //     access:6036,
+            //     meta: 6036,
+            //     path: 'statistical',
+            //     title: '外勤统计',
+            //     name: 'statistical',
+            //     component: resolve => {
+            //         require(['@/views/commercialManagement/statistical/statistical_index.vue'], resolve);
+            //     }
+            // },
             // {
             //     access: 6037,
             //     path: 'schedule',
@@ -815,7 +818,7 @@ export const appRouter = [
                 title: '工单管理',
                 name:"administratiotaskmanagement",
                 component: resolve => {
-                    require(['@/views/administrationManagement/index.vue'], resolve);
+                    require(['@/views/administrationManagement/myCommonTask/index.vue'], resolve);
                 }
             },
             {
@@ -991,7 +994,7 @@ export const appRouter = [
                 title: '管理SQL',
                 name: 'admin_sql_deal',
                 component: resolve => {
-                    require(['@/views/sql_admin/main.vue'], resolve);
+                    require(['@/views/systemManagement/sql_admin/main.vue'], resolve);
                 }
             },
             // {
@@ -1042,16 +1045,6 @@ export const appRouter = [
                 name: 'attributeManagement',
                 component: resolve => {
                     require(['@/views/systemManagement/attributeManagement/attributeManagement_index.vue'], resolve);
-                }
-            },
-            {
-                access: 6102,
-                meta: 6102,
-                path: 'stystemLog',
-                title: '系统日志',
-                name: 'stystemLog',
-                component: resolve => {
-                    require(['@/views/systemManagement/stystemLog/stystemLog.vue'], resolve);
                 }
             }
         ]
@@ -1196,6 +1189,16 @@ export const appRouter = [
         title: '日志管理', 
         component: Main,
         children: [
+            {
+                access: 6102,
+                meta: 6102,
+                path: 'stystemLog',
+                title: '系统日志',
+                name: 'stystemLog',
+                component: resolve => {
+                    require(['@/views/logManagement/stystemLog/stystemLog.vue'], resolve);
+                }
+            },
             {
                 access: 6121,
                 meta: 6122,

@@ -2,30 +2,28 @@
     <div>
         <Modal
             title="修改密码"
-            width=400
-            v-model="open_update_password"
+            v-model="change_password"
+            width="350"
         >
-            <Form :label-width="100">
-                <Row>
-                    <Col span="1" style="visibility:hidden"></Col>                            
-                    <Col span="20">
-                        <FormItem label="用户名称：">
-                            <Input v-model="user_name"></Input>
+            <Row :gutter="20" style="margin-bottom:10px"><h2><center>当前选择用户:{{username}}</center></h2></Row>
+            <Form :label-width="100" ref="formdata" :rules="formdataRule" :model="formdata">
+                <Row :gutter="20">
+                    <Col span="24">
+                        <FormItem label="密码：" prop="password">
+                            <Input  size="small"  type="password" style="margin-right:5px" v-model="formdata.password">
+                            </Input>
                         </FormItem>
                     </Col>
-                </Row>
-                <Row>
-                    <Col span="1" style="visibility:hidden"></Col>                            
-                    <Col span="10">
-                        <FormItem label="用户密码：">
-                            <Input v-model="user_password"></Input>
+                    <Col span="24">
+                        <FormItem label="重复密码：" prop="password2">
+                            <Input  size="small" type="password" style="margin-right:5px" v-model="formdata.password2">
+                            </Input>
                         </FormItem>
                     </Col>
                 </Row>
             </Form>
-
             <div slot="footer">
-                <Button type="ghost" @click="update_password">修改</Button>
+                <Button type="warning" @click="submit" long :loading="loading" :disabled="disabled">修改密码</Button>
             </div>
         </Modal>
     </div>
@@ -34,33 +32,66 @@
 <script>
 export default {
     data(){
+        let _self = this
+        const validatePassword2 = (rule, value, callback) => {
+            if (value == '') {
+                callback(new Error(' '));
+            } else {
+                if (_self.formdata.password == _self.formdata.password2) {
+                    _self.disabled = false
+                    callback();
+                } else {
+                    callback(new Error('格式错误！'));
+                }             
+            }
+        };
         return{
-            open_update_password: false,
-            user_id: "",
-            user_name: "",
-            user_password: "",
-            button_loading: false,
+            disabled:true,
+            loading:false,
+            change_password: false,
+            username:"",
+            userID:"",
+            formdata:{
+                password:"",
+                password2:""
+            },
+            formdataRule:{
+                password:{ message:"请输入密码！", required: true,  trigger: 'blur' },
+                password2:[
+                    { message:"请输入密码！", required: true,  trigger: 'blur' },
+                    { message:"两次密码输入不一致！", validator:validatePassword2,  trigger: 'blur' },
+                ],
+            }
         }
     },
     methods:{
-        // 修改用户密码
-        update_password(){
+        submit(){
             let _self = this
-            _self.button_loading = true
+            _self.loading = true
+            this.$refs['formdata'].validate((valid) => {
+                if (valid) {
+                    _self.updatePassword()
+                } else {
+                    this.$Message.error('请补全信息！');
+                    _self.loading = false
+                }
+            })
+        },
+        updatePassword(){
+            let _self = this
             let url = `api/user/updatePasswordByUserId`
-
-            let config = {
-                id: _self.user_id,
-                password: _self.password
+            config = {
+                id: _self.userID,
+                password: _self.formdata.password
             }
 
             function success(res){
-                _self.button_loading = false
-                _self.open_update_password = false
+                _self.loading = false
+                _self.change_password = false
             }
-            
+
             function fail(err){
-                _self.button_loading = false
+                _self.loading = false
             }
 
             this.$Post(url, config, success, fail)
@@ -68,10 +99,11 @@ export default {
     },
     created(){
         let _self = this
-        _self.$bus.on("UPDATE_USER_PASSWORD",(e)=>{
-            console.log(e)
+        this.$bus.on('CHANGE_PASSWORD', (e) => {
+            _self.change_password = true
+            _self.username = e.realname
+            _self.userID = e.id
         })
     }
 }
 </script>
-

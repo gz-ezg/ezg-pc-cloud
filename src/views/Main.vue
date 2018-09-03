@@ -135,10 +135,11 @@
         <!-- 工单相关 -->
         <next></next>
         <set-finish-time></set-finish-time>
+        <field-list-by-company-id></field-list-by-company-id>
     </div>
 </template>
 <script>
-    import changePassword from './systemManagement/userManagement/change_password'
+    import changePassword from './woa-components/updatePassword/index.vue'
     import shrinkableMenu from './main-components/shrinkable-menu/shrinkable-menu.vue';
     import tagsPageOpened from './main-components/tags-page-opened.vue';
     import breadcrumbNav from './main-components/breadcrumb-nav.vue';
@@ -151,7 +152,8 @@
     import util from '@/libs/util.js';
     import next from './woa-components/next/flow.vue';
     import setFinishTime from './woa-components/setFinishTime/setFinishTime'
-    
+    import fieldListByCompanyId from './woa-components/fieldListByCompanyId/index.vue'
+
     export default {
         components: {
             shrinkableMenu,
@@ -164,7 +166,8 @@
             systemComplain,
             changePassword,
             next,
-            setFinishTime
+            setFinishTime,
+            fieldListByCompanyId
         },
         data () {
             return {

@@ -1,50 +1,52 @@
 <template>
     <div style="min-width:1000px">
         <Row >
-            <Card>
-                <Form ref="SearchValidate" :model="SearchValidate" :label-width="80" style="margin-top: 15px" >
-                <Row :gutter="8">
-                    <Col span="8">
-                        <FormItem label="名字：" prop="realname">
-                            <Input v-model="SearchValidate.realname" size="small"></Input>
+            <div @keydown.enter="Search">
+                <Card>
+                    <Form ref="SearchValidate" :model="SearchValidate" :label-width="80" style="margin-top: 15px" >
+                    <Row :gutter="8">
+                        <Col span="8">
+                            <FormItem label="名字：" prop="realname">
+                                <Input v-model="SearchValidate.realname" size="small"></Input>
+                            </FormItem>
+                        </Col>
+                        <Col span="8">
+                            <FormItem label="电话：" prop="mobilephone">
+                                <Input v-model="SearchValidate.mobilephone" size="small"></Input>
+                            </FormItem>
+                        </Col>
+                        <Col span="8">
+                            <FormItem label="用户账户：" prop="username">
+                                <Input v-model="SearchValidate.username" size="small"></Input>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row :gutter="8">
+                        <Col span="8">
+                            <FormItem label="角色ID：" prop="roleid">
+                                <Input v-model="SearchValidate.roleid" size="small"></Input>
+                            </FormItem>
+                        </Col>
+                        <Col span="8">
+                            <FormItem label="角色编码：" prop="rolecode">
+                                <Input v-model="SearchValidate.rolecode" size="small"></Input>
+                            </FormItem>
+                        </Col>
+                        <Col span="8">
+                            <FormItem label="角色名称：" prop="rolename">
+                                <Input v-model="SearchValidate.rolename" size="small"></Input>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <center>
+                        <FormItem>
+                            <Button type="primary" @click="Search" >搜索</Button>
+                            <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
                         </FormItem>
-                    </Col>
-                    <Col span="8">
-                        <FormItem label="电话：" prop="mobilephone">
-                            <Input v-model="SearchValidate.mobilephone" size="small"></Input>
-                        </FormItem>
-                    </Col>
-                    <Col span="8">
-                        <FormItem label="用户账户：" prop="username">
-                            <Input v-model="SearchValidate.username" size="small"></Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="8">
-                    <Col span="8">
-                        <FormItem label="角色ID：" prop="roleid">
-                            <Input v-model="SearchValidate.roleid" size="small"></Input>
-                        </FormItem>
-                    </Col>
-                    <Col span="8">
-                        <FormItem label="角色编码：" prop="rolecode">
-                            <Input v-model="SearchValidate.rolecode" size="small"></Input>
-                        </FormItem>
-                    </Col>
-                    <Col span="8">
-                        <FormItem label="角色名称：" prop="rolename">
-                            <Input v-model="SearchValidate.rolename" size="small"></Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <center>
-                    <FormItem>
-                        <Button type="primary" @click="Search" >搜索</Button>
-                        <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
-                    </FormItem>
-                </center>
-            </Form>
+                    </center>
+                </Form>
             </Card>
+            </div>
         </Row>
         <Card>
             <Row>

@@ -455,7 +455,7 @@
                 if(this.row == null || this.row == ""){
                     this.$Message.warning('请选择一行进行编辑！')                    
                 }else{
-                    Bus.$emit('open_returnVisit_edit', _self.row)
+                    Bus.$emit('open_workorderVisit_edit', _self.row)
                 }
             },
             show(){
