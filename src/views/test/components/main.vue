@@ -23,7 +23,7 @@
     <customer-detail></customer-detail>
     <follow-up-data></follow-up-data>
     
-    <!-- <div v-html="content"></div> -->
+    <div v-html="content"></div>
     <!-- <Button @click="downAccoutProductivity">导出会计绩效</Button>
     <Button @click="downMarketProductivityTotal">导出市场绩效统计</Button>
     <Button @click="downMarketProductivityDetail">导出市场绩效详情</Button> -->
@@ -59,7 +59,15 @@ export default {
             company_id:"",
             customeId:31681,
             companyname:"广州则为信息科技有限公司",
-            content:""
+            content:"",
+            list:[
+                {id:1,content:"1231414141414"},
+                {id:2,content:"1231414141414"},
+                {id:3,content:"1231414141414"},
+                {id:4,content:"1231414141414"},
+                {id:5,content:"1231414141414"},
+            ],
+            html:""
         }
     },
     methods: {
@@ -173,10 +181,7 @@ export default {
                                             <strong>公布时间</strong>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td width="667" valign="top" style="border-width: 1px; border-style: solid;"></td>
-                                        <td width="256.66666666666674" valign="top" style="border-width: 1px; border-style: solid;"></td>
-                                    </tr>
+                                    ${this.html}    
                                 </tbody>
                             </table>
                             <p style="margin-top: 0;margin-right: 0;margin-bottom: 0;text-indent: 28px;line-height: 150%">
@@ -656,6 +661,15 @@ export default {
     },
     mounted () {
         this.init();
+        let template_array = []
+        for(let i = 0; i<this.list.length;i++){
+            let temp = `<tr>
+                    <td width="667" valign="top" style="border-width: 1px; border-style: solid;">${this.list[i].id}</td>
+                    <td width="256.66666666666674" valign="top" style="border-width: 1px; border-style: solid;">${this.list[i].content}</td>
+                 </tr>`
+            template_array.push(temp)
+        }
+        this.html = template_array.join("")
         
     },
     destroyed () {
