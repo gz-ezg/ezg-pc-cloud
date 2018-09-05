@@ -203,7 +203,7 @@ export default {
                 //     { message:"格式错误！",required: true, trigger: 'change' },
                 // ],
                 // userAliasId:[
-                //     { message:"格式错误！",required: true, trigger: 'change' },
+                //     { message:"格式错误！",type: "number", trigger: 'change' },
                 // ]
             }
         }

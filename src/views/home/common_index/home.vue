@@ -225,7 +225,7 @@ export default {
                 collection: 24389305,
                 transfer: 39503498
             },
-            cityData: cityData,
+            // cityData: cityData,
             showAddNewTodo: false,
             newToDoItemValue: ''
         };

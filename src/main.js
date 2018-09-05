@@ -177,7 +177,7 @@ Vue.prototype.$changeCars = function(data){
 }
 
 //  this.$http.get()
-Vue.prototype.$Get = function(url, config, success, fail=function(err){console.log(err);_self.$Message.error(res.data.msg)}){
+Vue.prototype.$Get = function(url, config, success, fail=function(err){console.log(err);_self.$Message.error(err)}){
     let _self = this
     this.$http.get(url,config).then(function(res){
         // _self.$backToLogin(res)
@@ -191,7 +191,7 @@ Vue.prototype.$Get = function(url, config, success, fail=function(err){console.l
             }
         }
     }).catch(function(err){
-        _self.$Message.error('网络异常！')
+        _self.$Message.error('数据异常！')
         console.error(err)
     })
 }
@@ -213,7 +213,7 @@ Vue.prototype.$Post = function(url, config, success, fail){
         }
     }).catch(function(err){
         fail(err)
-        _self.$Message.error('网络异常！')
+        _self.$Message.error('数据异常！')
         console.error(err)
     })
 }

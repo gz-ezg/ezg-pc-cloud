@@ -7,6 +7,7 @@ const merge = require('webpack-merge');
 const webpackBaseConfig = require('./webpack.base.config.js');
 const fs = require('fs');
 const package = require('../package.json');
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
 fs.open('./build/env.js', 'w', function(err, fd) {
     const buf = 'export default "development";';
@@ -19,12 +20,21 @@ module.exports = merge(webpackBaseConfig, {
         port: 9997,
         proxy: {
             '/api': {
-                // target: 'http://192.168.0.220:9000/',
                 target: 'http://192.168.0.236:9000/',
                 pathRewrite: {'^/api' : ''},
                 changeOrigin: true
             }
-        }
+        },
+        overlay: {
+            errors: true,
+        },
+        // stats:{
+        //     timings: true,
+        //     version: true,
+        //     errors: true,
+        //     colors: true
+        // },
+        quiet: true,
     },
     devtool: '#source-map',
     output: {
@@ -58,6 +68,13 @@ module.exports = merge(webpackBaseConfig, {
             ignore: [
                 'text-editor.vue'
             ]
-        })
+        }),
+        new FriendlyErrorsPlugin({
+            compilationSuccessInfo: {
+                messages: ['Now Proxy in 236; You application is running here http://localhost:9997'],
+              },
+            clearConsole: true
+        }
+        )
     ]
 });

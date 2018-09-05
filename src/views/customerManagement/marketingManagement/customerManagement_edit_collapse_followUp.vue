@@ -788,7 +788,6 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
             open_detail(e,event){
                 let _self = this
                 let url = 'api/customer/follow/record/detail'
-                _self.openAllDetail = true
                 let config = {
                     params:{
                         followRecordId:e
@@ -799,6 +798,7 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
                     // console.log(res.data.data)
                     let temp = res.data.data
                     if(res.data.data != null){
+                        _self.openAllDetail = true
                         _self.fiedDetail = res.data.data
                         if(res.data.data.realpaths){
                             _self.fiedDetail.imgs = []
@@ -808,6 +808,8 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
                                 _self.fiedDetail.imgs.push(pic[i])
                             }
                         }
+                    }else{
+                        _self.$Message.warning("暂无数据！")
                     }
                     
                 }

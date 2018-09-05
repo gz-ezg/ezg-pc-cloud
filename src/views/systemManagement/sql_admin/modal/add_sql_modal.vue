@@ -20,7 +20,7 @@
             <FormItem label="SQL主体" prop="sqlMain">
                 <Input v-model="SQL_item.sqlMain" placeholder="" type="textarea"></Input>
             </FormItem>
-            <FormItem label="跳过权限设置" prop="sqlMain">
+            <FormItem label="跳过权限设置" prop="skipPermissionCheck">
                 <Input v-model="SQL_item.skipPermissionCheck" placeholder="" type="textarea"></Input>
             </FormItem>
             <FormItem label="SQL编码" prop="sqlCode">
@@ -103,7 +103,6 @@ export default {
             var url = 'api/system/createSqlTemplate'
 
             let config = {
-                
                 sqlSelect: _that.SQL_item.sqlSelect,
                 sqlGroup: _that.SQL_item.sqlGroup,
                 sqlMain: _that.SQL_item.sqlMain,

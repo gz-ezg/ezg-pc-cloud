@@ -212,6 +212,11 @@ import EditModal from './edit_user'
                         minWidth: 300
                     },
                     {
+                        title: '工号',
+                        key: 'user_alias_id',
+                        minWidth: 150
+                    },
+                    {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
@@ -311,6 +316,7 @@ import EditModal from './edit_user'
 
                     for (let i = 0; i < _data.rows.length; i++) {
                         _self.userData.push({
+                            user_alias_id: _data.rows[i].user_alias_id,
                             id: _data.rows[i].id,
                             username: _data.rows[i].username,
                             realname: _data.rows[i].realname,
