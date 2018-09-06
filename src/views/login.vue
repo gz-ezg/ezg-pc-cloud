@@ -3,7 +3,11 @@
 </style>
 
 <template>
-    <div class="login" @keydown.enter="handleSubmit">
+    <div class="login" @keydown.enter="handleSubmit" >
+         <Spin size="large" v-if="!sso" fix>
+            <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
+            <div>正在登录中...</div>
+         </Spin>
         <div class="login-con">
             <Card :bordered="false">
                 <p slot="title">
@@ -48,6 +52,7 @@
     export default {
         data() {
             return {
+                sso: true,
                 isSave:false,
                 form: {
                     userName: '',
@@ -240,11 +245,12 @@
                 }
 
                 function fail(err){
-                    // _self.$Message.error("请输入账号密码登录！")
-                    window.location.reload()
+                    _self.$Message.error("请输入账号密码登录！")
+                    _self.sso = true
+                    // window.location.reload()
                 }
                 
-                this.$Get(url, config, success)
+                this.$Get(url, config, success, fail)
             },
             get_sso_params(config){
                 let _self = this
@@ -252,32 +258,14 @@
                 if(config.length == 3){
                     return new Promise(function(resolve, reject){
                         let params = []
-                        for(let i = 0;i<config.length;i++){
+                            for(let i = 0;i<config.length;i++){
                             params[i] = config[i].split("=")[1]
                             console.log(params)
                         }
-                        // let userName = config[0].split("=")[1]
-                        // let timeStamp = config[1].split("=")[1]
-                        // let token = config[2].split("=")[1]
                         resolve(params)
+                        alert(params)
+
                     })
-                    // try {
-                    //     let userName = config[0].split("=")[1]
-                    //     let timeStamp = config[1].split("=")[1]
-                    //     let token = config[2].split("=")[1]
-                    //     console.log(userName, timeStamp, token)
-                    //     console.log("SSO登录！")
-                    //     setTimeout(function(){
-                    //         console.log("1111")
-                    //     },1000)
-                    //     setTimeout(function(){
-                    //         _self.sso_login(userName, timeStamp, token)
-                    //     },1000)
-                    // } catch (error) {
-                    //     console.log(error)
-                    //     // _self.$Message.error(error)
-                    // }
-                    
                 }
                 // console.log(config)
             else{
@@ -296,36 +284,35 @@
             //  sso登录
             params = temp.split("?")
             // console.log(params)
-            if(params.length>1){
-                let config = params[1].split("&")
-                _self.get_sso_params(config).then(function(res){
-                    console.log(res)
-                    _self.sso_login(res[0], res[1], res[2])
-                })
-                // if(config.length == 3){
-                //     try {
-                //         let userName = config[0].split("=")[1]
-                //         let timeStamp = config[1].split("=")[1]
-                //         let token = config[2].split("=")[1]
-                //         console.log(userName, timeStamp, token)
-                //         console.log("SSO登录！")
-                //         _self.sso_login(userName, timeStamp, token)
-
-                //         // setTimeout(function(){
-                //         //     console.log("1111")
-                //         // },1000)
-                //         // setTimeout(function(){
-                //         //     _self.sso_login(userName, timeStamp, token)
-                //         // },1000)
-                //     } catch (error) {
-                //         // console.log(error)
-                //         _self.$Message.error(error)
-                //     }
-                // }
-                // console.log(config)
-            }else{
-                console.log("正常登录！")
-            }
+                if(params.length>1){
+                    let config = params[1].split("&")
+                    // _self.get_sso_params(config).then(function(res){
+                    //     console.log(res)
+                    //     _self.sso_login(res[0], res[1], res[2])
+                    // })
+                    if(config.length == 3){
+                        
+                        // try {
+                            this.sso = false
+                            let userName = config[0].split("=")[1]
+                            let timeStamp = config[1].split("=")[1]
+                            let token = config[2].split("=")[1]
+                            console.log(userName, timeStamp, token)
+                            console.log("SSO登录！")
+                            // _self.sso_login(userName, timeStamp, token)
+                            setTimeout(function(){
+                                _self.sso_login(userName, timeStamp, token)
+                            },0)
+                        // } catch (error) {
+                        //     // console.log(error)
+                        //     _self.$Message.error(error)
+                        // }
+                    }
+                    console.log(config)
+                }else{
+                    this.sso = true
+                    console.log("正常登录！")
+                }
             let user = Cookies.get('user')
             let password = Cookies.get('password')
             // console.log(user)

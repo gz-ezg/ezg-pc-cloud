@@ -117,7 +117,7 @@
             </Col>
         </Row>
         <div class="market_hover">
-            <Card style="width:60px;height:140px;">
+            <Card style="width:60px;height:190px;">
                 <!-- <div @click="openCal">
                     <Row>
                         <Col span="24">
@@ -146,13 +146,13 @@
                         </Col>
                     </Row>
                 </div>
-                <!-- <div @click="openCal">
+                <div @click="open_fangan_code">
                     <Row>
                         <Col span="24">
-                            <Icon type="android-contacts" size="28" ></Icon><p style="font-size:10px" >公司交易</p>
+                            <Icon type="android-contacts" size="28" ></Icon><p style="font-size:10px" >方案</p>
                         </Col>
                     </Row>
-                </div> -->
+                </div>
             </Card>
         </div>
         <Modal
@@ -257,6 +257,18 @@
                 </Row>
                 <div slot="footer"></div>
             </Modal>
+            <Modal
+                title="方案工具二维码"
+                v-model="openFangAnCode"
+                width="300"
+            >
+                <Row>
+                    <center>
+                        <img src="../../../images/saomahuoqufangan.jpg" alt="">
+                    </center>
+                </Row>
+                <div slot="footer"></div>
+            </Modal>
             <team-total-sum></team-total-sum>
             <person-history></person-history>
     </div>
@@ -284,6 +296,7 @@ export default {
                 }
             };
         return{
+            openFangAnCode:false,
             openPayCode:false,
             week_loading:false,
             day_loading:false,
@@ -504,6 +517,9 @@ export default {
         },
         open_pay_code(){
             this.openPayCode = true
+        },
+        open_fangan_code(){
+            this.openFangAnCode = true
         }
     },
     created(){

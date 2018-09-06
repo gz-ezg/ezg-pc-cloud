@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div>
         <Table 
             highlight-row 
             :data="tableShowData" 

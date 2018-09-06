@@ -421,6 +421,16 @@ export const appRouter = [
                     require(['@/views/cluesLibrary/cluesLabelManagement/cluesLabels.vue'], resolve);
                 }
             },
+            {
+                access: 6099,
+                meta: 6099,
+                path: 'cluelibrarytemplate',
+                title: '线索模板',
+                name: 'clueLibraryTemplate_index',
+                component: resolve => {
+                    require(['@/views/cluesLibrary/clueLibraryTemplate/index.vue'], resolve);
+                }
+            },
         ]
     },
     {
