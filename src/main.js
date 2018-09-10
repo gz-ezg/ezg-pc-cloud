@@ -223,42 +223,44 @@ Vue.prototype.$Post = function(url, config, success, fail){
 Vue.prototype.$GetDataCenter = function(params, finish){
     let _self = this
     // console.log(params)
-    // let result = {}
-    // let temp_params = params.split(",")
-    // // console.log(temp_params)
-    // for(let i = 0; i<temp_params.length;i++){
-    //     if(_self.$store.state.user.typegroup.hasOwnProperty(temp_params[i])){
-    //         // console.log(temp_params[i])
-    //         // console.log(_self.$store.state.user.typegroup[temp_params[i]])
-    //         let temp = {}
-    //         temp[temp_params[i]]= _self.$store.state.user.typegroup[temp_params[i]]
-    //         // console.log(temp)
-    //         result = Object.assign(result, temp);
-    //         // console.log(temp_params)
-    //         temp_params.splice(i,1)
-    //     }
-    // }
-    // let config = {
-    //     params:{
-    //         groupCodes: temp_params.join(",")
-    //     }
-    // }
-    let config = {
-        params:{
-            groupCodes: params
+    let result = {}
+    let temp_params = params.split(",")
+    // console.log(temp_params)
+    for(let i = 0; i<temp_params.length;i++){
+        if(_self.$store.state.user.typegroup.hasOwnProperty(temp_params[i])){
+            // console.log("111")
+            // console.log(temp_params[i])
+            // console.log(_self.$store.state.user.typegroup[temp_params[i]])
+            let temp = {}
+            temp[temp_params[i]]= _self.$store.state.user.typegroup[temp_params[i]]
+            // console.log(temp)
+            result = Object.assign(result, temp);
+            // console.log(temp_params)
+            temp_params.splice(i,1)
+            i = i - 1
         }
     }
+    let config = {
+        params:{
+            groupCodes: temp_params.join(",")
+        }
+    }
+    // let config = {
+    //     params:{
+    //         groupCodes: params
+    //     }
+    // }
     // console.log(config.params)
     let url = `api/system/tsType/queryTsTypeByGroupCodes`
     
-    if(config.params){
+    if(temp_params.length){
         this.$http.get(url, config).then(function(res){
             // _self.$backToLogin(res)
             if(res.data.msgCode == "40000"){
-                // res.data.data = Object.assign(result, res.data.data);
+                _self.$store.commit('set_typegrounp', res.data.data);
+                res.data.data = Object.assign(result, res.data.data);
                 // console.log(res)
                 finish(res)
-                // _self.$store.commit('set_typegrounp', res.data.data);
                 // console.log(_self.$store.state.user.typegroup.area)
             }else{
                 _self.$Message.error("请求异常！")
@@ -267,6 +269,8 @@ Vue.prototype.$GetDataCenter = function(params, finish){
             console.log(err)
             _self.$Message.error("网络异常！")
         })
+    }else{
+        // console.log("111")
     }
 }
 

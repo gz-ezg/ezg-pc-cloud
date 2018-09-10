@@ -80,6 +80,7 @@
     "less-loader": "^4.0.5",
     "node-sass": "^4.7.2",
     "portfinder": "^1.0.17",
+    "prerender-spa-plugin": "^3.4.0",
     "sass-loader": "^6.0.6",
     "semver": "^5.4.1",
     "style-loader": "^0.19.1",

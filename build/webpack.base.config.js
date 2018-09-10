@@ -3,7 +3,8 @@ const os = require('os');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HappyPack = require('happypack');
-var happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
+// const PrerenderSPAPlugin = require('prerender-spa-plugin')
 
 function resolve (dir) {
     return path.join(__dirname, dir);
@@ -104,6 +105,12 @@ module.exports = {
             $: "jquery",
             jQuery: "jquery"
         }),
+        // new PrerenderSPAPlugin({
+        //     // Required - The path to the webpack-outputted app to prerender.
+        //     staticDir: path.join(__dirname, '../dist'),
+        //     // Required - Routes to render.
+        //     routes: [ '/login' ],
+        //   })
 
     ],
     resolve: {
