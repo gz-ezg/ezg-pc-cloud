@@ -63,6 +63,7 @@
                 <Button type="primary" icon="ios-color-wand-outline" @click="fuwuxiang">查看会计到家服务项目</Button>
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="kjfw">会计到家服务</Button> -->
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="yfwjh">查看服务计划</Button> -->
+                <Button type="primary" icon="ios-color-wand-outline" @click="openFieldByCompanyId">外勤详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="ydzj">查看月度总结</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
             </ButtonGroup>
@@ -495,6 +496,16 @@
             selectrow(a) {
                 let _self = this
                 _self.id = a
+            },
+            openFieldByCompanyId(){
+                let _self = this
+
+                if (!_self.id) {
+                    this.$Message.warning('请选择要查看的项目！')
+                } else {
+                    console.log(_self.id)
+                    _self.$bus.emit('OPEN_FIELD_LIST_BY_COMPANYID', [_self.id.company_id,_self.id.companyname])
+                }
             }
         },
         mounted() {

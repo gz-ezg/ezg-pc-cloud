@@ -50,7 +50,7 @@
                 <Button type="primary" icon="information-circled" @click="fpkj">变更会计</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="setLevel">设置财务等级</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="openFollow">服务详情</Button>
-                <!-- <Button type="primary" icon="ios-color-wand-outline" @click="openFieldByCompanyId">外勤详情</Button> -->
+                <Button type="primary" icon="ios-color-wand-outline" @click="openFieldByCompanyId">外勤详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="open_change_log">变更日志</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
             </ButtonGroup>

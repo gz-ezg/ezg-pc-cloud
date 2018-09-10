@@ -1,7 +1,11 @@
 import Cookies from 'js-cookie';
 
 const user = {
-    state: {},
+    state: {
+        typegroup:{
+            
+        }
+    },
     mutations: {
         logout (state, vm) {
             Cookies.remove('user');
@@ -19,6 +23,11 @@ const user = {
             if (theme) {
                 localStorage.theme = theme;
             }
+        },
+        set_typegrounp(state, type){
+            state.typegroup = Object.assign(state.typegroup,type);
+            // console.log(state.typegroup.area)
+            
         }
     }
 };

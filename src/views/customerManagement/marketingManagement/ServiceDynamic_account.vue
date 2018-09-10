@@ -29,8 +29,8 @@
             <span class="expand-value">{{ row.accmanager_realname }}</span>
             </Col>
             <Col span="8">
-            <span class="expand-key">已服务时长: </span>
-            <span class="expand-value">{{ row.service_time }}</span>
+            <span class="expand-key">累计外勤数量: </span>
+            <span class="expand-value">{{ row.legwork_valid_num }}</span>
             </Col>
         </Row>
         <Row>

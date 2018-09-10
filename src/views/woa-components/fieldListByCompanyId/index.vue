@@ -151,11 +151,7 @@ export default {
             }
 
             function fail(err){
-                if(err.data.msg == "该企业没有周期性产品"){
-                    _self.$Message.error(err.data.msg)
-                }else{
-                    _self.$Message.error(err)
-                }
+                _self.$Message.error(err)
             }
             this.$Get(url, config, success, fail)
         },
@@ -170,6 +166,7 @@ export default {
     },
     created(){
         let _self = this
+        this.$bus.off('OPEN_FIELD_LIST_BY_COMPANYID')
         this.$bus.on('OPEN_FIELD_LIST_BY_COMPANYID',(e)=>{
             _self.companyId = e[0]
             _self.companyName = e[1]

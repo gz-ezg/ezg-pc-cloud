@@ -10,8 +10,8 @@
                 <Row :gutter="16">
                     <Col span="22">                                       
                         <FormItem prop="Type" label="文件类别：">
-                            <Select transfer v-model="row.Type" placeholder="" size="small">
-                                <Option v-for="(item,index) in selectType" :key=index :value="item.typecode" >{{item.typename}}</Option>
+                            <Select transfer v-model="row.Type" placeholder="">
+                                <Option v-for="(item,index) in selectType" :key=index :value="item.typecode">{{item.typename}}</Option>
                             </Select>
                         </FormItem>
                     </Col>                    
@@ -19,7 +19,7 @@
                 <Row :gutter="16">
                     <Col span="22">                   
                         <FormItem prop="fileName" label="文件名称：">
-                            <Input type="text" v-model="row.fileName" size="small" >
+                            <Input type="text" v-model="row.fileName"  >
                             </Input>
                         </FormItem>
                     </Col>                    
@@ -27,15 +27,7 @@
                 <Row :gutter="16">
                     <Col span="22">
                         <FormItem prop="fileMemo" label="文件说明：">
-                            <Input type="text" v-model="row.fileMemo"  size="small">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="22">
-                        <FormItem prop="sourceurl" label="视频地址：">
-                            <Input type="text" v-model="row.sourceurl" size="small" >
+                            <Input type="text" v-model="row.fileMemo" >
                             </Input>
                         </FormItem>
                     </Col>
@@ -60,8 +52,7 @@ export default {
                 fileName:"",
                 fileMemo:"",
                 id:"",
-                Type:"",
-                sourceurl:""
+                Type:""
             },
             row_rule:{
                 fileName:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
@@ -84,18 +75,44 @@ export default {
             })
         },
         submit(){
-            // let url = ""
-            // let config = ""
+            let url = ""
+            let config = ""
             let _self = this
-
-            let url = "api/system/resource/updateSource"
-            let config = {
-                id: _self.row.id.toString(),
-                sourcetype: _self.row.Type,
-                filename: _self.row.fileName,
-                sourcememo: _self.row.fileMemo,
-                sourceurl: _self.row.sourceurl,
-                classify: _self.key
+            if(_self.key == "contract"){
+                url = `api/system/resource/contract/management/update`
+                config = {
+                        id: _self.row.id.toString(),
+                        contracttype: _self.row.Type,
+                        filename: _self.row.fileName,
+                        filememo: _self.row.fileMemo
+                }   
+            }
+            if(_self.key == "company"){
+                    url = `api/system/resource/company/resource/update`
+                    config = {
+                        id: _self.row.id.toString(),
+                        resourcetype: _self.row.Type,
+                        filename: _self.row.fileName,
+                        resourcememo: _self.row.fileMemo
+                    }   
+            }
+            if(_self.key == "learn"){
+                    url = `api/system/resource/learn/source/update`
+                    config = {
+                        id: _self.row.id.toString(),
+                        resourcetype: _self.row.Type,
+                        filename: _self.row.fileName,
+                        resourcememo: _self.row.fileMemo
+                    }   
+            }
+            if(_self.key == "depart"){
+                    url = `api/system/resource/depart/resource/manager/update`
+                    config = {
+                        id: _self.row.id.toString(),
+                        resourcetype: _self.row.Type,
+                        filename: _self.row.fileName,
+                        filememo: _self.row.fileMemo
+                    }   
             }
             this.$http.post(url,config).then(function(res){
                 //   console.log(res)
@@ -114,30 +131,31 @@ export default {
             this.row.fileMemo = ""
             this.row.id = ""
             this.row.contractType = ""
-            this.row.sourceurl = ""
             this.isEdit = false
         }  
         },
         created () {
             let _self = this
-            Bus.$off('Open_material_house_edit')
             Bus.$on('Open_material_house_edit',(e)=>{
-                console.log(e)
-                _self.selectType = e[1]        
+                _self.selectType = e[1]            
                 _self.key = e[2]
+                if(e[2]=="contract"){
+                    _self.row.id = e[0].id
+                    _self.row.fileName = e[0].fileName
+                    _self.row.fileMemo = e[0].fileMemo
+                    _self.row.Type = e[0].contractType
+                }
                 if(e[2]=="depart"){
                     _self.row.id = e[0].id
-                    _self.row.fileName = e[0].filename
-                    _self.row.fileMemo = e[0].sourcememo
-                    _self.row.Type = e[0].sourcetype
-                    _self.row.sourceurl = e[0].sourceurl
+                    _self.row.fileName = e[0].fileName
+                    _self.row.fileMemo = e[0].fileMemo
+                    _self.row.Type = e[0].resourceType
                 }
-                if(e[2]=="company"){
+                if(e[2]=="company" || e[2]=="learn"){
                     _self.row.id = e[0].id
-                    _self.row.fileName = e[0].filename
-                    _self.row.fileMemo = e[0].sourcememo
-                    _self.row.Type = e[0].sourcetype
-                    _self.row.sourceurl = e[0].sourceurl
+                    _self.row.fileName = e[0].fileName
+                    _self.row.fileMemo = e[0].resourceMemo
+                    _self.row.Type = e[0].resourceType
                 }
                 // console.log(_self.row)
                 _self.isEdit = true

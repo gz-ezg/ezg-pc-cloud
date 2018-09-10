@@ -1699,6 +1699,7 @@
                     let button = $("div[name='firstProperty']").find("button[class='active']")
                     if (button[0].id != _self.lastFirstPropertyValue) {
                         _self.lastFirstPropertyValue = button[0].id
+                        console.log(_self.lastFirstPropertyValue)
                         // 重置属性
                         let _sku_p_value, _sku_p, i, j
                         if (_self.productSKU) {
@@ -2189,12 +2190,12 @@
                                     _data.payDir = _self.formValidate.payDir
                                     _data.orderPayNumber = _self.formValidate.orderPayNumber
                                     _data.GDSreport = _self.formValidate.GDSreport
-                                    for(let i = 0; i<_self.orderItemList.length; i++){
-                                        if(_self.orderItemList[i].skuid == 1047 || _self.orderItemList[i].skuid == 1048 || _self.orderItemList[i].skuid == 1049 || _self.orderItemList[i].skuid == 1050){
-                                            _self.orderItemList[i].productnumber = _self.orderItemList[i].productnumber * 12
-                                        }
-                                    }
-                                    console.log(_self.orderItemList)
+                                    // for(let i = 0; i<_self.orderItemList.length; i++){
+                                    //     if(_self.orderItemList[i].skuid == 1047 || _self.orderItemList[i].skuid == 1048 || _self.orderItemList[i].skuid == 1049 || _self.orderItemList[i].skuid == 1050){
+                                    //         _self.orderItemList[i].productnumber = _self.orderItemList[i].productnumber * 12
+                                    //     }
+                                    // }
+                                    // console.log(_self.orderItemList)
 
                                     _data.orderitems = JSON.stringify(_self.orderItemList)
                                     _data.payTime = _self.StartTime1

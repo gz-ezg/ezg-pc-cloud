@@ -131,7 +131,8 @@
                     // alert(JSON.stringify(re.data.data.interfaces))
                     localStorage.setItem("access_array",JSON.stringify(re.data.data.interfaces))
                     Cookies.set('operations', (re.data.data.operations).join());
-                    // window.location.reload();
+                    //  确保菜单重新生成，防止菜单组件被缓存
+                    window.location.reload();
                     setTimeout(() => {
                         _self.$router.push({
                             name: 'home_index'

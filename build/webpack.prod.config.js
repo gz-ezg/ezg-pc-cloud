@@ -26,6 +26,8 @@ module.exports = merge(webpackBaseConfig, {
         filename: '[name].[chunkhash].js',
         chunkFilename: '[name].[chunkhash].chunk.js'
     },
+    //  开启远程调试时使用,默认注释 
+    // devtool: '#source-map',
     plugins: [
         new cleanWebpackPlugin(['dist/*'], {
             root: path.resolve(__dirname, '../')

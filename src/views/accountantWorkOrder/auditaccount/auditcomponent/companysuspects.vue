@@ -26,7 +26,7 @@ export default {
                     align: 'center'
                 },
                 {
-                    title:' 企业疑点内容',
+                    title:' 会计疑点',
                     key:'name',
                 },
                 {

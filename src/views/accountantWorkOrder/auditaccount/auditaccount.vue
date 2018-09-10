@@ -31,12 +31,12 @@
                             <Card style="height:400px;"><companysupects-chart></companysupects-chart></Card></Col>             
                     </Row> -->
                 </TabPane>
-                <TabPane label="企业疑点" name="name2">
+                <TabPane label="会计疑点" name="name2">
                     <Row :gutter="20" style="margin-top:20px" >
                         <Col><Card><companylist  :date="auditdate" :disposes="disposes_map" :id="companyId" @OPENDEATAIL="open_detail"></companylist></Card></Col>
                     </Row>
                 </TabPane>
-                <TabPane label="会计疑点" name="name3">
+                <TabPane label="企业疑点" name="name3">
                     <Row :gutter="20" style="margin-top:20px" >
                         <Col><Card><auditlist :date="auditdate"  :id="accountId" @OPENDEATAIL="open_detail" :disposes="disposes_map"></auditlist></Card></Col>
                     </Row>

@@ -35,14 +35,14 @@
                 </Row>
                 <Row :gutter="16">
                     <Col span="12">
-                        <FormItem prop="companyfname" label="异常情况（企业）：">
+                        <FormItem prop="companyfname" label="异常情况（财务）：">
                             <Input type="textarea" v-html="detail.companyfname" readonly>
                             </Input>
                             <!-- <div v-html="detail.companyfname" style="border:#D3D3D3 solid 1px；padding:5px"></div> -->
                         </FormItem> 
                     </Col>
                     <Col span="12">
-                        <FormItem prop="acconterfname" label="异常情况（财务）：">
+                        <FormItem prop="acconterfname" label="异常情况（企业）：">
                             <Input type="textarea" v-html="detail.acconterfname" readonly>
                             </Input>
                         </FormItem> 

@@ -42,11 +42,16 @@
                                             <Col span="8">
                                             <FormItem label="线索类型：" prop="clueType">                  
                                                 <Select transfer v-model="SearchValidate.clueType" size="small">
-                                                    <Option value="ybxs">普通</Option>
-                                                    <Option value="qdxs">渠道</Option>
-                                                    <Option value="kjxs">会计线索</Option>
+                                                    <Option v-for="item in cluetype" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
                                                 </Select>
                                             </FormItem>
+                                            </Col>
+                                            <Col span="8">
+                                                <FormItem label="线索级别：" prop="clueLevel">
+                                                    <Select transfer v-model="SearchValidate1.clueLevel" size="small" >
+                                                        <Option v-for="item in clue_level" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
+                                                    </Select>
+                                                </FormItem>
                                             </Col>
                                             <Col span="8">
                                                 <FormItem label="创建时间：" prop="date">
@@ -54,17 +59,6 @@
                                                 </FormItem>
                                             </Col>
                                         </Row>
-                                        <!-- <Row :gutter="16" style="height:56px">
-                                            
-                                                                                <Col span="12">
-                                            <FormItem label="线索状态：" prop="clueStatus">
-                                                <Select transfer v-model="SearchValidate.clueStatus" transfer>
-                                                    <Option value="未领取">未领取</Option>
-                                                    <Option value="已领取">已领取</Option>
-                                                </Select>
-                                            </FormItem> 
-                                            </Col>
-                                        </Row> -->
                                         <center>
                                             <FormItem style="margin-top:10px">
                                                 <Button type="primary" @click="Search">搜索</Button>
@@ -85,14 +79,6 @@
                             <!--<Button type="primary" icon="ios-color-wand-outline" @click="EditClues">编辑</Button>-->
                             <Button v-permission="['cluesLibraryM.n.delete']" type="primary" icon="ios-color-wand-outline" @click="DeleteClues">删除</Button>
                         </ButtonGroup>
-                        <!-- <Poptip
-                            style="float: right"
-                            placement="bottom-end"
-                            @on-popper-show="isSearch(true)"
-                            width="600">
-                        <Button type="text" icon="funnel">筛选</Button>
-                        
-                    </Poptip> -->
                     </Row>
                     <Row style="margin-top: 10px;">
                         <Table
@@ -144,9 +130,7 @@
                                             <Col span="8">
                                                 <FormItem label="线索类型：" prop="clueType">                  
                                                     <Select transfer v-model="SearchValidate1.clueType" size="small" >
-                                                        <Option value="ybxs">普通</Option>
-                                                        <Option value="qdxs">渠道</Option>
-                                                        <Option value="kjxs">会计线索</Option>
+                                                        <Option v-for="item in cluetype" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
                                                     </Select>
                                                 </FormItem>
                                             </Col>
@@ -156,22 +140,20 @@
                                                 </FormItem>
                                             </Col>
                                             <Col span="8">
+                                                <FormItem label="线索级别：" prop="clueLevel">
+                                                    <Select transfer v-model="SearchValidate1.clueLevel" size="small" >
+                                                        <Option v-for="item in clue_level" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
+                                                    </Select>
+                                                </FormItem>
+                                            </Col>
+                                        </Row>
+                                        <Row :gutter="16" style="height:56px">
+                                            <Col span="8">
                                                 <FormItem label="创建时间：" prop="date">
                                                     <DatePicker placement="bottom-end" transfer type="daterange" style="width:100%"  size="small" v-model="SearchValidate1.date"></DatePicker>
                                                 </FormItem>
                                             </Col>
                                         </Row>
-                                        <!-- <Row :gutter="16" style="height:56px">
-                                            
-                                                                                <Col span="12">
-                                            <FormItem label="线索状态：" prop="clueStatus">
-                                                <Select transfer v-model="SearchValidate.clueStatus"  transfer>
-                                                    <Option value="未领取">未领取</Option>
-                                                    <Option value="已领取">已领取</Option>
-                                                </Select>
-                                            </FormItem> 
-                                            </Col>
-                                        </Row> -->
                                         <center>
                                             <FormItem style="margin-top:10px">
                                                 <Button type="primary" @click="Search1">搜索</Button>
@@ -189,14 +171,6 @@
                         <ButtonGroup>
                             <Button v-permission="['cluesLibraryM.y.delete']" type="primary" icon="ios-color-wand-outline" @click="DeleteClues">删除</Button>
                         </ButtonGroup>
-                        <!-- <Poptip
-                            style="float: right"
-                            placement="bottom-end"
-                            @on-popper-show="isSearch(true)"
-                            width="600">
-                        <Button type="text" icon="funnel">筛选</Button>
-                        
-                    </Poptip> -->
                     </Row>
                     <Row style="margin-top: 10px;">
                         <Table
@@ -477,7 +451,8 @@ import flowVue from '../../woa-components/next/flow.vue';
                     clueStatus:'',
                     clueType:'',
                     date:'',
-                    rrealname:''
+                    rrealname:'',
+                    clueLevel:''
                 },
                 //  未领取的线索
                 ishandleSubmit:false,                
@@ -487,7 +462,8 @@ import flowVue from '../../woa-components/next/flow.vue';
                     crealname:'',
                     clueStatus:'',
                     clueType:'',
-                    date:''
+                    date:'',
+                    clueLevel:''
                 },
                 addTag: false,
                 isEidt: false,
@@ -568,6 +544,11 @@ import flowVue from '../../woa-components/next/flow.vue';
                         width: 100,
                     },
                     {
+                        title: '线索详情',
+                        key: 'memo',
+                        width: 300,
+                    },
+                    {
                         title: '线索创建时间',
                         key: 'createdate',
                         width: 160,
@@ -583,25 +564,30 @@ import flowVue from '../../woa-components/next/flow.vue';
                         width: 100,
                     },*/
                     {
-                        title:'客户类型',
+                        title: '线索级别',
+                        key: 'clue_level',
+                        width: 120
+                    },
+                    {
+                        title: '客户类型',
                         key:'type',
                         width:120
                     },
-                    {
-                        title: '线索标签',
-                        key: 'labelName',
-                        width: 300,
-                    },
+                    // {
+                    //     title: '线索标签',
+                    //     key: 'labelName',
+                    //     width: 200,
+                    // },
                     {
                         title: '线索类型',
                         key: 'cluestype',
                         width: 100,
                     },
-                    {
-                        title: '线索说明',
-                        key: 'memo',
-                        width: 200,
-                    },
+                    // {
+                    //     title: '线索说明',
+                    //     key: 'memo',
+                    //     width: 300,
+                    // },
                     {
                         title: '操作',
                         align: 'center',
@@ -651,6 +637,11 @@ import flowVue from '../../woa-components/next/flow.vue';
                         width: 100,
                     },
                     {
+                        title: '线索详情',
+                        key: 'memo',
+                        width: 300,
+                    },
+                    {
                         title: '线索创建时间',
                         key: 'createdate',
                         width: 160,
@@ -666,19 +657,19 @@ import flowVue from '../../woa-components/next/flow.vue';
                         width: 100,
                     },
                     {
-                        title: '线索标签',
-                        key: 'labelName',
-                        width: 150,
+                        title: '线索级别',
+                        key: 'clue_level',
+                        width: 120
                     },
+                    // {
+                    //     title: '线索标签',
+                    //     key: 'labelName',
+                    //     width: 150,
+                    // },
                     {
                         title: '线索类型',
                         key: 'cluestype',
                         width: 100,
-                    },
-                    {
-                        title: '线索详情',
-                        key: 'memo',
-                        width: 200,
                     },
                     {
                         title: '操作',
@@ -762,6 +753,8 @@ import flowVue from '../../woa-components/next/flow.vue';
                 pageTotal22: new Number(),
                 allUser: [],
                 cluetype: [],
+                clue_level: [],
+                clue_level_map:new Map()
             }
         },
         methods: {
@@ -805,17 +798,14 @@ import flowVue from '../../woa-components/next/flow.vue';
                     var temp = res.data.data;
                     _self.allUser = temp;
                 });
-                // var url2 = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes?groupCodes=cluetype`;
-                // this.$http.get(url2).then(function(res) {
-                //     var temp = res.data.data;
-                //     _self.cluetype = temp.cluetype
-                // });
 
-                let params = "cluetype"
+                let params = "cluetype,clue_level"
 
                 function finish(res){
                     var temp = res.data.data;
                     _self.cluetype = temp.cluetype
+                    _self.clue_level = temp.clue_level
+                    _self.clue_level_map = _self.$array2map(_self.clue_level)
                 }
 
                 this.$GetDataCenter(params, finish)
@@ -844,9 +834,9 @@ import flowVue from '../../woa-components/next/flow.vue';
                     var config = {
                         params:{
                             receipt:'N',
-                            isAudit:'Y',
-                            sortField:'id',
-                            order:'desc',
+                            // isAudit:'Y',
+                            sortField:'clue_level',
+                            order:'asc',
                             page:_self.paget,
                             pageSize:_self.pageSizet,
                             customerName:_self.SearchValidate.customerName,
@@ -902,6 +892,7 @@ import flowVue from '../../woa-components/next/flow.vue';
                             createby: (response.data.data.rows[i].crealname),
                             labelName: response.data.data.rows[i].labelname,
                             createdate: response.data.data.rows[i].createdate,
+                            clue_level: _self.clue_level_map.get(response.data.data.rows[i].clue_level)
                         })
                     }
                 }
@@ -921,8 +912,8 @@ import flowVue from '../../woa-components/next/flow.vue';
                         params:{
                             receipt:'Y',
                             // isAudit:'Y',
-                            sortField:'id',
-                            order:'desc',
+                            sortField:'clue_level',
+                            order:'asc',
                             page:_self.pagey,
                             pageSize:_self.pageSizey,
                             customerName:_self.SearchValidate1.customerName,
@@ -930,16 +921,10 @@ import flowVue from '../../woa-components/next/flow.vue';
                             crealname:_self.SearchValidate1.crealname,
                             bcreatedate:DateFormat(_self.SearchValidate1.date[0]),
                             ecreatedate:DateFormat(_self.SearchValidate1.date[1]),
-                            // clueStatus:_self.SearchValidate.clueStatus,
                             clueType:_self.SearchValidate1.clueType,
                             rrealname:_self.SearchValidate1.rrealname
                         }
                     }
-                //     for (var key in _self.SearchValidate1) {
-                //     if (_self.SearchValidate1[key] == "" || _self.SearchValidate1[key] == null) {
-                //     delete config.params[key];
-                //     }
-                // }
                 _self.tableData2 = []
 
                 function doSuccess(response) {
@@ -961,6 +946,7 @@ import flowVue from '../../woa-components/next/flow.vue';
                         } else {
                             _tel = response.data.data.rows[i].customer_tel
                         }
+                        // console.log(_self.clue_level_map)
                         _self.tableData2.push({
                             type: type,
                             id: response.data.data.rows[i].id,
@@ -980,6 +966,7 @@ import flowVue from '../../woa-components/next/flow.vue';
                             createby: response.data.data.rows[i].crealname,
                             labelName: response.data.data.rows[i].labelname,
                             createdate: response.data.data.rows[i].createdate,
+                            clue_level: _self.clue_level_map.get(response.data.data.rows[i].clue_level)
                         })
                     }
                 }
@@ -1373,21 +1360,32 @@ import flowVue from '../../woa-components/next/flow.vue';
                 //     _self.getTableData()
                 //     _self.getTableData2()
                 // }
-                this.$http.post(url, _data).then(function(res){
-                    console.log(res.data)
-                    if(res.data.msgCode == 40000){
-                        _self.$Message.success('领取成功!')
-                        _self.getTableData()
-                        _self.getTableData2()
-                    }else{
-                        if(res.data.msgCode == 50000){
-                            _self.$Message.warning("您不在候选人名单，无法领取！")
-                        }else{
-                            _self.$Message.warning("领取失败！")
-                        }
+
+                function success(res){
+                    _self.getTableData()
+                    _self.getTableData2()
+                }
+
+                function fail(err){
+
+                }
+                // this.$http.post(url, _data).then(function(res){
+                //     console.log(res.data)
+                //     if(res.data.msgCode == 40000){
+                //         _self.$Message.success('领取成功!')
+                //         _self.getTableData()
+                //         _self.getTableData2()
+                //     }else{
+                //         if(res.data.msgCode == 50000){
+                //             _self.$Message.warning("您不在候选人名单，无法领取！")
+                //         }else{
+                //             _self.$Message.warning("领取失败！")
+                //         }
                         
-                    }
-                })
+                //     }
+                // })
+
+                this.$Post(url, config, success, fail)
                 // this.PostData(url, _data, doSuccess)
             },
 

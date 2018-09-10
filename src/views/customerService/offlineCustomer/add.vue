@@ -606,7 +606,8 @@
 
                         let config = {
                             id: res.data.data.cycleid,
-                            serviceStatus: "stop"
+                            serviceStatus: "stop",
+                            downlinePeriod: _self.task_message.taxperiod
                         }
 
                         function success(res){

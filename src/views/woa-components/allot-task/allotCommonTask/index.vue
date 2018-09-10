@@ -485,13 +485,13 @@ import allotAccountService from './allot_accout_service'
                 ],
                 //  未分配表格相关
                 NpageTotal:new Number(),
-                Npage:'1',
-                NpageSize:'10',
+                Npage:1,
+                NpageSize:10,
                 Ndata: [],
                 //  已分配表格相关
                 YpageTotal:new Number(),
-                Ypage:'1',
-                YpageSize:'10',
+                Ypage:1,
+                YpageSize:10,
                 Ydata: [],
             }
         },

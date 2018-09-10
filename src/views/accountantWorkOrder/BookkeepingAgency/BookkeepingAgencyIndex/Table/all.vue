@@ -65,6 +65,7 @@
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="zlwc" v-if="zl">资料完成</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="zzwc" v-if="zz">做账完成</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="bswc" v-if="bs">报税完成</Button> -->
+                <Button type="primary" icon="ios-color-wand-outline" @click="openFieldByCompanyId">外勤详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
             </ButtonGroup>
             <Poptip
@@ -481,7 +482,9 @@
                         function doSuccess() {
                             _self.$Message.success('成功开始服务')
                             _self.page = 1
-                            _self.getData()
+                            setTimeout(function(){
+                                _self.getData()
+                            },1000)
                         }
 
                         _self.PostData(url, _data, doSuccess)
@@ -624,6 +627,16 @@
                 let _self = this
                 let temp = JSON.parse(localStorage.getItem("global_datacenter"))
                 _self.managestatus = temp
+            },
+            openFieldByCompanyId(){
+                let _self = this
+
+                if (!_self.id) {
+                    this.$Message.warning('请选择要查看的项目！')
+                } else {
+                    // console.log(_self.id)
+                    _self.$bus.emit('OPEN_FIELD_LIST_BY_COMPANYID', [_self.id.company_id,_self.id.CompanyName])
+                }
             }
         },
         mounted() {

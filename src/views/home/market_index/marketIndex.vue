@@ -117,14 +117,17 @@
             </Col>
         </Row>
         <div class="market_hover">
-            <Card style="width:60px;height:190px;">
-                <!-- <div @click="openCal">
+            <Card style="width:60px;height:250px;">
+                <div @click="open_clue" style="margi-bottom:10px">
                     <Row>
                         <Col span="24">
-                            <Icon type="clipboard" size="36"></Icon><p style="font-size:10px" >方案</p>
+                            <Badge :count="clueNumber">
+                                <Icon type="android-share-alt" size="32"></Icon>
+                            </Badge>
+                            <p style="font-size:10px" >线索</p>
                         </Col>
                     </Row>
-                </div> -->
+                </div>
                 <div @click="openCal">
                     <Row>
                         <Col span="24">
@@ -296,6 +299,8 @@ export default {
                 }
             };
         return{
+            //  线索数量
+            clueNumber: 0,
             openFangAnCode:false,
             openPayCode:false,
             week_loading:false,
@@ -520,12 +525,42 @@ export default {
         },
         open_fangan_code(){
             this.openFangAnCode = true
+        },
+        open_clue(){
+            setTimeout(() => {
+                this.$router.push({
+                    name: 'cluesLibrary_index'
+                });
+            }, 500)
+        },
+        get_clue_number(){
+            let url = 'api/clue/list'
+
+            let _self = this
+
+            let config = {
+                params:{
+                    receipt:"N",
+                    page: 1,
+                    pageSize: 1
+                }
+            }
+
+            function success(res){
+                _self.clueNumber = res.data.data.total
+            }
+
+            function fail(err){
+                _self.clueNumber = 0
+            }
+
+            this.$Get(url, config, success, fail)
         }
     },
     created(){
         let _self = this
         // console.log(this.$route.path)
-        
+        _self.get_clue_number()
         if(this.$route.path == "/allindex/marketIndex"){
             // console.log("111")
         }else{

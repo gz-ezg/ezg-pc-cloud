@@ -155,25 +155,25 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    {
-        path: '/test',
-        icon: 'social-windows',
-        name: 'test',
-        title: 'Test',
-        component: Main,
-        children: [
-            {
-                path: 'test',
-                title: '测试页面',
-                name: 'test_index',
-                component: resolve => {
-                    require(['@/views/test/components/main.vue'], resolve);
-                    // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+    // {
+    //     path: '/test',
+    //     icon: 'social-windows',
+    //     name: 'test',
+    //     title: 'Test',
+    //     component: Main,
+    //     children: [
+    //         {
+    //             path: 'test',
+    //             title: '测试页面',
+    //             name: 'test_index',
+    //             component: resolve => {
+    //                 require(['@/views/test/components/main.vue'], resolve);
+    //                 // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-                }
-            }
-        ]
-    },
+    //             }
+    //         }
+    //     ]
+    // },
     // {
     //     path: '/allindex',
     //     icon: 'social-windows',
@@ -1145,17 +1145,7 @@ export const appRouter = [
                 title: '公司资料',
                 name: 'CompanyInformation_index',
                 component: resolve => {
-                    require(['@/views/material-house/CompanyInformation/CompanyInformation.vue'], resolve);
-                }
-            },
-            {
-                access: 6067,
-                meta: 6067,
-                path: 'contractType',
-                title: '合同类型',
-                name: 'contractType_index',
-                component: resolve => {
-                    require(['@/views/material-house/contractType/contractType.vue'], resolve);
+                    require(['@/views/material-house/companyMaterial/index.vue'], resolve);
                 }
             },
             {
@@ -1165,29 +1155,59 @@ export const appRouter = [
                 title: '部门资料',
                 name: 'DepartmentInformation_index',
                 component: resolve => {
-                    require(['@/views/material-house/DepartmentInformation/DepartmentInformation.vue'], resolve);
+                    require(['@/views/material-house/departMaterial/index.vue'], resolve);
                 }
             },
-            {
-                access: 6069,
-                meta: 6069,
-                path: 'LearningInformation',
-                title: '学习资料',
-                name: 'LearningInformation_index',
-                component: resolve => {
-                    require(['@/views/material-house/LearningInformation/LearningInformation.vue'], resolve);
-                }
-            },
-            {
-                access: 6070,
-                meta: 6070,
-                path: 'VideoData',
-                title: '视频资料',
-                name: 'VideoData_index',
-                component: resolve => {
-                    require(['@/views/material-house/VideoData/VideoData.vue'], resolve);
-                }
-            }
+            // {
+            //     access: 6066,
+            //     meta: 6066,
+            //     path: 'CompanyInformation',
+            //     title: '公司资料',
+            //     name: 'CompanyInformation_index',
+            //     component: resolve => {
+            //         require(['@/views/material-house/CompanyInformation/CompanyInformation.vue'], resolve);
+            //     }
+            // },
+            // {
+            //     access: 6067,
+            //     meta: 6067,
+            //     path: 'contractType',
+            //     title: '合同类型',
+            //     name: 'contractType_index',
+            //     component: resolve => {
+            //         require(['@/views/material-house/contractType/contractType.vue'], resolve);
+            //     }
+            // },
+            // {
+            //     access: 6068,
+            //     meta: 6068,
+            //     path: 'DepartmentInformation',
+            //     title: '部门资料',
+            //     name: 'DepartmentInformation_index',
+            //     component: resolve => {
+            //         require(['@/views/material-house/DepartmentInformation/DepartmentInformation.vue'], resolve);
+            //     }
+            // },
+            // {
+            //     access: 6069,
+            //     meta: 6069,
+            //     path: 'LearningInformation',
+            //     title: '学习资料',
+            //     name: 'LearningInformation_index',
+            //     component: resolve => {
+            //         require(['@/views/material-house/LearningInformation/LearningInformation.vue'], resolve);
+            //     }
+            // },
+            // {
+            //     access: 6070,
+            //     meta: 6070,
+            //     path: 'VideoData',
+            //     title: '视频资料',
+            //     name: 'VideoData_index',
+            //     component: resolve => {
+            //         require(['@/views/material-house/VideoData/VideoData.vue'], resolve);
+            //     }
+            // }
         ]
     },
     {

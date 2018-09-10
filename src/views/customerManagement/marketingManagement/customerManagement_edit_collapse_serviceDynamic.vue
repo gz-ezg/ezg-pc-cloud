@@ -409,6 +409,7 @@
                         temp.createdate = res.data.data.rows[i].createdate
                         temp.updatedate = res.data.data.rows[i].updatedate
                         temp.service_time = res.data.data.rows[i].service_time
+                        temp.legwork_valid_num = res.data.data.rows[i].legwork_valid_num
                         temp._expanded = false
                         _self.data4.push(temp)
                     }
