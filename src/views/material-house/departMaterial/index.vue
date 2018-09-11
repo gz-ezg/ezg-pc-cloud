@@ -145,6 +145,11 @@ export default {
                     width: 120
                 },
                 {
+                    title: '创建部门',
+                    key: 'departname',
+                    width:150
+                },
+                {
                     title: '创建时间',
                     key: 'createdate',
                     width: 120
@@ -264,12 +269,12 @@ export default {
         },
         upload(){
             let _self = this
-            _self.$bus.emit('upload_material_company',[_self.resourceType,"company"])
+            _self.$bus.emit('upload_material_company',[_self.resourceType,"depart"])
         },
         edit(){
             let _self = this
             if(this.local_rows != ""){
-                Bus.$emit('Open_material_house_edit', [_self.local_rows, _self.resourceType,'company'])
+                Bus.$emit('Open_material_house_edit', [_self.local_rows, _self.resourceType,'depart'])
             }else{
                 this.$Message.warning('请选择一行进行编辑！')
             }

@@ -24,7 +24,7 @@ const user = {
                 localStorage.theme = theme;
             }
         },
-        set_typegrounp(state, type){
+        set_typegroup(state, type){
             state.typegroup = Object.assign(state.typegroup,type);
             // console.log(state.typegroup.area)
             

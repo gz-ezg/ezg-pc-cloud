@@ -48,7 +48,7 @@
                                             </Col>
                                             <Col span="8">
                                                 <FormItem label="线索级别：" prop="clueLevel">
-                                                    <Select transfer v-model="SearchValidate1.clueLevel" size="small" >
+                                                    <Select transfer v-model="SearchValidate.clueLevel" size="small" >
                                                         <Option v-for="item in clue_level" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
                                                     </Select>
                                                 </FormItem>
@@ -767,6 +767,7 @@ import flowVue from '../../woa-components/next/flow.vue';
                 _self.SearchValidate.crealname = ''
                 _self.SearchValidate.date = '',
                 _self.SearchValidate.clueType = ''
+                _self.SearchValidate.clueLevel = ""
                 _self.paget = 1
                 _self.getTableData()
             },
@@ -778,6 +779,7 @@ import flowVue from '../../woa-components/next/flow.vue';
                 _self.SearchValidate1.date = '',
                 _self.SearchValidate1.clueType = '',
                 _self.SearchValidate1.rrealname = ''
+                _self.SearchValidate1.clueLevel = ""
                 _self.pagey = 1
                 _self.getTableData2()
             },
@@ -842,6 +844,7 @@ import flowVue from '../../woa-components/next/flow.vue';
                             customerName:_self.SearchValidate.customerName,
                             customerTel:_self.SearchValidate.customerTel,
                             crealname:_self.SearchValidate.crealname,
+                            clueLevel:_self.SearchValidate.clueLevel,
                             bcreatedate:DateFormat(_self.SearchValidate.date[0]),
                             ecreatedate:DateFormat(_self.SearchValidate.date[1]),
                             // clueStatus:_self.SearchValidate.clueStatus,
@@ -919,6 +922,7 @@ import flowVue from '../../woa-components/next/flow.vue';
                             customerName:_self.SearchValidate1.customerName,
                             customerTel:_self.SearchValidate1.customerTel,
                             crealname:_self.SearchValidate1.crealname,
+                            clueLevel:_self.SearchValidate1.clueLevel,
                             bcreatedate:DateFormat(_self.SearchValidate1.date[0]),
                             ecreatedate:DateFormat(_self.SearchValidate1.date[1]),
                             clueType:_self.SearchValidate1.clueType,
@@ -1351,7 +1355,7 @@ import flowVue from '../../woa-components/next/flow.vue';
             lingq(a) {
                 let _self = this
                 let url = 'api/clue/receiptClue'
-                let _data = {
+                let config = {
                     id: a.row.id
                 }
 

@@ -163,6 +163,11 @@
                         key: 'end_period',
                         width: 120
                     },
+                    {
+                        title: '下线税期',
+                        key: 'downline_period',
+                        width: 120
+                    },
                     // {
                     //     title: '收资料',
                     //     key: 'zl',
@@ -351,7 +356,8 @@
                             zl: '',
                             zz: '',
                             bs: '',
-                            cycle_work_order_id:_data.rows[i].cycle_work_order_id                            
+                            cycle_work_order_id:_data.rows[i].cycle_work_order_id,
+                            downline_period:_data.rows[i].downline_period                          
                         })
                     }
                 }

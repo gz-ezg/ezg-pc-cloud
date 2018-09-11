@@ -865,13 +865,23 @@ export const appRouter = [
             {
                 access:6078,
                 meta: 6078,
-                path: 'fieldWarning',
-                title: '外勤预警',
-                name: 'fieldWarning_index',
+                path: 'attendance',
+                title: '个人考勤',
+                name: 'attendance_index',
                 component: resolve => {
-                    require(['@/views/fieldManagement/fieldWarning/fieldWarning.vue'],resolve)
+                    require(['@/views/fieldManagement/attendance/index.vue'],resolve)
                 }
             }
+            // {
+            //     access:6078,
+            //     meta: 6078,
+            //     path: 'fieldWarning',
+            //     title: '外勤预警',
+            //     name: 'fieldWarning_index',
+            //     component: resolve => {
+            //         require(['@/views/fieldManagement/fieldWarning/fieldWarning.vue'],resolve)
+            //     }
+            // }
         ]
     },
     {
