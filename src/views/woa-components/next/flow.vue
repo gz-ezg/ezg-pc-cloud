@@ -117,6 +117,10 @@ export default {
             _self.flow_show = true
             _self.current_row = e
         })
+        _self.$bus.on('myflow',(e)=>{
+            _self.flow_show = true
+            _self.current_row = e
+        })
     }
 }
 </script>

@@ -1,91 +1,154 @@
 <template>
     <div>
-        <Card style="min-width:800px">
-            <!-- <Row> -->
-                <Row style="margin-bottom:10px;">
-                    <Collapse v-model="search_model">
-                            <Panel name="1" >
-                                <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
-                                筛选
-                            
-                            <div slot="content" @keydown.enter="Search">
-                                <Form ref="SearchValidate" :model="SearchValidate" :label-width="80" style="margin-top: 15px">
-                                    <Row :gutter="16" style="height:56px">
-                                        <Col span="8">
-                                        <FormItem label="客户名称：" prop="customer_name">
-                                            <Input v-model="SearchValidate.customer_name" size="small"></Input>
-                                        </FormItem>
-                                        </Col>
-                                        <Col span="8">
-                                        <FormItem label="联系方式：" prop="customer_mobile_phone">
-                                            <Input v-model="SearchValidate.customer_mobile_phone" size="small"></Input>
-                                        </FormItem>
-                                        </Col>
-                                        <Col span="8">
-                                        <FormItem label="客户状态：" prop="customerStatus">
-                                            <Cascader trigger="hover" transfer :data="customerType" v-model="SearchValidate.customerStatus" size="small" style="margin-top:5px;width:100%"></Cascader>  
-                                        </FormItem>
-                                        </Col>
-                                    </Row>
-                                    <Row :gutter="16">
-                                        <Col span="8">
-                                            <FormItem label="区域：" prop="customer_area">
-                                                <Select transfer v-model="SearchValidate.customer_area" @on-change="Search" size="small">
-                                                    <Option value="gz">广州</Option>
-                                                    <Option value="sz">深圳</Option>
-                                                    <Option value="dg">东莞</Option>
-                                                    <Option value="lz">兰州</Option>
-                                                    <Option value="zh">珠海</Option>
-                                                    <Option value="zz">郑州</Option>
-                                                    <Option value="sh">上海</Option>
-                                                    <Option value="zs">中山</Option>
-                                                    <Option value="fs">佛山</Option>
-                                                    <Option value="qt">其他</Option>
-                                                </Select>
-                                            </FormItem>
-                                        </Col>
-                                    </Row>
-                                            <center>
-                                                <FormItem style="margin-top:5px">
-                                                    <Button type="primary" @click="Search">搜索</Button>
-                                                    <Button type="ghost" @click="handleReset('SearchValidate')" style="margin-left: 8px">
-                                                        重置
-                                                    </Button>
+        
+            <Tabs value="name1">
+                <TabPane label="我的客户" name="name1">
+                    <Card style="min-width:800px">
+                    <Row style="margin-bottom:10px;">
+                            <Collapse v-model="search_model">
+                                    <Panel name="1" >
+                                        <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
+                                        筛选
+                                    
+                                    <div slot="content" @keydown.enter="SearchCustomer">
+                                        <Form ref="SearchValidateCustomer" :model="SearchValidateCustomer" :label-width="80" style="margin-top: 15px">
+                                            <Row :gutter="16" style="height:56px">
+                                                <Col span="8">
+                                                <FormItem label="客户名称：" prop="customer_name">
+                                                    <Input v-model="SearchValidateCustomer.customer_name" size="small"></Input>
                                                 </FormItem>
-                                            </center>
-                                </Form>
-                                
-                            </div>
-                        </Panel>
-                    </Collapse>
-                </Row>
-                <ButtonGroup>
-                    <Button v-permission="['channelC.add']" type="primary" icon="plus" @click="getCannelType();modal_add = true">录入</Button>
-                    <!-- <Button v-permission="['channelC.export']" type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button> -->
-                </ButtonGroup>
-            <Row style="margin-top: 10px;">
-                <Table
-                        highlight-row
-                        size="small"
-                        :columns="columns"
-                        :data="data2"
-                        @on-current-change="selectRow"
-                        @on-row-dblclick="examine"
-                        :loading="table_loading"
-                        @on-sort-change="sort"                                                
-                        ></Table>
-                <Page
-                        size="small"
-                        :total="pageTotal"
-                        show-total
-                        show-sizer
-                        show-elevator
-                        :current.sync = "page"
-                        @on-change="pageChange"
-                        @on-page-size-change="pageSizeChange"
-                        style="margin-top: 10px"></Page>
-            </Row>
-        </Card>
+                                                </Col>
+                                                <Col span="8">
+                                                <FormItem label="联系方式：" prop="customer_mobile_phone">
+                                                    <Input v-model="SearchValidateCustomer.customer_mobile_phone" size="small"></Input>
+                                                </FormItem>
+                                                </Col>
+                                            </Row>
+                                                    <center>
+                                                        <FormItem style="margin-top:5px">
+                                                            <Button type="primary" @click="SearchCustomer">搜索</Button>
+                                                            <Button type="ghost" @click="handleReset('SearchValidateCustomer')" style="margin-left: 8px">
+                                                                重置
+                                                            </Button>
+                                                        </FormItem>
+                                                    </center>
+                                        </Form>
+                                    </div>
+                                </Panel>
+                            </Collapse>
+                        </Row>
+                    <Row style="margin-top: 10px;">
+                        <Table
+                                highlight-row
+                                size="small"
+                                :columns="customerColumns"
+                                :data="customerData"
+                                @on-current-change="selectRow"
+                                @on-row-dblclick="examine"
+                                :loading="customerLoading"                                            
+                                ></Table>
+                        <Page
+                                size="small"
+                                :total="customerTotal"
+                                show-total
+                                show-elevator
+                                :current.sync = "customerPage"
+                                @on-change="pageChangeCustomer"
+                                style="margin-top: 10px;margin-bottom:10px"></Page>
+                        </Row>
+                        </Card>
+                </TabPane>
+                <TabPane label="已领取" name="name2">
+                    <Card style="min-width:800px">
+                    <Row style="margin-bottom:10px;">
+                            <Collapse v-model="search_model">
+                                    <Panel name="1" >
+                                        <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
+                                        筛选
+                                    
+                                    <div slot="content" @keydown.enter="Search">
+                                        <Form ref="SearchValidate" :model="SearchValidate" :label-width="80" style="margin-top: 15px">
+                                            <Row :gutter="16" style="height:56px">
+                                                <Col span="8">
+                                                <FormItem label="客户名称：" prop="customer_name">
+                                                    <Input v-model="SearchValidate.customer_name" size="small"></Input>
+                                                </FormItem>
+                                                </Col>
+                                                <Col span="8">
+                                                <FormItem label="联系方式：" prop="customer_mobile_phone">
+                                                    <Input v-model="SearchValidate.customer_mobile_phone" size="small"></Input>
+                                                </FormItem>
+                                                </Col>
+                                                <Col span="8">
+                                                <FormItem label="客户状态：" prop="customerStatus">
+                                                    <Cascader trigger="hover" transfer :data="customerType" v-model="SearchValidate.customerStatus" size="small" style="margin-top:5px;width:100%"></Cascader>  
+                                                </FormItem>
+                                                </Col>
+                                            </Row>
+                                            <Row :gutter="16">
+                                                <Col span="8">
+                                                    <FormItem label="区域：" prop="customer_area">
+                                                        <Select transfer v-model="SearchValidate.customer_area" @on-change="Search" size="small">
+                                                            <Option value="gz">广州</Option>
+                                                            <Option value="sz">深圳</Option>
+                                                            <Option value="dg">东莞</Option>
+                                                            <Option value="lz">兰州</Option>
+                                                            <Option value="zh">珠海</Option>
+                                                            <Option value="zz">郑州</Option>
+                                                            <Option value="sh">上海</Option>
+                                                            <Option value="zs">中山</Option>
+                                                            <Option value="fs">佛山</Option>
+                                                            <Option value="qt">其他</Option>
+                                                        </Select>
+                                                    </FormItem>
+                                                </Col>
+                                            </Row>
+                                                    <center>
+                                                        <FormItem style="margin-top:5px">
+                                                            <Button type="primary" @click="Search">搜索</Button>
+                                                            <Button type="ghost" @click="handleReset('SearchValidate')" style="margin-left: 8px">
+                                                                重置
+                                                            </Button>
+                                                        </FormItem>
+                                                    </center>
+                                        </Form>
+                                        
+                                    </div>
+                                </Panel>
+                            </Collapse>
+                        </Row>
+                        <ButtonGroup>
+                            <Button v-permission="['channelC.add']" type="primary" icon="plus" @click="getCannelType();modal_add = true">录入</Button>
+                            <!-- <Button v-permission="['channelC.export']" type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button> -->
+                        </ButtonGroup>
+                    <Row style="margin-top: 10px;">
+                        <Table
+                                highlight-row
+                                size="small"
+                                :columns="columns"
+                                :data="data2"
+                                @on-current-change="selectRow"
+                                @on-row-dblclick="examine"
+                                :loading="table_loading"
+                                @on-sort-change="sort"                                                
+                                ></Table>
+                        <Page
+                                size="small"
+                                :total="pageTotal"
+                                show-total
+                                show-sizer
+                                show-elevator
+                                :current.sync = "page"
+                                @on-change="pageChange"
+                                @on-page-size-change="pageSizeChange"
+                                style="margin-top: 10px;margin-bottom:10px"></Page>
+                        </Row>
+                        </Card>
+                </TabPane> 
+            </Tabs>
+        
+            <!-- <Row> -->
+                
         <Modal
                 v-model="modal_add"
                 title="录入"
@@ -274,6 +337,12 @@
                 }
             };
             return {
+                customerPage:1,
+                SearchValidateCustomer:{
+                    customer_name:'',
+                    customer_mobile_phone:'',
+                },
+                customerLoading: false,
                 sortField:"updatedate",
                 order:"desc",
                 search_model:"",
@@ -293,6 +362,7 @@
                 loading: false,
                 pageTotal: new Number(),
                 pageTotal2: new Number(),
+                customerTotal: new Number(),
                 customerid: '',
                 //  使用者列表？
                 pagea: 1,
@@ -385,6 +455,122 @@
                         {required: true, validator: validateTel, trigger: 'change'}
                     ],
                 },
+                customerColumns:[
+                    {
+                        title: '客户名称',
+                        key: 'customer_name',
+                        width: 120,
+                    },
+                    {
+                        title: '联系方式',
+                        key: 'people',
+                        render: (h, params) => {
+                            return h('Poptip', {
+                                props: {
+                                    trigger: 'hover',
+                                    title: '联系方式',
+                                    placement: 'bottom'
+                                }
+                            }, [
+                                h('span', this.customerData[params.index].customer_mobile_phone + '    '),
+                                h('Icon', {
+                                    props: {
+                                        type: 'arrow-down-b',
+                                    }
+                                }),
+                                h('div', {
+                                    slot: 'content'
+                                }, [
+                                    h('ul', this.customerData[params.index].people.map(item => [
+                                        h('li', {
+                                            style: {
+                                                padding: '4px'
+                                            }
+                                        }, '手机：' + item.customer_mobile_phone),
+                                        h('li', {
+                                            style: {
+                                                padding: '4px'
+                                            }
+                                        }, '固话：' + item.customer_tel),
+                                        h('li', {
+                                            style: {
+                                                padding: '4px'
+                                            }
+                                        }, 'Q  Q：' + item.customerqq),
+                                        h('li', {
+                                            style: {
+                                                padding: '4px'
+                                            }
+                                        }, '微信：' + item.customer_wechat)
+                                    ]))
+                                ])
+                            ]);
+                        },
+                        width: 150,
+                    },
+                    {
+                        title: '客户状态',
+                        key: 'customer_status',
+                        width: 150,                 
+                    },
+                    {
+                        title: '地区',
+                        key: 'customer_area',
+                        width: 80,                     
+                    },
+                    {
+                        title: '跟进人',
+                        key: 'followbyname',
+                        width: 120,                
+                    },
+                    {
+                        title: '创建人',
+                        key: 'createrealname',
+                        width: 120,                     
+                    },
+                    {
+                        title: '更新时间',
+                        key: 'updatedate',
+                        width: 150,                   
+                    },
+                    {
+                        title: '创建时间',
+                        key: 'createdate',
+                        width: 150,                    
+                    },
+/*                    {
+                        title: '线索变化剩余时长',
+                        key: 'isbound',
+                        width: 140
+                    },*/
+                    {
+                        title: '操作',
+                        key: 'action',
+                        fixed: 'right',
+                        width: 70,
+                        align: 'center',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small',
+                                        permission: "['channelC.cheek']"
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            // console.log(params.row)
+                                            this.examine(params.row)
+                                        }
+                                    }
+                                }, '查看')
+                            ]);
+                        }
+                    }
+                ],
                 columns: [
                     {
                         title: '客户名称',
@@ -517,6 +703,7 @@
                 customerTypeArr:[],
                 area:[],
                 customerType:[],
+                customerData:[]
             }
         },
         methods: {
@@ -548,6 +735,9 @@
                 _self.SearchValidate.date = '',
                 _self.SearchValidate.customer_area = ''
                 _self.getData()
+                _self.SearchValidateCustomer.customer_name = ""
+                _self.SearchValidateCustomer.customer_mobile_phone = ""
+                _self.get_customer_data()
                 _self.ishandleSubmit = false
             },
             Search() {
@@ -774,6 +964,97 @@
                 })
             },
 
+            get_customer_data(){
+                let _self = this
+                _self.customerLoading = true
+                let url = 'api/customer/list'
+                let params = "channelcluet"
+
+                let _group = []
+                var keys =[]
+                var temp_status = ''
+                if(_self.SearchValidate.customerStatus==''||_self.SearchValidate.customerStatus==null){
+                    temp_status = ''
+                }else{
+                    temp_status = _self.SearchValidate.customerStatus.join('-')
+                }
+                    var config = {
+                        params:{
+                            // sortField:_self.sortField,
+                            // order:_self.order,
+                            page:_self.customerPage,
+                            pageSize: 10,
+                            // customer_name:_self.SearchValidate.customer_name,
+                            // customer_mobile_phone:_self.SearchValidate.customer_mobile_phone,
+                            // customerStatus:temp_status,
+                            // bUpdatedate:DateFormat(_self.SearchValidate.date[0]),
+                            // eUpdatedate:DateFormat(_self.SearchValidate.date[1]),
+                            // customer_area:_self.SearchValidate.customer_area
+                        }
+                    }
+
+                function doSuccess(response) {
+                    let _data = response.data.data
+
+                    _self.customerTotal = _data.total
+                    _self.customerData = []
+
+                    for (let i = 0; i < _data.rows.length; i++) {
+                        let a = ''
+                        // for (let k = 0; k < _group.length; k++) {
+                        //     if (_data.rows[i].clue_status == _group[k].typecode) {
+                        //         a = _group[k].typename
+                        //     }
+                        // }
+                        _self.customerData.push({
+                            // cluestatus: _data.rows[i].cluestatus,
+                            followbyname: _data.rows[i].followbyname,
+                            customer_name: _data.rows[i].NAME,
+                            // channel_name: _data.rows[i].channel_name,
+                            // clue_status: a,
+                            createdate: (_data.rows[i].CREATEDATE).substr(0,10),
+                            customer_area: _self.findAreaText(_data.rows[i].AREA),
+                            customer_email: _data.rows[i].email,
+                            // customer_level: _data.rows[i].customer_level,
+                            customer_memo: _data.rows[i].backup,
+                            customer_status: _self.findCustomerType(_data.rows[i].customerType),
+                            // customer_tags: _data.rows[i].customer_tags,
+                            customer_id: _data.rows[i].ID,
+                            updatedate:  (_data.rows[i].updatedate).substr(0,10),
+                            createrealname: _data.rows[i].createbyname,
+                            customer_mobile_phone: _data.rows[i].TEL,
+                            people: [
+                                {
+                                    customer_mobile_phone: _data.rows[i].TEL,
+                                    customer_wechat: _data.rows[i].weixin,
+                                    customerqq: _data.rows[i].qq,
+                                }
+                            ]
+                        })
+                    }
+                    _self.customerLoading = false
+                }
+
+                // function doSuccess3(re) {
+                //     _group = re.data.data.channelcluet
+                // }
+
+                // this.$GetDataCenter(params, doSuccess3)
+
+                _self.$http.get(url,config).then(function(res){
+                    doSuccess(res)
+                })
+            },
+
+            SearchCustomer(){
+                this.customerPage = 1
+                this.get_customer_data()
+            },
+
+            pageChangeCustomer(e){
+                this.customerPage = e
+                this.get_customer_data()
+            },
             // 改变页码
             pageChange(a) {
                 let _self = this
@@ -796,6 +1077,7 @@
             // 表格行选中事件
             selectRow(a) {
                 var _self = this
+                console.log(a)
                 _self.customerid = a.customer_id
             },
             handleSubmit(name) {
@@ -1075,6 +1357,7 @@
         mounted() {
             this.getDataCenter()
             this.getData()
+            this.get_customer_data()
         },
     }
 </script>

@@ -471,6 +471,7 @@ export default {
             
         },
         showflow(){
+            console.log("11111")
             if(this.current_row != ''){
                 if(this.current_row.resumeFlag == 2){
                     this.$Message.warning('当前工单已锁定！')

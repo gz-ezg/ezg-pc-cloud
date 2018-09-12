@@ -138,6 +138,7 @@ export default {
                 _that.SQL_item.skipPermissionCheck = ""
                 _that.SQL_item.paramsOr = ""
                 _that.SQL_item.sqlGroup = ''
+                _that.$bus.emit("refresh",true)
             }
 
             function fail(err){

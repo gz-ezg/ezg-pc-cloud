@@ -11,7 +11,7 @@
         <div style="float: left;">
             <Page :total="total_Num"
                 :loading = "sql_loading"
-                :current="1" 
+                :current="current_page" 
                 :page-size="pageSize" 
                 @on-page-size-change="pageSizeChange" 
                 @on-change="changePage" 
@@ -133,7 +133,7 @@
             this.GetTableData()
             var _that = this
             _that.$bus.on('refresh',e =>{
-                _that.current_page = 1
+                // _that.current_page = 1
                 _that.GetTableData()
             })
         },

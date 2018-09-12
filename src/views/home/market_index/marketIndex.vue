@@ -394,7 +394,12 @@ export default {
             }
 
             function success(res){
-                _self.userTableData = res.data.data
+                if(res.data.data.person){
+                    _self.userTableData = res.data.data
+                }else{
+                    _self.userTableData.team = res.data.data.team
+                }
+                
             }
 
             this.$Get(url, config, success)
@@ -561,12 +566,12 @@ export default {
         let _self = this
         // console.log(this.$route.path)
         _self.get_clue_number()
-        if(this.$route.path == "/allindex/marketIndex"){
-            // console.log("111")
-        }else{
+        // if(this.$route.path == "/allindex/marketIndex"){
+        //     // console.log("111")
+        // }else{
             _self.getUserPlanData()
             _self.getUserTableData()
-        }
+        // }
 
         _self.$bus.on("UPDATE_MARKET_INDEX",(e)=>{
             _self.saler = e

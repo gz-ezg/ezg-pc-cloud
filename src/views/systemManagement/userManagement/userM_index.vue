@@ -326,8 +326,9 @@ import EditModal from './edit_user'
                             email: _data.rows[i].email,
                             departname:_data.rows[i].departname
                         })
-                    _self.user_table_loading = false                 
+                                     
                     }
+                    _self.user_table_loading = false
                 }
 
                 this.$Get(url, config, doSuccess)
