@@ -116,7 +116,7 @@
                 </Card>
             </Col>
         </Row>
-        <div class="market_hover">
+        <div class="market_hover" v-if="hoverShow">
             <Card style="width:60px;height:250px;">
                 <div @click="open_clue" style="margi-bottom:10px">
                     <Row>
@@ -378,6 +378,17 @@ export default {
         baojia,
         teamTotalSum,
         personHistory
+    },
+    computed:{
+        //  浮动栏是否显示
+        hoverShow(){
+            console.log(this.$route)
+            if(this.$route.path == "/allindex/marketIndex"){
+                return false
+            }else{
+                return true
+            }
+        }
     },
     methods: {
         openCal(){

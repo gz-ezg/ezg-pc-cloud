@@ -286,8 +286,7 @@
                 if (_self.row.id == null) {
                     _self.$Message.warning('请选择要查看的项目')
                 } else {
-                    _self.row.type = 'check'
-                    Bus.$emit('add', _self.row)
+                    _self.$bus.emit('OPEN_OFFLINE_SHOW', _self.row)
                 }
             },
 

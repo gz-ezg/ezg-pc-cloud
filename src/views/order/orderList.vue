@@ -1341,7 +1341,6 @@
                     _self.$Message.warning('请选择要查看的订单');
                 } else {
                     let url = '/order/detail/' + _self.customerId
-                    _self.detailCustomer = true
                     _self.isCheck = true
 
                     function doSuccess(response) {
@@ -1422,6 +1421,7 @@
                                 break
                             }
                         }
+                        _self.detailCustomer = true
                     }
 
                     this.GetData(url, doSuccess)

@@ -272,7 +272,7 @@
             else{
                 console.log("正常登录！")
             }
-        }
+        },
         },
         mounted() {
             $('#randCodeImage').click(function () {

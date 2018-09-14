@@ -1070,6 +1070,47 @@ export const appRouter = [
         ]
     },
     {
+        access: 6130,
+        meta: 6130,
+        path: '/handoverresource',
+        icon: 'social-windows',
+        name: 'handoverresource',
+        title: '交接资料',
+        component: Main,
+        children: [
+            {   
+                access: 6131,
+                meta: 6131,
+                path: 'handovermanagement', 
+                title: '交接管理', 
+                name: 'handovermanagement_index', 
+                component: resolve => {
+                    require(['@/views/handoverresource/handoverManagement/index.vue'], resolve);
+                }
+            },
+            {   
+                access: 6132,
+                meta: 6132,
+                path: 'resourelist', 
+                title: '资料管理', 
+                name: 'resourelist_index', 
+                component: resolve => {
+                    require(['@/views/handoverresource/resoureList/index.vue'], resolve);
+                }
+            },
+            {   
+                access: 6133,
+                meta: 6133,
+                path: 'resourename', 
+                title: '资料参数', 
+                name: 'resourename_index', 
+                component: resolve => {
+                    require(['@/views/handoverresource/resoureName/index.vue'], resolve);
+                }
+            }
+        ]
+    },
+    {
         access: 6103,
         meta: 6103,
         path: '/allindex',

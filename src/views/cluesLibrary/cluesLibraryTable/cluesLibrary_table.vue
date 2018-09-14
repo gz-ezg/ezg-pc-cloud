@@ -547,6 +547,14 @@ import flowVue from '../../woa-components/next/flow.vue';
                         title: '线索详情',
                         key: 'memo',
                         width: 300,
+                        render:(h, params) =>{
+                            console.log(params)
+                            return h("div",{
+                                domProps:{
+                                    innerHTML: params.row.memo
+                                }
+                            })
+                        }
                     },
                     {
                         title: '线索创建时间',
@@ -640,6 +648,14 @@ import flowVue from '../../woa-components/next/flow.vue';
                         title: '线索详情',
                         key: 'memo',
                         width: 300,
+                        render:(h, params) =>{
+                            console.log(params)
+                            return h("div",{
+                                domProps:{
+                                    innerHTML: params.row.memo
+                                }
+                            })
+                        }
                     },
                     {
                         title: '线索创建时间',

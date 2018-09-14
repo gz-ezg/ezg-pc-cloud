@@ -149,14 +149,6 @@
 
 <script>
     import Bus from '../../../../components/bus'
-    
-
-    // import channelFrom from '../../../channelManagement/channelCustomer/channelManagement_examine_from.vue'
-    // import channelCompany from '../../../channelManagement/channelCustomer/channelManagement_examine_company.vue'
-    // import channelOrderList from '../../../channelManagement/channelCustomer/channelManagement_examine_orderList.vue'
-    // import channelFllowUp from '../../../channelManagement/channelCustomer/channelManagement_examine_followUp.vue'
-    // import channelRelationPerson from '../../../channelManagement/channelCustomer/channelManagement_examine_relationPerson.vue'
-    // import channelServiceDynamic from '../../../channelManagement/channelCustomer/channelManagement_examine_serviceDynamic.vue'
 
     export default {
         components: {
@@ -333,32 +325,12 @@
                 _self.modal = true
             },
 
-            add() {
-                let _self = this
-
-                _self.row.type = 'add'
-                Bus.$emit('add', _self.row)
-            },
-
-            edit() {
-                let _self = this
-
-                if (_self.row.id == null) {
-                    _self.$Message.warning('请选择要查看的项目')
-                } else {
-                    _self.row.type  = 'edit'
-                    Bus.$emit('add', _self.row)
-                }
-            },
-
             check() {
                 let _self = this
-
                 if (_self.row.id == null) {
                     _self.$Message.warning('请选择要查看的项目')
                 } else {
-                    _self.row.type = 'check'
-                    Bus.$emit('add', _self.row)
+                    _self.$bus.emit('OPEN_OFFLINE_SHOW', _self.row)
                 }
             },
 

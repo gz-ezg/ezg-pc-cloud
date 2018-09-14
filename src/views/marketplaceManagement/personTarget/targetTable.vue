@@ -470,7 +470,8 @@ export default {
 			_self.check_depart_id = ""
 		}else{
 			_self.check_depart_id = e[0].ID
-		}
+    }
+    this.page = 1
 		this.getTableData()
         console.log(_self.check_depart_id)
     }
