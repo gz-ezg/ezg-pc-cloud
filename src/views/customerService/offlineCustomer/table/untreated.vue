@@ -266,7 +266,8 @@
                 let _self = this
 
                 _self.row.type = 'add'
-                Bus.$emit('add', _self.row)
+                // Bus.$emit('add', _self.row)
+                _self.$bus.emit("OPEN_OFFLINE_ADD",true)
             },
 
             edit() {
@@ -276,7 +277,8 @@
                     _self.$Message.warning('请选择要查看的项目')
                 } else {
                     _self.row.type  = 'edit'
-                    Bus.$emit('add', _self.row)
+                    // Bus.$emit('add', _self.row)
+                    _self.$bus.emit("OPEN_OFFLINE_UPDATE",_self.row)
                 }
             },
 

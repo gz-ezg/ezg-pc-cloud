@@ -274,6 +274,7 @@
             </Modal>
             <team-total-sum></team-total-sum>
             <person-history></person-history>
+            <index-clue></index-clue>
     </div>
 </template>
 
@@ -283,6 +284,7 @@ import classic from './classic'
 import baojia from './baojia'
 import teamTotalSum from './TeamTotalSum';
 import personHistory from './showHistory';
+import indexClue from './clue';
 
 export default {
     data(){
@@ -377,12 +379,13 @@ export default {
         classic,
         baojia,
         teamTotalSum,
-        personHistory
+        personHistory,
+        indexClue
     },
     computed:{
         //  浮动栏是否显示
         hoverShow(){
-            console.log(this.$route)
+            // console.log(this.$route)
             if(this.$route.path == "/allindex/marketIndex"){
                 return false
             }else{
@@ -543,11 +546,13 @@ export default {
             this.openFangAnCode = true
         },
         open_clue(){
-            setTimeout(() => {
-                this.$router.push({
-                    name: 'cluesLibrary_index'
-                });
-            }, 500)
+            // setTimeout(() => {
+            //     this.$router.push({
+            //         name: 'cluesLibrary_index'
+            //     });
+            // }, 500)
+            let _self = this
+            this.$bus.emit("OPEN_INDEX_CLUE",true)
         },
         get_clue_number(){
             let url = 'api/clue/list'
@@ -558,7 +563,8 @@ export default {
                 params:{
                     receipt:"N",
                     page: 1,
-                    pageSize: 1
+                    pageSize: 1,
+                    clueType: "xtxs"
                 }
             }
 

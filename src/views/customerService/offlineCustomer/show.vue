@@ -138,8 +138,8 @@
         created() {
             let _self = this
             this.$bus.on('OPEN_OFFLINE_SHOW', (e)=>{
+                _self.$refs["task_message"].resetFields();
                 _self.isOpenShow = true                    
-                _self.title = '查看'
                 _self.task_message.company = e.CompanyName
                 if(e.product == null||e.product == ""){
                     _self.task_message.product = "."

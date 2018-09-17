@@ -22,8 +22,8 @@
                 <Row :gutter="16">
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="20">
-                        <FormItem prop="companyName" label="服务人员">
-                            <Select transfer v-model="servicerID">
+                        <FormItem prop="companyName" label="服务人员" >
+                            <Select transfer v-model="servicerID" filterable>
                                 <Option v-for="item in allDepartUser" :value="item.id" :key="item.id">{{ item.realname }}</Option>
                             </Select>
                         </FormItem>

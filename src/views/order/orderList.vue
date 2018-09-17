@@ -483,15 +483,15 @@
                     </Row>
             <Row>
                 <ButtonGroup>
-                    <Button v-permission="['orderL.add']" type="primary" icon="plus" @click="orderAdd = true">录入</Button>
-                    <Button v-permission="['orderL.edit']" type="primary" icon="edit" @click="orderEdit()">编辑</Button>
-                    <Button v-permission="['orderL.detail']" type="primary" icon="ios-crop" @click="detailCustomers()">查看</Button>
+                    <Button v-permission="['orderL.add']" type="primary" icon="plus" @click="orderAdd = true" name="order_add">录入</Button>
+                    <Button v-permission="['orderL.edit']" type="primary" icon="edit" @click="orderEdit()" name="order_edit">编辑</Button>
+                    <Button v-permission="['orderL.detail']" type="primary" icon="ios-crop" @click="detailCustomers()" name="order_show">查看</Button>
                     <Button v-permission="['orderL.flowChart']" type="primary" icon="ios-crop" @click="flowChart()">查看流程图</Button>
-                    <Button v-permission="['orderL.resubmit']" type="primary" icon="ios-crop" @click="reApplyProcess()">重新提交</Button>
-                    <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="xiugaiOpen()">修改</Button>
+                    <Button v-permission="['orderL.resubmit']" type="primary" icon="ios-crop" @click="reApplyProcess()" name="order_re_submit">重新提交</Button>
+                    <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="xiugaiOpen()" name="order_amend">修改</Button>
                     <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="getTableData">刷新</Button>
-                    <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="refresh" v-if="isAdmin">重新生成工单</Button>
-                    <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="refresh_order" v-if="isAdmin">重置订单流程</Button>
+                    <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="refresh" v-if="isAdmin" name="order_rebuild_worderorder">重新生成工单</Button>
+                    <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="refresh_order" v-if="isAdmin" name="order_rebuild_orderflow">重置订单流程</Button>
                     <!--  ↓ ↓ 该功能暂定，代码勿删  -->
                     <!--<Button type="primary" icon="ios-color-filter-outline" @click="qihuaOpen()">企划(修改)</Button>-->
                     <!--<Button v-permission="['orderL.invalid']" type="primary" icon="ios-color-filter-outline" @click="deleteOrder = true">订单作废</Button>-->
@@ -2110,6 +2110,8 @@
 
             // 录入订单提交
             ok4(name) {
+                
+                this.$ButtonCollect("order_add")
                 let eaRows = $('#orderItemList').datagrid('getRows')
                 for(let j = 0;j<eaRows.length;j++){
                     $('#orderItemList').datagrid('endEdit',j)
@@ -2752,7 +2754,7 @@
             // 【重新提交】按钮 点击事件
             reApplyProcess() {
                 let _self = this
-
+                _self.$ButtonCollect("order_re_submit")
                 if (_self.currentProcess == 'Returned') {
                     _self.$Modal.confirm({
                         title: '重新提交审批',
@@ -3033,6 +3035,7 @@
                     _self.$Message.warning('该订单状态不允许编辑');
                 }
                 else {
+                    _self.$ButtonCollect("order_edit")
                     _self.eaditOrder = true
                     _self.isEdit = true
 
@@ -3168,6 +3171,7 @@
                 } else if (_self.currentProcess != 'Finished') {
                     _self.$Message.warning('该订单状态不允许修改');
                 } else {
+                    _self.$ButtonCollect("order_amend")
                     _self.xiugai = true
                     _self.isxiugai = true
 
@@ -3780,6 +3784,7 @@
                 if (_self.customerId == '') {
                     _self.$Message.warning('请选择订单项');
                 } else {
+                    _self.$ButtonCollect("order_rebuild_worderorder")
                     let url = `api/order/orderApprovalFinish`
                     let config = {
                         params:{
@@ -3800,6 +3805,7 @@
                 if (_self.customerId == '') {
                     _self.$Message.warning('请选择订单项');
                 } else {
+                    _self.$ButtonCollect("order_rebuild_orderflow")
                     let url = `api/order/resetOrderProcess`
                     let config = {
                         params:{

@@ -18,38 +18,13 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="20">
                         <FormItem label="服务人员：">
-                            <Select transfer v-model="servicerID">
+                            <Select transfer v-model="servicerID" filterable>
                                 <Option v-for="(item,index) in allDepartUser" :key="index" :value="item.id">{{item.realname}}</Option>
                             </Select>
                         </FormItem>
                     </Col>
                 </Row>
             </Form>
-            <!-- <Row>
-                <Row :gutter="16">
-                    <Col span="10">
-                        <Input v-model="realname" placeholder="输入服务人员名称搜索" @on-enter="getData" size="small">
-                            <Button slot="append" icon="ios-search" @click="getData" size="small">搜索</Button>
-                        </Input>
-                    </Col>
-                    <Col span="14"><span>温馨提示：双击下方列表选择需要变更的市场人员</span></Col>
-                </Row>
-                <Table
-                        style="margin-top: 10px"
-                        highlight-row
-                        :columns="service_header"
-                        @on-row-dblclick="rowSelectService"
-                        :loading="Loading"
-                        :data="service_data"></Table>
-                <Page
-                        size="small"
-                        :total="ServiceTotal"
-                        show-total
-                        show-elevator
-                        @on-change="pageChange"
-                        style="margin-top: 10px">
-                </Page>
-            </Row> -->
             <div slot="footer">
                 <Button type="ghost" @click="common_allot_open=false">关闭</Button>
                 <Button type="primary" @click="allot" :loading="loading">分配</Button>                

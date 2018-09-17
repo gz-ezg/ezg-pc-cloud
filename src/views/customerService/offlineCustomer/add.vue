@@ -1,22 +1,21 @@
 <template>
     <div>
         <Modal
-            v-model="add"
-            :title="title"
+            v-model="isOpenAdd"
+            title="录入"
             width="800"
-            @on-cancel="cancel"
         >
             <Form ref="task_message" :model="task_message" :rules="task_message_rule" :label-width="120">
                 <Row :gutter="16">
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
                         <FormItem prop="company" label="公司名称">
-                            <Input size="small" v-model="task_message.company" @on-focus="getCompany" readonly :disabled="!isshow"/>
+                            <Input size="small" v-model="task_message.company" @on-focus="getCompany" />
                         </FormItem>
                     </Col>
                     <Col span="10">
                         <FormItem prop="product" label="产品名称">
-                            <Input size="small" v-model="task_message.product" @on-focus="getProduct" readonly :disabled="!isshow"/>
+                            <Input size="small" v-model="task_message.product" @on-focus="getProduct" />
                         </FormItem>
                     </Col>
                 </Row>
@@ -24,12 +23,12 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
                         <FormItem prop="customer" label="客户名称">
-                            <Input size="small" v-model="task_message.customer" @on-focus="getCompany" readonly :disabled="!isshow"/>
+                            <Input size="small" v-model="task_message.customer" @on-focus="getCompany" />
                         </FormItem>
                     </Col>
                     <Col span="10">
                         <FormItem prop="tel" label="客户手机">
-                            <Input size="small" v-model="task_message.tel" readonly :disabled="!isshow"/>
+                            <Input size="small" v-model="task_message.tel" />
                         </FormItem>
                     </Col>
                 </Row>
@@ -37,12 +36,12 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
                         <FormItem prop="servicername" label="服务人员">
-                            <Input size="small" v-model="task_message.servicername" @on-focus="getUser" readonly :disabled="!isshow"/>
+                            <Input size="small" v-model="task_message.servicername" @on-focus="getUser" />
                         </FormItem>
                     </Col>
                     <Col span="10">
                         <FormItem prop="marketername" label="市场人员">
-                            <Input size="small" v-model="task_message.marketername" readonly :disabled="!isshow"/>
+                            <Input size="small" v-model="task_message.marketername" />
                         </FormItem>
                     </Col>
                 </Row>
@@ -50,12 +49,12 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
                         <FormItem prop="servicebegindate" label="服务开始时间">
-                            <DatePicker type="date" v-model="task_message.servicebegindate" style="width:100%" size="small" :disabled="!isshow"></DatePicker>
+                            <DatePicker type="date" v-model="task_message.servicebegindate" style="width:100%" size="small"></DatePicker>
                         </FormItem>
                     </Col>
                     <Col span="10">
                         <FormItem prop="enddate" label="下线时间">
-                            <DatePicker type="date" v-model="task_message.enddate" style="width: 100%" size="small" :disabled="!isshow"></DatePicker>
+                            <DatePicker type="date" v-model="task_message.enddate" style="width: 100%" size="small" ></DatePicker>
                         </FormItem>
                     </Col>
                 </Row>
@@ -63,12 +62,12 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
                         <FormItem prop="callbackdate" label="回访时间">
-                            <DatePicker type="date" v-model="task_message.callbackdate" style="width: 100%" size="small" :disabled="!isshow"></DatePicker>
+                            <DatePicker type="date" v-model="task_message.callbackdate" style="width: 100%" size="small" ></DatePicker>
                         </FormItem>
                     </Col>
                     <Col span="10">
                         <FormItem prop="endreason" label="客户类别">
-                            <Select v-model="task_message.endreason" style="width:100%" size="small" :disabled="!isshow">
+                            <Select v-model="task_message.endreason" style="width:100%" size="small" >
                                 <Option value="gszr">公司转让</Option>
                                 <Option value="qysj">企业升级</Option>
                                 <Option value="kjb">会计部</Option>
@@ -83,7 +82,7 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
                         <FormItem prop="taxperiod" label="下线税期">
-                            <Input size="small" v-model="task_message.taxperiod" type="text" placeholder="格式：2018-06" :disabled="!isshow" />
+                            <Input size="small" v-model="task_message.taxperiod" type="text" placeholder="格式：2018-06"  />
                         </FormItem>
                     </Col>
                 </Row>
@@ -91,7 +90,7 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="20">
                         <FormItem prop="reasonformarketer" label="市场通知下线原因">
-                            <Input size="small" v-model="task_message.reasonformarketer" type="textarea" :autosize="{minRows: 2,maxRows: 5}" :disabled="!isshow"/>
+                            <Input size="small" v-model="task_message.reasonformarketer" type="textarea" :autosize="{minRows: 2,maxRows: 5}" />
                         </FormItem>
                     </Col>
                 </Row>
@@ -99,14 +98,14 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="20">
                         <FormItem prop="reasonforcallback" label="客户实际下线原因">
-                            <Input size="small" v-model="task_message.reasonforcallback" type="textarea" :autosize="{minRows: 2,maxRows: 5}" :disabled="!isshow"/>
+                            <Input size="small" v-model="task_message.reasonforcallback" type="textarea" :autosize="{minRows: 2,maxRows: 5}" />
                         </FormItem>
                     </Col>
                 </Row>
             </Form>
             <div slot="footer">
-                <Button type="primary" @click="submit" v-show="isshow">修改</Button>
-                <Button type="ghost" @click="close" v-show="isshow">关闭</Button>
+                <Button type="primary" @click="submit" >新增</Button>
+                <Button type="ghost" @click="close" >关闭</Button>
             </div>
         </Modal>
         <Modal
@@ -211,7 +210,7 @@
                 searchCompany:"",
                 searchProduct:"",
                 searchFollow:"",
-                add:false,
+                isOpenAdd:false,
                 task_message: {
                     companyid:"",
                     taxperiod:"",
@@ -302,10 +301,9 @@
         created() {
             let _self = this
             
-            Bus.$on('add', (e)=>{
-                if(e.type == 'add') {
-                    _self.title = '录入'
-                    _self.isshow = true  
+            _self.$bus.on("OPEN_OFFLINE_ADD",(e)=>{
+                    _self.isOpenAdd = true
+                    _self.$refs["task_message"].resetFields();
                     _self.task_message.company = ""
                     _self.task_message.product = ""
                     _self.task_message.customer = ""
@@ -319,50 +317,69 @@
                     _self.task_message.marketername = ""
                     _self.task_message.servicername = ""
                     _self.task_message.tel = ""
-                    _self.task_message.taxperiod = ""                             
-                } else if(e.type == 'edit') {
-                    console.log(e)
-                    _self.isshow = true                    
-                    _self.title = '编辑'
-                    _self.task_message.company = e.CompanyName
-                    _self.task_message.product = e.product
-                    _self.task_message.customer = e.name
-                    _self.task_message.id = e.id
-                    _self.task_message.servicebegindate = e.servicebegindate
-                    _self.task_message.enddate = e.enddate
-                    _self.task_message.callbackdate = e.callbackdate
-                    _self.task_message.endreason = e.endreason
-                    _self.task_message.reasonformarketer = e.reasonformarketer
-                    _self.task_message.reasonforcallback = e.reasonforcallback
-                    _self.task_message.marketername = e.marketer
-                    _self.task_message.servicername = e.servicer
-                    _self.task_message.tel = e.TEL
-                    _self.task_message.taxperiod = e.taxperiod
-                } else if(e.type == 'check') {
-                    _self.isshow = false                    
-                    _self.title = '查看'
-                    _self.task_message.company = e.CompanyName
-                    if(e.product == null||e.product == ""){
-                        _self.task_message.product = "."
-                    }else{
-                        _self.task_message.product = e.product
-                    }
-                    _self.task_message.customer = e.name
-                    _self.task_message.servicebegindate = e.servicebegindate
-                    _self.task_message.enddate = e.enddate
-                    _self.task_message.callbackdate = e.callbackdate
-                    _self.task_message.endreason = e.endreason
-                    _self.task_message.reasonformarketer = e.reasonformarketer
-                    _self.task_message.reasonforcallback = e.reasonforcallback
-                    _self.task_message.marketername = e.marketer
-                    _self.task_message.servicername = e.servicer
-                    _self.task_message.taxperiod = e.taxperiod                                     
-                    _self.task_message.tel = e.TEL
-
-                }
-
-                _self.add = true
+                    _self.task_message.taxperiod = ""   
             })
+            // Bus.$on('add', (e)=>{
+            //     if(e.type == 'add') {
+            //         _self.title = '录入'
+            //         _self.isshow = true  
+            //         _self.task_message.company = ""
+            //         _self.task_message.product = ""
+            //         _self.task_message.customer = ""
+            //         _self.task_message.id = ""
+            //         _self.task_message.servicebegindate = ""
+            //         _self.task_message.enddate = ""
+            //         _self.task_message.callbackdate = ""
+            //         _self.task_message.endreason = ""
+            //         _self.task_message.reasonformarketer = ""
+            //         _self.task_message.reasonforcallback = ""
+            //         _self.task_message.marketername = ""
+            //         _self.task_message.servicername = ""
+            //         _self.task_message.tel = ""
+            //         _self.task_message.taxperiod = ""                             
+            //     } else if(e.type == 'edit') {
+            //         console.log(e)
+            //         _self.isshow = true                    
+            //         _self.title = '编辑'
+            //         _self.task_message.company = e.CompanyName
+            //         _self.task_message.product = e.product
+            //         _self.task_message.customer = e.name
+            //         _self.task_message.id = e.id
+            //         _self.task_message.servicebegindate = e.servicebegindate
+            //         _self.task_message.enddate = e.enddate
+            //         _self.task_message.callbackdate = e.callbackdate
+            //         _self.task_message.endreason = e.endreason
+            //         _self.task_message.reasonformarketer = e.reasonformarketer
+            //         _self.task_message.reasonforcallback = e.reasonforcallback
+            //         _self.task_message.marketername = e.marketer
+            //         _self.task_message.servicername = e.servicer
+            //         _self.task_message.tel = e.TEL
+            //         _self.task_message.taxperiod = e.taxperiod
+            //     } else if(e.type == 'check') {
+            //         _self.isshow = false                    
+            //         _self.title = '查看'
+            //         _self.task_message.company = e.CompanyName
+            //         if(e.product == null||e.product == ""){
+            //             _self.task_message.product = "."
+            //         }else{
+            //             _self.task_message.product = e.product
+            //         }
+            //         _self.task_message.customer = e.name
+            //         _self.task_message.servicebegindate = e.servicebegindate
+            //         _self.task_message.enddate = e.enddate
+            //         _self.task_message.callbackdate = e.callbackdate
+            //         _self.task_message.endreason = e.endreason
+            //         _self.task_message.reasonformarketer = e.reasonformarketer
+            //         _self.task_message.reasonforcallback = e.reasonforcallback
+            //         _self.task_message.marketername = e.marketer
+            //         _self.task_message.servicername = e.servicer
+            //         _self.task_message.taxperiod = e.taxperiod                                     
+            //         _self.task_message.tel = e.TEL
+
+            //     }
+
+            //     _self.add = true
+            // })
         },
         methods: {
             cancel(){
@@ -490,7 +507,7 @@
 
             rowSelect(a) {
                 let _self = this
-                console.log(a)
+                // console.log(a)
                 _self.selectCompany = false
                 _self.task_message.company = a.CompanyName
                 _self.task_message.customer = a.NAME
@@ -556,7 +573,7 @@
             },
             submit(){
                 let _self = this
-                if(_self.title == "录入"){
+                // if(_self.title == "录入"){
                     this.$refs['task_message'].validate((valid) => {
                         // console.log(valid)
                         if (valid) {
@@ -565,18 +582,16 @@
                             this.$Message.error('请填写必选项！');
                         }
                     })
-
-                    
-                }else{
-                    this.$refs['task_message'].validate((valid) => {
-                        // console.log(valid)
-                        if (valid) {
-                            _self.postDataEdit()
-                        } else {
-                            this.$Message.error('请填写必选项！');
-                        }
-                    })
-                }
+                // }else{
+                //     this.$refs['task_message'].validate((valid) => {
+                //         // console.log(valid)
+                //         if (valid) {
+                //             _self.postDataEdit()
+                //         } else {
+                //             this.$Message.error('请填写必选项！');
+                //         }
+                //     })
+                // }
             },
             postData() {
                 let _self = this
@@ -620,7 +635,7 @@
 
                         _self.$Post(url, config, success, fail)
                     }else{
-                        _self.add = false
+                        _self.isOpenAdd = false
                     }
                     _self.cancel()
                 }
@@ -633,36 +648,36 @@
                 this.$Post(url, _data, doSuccess, fail)
             },
             
-            postDataEdit() {
-                let _self = this
-                let url = 'api/customer/updateCustomerEnd'
-                let _data = {
-                    id: _self.task_message.id,
-                    // companyid: _self.task_message.companyid,
-                    productid: _self.task_message.productid,
-                    servicer: _self.task_message.servicer,
-                    marketer: _self.task_message.marketer,
-                    enddate: DateFormat(_self.task_message.enddate),
-                    callbackdate: DateFormat(_self.task_message.callbackdate),
-                    servicebegindate: DateFormat(_self.task_message.servicebegindate),
-                    reasonformarketer: _self.task_message.reasonformarketer,
-                    reasonforcallback: _self.task_message.reasonforcallback,
-                    endreason: _self.task_message.endreason,
-                    taxperiod: _self.task_message.taxperiod
-                }
+            // postDataEdit() {
+            //     let _self = this
+            //     let url = 'api/customer/updateCustomerEnd'
+            //     let _data = {
+            //         id: _self.task_message.id,
+            //         // companyid: _self.task_message.companyid,
+            //         productid: _self.task_message.productid,
+            //         servicer: _self.task_message.servicer,
+            //         marketer: _self.task_message.marketer,
+            //         enddate: DateFormat(_self.task_message.enddate),
+            //         callbackdate: DateFormat(_self.task_message.callbackdate),
+            //         servicebegindate: DateFormat(_self.task_message.servicebegindate),
+            //         reasonformarketer: _self.task_message.reasonformarketer,
+            //         reasonforcallback: _self.task_message.reasonforcallback,
+            //         endreason: _self.task_message.endreason,
+            //         taxperiod: _self.task_message.taxperiod
+            //     }
 
-                function doSuccess(res) {
-                    _self.add = false
-                    // _self.$Message.success(res.data.msg)
-                    Bus.$emit('updateofflinecustomer',true)
-                    _self.cancel()
-                }
-                function fail(err){
-                    console.log(err)
-                }
-                // this.PostData(url, _data, doSuccess)
-                this.$Post(url, _data, doSuccess, fail)
-            }
+            //     function doSuccess(res) {
+            //         _self.add = false
+            //         // _self.$Message.success(res.data.msg)
+            //         Bus.$emit('updateofflinecustomer',true)
+            //         _self.cancel()
+            //     }
+            //     function fail(err){
+            //         console.log(err)
+            //     }
+            //     // this.PostData(url, _data, doSuccess)
+            //     this.$Post(url, _data, doSuccess, fail)
+            // }
         }
     }
 </script>

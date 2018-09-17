@@ -11,12 +11,11 @@
 </style>
 <template>
     <div style="min-width:800px">
-        <Tabs value="name1">
-            
+        <Tabs value="name1"> 
             <TabPane label="未领取" name="name1">
                 <Card>
                     <Row style="margin-bottom:10px">
-                        <Collapse v-model="search_model">
+                        <!-- <Collapse v-model="search_model">
                             <Panel name="1" >
                                 <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
                                 筛选
@@ -71,15 +70,7 @@
                                     </Form>
                                 </div>
                             </Panel>
-                        </Collapse>
-                    </Row>
-                    <Row>
-                        <ButtonGroup>
-                            <Button v-permission="['cluesLibraryM.n.add']" type="primary" icon="ios-color-wand-outline" @click="AddClues">新增</Button>
-                            <!--<Button type="primary" icon="ios-color-wand-outline" @click="YYAddClues">运营新增</Button>-->
-                            <!--<Button type="primary" icon="ios-color-wand-outline" @click="EditClues">编辑</Button>-->
-                            <Button v-permission="['cluesLibraryM.n.delete']" type="primary" icon="ios-color-wand-outline" @click="DeleteClues">删除</Button>
-                        </ButtonGroup>
+                        </Collapse> -->
                     </Row>
                     <Row style="margin-top: 10px;">
                         <Table
@@ -92,7 +83,6 @@
                                 size="small"
                                 :total="pageTotal"
                                 show-total
-                                show-sizer
                                 show-elevator
                                 :current.sync = "paget"
                                 @on-change="pageChange"
@@ -104,7 +94,7 @@
             <TabPane label="已领取" name="name2">
                 <Card>
                     <Row style="margin-bottom:10px">
-                        <Collapse v-model="search_model2">
+                        <!-- <Collapse v-model="search_model2">
                             <Panel name="1">
                                 <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
                                 筛选
@@ -166,12 +156,7 @@
                                     </Form>
                                 </div>
                             </Panel>
-                        </Collapse>
-                    </Row>
-                    <Row>
-                        <ButtonGroup>
-                            <Button v-permission="['cluesLibraryM.y.delete']" type="primary" icon="ios-color-wand-outline" @click="DeleteClues">删除</Button>
-                        </ButtonGroup>
+                        </Collapse> -->
                     </Row>
                     <Row style="margin-top: 10px;">
                         <Table
@@ -184,7 +169,6 @@
                                 size="small"
                                 :total="pageTotal22"
                                 show-total
-                                show-sizer
                                 show-elevator
                                 @on-change="pageChange22"
                                 @on-page-size-change="pageSizeChange22"
@@ -206,120 +190,6 @@
                 <Button type="primary" @click="submit_customer" long >确认</Button>
             </div>
         </Modal> -->
-        <Modal
-                v-model="modal2"
-                title="新增线索"
-                class-name="vertical-center-modal"
-                ok-text="保存"
-                :styles="{top: '10%'}"
-                :loading="loading"
-                @on-ok="ok22('formValidate')"
-                @on-cancel="cancel('formValidate')">
-            <Form ref="formValidate" :model="formValidate"  :rules="ruleValidate" :label-width="90">
-                <!-- <p>{{isOldCustomer}}</p> -->
-                <FormItem label="客户类型" prop="neworold">
-                    <RadioGroup v-model="formValidate.neworold" size="large">
-                        <Radio label="0">老客户</Radio>
-                        <Radio label="1">新客户</Radio>
-                    </RadioGroup>
-                </FormItem>
-                <FormItem label="客户名称" prop="customerName">
-                    <Input v-model="formValidate.customerName" size="small" :readonly="isOldCustomer" @on-focus="get_customer"></Input>
-                </FormItem>
-                <FormItem label="公司名称" prop="companyname">
-                    <Input v-model="formValidate.companyname" @on-focus="get_customer" :readonly="isOldCustomer" size="small"></Input>
-                </FormItem>
-                <FormItem label="客户电话" prop="customerTel">
-                    <Input v-model="formValidate.customerTel" size="small" @on-focus="get_customer" :readonly="isOldCustomer"></Input>
-                </FormItem>
-                <FormItem label="标签" prop="labels">
-                    <Tag v-for="item in customerlabelGroup" :key="item" :name="item" :id="item.id" closable
-                         @on-close="handleClose2">
-                        {{ item.labelName }}
-                    </Tag>
-                    <Button icon="ios-plus-empty" type="dashed" size="small" @click="getLabelData();addTag = true">添加</Button>
-                </FormItem>
-                <FormItem label="线索说明" prop="clueMemo">
-                    <Input v-model="formValidate.clueMemo" type="textarea" :autosize="{minRows: 2,maxRows: 5}" size="small">></Input>
-                </FormItem>
-            </Form>
-        </Modal>
-        <Modal
-                v-model="modal22"
-                title="运营新增线索"
-                class-name="vertical-center-modal"
-                ok-text="保存"
-                :styles="{top: '10%'}"
-                :loading="loading"
-                @on-ok="ok222('formValidate22')"
-                @on-cancel="cancel('formValidate22')">
-            <Form ref="formValidate22" :model="formValidate22"  :rules="ruleValidate22" :label-width="90">
-                <FormItem label="客户名称" prop="customerName">
-                    <Input v-model="formValidate22.customerName" size="small">></Input>
-                </FormItem>
-                <FormItem label="客户电话" prop="customerTel">
-                    <Input v-model="formValidate22.customerTel" size="small">></Input>
-                </FormItem>
-                <FormItem label="运营来源" prop="labels">
-                    <Tag v-for="item in customerlabelGroup22" :key="item" :name="item" :id="item.id" closable
-                         @on-close="handleClose2">
-                        {{ item.labelName }}
-                    </Tag>
-                    <Button icon="ios-plus-empty" type="dashed" size="small" @click="getLabelData();addTag = true">添加</Button>
-                </FormItem>
-                <FormItem label="标签" prop="labels">
-                    <Tag v-for="item in customerlabelGroup" :key="item" :name="item" :id="item.id" closable
-                         @on-close="handleClose2">
-                        {{ item.labelName }}
-                    </Tag>
-                    <Button icon="ios-plus-empty" type="dashed" size="small" @click="getLabelData();addTag = true">添加</Button>
-                </FormItem>
-                <FormItem label="线索说明" prop="clueMemo">
-                    <Input v-model="formValidate22.clueMemo" type="textarea" :autosize="{minRows: 2,maxRows: 5}" size="small">></Input>
-                </FormItem>
-            </Form>
-        </Modal>
-        <Modal
-                v-model="modal3"
-                title="编辑线索"
-                class-name="vertical-center-modal"
-                ok-text="保存"
-                :styles="{top: '10%'}"
-                :loading="loading2"
-                @on-ok="ok('formValidate2')"
-                @on-cancel="cancel('formValidate2')">
-            <Form ref="formValidate2" :model="formValidate2" :label-width="90">
-                <FormItem label="客户名称" prop="customerName">
-                    <Input v-model="formValidate2.customerName" disabled size="small">></Input>
-                </FormItem>
-                <FormItem label="客户电话" prop="customerTel">
-                    <Input v-model="formValidate2.customerTel" disabled size="small">></Input>
-                </FormItem>
-                <FormItem label="线索状态" prop="cluesstatus">
-                    <Input v-model="formValidate2.cluesstatus" disabled size="small">></Input>
-                </FormItem>
-                <FormItem label="线索类型" prop="cluestype">
-                    <Input v-model="formValidate2.cluestype" disabled size="small">></Input>
-                </FormItem>
-                <FormItem label="创建人" prop="createby">
-                    <Input v-model="formValidate2.createby" disabled size="small">></Input>
-                </FormItem>
-                <FormItem label="创建时间" prop="createdate">
-                    <Input v-model="formValidate2.createdate" disabled size="small">></Input>
-                </FormItem>
-                <FormItem label="线索标签" prop="labels">
-                    <Tag v-for="item in customerlabelGroup" :key="item" :name="item" :id="item.id" closable
-                         @on-close="handleClose2">
-                        {{ item.labelName }}
-                    </Tag>
-                    <Button icon="ios-plus-empty" type="dashed" size="small" @click="getLabelData();addTag = true">添加</Button>
-                </FormItem>
-                <FormItem label="线索说明" prop="cluescontent">
-                    <Input v-model="formValidate2.cluescontent" type="textarea"
-                           :autosize="{minRows: 2,maxRows: 5}"></Input>
-                </FormItem>
-            </Form>
-        </Modal>
         <Modal
                 v-model="modal4"
                 title="查看线索"
@@ -354,60 +224,6 @@
                            :autosize="{minRows: 2,maxRows: 5}" disabled></Input>
                 </FormItem>
             </Form>
-        </Modal>
-        <Modal
-                v-model="addTag"
-                title="添加标签"
-                @on-ok="ok2"
-                @on-cancel="cancel2">
-            <Table
-                    border
-                    ref="selection"
-                    :columns="columns4"
-                    :data="data"
-                    @on-select-cancel="selectCancel"
-                    @on-selection-change="selectionChange"></Table>
-            <Page
-                    size="small"
-                    :total="pageTotal2"
-                    show-total
-                    show-sizer
-                    show-elevator
-                    @on-change="pageChange2"
-                    @on-page-size-change="pageSizeChange2"
-                    style="margin-top: 10px"></Page>
-        </Modal>
-            <Modal
-                v-model="selectCompany"
-                title="选择公司"
-                width="80%"
-            >
-                <Row :gutter="16">
-                    <Col span="8">
-                    <Input v-model="searchCompany" placeholder="输入公司名称搜索" @on-keydown="keydown1">
-                    <Button slot="append" icon="ios-search" @click="searchCompanyData">搜索</Button>
-                    </Input>
-                    </Col>
-                </Row>
-                <Table
-                        style="margin-top: 10px"
-                        border
-                        highlight-row
-                        size="small"
-                        ref="selection"
-                        :columns="columns44"
-                        :data="data4"
-                        @on-row-dblclick="rowSelect"
-                        :loading="companyLoading"></Table>
-                <Page
-                        size="small"
-                        :total="pageTotal3"
-                        :current.sync="page3"
-                        show-total
-                        show-elevator
-                        @on-change="pageChange3"
-                        style="margin-top: 10px"></Page>
-                <div slot="footer"></div>
         </Modal>
     </div>
 </template>
@@ -539,11 +355,11 @@ import flowVue from '../../woa-components/next/flow.vue';
                         key: 'tel',
                         width: 130,
                     },
-                    {
-                        title: '线索状态',
-                        key: 'cluesstatus',
-                        width: 100,
-                    },
+                    // {
+                    //     title: '线索状态',
+                    //     key: 'cluesstatus',
+                    //     width: 100,
+                    // },
                     {
                         title: '线索详情',
                         key: 'memo',
@@ -562,11 +378,11 @@ import flowVue from '../../woa-components/next/flow.vue';
                         key: 'createdate',
                         width: 160,
                     },
-                    {
-                        title: '创建人',
-                        key: 'createby',
-                        width: 100,
-                    },
+                    // {
+                    //     title: '创建人',
+                    //     key: 'createby',
+                    //     width: 100,
+                    // },
 /*                    {
                         title: '领取人',
                         key: 'receiveby',
@@ -577,21 +393,21 @@ import flowVue from '../../woa-components/next/flow.vue';
                         key: 'clue_level',
                         width: 120
                     },
-                    {
-                        title: '客户类型',
-                        key:'type',
-                        width:120
-                    },
+                    // {
+                    //     title: '客户类型',
+                    //     key:'type',
+                    //     width:120
+                    // },
                     // {
                     //     title: '线索标签',
                     //     key: 'labelName',
                     //     width: 200,
                     // },
-                    {
-                        title: '线索类型',
-                        key: 'cluestype',
-                        width: 100,
-                    },
+                    // {
+                    //     title: '线索类型',
+                    //     key: 'cluestype',
+                    //     width: 100,
+                    // },
                     // {
                     //     title: '线索说明',
                     //     key: 'memo',
@@ -640,11 +456,11 @@ import flowVue from '../../woa-components/next/flow.vue';
                         key:'type',
                         width:120
                     },
-                    {
-                        title: '线索状态',
-                        key: 'cluesstatus',
-                        width: 100,
-                    },
+                    // {
+                    //     title: '线索状态',
+                    //     key: 'cluesstatus',
+                    //     width: 100,
+                    // },
                     {
                         title: '线索详情',
                         key: 'memo',
@@ -663,31 +479,31 @@ import flowVue from '../../woa-components/next/flow.vue';
                         key: 'createdate',
                         width: 160,
                     },
-                    {
-                        title: '创建人',
-                        key: 'createby',
-                        width: 100,
-                    },
+                    // {
+                    //     title: '创建人',
+                    //     key: 'createby',
+                    //     width: 100,
+                    // },
                     {
                         title: '领取人',
                         key: 'receiptor',
                         width: 100,
                     },
-                    {
-                        title: '线索级别',
-                        key: 'clue_level',
-                        width: 120
-                    },
+                    // {
+                    //     title: '线索级别',
+                    //     key: 'clue_level',
+                    //     width: 120
+                    // },
                     // {
                     //     title: '线索标签',
                     //     key: 'labelName',
                     //     width: 150,
                     // },
-                    {
-                        title: '线索类型',
-                        key: 'cluestype',
-                        width: 100,
-                    },
+                    // {
+                    //     title: '线索类型',
+                    //     key: 'cluestype',
+                    //     width: 100,
+                    // },
                     {
                         title: '操作',
                         key: 'action',
@@ -865,8 +681,7 @@ import flowVue from '../../woa-components/next/flow.vue';
                             bcreatedate:DateFormat(_self.SearchValidate.date[0]),
                             ecreatedate:DateFormat(_self.SearchValidate.date[1]),
                             // clueStatus:_self.SearchValidate.clueStatus,
-                            clueType:_self.SearchValidate.clueType,
-                            un_clueType: "xtxs"
+                            clueType: "xtxs"
                         }
                     }
                 //     for (var key in _self.SearchValidate) {
@@ -943,9 +758,8 @@ import flowVue from '../../woa-components/next/flow.vue';
                             clueLevel:_self.SearchValidate1.clueLevel,
                             bcreatedate:DateFormat(_self.SearchValidate1.date[0]),
                             ecreatedate:DateFormat(_self.SearchValidate1.date[1]),
-                            clueType:_self.SearchValidate1.clueType,
-                            rrealname:_self.SearchValidate1.rrealname,
-                            un_clueType: "xtxs"
+                            clueType:"xtxs",
+                            rrealname:_self.SearchValidate1.rrealname
                         }
                     }
                 _self.tableData2 = []

@@ -65,7 +65,7 @@
                     <Row>
                         <ButtonGroup>
                             <!--<Button type="primary" icon="ios-crop" @click="detailCustomers">查看</Button>-->
-                            <Button v-permission="['orderA.transaction']" type="primary" icon="ios-crop" @click="toDoWorkFlow">办理审批</Button>
+                            <Button v-permission="['orderA.transaction']" type="primary" icon="ios-crop" @click="toDoWorkFlow" name="order_approve_submit">办理审批</Button>
                             <Button v-permission="['orderA.exportN']" type="primary" icon="ios-color-filter-outline" @click="downloadExcelN">导出Excel</Button>
                             <Button type="primary" icon="ios-color-filter-outline" @click="getTableDataN">刷新</Button>                            
                         </ButtonGroup>
@@ -126,10 +126,8 @@
                             </Col>
                             <Col span="8">
                                 <FormItem label="缴费渠道" prop="payDir">
-                                    <Select transfer v-model="formValidateDetail.payDir" disabled>
+                                    <Select transfer v-model="formValidateDetail.payDir" disabled size="small">
                                         <Option v-for="(item, index) in payDirType" :key=index :value="item.typecode">{{item.typename}}</Option>                            
-                                        
-                                        
                                     </Select>
                                 </FormItem>
                             </Col>
@@ -159,7 +157,7 @@
                             </Col> -->
                             <Col span="8">
                                 <FormItem label="国地税报道" prop="GDSreport">
-                                    <Select transfer v-model="formValidateDetail.GDSreport" disabled>
+                                    <Select transfer v-model="formValidateDetail.GDSreport" disabled size="small">
                                         <Option value="ybd">已报道</Option>
                                         <Option value="wbd">未报道</Option>
                                         <Option value="bybd">不用报道</Option>
@@ -894,10 +892,17 @@
                     _self.loadingY = false
                 }
 
-                this.$http.get(url,config).then(function(res){
-                    _self.$backToLogin(res)                    
-                    doSuccess(res)
-                })
+                // this.$http.get(url,config).then(function(res){
+                //     _self.$backToLogin(res)                    
+                //     doSuccess(res)
+                // }).catch(function(err){
+                //     _self.$Message.error(err)
+                // })
+                function fail(err){
+                    _self.loadingY = false
+                    _self.$Message.error(err)
+                }
+                this.$Get(url, config, doSuccess, fail)
             },
             handleReset(){
                 var _self = this
@@ -981,10 +986,16 @@
                     _self.loadingN = false
                 }
 
-                this.$http.get(url, config).then(function(res){
-                   _self.$backToLogin(res)
-                    doSuccess(res)
-                })
+                // this.$http.get(url, config).then(function(res){
+                //    _self.$backToLogin(res)
+                //     doSuccess(res)
+                // })
+                function fail(err){
+                    _self.loadingN = false
+                    _self.$Message.error(err)
+                }
+
+                this.$Get(url, config, doSuccess, fail)
             },
 
             // 已审批列表改变页码
@@ -1094,6 +1105,7 @@
                 if (_self.customerId == '') {
                     _self.$Message.warning('请选择订单项');
                 } else {
+                    _self.$ButtonCollect("order_approve_submit")
                     _self.shenpi = true
                     _self.ApproveFlow = []
                     let url = '/activiti/getProcessInstanceComments?bussinessKey=' + _self.customerId
