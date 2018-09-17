@@ -1,0 +1,62 @@
+<template>
+    <div>
+        <CheckboxGroup v-model="checkAllGroup">
+            <Checkbox v-for="(item, index) in data" :label="item.code" :key="index">{{item.data}}<Input v-model="number[item.code]" v-if="item.number" size="small" style="width:40px"/></Checkbox>
+        </CheckboxGroup>
+    </div>
+</template>
+
+<script>
+export default {
+    data(){
+        return{
+            checkAllGroup:[],
+            number:{
+
+            },
+            data:[
+                {
+                    code:"a",
+                    data:"11",
+                    number:false
+                },
+                {
+                    code:"b",
+                    data:"21",
+                    number:false
+                },
+                {
+                    code:"c",
+                    data:"33",
+                    number:false
+                },
+                {
+                    code:"d",
+                    data:"44",
+                    number:false
+                },
+                {
+                    code:"e",
+                    data:"55",
+                    number:true
+                },
+                {
+                    code:"f",
+                    data:"66",
+                    number:true
+                },
+                {
+                    code:"g",
+                    data:"77",
+                    number:true
+                },
+                {
+                    code:"h",
+                    data:"88",
+                    number:true
+                },
+            ]
+        }
+    }
+}
+</script>
