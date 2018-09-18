@@ -52,7 +52,7 @@
                     <Col span="4" style="border:1px solid #F5F5F5;background-color:#F5F5F5"><center style="padding:10px">本日销售目标</center></Col>
                     <Col span="4" style="border:1px solid #F5F5F5;background-color:#F5F5F5"><center style="padding:10px">本日完成</center></Col>
                     <Col span="4" style="border:1px solid #F5F5F5;background-color:#F5F5F5"><center style="padding:10px">本日计划新增客户</center></Col>
-                    <Col span="4" style="border:1px solid #F5F5F5;background-color:#F5F5F5"><center style="padding:10px">本人新增客户</center></Col>
+                    <Col span="4" style="border:1px solid #F5F5F5;background-color:#F5F5F5"><center style="padding:10px">本日新增客户</center></Col>
                     <Col span="4" style="border:1px solid #F5F5F5;background-color:#F5F5F5"><center style="padding:10px">本日计划拜访</center></Col>
                     <Col span="4" style="border:1px solid #F5F5F5;background-color:#F5F5F5"><center style="padding:10px">本日拜访</center></Col>
                     <Col span="4" style="border:1px solid #F5F5F5"><center style="padding:10px">{{UserPlanData.day.saleroom}}</center></Col>

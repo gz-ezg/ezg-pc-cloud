@@ -137,7 +137,14 @@ export default {
                 {
                     title: '视频文件',
                     key: 'isvideo',
-                    width: 120
+                    width: 120,
+                    render:(h,params) =>{
+                        if(params.row.isvideo == "N"){
+                            return h('div','否')
+                        }else{
+                            return h('div','是')
+                        }
+                    }
                 },
                 {
                     title: '创建人',
@@ -205,6 +212,21 @@ export default {
                                         }
                                     }
                                 }, '下载'),
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small',
+                                    },
+                                    style: {
+                                        marginRight: '5px',
+                                        display: (localStorage.getItem("realname") == "管理员") ? "inline" : "none"
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.delete_file(params.row)
+                                        }
+                                    }
+                                }, '删除')
                             ]);
                         }else{
                             return h('div', [
@@ -241,7 +263,22 @@ export default {
                                             
                                         }
                                     }
-                                }, '下载')
+                                }, '下载'),
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small',
+                                    },
+                                    style: {
+                                        marginRight: '5px',
+                                        display: (localStorage.getItem("realname") == "管理员") ? "inline" : "none"
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.delete_file(params.row)
+                                        }
+                                    }
+                                }, '删除')
                             ]);
                         }
                     }
@@ -338,6 +375,25 @@ export default {
 
                 _self.$GetDataCenter(params, finish)
             })
+        },
+        delete_file(e){
+            let _self = this
+            let url = "api/system/resource/updateSource"
+
+            let config = {
+                id: e.id,
+                deleteflag: "1"
+            }
+
+            function success(res){
+                // _self.$Message.success("删除成功")
+                _self.getData()
+            }
+
+            function fail(err){
+            }
+
+            this.$Post(url, config, success, fail)
         }
     },
     created () {

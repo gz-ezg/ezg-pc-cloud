@@ -361,9 +361,9 @@ export default {
         qq: "",
         weixin: "",
         address: "",
-        customertype: [],
+        customertype: [10917,10822],
         customersource: "",
-        importlevel: "",
+        importlevel: "3",
         area: "",
         issend: "Y",
         customerlabel: [],
@@ -377,7 +377,8 @@ export default {
         channelsource: "",
         channelTypeId: "",
         TJleader: "",
-        recCustomer: ""
+        recCustomer: "",
+        importance: "ordinary"
         // customertuijianId:''
       },
       area: [],

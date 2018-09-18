@@ -55,6 +55,11 @@
                             </Input>
                         </FormItem>
                     </Col>
+                    <Col span="12">
+                        <FormItem label="入职时间：" prop="probationTime">
+                            <DatePicker type="date"  size="small"  style="margin-right:5px" v-model="formdata.probationTime" />
+                        </FormItem>
+                    </Col>
                 </Row>
                 <Row>
                     <Col span="12">
@@ -80,6 +85,8 @@
 </template>
 
 <script>
+import {DateFormat} from '../../../libs/utils.js'
+
 export default {
     data(){
         let _self = this
@@ -169,7 +176,8 @@ export default {
                 email: "",
                 roleName: "",
                 orgName: "",
-                userAliasId:""
+                userAliasId:"",
+                probationTime: new Date()
             },
             formdataRule:{
                 username:[
@@ -236,7 +244,8 @@ export default {
                 roleIds: _self.formdata.roleIds,
                 mobilephone: _self.formdata.mobilePhone,
                 email: _self.formdata.email,
-                userAliasId: _self.formdata.userAliasId
+                userAliasId: _self.formdata.userAliasId,
+                probationTime: DateFormat(_self.formdata.probationTime)
             }
 
             function success(res){

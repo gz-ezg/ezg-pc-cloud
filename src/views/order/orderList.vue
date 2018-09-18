@@ -59,7 +59,7 @@
                     </Col>
                     <Col span="8">
                     <FormItem label="缴费渠道" prop="payDir">
-                        <Select transfer v-model="formValidate.payDir" size="small">
+                        <Select transfer v-model="formValidate.payDir" size="small" filterable>
                             <Option v-for="(item, index) in payDirType" :key=index :value="item.typecode">{{item.typename}}</Option>                            
                             <!-- <Option value="gszfb">公司支付宝</Option>
                             <Option value="gh">工行</Option>
@@ -268,7 +268,7 @@
                     </Col>
                     <Col span="8">
                     <FormItem label="缴费渠道" prop="payDir">
-                        <Select transfer v-model="formValidateEadit.payDir" style="width:100%" size="small">
+                        <Select transfer v-model="formValidateEadit.payDir" style="width:100%" size="small" filterable>
                             <Option v-for="(item, index) in payDirType" :key=index :value="item.typecode">{{item.typename}}</Option>                            
                         </Select>
                     </FormItem>
@@ -792,7 +792,7 @@
                     customername: '',
                     GDSreport: '',
                     payDir: '',
-                    date: '',
+                    date: new Date(),
                     serviceBeginDate: ''
                 },
                 formValidateEadit: {
@@ -942,7 +942,7 @@
                                         placement: 'bottom'
                                     }
                                 }, [
-                                    h('span', this.data3[params.index].companyname[0].name + ''),
+                                    h('span', this.data3[params.index].companyname[0] + ''),
                                     h('Icon', {
                                         props: {
                                             type: 'arrow-down-b'
@@ -956,7 +956,7 @@
                                                 style: {
                                                     padding: '4px'
                                                 }
-                                            }, '公司名：' + item.name),
+                                            }, '公司名：' + item),
                                         ]))
                                     ])
                                 ])
@@ -1260,9 +1260,15 @@
                                 _paydir = _self.payDirData[j].typename
                             }
                         }
-                        let _company = [{
-                            name: _data.rows[i].companyname
-                        }]
+                        // let _company = [{
+                        //     name: _data.rows[i].companyname.split(",")
+                        // }]
+                        let _company
+                        if(_data.rows[i].companyname){
+                            _company = _data.rows[i].companyname.split(",")
+                        }else{
+                            _company = ""
+                        }
                         _self.data3.push({
                             base_paydir: _paydir,
                             productname: _data.rows[i].productname,
@@ -1341,6 +1347,7 @@
                     _self.$Message.warning('请选择要查看的订单');
                 } else {
                     let url = '/order/detail/' + _self.customerId
+                    _self.detailCustomer = true
                     _self.isCheck = true
 
                     function doSuccess(response) {
@@ -1351,6 +1358,8 @@
                         } else {
                             _date = ''
                         }
+                        
+
                         _self.orderItemList3 = _data.items
                         _self.formValidateDetail.CompanyName = _data.CompanyName,
                             _self.formValidateDetail.companyid = _data.companyid,
@@ -1421,7 +1430,6 @@
                                 break
                             }
                         }
-                        _self.detailCustomer = true
                     }
 
                     this.GetData(url, doSuccess)
@@ -2200,7 +2208,8 @@
                                     // console.log(_self.orderItemList)
 
                                     _data.orderitems = JSON.stringify(_self.orderItemList)
-                                    _data.payTime = _self.StartTime1
+                                    // _data.payTime = _self.StartTime1
+                                    _data.payTime = DateFormat(_self.formValidate.date)
                                     _data.isornotkp = _self.formValidate.isornotkp
                                     function doSuccess(response) {
                                         _self.orderAdd = false
