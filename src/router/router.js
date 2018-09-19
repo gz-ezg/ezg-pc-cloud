@@ -155,35 +155,35 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    // {
-    //     path: '/test',
-    //     icon: 'social-windows',
-    //     name: 'test',
-    //     title: 'Test',
-    //     component: Main,
-    //     children: [
-    //         {
-    //             path: 'test',
-    //             title: '测试页面',
-    //             name: 'test_index',
-    //             component: resolve => {
-    //                 require(['@/views/test/components/main.vue'], resolve);
-    //                 // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+    {
+        path: '/test',
+        icon: 'social-windows',
+        name: 'test',
+        title: 'Test',
+        component: Main,
+        children: [
+            {
+                path: 'test',
+                title: '测试页面',
+                name: 'test_index',
+                component: resolve => {
+                    require(['@/views/test/components/main.vue'], resolve);
+                    // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-    //             }
-    //         },
-    //         {
-    //             path: 'test2',
-    //             title: '测试页面2',
-    //             name: 'test2_index',
-    //             component: resolve => {
-    //                 require(['@/views/test/components/test2.vue'], resolve);
-    //                 // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+                }
+            },
+            {
+                path: 'test2',
+                title: '测试页面2',
+                name: 'test2_index',
+                component: resolve => {
+                    require(['@/views/test/components/test2.vue'], resolve);
+                    // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-    //             }
-    //         }
-    //     ]
-    // },
+                }
+            }
+        ]
+    },
     // {
     //     path: '/allindex',
     //     icon: 'social-windows',
@@ -1079,47 +1079,47 @@ export const appRouter = [
             }
         ]
     },
-    // {
-    //     access: 6130,
-    //     meta: 6130,
-    //     path: '/handoverresource',
-    //     icon: 'social-windows',
-    //     name: 'handoverresource',
-    //     title: '交接资料',
-    //     component: Main,
-    //     children: [
-    //         {   
-    //             access: 6131,
-    //             meta: 6131,
-    //             path: 'handovermanagement', 
-    //             title: '交接管理', 
-    //             name: 'handovermanagement_index', 
-    //             component: resolve => {
-    //                 require(['@/views/handoverresource/handoverManagement/index.vue'], resolve);
-    //             }
-    //         },
-    //         {   
-    //             access: 6132,
-    //             meta: 6132,
-    //             path: 'resourelist', 
-    //             title: '资料管理', 
-    //             name: 'resourelist_index', 
-    //             component: resolve => {
-    //                 require(['@/views/handoverresource/resoureList/index.vue'], resolve);
-    //             }
-    //         },
-    //         {   
-    //             access: 6133,
-    //             meta: 6133,
-    //             path: 'resourename', 
-    //             title: '资料参数', 
-    //             name: 'resourename_index', 
-    //             component: resolve => {
-    //                 require(['@/views/handoverresource/resoureName/index.vue'], resolve);
-    //             }
-    //         }
-    //     ]
-    // },
+    {
+        access: 6130,
+        meta: 6130,
+        path: '/handoverresource',
+        icon: 'social-windows',
+        name: 'handoverresource',
+        title: '交接资料',
+        component: Main,
+        children: [
+            {   
+                access: 6131,
+                meta: 6131,
+                path: 'handovermanagement', 
+                title: '交接管理', 
+                name: 'handovermanagement_index', 
+                component: resolve => {
+                    require(['@/views/handoverresource/handoverManagement/index.vue'], resolve);
+                }
+            },
+            {   
+                access: 6132,
+                meta: 6132,
+                path: 'resourelist', 
+                title: '资料管理', 
+                name: 'resourelist_index', 
+                component: resolve => {
+                    require(['@/views/handoverresource/resoureList/index.vue'], resolve);
+                }
+            },
+            {   
+                access: 6133,
+                meta: 6133,
+                path: 'resourename', 
+                title: '资料参数', 
+                name: 'resourename_index', 
+                component: resolve => {
+                    require(['@/views/handoverresource/resoureName/index.vue'], resolve);
+                }
+            }
+        ]
+    },
     {
         access: 6103,
         meta: 6103,

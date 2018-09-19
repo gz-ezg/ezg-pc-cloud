@@ -40,6 +40,12 @@
                 </Panel>
             </Collapse>
         </Row>
+        <Row>
+            <ButtonGroup>
+                <Button type="primary" icon="plus" @click="create_file">新增资料</Button>
+                <Button type="primary" icon="plus" @click="create_file">申请交接</Button>
+            </ButtonGroup>
+        </Row>
         <Row style="margin-top: 10px;">
             <Table
                 ref="selection"
@@ -60,33 +66,38 @@
                 style="margin-top: 10px"></Page>
         </Row>
         <Modal
-                v-model="openDetail"
-                title="交接详情"
-                width="600">
-            <Row>
-                <Col span="5"><span>交接人：</span></Col>
-                <Col span="7"></Col>
-                <Col span="5"><span>接收人：</span></Col>
-                <Col span="7"></Col>
+            title="注销资料"
+            v-model="openLogout"
+            width="500"
+        >
+            <Row :gutter="20" style="margin-bottom:10px"><h3><center>{{selectRow.companyname}}</center></h3></Row>
+            <Row :gutter="20" style="margin-bottom:10px"><h3><center>{{selectRow.file_type_name}}</center></h3></Row>
+            <Row :gutter="20" style="margin-bottom:10px">
+                <Input type="textarea" :rows="4" placeholder="请填写注销原因！" v-model="logoutReason"></Input>
             </Row>
-            <Row>
-                <Col span="5"><span>交接部门：</span></Col>
-                <Col span="7"></Col>
-                <Col span="5"><span>交接时间：</span></Col>
-                <Col span="7"></Col>
-            </Row>
-            <Row>
-                <Col span="6"><img />></Col>
-            </Row>
+            
+            <div slot="footer">
+                <Button type="warning" @click="confirm_logout" long :loading="logoutLoading" :disabled="disabled">注销</Button>
+            </div>
         </Modal>
+        <create-file @update="get_data"></create-file>
     </Card>
 </template>
 
 <script>
+import createFile from './create_file'
 export default {
     name: 'resourelist_index',
+    components:{
+        createFile
+    },
     data(){
         return{
+            logoutLoading: false,
+            logoutReason: "",
+            openLogout: false,
+            selectRow:{},
+            search_model:"",
             loading: false,
             openDetail:false,
             selectRow:{
@@ -101,6 +112,8 @@ export default {
             pageSize: 10,
             total: 0,
             data: [],
+            managestatus: [],
+            managestatus_map: new Map(),
             header: [
                 {
                     title: "客户名称",
@@ -119,37 +132,42 @@ export default {
                 },
                 {
                     title: "资料名称",
-                    key: "resourename",
+                    key: "file_type_name",
                     width: 150
                 },
                 {
                     title: "数量",
-                    key: "number",
+                    key: "file_num",
                     width: 90
                 },
                 {
                     title: "保管部门",
-                    key: "depart",
+                    key: "departname",
                     width: 150
                 },
                 {
                     title: "保管人",
-                    key: "companyname",
+                    key: "keeperrealname",
                     width: 120
                 },
                 {
                     title: "区域",
-                    key: "area",
+                    key: "storage",
                     width: 120
                 },
                 {
-                    title: "状态",
-                    key: "status",
-                    width: 150
+                    title: "存放地点",
+                    key: "storage_code",
+                    width: 120
                 },
                 {
-                    title: "注销原因",
-                    key: "reason    ",
+                    title: "文件状态",
+                    key: "file_status_name",
+                    width: 120
+                },
+                {
+                    title: "注销备注",
+                    key: "logout_memo",
                     width: 120
                 },
                 {
@@ -158,6 +176,17 @@ export default {
                     width: 250,
                     render: (h, parmas) =>{
                         return h('div',[
+                            // h('Button',{
+                            //     props: {
+                            //         type: 'text',
+                            //         size: 'small'
+                            //     },
+                            //     on: {
+                            //         click: () => {
+                            //             this.open_img(parmas)
+                            //         }
+                            //     }
+                            // },'[ 查看照片 ]'),
                             h('Button',{
                                 props: {
                                     type: 'text',
@@ -165,18 +194,8 @@ export default {
                                 },
                                 on: {
                                     click: () => {
-                                        this.open_img(parmas)
-                                    }
-                                }
-                            },'[ 查看照片 ]'),
-                            h('Button',{
-                                props: {
-                                    type: 'text',
-                                    size: 'small'
-                                },
-                                on: {
-                                    click: () => {
-                                        this.logout(parmas)
+                                        this.selectRow = parmas.row
+                                        this.logout(parmas.row)
                                     }
                                 }
                             },'[ 资料注销 ]'),
@@ -197,34 +216,74 @@ export default {
             ]
         }
     },
+    computed:{
+        disabled(){
+            if(!this.logoutReason){
+                return true
+            }else{
+                return false
+            }
+        }
+    },
     methods:{
         open_img(e){
             this.selectRow = e
             this.openDetail = true
         },
         logout(e){
+            this.openLogout = true
+        },
+        confirm_logout(){
+            let _self = this
+            _self.logoutLoading = true
+            let url = "api/customer/file/logout"
+            let config = {
+                id: _self.selectRow.id,
+                logoutMemo: _self.logoutReason
+            }
 
+            function success(res){
+                _self.logoutLoading = false
+                _self.openLogout = false
+                _self.selectRow = {}
+                _self.get_data()
+            }
+
+            function fail(err){
+                _self.logoutLoading = false
+            }
+
+            this.$Post(url, config, success, fail)
         },
         open_flow(e){
 
         },
         get_data(){
             let _self = this
-            let url = ""
+            let url = "api/customer/file/list"
 
             _self.loading = true
 
             let config = {
-                page: _self.page,
-                pageSize: _self.pageSize,
-                companyname: _self.seacrhFormInline.companyname,
-                customername: _self.seacrhFormInline.customername,
-                tel: _self.seacrhFormInline.tel
+                params:{
+                    page: _self.page,
+                    pageSize: _self.pageSize,
+                    // companyname: _self.seacrhFormInline.companyname,
+                    // customername: _self.seacrhFormInline.customername,
+                    // tel: _self.seacrhFormInline.tel
+                }
+                
             }
 
             function success(res){
                 _self.total = res.data.data.total
                 _self.data = res.data.data.rows
+                for(let i = 0; i< _self.data.length; i++){
+                    if(_self.data[i].file_status){
+                        _self.data[i].file_status_name = _self.managestatus_map.get(_self.data[i].file_status)
+                    }
+                }
+                _self.loading = false
             }
 
             this.$Get(url, config, success)
@@ -232,9 +291,11 @@ export default {
         get_data_center(){
             let _self = this
             return new Promise((resolve, reject) => {
-                let parmas = ""
+                let params = "managestatus"
                 function success(res){
                     resolve()
+                    _self.managestatus = res.data.data.managestatus
+                    _self.managestatus_map = _self.$array2map(_self.managestatus)
                 }
                 _self.$GetDataCenter(params, success)
 
@@ -243,6 +304,11 @@ export default {
         pageChange(e){
             this.page = e
             this.get_data()
+        },
+        search(){},
+        reset(){},
+        create_file(){
+            this.$bus.emit("OPEN_CREATE_RESOURE_FILE", true)
         }
     },
     created(){
