@@ -45,7 +45,6 @@ export default {
                     start  : '2018-09-03T11:30:00',
                     end : '2018-09-03T12:00:00',
                     color: "green",
-                    allDay: false
                 },
                 {
                     title  : 'event2',
@@ -55,7 +54,6 @@ export default {
                 {
                     title  : 'event3',
                     start  : '2018-09-11T12:30:00',
-                    allDay : false,
                 },
             ],
             //  默认显示月

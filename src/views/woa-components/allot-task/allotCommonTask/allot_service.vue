@@ -14,7 +14,7 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="16">
+                <Row :gutter="16" v-if="show">
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="20">
                         <FormItem label="服务人员：">
@@ -36,11 +36,12 @@
 export default {
     data(){
         return{
+            show: true,
             common_allot_open:false,
             workorderIds:"",
             departName:"",
             ServiceDeptID:"",
-            allDepartUser:"",
+            allDepartUser:[],
             loading:false,
             servicerID:""
         }
@@ -64,6 +65,7 @@ export default {
             }
 
             function success(res){
+                _self.show = false
                 _self.workorderIds = ""
                 _self.departName = ""
                 _self.ServiceDeptID = ""
@@ -83,6 +85,7 @@ export default {
     created(){
         let _self = this
         this.$bus.on('global_allot_commonorder',(e)=>{
+            _self.show = true
             _self.ServiceDeptID = e[0]
             _self.departName = e[1]
             _self.workorderIds = e[2]

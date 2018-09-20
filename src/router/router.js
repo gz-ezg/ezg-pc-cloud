@@ -1085,7 +1085,7 @@ export const appRouter = [
         path: '/handoverresource',
         icon: 'social-windows',
         name: 'handoverresource',
-        title: '交接资料',
+        title: '资料管理',
         component: Main,
         children: [
             {   

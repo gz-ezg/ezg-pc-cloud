@@ -19,7 +19,7 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="16">
+                <Row :gutter="16" v-if="show">
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="20">
                         <FormItem prop="companyName" label="服务人员" >
@@ -53,6 +53,7 @@
 export default {
     data(){
         return{
+            show: true,
             workorderIds:"",
             departName:"",
             ServiceDeptID:"",
@@ -83,6 +84,7 @@ export default {
             }
 
             function success() {
+                _self.show = false
                 _self.workorderIds = ""
                 _self.servicerID = ""
                 _self.ServiceDeptID = ""
@@ -102,6 +104,7 @@ export default {
     created(){
         let _self = this
         this.$bus.on('global_allot_accountorder',(e)=>{
+            _self.show = true
             _self.ServiceDeptID = e[0]
             _self.departName = e[1]
             _self.workorderIds = e[2]

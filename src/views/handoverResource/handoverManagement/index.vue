@@ -40,6 +40,14 @@
                 </Panel>
             </Collapse>
         </Row>
+        <Row>
+            <ButtonGroup>
+                <Button type="primary" icon="plus" @click="create_file">交接入库</Button>
+                <Button type="primary" icon="plus" @click="create_request">申请交接</Button>
+                <Button type="primary" icon="plus" disabled>交接出库</Button>
+                <Button type="primary" icon="plus" @click="confirm_request">交接处理</Button>
+            </ButtonGroup>
+        </Row>
         <Row style="margin-top: 10px;">
             <Table
                 ref="selection"
@@ -49,6 +57,7 @@
                 :columns="header"
                 :data="data"
                 @on-row-dblclick="open_detail"
+                @on-current-change="select_row"
             >
             </Table>
             <Page
@@ -61,38 +70,121 @@
                 style="margin-top: 10px"></Page>
         </Row>
         <Modal
-                v-model="openDetail"
-                title="交接详情"
-                width="600">
-            <Row>
-                <Col span="5"><span>交接人：</span></Col>
-                <Col span="7"></Col>
-                <Col span="5"><span>接收人：</span></Col>
-                <Col span="7"></Col>
+                v-model="openRequest"
+                title="协商明细"
+                width="800">
+            <Row :gutter="20">
+                <Table
+                    ref="selection"
+                    highlight-row
+                    size="small"
+                    :columns="requestHeader"
+                    :data="requestData"
+                    style="margin-top:10px"
+                >
+                </Table>
             </Row>
-            <Row>
-                <Col span="5"><span>交接部门：</span></Col>
-                <Col span="7"></Col>
-                <Col span="5"><span>交接时间：</span></Col>
-                <Col span="7"></Col>
-            </Row>
-            <Row>
-                <Col span="6"><img />></Col>
-            </Row>
+            <div slot="footer"></div>
         </Modal>
+        <hand-over-detail></hand-over-detail>
+        <create-request @update="get_data"></create-request>
+        <create-file @update="get_data"></create-file>
+        <comfirm-file @update="get_data"></comfirm-file>
     </Card>
 </template>
 
 <script>
+import handOverDetail from './hand_overdetail'
+import createRequest from './create_request'
+import createFile from './create_file'
+import comfirmFile from './comfirm_request'
+
 export default {
     name: 'handovermanagement_index',
+    components:{
+        handOverDetail,
+        createRequest,
+        createFile,
+        comfirmFile
+    },
     data(){
         return{
-            loading: false,
+            //  协商请求明细
+            openRequest: false,
+            requestHeader: [
+                {
+                    title: "状态",
+                    key: "status",
+                    minWidth:120
+                },
+                {
+                    title: "创建时间",
+                    key: "createdate",
+                    minWidth:150
+                },
+                {
+                    title: "创建人",
+                    key: "realname",
+                    minWidth:150
+                },
+                {
+                    title: "备注",
+                    key: "memo",
+                    key: 200
+                }
+            ],
+            requestData: [],
+            //  交接详情
+            detailApplicantRealname:"",
+            detailReceiverRealname:"",
+            fileHeader: [
+                {
+                    title: "资料名称",
+                    key: "file_type_name",
+                    minWidth: 150
+                },
+                {
+                    title: "所属公司",
+                    key: "companyname",
+                    minWidth: 200
+                },
+                {
+                    title: "客户名称",
+                    key: "name",
+                    minWidth: 150
+                },
+                {
+                    title: "文件数量",
+                    key: "file_num",
+                    minWidth: 120
+                },
+                {
+                    title: "交接数量",
+                    key: "connect_num",
+                    minWidth: 120
+                },
+                {
+                    title: "存放部门",
+                    key: "departname",
+                    minWidth: 120
+                },
+                {
+                    title: "存放地点",
+                    key: "storage",
+                    minWidth: 120
+                },
+                {
+                    title: "存放位置",
+                    key: "storage_code",
+                    minWidth: 120
+                }
+            ],
+            fileData: [],
             openDetail:false,
-            selectRow:{
-
-            },
+            //  主页
+            search_model: "",
+            loading: false,
+            selectRow:"",
             seacrhFormInline: {
                 companyname: "",
                 name: "",
@@ -104,96 +196,59 @@ export default {
             data: [],
             header: [
                 {
-                    title: "公司名称",
-                    key: "companyname",
-                    width: 200
+                    title: "申请人",
+                    key: "applicant_realname",
+                    minWidth: 120
                 },
                 {
-                    title: "客户名称",
-                    key: "name",
-                    width: 120
+                    title: "接收人",
+                    key: "receiver_realname",
+                    minWidth: 120
                 },
                 {
-                    title: "电话",
-                    key: "tel",
-                    width: 120
+                    title: "申请备注",
+                    key: "application_memo",
+                    minWidth: 120
                 },
                 {
-                    title: "资料名称",
-                    key: "resourename",
-                    width: 150
+                    title: "申请时间",
+                    key: "createdate",
+                    minWidth: 200
                 },
                 {
-                    title: "数量",
-                    key: "number",
-                    width: 90
-                },
-                {
-                    title: "交接人",
-                    key: "person",
-                    width: 120
-                },
-                {
-                    title: "交接时间",
-                    key: "time",
-                    width: 200
-                },
-                {
-                    title: "存放部门",
-                    key: "depart",
-                    width: 150
-                },
-                {
-                    title: "保管人",
-                    key: "companyname",
-                    width: 120
-                },
-                {
-                    title: "确认时间",
-                    key: "comfirmtime",
-                    width: 150
-                },
-                {
-                    title: "状态",
-                    key: "status",
-                    width: 120
-                },
-                {
-                    title: "接收方式",
-                    key: "recieveType",
-                    width: 120
-                },
-                {
-                    title: "快递号",
-                    key: "expressNumber",
-                    width: 150
-                },
-                {
-                    title: "保存方式",
-                    key: "saveType",
-                    width: 150
-                },
-                {
-                    title: "柜号",
-                    key: "number",
-                    width: 90
+                    title: "申请状态",
+                    key: "application_status",
+                    minWidth: 120
                 },
                 {
                     title: "操作",
                     key: "action",
-                    width: 120,
+                    minWidth: 200,
                     render: (h, parmas) =>{
-                        return h('Button',{
-                            props: {
-                                type: 'text',
-                                size: 'small'
-                            },
-                            on: {
-                                click: () => {
-                                    this.open_detail(parmas)
+                        return h('div',[
+                            h('Button',{
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.open_detail(parmas.row.id)
+                                    }
                                 }
-                            }
-                        },'[查看详情]')
+                            },'[查看详情]'),
+                            h('Button',{
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.open_request(parmas.row.id)
+                                    }
+                                }
+                            },'[查看协商]'),
+                        ])
                     }
                 }
             ]
@@ -201,53 +256,103 @@ export default {
     },
     methods:{
         open_detail(e){
-            this.selectRow = e
-            this.openDetail = true
+            let _self = this
+            this.$bus.emit("OPEN_HANDOVER_DETAIL", e)
+        },
+        open_request(e){
+            let _self = this
+            let url = "api/customer/file/connect/request/course/list"
+
+            let config = {
+                params:{
+                    connect_request_id: e,
+                    sortField: "id"
+                }
+            }
+
+            function success(res){
+                _self.requestData = res.data.data
+                _self.openRequest = true
+            }
+
+            this.$Get(url, config, success)
         },
         get_data(){
             let _self = this
-            let url = ""
+            let url = "api/customer/file/connect/request/list"
 
             _self.loading = true
 
             let config = {
-                page: _self.page,
-                pageSize: _self.pageSize,
-                companyname: _self.seacrhFormInline.companyname,
-                customername: _self.seacrhFormInline.customername,
-                tel: _self.seacrhFormInline.tel
+                params: {
+                    page: _self.page,
+                    pageSize: _self.pageSize,
+                    companyname: _self.seacrhFormInline.companyname,
+                    customername: _self.seacrhFormInline.customername,
+                    tel: _self.seacrhFormInline.tel,
+                    sortField: "id"
+                }
             }
 
             function success(res){
                 _self.total = res.data.data.total
                 _self.data = res.data.data.rows
+                _self.loading = false
+                // for(let i = 0;i<_self.data.length; i++){
+                    // _self.data[i].createdate = _self.data[i].createdate.slice(0,10)
+                // }
             }
 
             this.$Get(url, config, success)
         },
-        get_data_center(){
-            let _self = this
-            return new Promise((resolve, reject) => {
-                let parmas = ""
-                function success(res){
-                    resolve()
-                }
-                _self.$GetDataCenter(params, success)
+        // get_data_center(){
+        //     let _self = this
+        //     return new Promise((resolve, reject) => {
+        //         let parmas = ""
+        //         function success(res){
+        //             resolve()
+        //         }
+        //         _self.$GetDataCenter(params, success)
 
-            })
-        },
+        //     })
+        // },
         pageChange(e){
             this.page = e
             this.get_data()
+        },
+        search(){
+
+        },
+        reset(){
+
+        },
+        create_request(){
+            let _self = this
+            _self.$bus.emit("OPEN_CREATE_REQUEST_FILE", true)
+        },
+        create_file(){
+            this.$bus.emit("OPEN_CREATE_RESOURE_FILE", true)
+        },
+        confirm_request(){
+            let _self = this
+            if(!this.selectRow){
+                this.$Message.warning("请选择一行进行处理！")
+            }else{
+                this.$bus.emit("OPEN_CONFIRM_FILE", _self.selectRow)
+            }
+        },
+        select_row(e){
+            // console.log(e)
+            this.selectRow = e
         }
     },
     created(){
         let _self = this
-        this.get_data_center().then(
-            () => {
+        // this.get_data_center().then(
+        //     () => {
                 _self.get_data()
-            }
-        )
+        //     }
+        // )
     }
 }
 </script>

@@ -37,6 +37,8 @@
                 <Button type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button>        
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button> -->
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="finsih_workerorder" >一键完结</Button>
+
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="reCreate" v-permission="['administration.rebuild']">重新生成流程</Button> -->
             </ButtonGroup>
         </Row>
@@ -545,6 +547,23 @@ export default {
                 let _self = this
                 _self.flowChart1 = true
                 _self.flowChartImg = '/api/dataCenter/activiti/getResourceInputStreamObj?bussinessKey=' + a.row.id +'&bussinessType=20&time='+new Date()
+        },
+        finsih_workerorder(){
+            let _self = this
+            if(this.current_row != ''){
+                let url = `api/order/goFinshWorkOrderProcess`
+                let config = {
+                    params:{
+                        workOrderId: _self.current_row.id
+                    }
+                }
+                function success(res){
+                    _self.$Message.success(res.data.msg)
+                }
+                _self.$Get(url,config,success)
+            }else{
+                this.$Message.warning('请选择一行！')
+            }
         },
         // foundClues(){
         //     Bus.$emit('workOrderClues',true)

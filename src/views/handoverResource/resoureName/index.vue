@@ -102,28 +102,28 @@ export default {
                 {
                     title: "资料名称",
                     key: "file_type_name",
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     //  自定义，1
                     title: "数量",
                     key: "plural_name",
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title: "部门",
                     key: "use_departs_name",
-                    width: 200
+                    minWidth: 200
                 },
                 {
                     title: "客户展示",
                     key: "show_customer_name",
-                    width: 150
+                    minWidth: 150
                 },
                 {
                     title: "操作",
                     key: "action",
-                    width: 250,
+                    minWidth: 250,
                     render: (h, parmas) =>{
                             return h('div',[ 
                                 h('Button',{

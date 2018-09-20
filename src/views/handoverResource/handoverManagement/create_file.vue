@@ -25,13 +25,8 @@
                     <Input v-model="formValidate.fileNum" placeholder="请输入文件数量"></Input>
                 </FormItem>
                 <FormItem label="存放部门：" prop="saveDepartId">
-                    <Select v-model="formValidate.saveDepartId" placeholder="选择存放部门" 
-                    filterable
-                    remote
-                    :remote-method="get_data_center"
-                    :loading="departLoading"
-                    >
-                        <Option  v-for="item in departAlias" :value="item.ID" :key="item.ID">{{item.departname}}</Option>
+                    <Select v-model="formValidate.saveDepartId" placeholder="选择存放部门" >
+                        <Option  v-for="item in departAlias" :value="item.departid" :key="item.departid">{{item.departname}}</Option>
                     </Select>
                 </FormItem>
                 <FormItem label="存放地点：" prop="storage">
@@ -124,20 +119,20 @@ export default {
 
             this.$Get(url, config, success)
         },
-        get_data_center(query){
+        get_data_center(){
             let _self = this
             _self.departLoading = true 
-            let url = "api/system/depart/list"
+            let url = "api/system/depart/queryDepartsByUserId"
             let config = {
                 params:{
-                    page: 1,
-                    pageSize: 10,
-                    departname: query
+                    // page: 1,
+                    // pageSize: 10,
+                    // departname: query
                 }
             }
             function success(res){
-                _self.departLoading = false
-                _self.departAlias = res.data.data.rows
+                // _self.departLoading = false
+                _self.departAlias = res.data.data
             }
 
             this.$Get(url, config, success)

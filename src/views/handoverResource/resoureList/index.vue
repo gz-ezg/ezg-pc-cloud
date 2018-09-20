@@ -41,10 +41,10 @@
             </Collapse>
         </Row>
         <Row>
-            <ButtonGroup>
-                <Button type="primary" icon="plus" @click="create_file">新增资料</Button>
-                <Button type="primary" icon="plus" @click="create_file">申请交接</Button>
-            </ButtonGroup>
+            <!-- <ButtonGroup> -->
+                <!-- <Button type="primary" icon="plus" @click="create_file">新增资料</Button> -->
+                <!-- <Button type="primary" icon="plus" @click="create_request">申请交接</Button> -->
+            <!-- </ButtonGroup> -->
         </Row>
         <Row style="margin-top: 10px;">
             <Table
@@ -80,19 +80,28 @@
                 <Button type="warning" @click="confirm_logout" long :loading="logoutLoading" :disabled="disabled">注销</Button>
             </div>
         </Modal>
-        <create-file @update="get_data"></create-file>
+        <!-- <create-file @update="get_data"></create-file> -->
+        <!-- <create-request></create-request> -->
+        <file-log></file-log>
     </Card>
 </template>
 
 <script>
-import createFile from './create_file'
+// import createFile from './create_file'
+// import createRequest from './create_request'
+import fileLog from './file_log'
+
 export default {
     name: 'resourelist_index',
     components:{
-        createFile
+        fileLog
+        // createFile,
+        // createRequest
     },
     data(){
         return{
+            //  选中的列
+            selectRow: [],
             logoutLoading: false,
             logoutReason: "",
             openLogout: false,
@@ -115,65 +124,75 @@ export default {
             managestatus: [],
             managestatus_map: new Map(),
             header: [
-                {
-                    title: "客户名称",
-                    key: "name",
-                    width: 120
-                },
-                {
-                    title: "电话",
-                    key: "tel",
-                    width: 120
-                },
+                // {
+                //     key: "",
+                //     type: 'selection',
+                //     minWidth: 90
+                // },
+                // {
+                //     title: "客户名称",
+                //     key: "name",
+                //     minWidth: 120
+                // },
+                // {
+                //     title: "电话",
+                //     key: "tel",
+                //     minWidth: 120
+                // },
                 {
                     title: "公司名称",
                     key: "companyname",
-                    width: 200
+                    minWidth: 200
                 },
                 {
                     title: "资料名称",
                     key: "file_type_name",
-                    width: 150
+                    minWidth: 150
                 },
                 {
                     title: "数量",
                     key: "file_num",
-                    width: 90
+                    minWidth: 90
+                },
+                {
+                    title: "已锁定数量",
+                    key: "lock_num",
+                    minWidth: 120
                 },
                 {
                     title: "保管部门",
                     key: "departname",
-                    width: 150
+                    minWidth: 150
                 },
                 {
                     title: "保管人",
                     key: "keeperrealname",
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title: "区域",
                     key: "storage",
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title: "存放地点",
                     key: "storage_code",
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title: "文件状态",
                     key: "file_status_name",
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title: "注销备注",
                     key: "logout_memo",
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title: "操作",
                     key: "action",
-                    width: 250,
+                    minWidth: 250,
                     render: (h, parmas) =>{
                         return h('div',[
                             // h('Button',{
@@ -206,7 +225,7 @@ export default {
                                 },
                                 on: {
                                     click: () => {
-                                        this.open_flow(parmas)
+                                        this.open_flow(parmas.row)
                                     }
                                 }
                             },'[ 交接记录 ]')
@@ -256,7 +275,7 @@ export default {
             this.$Post(url, config, success, fail)
         },
         open_flow(e){
-
+            this.$bus.emit("OPEN_FILE_LOG", e)
         },
         get_data(){
             let _self = this
@@ -309,6 +328,20 @@ export default {
         reset(){},
         create_file(){
             this.$bus.emit("OPEN_CREATE_RESOURE_FILE", true)
+        },
+        create_request(){
+            let _self = this
+            if(!this.selectRow.length){
+                _self.$Message.warning("请选择要交接的资料！")
+            }else{
+                for(let i = 0; i< _self.selectRow.length; i++){
+                    _self.selectRow[i].num = 1
+                }
+                _self.$bus.emit("OPEN_CREATE_REQUEST_FILE", _self.selectRow)
+            }
+        },
+        select_change(e){
+            this.selectRow = e
         }
     },
     created(){

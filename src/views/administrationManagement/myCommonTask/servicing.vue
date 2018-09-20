@@ -37,6 +37,7 @@
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="finsih_workerorder" >一键完结</Button>
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="reCreate" v-permission="['administration.rebuild']">重新生成流程</Button> -->
             </ButtonGroup>
         </Row>
@@ -551,6 +552,23 @@ export default {
                 this.$bus.emit('myflow',this.current_row)
             }else{
                 this.$Message.warning('请选择一行进行流转！')
+            }
+        },
+        finsih_workerorder(){
+            let _self = this
+            if(this.current_row != ''){
+                let url = `api/order/goFinshWorkOrderProcess`
+                let config = {
+                    params:{
+                        workOrderId: _self.current_row.id
+                    }
+                }
+                function success(res){
+                    _self.$Message.success(res.data.msg)
+                }
+                _self.$Get(url,config,success)
+            }else{
+                this.$Message.warning('请选择一行！')
             }
         },
         //  流程图

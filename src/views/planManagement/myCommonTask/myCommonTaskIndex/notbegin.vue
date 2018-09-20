@@ -42,6 +42,8 @@
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="finsih_workerorder" >一键完结</Button>
+
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="product_error">产品异常</Button> -->
                 <!-- <Button type="primary" icon="ios-color-wand-outline">批量已读</Button>
                 <Button type="primary" icon="ios-color-wand-outline">批量未读</Button> -->
@@ -600,6 +602,23 @@ export default {
                 Bus.$emit('openCompanyDetail',this.current_row.company_id)
             }else{
                 this.$Message.warning('请选择一行查看！')
+            }
+        },
+        finsih_workerorder(){
+            let _self = this
+            if(this.current_row != ''){
+                let url = `api/order/goFinshWorkOrderProcess`
+                let config = {
+                    params:{
+                        workOrderId: _self.current_row.id
+                    }
+                }
+                function success(res){
+                    _self.$Message.success(res.data.msg)
+                }
+                _self.$Get(url,config,success)
+            }else{
+                this.$Message.warning('请选择一行！')
             }
         }
     },
