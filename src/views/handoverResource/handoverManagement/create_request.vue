@@ -1,7 +1,7 @@
 <template>
     <div>
         <Modal
-            title=""
+            title="申请交接"
             width="95%"
             v-model="openRequest"
             :mask-closable="false"
@@ -38,6 +38,7 @@
                                 editable 
                                 v-model="fileList" 
                                 :columns="columns"
+                                @on-save-edit="check_data"
                             >
 
                             </tables>
@@ -112,9 +113,9 @@ export default {
                     minWidth: 150
                 },
                 {
-                    title: "数量",
+                    title: "可交接数量",
                     key: "file_num",
-                    minWidth: 90
+                    minWidth: 120
                 },
                 {
                     title: "操作",
@@ -127,7 +128,7 @@ export default {
                             },
                             on: {
                                     click: () => {
-                                        params.row.num = 1
+                                        params.row.num = params.row.file_num - params.row.lock_num
                                         this.fileList.push(params.row)
                                     }
                                 }
@@ -195,9 +196,9 @@ export default {
                     minWidth: 200
                 },
                 {
-                    title: "存放数量",
+                    title: "可交接数量",
                     key: "file_num",
-                    minWidth: 90
+                    minWidth: 120
                 },
                 {
                     title: "请求数量",
@@ -311,7 +312,15 @@ export default {
 
             this.$Get(url, config, success)
         },
-
+        check_data(e){
+            let _self = this
+            console.log(e.row)
+            console.log(e.value)
+            if(e.row.file_num - e.row.lock_num < e.value){
+                _self.$Message.warning("当前输入数量超过最大可交接数，请重新输入！")
+                _self.fileList[e.index].num = e.row.file_num-e.row.lock_num
+            }
+        }
     },
     created() {
         let _self = this

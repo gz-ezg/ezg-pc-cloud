@@ -80,7 +80,7 @@
                     </FormItem>
                     </Col>
                 </Row>
-                <Row style="height:56px" :gutter="16" v-if="isshowchannel">
+                <Row style="height:56px" :gutter="16" v-if="channel_show">
                     <Col span="12">
                     <FormItem label="选择渠道" prop="channelTypeId">
                         <Select transfer v-model="formValidate.channelTypeId" size="small">
@@ -794,10 +794,10 @@ export default {
     // checkchannel(e){
     //         var _self = this
     //         if(e == 'xzqd'){
-    //             // _self.getChannelType()
-    //         _self.isshowchannel = true
+    //            _self.getChannelType()
+    //            _self.isshowchannel = true
     //         }else{
-    //             _self.isshowchannel = false
+    //            _self.isshowchannel = false
     //         }
     // },
     checkchannel(e) {

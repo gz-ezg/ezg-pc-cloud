@@ -58,7 +58,7 @@ export default {
             rulepayment:{
                 transcationamount: [
                         { required: true, message: '请输入付款金额', trigger: 'blur' },
-                        { validator: Num, trigger: 'blur' }
+                        // { validator: Num, trigger: 'blur' }
                 ],
                 paydir: [
                         { required: true, message: '请选择付款方式', trigger: 'change' }

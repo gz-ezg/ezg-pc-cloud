@@ -5,7 +5,7 @@
             v-model="openConfirm"
             width="600"
         >
-                <Form ref="formValidate" :model="formValidate" :label-width="80">
+                <Form ref="formValidate" :model="formValidate" :label-width="120" :rules="ruleInline">
                     <FormItem label="接收人：">
                         <Input v-model="receiverRealname" readonly></Input>
                     </FormItem>
@@ -34,7 +34,7 @@
                     </FormItem>
                 </Form>
                 <div slot="footer">
-                    <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
+                    <Button type="primary" @click="submit" :loading="loading">提交</Button>
                 </div>
         </Modal>
     </div>
@@ -44,6 +44,7 @@
 export default {
     data(){
         return{
+            loading: false,
             openConfirm: false,
             currentRow: "",
             departAlias: [],
@@ -56,7 +57,18 @@ export default {
                 storageCode: ""
             },
             receiverRealname: "",
-            applicantRealname: ""
+            applicantRealname: "",
+            ruleInline:{
+                departId: [
+                    { required: true, trigger: 'change', message: "存放部门必选！", type: 'number' }
+                ],
+                storage: [
+                    { required: true, trigger: 'change', message: "存放地点必选！" }
+                ],
+                storageCode: [
+                    { required: true, trigger: 'change', message: "存放位置必选！" }
+                ]
+            }
         }
     },
     computed:{
@@ -84,7 +96,46 @@ export default {
             this.$Get(url, config, success)
         },
         submit(){
-            
+            let _self = this
+            let url = "api/customer/file/connect/request/dispose"
+            _self.loading = true
+            function success(res){
+                    _self.loading = false
+                    _self.openConfirm = false
+                }
+
+                function fail(err){
+                    _self.loading = false
+                }
+            if(this.show){
+                //  true
+                this.$refs["formValidate"].validate((valid) => {
+                    if (valid) {
+                        let config = {
+                            status: "Y",
+                            connectRequestId: _self.connectRequestId,
+                            departId: _self.formValidate.departId,
+                            memo: _self.formValidate.memo,
+                            storage: _self.formValidate.storage,
+                            storageCode: _self.formValidate.storageCode
+                        }
+
+                        _self.$Post(url, config, success, fail)
+                    } else {
+                        this.$Message.error('请补全信息!');
+                        _self.loading = false
+                    }
+                })
+            }else{
+                //  false
+                let config2 = {
+                    status: "Y",
+                    connectRequestId: _self.connectRequestId,
+                    memo: _self.formValidate.memo
+                }
+                _self.$Post(url, config2, success, fail)
+
+            }
         }
     },
     created() {
