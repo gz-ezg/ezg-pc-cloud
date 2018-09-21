@@ -82,7 +82,7 @@
         </Modal>
         <!-- <create-file @update="get_data"></create-file> -->
         <!-- <create-request></create-request> -->
-        <file-log></file-log>
+        <file-log :customer_f_s_a="customer_file_s_map"></file-log>
     </Card>
 </template>
 
@@ -121,8 +121,10 @@ export default {
             pageSize: 10,
             total: 0,
             data: [],
-            managestatus: [],
-            managestatus_map: new Map(),
+            customer_file_s: [],
+            customer_file_s_map: new Map(),
+            customer_f_s_a: [],
+            customer_f_s_a_map: new Map(),
             header: [
                 // {
                 //     key: "",
@@ -176,7 +178,7 @@ export default {
                 },
                 {
                     title: "存放地点",
-                    key: "storage_code",
+                    key: "storage_name",
                     minWidth: 120
                 },
                 {
@@ -299,7 +301,8 @@ export default {
                 _self.data = res.data.data.rows
                 for(let i = 0; i< _self.data.length; i++){
                     if(_self.data[i].file_status){
-                        _self.data[i].file_status_name = _self.managestatus_map.get(_self.data[i].file_status)
+                        _self.data[i].file_status_name = _self.customer_file_s_map.get(_self.data[i].file_status)
+                        _self.data[i].storage_name = _self.customer_f_s_a_map.get(_self.data[i].storage_code)
                     }
                 }
                 _self.loading = false
@@ -310,11 +313,14 @@ export default {
         get_data_center(){
             let _self = this
             return new Promise((resolve, reject) => {
-                let params = "managestatus"
+                let params = "customer_file_s,customer_f_s_a"
                 function success(res){
                     resolve()
-                    _self.managestatus = res.data.data.managestatus
-                    _self.managestatus_map = _self.$array2map(_self.managestatus)
+                    _self.customer_file_s = res.data.data.customer_file_s
+                    _self.customer_file_s_map = _self.$array2map(_self.customer_file_s)
+                    // console.log(_self.customer_file_s_map)
+                    _self.customer_f_s_a = res.data.data.customer_f_s_a
+                    _self.customer_f_s_a_map = _self.$array2map(_self.customer_f_s_a)
                 }
                 _self.$GetDataCenter(params, success)
 

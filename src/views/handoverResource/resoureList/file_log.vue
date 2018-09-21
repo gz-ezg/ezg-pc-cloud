@@ -40,6 +40,11 @@
 <script>
 
 export default {
+    props:{
+        customer_f_s_a:{
+            type: Map
+        }
+    },
     data(){
         return{
             openFileLog: false,
@@ -108,6 +113,10 @@ export default {
                 _self.loading = false
                 _self.total = res.data.data.total
                 _self.data = res.data.data.rows
+                // console.log(_self.customer_f_s_a)
+                for(let i = 0;i<_self.data.length;i++){
+                    _self.data[i].new_storage = _self.customer_f_s_a.get(_self.data[i].new_storage)
+                }
             }
 
             this.$Get(url, config, success)

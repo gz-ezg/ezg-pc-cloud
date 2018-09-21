@@ -195,9 +195,11 @@ export default {
                 params:{
                     page: _self.page,
                     pageSize: _self.pageSize,
-                    companyname: _self.seacrhFormInline.companyname,
-                    customername: _self.seacrhFormInline.customername,
-                    tel: _self.seacrhFormInline.tel
+                    sortField: 'id'
+                    // departname: _self.seacrhFormInline.departname,
+                    // file_type_name: _self.seacrhFormInline.file_type_name,
+                    // keeperrealname: _self.seacrhFormInline.keeperrealname,
+                    // file_status: _self.seacrhFormInline.file_status
                 } 
             }
 

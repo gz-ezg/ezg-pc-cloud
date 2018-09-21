@@ -73,7 +73,9 @@ export default {
             ],
             fileData: [],
             detailApplicantRealname: "",
-            detailReceiverRealname: ""
+            detailReceiverRealname: "",
+            customer_f_s_a: "",
+            customer_f_s_a_map: new Map()
         }
     },
     methods:{
@@ -91,15 +93,28 @@ export default {
                 _self.detailApplicantRealname = res.data.data.applicant_realname
                 _self.detailReceiverRealname = res.data.data.receiver_realname
                 _self.fileData = res.data.data.files
+                for(let i = 0; i < _self.fileData.length; i++){
+                    _self.fileData[i].storage = _self.customer_f_s_a_map.get(_self.fileData[i].storage)
+                }
                 _self.openDetail = true
 
             }
 
             this.$Get(url, config, success)
         },
+        get_center(){
+            let _self = this
+            let params = "customer_f_s_a"
+            function success(res){
+                _self.customer_f_s_a = res.data.data.customer_f_s_a
+                _self.customer_f_s_a_map = _self.$array2map(_self.customer_f_s_a)
+            }
+            _self.$GetDataCenter(params, success)
+        }
     },
     created() {
         let _self = this
+        this.get_center()
         this.$bus.on("OPEN_HANDOVER_DETAIL",(e)=>{
             _self.get_data(e)
         })

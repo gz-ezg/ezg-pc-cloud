@@ -24,10 +24,10 @@
             <span class="expand-key">服务会计: </span>
             <span class="expand-value">{{ row.server_realname }}</span>
             </Col>
-            <Col span="8">
+            <!-- <Col span="8">
             <span class="expand-key">会计主管: </span>
             <span class="expand-value">{{ row.accmanager_realname }}</span>
-            </Col>
+            </Col> -->
             <Col span="8">
             <span class="expand-key">累计外勤数量: </span>
             <span class="expand-value">{{ row.legwork_valid_num }}</span>

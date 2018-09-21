@@ -13,20 +13,14 @@
                         <Form ref="seacrhFormInline" :model="seacrhFormInline" :label-width="100">
                             <Row :gutter="16">
                                 <Col span="8">
-                                    <FormItem prop="companyname" label="公司名称：">
-                                        <Input type="text" size="small" v-model="seacrhFormInline.companyname" placeholder="">
+                                    <FormItem prop="applicant_realname" label="申请人：">
+                                        <Input type="text" size="small" v-model="seacrhFormInline.applicant_realname" placeholder="">
                                         </Input>
                                     </FormItem>
                                 </Col>
                                 <Col span="8">
-                                    <FormItem prop="name" label="客户名称：">
-                                        <Input type="text" size="small" v-model="seacrhFormInline.name" placeholder="">
-                                        </Input>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem prop="tel" label="联系方式：">
-                                        <Input type="text" size="small" v-model="seacrhFormInline.tel" placeholder="">
+                                    <FormItem prop="receiver_realname" label="接收人：">
+                                        <Input type="text" size="small" v-model="seacrhFormInline.receiver_realname" placeholder="">
                                         </Input>
                                     </FormItem>
                                 </Col>
@@ -109,6 +103,8 @@ export default {
     },
     data(){
         return{
+            customer_file_s: [],
+            customer_file_s_map: new Map(),
             //  协商请求明细
             openRequest: false,
             requestHeader: [
@@ -186,9 +182,8 @@ export default {
             loading: false,
             selectRow:"",
             seacrhFormInline: {
-                companyname: "",
-                name: "",
-                tel: ""
+                receiver_realname: "",
+                applicant_realname: "",
             },
             page: 1,
             pageSize: 10,
@@ -217,7 +212,7 @@ export default {
                 },
                 {
                     title: "申请状态",
-                    key: "application_status",
+                    key: "status",
                     minWidth: 120
                 },
                 {
@@ -273,6 +268,9 @@ export default {
             function success(res){
                 _self.requestData = res.data.data
                 _self.openRequest = true
+                for(let i = 0; i < _self.requestData.length; i++){
+                    // _self.requestDatap[i].statusName = _self.customer_file_s_map.get(_self.requestData[i].status)
+                }
             }
 
             this.$Get(url, config, success)
@@ -287,9 +285,9 @@ export default {
                 params: {
                     page: _self.page,
                     pageSize: _self.pageSize,
-                    companyname: _self.seacrhFormInline.companyname,
-                    customername: _self.seacrhFormInline.customername,
-                    tel: _self.seacrhFormInline.tel,
+                    applicant_realname: _self.seacrhFormInline.applicant_realname,
+                    receiver_realname: _self.seacrhFormInline.receiver_realname,
+                    application_status: "",
                     sortField: "id"
                 }
             }
@@ -298,24 +296,26 @@ export default {
                 _self.total = res.data.data.total
                 _self.data = res.data.data.rows
                 _self.loading = false
-                // for(let i = 0;i<_self.data.length; i++){
-                    // _self.data[i].createdate = _self.data[i].createdate.slice(0,10)
-                // }
+                for(let i = 0;i<_self.data.length; i++){
+                    _self.data[i].createdate = _self.data[i].createdate.slice(0,10)
+                    _self.data[i].status = _self.customer_file_s_map.get(_self.data[i].application_status)
+                }
             }
 
             this.$Get(url, config, success)
         },
-        // get_data_center(){
-        //     let _self = this
-        //     return new Promise((resolve, reject) => {
-        //         let parmas = ""
-        //         function success(res){
-        //             resolve()
-        //         }
-        //         _self.$GetDataCenter(params, success)
-
-        //     })
-        // },
+        get_data_center(){
+            let _self = this
+            return new Promise((resolve, reject) => {
+                let params = "customer_file_s"
+                function success(res){
+                    _self.customer_file_s = res.data.data.customer_file_s
+                    _self.customer_file_s_map = _self.$array2map(_self.customer_file_s)
+                    resolve()
+                }
+                _self.$GetDataCenter(params, success)
+            })
+        },
         pageChange(e){
             this.page = e
             this.get_data()
@@ -348,11 +348,11 @@ export default {
     },
     created(){
         let _self = this
-        // this.get_data_center().then(
-        //     () => {
+        this.get_data_center().then(
+            () => {
                 _self.get_data()
-        //     }
-        // )
+            }
+        )
     }
 }
 </script>

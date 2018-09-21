@@ -24,7 +24,10 @@
                         </Select>
                     </FormItem>
                     <FormItem label="存放地点：" prop="storage" v-if="show">
-                        <Input v-model="formValidate.storage" placeholder="请输入存放位置"></Input>
+                        <!-- <Input v-model="formValidate.storage" placeholder="请输入存放位置"></Input> -->
+                        <Select v-model="formValidate.storage" placeholder="选择存放位置" >
+                            <Option  v-for="item in customer_f_s_a" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
+                        </Select>
                     </FormItem>
                     <FormItem label="存放位置：" prop="storageCode" v-if="show">
                         <Input v-model="formValidate.storageCode" placeholder="请输入存放具体位置"></Input>
@@ -68,7 +71,8 @@ export default {
                 storageCode: [
                     { required: true, trigger: 'change', message: "存放位置必选！" }
                 ]
-            }
+            },
+            customer_f_s_a: []
         }
     },
     computed:{
@@ -136,10 +140,20 @@ export default {
                 _self.$Post(url, config2, success, fail)
 
             }
+        },
+        get_center(){
+            let _self = this
+            let params = "customer_f_s_a"
+            function success(res){
+                _self.customer_f_s_a = res.data.data.customer_f_s_a
+                // _self.customer_f_s_a_map = _self.$array2map(_self.customer_f_s_a)
+            }
+            _self.$GetDataCenter(params, success)
         }
     },
     created() {
         let _self = this
+        _self.get_center()
         _self.$bus.on("OPEN_CONFIRM_FILE", (e)=>{
             // console.log(e)
             _self.get_data_center()

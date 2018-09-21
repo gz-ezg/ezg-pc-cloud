@@ -30,7 +30,11 @@
                     </Select>
                 </FormItem>
                 <FormItem label="存放地点：" prop="storage">
-                    <Input v-model="formValidate.storage" placeholder="请输入存放位置"></Input>
+                    <!-- <Input v-model="formValidate.storage" placeholder="请输入存放位置"></Input> -->
+                    <!-- <customer_f_s_a -->
+                    <Select v-model="formValidate.storage" placeholder="选择存放地点" >
+                        <Option  v-for="item in customer_f_s_a" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
+                    </Select>
                 </FormItem>
                 <FormItem label="存放位置：" prop="storageCode">
                     <Input v-model="formValidate.storageCode" placeholder="请输入存放具体位置"></Input>
@@ -66,7 +70,9 @@ export default {
             departAlias:[], 
             companyList:[],
             companyLoading: false,
-            departLoading: false
+            departLoading: false,
+            customer_f_s_a: [],
+            // customer_f_s_a_map: new Map()
         }
     },
     methods:{
@@ -174,14 +180,24 @@ export default {
                     }
                 }
             }
+        },
+        get_center(){
+            let _self = this
+            let params = "customer_f_s_a"
+            function success(res){
+                _self.customer_f_s_a = res.data.data.customer_f_s_a
+                // _self.customer_f_s_a_map = _self.$array2map(_self.customer_f_s_a)
+            }
+            _self.$GetDataCenter(params, success)
         }
     },
     created() {
         let _self = this
-        this.get_data_center()
+        this.get_center()
         this.get_all_file_type()
         this.$bus.off("OPEN_CREATE_RESOURE_FILE")
         this.$bus.on("OPEN_CREATE_RESOURE_FILE", (e)=>{
+            _self.get_data_center()
             _self.openResoureFile = true
         })
     },
