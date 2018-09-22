@@ -43,9 +43,10 @@ const app = {
             let menuList = [];
             // console.log(appRouter)
             appRouter.forEach((item, index) => {
-                // console.log(item)
-                if (item.access !== undefined) {
-                    let _data = (Cookies.get('access')).split(',')
+                // console.log(typeof(item.access))
+                // console.log(item.access)
+                if (item.access != undefined) {
+                    let _data = ("" + (Cookies.get('access'))).split(',')
                     // console.log(_data)
                     for (let i = 0; i < _data.length; i++) {
                         let accessCode = parseInt(_data[i])

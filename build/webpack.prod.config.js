@@ -28,6 +28,7 @@ module.exports = merge(webpackBaseConfig, {
     },
     //  开启远程调试时使用,默认注释 
     // devtool: '#source-map',
+    // productionSourceMap: true,
     plugins: [
         new cleanWebpackPlugin(['dist/*'], {
             root: path.resolve(__dirname, '../')

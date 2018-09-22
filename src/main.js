@@ -31,6 +31,29 @@ Vue.use(iView);
 Vue.use(VueBus);
 Vue.use(iviewArea)
 
+//  异常监控及上传
+//  上传待接口完成后实现
+Vue.config.errorHandler = function (err, vm, info) {
+    // handle error
+    // `info` 是 Vue 特定的错误信息，比如错误所在的生命周期钩子
+    // 只在 2.2.0+ 可用
+    // console.log("errorHandler - start")
+    // console.log(err)
+    // console.log(vm)
+    // console.log(info)
+    // console.log("errorHandler - end")
+    let { 
+        message, // 异常信息
+        name, // 异常名称
+        script,  // 异常脚本url
+        line,  // 异常行号
+        column,  // 异常列号
+        stack  // 异常堆栈信息
+    } = err;
+
+    console.log(err)
+  }
+
 //  axios 拦截器
 axios.interceptors.response.use(
     (response) => {
@@ -563,7 +586,13 @@ new Vue({
         this.$store.commit('setOpenedList');
         this.$store.commit('initCachepage');
         // 权限菜单过滤相关
-        this.$store.commit('updateMenulist');
+        //  记录，在这里为什么要调一次获取菜单的请求呢？？
+        /**
+         * ???
+         * ???
+         * 2018年9月22日21:44:11
+         */
+        // this.$store.commit('updateMenulist');
         // iview-admin检查更新
         // util.checkUpdate(this); // util中未配置
     },
