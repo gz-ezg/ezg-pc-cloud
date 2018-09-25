@@ -31,28 +31,7 @@ Vue.use(iView);
 Vue.use(VueBus);
 Vue.use(iviewArea)
 
-//  异常监控及上传
-//  上传待接口完成后实现
-Vue.config.errorHandler = function (err, vm, info) {
-    // handle error
-    // `info` 是 Vue 特定的错误信息，比如错误所在的生命周期钩子
-    // 只在 2.2.0+ 可用
-    // console.log("errorHandler - start")
-    // console.log(err)
-    // console.log(vm)
-    // console.log(info)
-    // console.log("errorHandler - end")
-    let { 
-        message, // 异常信息
-        name, // 异常名称
-        script,  // 异常脚本url
-        line,  // 异常行号
-        column,  // 异常列号
-        stack  // 异常堆栈信息
-    } = err;
 
-    console.log(err)
-  }
 
 //  axios 拦截器
 axios.interceptors.response.use(
@@ -110,6 +89,40 @@ axios.interceptors.response.use(
         return Promise.reject(error)
     }
 )
+
+//  异常监控及上传
+//  上传待接口完成后实现
+Vue.config.errorHandler = function (err, vm, info) {
+    // handle error
+    // `info` 是 Vue 特定的错误信息，比如错误所在的生命周期钩子
+    // 只在 2.2.0+ 可用
+    // console.log("errorHandler - start")
+    console.log(router.history.current.name)
+    console.log(info)
+    console.log(err)
+
+    let _self = this
+    let url = 'api/system/saveFontErrMsg'
+    let config = {
+        name: router.history.current.name,
+        hook: info,
+        page: "",
+        err: err
+    }
+
+    axios.post(url, config).then(function(res){
+        if(res.data.msgCode == "40000"){
+            console.log("上报成功")
+        }else{
+            console.log(res)
+        }
+    }).catch(function(err){
+        console.log(err)
+    })
+
+  }
+
+
 // 按钮采集
 Vue.prototype.$ButtonCollect = function(name){
     let _self = this;

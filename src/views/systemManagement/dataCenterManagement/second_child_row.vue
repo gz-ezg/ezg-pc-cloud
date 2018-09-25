@@ -146,22 +146,23 @@ export default {
                 {
                     title: '字典名称',
                     key: 'typename',
-                    // width: 200
+                    minWidth: 200
                 },
                 {
                     title: '字典code',
                     key: 'typecode',
-                    // width: 200
+                    minWidth: 200
                 },
                 {
                     title: '排序',
-                    key:'sort'
+                    key:'sort',
+                    minWidth: 120
                 },
                 {
                     title: '操作',
                     key: 'action',
                     fixed: 'right',
-                    width: 200,
+                    minWidth: 200,
                     render: (h, params) => {
                         return h('div', [
                             h('Button', {

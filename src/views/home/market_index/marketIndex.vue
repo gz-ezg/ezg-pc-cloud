@@ -116,7 +116,7 @@
                 </Card>
             </Col>
         </Row>
-        <div class="market_hover" v-if="hoverShow">
+        <div class="market_hover">
             <Card style="width:60px;height:250px;">
                 <div @click="open_clue" style="margi-bottom:10px">
                     <Row>

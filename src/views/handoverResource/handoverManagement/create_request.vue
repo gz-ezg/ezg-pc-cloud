@@ -253,7 +253,7 @@ export default {
                 function success(res){
                     _self.submit_loading = false
                     _self.openRequest = false
-                    _self.$emit("update",true)
+                    _self.$bus.emit("HANDOVER_FILE_UPDATE",true)
                 }
 
                 function fail(err){
@@ -324,8 +324,8 @@ export default {
     },
     created() {
         let _self = this
-        this.get_data()
         this.$bus.on("OPEN_CREATE_REQUEST_FILE", (e)=>{
+            _self.get_data()
             _self.userList = []
             _self.receiverId = ""
             // console.log(e)

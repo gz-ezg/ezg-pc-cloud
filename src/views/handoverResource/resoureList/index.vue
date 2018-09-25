@@ -173,12 +173,12 @@ export default {
                 },
                 {
                     title: "区域",
-                    key: "storage",
+                    key: "storage_name",
                     minWidth: 120
                 },
                 {
                     title: "存放地点",
-                    key: "storage_name",
+                    key: "storage_code",
                     minWidth: 120
                 },
                 {
@@ -302,7 +302,7 @@ export default {
                 for(let i = 0; i< _self.data.length; i++){
                     if(_self.data[i].file_status){
                         _self.data[i].file_status_name = _self.customer_file_s_map.get(_self.data[i].file_status)
-                        _self.data[i].storage_name = _self.customer_f_s_a_map.get(_self.data[i].storage_code)
+                        _self.data[i].storage_name = _self.customer_f_s_a_map.get(_self.data[i].storage)
                     }
                 }
                 _self.loading = false

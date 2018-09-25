@@ -27,7 +27,7 @@ router.beforeEach((to, from, next) => {
     // console.log("======= next =======")
     // console.log(next)
 
-    if(to.name == "login"){
+    if(to.name == "login" || to.name == "home_index"){
         
     }else{
         let url = 'api/system/addGather'

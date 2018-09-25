@@ -554,6 +554,9 @@ import { yasuo } from '../../../libs/img_beforeUpload.js'
                 _self.companynameArray = [];
                 function doSuccess(response) {
                     // console.log(response)
+                    if(response.data.data.length != 0){
+                        _self.formValidate.companyId = response.data.data[0].id
+                    }
                     for (var i = 0; i < response.data.data.length; i++) {
                         var a = {}
                         a.id = response.data.data[i].id

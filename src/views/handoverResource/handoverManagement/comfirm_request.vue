@@ -106,6 +106,7 @@ export default {
             function success(res){
                     _self.loading = false
                     _self.openConfirm = false
+                    _self.$bus.emit("HANDOVER_FILE_UPDATE",true)
                 }
 
                 function fail(err){

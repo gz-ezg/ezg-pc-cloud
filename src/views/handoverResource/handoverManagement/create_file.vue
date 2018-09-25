@@ -39,6 +39,14 @@
                 <FormItem label="存放位置：" prop="storageCode">
                     <Input v-model="formValidate.storageCode" placeholder="请输入存放具体位置"></Input>
                 </FormItem>
+                <FormItem label="资料来源：" prop="fileSource">
+                    <Select v-model="formValidate.fileSource" placeholder="选择资料来源">
+                        <Option  v-for="item in customer_resource_from" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
+                    </Select>
+                </FormItem>
+                <FormItem label="客户名称：" prop="customerName" v-if="customerName">
+                    <Input v-model="formValidate.customerName" placeholder="请输入客户名称"></Input>
+                </FormItem>
                 <FormItem>
                     <Button type="primary" @click="create_type" :loading="loading">新增</Button>
                     <Button type="ghost" @click="reset_type" style="margin-left: 8px">重置</Button>
@@ -63,7 +71,9 @@ export default {
                 storage: "",
                 companyId: "",
                 fileNum: 1,
-                storageCode: ""
+                storageCode: "",
+                fileSource: "",
+                customerName: ""
             },
             loading: false,
             fileList: [],
@@ -72,7 +82,17 @@ export default {
             companyLoading: false,
             departLoading: false,
             customer_f_s_a: [],
+            customer_resource_from: []
             // customer_f_s_a_map: new Map()
+        }
+    },
+    computed:{
+        customerName(){
+            if(this.formValidate.fileSource == "customer"){
+                return true
+            }else{
+                return false
+            }
         }
     },
     methods:{
@@ -93,7 +113,7 @@ export default {
             function success(res){
                 _self.openResoureFile = false
                 _self.loading = false
-                _self.$emit("update",true)
+                // _self.$emit("update",true)
                 _self.reset_type()
             }
 
@@ -131,9 +151,6 @@ export default {
             let url = "api/system/depart/queryDepartsByUserId"
             let config = {
                 params:{
-                    // page: 1,
-                    // pageSize: 10,
-                    // departname: query
                 }
             }
             function success(res){
@@ -142,12 +159,6 @@ export default {
             }
 
             this.$Get(url, config, success)
-            // let _self = this
-            // let parmas = "departAlias"
-            // function success(res){
-            //     _self.departAlias = res.data.data.departAlias
-            // }
-            // _self.$GetDataCenter(parmas, success)
         },
         get_company(query){
             let _self = this
@@ -183,9 +194,10 @@ export default {
         },
         get_center(){
             let _self = this
-            let params = "customer_f_s_a"
+            let params = "customer_f_s_a,customer_resource_from"
             function success(res){
                 _self.customer_f_s_a = res.data.data.customer_f_s_a
+                _self.customer_resource_from = res.data.data.customer_resource_from
                 // _self.customer_f_s_a_map = _self.$array2map(_self.customer_f_s_a)
             }
             _self.$GetDataCenter(params, success)
