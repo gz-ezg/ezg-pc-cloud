@@ -90,8 +90,8 @@ export default {
             }
 
             function success(res){
-                _self.detailApplicantRealname = res.data.data.applicant_realname
-                _self.detailReceiverRealname = res.data.data.receiver_realname
+                _self.detailApplicantRealname = res.data.data.applicant_name
+                _self.detailReceiverRealname = res.data.data.receiver_name
                 _self.fileData = res.data.data.files
                 for(let i = 0; i < _self.fileData.length; i++){
                     _self.fileData[i].storage = _self.customer_f_s_a_map.get(_self.fileData[i].storage)

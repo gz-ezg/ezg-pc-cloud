@@ -57,12 +57,17 @@ export default {
             header: [
                 {
                     title: "交接人",
-                    key: "old_realname",
+                    key: "applicant_name",
                     minWidth: 120
                 },
                 {
                     title: "接收人",
-                    key: "new_realname",
+                    key: "receiver_name",
+                    minWidth: 120
+                },
+                {
+                    title: "接收数量",
+                    key: "customer_file_num",
                     minWidth: 120
                 },
                 {

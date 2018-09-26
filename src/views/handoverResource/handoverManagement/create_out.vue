@@ -1,37 +1,24 @@
 <template>
     <div>
         <Modal
-            title="申请交接"
+            title="申请出库"
             width="95%"
-            v-model="openRequest"
+            v-model="openCustomerOut"
             :mask-closable="false"
         >
             <Row :gutter="20">
                 <Col span="12">
                     <Card title="创建请求">
-                        <Row :gutter="20">
+                        <Row :gutter="20" style="height:40px">
                             <Col span="12">
-                                <Select 
-                                    v-model="receiverId" 
-                                    placeholder="接收人" 
-                                    filterable
-                                    remote
-                                    :remote-method="get_user"
-                                    :loading="userLoading"
-                                >
-                                    <Option v-for="item in userList" :key="item.id" :value="item.id" :label="item.realname">
-                                        <span>{{item.realname}}</span>
-                                        <span style="float:right;color:#ccc">{{item.departname}}</span>
-                                    </Option>
-                                </Select>
+                                <RadioGroup v-model="connectPlan">
+                                    <Radio  v-for="item in connect_plan" :key="item.id" :label="item.typecode">{{item.typename}}</Radio>
+                                </RadioGroup>
                             </Col>
-                            <Col span="12">
-                                <Input v-model="applicationMemo" type="textarea" placeholder="备注" :rows="1"/>
+                            <Col span="12" >
+                                <Input v-model="trackingNumber" placeholder="快递单号" v-if="connectPlan == 'express'"/>
                             </Col>
                         </Row>
-                        <!-- <Row :gutter="20" style="margin-top:10px">
-                            
-                        </Row> -->
                         <Row :gutter="20" style="margin-top:10px">
                             <tables
                                 ref="tables" 
@@ -97,6 +84,10 @@ export default {
     },
     data(){
         return{
+            //  提交操作
+            connectPlan: "f_to_f",
+            trackingNumber: "",
+            connect_plan: [],
             //  公司
             companyLoading: false,
             companyList: [],
@@ -142,13 +133,8 @@ export default {
             pageSize: 10,
             //  资料
             loading: false,
-            //  人员
-            userLoading: false,
-            userList: [],
             submit_loading: false,
-            openRequest: false,
-            receiverId: "",
-            applicationMemo: "",
+            openCustomerOut: false,
             fileList:[],
             columns:[
                 {
@@ -168,20 +154,6 @@ export default {
                                     }
                                 }
                             })
-                            // return h('Poptip', {
-                            //     props: {
-                            //         confirm: true,
-                            //         title: '你确定要移除吗?'
-                            //     },
-                            //     on: {
-                            //         'on-ok': () => {
-                            //             vm.$emit('on-delete', params)
-                            //             vm.$emit('input', params.tableData.filter((item, index) => index !== params.row.initRowIndex))
-                            //         }
-                            //     }
-                            // }, [
-                            //     // h('Button', '删除')
-                            // ])
                         }
                     ]
                 },
@@ -210,32 +182,12 @@ export default {
         }
     },
     methods:{
-        get_user(query){
-            let _self = this
-            let url = `api/user/list`
-            _self.userLoading = true
-
-            let config = {
-                params: {
-                    page: 1,
-                    pageSize: 5,
-                    realname: query
-                }
-            }
-
-            function success(res){
-                _self.userLoading = false
-                _self.userList = res.data.data.rows
-            }
-
-            this.$Get(url, config, success)
-        },
         submit_request(){
             let _self = this
-            if(!this.receiverId){
-                _self.$Message.warning("请选择接收人！")
+            if(this.connectPlan == 'express' && !this.trackingNumber){
+                _self.$Message.warning("请输入快递单号！")
             }else{
-                let url = "api/customer/file/connect/request/create"
+                let url = "api/customer/file/connect/request/customer/create"
                 _self.submit_loading = true
                 let temp = {}
                 for(let i = 0; i < _self.fileList.length; i++){
@@ -245,15 +197,16 @@ export default {
                 console.log(temp)
 
                 let config = {
-                    receiverId: _self.receiverId,
-                    applicationMemo: _self.applicationMemo,
+                    connectPlan: _self.connectPlan,
+                    trackingNumber: _self.trackingNumber,
                     customerFileJson: JSON.stringify(temp)
                 }
 
                 function success(res){
                     _self.submit_loading = false
-                    _self.openRequest = false
+                    _self.openCustomerOut = false
                     _self.fileList = []
+                    _self.trackingNumber = ""
                     _self.$bus.emit("HANDOVER_FILE_UPDATE",true)
                 }
 
@@ -321,17 +274,28 @@ export default {
                 _self.$Message.warning("当前输入数量超过最大可交接数，请重新输入！")
                 _self.fileList[e.index].num = e.row.file_num-e.row.lock_num
             }
+        },
+        get_data_center(){
+            let _self = this
+            let params = "connect_plan"
+
+            function success(res){
+                _self.connect_plan = res.data.data.connect_plan
+            }
+
+            this.$GetDataCenter(params, success)
         }
     },
     created() {
         let _self = this
-        this.$bus.on("OPEN_CREATE_REQUEST_FILE", (e)=>{
+        this.get_data_center()
+        this.$bus.on("OPEN_CREATE_OUT_FILE", (e)=>{
             _self.get_data()
             _self.userList = []
             _self.receiverId = ""
             // console.log(e)
             // _self.fileList = e
-            _self.openRequest = true
+            _self.openCustomerOut = true
         })
     },
 }

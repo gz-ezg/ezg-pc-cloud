@@ -38,7 +38,7 @@
             <ButtonGroup>
                 <Button type="primary" icon="plus" @click="create_file">交接入库</Button>
                 <Button type="primary" icon="plus" @click="create_request">申请交接</Button>
-                <Button type="primary" icon="plus" disabled>交接出库</Button>
+                <Button type="primary" icon="plus" @click="create_out">交接出库</Button>
                 <Button type="primary" icon="plus" @click="confirm_request">交接处理</Button>
             </ButtonGroup>
         </Row>
@@ -103,6 +103,10 @@ export default {
             customer_file_s_map: new Map(),
             handover_status: [],
             handover_status_map: new Map(),
+            file_connect_type: [],
+            file_connect_type_map: new Map(),
+            connect_plan: [],
+            connect_plan_map: new Map(),
             //  协商请求明细
             openRequest: false,
             requestHeader: [
@@ -190,12 +194,12 @@ export default {
             header: [
                 {
                     title: "申请人",
-                    key: "applicant_realname",
+                    key: "applicant_name",
                     minWidth: 120
                 },
                 {
                     title: "接收人",
-                    key: "receiver_realname",
+                    key: "receiver_name",
                     minWidth: 120
                 },
                 {
@@ -209,9 +213,19 @@ export default {
                     minWidth: 200
                 },
                 {
+                    title: "交接方式",
+                    key: "connect_plan",
+                    minWidth: 90
+                },
+                {
+                    title: "交接类型",
+                    key: "connect_type",
+                    minWidth: 90
+                },
+                {
                     title: "申请状态",
                     key: "status",
-                    minWidth: 120
+                    minWidth: 90
                 },
                 {
                     title: "操作",
@@ -297,6 +311,8 @@ export default {
                 for(let i = 0;i<_self.data.length; i++){
                     _self.data[i].createdate = _self.data[i].createdate.slice(0,10)
                     _self.data[i].status = _self.handover_status_map.get(_self.data[i].application_status)
+                    _self.data[i].connect_plan = _self.connect_plan_map.get(_self.data[i].connect_plan)
+                    _self.data[i].connect_type = _self.file_connect_type_map.get(_self.data[i].connect_type)
                 }
             }
 
@@ -305,12 +321,16 @@ export default {
         get_data_center(){
             let _self = this
             return new Promise((resolve, reject) => {
-                let params = "customer_file_s,handover_status"
+                let params = "customer_file_s,handover_status,file_connect_type,connect_plan"
                 function success(res){
                     _self.customer_file_s = res.data.data.customer_file_s
                     _self.customer_file_s_map = _self.$array2map(_self.customer_file_s)
                     _self.handover_status = res.data.data.handover_status
                     _self.handover_status_map = _self.$array2map(_self.handover_status)
+                    _self.file_connect_type = res.data.data.file_connect_type
+                    _self.file_connect_type_map = _self.$array2map(_self.file_connect_type)
+                    _self.connect_plan = res.data.data.connect_plan
+                    _self.connect_plan_map = _self.$array2map(_self.connect_plan)
                     resolve()
                 }
                 _self.$GetDataCenter(params, success)
@@ -332,6 +352,9 @@ export default {
         },
         create_file(){
             this.$bus.emit("OPEN_CREATE_RESOURE_FILE", true)
+        },
+        create_out(){
+            this.$bus.emit("OPEN_CREATE_OUT_FILE", true)
         },
         confirm_request(){
             let _self = this

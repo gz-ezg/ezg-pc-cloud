@@ -18,6 +18,8 @@
         <create-request></create-request>
         <create-file></create-file>
         <comfirm-file></comfirm-file>
+        <create-out></create-out>
+        <update-req></update-req>
     </div>
 </template>
 
@@ -26,6 +28,8 @@ import handOverDetail from './hand_overdetail'
 import createRequest from './create_request'
 import createFile from './create_file'
 import comfirmFile from './comfirm_request'
+import createOut from './create_out'
+import updateReq from './update_request'
 
 import all from './tabs/all'
 import finish from './tabs/finish'
@@ -39,10 +43,12 @@ export default {
         createRequest,
         createFile,
         comfirmFile,
+        createOut,
         all,
         finish,
         normal,
-        reject
+        reject,
+        updateReq
     },
     data(){
         return{

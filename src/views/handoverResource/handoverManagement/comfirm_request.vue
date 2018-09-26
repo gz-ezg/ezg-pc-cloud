@@ -161,8 +161,8 @@ export default {
             _self.connectRequestId = e.id
             _self.currentRow = e
             _self.openConfirm = true
-            _self.receiverRealname = e.receiver_realname
-            _self.applicantRealname = e.applicant_realname
+            _self.receiverRealname = e.receiver_name
+            _self.applicantRealname = e.applicant_name
         })
     },
 }

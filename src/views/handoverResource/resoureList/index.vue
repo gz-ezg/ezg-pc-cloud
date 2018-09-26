@@ -82,7 +82,7 @@
         </Modal>
         <!-- <create-file @update="get_data"></create-file> -->
         <!-- <create-request></create-request> -->
-        <file-log :customer_f_s_a="customer_file_s_map"></file-log>
+        <file-log :customer_f_s_a="customer_f_s_a_map"></file-log>
     </Card>
 </template>
 
