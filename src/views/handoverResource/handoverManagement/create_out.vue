@@ -41,10 +41,14 @@
                                     remote
                                     :remote-method="get_company"
                                     :loading="companyLoading"
+                                    @on-change="get_data"
                                 >
-                                    <Option  v-for="item in companyList" :value="item.id" :key="item.id">{{item.companyname}}</Option>
+                                    <Option  v-for="item in companyList" :value="item.companyname" :key="item.id">{{item.companyname}}</Option>
                                 </Select>
                             </Col>
+                            <!-- <Col span="12">
+                                <Button type="primary" @click="get_data">搜索</Button>
+                            </Col> -->
                         </Row>
                         <Row :gutter="20" style="margin-top:10px">
                             <Table
@@ -105,7 +109,7 @@ export default {
                 },
                 {
                     title: "可交接数量",
-                    key: "file_num",
+                    key: "max_allow_connect_num",
                     minWidth: 120
                 },
                 {
@@ -119,7 +123,7 @@ export default {
                             },
                             on: {
                                     click: () => {
-                                        params.row.num = params.row.file_num - params.row.lock_num
+                                        params.row.num = params.row.max_allow_connect_num
                                         this.fileList.push(params.row)
                                     }
                                 }
@@ -169,7 +173,7 @@ export default {
                 },
                 {
                     title: "可交接数量",
-                    key: "file_num",
+                    key: "max_allow_connect_num",
                     minWidth: 120
                 },
                 {
@@ -207,6 +211,10 @@ export default {
                     _self.openCustomerOut = false
                     _self.fileList = []
                     _self.trackingNumber = ""
+                    //  根据返回值id，生成扫码页面，推送给客户
+                    console.log(res.data)
+                    _self.send_customer_msg(res.data.data.id)
+                    _self.$bus.emit("OPEN_OUTER_QCODER", res.data.data.id)
                     _self.$bus.emit("HANDOVER_FILE_UPDATE",true)
                 }
 
@@ -216,6 +224,26 @@ export default {
 
                 this.$Post(url, config, success, fail)
             }
+        },
+
+        //  发送微信推送
+        send_customer_msg(e){
+            console.log(e)
+            let url = `api/customer/file/connect/request/customer/send`
+            let _self  = this
+            let config = {
+                connectRequestId: e
+            }
+
+            function success(res){
+
+            }
+
+            function fail(err){
+
+            }
+
+            this.$Post(url, config, success, fail)
         },
         //  获取资料
         get_company(query){
@@ -251,9 +279,7 @@ export default {
                 params:{
                     page: _self.page,
                     pageSize: _self.pageSize,
-                    // companyname: _self.companyName,
-                    // customername: _self.seacrhFormInline.customername,
-                    // tel: _self.seacrhFormInline.tel
+                    companyname: _self.companyName,
                 }
                 
             }
@@ -270,9 +296,9 @@ export default {
             let _self = this
             console.log(e.row)
             console.log(e.value)
-            if(e.row.file_num - e.row.lock_num < e.value){
+            if(e.row.max_allow_connect_num < e.value){
                 _self.$Message.warning("当前输入数量超过最大可交接数，请重新输入！")
-                _self.fileList[e.index].num = e.row.file_num-e.row.lock_num
+                _self.fileList[e.index].num = e.row.max_allow_connect_num
             }
         },
         get_data_center(){

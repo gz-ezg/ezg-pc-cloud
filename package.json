@@ -43,9 +43,12 @@
     "tinymce": "^4.7.4",
     "v-charts": "^1.17.6",
     "vue": "^2.5.13",
+    "vue-contextmenu": "^1.5.3",
     "vue-full-calendar": "^2.6.1",
     "vue-fullcalendar": "^1.0.9",
+    "vue-md-date-picker": "^1.0.16",
     "vue-router": "^3.0.1",
+    "vuejs-datepicker": "^1.5.3",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

@@ -107,8 +107,9 @@ Vue.config.errorHandler = function (err, vm, info) {
         name: router.history.current.name,
         hook: info,
         page: "",
-        err: err
+        err: err.toString()
     }
+    console.log(config)
 
     axios.post(url, config).then(function(res){
         if(res.data.msgCode == "40000"){

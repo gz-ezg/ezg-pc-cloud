@@ -19,14 +19,22 @@
                                     </FormItem>
                                 </Col>
                                 <Col span="8">
-                                    <FormItem prop="name" label="客户名称：">
-                                        <Input type="text" size="small" v-model="seacrhFormInline.name" placeholder="">
+                                    <FormItem prop="tel" label="文件名称：">
+                                        <Input type="text" size="small" v-model="seacrhFormInline.file_type_name" placeholder="">
                                         </Input>
                                     </FormItem>
                                 </Col>
                                 <Col span="8">
-                                    <FormItem prop="tel" label="联系方式：">
-                                        <Input type="text" size="small" v-model="seacrhFormInline.tel" placeholder="">
+                                    <FormItem prop="companyname" label="保管人：">
+                                        <Input type="text" size="small" v-model="seacrhFormInline.keeperrealname" placeholder="">
+                                        </Input>
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row :gutter="16">
+                                <Col span="8">
+                                    <FormItem prop="companyname" label="保管部门：">
+                                        <Input type="text" size="small" v-model="seacrhFormInline.departname" placeholder="">
                                         </Input>
                                     </FormItem>
                                 </Col>
@@ -41,10 +49,6 @@
             </Collapse>
         </Row>
         <Row>
-            <!-- <ButtonGroup> -->
-                <!-- <Button type="primary" icon="plus" @click="create_file">新增资料</Button> -->
-                <!-- <Button type="primary" icon="plus" @click="create_request">申请交接</Button> -->
-            <!-- </ButtonGroup> -->
         </Row>
         <Row style="margin-top: 10px;">
             <Table
@@ -113,9 +117,10 @@ export default {
 
             },
             seacrhFormInline: {
+                file_type_name: "",
+                keeperrealname: "",
                 companyname: "",
-                name: "",
-                tel: ""
+                departname: ""
             },
             page: 1,
             pageSize: 10,
@@ -155,6 +160,11 @@ export default {
                     title: "数量",
                     key: "file_num",
                     minWidth: 90
+                },
+                {
+                    title: "可交接数量",
+                    key: "max_allow_connect_num-",
+                    minWidth: 120
                 },
                 {
                     title: "已锁定数量",
@@ -289,9 +299,11 @@ export default {
                 params:{
                     page: _self.page,
                     pageSize: _self.pageSize,
-                    // companyname: _self.seacrhFormInline.companyname,
-                    // customername: _self.seacrhFormInline.customername,
-                    // tel: _self.seacrhFormInline.tel
+                    departname: _self.seacrhFormInline.departname,
+                    file_type_name: _self.seacrhFormInline.file_type_name,
+                    keeperrealname: _self.seacrhFormInline.keeperrealname,
+                    companyname: _self.seacrhFormInline.companyname,
+
                 }
                 
             }
@@ -330,8 +342,17 @@ export default {
             this.page = e
             this.get_data()
         },
-        search(){},
-        reset(){},
+        search(){
+            this.page = 1
+            this.get_data()
+        },
+        reset(){
+            this.seacrhFormInline.departname = ""
+            this.seacrhFormInline.file_type_name = ""
+            this.seacrhFormInline.keeperrealname = ""
+            this.seacrhFormInline.companyname = ""
+            this.get_data()
+        },
         create_file(){
             this.$bus.emit("OPEN_CREATE_RESOURE_FILE", true)
         },

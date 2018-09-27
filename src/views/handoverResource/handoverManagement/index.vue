@@ -20,6 +20,7 @@
         <comfirm-file></comfirm-file>
         <create-out></create-out>
         <update-req></update-req>
+        <q-code></q-code>
     </div>
 </template>
 
@@ -36,6 +37,8 @@ import finish from './tabs/finish'
 import normal from './tabs/normal'
 import reject from './tabs/reject'
 
+import qCode from './QCode';
+
 export default {
     name: 'handovermanagement_index',
     components:{
@@ -48,7 +51,8 @@ export default {
         finish,
         normal,
         reject,
-        updateReq
+        updateReq,
+        qCode
     },
     data(){
         return{

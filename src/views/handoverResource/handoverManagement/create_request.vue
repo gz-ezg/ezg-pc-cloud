@@ -54,10 +54,14 @@
                                     remote
                                     :remote-method="get_company"
                                     :loading="companyLoading"
+                                    @on-change="get_data"
                                 >
-                                    <Option  v-for="item in companyList" :value="item.id" :key="item.id">{{item.companyname}}</Option>
+                                    <Option  v-for="item in companyList" :value="item.companyname" :key="item.id">{{item.companyname}}</Option>
                                 </Select>
                             </Col>
+                            <!-- <Col span="12">
+                                <Button type="primary" @click="get_data">搜索</Button>
+                            </Col> -->
                         </Row>
                         <Row :gutter="20" style="margin-top:10px">
                             <Table
@@ -114,7 +118,7 @@ export default {
                 },
                 {
                     title: "可交接数量",
-                    key: "file_num",
+                    key: "max_allow_connect_num",
                     minWidth: 120
                 },
                 {
@@ -128,7 +132,7 @@ export default {
                             },
                             on: {
                                     click: () => {
-                                        params.row.num = params.row.file_num - params.row.lock_num
+                                        params.row.num = params.row.max_allow_connect_num
                                         this.fileList.push(params.row)
                                     }
                                 }
@@ -197,7 +201,7 @@ export default {
                 },
                 {
                     title: "可交接数量",
-                    key: "file_num",
+                    key: "max_allow_connect_num",
                     minWidth: 120
                 },
                 {
@@ -254,6 +258,8 @@ export default {
                     _self.submit_loading = false
                     _self.openRequest = false
                     _self.fileList = []
+                    //  生成一个二维码，员工扫码进入企业微信的交接工具
+                    _self.$bus.emit("OPEN_INNER_QCODER",true)
                     _self.$bus.emit("HANDOVER_FILE_UPDATE",true)
                 }
 
@@ -298,7 +304,7 @@ export default {
                 params:{
                     page: _self.page,
                     pageSize: _self.pageSize,
-                    // companyname: _self.companyName,
+                    companyname: _self.companyName,
                     // customername: _self.seacrhFormInline.customername,
                     // tel: _self.seacrhFormInline.tel
                 }
@@ -317,9 +323,9 @@ export default {
             let _self = this
             console.log(e.row)
             console.log(e.value)
-            if(e.row.file_num - e.row.lock_num < e.value){
+            if(e.row.max_allow_connect_num < e.value){
                 _self.$Message.warning("当前输入数量超过最大可交接数，请重新输入！")
-                _self.fileList[e.index].num = e.row.file_num-e.row.lock_num
+                _self.fileList[e.index].num = e.row.max_allow_connect_num
             }
         }
     },

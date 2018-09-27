@@ -122,14 +122,14 @@ export default {
                     minWidth:150
                 },
                 {
-                    title: "创建人",
-                    key: "realname",
+                    title: "操作人",
+                    key: "operator_name",
                     minWidth:150
                 },
                 {
                     title: "备注",
                     key: "memo",
-                    key: 200
+                    minWidth: 200
                 }
             ],
             requestData: [],

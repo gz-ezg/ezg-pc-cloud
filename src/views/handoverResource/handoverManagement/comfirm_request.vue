@@ -134,7 +134,7 @@ export default {
             }else{
                 //  false
                 let config2 = {
-                    status: "Y",
+                    status: "N",
                     connectRequestId: _self.connectRequestId,
                     memo: _self.formValidate.memo
                 }
