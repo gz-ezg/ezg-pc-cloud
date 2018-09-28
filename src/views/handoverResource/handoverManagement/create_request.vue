@@ -305,6 +305,7 @@ export default {
                     page: _self.page,
                     pageSize: _self.pageSize,
                     companyname: _self.companyName,
+                    file_status: "normal"
                     // customername: _self.seacrhFormInline.customername,
                     // tel: _self.seacrhFormInline.tel
                 }

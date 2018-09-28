@@ -1,9 +1,15 @@
 <template>
-    <div style="min-width:1300px">
+    <div style="min-width:1300px" @click="close_right_menu">
         <!-- <CheckboxGroup v-model="checkAllGroup">
             <Checkbox v-for="(item, index) in data" :label="item.code" :key="index">{{item.data}}<Input v-model="number[item.code]" v-if="item.number" size="small" style="width:40px"/></Checkbox>
         </CheckboxGroup> -->
         <Card title="日程表">
+            <Card style="width:100px;position:fixed;top:372px;left:671px;z-index:9999" v-if="click_show">
+                        <Row :gutter="20">
+                            <Col><span style="padding:5px;" @click="dayClick">新增任务</span></Col>
+                            <Col style="padding-top:10px"><span style="padding:5px">新增计划</span></Col>
+                        </Row>
+                    </Card>
             <Row :gutter="20"> 
                 <Col span="18">
                     <full-calendar
@@ -15,6 +21,8 @@
                         :editable="false"
                         @day-click="dayClick"
                         @right-click="right_deal"
+                        @event-mouseover="mouse_over"
+                        @event-mouseout="mouse_out"
                         >
 
                     </full-calendar>
@@ -70,17 +78,8 @@
             <div slot="footer"></div>
         </Modal>
         <Button @click="next">下一个</Button>
-        <Menu active-name="1" v-if="click_show">
-            <MenuItem name="1">
-                <Icon type="document-text"></Icon>
-                文章管理
-            </MenuItem>
-            <MenuItem name="2">
-                <Icon type="chatbubbles"></Icon>
-                评论管理
-            </MenuItem>
-        </Menu>
-        <!-- <div id="app" @contextmenu="showMenu" style="width: 100px;height: 100px;background: red;">
+        
+        <!-- <div id="app" @contextmenu="showMenu" style="width: 705px;height: 307px;background: red;">
             <vue-context-menu :contextMenuData="contextMenuData"
                             @savedata="savedata"
                             @newdata="newdata">
@@ -90,11 +89,9 @@
 </template>
 
 <script>
-import zh from 'vuejs-datepicker/dist/locale/translations/zh.js'
-import { FullCalendar } from 'vue-full-calendar'
+import { zh } from 'vuejs-datepicker/dist/locale/index.js'
+import { FullCalendar } from 'vue-full-calendar'    
 import Datepicker from 'vuejs-datepicker';
-import 'vue-contextmenu/style/css/font-awesome.min.css'
-import VueContextMenu from 'vue-contextmenu'
 //  引入中文库
 import 'fullcalendar/dist/locale/zh-cn.js'
 
@@ -102,12 +99,11 @@ export default {
     components:{
         FullCalendar,
         Datepicker,
-        VueContextMenu
-        // calendar
-        // fullCalendar
     },
     data(){
         return{
+            top: "",
+            left: "",
             click_show: false,
             zh: zh,
             date: new Date(),   
@@ -180,9 +176,29 @@ export default {
             console.log(e)
         },
         right_deal(e){
-            this.click_show = true
-            console.log(e)
+            // this.click_show = true
+            // console.log(e)
             //  e.x e.y e.path[0]
+        },
+        //  右键点击，鼠标滑入滑出
+        close_right_menu(){
+            this.click_show = false
+        },
+        mouse_out(){
+            console.log("鼠标离开了！")
+            this.click_show = false
+        },
+        mouse_over(event, jsEvent, view){
+            this.click_show = true
+            console.log("====== event ======")        
+            console.log(event)
+            console.log("====== jsEvent ======")
+            console.log(jsEvent)
+            console.log("====== view ======")
+            console.log(view)
+
+            this.top = jsEvent.clientX
+            this.left = jsEvent.clientY
         }
     }
     //  @event-selected 点击事件触发

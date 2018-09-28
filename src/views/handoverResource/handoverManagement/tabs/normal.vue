@@ -234,7 +234,7 @@ export default {
                 {
                     title: "操作",
                     key: "action",
-                    minWidth: 200,
+                    minWidth: 120,
                     render: (h, parmas) =>{
                         return h('div',[
                             h('Button',{
@@ -248,17 +248,17 @@ export default {
                                     }
                                 }
                             },'[查看详情]'),
-                            h('Button',{
-                                props: {
-                                    type: 'text',
-                                    size: 'small'
-                                },
-                                on: {
-                                    click: () => {
-                                        this.open_request(parmas.row.id)
-                                    }
-                                }
-                            },'[查看协商]'),
+                            // h('Button',{
+                            //     props: {
+                            //         type: 'text',
+                            //         size: 'small'
+                            //     },
+                            //     on: {
+                            //         click: () => {
+                            //             this.open_request(parmas.row.id)
+                            //         }
+                            //     }
+                            // },'[查看协商]'),
                         ])
                     }
                 }

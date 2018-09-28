@@ -97,8 +97,8 @@ Vue.config.errorHandler = function (err, vm, info) {
     // `info` 是 Vue 特定的错误信息，比如错误所在的生命周期钩子
     // 只在 2.2.0+ 可用
     // console.log("errorHandler - start")
-    console.log(router.history.current.name)
-    console.log(info)
+    // console.log(router.history.current.name)
+    // console.log(info)
     console.log(err)
 
     let _self = this
@@ -109,7 +109,7 @@ Vue.config.errorHandler = function (err, vm, info) {
         page: "",
         err: err.toString()
     }
-    console.log(config)
+    // console.log(config)
 
     axios.post(url, config).then(function(res){
         if(res.data.msgCode == "40000"){

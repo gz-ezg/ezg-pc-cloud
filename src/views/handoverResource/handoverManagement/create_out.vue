@@ -280,6 +280,7 @@ export default {
                     page: _self.page,
                     pageSize: _self.pageSize,
                     companyname: _self.companyName,
+                    file_status: "normal"
                 }
                 
             }

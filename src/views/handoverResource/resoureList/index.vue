@@ -219,6 +219,9 @@ export default {
                             //     }
                             // },'[ 查看照片 ]'),
                             h('Button',{
+                                style: {
+                                    display: (localStorage.getItem("realname") == "管理员" ) ? "inline-block" : "none"
+                                },
                                 props: {
                                     type: 'text',
                                     size: 'small'

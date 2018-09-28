@@ -135,8 +135,7 @@ export default {
             let _self = this
             let url = "api/customer/file/type/list"
 
-            let config = {
-
+            let config = {   
             }
 
             function success(res){
@@ -206,9 +205,9 @@ export default {
     created() {
         let _self = this
         this.get_center()
-        this.get_all_file_type()
         this.$bus.off("OPEN_CREATE_RESOURE_FILE")
         this.$bus.on("OPEN_CREATE_RESOURE_FILE", (e)=>{
+            _self.get_all_file_type()
             _self.get_data_center()
             _self.openResoureFile = true
         })

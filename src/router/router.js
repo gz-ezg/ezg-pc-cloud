@@ -244,6 +244,37 @@ export const appRouter = [
     {
         access: 6001,
         meta: 6001,
+        path: '/missionCenter',
+        icon: 'social-windows',
+        name: 'missionCenter',
+        title: "任务中心",
+        component: Main,
+        children:[
+            {
+                access: 6002,
+                meta: 6002,
+                path: 'schedule',
+                title: '日程',
+                name: 'schedule_index',
+                component: resolve => {
+                    require(['@/views/missionCenter/schedule/index.vue'], resolve);
+                }
+            },
+            {
+                access: 6003,
+                meta: 6003,
+                path: 'missionManagement',
+                title: '任务管理',
+                name: 'missionManagement_index',
+                component: resolve => {
+                    require(['@/views/missionCenter/missionManagement/index.vue'], resolve);
+                }
+            },
+        ]
+    },
+    {
+        access: 6001,
+        meta: 6001,
         path: '/customerManagement',
         icon: 'social-windows',
         name: 'customerManagement',
@@ -851,6 +882,67 @@ export const appRouter = [
                     require(['@/views/administrationManagement/clockin/index.vue'], resolve);
                 }
             },
+            {
+                access: 6094,
+                meta: 6094,
+                path: 'marketPerformance',
+                title: '市场绩效',
+                name:"marketPerformance_index",
+                component: resolve => {
+                    require(['@/views/administrationManagement/marketPerformance/index.vue'], resolve);
+                }
+            },
+            {
+                access: 6094,
+                meta: 6094,
+                path: 'resumeManagement',
+                title: '简历管理',
+                name:"resumeManagement_index",
+                component: resolve => {
+                    require(['@/views/administrationManagement/resumeManagement/index.vue'], resolve);
+                }
+            },
+        ]
+    },
+    {
+        access: 6130,
+        meta: 6130,
+        path: '/handoverresource',
+        icon: 'social-windows',
+        name: 'handoverresource',
+        title: '资料管理',
+        component: Main,
+        children: [
+            {   
+                access: 6131,
+                meta: 6131,
+                path: 'handovermanagement', 
+                title: '交接管理', 
+                name: 'handovermanagement_index', 
+                component: resolve => {
+                    require(['@/views/handoverresource/handoverManagement/index.vue'], resolve);
+                }
+            },
+            {   
+                access: 6132,
+                meta: 6132,
+                path: 'resourelist', 
+                title: '资料管理', 
+                name: 'resourelist_index', 
+                component: resolve => {
+                    require(['@/views/handoverresource/resoureList/index.vue'], resolve);
+                }
+            },
+            {   
+                access: 6133,
+                meta: 6133,
+                path: 'resourename', 
+                title: '资料参数', 
+                name: 'resourename_index', 
+                component: resolve => {
+                    require(['@/views/handoverresource/resoureName/index.vue'], resolve);
+                }
+            }
         ]
     },
     {
@@ -953,6 +1045,24 @@ export const appRouter = [
             //         require(['@/views/publicPool/personTarget/index.vue'], resolve);
             //     }
             // }
+        ]
+    },
+    {
+        access: 6027,
+        meta: 6027,
+        path: '/solutionTool',
+        icon: 'social-windows',
+        title: '方案工具',
+        name: 'solutionTool',
+        component: Main,
+        children: [
+            {
+                access: 6089,
+                meta: 6089,
+                path: 'useRecord', title: '使用记录', name: 'useRecord_index', component: resolve => {
+                    require(['@/views/solutionTool/useRecord/index.vue'], resolve);
+                }
+            },
         ]
     },
 /*    {
@@ -1075,47 +1185,6 @@ export const appRouter = [
                 name: 'attributeManagement',
                 component: resolve => {
                     require(['@/views/systemManagement/attributeManagement/attributeManagement_index.vue'], resolve);
-                }
-            }
-        ]
-    },
-    {
-        access: 6130,
-        meta: 6130,
-        path: '/handoverresource',
-        icon: 'social-windows',
-        name: 'handoverresource',
-        title: '资料管理',
-        component: Main,
-        children: [
-            {   
-                access: 6131,
-                meta: 6131,
-                path: 'handovermanagement', 
-                title: '交接管理', 
-                name: 'handovermanagement_index', 
-                component: resolve => {
-                    require(['@/views/handoverresource/handoverManagement/index.vue'], resolve);
-                }
-            },
-            {   
-                access: 6132,
-                meta: 6132,
-                path: 'resourelist', 
-                title: '资料管理', 
-                name: 'resourelist_index', 
-                component: resolve => {
-                    require(['@/views/handoverresource/resoureList/index.vue'], resolve);
-                }
-            },
-            {   
-                access: 6133,
-                meta: 6133,
-                path: 'resourename', 
-                title: '资料参数', 
-                name: 'resourename_index', 
-                component: resolve => {
-                    require(['@/views/handoverresource/resoureName/index.vue'], resolve);
                 }
             }
         ]
@@ -1308,6 +1377,16 @@ export const appRouter = [
                 name: 'OP_index',
                 component: resolve => {
                     require(['@/views/logManagement/opLog/index.vue'], resolve);
+                }
+            },
+            {
+                access: 6122,
+                meta: 6122,
+                path: '/frontErrLog',
+                title: '异常统计', 
+                name: 'frontErrLog_index',
+                component: resolve => {
+                    require(['@/views/logManagement/frontErrLog/index.vue'], resolve);
                 }
             },
             // {
