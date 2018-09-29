@@ -119,9 +119,9 @@ export default {
                 _self.total = res.data.data.total
                 _self.data = res.data.data.rows
                 // console.log(_self.customer_f_s_a)
-                // for(let i = 0;i<_self.data.length;i++){
-                //     _self.data[i].new_storage = _self.customer_f_s_a.get(_self.data[i].new_storage)
-                // }
+                for(let i = 0;i<_self.data.length;i++){
+                    _self.data[i].new_storage = _self.customer_f_s_a.get(_self.data[i].new_storage)
+                }
             }
 
             this.$Get(url, config, success)
@@ -135,7 +135,7 @@ export default {
         let _self = this
         this.$bus.on("OPEN_FILE_LOG", (e)=>{
             // console.log(e)
-            _self.fileName = e.file_type_name
+            _self.fileName = e.customer_file_name
             _self.companyName = e.companyname
             _self.fileId = e.id
             _self.get_data()

@@ -104,7 +104,7 @@ export default {
                 },
                 {
                     title: "资料名称",
-                    key: "file_type_name",
+                    key: "customer_file_name",
                     minWidth: 150
                 },
                 {
@@ -163,7 +163,7 @@ export default {
                 },
                 {
                     title: "资料名称",
-                    key: "file_type_name",
+                    key: "customer_file_name",
                     minWidth: 150
                 },
                 {

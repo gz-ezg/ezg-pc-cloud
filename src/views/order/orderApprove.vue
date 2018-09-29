@@ -378,9 +378,15 @@
                                 <Button type="primary" icon="plus" @click="kuaiji()" v-show="kjdj">查看会计到家服务项</Button>
                             </FormItem>
                         </Row>
-                        <table width="100%" id="orderItemList7"></table>
+                        <!-- <table width="100%" id="orderItemList7"></table> -->
+                        <Row>
+                            <Table :columns="orderDetailListHeader" :data="orderItemList9">
+                            </Table>
+                        </Row>
                     </Form>
-                    <div slot="footer"></div>
+                    <div slot="footer">
+                        <Button @click="detailCustomer = false">关闭</Button>
+                    </div>
                 </Modal>
             </TabPane>
             <TabPane label="订单列表" name="name3" v-if="orderListShow">
@@ -735,6 +741,78 @@
                         }
                     }
                 ],
+                orderDetailListHeader: [
+                    {
+                        title: "序号",
+                        type: 'index',
+                        minWidth: 60,
+                        align: 'center'
+                    },
+                    {
+                        title: "产品名",
+                        key: "product",
+                        minWidth: 150,
+                    },
+                    {
+                        title: "产品属性",
+                        key: "propertys",
+                        minWidth: 250,
+                        render: (h, params) => {
+                            return h("div",{
+                                domProps:{
+                                    innerHTML: params.row.propertys
+                                }
+                            })
+                        }
+                    },
+                    {
+                        title: "产品价格",
+                        key: "oaprice",
+                        minWidth: 100,
+                    },
+                    {
+                        title: "产品数量（个/月）",
+                        key: "productnumber",
+                        minWidth: 150,
+                    },
+                    {
+                        title: "销售价格",
+                        key: "paynumber",
+                        minWidth: 100,
+                    },
+                    {
+                        title: "赠送数量",
+                        key: "givethenumber",
+                        minWidth: 100,
+                    },
+                    {
+                        title: "服务开始税期",
+                        key: "servicestartdate",
+                        minWidth: 120
+                    },
+                    {
+                        title: "服务部门",
+                        key: "departname",
+                        minWidth: 140
+                    },
+                    {
+                        title: "单价/月",
+                        key: "unitprice",
+                        minWidth: 90
+                    },
+                    {
+                        title: "备注",
+                        key: "memo",
+                        minWidth: 300,
+                        render: (h, params) => {
+                            return h("div",{
+                                domProps:{
+                                    innerHTML: params.row.memo
+                                }
+                            })
+                        }
+                    }
+                ]
             }
         },
         methods: {

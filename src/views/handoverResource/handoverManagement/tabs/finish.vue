@@ -142,7 +142,7 @@ export default {
             fileHeader: [
                 {
                     title: "资料名称",
-                    key: "file_type_name",
+                    key: "customer_file_name",
                     minWidth: 150
                 },
                 {
@@ -244,7 +244,7 @@ export default {
                                 },
                                 on: {
                                     click: () => {
-                                        this.open_detail(parmas.row.id)
+                                        this.open_detail(parmas.row)
                                     }
                                 }
                             },'[查看详情]'),
@@ -268,7 +268,7 @@ export default {
     methods:{
         open_detail(e){
             let _self = this
-            this.$bus.emit("OPEN_HANDOVER_DETAIL", e)
+            this.$bus.emit("OPEN_HANDOVER_DETAIL", e.id)
         },
         open_request(e){
             let _self = this
@@ -345,10 +345,13 @@ export default {
             this.get_data()
         },
         search(){
-
+            this.get_data()
         },
         reset(){
-
+            this.page = 1
+            this.seacrhFormInline.receiver_realname = ""
+            this.seacrhFormInline.applicant_realname = ""
+            this.get_data()
         },
         create_request(){
             let _self = this

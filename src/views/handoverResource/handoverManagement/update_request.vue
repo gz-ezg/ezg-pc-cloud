@@ -64,7 +64,7 @@
                     <Input v-model="selectRowFiles.companyname" disabled></Input>
                 </FormItem>
                 <FormItem label="资料名称：">
-                    <Input v-model="selectRowFiles.file_type_name" disabled></Input>
+                    <Input v-model="selectRowFiles.customer_file_name" disabled></Input>
                 </FormItem>
                 <FormItem label="最大交接数量:">
                     <Input v-model="selectRowFiles.max_allow_connect_num" disabled></Input>
@@ -139,7 +139,7 @@ export default {
                 },
                 {
                     title: "资料名称",
-                    key: "file_type_name",
+                    key: "customer_file_name",
                     minWidth: 150
                 },
                 {
@@ -172,7 +172,7 @@ export default {
                 },
                 {
                     title: "资料名称",
-                    key: "file_type_name",
+                    key: "customer_file_name",
                     minWidth: 150
                 },
                 {
@@ -214,7 +214,7 @@ export default {
                 companyname: "",
                 name: "",
                 max_allow_connect_num: "",
-                file_type_name: "",
+                customer_file_name: "",
                 connect_num: "",
                 file_num: ""
             },
@@ -314,7 +314,7 @@ export default {
                 _self.selectRowFiles.companyname = ""
                 _self.selectRowFiles.name = ""
                 _self.selectRowFiles.max_allow_connect_num = ""
-                _self.selectRowFiles.file_type_name = ""
+                _self.selectRowFiles.customer_file_name = ""
                 _self.selectRowFiles.connect_num = ""
                 _self.selectRowFiles.file_num = ""
                 _self.get_data(_self.id)

@@ -75,7 +75,7 @@
             width="500"
         >
             <Row :gutter="20" style="margin-bottom:10px"><h3><center>{{selectRow.companyname}}</center></h3></Row>
-            <Row :gutter="20" style="margin-bottom:10px"><h3><center>{{selectRow.file_type_name}}</center></h3></Row>
+            <Row :gutter="20" style="margin-bottom:10px"><h3><center>{{selectRow.customer_file_name}}</center></h3></Row>
             <Row :gutter="20" style="margin-bottom:10px">
                 <Input type="textarea" :rows="4" placeholder="请填写注销原因！" v-model="logoutReason"></Input>
             </Row>
@@ -153,7 +153,7 @@ export default {
                 },
                 {
                     title: "资料名称",
-                    key: "file_type_name",
+                    key: "customer_file_name",
                     minWidth: 150
                 },
                 {
@@ -163,7 +163,7 @@ export default {
                 },
                 {
                     title: "可交接数量",
-                    key: "max_allow_connect_num-",
+                    key: "max_allow_connect_num",
                     minWidth: 120
                 },
                 {
@@ -302,6 +302,7 @@ export default {
                 params:{
                     page: _self.page,
                     pageSize: _self.pageSize,
+                    sortField: "id",
                     departname: _self.seacrhFormInline.departname,
                     file_type_name: _self.seacrhFormInline.file_type_name,
                     keeperrealname: _self.seacrhFormInline.keeperrealname,

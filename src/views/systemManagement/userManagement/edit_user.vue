@@ -275,7 +275,7 @@ export default {
                 userId:e.id
             }
             
-            this.$refs["formdata"].resetFields();
+            _self.$refs["formdata"].resetFields();
             function success(res){
                 // console.log(res)
                 _self.formdata.username = res.data.data.userName

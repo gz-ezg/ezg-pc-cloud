@@ -21,6 +21,10 @@
                         <Option  v-for="item in fileList" :value="item.id" :key="item.id">{{item.file_type_name}}</Option>
                     </Select>
                 </FormItem>
+                <FormItem label="文件名称：" prop="customerFileName" v-if="formValidate.customerFileTypeId == '54'">
+                    <Input v-model="formValidate.customerFileName" placeholder="输入文件名称">
+                    </Input>
+                </FormItem>
                 <FormItem label="文件数量：" prop="fileNum" v-if="isCanInput">
                     <Input v-model="formValidate.fileNum" placeholder="请输入文件数量"></Input>
                 </FormItem>
@@ -73,7 +77,8 @@ export default {
                 fileNum: 1,
                 storageCode: "",
                 fileSource: "",
-                customerName: ""
+                customerName: "",
+                customerFileName: ""
             },
             loading: false,
             fileList: [],
@@ -98,30 +103,32 @@ export default {
     methods:{
         create_type(){
             let _self = this
-            let url = "api/customer/file/create"
-            _self.loading = true
+                let url = "api/customer/file/create"
+                _self.loading = true
 
-            let config = {
-                customerFileTypeId: _self.formValidate.customerFileTypeId,
-                saveDepartId: _self.formValidate.saveDepartId,
-                storage: _self.formValidate.storage,
-                companyId: _self.formValidate.companyId,
-                fileNum: _self.formValidate.fileNum,
-                storageCode: _self.formValidate.storageCode,
-            }
+                let config = {
+                    customerFileTypeId: _self.formValidate.customerFileTypeId,
+                    saveDepartId: _self.formValidate.saveDepartId,
+                    storage: _self.formValidate.storage,
+                    companyId: _self.formValidate.companyId,
+                    fileNum: _self.formValidate.fileNum,
+                    storageCode: _self.formValidate.storageCode,
+                    customerFileName: _self.formValidate.customerFileName
+                }
 
-            function success(res){
-                _self.openResoureFile = false
-                _self.loading = false
-                // _self.$emit("update",true)
-                _self.reset_type()
-            }
+                function success(res){
+                    _self.openResoureFile = false
+                    _self.loading = false
+                    // _self.$emit("update",true)
+                    _self.reset_type()
+                }
 
-            function fail(err){
-                _self.loading = false
-            }
+                function fail(err){
+                    _self.loading = false
+                }
 
-            this.$Post(url, config, success, fail)
+                this.$Post(url, config, success, fail)
+            
         },
         reset_type(){
             this.formValidate.customerFileTypeId = ""
@@ -130,6 +137,7 @@ export default {
             this.formValidate.companyId = ""
             this.formValidate.storageCode = ""
             this.formValidate.fileNum = 1
+            this.formValidate.customerFileName = ""
         },
         get_all_file_type(){
             let _self = this

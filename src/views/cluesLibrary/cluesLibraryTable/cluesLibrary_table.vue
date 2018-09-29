@@ -650,7 +650,7 @@ import flowVue from '../../woa-components/next/flow.vue';
                         key: 'memo',
                         width: 300,
                         render:(h, params) =>{
-                            console.log(params)
+                            // console.log(params)
                             return h("div",{
                                 domProps:{
                                     innerHTML: params.row.memo

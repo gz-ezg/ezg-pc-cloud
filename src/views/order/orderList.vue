@@ -59,21 +59,8 @@
                     </Col>
                     <Col span="8">
                     <FormItem label="缴费渠道" prop="payDir">
-                        <Select transfer v-model="formValidate.payDir" size="small" filterable>
+                        <Select transfer v-model="formValidate.payDir" size="small">
                             <Option v-for="(item, index) in payDirType" :key=index :value="item.typecode">{{item.typename}}</Option>                            
-                            <!-- <Option value="gszfb">公司支付宝</Option>
-                            <Option value="gh">工行</Option>
-                            <Option value="zh">招行</Option>
-                            <Option value="wx">微信公众号</Option>
-                            <Option value="gw">官网</Option>
-                            <Option value="other">其他</Option>
-                            <Option value="cash">现金</Option>
-                            <Option value="jhang">建行</Option>
-                            <Option value="nsh">农商行</Option>
-                            <Option value="tb">淘宝</Option>
-                            <Option value="zgrzh">转个人账户</Option>
-                            <Option value="dgzfb">东莞支付宝</Option>
-                            <Option value="szgh">深圳工行</Option> -->
                         </Select>
                     </FormItem>
                     </Col>
@@ -162,8 +149,7 @@
                 title="查看"
                 :mask-closable="false"                
                 width="80%"
-                @on-ok="cancel('formValidateDetail')"
-                @on-cancel="cancel('formValidateDetail')">
+        >
             <Form ref="formValidateDetail" :model="formValidateDetail" :label-width="100">
                 <Row :gutter="16">
                     <Col span="8">
@@ -226,8 +212,14 @@
                     </FormItem>
                 </Row>
                 <table width="100%" id="orderItemList3"></table>
+                <Row style="margin-top:10px">
+                    <Table :columns="orderDetailListHeader" :data="orderItemList3">
+                    </Table>
+                </Row>
             </Form>
-            <div slot="footer"></div>
+            <div slot="footer">
+                <Button @click="detailCustomer = false">关闭</Button>
+            </div>
         </Modal>
         <Modal
                 v-model="eaditOrder"
@@ -1121,8 +1113,80 @@
                 data4: [],
                 isSearch: false,
                 order:'desc',
-                sortField:'id'
-
+                sortField:'id',
+                //  查看订单详情，订单项
+                orderDetailListHeader: [
+                    {
+                        title: "序号",
+                        type: 'index',
+                        minWidth: 60,
+                        align: 'center'
+                    },
+                    {
+                        title: "产品名",
+                        key: "product",
+                        minWidth: 150,
+                    },
+                    {
+                        title: "产品属性",
+                        key: "propertys",
+                        minWidth: 250,
+                        render: (h, params) => {
+                            return h("div",{
+                                domProps:{
+                                    innerHTML: params.row.propertys
+                                }
+                            })
+                        }
+                    },
+                    {
+                        title: "产品价格",
+                        key: "oaprice",
+                        minWidth: 100,
+                    },
+                    {
+                        title: "产品数量（个/月）",
+                        key: "productnumber",
+                        minWidth: 150,
+                    },
+                    {
+                        title: "销售价格",
+                        key: "paynumber",
+                        minWidth: 100,
+                    },
+                    {
+                        title: "赠送数量",
+                        key: "givethenumber",
+                        minWidth: 100,
+                    },
+                    {
+                        title: "服务开始税期",
+                        key: "servicestartdate",
+                        minWidth: 120
+                    },
+                    {
+                        title: "服务部门",
+                        key: "departname",
+                        minWidth: 140
+                    },
+                    {
+                        title: "单价/月",
+                        key: "unitprice",
+                        minWidth: 90
+                    },
+                    {
+                        title: "备注",
+                        key: "memo",
+                        minWidth: 300,
+                        render: (h, params) => {
+                            return h("div",{
+                                domProps:{
+                                    innerHTML: params.row.memo
+                                }
+                            })
+                        }
+                    }
+                ]
             }
         },
         methods: {
@@ -1342,15 +1406,15 @@
             // 点击【查看】按钮
             detailCustomers() {
                 let _self = this
-
                 if (_self.customerId == '') {
                     _self.$Message.warning('请选择要查看的订单');
                 } else {
                     let url = '/order/detail/' + _self.customerId
-                    _self.detailCustomer = true
                     _self.isCheck = true
-
+                    _self.orderItemList3 = []
+                    _self.detailCustomer = true
                     function doSuccess(response) {
+                        
                         let _data = response.data.data
                         let _date = ''
                         if (_data.serviceStartDate != '' && _data.serviceStartDate != null) {
@@ -1376,54 +1440,53 @@
                             _self.formValidateDetail.ticheng = _data.performanceMoney,
                             _self.formValidateDetail.isornotkp = _data.isornotkp
 
-                        $('#orderItemList3').datagrid({
-                            idField: 'id',
-                            title: '',
-                            data: _self.orderItemList3,
-                            height: 300,
-                            rownumbers: true,
-                            singleSelect: true,
-                            frozenColumns: [[]],
-                            columns: [[
-                                {field: 'skuid', title: '编号', hidden: true, sortable: true},
-                                {field: 'iscycle', title: 'iscycle', hidden: true, sortable: true},
-                                {field: 'productid', title: '产品名', hidden: true, sortable: true},
-                                {field: 'product', title: '产品名', width: 150},
-                                {field: 'propertys', title: '产品属性', width: 250},
-                                {field: 'oaprice', title: '产品价格', width: 100},
-                                {field: 'productnumber', title: '产品数量(个/月)', width: 80},
-                                {
-                                    field: 'paynumber',
-                                    title: '销售价格',
-                                    width: 80,
-                                },
-                                {field: 'givethenumber', title: '赠送数量', width: 100}, 
+                        // $('#orderItemList3').datagrid({
+                        //     idField: 'id',
+                        //     title: '',
+                        //     data: _self.orderItemList3,
+                        //     height: 300,
+                        //     rownumbers: true,
+                        //     singleSelect: true,
+                        //     frozenColumns: [[]],
+                        //     columns: [[
+                        //         {field: 'skuid', title: '编号', hidden: true, sortable: true},
+                        //         {field: 'iscycle', title: 'iscycle', hidden: true, sortable: true},
+                        //         {field: 'productid', title: '产品名', hidden: true, sortable: true},
+                        //         {field: 'product', title: '产品名', width: 150},
+                        //         {field: 'propertys', title: '产品属性', width: 250},
+                        //         {field: 'oaprice', title: '产品价格', width: 100},
+                        //         {field: 'productnumber', title: '产品数量(个/月)', width: 80},
+                        //         {
+                        //             field: 'paynumber',
+                        //             title: '销售价格',
+                        //             width: 80,
+                        //         },
+                        //         {field: 'givethenumber', title: '赠送数量', width: 100}, 
                                         
-                                {field:'servicestartdate',title:'服务开始税期',width:90,
-                                    formatter: function(val, row, a) {
-                                        return row.servicestartdate
-                                    }
-                                }, 
-                                 {
-                                    field: 'departname',
-                                    title: '服务部门',
-                                    width: 140,
-                                    formatter: function (value, rec, index) {
-                                        return _self.departnamef(value, rec, index);
-                                    }
-                                }, {field: 'departid', title: '服务部门id', hidden: true}, {
-                                    field: 'servicedeparts',
-                                    title: '服务部门id',
-                                    hidden: true
-                                }, {
-                                    field: 'unitprice',
-                                    title: '单价/月',
-                                    width: 70,
-                                },
-                                {field: 'memo', title: '备注 ', width: 300,}
-                            ]],
-                        })
-
+                        //         {field:'servicestartdate',title:'服务开始税期',width:90,
+                        //             formatter: function(val, row, a) {
+                        //                 return row.servicestartdate
+                        //             }
+                        //         }, 
+                        //          {
+                        //             field: 'departname',
+                        //             title: '服务部门',
+                        //             width: 140,
+                        //             formatter: function (value, rec, index) {
+                        //                 return _self.departnamef(value, rec, index);
+                        //             }
+                        //         }, {field: 'departid', title: '服务部门id', hidden: true}, {
+                        //             field: 'servicedeparts',
+                        //             title: '服务部门id',
+                        //             hidden: true
+                        //         }, {
+                        //             field: 'unitprice',
+                        //             title: '单价/月',
+                        //             width: 70,
+                        //         },
+                        //         {field: 'memo', title: '备注 ', width: 300,}
+                        //     ]],
+                        // })
                         for (let i = 0; i < _data.items.length; i++) {
                             if (_data.items[i].product == '会计到家') {
                                 _self.kjdj = true
@@ -2571,7 +2634,13 @@
                 this.formValidateEadit.date = ''
                 this.formValidatexiugai.date = ''
                 this.formValidatexiugai.serviceBeginDate = ''*/
-                $('#orderItemList').datagrid('loadData', {total: 0, rows: []})
+                /**
+                 * 2018年9月29日16:17:32
+                 * 因为这句话会报错，故注销
+                 */
+                if(name == "formValidate"){
+                    $('#orderItemList').datagrid('loadData', {"total": "0", "rows": []})
+                }
                 this.$refs[name].resetFields();
             },
 

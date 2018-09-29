@@ -4,7 +4,7 @@
             <Checkbox v-for="(item, index) in data" :label="item.code" :key="index">{{item.data}}<Input v-model="number[item.code]" v-if="item.number" size="small" style="width:40px"/></Checkbox>
         </CheckboxGroup> -->
         <Card title="日程表">
-            <Card style="width:100px;position:fixed;top:372px;left:671px;z-index:9999" v-if="click_show">
+            <Card style="width:100px;position:fixed;z-index:9999" v-if="click_show" :style="{top: top + 'px', left: left + 'px'}">
                         <Row :gutter="20">
                             <Col><span style="padding:5px;" @click="dayClick">新增任务</span></Col>
                             <Col style="padding-top:10px"><span style="padding:5px">新增计划</span></Col>
@@ -85,6 +85,12 @@
                             @newdata="newdata">
             </vue-context-menu>
         </div> -->
+        <Card style="position:fixed;right:0px;top:100px;width:30vw;height:100vh;z-index:9999" title="右边弹出层" v-if="openRightHover">
+            <div slot="extra">
+                <Icon type="close-round" @click="openRightHover = false"></Icon>
+            </div>
+            <Row></Row>
+        </Card>
     </div>
 </template>
 
@@ -102,6 +108,7 @@ export default {
     },
     data(){
         return{
+            openRightHover: false,
             top: "",
             left: "",
             click_show: false,
@@ -162,7 +169,7 @@ export default {
         eventrender(event){},
         dayClick(date, jsEvent, view){
             //  可以在此处新增日程
-            this.openAddCalendar = true
+            this.openRightHover = true
             console.log(date)
             console.log(jsEvent)
             console.log(view)
@@ -197,8 +204,8 @@ export default {
             console.log("====== view ======")
             console.log(view)
 
-            this.top = jsEvent.clientX
-            this.left = jsEvent.clientY
+            this.top = jsEvent.clientY
+            this.left = jsEvent.clientX
         }
     }
     //  @event-selected 点击事件触发

@@ -155,35 +155,35 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    {
-        path: '/test',
-        icon: 'social-windows',
-        name: 'test',
-        title: 'Test',
-        component: Main,
-        children: [
-            {
-                path: 'test',
-                title: '测试页面',
-                name: 'test_index',
-                component: resolve => {
-                    require(['@/views/test/components/main.vue'], resolve);
-                    // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+    // {
+    //     path: '/test',
+    //     icon: 'social-windows',
+    //     name: 'test',
+    //     title: 'Test',
+    //     component: Main,
+    //     children: [
+    //         {
+    //             path: 'test',
+    //             title: '测试页面',
+    //             name: 'test_index',
+    //             component: resolve => {
+    //                 require(['@/views/test/components/main.vue'], resolve);
+    //                 // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-                }
-            },
-            {
-                path: 'test2',
-                title: '测试页面2',
-                name: 'test2_index',
-                component: resolve => {
-                    require(['@/views/test/components/test2.vue'], resolve);
-                    // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             path: 'test2',
+    //             title: '测试页面2',
+    //             name: 'test2_index',
+    //             component: resolve => {
+    //                 require(['@/views/test/components/test2.vue'], resolve);
+    //                 // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-                }
-            }
-        ]
-    },
+    //             }
+    //         }
+    //     ]
+    // },
     // {
     //     path: '/allindex',
     //     icon: 'social-windows',
@@ -241,37 +241,37 @@ export const appRouter = [
     //         },
     //     ]
     // },
-    {
-        access: 6001,
-        meta: 6001,
-        path: '/missionCenter',
-        icon: 'social-windows',
-        name: 'missionCenter',
-        title: "任务中心",
-        component: Main,
-        children:[
-            {
-                access: 6002,
-                meta: 6002,
-                path: 'schedule',
-                title: '日程',
-                name: 'schedule_index',
-                component: resolve => {
-                    require(['@/views/missionCenter/schedule/index.vue'], resolve);
-                }
-            },
-            {
-                access: 6003,
-                meta: 6003,
-                path: 'missionManagement',
-                title: '任务管理',
-                name: 'missionManagement_index',
-                component: resolve => {
-                    require(['@/views/missionCenter/missionManagement/index.vue'], resolve);
-                }
-            },
-        ]
-    },
+    // {
+    //     access: 6001,
+    //     meta: 6001,
+    //     path: '/missionCenter',
+    //     icon: 'social-windows',
+    //     name: 'missionCenter',
+    //     title: "任务中心",
+    //     component: Main,
+    //     children:[
+    //         {
+    //             access: 6002,
+    //             meta: 6002,
+    //             path: 'schedule',
+    //             title: '日程',
+    //             name: 'schedule_index',
+    //             component: resolve => {
+    //                 require(['@/views/missionCenter/schedule/index.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             access: 6003,
+    //             meta: 6003,
+    //             path: 'missionManagement',
+    //             title: '任务管理',
+    //             name: 'missionManagement_index',
+    //             component: resolve => {
+    //                 require(['@/views/missionCenter/missionManagement/index.vue'], resolve);
+    //             }
+    //         },
+    //     ]
+    // },
     {
         access: 6001,
         meta: 6001,
@@ -882,26 +882,26 @@ export const appRouter = [
                     require(['@/views/administrationManagement/clockin/index.vue'], resolve);
                 }
             },
-            {
-                access: 6094,
-                meta: 6094,
-                path: 'marketPerformance',
-                title: '市场绩效',
-                name:"marketPerformance_index",
-                component: resolve => {
-                    require(['@/views/administrationManagement/marketPerformance/index.vue'], resolve);
-                }
-            },
-            {
-                access: 6094,
-                meta: 6094,
-                path: 'resumeManagement',
-                title: '简历管理',
-                name:"resumeManagement_index",
-                component: resolve => {
-                    require(['@/views/administrationManagement/resumeManagement/index.vue'], resolve);
-                }
-            },
+            // {
+            //     access: 6094,
+            //     meta: 6094,
+            //     path: 'marketPerformance',
+            //     title: '市场绩效',
+            //     name:"marketPerformance_index",
+            //     component: resolve => {
+            //         require(['@/views/administrationManagement/marketPerformance/index.vue'], resolve);
+            //     }
+            // },
+            // {
+            //     access: 6094,
+            //     meta: 6094,
+            //     path: 'resumeManagement',
+            //     title: '简历管理',
+            //     name:"resumeManagement_index",
+            //     component: resolve => {
+            //         require(['@/views/administrationManagement/resumeManagement/index.vue'], resolve);
+            //     }
+            // },
         ]
     },
     {
@@ -1047,24 +1047,24 @@ export const appRouter = [
             // }
         ]
     },
-    {
-        access: 6027,
-        meta: 6027,
-        path: '/solutionTool',
-        icon: 'social-windows',
-        title: '方案工具',
-        name: 'solutionTool',
-        component: Main,
-        children: [
-            {
-                access: 6089,
-                meta: 6089,
-                path: 'useRecord', title: '使用记录', name: 'useRecord_index', component: resolve => {
-                    require(['@/views/solutionTool/useRecord/index.vue'], resolve);
-                }
-            },
-        ]
-    },
+    // {
+    //     access: 6027,
+    //     meta: 6027,
+    //     path: '/solutionTool',
+    //     icon: 'social-windows',
+    //     title: '方案工具',
+    //     name: 'solutionTool',
+    //     component: Main,
+    //     children: [
+    //         {
+    //             access: 6089,
+    //             meta: 6089,
+    //             path: 'useRecord', title: '使用记录', name: 'useRecord_index', component: resolve => {
+    //                 require(['@/views/solutionTool/useRecord/index.vue'], resolve);
+    //             }
+    //         },
+    //     ]
+    // },
 /*    {
         path: '/admin',
         icon: 'social-windows',
@@ -1380,8 +1380,8 @@ export const appRouter = [
                 }
             },
             {
-                access: 6122,
-                meta: 6122,
+                access: 6123,
+                meta: 6123,
                 path: '/frontErrLog',
                 title: '异常统计', 
                 name: 'frontErrLog_index',

@@ -138,7 +138,7 @@ export default {
             fileHeader: [
                 {
                     title: "资料名称",
-                    key: "file_type_name",
+                    key: "customer_file_name",
                     minWidth: 150
                 },
                 {
@@ -230,7 +230,7 @@ export default {
                 {
                     title: "操作",
                     key: "action",
-                    minWidth: 120,
+                    minWidth: 200,
                     render: (h, parmas) =>{
                         return h('div',[
                             h('Button',{
@@ -240,21 +240,21 @@ export default {
                                 },
                                 on: {
                                     click: () => {
-                                        this.open_detail(parmas.row.id)
+                                        this.open_detail(parmas.row)
                                     }
                                 }
                             },'[查看详情]'),
-                            // h('Button',{
-                            //     props: {
-                            //         type: 'text',
-                            //         size: 'small'
-                            //     },
-                            //     on: {
-                            //         click: () => {
-                            //             this.open_request(parmas.row.id)
-                            //         }
-                            //     }
-                            // },'[查看协商]'),
+                            h('Button',{
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.open_request(parmas.row.id)
+                                    }
+                                }
+                            },'[协商记录]'),
                         ])
                     }
                 }
@@ -264,7 +264,7 @@ export default {
     methods:{
         open_detail(e){
             let _self = this
-            this.$bus.emit("OPEN_HANDOVER_DETAIL", e)
+            this.$bus.emit("OPEN_HANDOVER_DETAIL", e.id)
         },
         open_request(e){
             let _self = this
@@ -281,7 +281,11 @@ export default {
                 _self.requestData = res.data.data
                 _self.openRequest = true
                 for(let i = 0; i < _self.requestData.length; i++){
-                    // _self.requestDatap[i].statusName = _self.handover_status_map.get(_self.requestData[i].status)
+                    if(_self.requestData[i].status == "Y"){
+                        _self.requestData[i].status = "通过"
+                    }else{
+                        _self.requestData[i].status = "拒绝"
+                    }
                 }
             }
 
@@ -341,10 +345,13 @@ export default {
             this.get_data()
         },
         search(){
-
+            this.get_data()
         },
         reset(){
-
+            this.page = 1
+            this.seacrhFormInline.receiver_realname = ""
+            this.seacrhFormInline.applicant_realname = ""
+            this.get_data()
         },
         create_request(){
             let _self = this

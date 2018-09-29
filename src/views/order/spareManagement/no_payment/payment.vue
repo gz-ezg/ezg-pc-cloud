@@ -163,6 +163,7 @@ export default {
         //  初始化
         init(){
             this.$bus.on('open_payment',(e)=>{
+                this.show = "1"
                 this.balanceRow = e
                 this.balanceId = e.id
                 this.payment = true

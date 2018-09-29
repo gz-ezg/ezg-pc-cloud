@@ -119,6 +119,7 @@ export default {
             var _that = this
             this.$bus.on('select_had_pay',(e)=>{
             // Bus.$on('select_had_pay',(e)=>{
+                this.show = "1"
                 this.display = true
                 this.balanceId = e
                 this.GetBalanceIdDate()
