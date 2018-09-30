@@ -3,6 +3,7 @@
         <!-- <CheckboxGroup v-model="checkAllGroup">
             <Checkbox v-for="(item, index) in data" :label="item.code" :key="index">{{item.data}}<Input v-model="number[item.code]" v-if="item.number" size="small" style="width:40px"/></Checkbox>
         </CheckboxGroup> -->
+        <Button @click="get_date">下一天</Button>
         <Card title="日程表">
             <Card style="width:100px;position:fixed;z-index:9999" v-if="click_show" :style="{top: top + 'px', left: left + 'px'}">
                         <Row :gutter="20">
@@ -89,17 +90,22 @@
             <div slot="extra">
                 <Icon type="close-round" @click="openRightHover = false"></Icon>
             </div>
-            <Row></Row>
+            <Row>
+                <Scroll height="800">
+                    <div style="1000px">
+                    </div>
+                </Scroll>
+            </Row>
         </Card>
     </div>
 </template>
 
 <script>
 import { zh } from 'vuejs-datepicker/dist/locale/index.js'
-import { FullCalendar } from 'vue-full-calendar'    
+import { FullCalendar } from 'vue-full-calendar'
 import Datepicker from 'vuejs-datepicker';
 //  引入中文库
-import 'fullcalendar/dist/locale/zh-cn.js'
+import 'fullcalendar/dist/locale/zh-cn'
 
 export default {
     components:{
@@ -116,7 +122,7 @@ export default {
             date: new Date(),   
             openAddCalendar: false,
             config:{
-                // locale: 'zh-cn',
+                locale: 'zh-cn',
                 //  周末不显示
                 // weekends: false,
                 
@@ -190,10 +196,12 @@ export default {
         //  右键点击，鼠标滑入滑出
         close_right_menu(){
             this.click_show = false
+            
         },
         mouse_out(){
             console.log("鼠标离开了！")
             this.click_show = false
+            // console.log($(this.$refs["calendar"]).fullCalendar('getDate'))
         },
         mouse_over(event, jsEvent, view){
             this.click_show = true
@@ -206,6 +214,13 @@ export default {
 
             this.top = jsEvent.clientY
             this.left = jsEvent.clientX
+        },
+        get_date(){
+            //  获取当前日期
+            // fireMethod 调用内置方法$(this.$el).fullCalendar(...options)
+            console.log(this.$refs.calendar.fireMethod('getDate'))
+            // 更改到指定日期
+            this.$refs.calendar.fireMethod('changeView', 'agendaDay', '2017-06-01')
         }
     }
     //  @event-selected 点击事件触发
