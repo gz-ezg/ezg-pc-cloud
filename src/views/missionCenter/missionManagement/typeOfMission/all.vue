@@ -38,8 +38,7 @@
                 :loading="loading"
                 :columns="header"
                 :data="data"
-                @on-row-dblclick="open_detail"
-                @on-current-change="select_row"
+                @on-row-dblclick="open_task_detail"
             >
             </Table>
             <Page
@@ -64,7 +63,83 @@ export default {
                 receiver_realname: ""
             },
             loading: false,
-            header: [],
+            header: [
+                {
+                    title: "任务对象",
+                    key: "companyName",
+                    minWidth: 180
+                },
+                {
+                    title: "任务名称",
+                    key:"task_name",
+                    minWidth: 150
+                },
+                {
+                    title: "执行人",
+                    key: "realname",
+                    minWidth: 120
+                },
+                // {
+                //     title:"任务级别",
+                //     key:'task_level_name',
+                //     minWidth:150
+                // },
+                {
+                    title: "任务阶段",
+                    key: "task_stage_name",
+                    minWidth: 120
+                },
+                {
+                    title: "开始时间",
+                    key: "plan_date",
+                    minWidth: 180
+                },
+                // {
+                //     title: "任务类型",
+                //     key: "task_kind_name",
+                //     minWidth: 120
+                // },
+                // {
+                //     title: "任务阶段",
+                //     key: "task_stage_name",
+                //     minWidth: 120
+                // },
+                // {
+                //     title: "任务标签",
+                //     key: "task_lable",
+                //     minWidth: 120
+                // },
+                {
+                    title: "操作",
+                    minWidth: 180,
+                    render: (h, parmas) => {
+                        return h('div',[
+                            h("Button",{
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.open_task_detail(parmas.row)
+                                    }
+                                }
+                            }, "查看"),
+                            h("Button",{
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.delete_task(parmas.row.id)
+                                    }
+                                }
+                            },"删除")
+                        ])
+                    }
+                }
+            ],
             data: [],
             total: 0,
             page: 1,
@@ -83,13 +158,51 @@ export default {
             this.get_data()
         },
         get_data(){
+            let _self = this
+            let url = 'api/task/list'
+            _self.loading = true
+            let config = {
+                page: _self.page,
+                pageSize: _self.pageSize
+            }
 
+            function success(res){
+                _self.loading = false
+                _self.data = res.data.data.rows
+                _self.total = res.data.data.total
+            }
+
+            function fail(err){
+                _self.loading = false
+
+            }
+
+            this.$Post(url, config, success, fail)
         },
         search(){
             this.get_data()
         },
         reset(){
             this.get_data()
+        },
+        delete_task(e){
+            let _self = this
+
+            let url = `api/task/deleteTask`
+            let config = {
+                params: {
+                    taskId: e
+                }
+            }
+
+            function success(res){
+                _self.get_data()
+            }
+
+            this.$Get(url, config, success)
+        },
+        open_task_detail(e){
+            console.log(e)
         }
     },
     created() {

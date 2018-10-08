@@ -759,7 +759,7 @@ export default {
       _self.customertypeText = a.customertypeText;
       _self.tel = a.tel;
       _self.customersource = a.customersource;
-      // console.log(_self.customerid);
+      // console.log(_self.tel);
     },
 
     //  改变页码
@@ -848,7 +848,7 @@ export default {
           correctLevel: QRCode.CorrectLevel.H
         });
       } else {
-        this.$Message.warning("抱歉，您还没有选择客户");
+        this.$Message.warning("抱歉，您选择的客户未录入联系方式！");
       }
     },
     getQRcode2() {
@@ -881,7 +881,7 @@ export default {
 
         this.$Get(url, config, success);
       } else {
-        this.$Message.warning("抱歉，您还没有选择客户");
+        this.$Message.warning("抱歉，您选择的客户未录入联系方式！");
       }
     },
 

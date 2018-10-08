@@ -68,8 +68,8 @@ export default {
                 params:{
                     page: 1,
                     pageSize: 10,
-                    // yearmonth: DateFormatYearMonth(_self.yearmonth),
-                    yearmonth: _self.yearmonth,
+                    yearmonth: DateFormatYearMonth(_self.yearmonth),
+                    // yearmonth: _self.yearmonth,
                     buserId: localStorage.getItem("id")
                 }  
             }

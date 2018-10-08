@@ -1,9 +1,6 @@
 <template>
     <div style="min-width:1300px" @click="close_right_menu">
-        <!-- <CheckboxGroup v-model="checkAllGroup">
-            <Checkbox v-for="(item, index) in data" :label="item.code" :key="index">{{item.data}}<Input v-model="number[item.code]" v-if="item.number" size="small" style="width:40px"/></Checkbox>
-        </CheckboxGroup> -->
-        <Button @click="get_date">下一天</Button>
+        <!-- <Button @click="get_date">下一天</Button> -->
         <Card title="日程表">
             <Card style="width:100px;position:fixed;z-index:9999" v-if="click_show" :style="{top: top + 'px', left: left + 'px'}">
                         <Row :gutter="20">
@@ -86,13 +83,30 @@
                             @newdata="newdata">
             </vue-context-menu>
         </div> -->
-        <Card style="position:fixed;right:0px;top:100px;width:30vw;height:100vh;z-index:9999" title="右边弹出层" v-if="openRightHover">
+        <Card style="position:fixed;right:0px;top:100px;width:30vw;height:100vh;z-index:9999" title="新建日程" v-if="openRightHover">
             <div slot="extra">
                 <Icon type="close-round" @click="openRightHover = false"></Icon>
             </div>
             <Row>
                 <Scroll height="800">
                     <div style="1000px">
+                        <Row><span>日程信息</span></Row>
+                        <Row>
+                            <Form :model="newCalendar" label-position="left" :label-width="100">
+                                <FormItem label="主题">
+                                    <Input v-model="newCalendar.taskName"></Input>
+                                </FormItem>
+                                <FormItem label="起止时间">
+                                    <Input v-model="newCalendar.planDate"></Input>
+                                </FormItem>
+                                <FormItem label="重复">
+                                    <Input v-model="newCalendar.input3"></Input>
+                                </FormItem>
+                                <FormItem label="提醒">
+                                    <Input v-model="newCalendar.input3"></Input>
+                                </FormItem>
+                            </Form>
+                        </Row>
                     </div>
                 </Scroll>
             </Row>
@@ -114,6 +128,9 @@ export default {
     },
     data(){
         return{
+            newCalendar:{
+
+            },
             openRightHover: false,
             top: "",
             left: "",
