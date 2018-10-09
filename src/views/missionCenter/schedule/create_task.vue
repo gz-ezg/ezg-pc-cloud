@@ -2,7 +2,7 @@
     <div>
         <Modal
             v-model="openTaskDetail"
-            title="任务详情"
+            title="新增任务"
             width="600"
             :scrollable="true"
             class-name="vertical-center-modal"
@@ -181,11 +181,14 @@ export default {
     },
     created() {
         let _self = this
-        this.$bus.on("OPEN_TASK_DETAIL",(e)=>{
+        this.$bus.on("OPEN_CREATE_TASK",(e)=>{
             // console.log(e)
-            _self.get_data_center()
-            _self.get_detail(e.id)
-            _self.detail = e
+            // _self.get_data_center()
+            // _self.get_detail(e)
+            // _self.detail = e
+            console.log(e._d)
+            _self.data.taskData[0].plan_date = e._d
+            _self.data.taskData[0].expect_start_date = e._d
             _self.openTaskDetail = true
         })
     },

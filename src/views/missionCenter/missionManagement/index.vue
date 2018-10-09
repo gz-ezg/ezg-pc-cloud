@@ -44,7 +44,7 @@
                 </FormItem>
                 <FormItem label="执行者">
                     <Select 
-                        v-model="newMission.executorId" 
+                        v-model="newMission.executorId"
                         placeholder="执行者" 
                         filterable
                         remote
@@ -81,30 +81,31 @@
                         </FormItem>
                     </Col>
                     <Col span="12">
-                        <FormItem label="任务状态">
-                            <Select v-model="newMission.taskDesCode">
-                                <Option v-for="(item,index) in taskDesCode" :key="index" :value="item.typecode">{{item.typename}}</Option>
-                            </Select>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="12">
-                    <Col span="12">
                         <FormItem label="任务类型">
                             <Select v-model="newMission.taskKind">
                                 <Option v-for="(item,index) in taskKind" :key="index" :value="item.typecode">{{item.typename}}</Option>
                             </Select>
                         </FormItem>
                     </Col>
-                    <Col span="12"> 
+                    <!-- <Col span="12">
+                        <FormItem label="任务状态">
+                            <Select v-model="newMission.taskDesCode">
+                                <Option v-for="(item,index) in taskDesCode" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                            </Select>
+                        </FormItem>
+                    </Col> -->
+                </Row>
+                <Row :gutter="12">
+                    
+                    <!-- <Col span="12"> 
                         <FormItem label="任务阶段">
                             <Select v-model="newMission.taskStage">
                                 <Option v-for="(item,index) in taskStage" :key="index" :value="item.typecode">{{item.typename}}</Option>
                             </Select>
                         </FormItem>
-                    </Col>
+                    </Col> -->
                 </Row>
-                <Row :gutter="12">
+                <!-- <Row :gutter="12">
                     <Col span="12">
                         <FormItem label="跟进结果">
                             <Select v-model="newMission.followResult">
@@ -119,28 +120,30 @@
                             </Select>
                         </FormItem>
                     </Col>
-                </Row>
-                <FormItem label="任务标签">
+                </Row> -->
+                <!-- <FormItem label="任务标签">
                     <CheckboxGroup v-model="newMission.taskLable">
                         <Checkbox v-for="(item, index) in label" :key="index" :label="item"></Checkbox>
                     </CheckboxGroup>
-                </FormItem>
+                </FormItem> -->
             </Form>
             <div slot="footer">
                 <Button @click="create_task" type="primary" :loading="createLoading">新增</Button>
                 <Button @click="cancel_task" type="ghost">清空</Button>
             </div>
         </Modal>
+        <detail-task></detail-task>
     </Card>
 </template>
 
 <script>
 import all from './typeOfMission/all'
-
+import DetailTask from './taskComponents/detailTask';
 export default {
     name: "missionManagement_index",
     components: {
         all,
+        DetailTask
     },
     data(){
         return{
@@ -156,12 +159,12 @@ export default {
                 planDate: new Date(),
                 taskLevel: "",
                 taskDesCode: "",
-                taskKind: "",
+                taskKind: "tkFollow",
                 taskStage: "",
                 followResult: "",
                 followUpType: "",
                 companyId: "",
-                executorId: ""
+                executorId: localStorage.getItem("id")
             },
             openAddMission: false,
             taskLevel: [],
@@ -177,7 +180,12 @@ export default {
             market_status_map: new Map(),
             markert_follow_up_type_map: new Map(),
             companyList: [],
-            userList: []
+            userList: [
+                {
+                    id: localStorage.getItem("id"),
+                    realname: localStorage.getItem("realname")
+                }
+            ]
             
         }
     },
@@ -258,18 +266,18 @@ export default {
                 executorId: _self.newMission.executorId,
                 taskContent: _self.newMission.taskContent,
                 taskLevel: _self.newMission.taskLevel,
-                taskDesCode: _self.newMission.taskDesCode,
+                // taskDesCode: _self.newMission.taskDesCode,
                 taskKind: _self.newMission.taskKind,
-                taskStage: _self.newMission.taskStage,
-                followResult: _self.newMission.followResult,
-                followUpType: _self.newMission.followUpType,
-                taskLable: _self.newMission.taskLable.join(","),
+                // taskStage: _self.newMission.taskStage,
+                // followResult: _self.newMission.followResult,
+                // followUpType: _self.newMission.followUpType,
+                // taskLable: _self.newMission.taskLable.join(","),
                 taskLevelName: _self.taskLevel_map.get(_self.newMission.taskLevel),
-                taskDescription: _self.taskDesCode_map.get(_self.newMission.taskDesCode),
+                // taskDescription: _self.taskDesCode_map.get(_self.newMission.taskDesCode),
                 taskKindName: _self.taskKind_map.get(_self.newMission.taskKind),
-                taskStageName: _self.taskStage_map.get(_self.newMission.taskStage),
-                followResultName: _self.market_status_map.get(_self.newMission.followResult),
-                followUpTypeName: _self.markert_follow_up_type_map.get(_self.newMission.followUpType),
+                // taskStageName: _self.taskStage_map.get(_self.newMission.taskStage),
+                // followResultName: _self.market_status_map.get(_self.newMission.followResult),
+                // followUpTypeName: _self.markert_follow_up_type_map.get(_self.newMission.followUpType),
             }
 
             function success(res){
@@ -291,6 +299,7 @@ export default {
     created() {
         let _self = this
         this.get_data_center()
+        // this.get_user("")
     },
 }
 </script>

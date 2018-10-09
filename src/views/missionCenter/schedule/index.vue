@@ -1,11 +1,223 @@
 <template>
-    <div>
-        日程
+    <div style="min-width:1300px" @click="close_right_menu">
+        
+        <!-- <Button @click="get_date">下一天</Button> -->
+        <Card title="日程表">
+            <Card style="width:400px;position:fixed;z-index:9999" v-if="click_show" :style="{top: top + 'px', left: left + 'px'}">
+                <Row :gutter="20">
+                    <Col span="6">
+                        <span>任务对象：</span>
+                    </Col>
+                    <Col span="18"><span>{{hover_local.companyName}}</span></Col>
+                </Row>
+                <Row :gutter="20">
+                    <Col span="6">
+                        <span>任务详情：</span>
+                    </Col>
+                    <Col span="18"><span>{{hover_local.task_content}}</span></Col>
+                </Row>
+                <Row :gutter="20">
+                    <Col span="6">
+                        <span>执行人：</span>
+                    </Col>
+                    <Col span="18"><span>{{hover_local.executor_name}}</span></Col>
+                </Row>
+                <Row :gutter="20">
+                    <Col span="6">
+                        <span>创建人：</span>
+                    </Col>
+                    <Col span="18"><span>{{hover_local.realname}}</span></Col>
+                </Row>
+            </Card>
+            <Row :gutter="20"> 
+                <Col span="18">
+                    <full-calendar
+                        ref="calendar"  
+                        :events="events" 
+                        :config="config" 
+                        @event-selected="eventSelected"
+                        :defaultView="defaultView"
+                        :editable="false"
+                        @day-click="dayClick"
+                        @right-click="right_deal"
+                        @event-mouseover="mouse_over"
+                        @event-mouseout="mouse_out"
+                        >
+
+                    </full-calendar>
+                </Col>
+                <Col span="6">
+                    <Row style="height:340px">
+                        <datepicker 
+                        v-model="date"
+                        :inline="true"
+                        :language="zh"
+                        @selected="change_date">
+                        </datepicker>
+                    </Row>
+                    <Row>
+                        <Row style="margin-bottom:10px">{{(new Date()).toLocaleDateString().replace(new RegExp("/",'g'),"-")}}</Row>
+                        <Row>
+                            <Scroll height="300">
+                                <Timeline>
+                                    <TimelineItem v-for="item in events" :key="item.id">
+                                        <p class="time">{{item.start}}</p>
+                                        <p class="content">{{item.task_name}}</p>
+                                    </TimelineItem>
+                                </Timeline>
+                            </Scroll>
+                        </Row>
+                    </Row>
+                </Col>
+            </Row>
+        </Card>
+        <create-task></create-task>
     </div>
 </template>
 
 <script>
+import { zh } from 'vuejs-datepicker/dist/locale/index.js'
+import { FullCalendar } from 'vue-full-calendar'
+import Datepicker from 'vuejs-datepicker';
+//  引入中文库
+import 'fullcalendar/dist/locale/zh-cn'
+
+import CreateTask from './create_task'
+
+
 export default {
-    name: "schedule_index"
+    name: "schedule_index",
+    components:{
+        FullCalendar,
+        Datepicker,
+        CreateTask
+    },
+    data(){
+        return{
+            //  控制右侧弹出页面
+            openRightHover: false,
+            //  控制悬浮菜单位置
+            top: "",
+            left: "",
+            //  控制悬浮菜单展示
+            click_show: false,
+            zh: zh,
+            date: new Date(),   
+            config:{
+                locale: 'zh-cn',
+                //  周末不显示
+                // weekends: false,  
+            },
+            events:[
+
+            ],
+            events_temp: [],
+            //  默认显示月
+            defaultView:"month",
+            hover_local: ""
+        }
+    },
+    mounted() {
+
+    },
+    methods:{
+        eventSelected(event, jsEvent, view){
+            //  点击展示事件详情
+            console.log(event)
+            console.log(jsEvent)
+            console.log(view)
+        },
+        eventDrop(event){},
+        eventResize(event){},
+        eventCreated(event){},
+        eventReceive(event){},
+        eventrender(event){},
+        dayClick(date, jsEvent, view){
+            //  可以在此处新增日程
+            // this.openRightHover = true
+            // this.newCalendar.planDate = date
+            let _self = this
+            _self.$bus.emit("OPEN_CREATE_TASK", date)
+            console.log(date)
+            // console.log(jsEvent)
+            // console.log(view)
+        },
+        next() {
+            //  通过这个函数调用calendar中的方法，
+            //  方法名，参数
+            this.$refs.calendar.fireMethod('getEventSources')
+        },
+        change_date(e){
+            console.log(e)
+        },
+        right_deal(e){
+            // this.click_show = true
+            // console.log(e)
+            //  e.x e.y e.path[0]
+        },
+        //  右键点击，鼠标滑入滑出
+        close_right_menu(){
+            this.click_show = false
+            
+        },
+        mouse_out(){
+            // console.log("鼠标离开了！")
+            this.click_show = false
+            // console.log($(this.$refs["calendar"]).fullCalendar('getDate'))
+        },
+        mouse_over(event, jsEvent, view){
+            this.click_show = true
+            // console.log("====== event ======")        
+            // console.log(event)
+            // console.log("====== jsEvent ======")
+            // console.log(jsEvent)
+            // console.log("====== view ======")
+            // console.log(view)
+
+            this.top = jsEvent.clientY
+            this.left = jsEvent.clientX
+            this.hover_local = event
+            // console.log(this.hover_local)
+        },
+        get_date(){
+            //  获取当前日期
+            // fireMethod 调用内置方法$(this.$el).fullCalendar(...options)
+            console.log(this.$refs.calendar.fireMethod('getDate'))
+            // 更改到指定日期
+            this.$refs.calendar.fireMethod('changeView', 'agendaDay', '2017-06-01')
+        },
+        get_data(){
+            let _self = this
+            let url = 'api/task/list'
+            let config = {
+                page: 1,
+                pageSize: 1000
+            }
+
+            function success(res){
+                _self.events_temp = res.data.data.rows
+                for(let i = 0;i<_self.events_temp.length;i++){
+                    _self.events_temp[i].start = _self.events_temp[i].plan_date
+                    _self.events_temp[i].title = _self.events_temp[i].task_name
+                }
+
+                _self.events = _self.events_temp
+            }
+
+            function fail(err){
+            }
+
+            this.$Post(url, config, success, fail)
+        },
+    },
+    created() {
+        let _self = this
+        _self.get_data()
+    },
+    //  @event-selected 点击事件触发
+    //  @day-click  点击日期触发
 }
 </script>
+<style>
+    @import '~fullcalendar/dist/fullcalendar.css';
+</style> 

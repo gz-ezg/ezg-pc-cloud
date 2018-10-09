@@ -8,14 +8,25 @@
             size="small"
             :columns="header2"
             :data="data2"></Table>
+        <!-- <Button @click="value1 = true" type="primary">Open</Button>
+        <Drawer title="Basic Drawer" :closable="false" v-model="value1">
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+        </Drawer> -->
     </div>
 </template>
 
 <script>
+// import Drawer from 'iview/src/components/drawer'
 export default {
     name: "test-3",
+    components:{
+        // Drawer
+    },
     data(){
         return {
+            value1: false,
             typeArray: [
                 {
                     typecode:12,

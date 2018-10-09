@@ -76,7 +76,7 @@ export default {
                 },
                 {
                     title: "执行人",
-                    key: "realname",
+                    key: "executor_name",
                     minWidth: 120
                 },
                 // {
@@ -202,7 +202,7 @@ export default {
             this.$Get(url, config, success)
         },
         open_task_detail(e){
-            console.log(e)
+            this.$bus.emit("OPEN_TASK_DETAIL",e)
         }
     },
     created() {

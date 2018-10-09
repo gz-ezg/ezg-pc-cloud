@@ -1,13 +1,14 @@
 <template>
     <div style="min-width:1300px" @click="close_right_menu">
+        
         <!-- <Button @click="get_date">下一天</Button> -->
         <Card title="日程表">
             <Card style="width:100px;position:fixed;z-index:9999" v-if="click_show" :style="{top: top + 'px', left: left + 'px'}">
-                        <Row :gutter="20">
-                            <Col><span style="padding:5px;" @click="dayClick">新增任务</span></Col>
-                            <Col style="padding-top:10px"><span style="padding:5px">新增计划</span></Col>
-                        </Row>
-                    </Card>
+                <Row :gutter="20">
+                    <Col><span style="padding:5px;" @click="dayClick">新增任务</span></Col>
+                    <Col style="padding-top:10px"><span style="padding:5px">新增计划</span></Col>
+                </Row>
+            </Card>
             <Row :gutter="20"> 
                 <Col span="18">
                     <full-calendar
@@ -76,13 +77,6 @@
             <div slot="footer"></div>
         </Modal>
         <Button @click="next">下一个</Button>
-        
-        <!-- <div id="app" @contextmenu="showMenu" style="width: 705px;height: 307px;background: red;">
-            <vue-context-menu :contextMenuData="contextMenuData"
-                            @savedata="savedata"
-                            @newdata="newdata">
-            </vue-context-menu>
-        </div> -->
         <Card style="position:fixed;right:0px;top:100px;width:30vw;height:100vh;z-index:9999" title="新建日程" v-if="openRightHover">
             <div slot="extra">
                 <Icon type="close-round" @click="openRightHover = false"></Icon>
@@ -111,6 +105,7 @@
                 </Scroll>
             </Row>
         </Card>
+        
     </div>
 </template>
 
@@ -121,6 +116,8 @@ import Datepicker from 'vuejs-datepicker';
 //  引入中文库
 import 'fullcalendar/dist/locale/zh-cn'
 
+
+
 export default {
     components:{
         FullCalendar,
@@ -128,8 +125,9 @@ export default {
     },
     data(){
         return{
+            
             newCalendar:{
-
+                planDate: ""
             },
             openRightHover: false,
             top: "",
@@ -147,15 +145,29 @@ export default {
             events:[
                 {
                     title  : 'event1',
-                    start  : '2018-09-03T09:00:00',
-                    end : '2018-09-03T11:00:00',
+                    start  : '2018-09-03 09:00:00',
+                    end : '2018-09-03 11:00:00',
+                    color: "red",
+                    description: "这是标题"
+                },
+                {
+                    title  : 'event2',
+                    start  : '2018-09-03 09:00:00',
+                    end : '2018-09-03 11:00:00',
+                    color: "red",
+                    description: "这是标题"
+                },
+                {
+                    title  : 'event4',
+                    start  : '2018-09-03 09:00:00',
+                    end : '2018-09-03 11:00:00',
                     color: "red",
                     description: "这是标题"
                 },
                 {
                     title  : 'event5',
-                    start  : '2018-09-03T11:30:00',
-                    end : '2018-09-03T12:00:00',
+                    start  : '2018-09-03 11:30:00',
+                    end : '2018-09-03 12:00:00',
                     color: "green",
                     description: "这是标2"
                 },
@@ -167,7 +179,7 @@ export default {
                 },
                 {
                     title  : 'event3',
-                    start  : '2018-09-11T12:30:00',
+                    start  : '2018-09-11 12:30:00',
                     description: "这是标题4"
                 },
             ],
@@ -193,6 +205,7 @@ export default {
         dayClick(date, jsEvent, view){
             //  可以在此处新增日程
             this.openRightHover = true
+            this.newCalendar.planDate = date
             console.log(date)
             console.log(jsEvent)
             console.log(view)
