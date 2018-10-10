@@ -68,7 +68,7 @@
                         </Col>
                         <Col span="12">
                             <FormItem label="提醒时间">
-                                <DatePicker type="datetime" v-model="newMission.noticeDate" style="width:100%"></DatePicker>
+                                <DatePicker type="datetime" v-model="newMission.specificDate" style="width:100%"></DatePicker>
                             </FormItem>
                         </Col>
                     </Row>
@@ -137,6 +137,7 @@
 </template>
 
 <script>
+import { FULLDateFormat } from '../../../libs/utils.js'
 import all from './typeOfMission/all'
 import DetailTask from './taskComponents/detailTask';
 export default {
@@ -157,6 +158,7 @@ export default {
                 taskName: "",
                 taskContent: "",
                 planDate: new Date(),
+                specificDate: "",
                 taskLevel: "",
                 taskDesCode: "",
                 taskKind: "tkFollow",
@@ -266,6 +268,8 @@ export default {
                 executorId: _self.newMission.executorId,
                 taskContent: _self.newMission.taskContent,
                 taskLevel: _self.newMission.taskLevel,
+                specificDate: FULLDateFormat(_self.newMission.specificDate),
+                planDate: FULLDateFormat(_self.newMission.planDate),
                 // taskDesCode: _self.newMission.taskDesCode,
                 taskKind: _self.newMission.taskKind,
                 // taskStage: _self.newMission.taskStage,

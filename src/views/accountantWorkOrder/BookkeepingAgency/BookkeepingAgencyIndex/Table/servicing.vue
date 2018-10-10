@@ -834,16 +834,18 @@
             let year = ""
             let month = ""
             if((now.getMonth())==0){
-                year = now.getMonth() - 1
+                year = now.getFullYear() - 1
                 month = "12"
             }else{
                 year = now.getFullYear()
-                if(now.getMonth()<9){
+                if(now.getMonth()<=9){
                     month = '0'+now.getMonth()
                 }else{
                     month = now.getMonth()
                 }
             }
+            console.log(year)
+            console.log(month)
             _self.time = year + month
             Bus.$on('UPDATE_ALL_ACCOUNT_PAGE',(e)=>{
                 _self.getData()

@@ -2202,7 +2202,7 @@
                                         });
                                         _self.$Message.error('您有周期性产品未选择服务开始税期')
                                         _self.beforeAddOrder = false
-                                        
+                                        return false
                                     }
                                 }
                             }
@@ -2339,6 +2339,7 @@
                                             _self.loading = true;
                                         });
                                         _self.$Message.error('您有周期性产品未选择服务开始税期')
+                                        return false
                                     }
                                 }
                             }

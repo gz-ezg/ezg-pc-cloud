@@ -52,3 +52,7 @@
         ├── Main.vue  主页面组件
         
 ```
+
+项目调试：npm run dev(dev-xxx xxx值参见packjson配置)
+
+打包项目：npm run build

@@ -83,7 +83,7 @@
                         </Col>
                     </Row>
                     <Row style="margin-top:40px">
-                        <Button @click="update_task" type="primary" style="margin-left:40px" :loading="loading">保存</Button>
+                        <Button @click="update_task" type="primary" style="margin-left:40px">保存</Button>
                     </Row>
                 </Row>
                 <Row style="margin-top:20px">
@@ -115,7 +115,6 @@
 export default {
     data(){
         return{
-            loading: false,
             openTaskDetail: false,
             data:{
                 taskData:[
@@ -133,7 +132,7 @@ export default {
             },
             taskStage: [],
             taskLevel: [],
-            taskStage_map: new Map()
+            taskDesCode: []
         }
     },
     methods:{
@@ -149,28 +148,6 @@ export default {
 
             function success(res){
                 _self.data = res.data.data
-                console.log(res.data.data)
-                // _self.get_last_follow_up_data()
-            }
-
-            this.$Get(url, config, success)
-        },
-        /**
-         * 获取最近一条更新记录
-         */
-        
-        get_last_follow_up_data(e){
-            let _self = this
-            let url = `api/customer/findLastCustomerContentByCompanyId`
-
-            let config = {
-                params: {
-                    companyId: e
-                }
-            }
-
-            function success(res){
-                console.log(res)
             }
 
             this.$Get(url, config, success)
@@ -185,7 +162,7 @@ export default {
 
             function success(res){
                 _self.taskLevel = res.data.data.taskLevel
-                // _self.taskDesCode = res.data.data.taskDesCode
+                _self.taskDesCode = res.data.data.taskDesCode
                 // _self.taskKind = res.data.data.taskKind
                 _self.taskStage = res.data.data.taskStage
                 // _self.market_status = res.data.data.market_status
@@ -193,7 +170,7 @@ export default {
                 // _self.taskLevel_map = _self.$array2map(_self.taskLevel)
                 // _self.taskDesCode_map = _self.$array2map(_self.taskDesCode)
                 // _self.taskKind_map = _self.$array2map(_self.taskKind)
-                _self.taskStage_map = _self.$array2map(_self.taskStage)
+                // _self.taskStage_map = _self.$array2map(_self.taskStage)
                 // _self.market_status_map = _self.$array2map(_self.market_status)
                 // _self.markert_follow_up_type_map = _self.$array2map(_self.markert_follow_up_type)
             }
@@ -201,33 +178,11 @@ export default {
         },
         update_task(){
             //  编辑任务，有点混乱，待理清
-            let _self = this
-            let url = `api/task/modifyTask`
-
-            _self.loading = true
-            let config = {
-                taskId: _self.data.taskData[0].id,
-                taskName: _self.data.taskData[0].task_name,
-                taskContent: _self.data.taskData[0].task_content,
-                taskStage: _self.data.taskData[0].task_stage,
-                taskStageName: _self.taskStage_map.get(_self.data.taskData[0].task_stage)
-            }
-
-            function success(res){
-                _self.loading = false
-                _self.openTaskDetail = false
-            }
-
-            function fail(err){
-                _self.loading = false
-            }
-
-            this.$Post(url, config, success, fail)
         }
     },
     created() {
         let _self = this
-        this.$bus.on("OPEN_TASK_DETAIL",(e)=>{
+        this.$bus.on("OPEN_SEHEDULE_DETAIL",(e)=>{
             // console.log(e)
             _self.get_data_center()
             _self.get_detail(e.id)

@@ -56,12 +56,12 @@
                         </datepicker>
                     </Row>
                     <Row>
-                        <Row style="margin-bottom:10px">{{(new Date()).toLocaleDateString().replace(new RegExp("/",'g'),"-")}}</Row>
+                        <Row style="margin-bottom:10px">{{date.toLocaleDateString().replace(new RegExp("/",'g'),"-")}}</Row>
                         <Row>
                             <Scroll height="300">
                                 <Timeline>
-                                    <TimelineItem v-for="item in events" :key="item.id">
-                                        <p class="time">{{item.start}}</p>
+                                    <TimelineItem v-for="item in oneData" :key="item.id">
+                                        <p class="time">{{item.plan_date.slice(10)}}</p>
                                         <p class="content">{{item.task_name}}</p>
                                     </TimelineItem>
                                 </Timeline>
@@ -72,6 +72,7 @@
             </Row>
         </Card>
         <create-task></create-task>
+        <task-detail></task-detail>
     </div>
 </template>
 
@@ -83,17 +84,19 @@ import Datepicker from 'vuejs-datepicker';
 import 'fullcalendar/dist/locale/zh-cn'
 
 import CreateTask from './create_task'
-
+import TaskDetail from './detailTask'
 
 export default {
     name: "schedule_index",
     components:{
         FullCalendar,
         Datepicker,
-        CreateTask
+        CreateTask,
+        TaskDetail
     },
     data(){
         return{
+            local_date:"",
             //  控制右侧弹出页面
             openRightHover: false,
             //  控制悬浮菜单位置
@@ -114,7 +117,8 @@ export default {
             events_temp: [],
             //  默认显示月
             defaultView:"month",
-            hover_local: ""
+            hover_local: "",
+            oneData: []
         }
     },
     mounted() {
@@ -123,9 +127,10 @@ export default {
     methods:{
         eventSelected(event, jsEvent, view){
             //  点击展示事件详情
-            console.log(event)
-            console.log(jsEvent)
-            console.log(view)
+            // console.log(event)
+            // console.log(jsEvent)
+            // console.log(view)
+            this.$bus.emit("OPEN_SEHEDULE_DETAIL",event)
         },
         eventDrop(event){},
         eventResize(event){},
@@ -137,7 +142,9 @@ export default {
             // this.openRightHover = true
             // this.newCalendar.planDate = date
             let _self = this
-            _self.$bus.emit("OPEN_CREATE_TASK", date)
+            this.date = date._d
+            this.get_onedate_data(this.date)
+            // _self.$bus.emit("OPEN_CREATE_TASK", date)
             console.log(date)
             // console.log(jsEvent)
             // console.log(view)
@@ -148,7 +155,9 @@ export default {
             this.$refs.calendar.fireMethod('getEventSources')
         },
         change_date(e){
-            console.log(e)
+            this.local_date = e.toLocaleDateString().replace(new RegExp("/",'g'),"-")
+            console.log(e.toLocaleDateString().replace(new RegExp("/",'g'),"-"))
+            this.get_onedate_data(e.toLocaleDateString().replace(new RegExp("/",'g'),"-"))
         },
         right_deal(e){
             // this.click_show = true
@@ -191,7 +200,8 @@ export default {
             let url = 'api/task/list'
             let config = {
                 page: 1,
-                pageSize: 1000
+                pageSize: 1000,
+                day: ""
             }
 
             function success(res){
@@ -209,10 +219,36 @@ export default {
 
             this.$Post(url, config, success, fail)
         },
+        get_onedate_data(e){
+            let _self = this
+            let url = 'api/task/list'
+            let config = {
+                page: 1,
+                pageSize: 1000,
+                day: e
+            }
+
+            function success(res){
+                // _self.events_temp = res.data.data.rows
+                // for(let i = 0;i<_self.events_temp.length;i++){
+                //     _self.events_temp[i].start = _self.events_temp[i].plan_date
+                //     _self.events_temp[i].title = _self.events_temp[i].task_name
+                // }
+
+                _self.oneData = res.data.data.rows
+            }
+
+            function fail(err){
+            }
+
+            this.$Post(url, config, success, fail)  
+        }
     },
     created() {
         let _self = this
         _self.get_data()
+        _self.get_onedate_data((new Date()).toLocaleDateString().replace(new RegExp("/",'g'),"-"))
+        this.local_date = (new Date()).toLocaleDateString().replace(new RegExp("/",'g'),"-")
     },
     //  @event-selected 点击事件触发
     //  @day-click  点击日期触发
