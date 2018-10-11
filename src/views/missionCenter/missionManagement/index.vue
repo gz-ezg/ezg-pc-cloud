@@ -166,7 +166,7 @@ export default {
                 followResult: "",
                 followUpType: "",
                 companyId: "",
-                executorId: localStorage.getItem("id")
+                executorId: localStorage.getItem("id"),
             },
             openAddMission: false,
             taskLevel: [],
@@ -272,20 +272,21 @@ export default {
                 planDate: FULLDateFormat(_self.newMission.planDate),
                 // taskDesCode: _self.newMission.taskDesCode,
                 taskKind: _self.newMission.taskKind,
-                // taskStage: _self.newMission.taskStage,
+                taskStage: "tesUnstarted",
                 // followResult: _self.newMission.followResult,
                 // followUpType: _self.newMission.followUpType,
                 // taskLable: _self.newMission.taskLable.join(","),
                 taskLevelName: _self.taskLevel_map.get(_self.newMission.taskLevel),
                 // taskDescription: _self.taskDesCode_map.get(_self.newMission.taskDesCode),
                 taskKindName: _self.taskKind_map.get(_self.newMission.taskKind),
-                // taskStageName: _self.taskStage_map.get(_self.newMission.taskStage),
+                taskStageName: "未开始",
                 // followResultName: _self.market_status_map.get(_self.newMission.followResult),
                 // followUpTypeName: _self.markert_follow_up_type_map.get(_self.newMission.followUpType),
             }
 
             function success(res){
                 _self.createLoading = false
+                _self.open_add_mission = false
                 _self.$refs['newMission'].resetFields();
             }
 

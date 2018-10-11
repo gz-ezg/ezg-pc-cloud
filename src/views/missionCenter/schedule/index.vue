@@ -56,7 +56,7 @@
                         </datepicker>
                     </Row>
                     <Row>
-                        <Row style="margin-bottom:10px">{{date.toLocaleDateString().replace(new RegExp("/",'g'),"-")}}</Row>
+                        <Row style="margin-bottom:10px"><h3>{{local_date}}</h3></Row>
                         <Row>
                             <Scroll height="300">
                                 <Timeline>
@@ -71,7 +71,7 @@
                 </Col>
             </Row>
         </Card>
-        <create-task></create-task>
+        <!-- <create-task></create-task> -->
         <task-detail></task-detail>
     </div>
 </template>
@@ -79,6 +79,7 @@
 <script>
 import { zh } from 'vuejs-datepicker/dist/locale/index.js'
 import { FullCalendar } from 'vue-full-calendar'
+import { DateFormat } from '../../../libs/utils.js'
 import Datepicker from 'vuejs-datepicker';
 //  引入中文库
 import 'fullcalendar/dist/locale/zh-cn'
@@ -145,7 +146,7 @@ export default {
             this.date = date._d
             this.get_onedate_data(this.date)
             // _self.$bus.emit("OPEN_CREATE_TASK", date)
-            console.log(date)
+            // console.log(date)
             // console.log(jsEvent)
             // console.log(view)
         },
@@ -155,9 +156,19 @@ export default {
             this.$refs.calendar.fireMethod('getEventSources')
         },
         change_date(e){
-            this.local_date = e.toLocaleDateString().replace(new RegExp("/",'g'),"-")
-            console.log(e.toLocaleDateString().replace(new RegExp("/",'g'),"-"))
-            this.get_onedate_data(e.toLocaleDateString().replace(new RegExp("/",'g'),"-"))
+            let date = DateFormat(e)
+            // this.local_date = e.toLocaleDateString().replace(new RegExp("/",'g'),"-")
+            this.local_date = date
+
+            // console.log(e.toLocaleDateString().replace(new RegExp("/",'g'),"-"))
+
+            // this.$refs.calendar.fireMethod('changeView', this.$refs.calendar.fireMethod("getView").type, e.toLocaleDateString().replace(new RegExp("/",'g'),"-"))
+            this.$refs.calendar.fireMethod('changeView', this.$refs.calendar.fireMethod("getView").type , date)
+
+            // console.log(this.$refs.calendar.fireMethod("getView").type)
+            // this.get_onedate_data(e.toLocaleDateString().replace(new RegExp("/",'g'),"-"))
+            this.get_onedate_data(date)
+
         },
         right_deal(e){
             // this.click_show = true
@@ -191,7 +202,7 @@ export default {
         get_date(){
             //  获取当前日期
             // fireMethod 调用内置方法$(this.$el).fullCalendar(...options)
-            console.log(this.$refs.calendar.fireMethod('getDate'))
+            // console.log(this.$refs.calendar.fireMethod('getDate'))
             // 更改到指定日期
             this.$refs.calendar.fireMethod('changeView', 'agendaDay', '2017-06-01')
         },
@@ -247,8 +258,10 @@ export default {
     created() {
         let _self = this
         _self.get_data()
-        _self.get_onedate_data((new Date()).toLocaleDateString().replace(new RegExp("/",'g'),"-"))
-        this.local_date = (new Date()).toLocaleDateString().replace(new RegExp("/",'g'),"-")
+        // _self.get_onedate_data((new Date()).toLocaleDateString().replace(new RegExp("/",'g'),"-"))
+        // this.local_date = (new Date()).toLocaleDateString().replace(new RegExp("/",'g'),"-")
+        this.local_date = DateFormat(new Date())
+        this.get_onedate_data(DateFormat(new Date()))
     },
     //  @event-selected 点击事件触发
     //  @day-click  点击日期触发
@@ -256,4 +269,29 @@ export default {
 </script>
 <style>
     @import '~fullcalendar/dist/fullcalendar.css';
+    .fc-unthemed td.fc-today{
+        background: #fcf4cd;
+    }
+    .fc-event{
+        font-size:14px;
+        border: 1px solid #2d8cf0;
+        color: #ffffff
+    }
+    .fc-event, .fc-event-dot{
+        background: #2d8cf0
+    }
+    .vdp-datepicker__calendar .cell.selected{
+        background:  #2d8cf0;
+        color: #ffffff;
+    }
+    .vdp-datepicker__calendar .cell.selected:hover{
+        background:  #2d8cf0;
+        color: #ffffff;
+    }
+    .fc-state-down, .fc-state-active {
+        background-color: #2d8cf0;
+        background-image: none;
+        box-shadow: none;
+        color: #ffffff
+    }
 </style> 

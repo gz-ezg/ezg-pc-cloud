@@ -2,61 +2,92 @@
     <div>
         <Modal
             title="创建资料"
-            width="500"
+            width="95"
             v-model="openResoureFile"
         >
-            <Form ref="formValidate" :model="formValidate" :label-width="120">
-                <FormItem label="所属公司：" prop="companyId">
-                    <Select v-model="formValidate.companyId" placeholder="输入公司名称搜索"
-                        filterable
-                        remote
-                        :remote-method="get_company"
-                        :loading="companyLoading"
-                    >
-                        <Option  v-for="item in companyList" :value="item.id" :key="item.id">{{item.companyname}}</Option>
-                    </Select>
-                </FormItem>
-                <FormItem label="文件类型：" prop="customerFileTypeId">
-                    <Select v-model="formValidate.customerFileTypeId" placeholder="选择文件类型" filterable @on-change="change">
-                        <Option  v-for="item in fileList" :value="item.id" :key="item.id">{{item.file_type_name}}</Option>
-                    </Select>
-                </FormItem>
-                <FormItem label="文件名称：" prop="customerFileName" v-if="formValidate.customerFileTypeId == '54'">
-                    <Input v-model="formValidate.customerFileName" placeholder="输入文件名称">
-                    </Input>
-                </FormItem>
-                <FormItem label="文件数量：" prop="fileNum" v-if="isCanInput">
-                    <Input v-model="formValidate.fileNum" placeholder="请输入文件数量"></Input>
-                </FormItem>
-                <FormItem label="存放部门：" prop="saveDepartId">
-                    <Select v-model="formValidate.saveDepartId" placeholder="选择存放部门" >
-                        <Option  v-for="item in departAlias" :value="item.departid" :key="item.departid">{{item.departname}}</Option>
-                    </Select>
-                </FormItem>
-                <FormItem label="存放地点：" prop="storage">
-                    <!-- <Input v-model="formValidate.storage" placeholder="请输入存放位置"></Input> -->
-                    <!-- <customer_f_s_a -->
-                    <Select v-model="formValidate.storage" placeholder="选择存放地点" >
-                        <Option  v-for="item in customer_f_s_a" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
-                    </Select>
-                </FormItem>
-                <FormItem label="存放位置：" prop="storageCode">
-                    <Input v-model="formValidate.storageCode" placeholder="请输入存放具体位置"></Input>
-                </FormItem>
-                <FormItem label="资料来源：" prop="fileSource">
-                    <Select v-model="formValidate.fileSource" placeholder="选择资料来源">
-                        <Option  v-for="item in customer_resource_from" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
-                    </Select>
-                </FormItem>
-                <FormItem label="客户名称：" prop="customerName" v-if="customerName">
-                    <Input v-model="formValidate.customerName" placeholder="请输入客户名称"></Input>
-                </FormItem>
-                <FormItem>
-                    <Button type="primary" @click="create_type" :loading="loading">新增</Button>
-                    <Button type="ghost" @click="reset_type" style="margin-left: 8px">重置</Button>
-                </FormItem>
-            </Form>
-            <div slot="footer"></div>
+            <Row>
+                <Col span="16">
+                    <Form ref="formValidate" :model="formValidate" :label-width="120">
+                        <FormItem label="所属公司：" prop="companyId">
+                            <Select v-model="formValidate.companyId" placeholder="输入公司名称搜索"
+                                filterable
+                                remote
+                                :remote-method="get_company"
+                                :loading="companyLoading"
+                                style="width:200px"
+                            >
+                                <Option  v-for="item in companyList" :value="item.id" :key="item.id">{{item.companyname}}</Option>
+                            </Select>
+                        </FormItem>
+                        <FormItem label="资料来源：" prop="fileSource">
+                            <Select v-model="formValidate.fileSource" placeholder="选择资料来源" style="width:200px">
+                                <Option  v-for="item in customer_resource_from" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
+                            </Select>
+                        </FormItem>
+                        <FormItem label="客户名称：" prop="customerName" v-if="customerName">
+                            <Input v-model="formValidate.customerName" placeholder="请输入客户名称" style="width:200px"></Input>
+                        </FormItem>
+                    </Form>
+                    <Row>
+                        <Button @click="openAddFileItem = true" type="primary">新增文件项</Button>
+                    </Row>
+                    <Row style="margin-top:20px">
+                        <Table
+                            ref="selection"
+                            highlight-row
+                            size="small"
+                            :columns="header"
+                            :data="formValidate.dataJson"
+                        >
+                        </Table>
+                    </Row>
+                </Col>
+                <Col span="8">
+                    <Form ref="fileItem" :model="fileItem" :label-width="120">
+                        <FormItem label="文件类型：" prop="customerFileTypeId">
+                            <Select v-model="fileItem.customerFileTypeId" placeholder="选择文件类型" filterable @on-change="change">
+                                <Option  v-for="item in fileList" :value="item.id" :key="item.id">{{item.file_type_name}}</Option>
+                            </Select>
+                        </FormItem>
+                        <FormItem label="文件名称：" prop="customerFileName">
+                            <Input v-model="fileItem.customerFileName" placeholder="输入文件名称">
+                            </Input>
+                        </FormItem>
+                        <FormItem label="文件数量：" prop="fileNum" v-if="isCanInput">
+                            <Input v-model="fileItem.fileNum" placeholder="请输入文件数量"></Input>
+                        </FormItem>
+                        <FormItem label="存放部门：" prop="saveDepartId">
+                            <Select v-model="fileItem.saveDepartId" placeholder="选择存放部门" >
+                                <Option  v-for="item in departAlias" :value="item.departid" :key="item.departid">{{item.departname}}</Option>
+                            </Select>
+                        </FormItem>
+                        <FormItem label="存放地点：" prop="storage">
+                            <!-- <Input v-model="formValidate.storage" placeholder="请输入存放位置"></Input> -->
+                            <!-- <customer_f_s_a -->
+                            <Select v-model="fileItem.storage" placeholder="选择存放地点" >
+                                <Option  v-for="item in customer_f_s_a" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
+                            </Select>
+                        </FormItem>
+                        <FormItem label="存放位置：" prop="storageCode">
+                            <Input v-model="fileItem.storageCode" placeholder="请输入存放具体位置"></Input>
+                        </FormItem>
+                    </Form>
+                    <center>
+                        <Button type="primary" @click="add_file_item" style="width:60%">新增资料项</Button>
+                    </center>
+                </Col>
+            </Row>
+            <div slot="footer">
+                <Button type="primary" @click="create_type" :loading="loading">新增</Button>
+                <Button type="ghost" @click="reset_type" style="margin-left: 8px">重置</Button>
+            </div>
+        </Modal>
+        <Modal
+            title="新增文件项"
+            v-model="openAddFileItem"
+            width="700"
+        >   
+            
         </Modal>
     </div>
 </template>
@@ -67,18 +98,22 @@ export default {
     },
     data(){
         return{
+            openAddFileItem: false,
             isCanInput: true,
             openResoureFile: false,
             formValidate: {
+                companyId: "",
+                customerName: "",
+                fileSource: "",
+                dataJson: []
+            },
+            fileItem: {
+                customerFileName: "",
                 customerFileTypeId: "",
                 saveDepartId: "",
                 storage: "",
-                companyId: "",
                 fileNum: 1,
                 storageCode: "",
-                fileSource: "",
-                customerName: "",
-                customerFileName: ""
             },
             loading: false,
             fileList: [],
@@ -87,7 +122,59 @@ export default {
             companyLoading: false,
             departLoading: false,
             customer_f_s_a: [],
-            customer_resource_from: []
+            customer_resource_from: [],
+            header: [
+                {
+                    title: "文件名",
+                    key: 'customerFileName',
+                    minWidth: 150
+                },
+                {
+                    title: "保存部门",
+                    key: "saveDepartId",
+                    minWidth: 150,
+                    render: (h, params) => {
+                        let departName = ""
+                        for(let i = 0;i < this.departAlias.length;i++){
+                            if(params.row.saveDepartId == this.departAlias[i].departid){
+                                departName = this.departAlias[i].departname
+                            }
+                        }
+                        return h('div',{
+                        }, departName)
+                    }
+                },
+                {
+                    title: "保存位置",
+                    key: "storage",
+                    minWidth: 150
+                },
+                {
+                    title: "文件数量",
+                    key: "fileNum",
+                    minWidth: 150
+                },
+                {
+                    title: "操作",
+                    key: 'action',
+                    minWidth: 120,
+                    render: (h, params) => {
+                        return h('Button',{
+                            props:{
+                                type:'text',
+                                size:'small'
+                            },
+                            on:{
+                                click:()=>{
+                                    // console.log(params)
+                                    this.formValidate.dataJson.splice(params.index, 1)
+                                }
+                            }
+                        }, '[ 删除 ]')
+                    }
+                }
+            ],
+            departAlias_map: new Map()
             // customer_f_s_a_map: new Map()
         }
     },
@@ -189,15 +276,16 @@ export default {
         //  判断是否可以输入数量
         change(e){
             let _self = this
-            for(let i = 0; i<_self.fileList.length; i++){
-                if(_self.fileList[i].id == e){
-                    if(_self.fileList[i].plural == "Y"){
-                        _self.isCanInput = true
-                    }else{
-                        _self.isCanInput = false
-                    }
-                }
-            }
+            _self.fileItem.customerFileName = e
+            // for(let i = 0; i<_self.fileList.length; i++){
+            //     if(_self.fileList[i].id == e){
+            //         if(_self.fileList[i].plural == "Y"){
+            //             _self.isCanInput = true
+            //         }else{
+            //             _self.isCanInput = false
+            //         }
+            //     }
+            // }
         },
         get_center(){
             let _self = this
@@ -208,6 +296,13 @@ export default {
                 // _self.customer_f_s_a_map = _self.$array2map(_self.customer_f_s_a)
             }
             _self.$GetDataCenter(params, success)
+        },
+        add_file_item(){
+            let _self = this
+            console.log(_self.fileItem)
+            this.fileItem.customerFileName = this.fileItem.customerFileTypeId
+            this.formValidate.dataJson.push(_self.fileItem)
+            
         }
     },
     created() {
