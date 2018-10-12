@@ -1,6 +1,6 @@
 <template>
     <div style="min-width:1300px" @click="close_right_menu">
-        <Button v-if="right_click_show" :style="{top: rightTop + 'px', left: rightLeft + 'px'}" style="position:fixed;z-index:9999">新增日程</Button>
+        <Button v-if="right_click_show" :style="{top: rightTop + 'px', left: rightLeft + 'px'}" style="position:fixed;z-index:9000" type="primary" @click="add_task">新增日程</Button>
         <!-- <Button @click="get_date">下一天</Button> -->
         <Card title="日程表">
             <Card style="width:400px;position:fixed;z-index:9999" v-if="click_show" :style="{top: top + 'px', left: left + 'px'}">
@@ -39,11 +39,10 @@
                         :defaultView="defaultView"
                         :editable="false"
                         @day-click="dayClick"
-                        @right-click="right_deal"
+                        @day-right-click="dayRightClick"
                         @event-mouseover="mouse_over"
                         @event-mouseout="mouse_out"
                         >
-
                     </full-calendar>
                 </Col>
                 <Col span="6">
@@ -55,9 +54,9 @@
                         @selected="change_date">
                         </datepicker>
                     </Row>
-                    <Row style="margin-bottom:10px">
-                        <Button @click="add_task" type="primary">新增日程</Button>
-                    </Row>
+                    <!-- <Row style="margin-bottom:10px">
+                        <Button  type="primary">新增日程</Button>
+                    </Row> -->
                     <Row>
                         <Row style="margin-bottom:10px"><h3>{{local_date}}</h3></Row>
                         <Row>
@@ -125,7 +124,8 @@ export default {
             //  默认显示月
             defaultView:"month",
             hover_local: "",
-            oneData: []
+            oneData: [],
+            rightClickDate: ""
         }
     },
     mounted() {
@@ -134,9 +134,6 @@ export default {
     methods:{
         eventSelected(event, jsEvent, view){
             //  点击展示事件详情
-            // console.log(event)
-            // console.log(jsEvent)
-            // console.log(view)
             this.$bus.emit("OPEN_SEHEDULE_DETAIL",event)
         },
         eventDrop(event){},
@@ -144,17 +141,12 @@ export default {
         eventCreated(event){},
         eventReceive(event){},
         eventrender(event){},
+        //  左键点击触发
         dayClick(date, jsEvent, view){
             //  可以在此处新增日程
-            // this.openRightHover = true
-            // this.newCalendar.planDate = date
             let _self = this
             this.date = date._d
             this.get_onedate_data(this.date)
-            // _self.$bus.emit("OPEN_CREATE_TASK", date)
-            // console.log(date)
-            // console.log(jsEvent)
-            // console.log(view)
         },
         next() {
             //  通过这个函数调用calendar中的方法，
@@ -176,16 +168,17 @@ export default {
             this.get_onedate_data(date)
 
         },
-        right_deal(e){
+        //  右键点击触发
+        dayRightClick(date, jsEvent, view){
             this.right_click_show = true
-            this.rightTop = e.y
-            this.rightLeft = e.x
-            console.log(e)
+            this.rightClickDate = DateFormat(date._d)
+            this.rightTop = jsEvent.pageY
+            this.rightLeft = jsEvent.pageX
+            // console.log(date, jsEvent, view)
         },
-        //  右键点击，鼠标滑入滑出
+        //  关闭右键菜单
         close_right_menu(){
             this.right_click_show = false
-            
         },
         mouse_out(){
             // console.log("鼠标离开了！")
@@ -194,12 +187,6 @@ export default {
         },
         mouse_over(event, jsEvent, view){
             this.click_show = true
-            // console.log("====== event ======")        
-            // console.log(event)
-            // console.log("====== jsEvent ======")
-            // console.log(jsEvent)
-            // console.log("====== view ======")
-            // console.log(view)
 
             this.top = jsEvent.clientY
             this.left = jsEvent.clientX

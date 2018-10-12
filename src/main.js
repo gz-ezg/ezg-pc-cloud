@@ -18,13 +18,14 @@ import VCharts from 'v-charts';
 // import './my-theme/index.less';
 // import "@babel/polyfill";
 // import echarts from 'echarts';
-
+// import VueScroller from 'vue-scroller'
 
 import iviewArea from 'iview-area';
 
 import datagrid from './libs/easyUI/jquery.easyui.min'
 import combobox from './libs/easyUI/jquery.easyui.min'
 
+// Vue.use(VueScroller)
 Vue.use(VCharts)
 Vue.use(VueI18n);
 Vue.use(iView);

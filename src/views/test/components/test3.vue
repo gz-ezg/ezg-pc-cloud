@@ -14,14 +14,23 @@
             <p>Some contents...</p>
             <p>Some contents...</p>
         </Drawer> -->
+        <vue-scroller 
+            :on-refresh="refresh"
+            :on-infinite="infinite">
+            <!-- content goes here -->
+        </vue-scroller>
     </div>
 </template>
 
 <script>
 // import Drawer from 'iview/src/components/drawer'
+import VueScroller from 'vue-scroller/src/components/Scroller.vue'
+
+
 export default {
     name: "test-3",
     components:{
+        VueScroller
         // Drawer
     },
     data(){
@@ -130,7 +139,8 @@ export default {
         }
     },
     methods:{
-
+        refresh(){},
+        infinite(){}
     },
     created() {
         let _self = this
