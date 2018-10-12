@@ -29,10 +29,10 @@
             :mask-closable="false"
         >
             <Form ref="newMission" :model="newMission" :label-width="80" style="margin-left:50px;margin-right:50px">
-                <FormItem label="任务名称">
+                <FormItem label="任务名称" prop="taskName">
                     <Input v-model="newMission.taskName"></Input>
                 </FormItem>
-                <FormItem label="任务对象">
+                <FormItem label="任务对象" prop="companyId">
                     <Select v-model="newMission.companyId" placeholder="输入公司名称搜索"
                         filterable
                         remote
@@ -42,7 +42,7 @@
                         <Option v-for="item in companyList" :value="item.id" :key="item.id">{{item.companyname}}</Option>
                     </Select>
                 </FormItem>
-                <FormItem label="执行者">
+                <FormItem label="执行者" prop="executorId">
                     <Select 
                         v-model="newMission.executorId"
                         placeholder="执行者" 
@@ -57,31 +57,46 @@
                         </Option>
                     </Select>
                 </FormItem>
-                <FormItem label="任务详情">
+                <!-- <FormItem label="执行部门">
+                    <Select 
+                        v-model="newMission.executorId"
+                        placeholder="执行部门" 
+                        filterable
+                        remote
+                        :remote-method="get_user"
+                        :loading="userLoading"
+                    >
+                        <Option v-for="item in userList" :key="item.id" :value="item.id" :label="item.realname">
+                            <span>{{item.realname}}</span>
+                            <span style="float:right;color:#ccc">{{item.departname}}</span>
+                        </Option>
+                    </Select>
+                </FormItem> -->
+                <FormItem label="任务详情" prop="taskContent">
                     <Input v-model="newMission.taskContent" type="textarea" :rows="3"></Input>
                 </FormItem>
                     <Row :gutter="12">
                         <Col span="12">
-                            <FormItem label="执行时间">
+                            <FormItem label="执行时间" prop="planDate">
                                 <DatePicker type="datetime" v-model="newMission.planDate" style="width:100%"></DatePicker>
                             </FormItem>
                         </Col>
-                        <Col span="12">
+                        <!-- <Col span="12">
                             <FormItem label="提醒时间">
                                 <DatePicker type="datetime" v-model="newMission.specificDate" style="width:100%"></DatePicker>
                             </FormItem>
-                        </Col>
+                        </Col> -->
                     </Row>
                 <Row :gutter="12">
                     <Col span="12">
-                        <FormItem label="任务级别">
+                        <FormItem label="任务级别" prop="taskLevel">
                             <Select v-model="newMission.taskLevel" type="text" transfer>
                                 <Option v-for="(item,index) in taskLevel" :key="index" :value="item.typecode">{{item.typename}}</Option>
                             </Select>
                         </FormItem>
                     </Col>
                     <Col span="12">
-                        <FormItem label="任务类型">
+                        <FormItem label="任务类型" prop="taskKind">
                             <Select v-model="newMission.taskKind">
                                 <Option v-for="(item,index) in taskKind" :key="index" :value="item.typecode">{{item.typename}}</Option>
                             </Select>
@@ -159,7 +174,7 @@ export default {
                 taskContent: "",
                 planDate: new Date(),
                 specificDate: "",
-                taskLevel: "",
+                taskLevel: "importance",
                 taskDesCode: "",
                 taskKind: "tkFollow",
                 taskStage: "",
@@ -187,7 +202,9 @@ export default {
                     id: localStorage.getItem("id"),
                     realname: localStorage.getItem("realname")
                 }
-            ]
+            ],
+            allUserList: [],
+            allUserList_map: new Map()
             
         }
     },
@@ -258,6 +275,28 @@ export default {
 
             this.$Get(url, config, success)
         },
+        get_all_user(){
+            let _self = this
+            let url = `api/user/list`
+
+            let config = {
+                params: {
+                    page: 1,
+                    pageSize: 1000,
+                }
+            }
+
+            function success(res){
+                _self.allUserList = res.data.data.rows
+                for(let i = 0;i<_self.allUserList.length;i++){
+                    _self.allUserList_map.set(_self.allUserList[i].id.toString(),_self.allUserList[i].realname)
+                }
+
+                console.log(_self.allUserList_map)
+            }
+
+            this.$Get(url, config, success)
+        },
         create_task(){
             let _self = this
             _self.createLoading = true
@@ -266,9 +305,10 @@ export default {
                 taskName: _self.newMission.taskName,
                 companyId: _self.newMission.companyId,
                 executorId: _self.newMission.executorId,
+                executorName: _self.allUserList_map.get(_self.newMission.executorId.toString()),
                 taskContent: _self.newMission.taskContent,
                 taskLevel: _self.newMission.taskLevel,
-                specificDate: FULLDateFormat(_self.newMission.specificDate),
+                // specificDate: FULLDateFormat(_self.newMission.specificDate),
                 planDate: FULLDateFormat(_self.newMission.planDate),
                 // taskDesCode: _self.newMission.taskDesCode,
                 taskKind: _self.newMission.taskKind,
@@ -280,14 +320,17 @@ export default {
                 // taskDescription: _self.taskDesCode_map.get(_self.newMission.taskDesCode),
                 taskKindName: _self.taskKind_map.get(_self.newMission.taskKind),
                 taskStageName: "未开始",
+                creatorName:localStorage.getItem("realname")
                 // followResultName: _self.market_status_map.get(_self.newMission.followResult),
                 // followUpTypeName: _self.markert_follow_up_type_map.get(_self.newMission.followUpType),
             }
-
+            
+            console.log(config)
             function success(res){
                 _self.createLoading = false
-                _self.open_add_mission = false
-                _self.$refs['newMission'].resetFields();
+                _self.openAddMission = false
+                _self.$bus.emit("UPDATE_TASK_LIST_DEMO", true)
+                _self.cancel_task()
             }
 
             function fail(err){
@@ -298,12 +341,13 @@ export default {
             this.$Post(url, config, success, fail)
         },
         cancel_task(){
-            _self.$refs['newMission'].resetFields();
+            this.$refs['newMission'].resetFields();
         }
     },
     created() {
         let _self = this
         this.get_data_center()
+        this.get_all_user()
         // this.get_user("")
     },
 }

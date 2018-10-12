@@ -1,6 +1,6 @@
 <template>
     <div style="min-width:1300px" @click="close_right_menu">
-        
+        <Button v-if="right_click_show" :style="{top: rightTop + 'px', left: rightLeft + 'px'}" style="position:fixed;z-index:9999">新增日程</Button>
         <!-- <Button @click="get_date">下一天</Button> -->
         <Card title="日程表">
             <Card style="width:400px;position:fixed;z-index:9999" v-if="click_show" :style="{top: top + 'px', left: left + 'px'}">
@@ -18,7 +18,7 @@
                 </Row>
                 <Row :gutter="20">
                     <Col span="6">
-                        <span>执行人：</span>
+                        <span>执行人：</span>	
                     </Col>
                     <Col span="18"><span>{{hover_local.executor_name}}</span></Col>
                 </Row>
@@ -54,6 +54,9 @@
                         :language="zh"
                         @selected="change_date">
                         </datepicker>
+                    </Row>
+                    <Row style="margin-bottom:10px">
+                        <Button @click="add_task" type="primary">新增日程</Button>
                     </Row>
                     <Row>
                         <Row style="margin-bottom:10px"><h3>{{local_date}}</h3></Row>
@@ -97,6 +100,9 @@ export default {
     },
     data(){
         return{
+            rightTop:"",
+            rightLeft: "",
+            right_click_show: false,
             local_date:"",
             //  控制右侧弹出页面
             openRightHover: false,
@@ -171,13 +177,14 @@ export default {
 
         },
         right_deal(e){
-            // this.click_show = true
-            // console.log(e)
-            //  e.x e.y e.path[0]
+            this.right_click_show = true
+            this.rightTop = e.y
+            this.rightLeft = e.x
+            console.log(e)
         },
         //  右键点击，鼠标滑入滑出
         close_right_menu(){
-            this.click_show = false
+            this.right_click_show = false
             
         },
         mouse_out(){
@@ -253,6 +260,9 @@ export default {
             }
 
             this.$Post(url, config, success, fail)  
+        },
+        add_task(){
+            
         }
     },
     created() {

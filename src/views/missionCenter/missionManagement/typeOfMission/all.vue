@@ -90,7 +90,7 @@ export default {
                     minWidth: 120
                 },
                 {
-                    title: "开始时间",
+                    title: "安排时间",
                     key: "plan_date",
                     minWidth: 180
                 },
@@ -163,7 +163,8 @@ export default {
             _self.loading = true
             let config = {
                 page: _self.page,
-                pageSize: _self.pageSize
+                pageSize: _self.pageSize,
+                sortField: "plan_date"
             }
 
             function success(res){
@@ -208,6 +209,9 @@ export default {
     created() {
         let _self = this
         this.get_data()
+        _self.$bus.on("UPDATE_TASK_LIST_DEMO", (e)=>{
+            _self.get_data()
+        })
     },
 }
 </script>

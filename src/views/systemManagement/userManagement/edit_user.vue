@@ -56,6 +56,13 @@
                             </Input>
                         </FormItem>
                     </Col>
+                    <Col span="12">
+                        <FormItem label="地区权限：" prop="visabled">
+                            <Select v-model="formdata.visable" multiple style="margin-right:5px" size="small">
+                                <Option v-for="item in area_visable" :value="item.typecode" :key="item.id">{{ item.typename }}</Option>
+                            </Select>
+                        </FormItem>
+                    </Col>
                 </Row>
                 <Row>
                     <Col span="12">
@@ -157,6 +164,7 @@ export default {
             }
         };
         return{
+            area_visable: [],
             update_loading: false,
             open_edit_user: false,
             formdata:{
@@ -171,7 +179,8 @@ export default {
                 email: "",
                 roleName: "",
                 departName: "",
-                userAliasId: ""
+                userAliasId: "",
+                visable: []
             },
             formdataRule:{
                 username:[
@@ -236,7 +245,8 @@ export default {
                 roleIds: _self.formdata.roleIds,
                 mobilephone: _self.formdata.mobilePhone,
                 email: _self.formdata.email,
-                userAliasId: _self.formdata.userAliasId
+                userAliasId: _self.formdata.userAliasId,
+                visable: _self.formdata.visable.join(",")
             }
 
             function success(res){
@@ -288,6 +298,9 @@ export default {
                 _self.formdata.orgIds = res.data.data.orgId
                 _self.formdata.departName = res.data.data.departName
                 _self.formdata.userAliasId = res.data.data.userAliasId
+                if(res.data.data.visable){
+                    _self.formdata.visable = res.data.data.visable.split(",")
+                }
             }
 
             function fail(err){
@@ -295,10 +308,21 @@ export default {
             }
 
             this.$Post(url, config, success, fail)
+        },
+        get_data_center(){
+            let _self = this
+            let params = "area_visable"
+
+            function success(res){
+                _self.area_visable = res.data.data.area_visable
+            }
+
+            this.$GetDataCenter(params, success)
         }
     },
     created(){
         let _self = this
+        _self.get_data_center()
         this.$bus.on("UPDATE_USER",(e) => {
             // console.log(e)
             _self.get_role_detail(e)

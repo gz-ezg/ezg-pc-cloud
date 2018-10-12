@@ -111,7 +111,22 @@
                             </Timeline>
                         </TabPane>                        
                         <TabPane label="讨论" name="2">
-                            <div></div>
+                            <Row style="padding-bottom:10px;padding-top:5px">
+                                <Input v-model="discuss.content" size="small" style="width:90%;padding-right:20px" placeholder="请输入内容参与讨论！"><Button slot="append" :loading="discussLoading" type="primary" size="small" @click="submit_discuss">发送</Button></Input>
+                                <Rate v-model="discuss.rate" size="small" style=""></Rate> 
+                            </Row>
+                            <Timeline>
+                                    <TimelineItem v-for="(item,index) in data.discuss" :key="index">
+                                        <Row :gutter="20">
+                                            <Col span="12">{{item.creator_name}}</Col>
+                                            <Col span="12">{{item.creator_date}}</Col>
+                                        </Row>
+                                        <Row :gutter="20" style="margin-top:5px">
+                                            <Col span="24">{{item.content}}</Col>
+                                            <Col span="12"><Rate disabled :value="(item.evaluation)/10" size="small"></Rate></Col>
+                                        </Row>
+                                    </TimelineItem>
+                                </Timeline>
                         </TabPane>
                         <TabPane label="最近跟进" name="3">
                             <div>
@@ -142,6 +157,11 @@
 export default {
     data(){
         return{
+            discussLoading: false,
+            discuss:{
+                rate: 5,
+                content: ""
+            },
             loading: false,
             openTaskDetail: false,
             data:{
@@ -315,10 +335,36 @@ export default {
                 if(res.data.data){
                     _self.followUpContent = res.data.data
                 }
-                console.log(_self.followUpContent)
+                // console.log(_self.followUpContent)
             }
 
             this.$Get(url, config, success)
+        },
+        submit_discuss(){
+            let _self = this
+            _self.discussLoading = true
+            let url = 'api/task/addTaskDiscuss'
+
+            let config = {
+                taskId: _self.data.taskData[0].id,
+                content: _self.discuss.content,
+                evaluation: _self.discuss.rate*10,
+                creatorId: localStorage.getItem("id"),
+                creatorName: localStorage.getItem("realname")
+            }
+
+            function success(res){
+                _self.discussLoading = false
+
+                _self.get_detail(_self.data.taskData[0].id,)
+            }
+
+            function fail(err){
+                _self.discussLoading = false
+
+            }
+
+            this.$Post(url, config, success, fail)
         }
     },
     created() {

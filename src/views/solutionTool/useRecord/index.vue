@@ -33,7 +33,7 @@ export default {
             total: 0,
             loading: false,
             data: [],
-            headers: [
+            header: [
                 {
                     title: "公司名称",
                     key: "companyname",
@@ -46,7 +46,7 @@ export default {
                 },
                 {
                     title: "联系方式",
-                    key: "tel",
+                    key: "customertel",
                     minWidth: 120
                 },
                 {
@@ -55,8 +55,8 @@ export default {
                     minWidth: 150
                 },
                 {
-                    title: "归属市场",
-                    key: "followby",
+                    title: "创建人",
+                    key: "realname",
                     minWidth: 150
                 }
             ]

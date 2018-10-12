@@ -112,6 +112,7 @@
                     ref="selection"
                     highlight-row
                     size="small"
+                    :loading="loading"
                     @on-row-click="selectrow"
                     :columns="header"
                     :data="data"></Table>
@@ -135,6 +136,7 @@
     export default {
         data() {
             return {
+                loading: false,
                 search_model:"",
                 SearchValidate:{
                     CompanyName:'',
@@ -351,6 +353,7 @@
             },
             getData() {
                 let _self = this
+                _self.loading = true
                 let url = '/order/cycle/service/record/list?sortField=updatedate&service_type=dljz&page=' + _self.page + '&pageSize=' + _self.pageSize + '&service_status=arrears&followby_realname='+_self.SearchValidate.followby_realname + '&CompanyName=' + _self.SearchValidate.CompanyName +'&server_realname=' +_self.SearchValidate.server_realname + '&departname='+ _self.SearchValidate.departname  + '&begin_end_period=' + _self.SearchValidate.begin_end_period + "&end_end_period=" + _self.SearchValidate.end_end_period
 
                  function doSuccess(res) {
@@ -396,6 +399,7 @@
                             
                         })
                     }
+                    _self.loading = false
 
                     // let _url = '/order/cycle/month/service/item/details?monthServiceIds=' + _ids.join()
 

@@ -5,7 +5,7 @@
             title="任务详情"
             width="600"
             :scrollable="true"
-            class-name="vertical-center-modal"
+            class-name="vertical-right-modal"
         >
             <div style="min-height:90vh;width:550px">
                 <Row>
@@ -243,7 +243,7 @@ export default {
     top: 0px;
     
 } */
-.vertical-center-modal .ivu-modal{
+.vertical-right-modal .ivu-modal{
     top: 0;
     float: right;
 }

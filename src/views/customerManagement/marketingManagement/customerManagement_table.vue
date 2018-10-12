@@ -526,7 +526,7 @@ export default {
         { field: "NAME", title: "姓名" },
         { field: "companynames", title: "公司" },
         // {field:'TEL',title:'电话'},
-        { field: "customerType", title: "客户状态" },
+        { field: "customerType", title: "客户状态", format: "customerTypes" },
         { field: "customersource", title: "客户来源", format: "cluesources" },
         { field: "importlevel", title: "客户等级", format: "importlevel" },
         { field: "AREA", title: "地区", format: "area" },

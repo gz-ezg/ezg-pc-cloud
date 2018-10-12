@@ -26,7 +26,7 @@
                     <Col span="24">
                         <FormItem prop="type" label="投诉类型：">
                             <Select transfer v-model="add.type" placeholder="">
-                                <Option v-for="(item,index) in type" :key=index :value="item.typecode">{{item.typename}}</Option>
+                                <Option v-for="(item,index) in InnerComplaintType" :key=index :value="item.typecode">{{item.typename}}</Option>
                             </Select>
                         </FormItem>
                     </Col>
@@ -114,7 +114,8 @@ export default {
                 ],
             company_data:[],
             company_data_total:new Number(),
-            currentPage:new Number()
+            currentPage:new Number(),
+            InnerComplaintType: []
         }
     },
     methods:{
@@ -258,6 +259,16 @@ export default {
                 _self.add.NAME = a.NAME
                 _self.add.companyName = a.CompanyName
             },
+            get_data_center(){
+                let _self = this
+                let params = "InnerComplaintType"
+
+                function success(res){
+                    _self.InnerComplaintType = res.data.data.InnerComplaintType
+                }
+
+                this.$GetDataCenter(params, success)
+            }
     },
     created(){
         let _self = this
@@ -266,6 +277,7 @@ export default {
         // })
         _self.$bus.on('ADD_COMPLAINT',(e)=>{
             _self.add_complaint = true
+            _self.get_data_center()
         })
     }
 }

@@ -75,6 +75,7 @@
                     ref="selection"
                     highlight-row
                     size="small"
+                    :loading="loading"
                     @on-row-click="selectrow"
                     :columns="header"
                     :data="data"></Table>
@@ -98,6 +99,7 @@
     export default {
         data() {
             return {
+                loading:false,
                 search_model:"",
                 SearchValidate:{
                     CompanyName:'',
@@ -318,7 +320,7 @@
             getData() {
                 let _self = this
                 let url = '/order/cycle/service/record/list?sortField=updatedate&service_type=dljz&page=' + _self.page + '&pageSize=' + _self.pageSize + '&service_status=stop&followby_realname='+_self.SearchValidate.followby_realname + '&CompanyName=' + _self.SearchValidate.CompanyName +'&server_realname=' +_self.SearchValidate.server_realname +'&departname='+ _self.SearchValidate.departname  + '&begin_end_period=' + _self.SearchValidate.begin_end_period + "&end_end_period=" + _self.SearchValidate.end_end_period
-
+                _self.loading = true
                  function doSuccess(res) {
                     let _data = res.data.data
                     _self.pageTotal = _data.total
@@ -360,6 +362,7 @@
                             downline_period:_data.rows[i].downline_period                          
                         })
                     }
+                    _self.loading = false
                 }
 
                 this.GetData(url, doSuccess)

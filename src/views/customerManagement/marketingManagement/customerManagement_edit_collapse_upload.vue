@@ -14,20 +14,24 @@
                 columns1: [
                     {
                         title: '上传时间',
-                        key: 'createdate'
+                        key: 'createdate',
+                        minWidth: 180
                     },
                     {
                         title: '附件名称',
-                        key: 'attachmenttitle'
+                        key: 'attachmenttitle',
+                        minWidth: 150
                     },
                     {
                         title: '附件格式',
-                        key: 'extend'
+                        key: 'extend',
+                        minWidth: 120
                     },
-                    // {
-                    //     title: '备注',
-                    //     key: 'follow'
-                    // },
+                    {
+                        title: '备注',
+                        key: 'content',
+                        minWidth: 200
+                    },
                     {
                         title: '操作',
                         key: 'action',
@@ -177,6 +181,7 @@
                             _filesArray.extend = _filesRes[i].extend
                             _filesArray.id = _filesRes[i].id
                             _filesArray.realpath = _filesRes[i].realpath
+                            _filesArray.content = _filesRes[i].content
                             _self.data1.push(_filesArray)
                         }
                     })

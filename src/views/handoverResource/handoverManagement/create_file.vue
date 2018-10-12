@@ -7,7 +7,7 @@
         >
             <Row>
                 <Col span="16">
-                    <Form ref="formValidate" :model="formValidate" :label-width="120">
+                    <Form ref="formValidate" :model="formValidate" :label-width="120" :rules="formValidateRule">
                         <FormItem label="所属公司：" prop="companyId">
                             <Select v-model="formValidate.companyId" placeholder="输入公司名称搜索"
                                 filterable
@@ -28,9 +28,9 @@
                             <Input v-model="formValidate.customerName" placeholder="请输入客户名称" style="width:200px"></Input>
                         </FormItem>
                     </Form>
-                    <Row>
+                    <!-- <Row>
                         <Button @click="openAddFileItem = true" type="primary">新增文件项</Button>
-                    </Row>
+                    </Row> -->
                     <Row style="margin-top:20px">
                         <Table
                             ref="selection"
@@ -43,7 +43,7 @@
                     </Row>
                 </Col>
                 <Col span="8">
-                    <Form ref="fileItem" :model="fileItem" :label-width="120">
+                    <Form ref="fileItem" :model="fileItem" :label-width="120" :rules="fileItemRule">
                         <FormItem label="文件类型：" prop="customerFileTypeId">
                             <Select v-model="fileItem.customerFileTypeId" placeholder="选择文件类型" filterable @on-change="change">
                                 <Option  v-for="item in fileList" :value="item.id" :key="item.id">{{item.file_type_name}}</Option>
@@ -79,7 +79,7 @@
             </Row>
             <div slot="footer">
                 <Button type="primary" @click="create_type" :loading="loading">新增</Button>
-                <Button type="ghost" @click="reset_type" style="margin-left: 8px">重置</Button>
+                <!-- <Button type="ghost" @click="reset_type" style="margin-left: 8px">重置</Button> -->
             </div>
         </Modal>
         <Modal
@@ -98,6 +98,35 @@ export default {
     },
     data(){
         return{
+            //  校验规则：
+            formValidateRule: {
+                companyId: [
+                    { required: true, message: '必填项！', trigger: 'change', type: "number" }
+                ],
+                fileSource: [
+                    { required: true, message: '必填项！', trigger: 'change' }
+                ]
+            },
+            fileItemRule: {
+                customerFileName: [
+                    { required: true, message: '必填项！', trigger: 'change' }
+                ],
+                customerFileTypeId: [
+                    { required: true, message: '必填项！', trigger: 'change', type: "number" }
+                ],
+                saveDepartId:[
+                    { required: true, message: '必填项！', trigger: 'change', type: "number" }
+                ],
+                storage: [
+                    { required: true, message: '必填项！', trigger: 'change' }
+                ],
+                fileNum: [
+                    { required: true, message: '必填项！', trigger: 'change' }
+                ],
+                // storageCode: [
+                //     { required: true, message: '必填项！', trigger: 'change' }
+                // ],
+            },
             openAddFileItem: false,
             isCanInput: true,
             openResoureFile: false,
@@ -112,7 +141,7 @@ export default {
                 customerFileTypeId: "",
                 saveDepartId: "",
                 storage: "",
-                fileNum: 1,
+                fileNum: "1",
                 storageCode: "",
             },
             loading: false,
@@ -147,7 +176,11 @@ export default {
                 {
                     title: "保存位置",
                     key: "storage",
-                    minWidth: 150
+                    minWidth: 150,
+                    render: (h, params) => {
+                        return h('div',{
+                        }, this.customer_f_s_a_map.get(params.row.storage))
+                    }
                 },
                 {
                     title: "文件数量",
@@ -174,8 +207,9 @@ export default {
                     }
                 }
             ],
-            departAlias_map: new Map()
-            // customer_f_s_a_map: new Map()
+            departAlias_map: new Map(),
+            fileType_map: new Map(),
+            customer_f_s_a_map: new Map()
         }
     },
     computed:{
@@ -194,13 +228,15 @@ export default {
                 _self.loading = true
 
                 let config = {
-                    customerFileTypeId: _self.formValidate.customerFileTypeId,
-                    saveDepartId: _self.formValidate.saveDepartId,
-                    storage: _self.formValidate.storage,
+                    // customerFileTypeId: 7,
+                    // saveDepartId: 10059,
+                    // storage: "kf2",
                     companyId: _self.formValidate.companyId,
-                    fileNum: _self.formValidate.fileNum,
-                    storageCode: _self.formValidate.storageCode,
-                    customerFileName: _self.formValidate.customerFileName
+                    // fileNum: _self.formValidate.fileNum,
+                    fileSource: _self.formValidate.fileSource,
+                    // storageCode: _self.formValidate.storageCode,
+                    customerName: _self.formValidate.customerName,
+                    dataJson: JSON.stringify(_self.formValidate.dataJson)
                 }
 
                 function success(res){
@@ -223,7 +259,7 @@ export default {
             this.formValidate.storage = ""
             this.formValidate.companyId = ""
             this.formValidate.storageCode = ""
-            this.formValidate.fileNum = 1
+            this.formValidate.fileNum = "1"
             this.formValidate.customerFileName = ""
         },
         get_all_file_type(){
@@ -235,6 +271,12 @@ export default {
 
             function success(res){
                 _self.fileList = res.data.data
+                _self.fileType_map = new Map()
+                for(let i = 0;i<_self.fileList.length;i++){
+                    _self.fileType_map.set(_self.fileList[i].id.toString(),_self.fileList[i].file_type_name)
+                }
+
+                // console.log(_self.fileType_map)
             }
 
             this.$Get(url, config, success)
@@ -276,16 +318,18 @@ export default {
         //  判断是否可以输入数量
         change(e){
             let _self = this
-            _self.fileItem.customerFileName = e
-            // for(let i = 0; i<_self.fileList.length; i++){
-            //     if(_self.fileList[i].id == e){
-            //         if(_self.fileList[i].plural == "Y"){
-            //             _self.isCanInput = true
-            //         }else{
-            //             _self.isCanInput = false
-            //         }
-            //     }
-            // }
+            _self.fileItem.customerFileName = _self.fileType_map.get(e.toString())
+            for(let i = 0; i<_self.fileList.length; i++){
+                if(_self.fileList[i].id == e){
+                    if(_self.fileList[i].plural == "Y"){
+                        
+                        _self.isCanInput = true
+                    }else{
+                        _self.fileItem.fileNum = "1"
+                        _self.isCanInput = false
+                    }
+                }
+            }
         },
         get_center(){
             let _self = this
@@ -293,15 +337,25 @@ export default {
             function success(res){
                 _self.customer_f_s_a = res.data.data.customer_f_s_a
                 _self.customer_resource_from = res.data.data.customer_resource_from
-                // _self.customer_f_s_a_map = _self.$array2map(_self.customer_f_s_a)
+                _self.customer_f_s_a_map = _self.$array2map(_self.customer_f_s_a)
             }
             _self.$GetDataCenter(params, success)
         },
         add_file_item(){
             let _self = this
-            console.log(_self.fileItem)
-            this.fileItem.customerFileName = this.fileItem.customerFileTypeId
-            this.formValidate.dataJson.push(_self.fileItem)
+            // console.log(_self.fileItem)
+             this.$refs["fileItem"].validate((valid) => {
+                    if (valid) {
+                        let temp = JSON.stringify(_self.fileItem)
+                        let temp_acs = JSON.parse(temp)
+                        this.formValidate.dataJson.push(temp_acs)
+                        temp_acs = null
+                    } else {
+                        return ;
+                    }
+                })
+            // this.fileItem.customerFileName = this.fileItem.customerFileTypeId
+            
             
         }
     },
