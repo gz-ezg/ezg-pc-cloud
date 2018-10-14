@@ -73,7 +73,7 @@
                 </Col>
             </Row>
         </Card>
-        <!-- <create-task></create-task> -->
+        <create-task></create-task>
         <task-detail></task-detail>
     </div>
 </template>
@@ -86,7 +86,7 @@ import Datepicker from 'vuejs-datepicker';
 //  引入中文库
 import 'fullcalendar/dist/locale/zh-cn'
 
-import CreateTask from './create_task'
+import CreateTask from '../common/createTask'
 import TaskDetail from './detailTask'
 
 export default {
@@ -171,10 +171,15 @@ export default {
         //  右键点击触发
         dayRightClick(date, jsEvent, view){
             this.right_click_show = true
-            this.rightClickDate = DateFormat(date._d)
+            // this.rightClickDate = DateFormat(date._d)
+            this.rightClickDate = date._d
             this.rightTop = jsEvent.pageY
             this.rightLeft = jsEvent.pageX
             // console.log(date, jsEvent, view)
+        },
+        add_task(){
+            let _self = this
+            this.$bus.emit("SCHEDULE_CREATE_TASK", _self.rightClickDate)
         },
         //  关闭右键菜单
         close_right_menu(){
@@ -248,9 +253,7 @@ export default {
 
             this.$Post(url, config, success, fail)  
         },
-        add_task(){
-            
-        }
+        
     },
     created() {
         let _self = this
