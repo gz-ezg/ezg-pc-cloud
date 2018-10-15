@@ -155,45 +155,45 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    {
-        path: '/test',
-        icon: 'social-windows',
-        name: 'test',
-        title: 'Test',
-        component: Main,
-        children: [
-            {
-                path: 'test',
-                title: '测试页面',
-                name: 'test_index',
-                component: resolve => {
-                    require(['@/views/test/components/main.vue'], resolve);
-                    // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+    // {
+    //     path: '/test',
+    //     icon: 'social-windows',
+    //     name: 'test',
+    //     title: 'Test',
+    //     component: Main,
+    //     children: [
+    //         {
+    //             path: 'test',
+    //             title: '测试页面',
+    //             name: 'test_index',
+    //             component: resolve => {
+    //                 require(['@/views/test/components/main.vue'], resolve);
+    //                 // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-                }
-            },
-            {
-                path: 'test2',
-                title: '测试页面2',
-                name: 'test2_index',
-                component: resolve => {
-                    require(['@/views/test/components/test2.vue'], resolve);
-                    // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             path: 'test2',
+    //             title: '测试页面2',
+    //             name: 'test2_index',
+    //             component: resolve => {
+    //                 require(['@/views/test/components/test2.vue'], resolve);
+    //                 // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-                }
-            },
-            {
-                path: 'test3',
-                title: '测试页面3',
-                name: 'test3_index',
-                component: resolve => {
-                    require(['@/views/test/components/test3.vue'], resolve);
-                    // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             path: 'test3',
+    //             title: '测试页面3',
+    //             name: 'test3_index',
+    //             component: resolve => {
+    //                 require(['@/views/test/components/test3.vue'], resolve);
+    //                 // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-                }
-            }
-        ]
-    },
+    //             }
+    //         }
+    //     ]
+    // },
     // {
     //     path: '/allindex',
     //     icon: 'social-windows',
@@ -252,8 +252,8 @@ export const appRouter = [
     //     ]
     // },
     {
-        access: 6001,
-        meta: 6001,
+        access: 6200,
+        meta: 6200,
         path: '/missionCenter',
         icon: 'social-windows',
         name: 'missionCenter',
@@ -261,8 +261,8 @@ export const appRouter = [
         component: Main,
         children:[
             {
-                access: 6002,
-                meta: 6002,
+                access: 6201,
+                meta: 6201,
                 path: 'schedule',
                 title: '日程',
                 name: 'schedule_index',
@@ -271,8 +271,8 @@ export const appRouter = [
                 }
             },
             {
-                access: 6003,
-                meta: 6003,
+                access: 6202,
+                meta: 6202,
                 path: 'missionManagement',
                 title: '任务管理',
                 name: 'missionManagement_index',
@@ -893,8 +893,8 @@ export const appRouter = [
                 }
             },
             {
-                access: 6094,
-                meta: 6094,
+                access: 6095,
+                meta: 6095,
                 path: 'marketPerformance',
                 title: '市场绩效',
                 name:"marketPerformance_index",
@@ -903,8 +903,8 @@ export const appRouter = [
                 }
             },
             {
-                access: 6094,
-                meta: 6094,
+                access: 6096,
+                meta: 6096,
                 path: 'resumeManagement',
                 title: '简历管理',
                 name:"resumeManagement_index",
@@ -1058,8 +1058,8 @@ export const appRouter = [
         ]
     },
     {
-        access: 6027,
-        meta: 6027,
+        access: 6140,
+        meta: 6140,
         path: '/solutionTool',
         icon: 'social-windows',
         title: '方案工具',
@@ -1067,8 +1067,8 @@ export const appRouter = [
         component: Main,
         children: [
             {
-                access: 6089,
-                meta: 6089,
+                access: 6141,
+                meta: 6141,
                 path: 'useRecord', title: '使用记录', name: 'useRecord_index', component: resolve => {
                     require(['@/views/solutionTool/useRecord/index.vue'], resolve);
                 }

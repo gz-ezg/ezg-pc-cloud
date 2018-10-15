@@ -7,18 +7,20 @@
         </Row>
         <div>
             <Tabs value="6">
-                <TabPane label="全部任务" name="6">
-                    <all></all>
+                <TabPane label="全部任务" name="6" >
+                    <all :taskKind="taskKind" :taskStage="taskStage"></all>
                 </TabPane>
                 <TabPane label="重要且紧急" name="1">
+                    <important-and-primary :taskKind="taskKind" :taskStage="taskStage"></important-and-primary>
                 </TabPane>
-                <TabPane label="重要但不紧急" name="2">
+                <TabPane label="非常紧急" name="2">
+                    <primary :taskKind="taskKind" :taskStage="taskStage"></primary>
                 </TabPane>
-                <TabPane label="紧急但不重要" name="3">
+                <TabPane label="非常重要" name="3">
+                    <importance :taskKind="taskKind" :taskStage="taskStage"></importance>
                 </TabPane>
-                <TabPane label="不重要也不紧急" name="4">
-                </TabPane>
-                <TabPane label="本周任务" name="5">
+                <TabPane label="一般" name="4">
+                    <normal :taskKind="taskKind" :taskStage="taskStage"></normal>
                 </TabPane>
             </Tabs>
         </div>
@@ -153,12 +155,22 @@
 
 <script>
 import { FULLDateFormat } from '../../../libs/utils.js'
+
 import all from './typeOfMission/all'
+import importance from './typeOfMission/important'
+import importantAndPrimary from './typeOfMission/importantAndPrimary'
+import normal from './typeOfMission/normal'
+import primary from './typeOfMission/primary'
+
 import DetailTask from './taskComponents/detailTask';
 export default {
     name: "missionManagement_index",
     components: {
         all,
+        importance,
+        importantAndPrimary,
+        normal,
+        primary,
         DetailTask
     },
     data(){

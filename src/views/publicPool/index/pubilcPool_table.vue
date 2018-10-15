@@ -361,11 +361,29 @@ export default {
           sortable: "custom",
         },
         {
-          title: "微信绑定",
-          key: "isbound",
-          width: 130,
-        //   sortable: true,
+          title: "成交总额",
+          key: "total_money",
+          width: 120,
+          sortable: "custom"
         },
+        {
+          title: "线索权重",
+          key: "clue_ranks",
+          width: 120,
+          sortable: "custom"
+        },
+        {
+          title: "最后成交时间",
+          key: "lately_order_time",
+          width: 150,
+          sortable: "custom"
+        },
+        // {
+        //   title: "微信绑定",
+        //   key: "isbound",
+        //   width: 130,
+        // //   sortable: true,
+        // },
         {
           title: "操作",
           key: 'action',
@@ -411,7 +429,7 @@ export default {
       impLevel_map: new Array(),
       sf_yn_map: new Map(),
       // 排序方式
-      sortName:'updatedate',
+      sortName:'clue_ranks',
       order:'desc'
     };
   },
@@ -435,7 +453,7 @@ export default {
         }
         if(e.order == 'normal'){
             this.order = ""
-            this.sortName = "updatedate"
+            this.sortName = "clue_ranks"
         }else{
             this.order = e.order
         }
@@ -550,7 +568,9 @@ export default {
 
           a.importLevelText = _self.impLevel_map[a.importLevel]
 
-
+          a.total_money = response[i].total_money
+          a.clue_ranks = response[i].clue_ranks
+          a.total_money = response[i].total_money
           a.area = response[i].AREA;
           a.areaText = _self.area_map.get(a.area);
           

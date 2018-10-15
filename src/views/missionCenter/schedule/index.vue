@@ -262,6 +262,10 @@ export default {
         // this.local_date = (new Date()).toLocaleDateString().replace(new RegExp("/",'g'),"-")
         this.local_date = DateFormat(new Date())
         this.get_onedate_data(DateFormat(new Date()))
+        _self.$bus.on("UPDATE_TASK_LIST_DEMO", (e)=>{
+            _self.get_data()
+            _self.get_onedate_data(DateFormat(new Date()))
+        })
     },
     //  @event-selected 点击事件触发
     //  @day-click  点击日期触发

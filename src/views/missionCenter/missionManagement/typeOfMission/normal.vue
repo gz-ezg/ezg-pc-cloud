@@ -193,6 +193,7 @@ export default {
                 page: _self.page,
                 pageSize: _self.pageSize,
                 sortField: "plan_date",
+                task_level: "normal",
                 task_stage: _self.seacrhFormInline.task_stage,
                 task_kind: _self.seacrhFormInline.task_kind,
                 executor_name: _self.seacrhFormInline.executor_name,
