@@ -892,16 +892,16 @@ export const appRouter = [
                     require(['@/views/administrationManagement/clockin/index.vue'], resolve);
                 }
             },
-            {
-                access: 6095,
-                meta: 6095,
-                path: 'marketPerformance',
-                title: '市场绩效',
-                name:"marketPerformance_index",
-                component: resolve => {
-                    require(['@/views/administrationManagement/marketPerformance/index.vue'], resolve);
-                }
-            },
+            // {
+            //     access: 6095,
+            //     meta: 6095,
+            //     path: 'marketPerformance',
+            //     title: '市场绩效',
+            //     name:"marketPerformance_index",
+            //     component: resolve => {
+            //         require(['@/views/administrationManagement/marketPerformance/index.vue'], resolve);
+            //     }
+            // },
             {
                 access: 6096,
                 meta: 6096,

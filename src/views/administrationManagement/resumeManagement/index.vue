@@ -20,23 +20,28 @@
                                     </FormItem>
                                 </Col>
                                 <Col span="8">
-                                    <FormItem prop="age" label="年龄：">
-                                        <Input type="text" size="small" v-model="seacrhFormInline.age" placeholder=""/>
-                                      
+                                    <FormItem prop="tel" label="电话：">
+                                        <Input type="text" size="small" v-model="seacrhFormInline.tel" placeholder=""/>
                                     </FormItem>
                                 </Col>
                                 <Col span="8">
                                     <FormItem prop="post" label="岗位：">
                                         <Input type="text" size="small" v-model="seacrhFormInline.post" placeholder=""/>
-                                      
                                     </FormItem>
                                 </Col>
                             </Row>
                             <Row :gutter="16">
                                 <Col span="8">
                                     <FormItem prop="sex" label="性别：">
-                                        <Input type="text" size="small" v-model="seacrhFormInline.sex" placeholder=""/>
-                                        
+                                        <Select type="text" size="small" v-model="seacrhFormInline.sex" placeholder="">
+                                            <Option value="0">男</Option>
+                                            <Option value="1">女</Option>
+                                        </Select>
+                                    </FormItem>
+                                </Col>
+                                <Col span="8">
+                                    <FormItem prop="createdate" label="创建时间：">
+                                        <DatePicker type="daterange" size="small" v-model="seacrhFormInline.createdate" placeholder="" style="width:100%"/>
                                     </FormItem>
                                 </Col>
                             </Row>
@@ -85,6 +90,9 @@
 <script>
 import createTemplate from './create'
 import updateTemplate from './update'
+
+import { DateFormat }from '../../../libs/utils.js'
+
 export default {
     components:{
         createTemplate,
@@ -105,10 +113,12 @@ export default {
             openDetail:false,
             seacrhFormInline: {
                 name: "",
-                age: "",
+                // age: "",
                 sex: "",
-                city: "",
-                tel:""
+                // city: "",
+                tel:"",
+                createdate: [],
+                post: ""
             },
             page: 1,
             pageSize: 10,
@@ -129,23 +139,50 @@ export default {
                 {
                     title: "性别",
                     key: "sex",
-                    minWidth: 50
+                    minWidth: 50,
+                    render: (h, params) => {
+                        let sexname = ""
+                        if(params.row.sex == 0){
+                            sexname = "男"
+                        }else{
+                            sexname = "女"
+                        }
+                        return h('div',{},sexname)
+                    }
                 },
                 {
                     title: "年龄",
                     key: "age",
-                    minWidth: 50
+                    minWidth: 80,
                 },
                 {
                     title: "城市",
                     key: "city",
-                    minWidth: 120
+                    minWidth: 80
+                },
+                {
+                    title: "岗位",
+                    key: "post",
+                    minWidth:120
+                },
+                {
+                    title: "创建时间",
+                    key: "createdate",
+                    minWidth:120,
+                    render: (h, params) => {
+                        let temp = params.row.createdate
+                        if(temp){
+                            temp = temp.slice(0,10)
+                        }
+                        return h('div',{},temp)
+                    }
                 },
                 {
                     title: "备注",
                     key: "memo",
                     minWidth: 150
-                },{
+                },
+                {
                     title:"操作",
                     width: 100,
                     align: 'center',
@@ -161,7 +198,7 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            console.log(params)
+                                            // console.log(params)
                                             let url = `api/system/resource/download?id=` + params.row.id
                                             window.open(url)
                                         }
@@ -174,7 +211,7 @@ export default {
         }
     },
     methods:{
-         save_current_row(e){
+        save_current_row(e){
             this.current_row = e
         },
          create_template(){
@@ -228,12 +265,14 @@ export default {
                     page: _self.page,
                     pageSize: _self.pageSize,
                     sortField: "id",
+                    post: this.seacrhFormInline.post,
                     name: this.seacrhFormInline.name,
-                    age: this.seacrhFormInline.age,
+                    // age: this.seacrhFormInline.age,
                     sex: this.seacrhFormInline.sex,
-                    city: this.seacrhFormInline.city,
-                    tel:this.seacrhFormInline.tel   
-
+                    // city: this.seacrhFormInline.city,
+                    tel:this.seacrhFormInline.tel,
+                    bcreatedate: DateFormat(this.seacrhFormInline.createdate[0]),
+                    ecreatedate: DateFormat(this.seacrhFormInline.createdate[1]) 
                 }
                 
             }
@@ -258,10 +297,12 @@ export default {
              
         },
         reset(){
-            this.seacrhFormInline.name = ""
-            this.seacrhFormInline.age = ""
-            this.seacrhFormInline.sex = ""
-            this.seacrhFormInline.city = ""
+            // this.seacrhFormInline.name = ""
+            // this.seacrhFormInline.age = ""
+            // this.seacrhFormInline.sex = ""
+            // this.seacrhFormInline.city = ""
+            // this.seacrhFormInline.createdate = []
+            this.$refs["seacrhFormInline"].resetFields()
             this.get_data()
         },
     } ,

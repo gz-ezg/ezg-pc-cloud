@@ -32,8 +32,8 @@
                             <Row :gutter="16">
                                 <Col span="8">
                                     <FormItem prop="plan_date" label="计划时间">
-                                        <Input type="text" size="small" v-model="seacrhFormInline.plan_date" placeholder="">
-                                        </Input>
+                                        <DatePicker type="daterange" size="small" v-model="seacrhFormInline.plan_date" placeholder="" style="width:100%">
+                                        </DatePicker>
                                     </FormItem>
                                 </Col>
                             </Row>
@@ -156,8 +156,14 @@ export default {
                             h("Button",{
                                 props: {
                                     type: 'text',
-                                    size: 'small'
+                                    size: 'small',
                                 },
+                                directives: [
+                                    {
+                                        name: "permission",
+                                        value: "mission.delete"
+                                    }
+                                ],
                                 on: {
                                     click: () => {
                                         this.delete_task(parmas.row.id)
@@ -190,15 +196,17 @@ export default {
             let url = 'api/task/list'
             _self.loading = true
             let config = {
-                page: _self.page,
-                pageSize: _self.pageSize,
-                sortField: "plan_date",
-                task_level: "both",
-                task_stage: _self.seacrhFormInline.task_stage,
-                task_kind: _self.seacrhFormInline.task_kind,
-                executor_name: _self.seacrhFormInline.executor_name,
-                bplan_date: DateFormat(_self.seacrhFormInline.plan_date[0]),
-                eplan_date: DateFormat(_self.seacrhFormInline.plan_date[1]),
+                params: {
+                    page: _self.page,
+                    pageSize: _self.pageSize,
+                    sortField: "plan_date",
+                    task_level: "both",
+                    task_stage: _self.seacrhFormInline.task_stage,
+                    task_kind: _self.seacrhFormInline.task_kind,
+                    executor_name: _self.seacrhFormInline.executor_name,
+                    bplan_date: DateFormat(_self.seacrhFormInline.plan_date[0]),
+                    eplan_date: DateFormat(_self.seacrhFormInline.plan_date[1]),
+                }
             }
 
             function success(res){
@@ -212,7 +220,7 @@ export default {
 
             }
 
-            this.$Post(url, config, success, fail)
+            this.$Get(url, config, success, fail)
         },
         search(){
             this.get_data()

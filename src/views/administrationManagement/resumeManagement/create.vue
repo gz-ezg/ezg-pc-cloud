@@ -27,7 +27,7 @@
                     <Input v-model="resumeTemplate.post" placeholder=""></Input>
                 </FormItem>
                 <FormItem label="电话" prop="tel">
-                    <Input v-model="resumeTemplate.tel" placeholder=""></Input>
+                    <Input v-model="resumeTemplate.tel" placeholder="" number></Input>
                 </FormItem>
                 <FormItem label="城市" prop="city">
                     <Input v-model="resumeTemplate.city" placeholder=""></Input>
@@ -51,7 +51,7 @@
             </Row>
             </Form>
             <div slot="footer">
-                <Button type="primary" @click="create_templ" :loading="loading">新增</Button>
+                <Button type="primary" @click="valid_create" :loading="loading">新增</Button>
             </div>
         </Modal>
     </div>
@@ -68,21 +68,24 @@ export default {
             resumeTemplate: {
                 name: "",
                 age: "",
-                sex: "",
+                sex: "0",
                 post: "",
                 memo: "",
                 tel: "",
-                city: ""
+                city: "广州"
             },
             create_rule:{
                 name:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
-                post:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }]
+                post:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
+                sex:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
+                tel:[{ required: true, message: '必选项！', trigger: 'change', type:'number' }]
             },
         }
     },
     methods:{
-         cancel(){
+        cancel(){
             this.file = []
+            // this.refs["resumeTemplate"].resetFields()
         },
         fileRemove(e) {
             this.file.splice(this.file.indexOf(e), 1);
@@ -91,6 +94,15 @@ export default {
             this.file.push(file)
             return false;
         },
+        valid_create(){
+            let _self = this
+            this.$refs["resumeTemplate"].validate((valid) => {
+                if (valid) {
+                    _self.create_templ()
+                } else {
+                }
+            })
+        },
         create_templ(){
             let _self = this
             _self.loading = true
@@ -98,6 +110,7 @@ export default {
             var formdata = new FormData()
             if(_self.file[0] == null){
                    _self.$Message.error("请选择文件")
+                   _self.loading = false
                 return;
             }
               
@@ -126,8 +139,6 @@ export default {
                     _self.$Message.error(res.data.msg)
                     _self.loading = false                    
                 }
-
-               
             }).catch(function(err){
                 _self.$Message.error(err)
                  _self.loading = false                    

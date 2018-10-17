@@ -36,7 +36,7 @@
                         :events="events" 
                         :config="config" 
                         @event-selected="eventSelected"
-                        :defaultView="defaultView"
+                        :defaultView="defaultView"  
                         :editable="false"
                         @day-click="dayClick"
                         @day-right-click="dayRightClick"
@@ -60,7 +60,7 @@
                     <Row>
                         <Row style="margin-bottom:10px"><h3>{{local_date}}</h3></Row>
                         <Row>
-                            <Scroll height="300">
+                            <Scroll height="520">
                                 <Timeline>
                                     <TimelineItem v-for="item in oneData" :key="item.id">
                                         <p class="time">{{item.plan_date.slice(10)}}</p>
@@ -123,6 +123,11 @@ export default {
             events_temp: [],
             //  默认显示月
             defaultView:"month",
+            // defaultView:{
+            //     month: {
+            //         eventLimit: 6 // adjust to 6 only for agendaWeek/agendaDay
+            //     }
+            // },
             hover_local: "",
             oneData: [],
             rightClickDate: ""
@@ -146,7 +151,8 @@ export default {
             //  可以在此处新增日程
             let _self = this
             this.date = date._d
-            this.get_onedate_data(this.date)
+            let dateTemp = DateFormat(date)
+            this.get_onedate_data(dateTemp)
         },
         next() {
             //  通过这个函数调用calendar中的方法，
@@ -155,8 +161,9 @@ export default {
         },
         change_date(e){
             let date = DateFormat(e)
+            // console.log(date)
             // this.local_date = e.toLocaleDateString().replace(new RegExp("/",'g'),"-")
-            this.local_date = date
+            
 
             // console.log(e.toLocaleDateString().replace(new RegExp("/",'g'),"-"))
 
@@ -209,9 +216,11 @@ export default {
             let _self = this
             let url = 'api/task/list'
             let config = {
-                page: 1,
-                pageSize: 1000,
-                day: ""
+                params:{
+                    page: 1,
+                    pageSize: 1000,
+                    day: ""
+                }
             }
 
             function success(res){
@@ -227,15 +236,20 @@ export default {
             function fail(err){
             }
 
-            this.$Post(url, config, success, fail)
+            this.$Get(url, config, success, fail)
         },
         get_onedate_data(e){
             let _self = this
+            // console.log(e)
+            this.local_date = e
             let url = 'api/task/list'
             let config = {
-                page: 1,
-                pageSize: 1000,
-                day: e
+                params:{
+                    page: 1,
+                    pageSize: 1000,
+                    day: e,
+                    sortField: "plan_date"
+                }
             }
 
             function success(res){
@@ -251,7 +265,7 @@ export default {
             function fail(err){
             }
 
-            this.$Post(url, config, success, fail)  
+            this.$Get(url, config, success, fail)  
         },
         
     },

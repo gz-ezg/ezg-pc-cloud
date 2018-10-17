@@ -235,8 +235,12 @@
             }
         },
         created(){
+            let _self = this
             Bus.$on('upload_file',(e)=>{
                 // this.getFileList()
+            })
+            Bus.$on("add_follow_up_data_to_edit", (e)=>{
+                _self.getFileList()
             })
         },
         mounted () {

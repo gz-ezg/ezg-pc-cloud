@@ -917,7 +917,7 @@
                     {
                         title: '订单号码',
                         key: 'ordercode',
-                        width: 140,
+                        minWidth: 140,
                         // sortable: true                                                
                     },
                     {
@@ -955,24 +955,24 @@
                             }
                         },
                         ellipsis: true,
-                        width: 300,
+                        minWidth: 300,
                         // sortable: true                                                
                     },
                     {
                         title: '客户名称',
                         key: 'name',
-                        width: 120,
+                        minWidth: 120,
                         // sortable: true                                                
                     },
                     {
                         title: '客户电话',
                         key: 'tel',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '产品名称',
                         key: 'productname',
-                        width: 180,
+                        minWidth: 180,
                         render:(h, params) => {
                             // console.log(params)
                             if(params.row.productname == ''||params.row.productname == null){
@@ -1006,37 +1006,37 @@
                     {
                         title: '流程状态',
                         key: 'ProcessType',
-                        width: 120,
+                        minWidth: 120,
                         // sortable: true                                                
                     },
                     {
                         title: '缴费渠道',
                         key: 'base_paydir',
-                        width: 120,
+                        minWidth: 120,
                         // sortable: true                                                
                     },
                     {
                         title: '订单价格',
                         key: 'paynumber',
-                        width: 120,
+                        minWidth: 120,
                         // sortable: true                                                
                     },
                     {
                         title: '已付款',
                         key: 'realnumber',
-                        width: 100,
+                        minWidth: 100,
                         // sortable: true                                                
                     },
                     {
                         title: '创建时间',
                         key: 'base_createdate',
-                        width: 120,
+                        minWidth: 120,
                         // sortable: true                                                
                     },
                     {
                         title: '缴费日期',
                         key:'payTime',
-                        width: 120
+                        minWidth: 120
                     },
                     // {
                     //     title: '订单状态',
@@ -1047,47 +1047,76 @@
                     {
                         title: '余款',
                         key: 'neednumber',
-                        width: 100,
+                        minWidth: 100,
                         // sortable: true                                                
                     },
                     {
                         title: '客户来源',
                         key: 'customersource',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '创建人',
                         key: 'crealname',
-                        width: 100
+                        minWidth: 100
                     },
                     {
                         title: '跟进人',
                         key: 'frealname',
-                        width: 100
+                        minWidth: 100
                     },
                     {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        width: 80,
+                        minWidth: 120,
                         render: (h, params) => {
                             if(params.index != this.pageSize){
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'warning',
-                                        size: 'small',
-                                        permission: "['orderL.record']"
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.cksp(params)
+                                return h('div', [
+                                    h('Button', {
+                                        props: {
+                                            type: 'warning',
+                                            size: 'small',
+                                            permission: "['orderL.record']"
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.cksp(params)
+                                            }
                                         }
-                                    }
-                                }, '审批记录')
-                            ]);
+                                    }, '审批记录'),
+                                ]);
                             }
                         }
+                    },
+                    {
+                        title: '撤回',
+                        key: 'action',
+                        minWidth: 120,
+                        render: (h, params)=>{
+                            if(params.index != this.pageSize){
+                                return h("Button",{
+                                        props: {
+                                            type: 'error',
+                                            size: 'small',
+                                        },
+                                        directives: [
+                                            {
+                                                name: "permission",
+                                                value: "orderL.cancelOrder"
+                                            }
+                                        ],
+                                        style:{
+                                            marginLeft: "10px"
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.order_cancelOrder(params)
+                                            }
+                                        }
+                                    },"订单撤回")
+                                }
+                            }
                     }
                 ],
                 productColumns: [
@@ -3807,6 +3836,24 @@
 
                 this.GetData(url, doSuccess)
             },
+            order_cancelOrder(params){
+                let _self = this
+
+                console.log(params)
+                let url = `api/order/cancelOrder`
+
+                let config = {
+                    params: {
+                        orderId: params.row.id
+                    }
+                }
+
+                function success(res){
+
+                }
+
+                this.$Get(url, config, success)
+            },
 
             typeGroupId() {
                 let _self = this
@@ -3975,6 +4022,11 @@
                 _self.isAdmin = true
             }else{
                 _self.isAdmin = false
+            }
+            if(localStorage.getItem("Main_Role") == "other"){
+                
+            }else{
+                _self.columns2.splice(-1)
             }
         },
         watch:{

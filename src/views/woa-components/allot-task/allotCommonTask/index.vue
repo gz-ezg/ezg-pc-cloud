@@ -38,7 +38,7 @@
                     </Row>
                     <Row>
                         <ButtonGroup>
-                            <Button type="primary" icon="ios-color-wand-outline" @click="Distribution_task">一键分配</Button>
+                            <Button type="primary" icon="ios-color-wand-outline" @click="Distribution_task" v-permission="['workorder.allot']">一键分配</Button>
                         </ButtonGroup>
                     </Row>
                     <Row style="margin-top: 10px;">

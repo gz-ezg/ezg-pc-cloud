@@ -571,6 +571,12 @@ export default {
           a.total_money = response[i].total_money
           a.clue_ranks = response[i].clue_ranks
           a.total_money = response[i].total_money
+          if (response[i].lately_order_time == null) {
+            a.lately_order_time = null;
+          } else {
+            a.lately_order_time = response[i].lately_order_time.slice(0,10)
+          }
+          // a.lately_order_time = response[i].lately_order_time
           a.area = response[i].AREA;
           a.areaText = _self.area_map.get(a.area);
           

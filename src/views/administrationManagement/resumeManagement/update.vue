@@ -9,6 +9,7 @@
                 ref="resumeTemplate"
                 :model="resumeTemplate"
                 :label-width="120"
+                :rules="create_rule"
             >
                 
                 <FormItem label="姓名" prop="name">
@@ -27,7 +28,7 @@
                     <Input v-model="resumeTemplate.post" placeholder=""></Input>
                 </FormItem>
                 <FormItem label="电话" prop="tel">
-                    <Input v-model="resumeTemplate.tel" placeholder=""></Input>
+                    <Input v-model="resumeTemplate.tel" placeholder="" number></Input>
                 </FormItem>
                 <FormItem label="城市" prop="city">
                     <Input v-model="resumeTemplate.city" placeholder=""></Input>
@@ -58,10 +59,25 @@ export default {
                 memo: "",
                 tel: "",
                 city: ""
-            }
+            },
+            create_rule:{
+                name:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
+                post:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
+                sex:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
+                tel:[{ required: true, message: '必选项！', trigger: 'change', type:'number' }]
+            },
         }
     },
     methods:{
+        valid_create(){
+            let _self = this
+            this.$refs["resumeTemplate"].validate((valid) => {
+                if (valid) {
+                    _self.update_templ()
+                } else {
+                }
+            })
+        },
         update_templ(){
             let _self = this
             _self.loading = true
@@ -102,7 +118,7 @@ export default {
             _self.resumeTemplate.sex = e.sex.toString();
             _self.resumeTemplate.post = e.post;
             _self.resumeTemplate.memo = e.memo;
-            _self.resumeTemplate.tel = e.tel;
+            _self.resumeTemplate.tel = parseInt(e.tel);
             _self.resumeTemplate.city = e.city;
             _self.openUpdateTemplate = true
         })

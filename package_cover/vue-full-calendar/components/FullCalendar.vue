@@ -52,7 +52,7 @@
 
             defaultView: {
                 default() {
-                    return 'agendaWeek'
+                    return "month"
                 },
             },
 
@@ -74,12 +74,14 @@
             defaultConfig() {
                 const self = this
                 return {
+                    eventLimit: true,
                     header: this.header,
                     defaultView: this.defaultView,
                     editable: this.editable,
                     selectable: this.selectable,
                     selectHelper: this.selectHelper,
-                    aspectRatio: 2,
+                    //  调整宽高比
+                    aspectRatio: 1.2,
                     timeFormat: 'HH:mm',
                     events: this.events,
                     eventSources: this.eventSources,
@@ -176,7 +178,8 @@
                     $(this.$el).fullCalendar('addEventSource', event)
                 })
             })
-
+            // console.log(defaultsDeep(this.config, this.defaultConfig))
+            // 日程表初始化，所有加载项均在其中，具体参考fullcalendar文档
             cal.fullCalendar(defaultsDeep(this.config, this.defaultConfig))
         },
 

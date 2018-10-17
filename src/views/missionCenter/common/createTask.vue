@@ -24,6 +24,7 @@
                         v-model="newMission.executorId"
                         placeholder="执行者" 
                         filterable
+                        multiple
                         remote
                         :remote-method="get_user"
                         :loading="userLoading"
@@ -143,17 +144,14 @@ export default {
                 followResult: "",
                 followUpType: "",
                 companyId: "",
-                executorId: localStorage.getItem("id")
+                executorId: []
             },
             createLoading: false,
             openAddMission: false,
             companyLoading: false,
             companyList: [],
             userList: [
-                {
-                    id: localStorage.getItem("id"),
-                    realname: localStorage.getItem("realname")
-                }
+                
             ],
             allUserList: [],
             allUserList_map: new Map(),
@@ -178,11 +176,16 @@ export default {
             let _self = this
             _self.createLoading = true
             let url = `api/task/addTask`
+            let executorNameArray = []
+            for(let i = 0; i < _self.newMission.executorId.length; i++){
+                executorNameArray.push(_self.allUserList_map.get(_self.newMission.executorId[i].toString()))
+            }
             let config = {
                 taskName: _self.newMission.taskName,
                 companyId: _self.newMission.companyId,
-                executorId: _self.newMission.executorId,
-                executorName: _self.allUserList_map.get(_self.newMission.executorId.toString()),
+                executorId: _self.newMission.executorId.join(","),
+                // executorName: _self.allUserList_map.get(_self.newMission.executorId.toString()),
+                executorName: executorNameArray.join(","),
                 taskContent: _self.newMission.taskContent,
                 taskLevel: _self.newMission.taskLevel,
                 // specificDate: FULLDateFormat(_self.newMission.specificDate),
@@ -202,7 +205,7 @@ export default {
                 // followUpTypeName: _self.markert_follow_up_type_map.get(_self.newMission.followUpType),
             }
             
-            console.log(config)
+            // console.log(config)
             function success(res){
                 _self.createLoading = false
                 _self.openAddMission = false

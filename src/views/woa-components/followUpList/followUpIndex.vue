@@ -430,6 +430,7 @@ export default {
         let _self = this
         this.getRole()
         this.GetFollowUpType()
+        this.$bus.off("global_follow_up_list",true)
         this.$bus.on("global_follow_up_list",(e)=>{
             //  接受方式，公司id，公司名，客户名，客户id
             _self.companyid = e[0]
@@ -439,8 +440,9 @@ export default {
             _self.companyInfo.id = e[0]
             _self.companyInfo.customerid = e[3]
             _self.getData()
-            console.log(e)
+            // console.log(e)
         })
+        
     }
 }
 </script>

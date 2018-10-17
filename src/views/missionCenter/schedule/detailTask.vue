@@ -12,9 +12,9 @@
                     <Col span="16">
                         <Input type="text" v-model="data.taskData[0].task_name" style="width:100%" readonly/>
                     </Col>
-                    <Col span="6" push="2">
+                    <!-- <Col span="6" push="2">
                         <Button type="error" @click="delete_task">删除任务</Button>
-                    </Col>
+                    </Col> -->
                 </Row>
                 <Row style="margin-top:20px">
                     <Row :gutter="20" style="margin-top:20px">
@@ -22,7 +22,7 @@
                             <span style="line-height:24px">任务对象</span>
                         </Col>
                         <Col span="20">
-                            <span style="line-height:24px">{{data.taskData[0].company_name}}
+                            <span style="line-height:24px">{{data.taskData[0].companyname}}
                             </span>
                         </Col>
                     </Row>
@@ -47,10 +47,18 @@
                     </Row>
                     <Row :gutter="20" style="margin-top:20px">
                         <Col span="4">
+                            <span style="line-height:24px">任务类型</span>
+                        </Col>
+                        <Col span="20">
+                            <span style="line-height:24px">{{data.taskData[0].task_kind_name}}</span>
+                        </Col>
+                    </Row>
+                    <Row :gutter="20" style="margin-top:20px">
+                        <Col span="4">
                             <span style="line-height:24px">开始时间</span>
                         </Col>
                         <Col span="20">
-                            <DatePicker v-model="data.taskData[0].expect_start_date" size="small" style="width:180px" type="datetime" disabled>
+                            <DatePicker v-model="data.taskData[0].expect_start_date" size="small" style="width:180px" type="datetime" readonly>
                             </DatePicker>
                         </Col>
                     </Row>
@@ -59,7 +67,7 @@
                             <span style="line-height:24px">提醒时间</span>
                         </Col>
                         <Col span="20">
-                            <DatePicker v-model="data.taskData[0].plan_date" size="small" style="width:180px" type="datetime" disabled>
+                            <DatePicker v-model="data.taskData[0].plan_date" size="small" style="width:180px" type="datetime" readonly>
                             </DatePicker>
                         </Col>
                     </Row>
@@ -92,7 +100,7 @@
                         </Col>
                     </Row>
                     <Row style="margin-top:40px">
-                        <Button @click="update_task" type="primary" style="margin-left:40px" :disabled="openSubmit" :loading="loading">修改</Button>
+                        <Button @click="before_update_task" type="primary" style="margin-left:40px" :disabled="openSubmit" :loading="loading">修改</Button>
                     </Row>
                 </Row>
                 <Row style="margin-top:20px">
@@ -150,13 +158,20 @@
             </div>
             <div slot="footer"></div>
         </Modal>
+        <follow-up-list></follow-up-list>
     </div>
 </template>
 
 <script>
+import followUpList from '../common/createFollowUp'
+
 export default {
+    components:{
+        followUpList
+    },
     data(){
         return{
+            id: "",
             discussLoading: false,
             discuss:{
                 rate: 5,
@@ -165,7 +180,7 @@ export default {
             loading: false,
             openTaskDetail: false,
             data:{
-                taskData:[
+                taskData: [
                     {
                         task_name: "",
                         id: "",
@@ -177,7 +192,8 @@ export default {
                         company_id: ""
                     }
                 ],
-                log:[]
+                log: [],
+                discuss: [],
             },
             taskStage: [],
             taskLevel: [],
@@ -215,8 +231,26 @@ export default {
 
             function success(res){
                 _self.data = res.data.data
-                if(res.data.data.taskData[0].company_id){
+                // console.log(res.data.data.taskData[0])
+                if(res.data.data.taskData[0]){
                     _self.get_last_follow_up_content(res.data.data.taskData[0].company_id)
+                }else{
+                    _self.data = {
+                        taskData: [
+                            {
+                                task_name: "",
+                                id: "",
+                                expect_start_date: "",
+                                task_stage: "",
+                                plan_date: "",
+                                company_name: "",
+                                task_content: "",
+                                company_id: ""
+                            }
+                        ],
+                        log: [],
+                        discuss: [],
+                    }
                 }
                 
             }
@@ -260,12 +294,25 @@ export default {
             }
             this.$GetDataCenter(params, success)
         },
+        before_update_task(){
+            let _self = this
+            if(_self.data.taskData[0].task_kind == "tkFollow" && _self.data.taskData[0].task_stage == "tesFinished"){
+                _self.$bus.emit("OPEN_SCHEDULE_FOLLOWUP",{
+                    companyname: _self.data.taskData[0].companyname,
+                    NAME: _self.data.taskData[0].custName,
+                    company_id: _self.data.taskData[0].company_id,
+                    custId: _self.data.taskData[0].custId,
+                })
+            }else{
+                this.update_task()
+            }
+        },
         update_task(){
             //  编辑任务，有点混乱，待理清
             let _self = this
             let url = `api/task/updateTaskStage`
             let fromdata = new FormData()
-            fromdata.append("taskId", _self.data.taskData[0].id)
+            fromdata.append("taskId", _self.id)
             fromdata.append("taskStage", _self.data.taskData[0].task_stage)
             fromdata.append("changeReason", _self.task_memo)
 
@@ -277,10 +324,11 @@ export default {
             console.log(config)
             function success(res){
                 _self.update_content()
+                _self.task_memo = ""
             }
 
             function fail(err){
-                _self.openTaskDetail = false
+                console.log(err)
             }
 
             this.$Post(url, fromdata, success, fail)
@@ -290,7 +338,7 @@ export default {
             let url = `api/task/addTaskDiscuss`
 
             let config = {
-                taskId: _self.data.taskData[0].id,
+                taskId: _self.id,
                 content: _self.task_memo,
                 creatorId: localStorage.getItem("id"),
                 creatorName: localStorage.getItem("realname")
@@ -298,21 +346,22 @@ export default {
 
             function success(res){
                 _self.loading = false
-                _self.openTaskDetail = false
-                _self.data = {
-                    taskData:[
-                        {
-                            task_name: "",
-                            id: "",
-                            expect_start_date: "",
-                            task_stage: "",
-                            plan_date: "",
-                            company_name: "",
-                            task_content: ""
-                        }
-                    ],
-                    log:[]
-                }
+                // _self.openTaskDetail = false
+                _self.get_detail(_self.id)
+                // _self.data = {
+                //     taskData:[
+                //         {
+                //             task_name: "",
+                //             id: "",
+                //             expect_start_date: "",
+                //             task_stage: "",
+                //             plan_date: "",
+                //             company_name: "",
+                //             task_content: ""
+                //         }
+                //     ],
+                //     log:[]
+                // }
             }
 
             function fail(err){
@@ -346,7 +395,7 @@ export default {
             let url = 'api/task/addTaskDiscuss'
 
             let config = {
-                taskId: _self.data.taskData[0].id,
+                taskId: _self.id,
                 content: _self.discuss.content,
                 evaluation: _self.discuss.rate*10,
                 creatorId: localStorage.getItem("id"),
@@ -356,7 +405,7 @@ export default {
             function success(res){
                 _self.discussLoading = false
 
-                _self.get_detail(_self.data.taskData[0].id,)
+                _self.get_detail(_self.id)
             }
 
             function fail(err){
@@ -369,26 +418,17 @@ export default {
     },
     created() {
         let _self = this
+        this.$bus.off("OPEN_SEHEDULE_DETAIL",true)
         this.$bus.on("OPEN_SEHEDULE_DETAIL",(e)=>{
-            _self.data = {
-                    taskData:[
-                        {
-                            task_name: "",
-                            id: "",
-                            expect_start_date: "",
-                            task_stage: "",
-                            plan_date: "",
-                            company_name: "",
-                            task_content: ""
-                        }
-                    ],
-                    log:[]
-                }
-            // console.log(e)
             _self.get_data_center()
+            _self.id = e.id
             _self.get_detail(e.id)
             _self.detail = e
             _self.openTaskDetail = true
+        })
+        this.$bus.off("FINISH_DEAL_WITH_SCHELCE",true)
+        this.$bus.on("FINISH_DEAL_WITH_SCHELCE",(e)=>{
+            _self.update_task()
         })
     },
 }
@@ -404,4 +444,3 @@ export default {
     float: right;
 }
 </style>
-

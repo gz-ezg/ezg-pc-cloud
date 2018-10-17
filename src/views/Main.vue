@@ -241,11 +241,12 @@
                 if (pathArr.length >= 2) {
                     this.$store.commit('addOpenSubmenu', pathArr[1].name);
                 }
-                this.userName = Cookies.get('user');
-                let messageCount = 3;
+                this.userName = localStorage.getItem("realname")
+                // this.userName = Cookies.get('user');
+                let messageCount = 0;
                 this.messageCount = messageCount.toString();
                 this.checkTag(this.$route.name);
-                this.$store.commit('setMessageCount', 3);
+                this.$store.commit('setMessageCount', messageCount);
             },
             toggleClick () {
                 this.shrink = !this.shrink;
