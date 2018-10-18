@@ -13,6 +13,7 @@
     "dev-236": "webpack-dev-server --content-base ./ --progress  --inline --hot --compress --config build/webpack-236.dev.config.js --host",
     "dev-cloud": "webpack-dev-server --content-base ./ --progress  --inline --hot --compress --config build/webpack-cloud.dev.config.js --host",
     "build": "webpack --progress --hide-modules --config build/webpack.prod.config.js",
+    "jenkins": "webpack --progress --hide-modules --config build/webpack.prod-jenkins.config",
     "lint": "eslint --fix --ext .js,.vue src",
     "test": "npm run lint"
   },
