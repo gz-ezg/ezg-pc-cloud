@@ -889,7 +889,7 @@ export const appRouter = [
                 title: '考勤管理',
                 name:"clockin_index",
                 component: resolve => {
-                    require(['@/views/administrationManagement/clockin/index.vue'], resolve);
+                    require(['@/views/administrationManagement/clockIn/index.vue'], resolve);
                 }
             },
             // {
@@ -930,7 +930,7 @@ export const appRouter = [
                 title: '交接管理', 
                 name: 'handovermanagement_index', 
                 component: resolve => {
-                    require(['@/views/handoverresource/handoverManagement/index.vue'], resolve);
+                    require(['@/views/handoverResource/handoverManagement/index.vue'], resolve);
                 }
             },
             {   
@@ -940,7 +940,7 @@ export const appRouter = [
                 title: '资料管理', 
                 name: 'resourelist_index', 
                 component: resolve => {
-                    require(['@/views/handoverresource/resoureList/index.vue'], resolve);
+                    require(['@/views/handoverResource/resoureList/index.vue'], resolve);
                 }
             },
             {   
@@ -950,7 +950,7 @@ export const appRouter = [
                 title: '资料参数', 
                 name: 'resourename_index', 
                 component: resolve => {
-                    require(['@/views/handoverresource/resoureName/index.vue'], resolve);
+                    require(['@/views/handoverResource/resoureName/index.vue'], resolve);
                 }
             }
         ]
@@ -1366,7 +1366,7 @@ export const appRouter = [
                 title: '系统日志',
                 name: 'stystemLog',
                 component: resolve => {
-                    require(['@/views/logManagement/stystemLog/stystemLog.vue'], resolve);
+                    require(['@/views/logManagement/stystemlog/stystemLog.vue'], resolve);
                 }
             },
             {
