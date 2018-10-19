@@ -252,37 +252,6 @@ export const appRouter = [
     //     ]
     // },
     {
-        access: 6200,
-        meta: 6200,
-        path: '/missionCenter',
-        icon: 'social-windows',
-        name: 'missionCenter',
-        title: "任务中心",
-        component: Main,
-        children:[
-            {
-                access: 6201,
-                meta: 6201,
-                path: 'schedule',
-                title: '日程',
-                name: 'schedule_index',
-                component: resolve => {
-                    require(['@/views/missionCenter/schedule/index.vue'], resolve);
-                }
-            },
-            {
-                access: 6202,
-                meta: 6202,
-                path: 'missionManagement',
-                title: '任务管理',
-                name: 'missionManagement_index',
-                component: resolve => {
-                    require(['@/views/missionCenter/missionManagement/index.vue'], resolve);
-                }
-            },
-        ]
-    },
-    {
         access: 6001,
         meta: 6001,
         path: '/customerManagement',
@@ -324,6 +293,37 @@ export const appRouter = [
                     require(['@/views/customerManagement/customerLog/index.vue'], resolve);
                 }
             }
+        ]
+    },
+    {
+        access: 6200,
+        meta: 6200,
+        path: '/missionCenter',
+        icon: 'social-windows',
+        name: 'missionCenter',
+        title: "任务中心",
+        component: Main,
+        children:[
+            {
+                access: 6201,
+                meta: 6201,
+                path: 'schedule',
+                title: '日程',
+                name: 'schedule_index',
+                component: resolve => {
+                    require(['@/views/missionCenter/schedule/index.vue'], resolve);
+                }
+            },
+            {
+                access: 6202,
+                meta: 6202,
+                path: 'missionManagement',
+                title: '任务管理',
+                name: 'missionManagement_index',
+                component: resolve => {
+                    require(['@/views/missionCenter/missionManagement/index.vue'], resolve);
+                }
+            },
         ]
     },
     // {

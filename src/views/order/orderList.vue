@@ -107,11 +107,32 @@
                     </Col>
                 </Row>
                 <Row :gutter="16">
-                    <FormItem label="选择产品" >
-                        <Button type="primary" icon="plus" @click="orderAddProducts()">新增</Button>
-                        <Button type="primary" icon="plus" @click="removeRows()">删除</Button>
-                        <Button type="primary" icon="plus" @click="kuaiji()" v-show="kjdj">查看会计到家服务项</Button>
-                    </FormItem>
+                    <Col span="24">
+                        <FormItem style="margin-bottom:20px">
+                            <!-- class="upload_before" -->
+                            <div slot="label">合同</div>
+                            <Upload
+                                    ref="upload"
+                                    multiple
+                                    :before-upload="handleUpload"
+                                    action=""
+                                    >
+                                <Button type="ghost" icon="ios-cloud-upload-outline">选择文件</Button>
+                            </Upload>
+                            <span v-for="(item,index) in show_file" :key=index>{{ item.name }}
+                                <Button type="text" @click="fileRemove(index)">移除</Button>
+                            </span>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="16">
+                    <Col span="24">
+                        <FormItem label="选择产品" >
+                            <Button type="primary" icon="plus" @click="orderAddProducts()">新增</Button>
+                            <Button type="primary" icon="plus" @click="removeRows()">删除</Button>
+                            <Button type="primary" icon="plus" @click="kuaiji()" v-show="kjdj">查看会计到家服务项</Button>
+                        </FormItem>
+                    </Col>
                 </Row>
                 <table width="100%" id="orderItemList"></table>
             </Form>
@@ -208,6 +229,7 @@
                 </Row>
                 <Row :gutter="16">
                     <FormItem>
+                        <Button type="primary" icon="plus" @click="show_contarct('onlyShow')">查看合同</Button>
                         <Button type="primary" icon="plus" @click="kuaiji()" v-show="kjdj">查看会计到家服务项</Button>
                     </FormItem>
                 </Row>
@@ -289,6 +311,7 @@
                     <FormItem label="选择产品">
                         <Button type="primary" icon="plus" @click="orderAddProducts()">新增</Button>
                         <Button type="primary" icon="plus" @click="removeRows()">删除</Button>
+                        <Button type="primary" icon="plus" @click="show_contarct('edit')">查看合同</Button>
                         <Button type="primary" icon="plus" @click="kuaiji()" v-show="kjdj">查看会计到家服务项</Button>
                     </FormItem>
                 </Row>
@@ -637,6 +660,7 @@
             <DatePicker type="month" width="190" @on-change="getStartTime2"></DatePicker>
             <div slot="footer"><Button type="primary" @click="Dateok">确定</Button></div>
         </Modal>
+        
         <!-- <Modal
             v-model="approveDetail"
             title="审批规则"
@@ -645,6 +669,7 @@
             
             <div slot="footer"><Button type="primary" @click="Dateok">确定</Button></div>
         </Modal> -->
+        <show-contarct></show-contarct>
     </div>
 </template>
 
@@ -654,7 +679,7 @@
     // import Vue from 'vue';
     // import iviewArea from 'iview-area';
     import {DateFormat} from '../../libs/utils.js'
-
+    import showContarct from './orderList/show_contarct.vue'
     // Vue.use(iviewArea);
     $.extend($.fn.datagrid.methods, {
         editCell: function(jq,param){
@@ -680,9 +705,13 @@
     let editIndex = undefined;
 
     export default {
+        components:{
+            showContarct
+        },
         name:'orderList_index',
         data() {
             return {
+                show_file: [],
                 isAdmin:false,
                 old_price:0,
                 cluesources:"",
@@ -1090,14 +1119,15 @@
                         }
                     },
                     {
-                        title: '撤回',
+                        title: '撤回及作废',
                         key: 'action',
-                        minWidth: 120,
+                        minWidth: 150,
                         render: (h, params)=>{
                             if(params.index != this.pageSize){
-                                return h("Button",{
+                                return h('div',[
+                                    h("Button",{
                                         props: {
-                                            type: 'error',
+                                            type: 'warning',
                                             size: 'small',
                                         },
                                         directives: [
@@ -1114,9 +1144,30 @@
                                                 this.order_cancelOrder(params)
                                             }
                                         }
-                                    },"订单撤回")
-                                }
+                                    },"撤回"),
+                                    h("Button",{
+                                        props: {
+                                            type: 'error',
+                                            size: 'small',
+                                        },
+                                        directives: [
+                                            {
+                                                name: "permission",
+                                                value: "orderL.deleteOrder"
+                                            }
+                                        ],
+                                        style:{
+                                            marginLeft: "10px"
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.order_delOrder(params)
+                                            }
+                                        }
+                                    },"作废")
+                                ])
                             }
+                        }
                     }
                 ],
                 productColumns: [
@@ -2221,7 +2272,7 @@
                     this.loading = true;
                     this.add_order_button_loading = true
                     this.$refs[name].validate((valid) => {
-                        console.log(valid)
+                        // console.log(valid)
                         if (valid) {
                             if (_self.iscycle == false || _self.isfuwu == true){
                                 for (let i = 0; i < _self.orderItemList.length; i++) {
@@ -2313,6 +2364,12 @@
                                         _self.currentPage2 = 1
                                         _self.add_order_button_loading = false
                                         _self.beforeAddOrder = false
+                                        if(_self.show_file.length != 0){
+                                            console.log(response.data)
+                                            _self.upload_img(response.data.data)
+                                        }else{
+                                            console.log("111111111")
+                                        }
                                         
                                     }
                                     function otherConditions() {
@@ -3836,10 +3893,12 @@
 
                 this.GetData(url, doSuccess)
             },
+
+            //  订单撤回
             order_cancelOrder(params){
                 let _self = this
 
-                console.log(params)
+                // console.log(params)
                 let url = `api/order/cancelOrder`
 
                 let config = {
@@ -3849,7 +3908,29 @@
                 }
 
                 function success(res){
+                    _self.$Message.success("撤回成功")
+                    _self.getTableData()
+                }
 
+                this.$Get(url, config, success)
+            },
+            
+            //  订单作废
+            order_delOrder(params){
+                let _self = this
+
+                // console.log(params)
+                let url = `api/order/abolishOrder`
+
+                let config = {
+                    params: {
+                        orderId: params.row.id
+                    }
+                }
+
+                function success(res){
+                    _self.$Message.success("作废成功！")
+                    _self.getTableData()
                 }
 
                 this.$Get(url, config, success)
@@ -4008,7 +4089,44 @@
             cancel_before_add_order(){
                 this.beforeAddOrder = false
                 this.loading = false
-            }
+            },
+            //  合同文件上传
+            handleUpload(file) {
+                console.log(file)
+                this.show_file.push(file)
+                return false;
+            },
+            fileRemove(e) {
+                // this.file.splice(e, 1);
+                this.show_file.splice(e, 1);
+            },
+            upload_img(e){
+                let _self = this
+                let formdata = new FormData()
+                
+                let url = `api/order/contract/upload`
+                formdata.append("orderId", e)
+                for(let i = 0; i < _self.show_file.length; i++){
+                    formdata.append("files", _self.show_file[i])
+                }
+                
+                formdata.get("files")
+                function success(res){
+                    _self.show_file = []
+                }
+
+                function fail(err){
+
+                }
+                
+                this.$Post(url, formdata, success, fail)
+            },
+
+            //  查看合同
+            show_contarct(e){
+                let _self = this
+                this.$bus.emit("ORDER_LIST_CONTARCT_PIC_OPEN", {id: _self.customerId, type: e})
+            },
         },
         mounted() {
             this.typeGroupId()
