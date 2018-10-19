@@ -68,13 +68,13 @@
                 <Button type="primary" icon="ios-color-wand-outline" @click="openFieldByCompanyId">外勤详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
             </ButtonGroup>
-            <Poptip
+            <!-- <Poptip
                         style="float: right"
                         placement="bottom-end"
                         width="400">
                     <Button type="text" icon="funnel">筛选</Button>
                     
-                </Poptip>
+                </Poptip> -->
         </Row>
         <Row style="margin-top: 10px;">
             <Table

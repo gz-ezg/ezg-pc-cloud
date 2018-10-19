@@ -1095,6 +1095,11 @@
                         minWidth: 100
                     },
                     {
+                        title: "上传合同",
+                        key: "contract_flag",
+                        minWidth: 100
+                    },
+                    {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
@@ -1413,6 +1418,12 @@
                         }else{
                             _company = ""
                         }
+                        let _contract_flag
+                        if(_data.rows[i].contract_flag == "Y"){
+                            _contract_flag = "已上传"
+                        }else{
+                            _contract_flag = "未上传"
+                        }
                         _self.data3.push({
                             base_paydir: _paydir,
                             productname: _data.rows[i].productname,
@@ -1436,7 +1447,8 @@
                             customersource:_self.cluesources_map.get(_data.rows[i].customersource),
                             cellClassName: {
                                 companyname: 'demo-table-info-cell-name'
-                            }
+                            },
+                            contract_flag: _contract_flag
                         })
                     }
 
