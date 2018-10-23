@@ -504,7 +504,7 @@
                     <Button v-permission="['orderL.flowChart']" type="primary" icon="ios-crop" @click="flowChart()">查看流程图</Button>
                     <Button v-permission="['orderL.resubmit']" type="primary" icon="ios-crop" @click="reApplyProcess()" name="order_re_submit">重新提交</Button>
                     <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="xiugaiOpen()" name="order_amend">修改</Button>
-                    <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="order_delOrder" name="order_amend">作废</Button>
+                    <Button v-permission="['orderL.delOrder']" type="primary" icon="ios-color-filter-outline" @click="order_delOrder" name="order_amend">作废</Button>
                     <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="getTableData">刷新</Button>
                     <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="refresh" v-if="isAdmin" name="order_rebuild_worderorder">重新生成工单</Button>
                     <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="refresh_order" v-if="isAdmin" name="order_rebuild_orderflow">重置订单流程</Button>

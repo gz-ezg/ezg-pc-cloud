@@ -657,20 +657,35 @@ export default {
             };
             console.log("_____________config__________________");
             console.log(config.customertype);
-            _self
-              .$http({
-                method: "post",
-                url: "/api/customer/updateCustomer",
-                data: config,
-                headers: { "Content-Type": "application/json" }
-              })
-              .then(function(response) {
-                if (response.data.msgCode == "40000") {
-                  _self.$Message.success("更新成功!");
-                  Bus.$emit("msg", "");
-                  _self.getData();
-                }
-              });
+            // _self
+            //   .$http({
+            //     method: "post",
+            //     url: "/api/customer/updateCustomer",
+            //     data: config,
+            //     headers: { "Content-Type": "application/json" }
+            //   })
+            //   .then(function(response) {
+            //     if (response.data.msgCode == "40000") {
+            //       _self.$Message.success("更新成功!");
+            //       Bus.$emit("msg", "");
+            //       _self.getData();
+            //     }
+            //   }).catch(function(err){
+            //     console.log(err.data)
+            //   });
+            let url = `/api/customer/updateCustomer`
+
+            function success(res){
+              _self.getData()
+              Bus.$emit("msg", "");
+            }
+
+            function fail(err){
+              
+            }
+
+            _self.$Post(url, config, success, fail)
+
           }
         } else {
           this.$Message.error("请完善客户信息");
