@@ -27,7 +27,7 @@ module.exports = merge(webpackBaseConfig, {
         chunkFilename: '[name].[chunkhash].chunk.js'
     },
     //  开启远程调试时使用,默认注释 
-    // devtool: '#source-map',
+    devtool: '#source-map',
     // productionSourceMap: true,
     plugins: [
         new cleanWebpackPlugin(['dist/*'], {
@@ -51,7 +51,8 @@ module.exports = merge(webpackBaseConfig, {
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false
-            }
+            },
+            sourceMap: true
         }),
         // new UglifyJsParallelPlugin({
         //     workers: os.cpus().length,
