@@ -433,6 +433,11 @@ import allotAccountService from './allot_accout_service'
                         width: 120
                     },
                     {
+                        title: "分配时间",
+                        key: "allotTime",
+                        width: 120
+                    },
+                    {
                         title: '服务部门',
                         key: 'departname',
                         width: 120
@@ -604,6 +609,10 @@ import allotAccountService from './allot_accout_service'
                         }else{
                         _self.Ydata[i].ServiceStart = _self.Ydata[i].ServiceStart.slice(0,10)
 
+                        }
+                        if(_self.Ydata[i].allotTime==null || _self.Ydata[i].allotTime==""){
+                        }else{
+                        _self.Ydata[i].allotTime = _self.Ydata[i].allotTime.slice(0,10)                        
                         }
                         if(_self.Ydata[i].ServiceEnd==null || _self.Ydata[i].ServiceEnd==""){
                         }else{

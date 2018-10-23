@@ -131,7 +131,7 @@
           </Row>
             <Row>
                 <ButtonGroup>
-                    <Button type="primary" icon="plus" @click="import_excel">导入</Button>
+                    <Button type="primary" icon="plus" @click="import_excel" v-permission="['pool.import']">导入</Button>
                     <Button type="primary" icon="edit" @click="isEditChange">查看</Button>
                     <Button type="primary" icon="ios-color-filter-outline" @click="downloadExcel">导出Excel</Button>
 
@@ -194,7 +194,7 @@
                       <Upload
                         ref="upload"
                         :before-upload="handleUpload"
-                        action=""
+                        action="/api/customer/importHighSeasPoolMessage"
                       >
                         <Button type="ghost" icon="ios-cloud-upload-outline" style="margin-top:40px">选择文件</Button>
                       </Upload>
@@ -1038,13 +1038,15 @@ export default {
       function success(res){
         _self.getTableData()
         _self.openImportCustomer = false
+        return false
       }
 
       function fail(err){
-
+        return false
       }
 
       this.$Post(url, formdata, success, fail)
+      return false
     }
     // findchannelTypeName(temp) {}
     /**********************数据字典相关end*********************/

@@ -504,6 +504,7 @@
                     <Button v-permission="['orderL.flowChart']" type="primary" icon="ios-crop" @click="flowChart()">查看流程图</Button>
                     <Button v-permission="['orderL.resubmit']" type="primary" icon="ios-crop" @click="reApplyProcess()" name="order_re_submit">重新提交</Button>
                     <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="xiugaiOpen()" name="order_amend">修改</Button>
+                    <Button v-permission="['orderL.delOrder']" type="primary" icon="ios-color-filter-outline" @click="order_delOrder" name="order_amend">作废</Button>
                     <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="getTableData">刷新</Button>
                     <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="refresh" v-if="isAdmin" name="order_rebuild_worderorder">重新生成工单</Button>
                     <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="refresh_order" v-if="isAdmin" name="order_rebuild_orderflow">重置订单流程</Button>
@@ -711,6 +712,8 @@
         name:'orderList_index',
         data() {
             return {
+                order_contract_flag: [],
+                order_contract_flag_map: new Map(),
                 show_file: [],
                 isAdmin:false,
                 old_price:0,
@@ -1124,9 +1127,9 @@
                         }
                     },
                     {
-                        title: '撤回及作废',
+                        title: '撤回',
                         key: 'action',
-                        minWidth: 150,
+                        minWidth: 120,
                         render: (h, params)=>{
                             if(params.index != this.pageSize){
                                 return h('div',[
@@ -1150,26 +1153,26 @@
                                             }
                                         }
                                     },"撤回"),
-                                    h("Button",{
-                                        props: {
-                                            type: 'error',
-                                            size: 'small',
-                                        },
-                                        directives: [
-                                            {
-                                                name: "permission",
-                                                value: "orderL.deleteOrder"
-                                            }
-                                        ],
-                                        style:{
-                                            marginLeft: "10px"
-                                        },
-                                        on: {
-                                            click: () => {
-                                                this.order_delOrder(params)
-                                            }
-                                        }
-                                    },"作废")
+                                    // h("Button",{
+                                    //     props: {
+                                    //         type: 'error',
+                                    //         size: 'small',
+                                    //     },
+                                    //     directives: [
+                                    //         {
+                                    //             name: "permission",
+                                    //             value: "orderL.deleteOrder"
+                                    //         }
+                                    //     ],
+                                    //     style:{
+                                    //         marginLeft: "10px"
+                                    //     },
+                                    //     on: {
+                                    //         click: () => {
+                                    //             this.order_delOrder(params)
+                                    //         }
+                                    //     }
+                                    // },"作废")
                                 ])
                             }
                         }
@@ -1419,11 +1422,7 @@
                             _company = ""
                         }
                         let _contract_flag
-                        if(_data.rows[i].contract_flag == "Y"){
-                            _contract_flag = "已上传"
-                        }else{
-                            _contract_flag = "未上传"
-                        }
+                        _contract_flag = _self.order_contract_flag_map.get(_data.rows[i].contract_flag)
                         _self.data3.push({
                             base_paydir: _paydir,
                             productname: _data.rows[i].productname,
@@ -3930,22 +3929,41 @@
             //  订单作废
             order_delOrder(params){
                 let _self = this
+                
+                // // console.log(params)
+                // let url = `api/order/abolishOrder`
 
-                // console.log(params)
-                let url = `api/order/abolishOrder`
+                // let config = {
+                //     params: {
+                //         orderId: params.row.id
+                //     }
+                // }
 
-                let config = {
-                    params: {
-                        orderId: params.row.id
+                // function success(res){
+                //     _self.$Message.success("作废成功！")
+                //     _self.getTableData()
+                // }
+
+                // this.$Get(url, config, success)
+                if (_self.customerId == '') {
+                    _self.$Message.warning('请选择订单项');
+                } else {
+                    _self.$ButtonCollect("order_rebuild_orderflow")
+                    let url = `api/order/abolishOrder`
+                    _self.$ButtonCollect("order_del")
+                    let config = {
+                        params:{
+                            orderId: _self.customerId
+                        }
                     }
-                }
 
-                function success(res){
-                    _self.$Message.success("作废成功！")
-                    _self.getTableData()
-                }
+                    function success(res){
+                        _self.$Message.success(res.data.msg)
+                        _self.getTableData()
+                    }
 
-                this.$Get(url, config, success)
+                    _self.$Get(url, config, success)
+                }
             },
 
             typeGroupId() {
@@ -3958,7 +3976,7 @@
 
                 // this.GetData(url, doSuccess)
 
-                let params = "payDirs"
+                let params = "payDirs,order_contract_flag"
 
                 function finsih(res){
                     _self.payDirData = res.data.data.payDirs
@@ -4079,11 +4097,13 @@
             },
             getCluesources(){
                 let _self = this
-                let config = 'cluesources'
+                let config = 'cluesources,order_contract_flag'
                 function finish(res){
                     // console.log(res.data.data.cluesources)
                     _self.cluesources = res.data.data.cluesources
                     _self.cluesources_map = _self.$array2map(_self.cluesources)
+                    _self.order_contract_flag = res.data.data.order_contract_flag
+                    _self.order_contract_flag_map = _self.$array2map(_self.order_contract_flag)
                     // console.log(_self.cluesources_map)
                 }
                 this.$GetDataCenter(config, finish)
