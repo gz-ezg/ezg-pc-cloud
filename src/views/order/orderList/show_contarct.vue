@@ -26,6 +26,18 @@
                     </Upload>
                 </Col>
             </Row>
+            <Row v-permission="['orderL.contract']">
+                <Col span="12">
+                    <Select v-model="contractFlag" style="width:180px">
+                        <Option value="wsc">未上传</option>
+                        <Option value="ysc">已上传(部分|全部)</option>
+                        <Option value="ybq">已补全</option>
+                    </Select>
+                </Col>
+                <Col span="12">
+                    <Button type="primary" @click="confirm" :loading="loading">修改</Button>
+                </Col>
+            </Row>
             <div slot="footer"><Button type="primary" @click="openContract=false">关闭</Button></div>
         </Modal>
     </div>
@@ -38,7 +50,9 @@ export default {
             orderId: "",
             openContract: false,
             imgArray: [],
-            type: "onlyShow"
+            type: "onlyShow",
+            contractFlag: "",
+            loading: false
         }
     },
     methods: {
@@ -96,6 +110,27 @@ export default {
             }
             this.$Post(url, formdata, success, fail)
         },
+        confirm(){
+            let _self = this
+            let url = `api/order/contract/flag/update`
+            _self.$ButtonCollect("order_contract")
+            _self.loading = true
+            let config = {
+                id: _self.orderId,
+                contractFlag: _self.contractFlag
+            }
+
+            function success(res){
+                _self.loading = false
+                _self.openContract = false
+            }
+
+            function fail(err){
+                _self.loading = false
+            }
+
+            this.$Post(url, config, success, fail)
+        }
     },
     computed:{
         isNull(){

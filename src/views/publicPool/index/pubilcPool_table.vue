@@ -194,7 +194,7 @@
                       <Upload
                         ref="upload"
                         :before-upload="handleUpload"
-                        action=""
+                        action="/api/customer/importHighSeasPoolMessage"
                       >
                         <Button type="ghost" icon="ios-cloud-upload-outline" style="margin-top:40px">选择文件</Button>
                       </Upload>
@@ -1038,13 +1038,15 @@ export default {
       function success(res){
         _self.getTableData()
         _self.openImportCustomer = false
+        return false
       }
 
       function fail(err){
-
+        return false
       }
 
       this.$Post(url, formdata, success, fail)
+      return false
     }
     // findchannelTypeName(temp) {}
     /**********************数据字典相关end*********************/
