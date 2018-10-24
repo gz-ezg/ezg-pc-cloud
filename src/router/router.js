@@ -71,7 +71,6 @@ export const previewFile = {
     path: '/previewFile/:id',
     name: 'previewFile',
     component: resolve => {
-        // require(['@/views/test/components/main.vue'], resolve);
         require(['@/views/woa-components/filePreview/index.vue'], resolve);
     }
 }
@@ -165,7 +164,7 @@ export const appRouter = [
             {
                 path: 'test',
                 title: '测试页面',
-                name: 'test_index',
+                name: '富文本编辑器测试',
                 component: resolve => {
                     require(['@/views/test/components/main.vue'], resolve);
                     // require(['@/views/woa-components/filePreview/index.vue'], resolve);
@@ -174,7 +173,7 @@ export const appRouter = [
             },
             {
                 path: 'test2',
-                title: '测试页面2',
+                title: '日程测试',
                 name: 'test2_index',
                 component: resolve => {
                     require(['@/views/test/components/test2.vue'], resolve);
@@ -184,11 +183,19 @@ export const appRouter = [
             },
             {
                 path: 'test3',
-                title: '测试页面3',
+                title: '可编辑表格测试',
                 name: 'test3_index',
                 component: resolve => {
                     require(['@/views/test/components/test3.vue'], resolve);
-                    // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+
+                }
+            },
+            {
+                path: 'test4',
+                title: '树形表测试',
+                name: 'test4_index',
+                component: resolve => {
+                    require(['@/views/test/components/test4.vue'], resolve);
 
                 }
             }
