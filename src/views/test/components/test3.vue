@@ -8,8 +8,8 @@
             size="small"
             :columns="header2"
             :data="data2"></Table>
-        <!-- <Button @click="value1 = true" type="primary">Open</Button>
-        <Drawer title="Basic Drawer" :closable="false" v-model="value1">
+         <Button @click="show" type="primary">show</Button>
+        <!--<Drawer title="Basic Drawer" :closable="false" v-model="value1">
             <p>Some contents...</p>
             <p>Some contents...</p>
             <p>Some contents...</p>
@@ -57,19 +57,23 @@ export default {
             data2: [
                 {
                     typecode: 12,
-                    date: "2018-10-01"
+                    date: "2018-10-01",
+                    text: "string"
                 },
                 {
                     typecode: 13,
-                    date: "2018-10-02"
+                    date: "2018-10-02",
+                    text: "string2"
                 },
                 {
                     typecode: 14,
-                    date: "2018-10-03"
+                    date: "2018-10-03",
+                    text: "string3"
                 },
                 {
                     typecode: 15,
-                    date: "2018-10-04"
+                    date: "2018-10-04",
+                    text: "string4"
                 }
             ],
             header2: [
@@ -134,16 +138,84 @@ export default {
                             })
                         ])
                     }
+                },
+                {
+                    title: "输入框测试",
+                    minWidth: 200,
+                    width: 300,
+                    render: (h, parmas) => {
+                        let _self = this
+                        // console.log(parmas)
+                        // return h('div',[
+                        //     h('Input',{
+                        //         // domProps: {
+                        //         //     value: this.data2[parmas.index].text,
+                        //         // },
+                        //         props:{
+                        //             value: this.data2[parmas.index].text,
+                        //             type: "textarea",
+                        //             autosize: true
+                        //         },
+                        //         on: {
+                        //             "input": function(event){
+                        //                 console.log(event)
+                        //                 _self.data2[parmas.index].text = event.target.value
+                        //                 // _self.$emit('input', event.target.value)
+                        //                 // Object.assign(parmas,{value: event})
+                        //             }
+                        //         },
+                        //         style: {
+                        //             width: "100%"
+                        //         }
+                        //     })
+                        // ])
+                        return h('div',[
+                            h('Input',{
+                                domProps: {
+                                    // value: this.data2[parmas.index].text,
+                                    // type: "textarea",
+                                    // autosize: true
+                                },
+                                props:{
+                                    value: this.data2[parmas.index].text,
+                                    autosize: true,
+                                    type: "textarea",
+                                },
+                                on: {
+                                    "on-blur": function(event){
+                                        console.log(event)
+                                        _self.data2[parmas.index].text = event.target.value
+                                        // _self.data2[parmas.index].text = event.target.value
+                                        // Object.assign(_self.data2[parmas.index], {text: event.target.value})
+                                        // Object.assign({text: event}, _self.data2[parmas.index])
+                                    },
+                                    // "on-enter":function(event){
+                                    //     console.log(event)
+                                    //     _self.data2[parmas.index].text = event.target.value
+                                    //     // _self.data2[parmas.index].text = event.target.value
+                                    //     // Object.assign(_self.data2[parmas.index], {text: event.target.value})
+                                    //     // Object.assign({text: event}, _self.data2[parmas.index])
+                                    // },
+                                },
+                                style: {
+                                    width: "100%"
+                                }
+                            })
+                        ])
+                    }
                 }
             ],
         }
     },
     methods:{
         refresh(){},
-        infinite(){}
+        infinite(){},
+        show(){
+            console.log(this.data2)
+        }
     },
     created() {
         let _self = this
-    },
+    }
 }
 </script>

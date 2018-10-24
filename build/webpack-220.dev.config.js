@@ -70,10 +70,10 @@ module.exports = merge(webpackBaseConfig, {
             {
                 from: 'src/views/my-components/text-editor/tinymce'
             },
-            {
-                from:'/WW_verify_z793ZwW9R5YytI0x.txt',
-                to: "../"
-            }
+            // {
+            //     from:'WW_verify_z793ZwW9R5YytI0x.txt',
+            //     to: "../"
+            // }
         ], {
             ignore: [
                 'text-editor.vue'

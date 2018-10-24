@@ -155,45 +155,45 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    // {
-    //     path: '/test',
-    //     icon: 'social-windows',
-    //     name: 'test',
-    //     title: 'Test',
-    //     component: Main,
-    //     children: [
-    //         {
-    //             path: 'test',
-    //             title: '测试页面',
-    //             name: 'test_index',
-    //             component: resolve => {
-    //                 require(['@/views/test/components/main.vue'], resolve);
-    //                 // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+    {
+        path: '/test',
+        icon: 'social-windows',
+        name: 'test',
+        title: 'Test',
+        component: Main,
+        children: [
+            {
+                path: 'test',
+                title: '测试页面',
+                name: 'test_index',
+                component: resolve => {
+                    require(['@/views/test/components/main.vue'], resolve);
+                    // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-    //             }
-    //         },
-    //         {
-    //             path: 'test2',
-    //             title: '测试页面2',
-    //             name: 'test2_index',
-    //             component: resolve => {
-    //                 require(['@/views/test/components/test2.vue'], resolve);
-    //                 // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+                }
+            },
+            {
+                path: 'test2',
+                title: '测试页面2',
+                name: 'test2_index',
+                component: resolve => {
+                    require(['@/views/test/components/test2.vue'], resolve);
+                    // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-    //             }
-    //         },
-    //         {
-    //             path: 'test3',
-    //             title: '测试页面3',
-    //             name: 'test3_index',
-    //             component: resolve => {
-    //                 require(['@/views/test/components/test3.vue'], resolve);
-    //                 // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+                }
+            },
+            {
+                path: 'test3',
+                title: '测试页面3',
+                name: 'test3_index',
+                component: resolve => {
+                    require(['@/views/test/components/test3.vue'], resolve);
+                    // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-    //             }
-    //         }
-    //     ]
-    // },
+                }
+            }
+        ]
+    },
     // {
     //     path: '/allindex',
     //     icon: 'social-windows',
@@ -607,15 +607,26 @@ export const appRouter = [
                 }
             },
             {
+                //  订单审批新
                 access: 6019,
                 meta: 6019,
                 path: 'orderApprove',
-                title: '订单审批',
+                title: '余款管理',
                 name: 'orderApprove_index',
                 component: resolve => {
-                    require(['@/views/order/orderApprove.vue'], resolve);
+                    require(['@/views/order/orderApprove/index.vue'], resolve);
                 }
             },
+            // {
+            //     access: 6019,
+            //     meta: 6019,
+            //     path: 'orderApprove',
+            //     title: '订单审批',
+            //     name: 'orderApprove_index',
+            //     component: resolve => {
+            //         require(['@/views/order/orderApprove.vue'], resolve);
+            //     }
+            // },
             {
                 access: 6020,
                 meta: 6020,
@@ -626,6 +637,7 @@ export const appRouter = [
                     require(['@/views/order/spareManagement/spareManagement.vue'], resolve);
                 }
             },
+            
             // {
             //     access:6020,
             //     path: 'orderLog',
@@ -910,6 +922,16 @@ export const appRouter = [
                 name:"resumeManagement_index",
                 component: resolve => {
                     require(['@/views/administrationManagement/resumeManagement/index.vue'], resolve);
+                }
+            },
+            {
+                access: 6096,
+                meta: 6096,
+                path: 'invoiceManagement',
+                title: '发票管理',
+                name:"invoicelist_index",
+                component: resolve => {
+                    require(['@/views/administrationManagement/invoiceManagement/index.vue'], resolve);
                 }
             },
         ]
