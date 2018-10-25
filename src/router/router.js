@@ -1143,7 +1143,7 @@ export const appRouter = [
                 title: '菜单管理',
                 name: 'menuMangement_index',
                 component: resolve => {
-                    require(['@/views/systemManagement/menuManagement/menuManagement_index.vue'], resolve);
+                    require(['@/views/systemManagement/menuManagement/index.vue'], resolve);
                 }
             },
             {

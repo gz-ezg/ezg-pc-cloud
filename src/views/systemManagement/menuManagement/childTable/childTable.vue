@@ -20,6 +20,7 @@
         data(){
             return {
                 columns10: [
+                    // 多级菜单
                     // {
                     //     type: 'expand',
                     //     width: 100 - 30 * this.depth,
@@ -55,16 +56,16 @@
                         key: 'text',
                         minWidth: 150
                     },
-                    {
-                        title: '菜单编码',
-                        key: 'attributes.interface_code',
-                        minWidth: 180,
-                        render: (h, params) => {
-                            // console.log(params.row)
-                            return h('div',{
-                            }, params.row.attributes.interface_code)
-                        }
-                    },
+                    // {
+                    //     title: '菜单编码',
+                    //     key: 'attributes.interface_code',
+                    //     minWidth: 180,
+                    //     render: (h, params) => {
+                    //         // console.log(params.row)
+                    //         return h('div',{
+                    //         }, params.row.attributes.interface_code)
+                    //     }
+                    // },
                     {
                         title: "操作",
                         key: "action",
@@ -77,29 +78,64 @@
                                         size: 'small'
                                     },
                                     style: {
-                                        marginRight: "10px"
+                                        marginRight: "16px"
                                     }
                                 }, "编辑菜单"),
                                 h('Button',{
                                     props: {
                                         type: 'info',
                                         size: 'small',
-                                        disabled: false
                                     },
                                     style: {
-                                        marginRight: "10px"
+                                        marginRight: "16px"
+                                    },
+                                    on: {
+                                        click: () => {
+                                            // console.log(params.row)
+                                            this.$emit("open-sidebar", params.row)
+                                        }
                                     }
-                                }, "新增子菜单"),
+                                }, "查看按钮"),
                                 h('Button',{
                                     props: {
                                         type: 'error',
                                         size: 'small'
                                     },
+                                    on: {
+                                        click: () => {
+                                            this.del_menu(params)
+                                        }
+                                    }
                                 }, "删除菜单")
                             ])
                         }
                     }
                 ]
+            }
+        },
+        methods: {
+            del_menu(e){
+                let _self = this
+                // console.log(e)
+                if(e.row.children){
+                    _self.$Message.warning("该菜单下还有未删除的子菜单！")
+                    return ;
+                }
+
+                let url = `api/menu/deleteMenu`
+
+                let config = {
+                    params: {
+                        menuId: e.row.id
+                    }
+                }
+
+                function success(res){
+                    _self.$Message.success(res.data.msg)
+                    _self.$bus.emit("UPDATE_MENU", true)
+                }
+
+                this.$Get(url, config, success)
             }
         }
     };

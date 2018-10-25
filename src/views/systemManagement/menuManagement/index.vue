@@ -7,28 +7,53 @@
         <ButtonGroup style="margin-bottom:10px">
             <Button type="primary" @click="create_menu('', 0)">新增一级菜单</Button>
         </ButtonGroup>
-        <Table :columns="headers" :data="data" size="small"></Table>
+        <Row>
+            <Col :span="span">
+                <Card>
+                    <Table :columns="headers" :data="data" size="small"></Table>
+                </Card>
+            </Col>
+            <Col :span="24-span" v-if="24-span">
+                <side-bar :code="currentCode" @close-sidebar="span = 24"></side-bar>
+            </Col>
+        </Row>
+        <create-menu></create-menu>
     </div>
 </template>
 <script>
-    import expandRow from './table-expand.vue';
+    import createMenu from './createMenu.vue'
+    import childTable from './childTable';
+    import sideBar from './sidebar.vue'
     export default {
-        components: { expandRow },
+        name: "menuMangement_index",
+        components: { 
+            childTable,
+            sideBar,
+            createMenu
+        },
         data () {
             return {
+                currentCode: 0,
+                span: 24,
                 headers: [
                     {
                         type: 'expand',
-                        width: 100,
+                        width: 50,
                         render: (h, params) => {
                             if(params.row.children){
-                                return h(expandRow, {
+                                return h(childTable, {
                                     props: {
                                         row: params.row.children,
                                         depth: 1
                                     },
                                     style: {
-                                        paddingLeft: "100px"
+                                        paddingLeft: "50px"
+                                    },
+                                    on: {
+                                        "open-sidebar": (e)=>{
+                                            this.span = "12"
+                                            this.open_sidebar(e)
+                                        }
                                     }
                                 })
                             }else{
@@ -43,16 +68,15 @@
                         key: 'text',
                         minWidth: 150
                     },
-                    {
-                        title: '菜单编码',
-                        key: 'attributes.interface_code',
-                        minWidth: 180,
-                        render: (h, params) => {
-                            // console.log(params.row)
-                            return h('div',{
-                            }, params.row.attributes.interface_code)
-                        }
-                    },
+                    // {
+                    //     title: '菜单编码',
+                    //     key: 'attributes.interface_code',
+                    //     minWidth: 180,
+                    //     render: (h, params) => {
+                    //         return h('div',{
+                    //         }, params.row.attributes.interface_code)
+                    //     }
+                    // },
                     {
                         title: "操作",
                         key: "action",
@@ -96,7 +120,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            //  删除菜单，需要处理逻辑
+                                            this.del_menu(params)
                                         }
                                     }
                                 }, "删除菜单")
@@ -125,11 +149,46 @@
                 let _self = this
                 let url = `api/menu/createMenu`
                 console.log( parentId, level)
+                _self.$bus.emit("OPEN_CREATE_MENU",{
+                    parentInterfaceId: parentId,
+                    interfaceLevel: level
+                })
+            },
+            del_menu(e){
+                let _self = this
+                // console.log(e)
+                if(e.row.children){
+                    _self.$Message.warning("该菜单下还有未删除的子菜单！")
+                    return ;
+                }
+
+                let url = `api/menu/deleteMenu`
+
+                let config = {
+                    params: {
+                        menuId: e.row.id
+                    }
+                }
+
+                function success(res){
+                    _self.$Message.success(res.data.msg)
+                    _self.get_menu()
+                }
+
+                this.$Get(url, config, success)
+            },
+            open_sidebar(e){
+                // console.log(e)
+                this.currentCode = e.id
             }
         },
         created() {
             let _self = this
             this.get_menu()
+            _self.$bus.off("UPDATE_MENU", true)
+            _self.$bus.on("UPDATE_MENU", (e) => {
+                _self.get_menu()
+            })
         },
     }
 </script>

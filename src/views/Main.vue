@@ -63,7 +63,7 @@
             </div>
         </div>
         <div class="single-page-con" :style="{left: shrink?'60px':'200px'}">
-            <div class="single-page" style="min-width:700px">
+            <div class="single-page" style="min-width:800px">
                 <keep-alive :include="keepPage">
                     <!-- <Spin size="large" fix v-if="spin_loading"></Spin> -->
                     <router-view></router-view>
