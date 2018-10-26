@@ -190,15 +190,25 @@ export const appRouter = [
 
                 }
             },
+            // {
+            //     path: 'test4',
+            //     title: '树形表测试',
+            //     name: 'test4_index',
+            //     component: resolve => {
+            //         require(['@/views/test/components/test4.vue'], resolve);
+
+            //     }
+            // },
             {
-                path: 'test4',
-                title: '树形表测试',
+                path: 'test5',
+                title: '工具测试',
                 name: 'test4_index',
                 component: resolve => {
-                    require(['@/views/test/components/test4.vue'], resolve);
+                    require(['@/views/test/components/test5.vue'], resolve);
 
                 }
-            }
+            },
+            
         ]
     },
     // {

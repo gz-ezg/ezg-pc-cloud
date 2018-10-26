@@ -5,7 +5,7 @@
                 <Icon type="close"></Icon>
             </span>
             <ButtonGroup style="margin-bottom:10px">
-                <Button type="primary" @click="create_button">菜单</Button>
+                <Button type="primary" @click="create_button">新建按钮</Button>
             </ButtonGroup>
             <Table
                 :columns="headers" 
@@ -95,6 +95,7 @@ export default {
         //  创建按钮
         create_button(){
             let _self = this
+            _self.$bus.emit("OPEN_CREATE_BUTTON", _self.code)
         },
         //  修改按钮
         update_button(){
@@ -106,8 +107,19 @@ export default {
         }
     },
     created() {
+        let _self = this
         this.get_button(this.code)
+        this.$bus.off("UPDATE_BUTTON",true)
+        _self.$bus.on("UPDATE_BUTTON", (e)=>{
+            _self.get_button(this.code)
+        })
     },
+    watch: {
+        //  监听code的变化
+        code(val){
+            this.get_button(val)
+        }
+    }
 }
 </script>
 

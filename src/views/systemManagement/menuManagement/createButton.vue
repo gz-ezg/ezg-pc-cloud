@@ -1,27 +1,24 @@
 <template>
     <div>
         <Modal
-        v-model="openCreateMenu"
+        v-model="openCreateButton"
         width="600"
         >
-            <div slot="header"><h3>创建菜单</h3></div>
+            <div slot="header"><h3>创建按钮</h3></div>
             <div>
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120">
-                    <FormItem label="菜单名称：" prop="interfaceName">
-                        <Input v-model="formValidate.interfaceName" placeholder="菜单名称范围2~15位字符,且不为空" style="width:240px"></Input>
+                    <FormItem label="按钮名称：" prop="operationname">
+                        <Input v-model="formValidate.operationname" placeholder="菜单名称范围2~15位字符,且不为空" style="width:240px"></Input>
                     </FormItem>
-                    <FormItem label="接口层级" prop="interfaceLevel">
-                        <Select transfer v-model="formValidate.interfaceLevel" placeholder="下级菜单" style="width:240px">
-                            <Option value="0" >一级菜单</Option>
-                            <Option value="1" >下级菜单</Option>
-                        </Select>
+                    <FormItem label="按钮编码" prop="operationcode">
+                        <Input v-model="formValidate.operationcode" placeholder="" style="width:240px"></Input>
                     </FormItem>
-                    <FormItem label="菜单编码：" prop="interfaceCode">
-                        <Input v-model="formValidate.interfaceCode" placeholder="" style="width:240px"></Input>
+                    <FormItem label="菜单编码：" prop="interfaceId">
+                        <Input v-model="formValidate.interfaceId" placeholder="" style="width:240px"></Input>
                     </FormItem>
-                    <FormItem label="父菜单ID：" prop="parentInterfaceId">
+                    <!-- <FormItem label="父菜单ID：" prop="parentInterfaceId">
                         <Input v-model="formValidate.parentInterfaceId" placeholder="" style="width:240px"></Input>
-                    </FormItem>
+                    </FormItem> -->
                     <FormItem>
                         <Button type="primary" @click="submit" :loading="loading">提交</Button>
                         <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 20px">取消</Button>
@@ -40,20 +37,19 @@ export default {
         return {
             createMenu: false,
             formValidate: {
-                interfaceName: "",
-                interfaceLevel: "",
-                interfaceCode: "",
-                parentInterfaceId: ""
+                operationname: "",
+                operationcode: "",
+                interfaceId: "",
             },
-            openCreateMenu: false,
+            openCreateButton: false,
             ruleValidate: {
-                interfaceName: [
+                operationname: [
                     { required: true, message: '请输入菜单名称', trigger: 'change' }
                 ],
-                interfaceLevel: [
+                operationcode: [
                     { required: true, message: '请输入菜单层级', trigger: 'change' }
                 ],
-                interfaceCode: [
+                interfaceId: [
                     { required: true, message: '请输入菜单编码', trigger: 'change' },
                 ]
             },
@@ -68,27 +64,26 @@ export default {
             let _self = this
             this.$refs["formValidate"].validate((valid) => {
                 if (valid) {
-                    _self.create_menu()
+                    _self.create_button()
                 } else {
                     _self.$Message.error("请补全信息！")
                 }
             })
         },
-        create_menu(){
+        create_button(){
             let _self = this
-            let url = `api/menu/createMenu`
+            let url = `api/menu/createButton`
             _self.loading = true
             let config = {
-                interfaceName: _self.formValidate.interfaceName,
-                parentInterfaceId: _self.formValidate.parentInterfaceId,
-                interfaceLevel: _self.formValidate.interfaceLevel,
-                interfaceCode: _self.formValidate.interfaceCode,
+                operationname: _self.formValidate.operationname,
+                operationcode: _self.formValidate.operationcode,
+                interfaceId: _self.formValidate.interfaceId,
             }
 
             function success(res){
                 _self.loading = false
-                _self.openCreateMenu = false
-                _self.$bus.emit("UPDATE_MENU", true)
+                _self.openCreateButton = false
+                _self.$bus.emit("UPDATE_BUTTON", true)
             }
 
             function fail(err){
@@ -100,12 +95,12 @@ export default {
     },
     created() {
         let _self = this
-        _self.$bus.off("OPEN_CREATE_MENU", true)
-        _self.$bus.on("OPEN_CREATE_MENU", (e) => {
+        _self.$bus.off("OPEN_CREATE_BUTTON", true)
+        _self.$bus.on("OPEN_CREATE_BUTTON", (e) => {
             console.log(e)
-            _self.formValidate.parentInterfaceId = e.parentInterfaceId
-            _self.formValidate.interfaceLevel = e.interfaceLevel.toString()
-            _self.openCreateMenu = true
+            _self.formValidate.interfaceId = e
+            // _self.formValidate.interfaceLevel = e.interfaceLevel.toString()
+            _self.openCreateButton = true
         })
     },
 }

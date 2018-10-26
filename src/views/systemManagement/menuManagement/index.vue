@@ -4,12 +4,13 @@
 
 <template>
     <div>
-        <ButtonGroup style="margin-bottom:10px">
-            <Button type="primary" @click="create_menu('', 0)">新增一级菜单</Button>
-        </ButtonGroup>
+        
         <Row>
             <Col :span="span">
                 <Card>
+                    <ButtonGroup style="margin-bottom:10px">
+                        <Button type="primary" @click="create_menu('', 0)">新增一级菜单</Button>
+                    </ButtonGroup>
                     <Table :columns="headers" :data="data" size="small"></Table>
                 </Card>
             </Col>
@@ -18,10 +19,13 @@
             </Col>
         </Row>
         <create-menu></create-menu>
+        <create-button></create-button>
     </div>
 </template>
 <script>
     import createMenu from './createMenu.vue'
+    import createButton from './createButton.vue'
+
     import childTable from './childTable';
     import sideBar from './sidebar.vue'
     export default {
@@ -29,7 +33,8 @@
         components: { 
             childTable,
             sideBar,
-            createMenu
+            createMenu,
+            createButton
         },
         data () {
             return {
