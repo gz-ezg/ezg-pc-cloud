@@ -15,62 +15,6 @@
             <TabPane label="未领取" name="name1">
                 <Card>
                     <Row style="margin-bottom:10px">
-                        <!-- <Collapse v-model="search_model">
-                            <Panel name="1" >
-                                <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
-                                筛选
-                                <div slot="content" @keydown.enter="Search">
-                                    <Form ref="SearchValidate" :model="SearchValidate" :label-width="80">
-                                        <Row :gutter="16">
-                                            <Col span="8">
-                                            <FormItem label="客户名称：" prop="customerName">
-                                                <Input v-model="SearchValidate.customerName" size="small"></Input>
-                                            </FormItem>
-                                            </Col>
-                                            <Col span="8">
-                                            <FormItem label="客户电话：" prop="customerTel">
-                                                <Input v-model="SearchValidate.customerTel" size="small"></Input>
-                                            </FormItem>
-                                            </Col>
-                                            <Col span="8">
-                                            <FormItem label="创建人：" prop="crealname">
-                                                <Input v-model="SearchValidate.crealname" size="small"></Input>
-                                            </FormItem>
-                                            </Col>
-                                        </Row>
-                                        <Row :gutter="16" style="height:56px">
-                                            <Col span="8">
-                                            <FormItem label="线索类型：" prop="clueType">                  
-                                                <Select transfer v-model="SearchValidate.clueType" size="small">
-                                                    <Option v-for="item in cluetype" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
-                                                </Select>
-                                            </FormItem>
-                                            </Col>
-                                            <Col span="8">
-                                                <FormItem label="线索级别：" prop="clueLevel">
-                                                    <Select transfer v-model="SearchValidate.clueLevel" size="small" >
-                                                        <Option v-for="item in clue_level" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col span="8">
-                                                <FormItem label="创建时间：" prop="date">
-                                                    <DatePicker transfer type="daterange" style="width:100%" size="small" v-model="SearchValidate.date" placement="bottom-end"></DatePicker>
-                                                </FormItem>
-                                            </Col>
-                                        </Row>
-                                        <center>
-                                            <FormItem style="margin-top:10px">
-                                                <Button type="primary" @click="Search">搜索</Button>
-                                                <Button type="ghost" @click="handleReset('SearchValidate')" style="margin-left: 8px">
-                                                    重置
-                                                </Button>
-                                            </FormItem>
-                                        </center>
-                                    </Form>
-                                </div>
-                            </Panel>
-                        </Collapse> -->
                     </Row>
                     <Row style="margin-top: 10px;">
                         <Table
@@ -94,69 +38,6 @@
             <TabPane label="已领取" name="name2">
                 <Card>
                     <Row style="margin-bottom:10px">
-                        <!-- <Collapse v-model="search_model2">
-                            <Panel name="1">
-                                <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
-                                筛选
-                                <div slot="content" @keydown.enter="Search1">
-                                    <Form ref="SearchValidate1" :model="SearchValidate1" :label-width="80">
-                                        <Row :gutter="16" style="height:56px">
-                                            <Col span="8">
-                                                <FormItem label="客户名称：" prop="customerName">
-                                                    <Input v-model="SearchValidate1.customerName" size="small"></Input>
-                                                </FormItem>
-                                            </Col>
-                                            <Col span="8">
-                                                <FormItem label="客户电话：" prop="customerTel">
-                                                    <Input v-model="SearchValidate1.customerTel" size="small"></Input>
-                                                </FormItem>
-                                            </Col>
-                                            <Col span="8">
-                                                <FormItem label="创建人：" prop="crealname">
-                                                    <Input v-model="SearchValidate1.crealname" size="small"></Input>
-                                                </FormItem>
-                                            </Col>
-                                        </Row>
-                                        <Row :gutter="16" style="height:56px">
-                                            <Col span="8">
-                                                <FormItem label="线索类型：" prop="clueType">                  
-                                                    <Select transfer v-model="SearchValidate1.clueType" size="small" >
-                                                        <Option v-for="item in cluetype" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col span="8">
-                                                <FormItem label="领取人：" prop="rrealname">
-                                                    <Input v-model="SearchValidate1.rrealname" size="small"></Input>
-                                                </FormItem>
-                                            </Col>
-                                            <Col span="8">
-                                                <FormItem label="线索级别：" prop="clueLevel">
-                                                    <Select transfer v-model="SearchValidate1.clueLevel" size="small" >
-                                                        <Option v-for="item in clue_level" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                        </Row>
-                                        <Row :gutter="16" style="height:56px">
-                                            <Col span="8">
-                                                <FormItem label="创建时间：" prop="date">
-                                                    <DatePicker placement="bottom-end" transfer type="daterange" style="width:100%"  size="small" v-model="SearchValidate1.date"></DatePicker>
-                                                </FormItem>
-                                            </Col>
-                                        </Row>
-                                        <center>
-                                            <FormItem style="margin-top:10px">
-                                                <Button type="primary" @click="Search1">搜索</Button>
-                                                <Button type="ghost" @click="handleReset1('SearchValidate1')" style="margin-left: 8px">
-                                                    重置
-                                                </Button>
-                                            </FormItem>
-                                        </center>
-                                    </Form>
-                                </div>
-                            </Panel>
-                        </Collapse> -->
                     </Row>
                     <Row style="margin-top: 10px;">
                         <Table

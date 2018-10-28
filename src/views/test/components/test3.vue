@@ -58,22 +58,30 @@ export default {
                 {
                     typecode: 12,
                     date: "2018-10-01",
-                    text: "string"
+                    text: 100,
+                    num: 1,
+                    total: 100
                 },
                 {
                     typecode: 13,
                     date: "2018-10-02",
-                    text: "string2"
+                    text: 50,
+                    num: 2,
+                    total: 100
                 },
                 {
                     typecode: 14,
                     date: "2018-10-03",
-                    text: "string3"
+                    text: 20,
+                    num: 5,
+                    total: 100
                 },
                 {
                     typecode: 15,
                     date: "2018-10-04",
-                    text: "string4"
+                    text: 10,
+                    num: 10,
+                    total: 100
                 }
             ],
             header2: [
@@ -88,7 +96,8 @@ export default {
                             h('Select',{
                                 props:{
                                     value: this.data2[parmas.index].typecode,
-                                    transfer: false
+                                    transfer: false,
+                                    size: "small"
                                 },
                                 on: {
                                     "on-change": function(event){
@@ -123,7 +132,8 @@ export default {
                                 props:{
                                     value: this.data2[parmas.index].date,
                                     type: "date",
-                                    transfer: false
+                                    transfer: false,
+                                    size: "small"
                                 },
                                 on: {
                                     "on-change": function(event){
@@ -180,6 +190,7 @@ export default {
                                     value: this.data2[parmas.index].text,
                                     autosize: true,
                                     type: "textarea",
+                                    size: "small"
                                 },
                                 on: {
                                     "on-blur": function(event){
@@ -189,13 +200,13 @@ export default {
                                         // Object.assign(_self.data2[parmas.index], {text: event.target.value})
                                         // Object.assign({text: event}, _self.data2[parmas.index])
                                     },
-                                    // "on-enter":function(event){
-                                    //     console.log(event)
-                                    //     _self.data2[parmas.index].text = event.target.value
+                                    "on-enter":function(event){
+                                        console.log(event)
+                                        _self.data2[parmas.index].text = event.target.value
                                     //     // _self.data2[parmas.index].text = event.target.value
                                     //     // Object.assign(_self.data2[parmas.index], {text: event.target.value})
                                     //     // Object.assign({text: event}, _self.data2[parmas.index])
-                                    // },
+                                    },
                                 },
                                 style: {
                                     width: "100%"
@@ -203,7 +214,52 @@ export default {
                             })
                         ])
                     }
-                }
+                },
+                {
+                    title: "数量",
+                    minWidth: 200,
+                    width: 300,
+                    render: (h, parmas) => {
+                        let _self = this
+                        return h('div',[
+                            h('Input',{
+                                domProps: {
+                                },
+                                props:{
+                                    value: this.data2[parmas.index].num,
+                                    autosize: true,
+                                    type: "text",
+                                    size: "small"
+                                },
+                                on: {
+                                    //  失去焦点触发
+                                    "on-blur": function(event){
+                                        console.log(event)
+                                        _self.data2[parmas.index].num = event.target.value
+                                        _self.data2[parmas.index].total = _self.data2[parmas.index].num * _self.data2[parmas.index].text
+                                    },
+                                    //  敲回车触发
+                                    "on-enter": function(event){
+                                        console.log("enter-start")
+                                        console.log(event)
+                                        console.log("enter-end")
+                                        _self.data2[parmas.index].num = event.target.value
+                                        _self.data2[parmas.index].total = _self.data2[parmas.index].num * _self.data2[parmas.index].text
+                                    }
+                                },
+                                style: {
+                                    width: "100%"
+                                }
+                            })
+                        ])
+                    }
+                },
+                {
+                    title: "总价",
+                    minWidth: 200,
+                    width: 300,
+                    key: "total"
+                },
             ],
         }
     },
