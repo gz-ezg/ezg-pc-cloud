@@ -6,9 +6,9 @@
         <textarea class='tinymce-textarea' id="tinymceEditer"></textarea>
         
     </Card>
-        <Row>
+        <!-- <Row>
             <admin-table></admin-table>
-        </Row>
+        </Row> -->
     <Spin fix v-if="spinShow">
         <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
         <div>加载组件中...</div>
@@ -33,102 +33,360 @@
 <script>
 // import Button from './buttonGroups'
 // import Tableshow from './table'
-import tinymce from 'tinymce';
-import companyDetail  from '../../woa-components/companyDetail/CompanyDetail'
-import Bus from '../../../components/bus.js'
-import customerDetail from '../../woa-components/customerDetail/channelCustomer'
-import followUpData from '../../woa-components/followUpList/followUpIndex'
-import adminTable from './tables'
+import tinymce from "tinymce";
+import companyDetail from "../../woa-components/companyDetail/CompanyDetail";
+import Bus from "../../../components/bus.js";
+import customerDetail from "../../woa-components/customerDetail/channelCustomer";
+import followUpData from "../../woa-components/followUpList/followUpIndex";
+import adminTable from "./tables";
 
 export default {
-    name: "company",
-    components: {
-        // Button,
-        // Tableshow
-        companyDetail,
-        customerDetail,
-        followUpData,
-        adminTable
-    },
-    created: function(){
-
-    },
-    data(){
-        return{
-            spinShow: true,
-            company_id:"",
-            customeId:31681,
-            companyname:"广州则为信息科技有限公司",
-            content:"",
-            list:[
-                {id:1,content:"1231414141414"},
-                {id:2,content:"1231414141414"},
-                {id:3,content:"1231414141414"},
-                {id:4,content:"1231414141414"},
-                {id:5,content:"1231414141414"},
-            ],
-            html:""
+  name: "company",
+  components: {
+    // Button,
+    // Tableshow
+    companyDetail,
+    customerDetail,
+    followUpData,
+    adminTable
+  },
+  created: function() {},
+  data() {
+    return {
+      spinShow: true,
+      company_id: "",
+      customeId: 31681,
+      companyname: "广州则为信息科技有限公司",
+      ruanZhu: [
+        {
+          rznum: 51,
+          wgnum: 19,
+          synum: 29,
+          fmnum: 7
         }
+      ],
+      rongYu: [
+        {
+          XMMC: "省企业研究开发经费后补助",
+          XMLB: "科技 ",
+          SBXM: "",
+          NF: "2016",
+          Id: "52970df3-083c-4751-bf93-ec7c505b6e2b",
+          ZCJE: "62.6",
+          CreateDate: "2016-12-08"
+        },
+        {
+          XMMC: "省企业研究开发经费后补助",
+          XMLB: "科技 ",
+          SBXM: "",
+          NF: "2016",
+          Id: "52970df3-083c-4751-bf93-ec7c505b6e2b",
+          ZCJE: "62.6",
+          CreateDate: "2016-12-08"
+        },
+        {
+          XMMC: "省企业研究开发经费后补助",
+          XMLB: "科技 ",
+          SBXM: "",
+          NF: "2016",
+          Id: "52970df3-083c-4751-bf93-ec7c505b6e2b",
+          ZCJE: "62.6",
+          CreateDate: "2016-12-08"
+        },
+        {
+          XMMC: "省企业研究开发经费后补助",
+          XMLB: "科技 ",
+          SBXM: "",
+          NF: "2016",
+          Id: "52970df3-083c-4751-bf93-ec7c505b6e2b",
+          ZCJE: "62.6",
+          CreateDate: "2016-12-08"
+        },
+        {
+          XMMC: "省企业研究开发经费后补助",
+          XMLB: "科技 ",
+          SBXM: "",
+          NF: "2016",
+          Id: "52970df3-083c-4751-bf93-ec7c505b6e2b",
+          ZCJE: "62.6",
+          CreateDate: "2016-12-08"
+        },
+        {
+          XMMC: "省企业研究开发经费后补助",
+          XMLB: "科技 ",
+          SBXM: "",
+          NF: "2016",
+          Id: "52970df3-083c-4751-bf93-ec7c505b6e2b",
+          ZCJE: "62.6",
+          CreateDate: "2016-12-08"
+        },
+        {
+          XMMC: "省企业研究开发经费后补助",
+          XMLB: "科技 ",
+          SBXM: "",
+          NF: "2016",
+          Id: "52970df3-083c-4751-bf93-ec7c505b6e2b",
+          ZCJE: "62.6",
+          CreateDate: "2016-12-08"
+        },
+        {
+          XMMC: "省企业研究开发经费后补助",
+          XMLB: "科技 ",
+          SBXM: "",
+          NF: "2016",
+          Id: "52970df3-083c-4751-bf93-ec7c505b6e2b",
+          ZCJE: "62.6",
+          CreateDate: "2016-12-08"
+        },
+        {
+          XMMC: "省企业研究开发经费后补助",
+          XMLB: "科技 ",
+          SBXM: "",
+          NF: "2016",
+          Id: "52970df3-083c-4751-bf93-ec7c505b6e2b",
+          ZCJE: "62.6",
+          CreateDate: "2016-12-08"
+        }
+      ],
+      rongyuHtml: "",
+      userMsg: [
+        {
+            realname:"管理员",
+            mobilephone:"18813525653"
+        }
+      ],
+      content: "",
+      list: [
+        { id: 1, content: "1231414141414" },
+        { id: 2, content: "1231414141414" },
+        { id: 3, content: "1231414141414" },
+        { id: 4, content: "1231414141414" },
+        { id: 5, content: "1231414141414" }
+      ],
+      html: ""
+    };
+  },
+  methods: {
+    BusTest() {
+      this.$bus.emit("VueBusTest", "34324");
     },
-    methods: {
-        BusTest(){
-            this.$bus.emit('VueBusTest',"34324")
-        },
-        openCompanyDetail(){
-            // this.company_id = "34143"
-            this.company_id = "34324"
-            let _self = this
-            Bus.$emit('openCompanyDetail',_self.company_id)
-        },
-        openCustomerDetail(){
-            let _self = this
-            Bus.$emit('Open_customer_detail',_self.customeId)
-        },
-        init () {
-            this.$nextTick(() => {
-                let vm = this;
-                let height = document.body.offsetHeight - 300;
-                tinymce.init({
-                    selector: '#tinymceEditer',
-                    branding: false,
-                    elementpath: false,
-                    height: height,
-                    language: 'zh_CN.GB2312',
-                    menubar: 'edit insert view format table tools',
-                    plugins: [
-                        'advlist autolink lists link image charmap print preview hr anchor pagebreak imagetools',
-                        'searchreplace visualblocks visualchars code fullpage',
-                        'insertdatetime media nonbreaking save table contextmenu directionality',
-                        'emoticons paste textcolor colorpicker textpattern imagetools codesample'
-                    ],
-                    toolbar1: ' newnote print preview | undo redo | insert | styleselect | forecolor backcolor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image emoticons media codesample',
-                    autosave_interval: '20s',
-                    image_advtab: true,
-                    table_default_styles: {
-                        width: '100%',
-                        borderCollapse: 'collapse'
-                    },
-                    setup: function (editor) {
-                        editor.on('init', function (e) {
-                            vm.spinShow = false;
-                            if (localStorage.editorContent) {
-                                //  设置文本
-                                tinymce.get('tinymceEditer').setContent(localStorage.editorContent);
-                            }
-                        });
-                        editor.on('keydown', function (e) {
-                            //  获取文本
-                            localStorage.editorContent = tinymce.get('tinymceEditer').getContent();
-                        });
-                    }
-                });
-                
+    openCompanyDetail() {
+      // this.company_id = "34143"
+      this.company_id = "34324";
+      let _self = this;
+      Bus.$emit("openCompanyDetail", _self.company_id);
+    },
+    openCustomerDetail() {
+      let _self = this;
+      Bus.$emit("Open_customer_detail", _self.customeId);
+    },
+    init() {
+      this.$nextTick(() => {
+        let vm = this;
+        let height = document.body.offsetHeight - 300;
+        tinymce.init({
+          selector: "#tinymceEditer",
+          branding: false,
+          elementpath: false,
+          height: height,
+          language: "zh_CN.GB2312",
+          menubar: "edit insert view format table tools",
+          plugins: [
+            "advlist autolink lists link image charmap print preview hr anchor pagebreak imagetools",
+            "searchreplace visualblocks visualchars code fullpage",
+            "insertdatetime media nonbreaking save table contextmenu directionality",
+            "emoticons paste textcolor colorpicker textpattern imagetools codesample"
+          ],
+          toolbar1:
+            " newnote print preview | undo redo | insert | styleselect | forecolor backcolor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image emoticons media codesample",
+          autosave_interval: "20s",
+          image_advtab: true,
+          table_default_styles: {
+            width: "100%",
+            borderCollapse: "collapse"
+          },
+          setup: function(editor) {
+            editor.on("init", function(e) {
+              vm.spinShow = false;
+              if (localStorage.editorContent) {
+                //  设置文本
+                tinymce
+                  .get("tinymceEditer")
+                  .setContent(localStorage.editorContent);
+              }
             });
-        },
-        show(){
-            // let temp = tinymce.get('tinymceEditer').getContent();
-            // console.log(temp)
-            let temp = `<!DOCTYPE html>
+            editor.on("keydown", function(e) {
+              //  获取文本
+              localStorage.editorContent = tinymce
+                .get("tinymceEditer")
+                .getContent();
+            });
+          }
+        });
+      });
+    },
+    show() {
+      let temp = `<!DOCTYPE html>
+            <html>
+                <head>
+                </head>
+                <body>
+                    <h1 style="text-align: center;"><strong>${
+                      this.companyname
+                    }项目规划</strong></h1>
+                    <p><strong>&nbsp;</strong></p>
+                    <h1><strong>一、企业情况</strong></h1>
+                    <p style="text-align: center;">公司主营业务：</p>
+                    <table style="margin-left: auto; margin-right: auto;border-spacing:0px">
+                        <tbody>
+                            <tr>
+                                <td width="137" style="border-width: 1px; border-style: solid;">
+                                    <p style="text-align: center;">企业名称</p>
+                                </td>
+                                <td style="text-align: center;border-width: 1px; border-style: solid;" width="138">
+                                    <p>注册资本</p>
+                                </td>
+                                <td style="text-align: center;border-width: 1px; border-style: solid;" width="162">
+                                    <p>注册时间</p>
+                                </td>
+                                <td width="138" style="border-width: 1px; border-style: solid;">
+                                    <p style="text-align: center;">地址所属区</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="137" style="border-width: 1px; border-style: solid;">
+                                    <p>&nbsp;</p>
+                                </td>
+                                <td width="138" style="border-width: 1px; border-style: solid;">
+                                    <p>&nbsp;</p>
+                                </td>
+                                <td width="162" style="border-width: 1px; border-style: solid;">
+                                    <p>&nbsp;</p>
+                                </td>
+                                <td width="138" style="border-width: 1px; border-style: solid;">
+                                    <p>&nbsp;</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>&nbsp;</p>
+                    <h1><strong>二、</strong><strong>企业</strong><strong>知产状况与规划</strong></h1>
+                    <table style="margin-left: auto; margin-right: auto;border-spacing:0px">
+                        <tbody>
+                            <tr>
+                                <td colspan="2" width="574" style="border-width: 1px; border-style: solid;">
+                                    <p style="text-align: center;">现有知识产权及软著</p>
+                                </td>
+                            </tr>
+                            <tr style="text-align: center;">
+                                <td width="260" style="border-width: 1px; border-style: solid;">
+                                    <p>类型</p>
+                                </td>
+                                <td width="314" style="border-width: 1px; border-style: solid;">
+                                    <p>数量</p>
+                                </td>
+                            </tr>
+                            <tr style="text-align: center;">
+                                <td width="260" style="border-width: 1px; border-style: solid;">
+                                    <p>外观新型</p>
+                                </td>
+                                <td width="314" style="border-width: 1px; border-style: solid;">
+                                    <p>${this.ruanZhu[0].wgnum}</p>
+                                </td>
+                            </tr>
+                            <tr style="text-align: center;">
+                                <td width="260" style="border-width: 1px; border-style: solid;">
+                                    <p>实用专利</p>
+                                </td>
+                                <td width="314" style="border-width: 1px; border-style: solid;">
+                                    <p>${this.ruanZhu[0].synum}</p>
+                                </td>
+                            </tr>
+                            <tr style="text-align: center;">
+                                <td width="260" style="border-width: 1px; border-style: solid;">
+                                    <p>发明专利</p>
+                                </td>
+                                <td width="314" style="border-width: 1px; border-style: solid;">
+                                    <p>${this.ruanZhu[0].fmnum}</p>
+                                </td>
+                            </tr>
+                            <tr style="text-align: center;">
+                                <td width="260" style="border-width: 1px; border-style: solid;">
+                                    <p>软著</p>
+                                </td>
+                                <td width="314" style="border-width: 1px; border-style: solid;">
+                                    <p>${this.ruanZhu[0].rznum}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="text-align: center;"><strong>&nbsp;</strong></p>
+                    <table style="margin-left: auto; margin-right: auto;border-spacing:0px">
+                    <tbody>
+                    <tr>
+                    <td colspan="2" width="574" style="border-width: 1px; border-style: solid;">
+                    <p style="text-align: center;">荣誉</p>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td style="text-align: center;border-width: 1px; border-style: solid;" width="260">
+                    <p>申报内容</p>
+                    </td>
+                    <td style="text-align: center;border-width: 1px; border-style: solid;" width="314">
+                    <p>申报时间</p>
+                    </td>
+                    </tr>
+                    ${this.rongyuHtml}
+                    </tbody>
+                    </table>
+                    <h1><strong>三、</strong><strong>科技项目规划</strong></h1>
+                    <table style="margin-left: auto; margin-right: auto;border-spacing:0px">
+                    <tbody>
+                    <tr>
+                    <td style="text-align: center;border-width: 1px; border-style: solid;" width="58">
+                    <p>序号</p>
+                    </td>
+                    <td style="text-align: center;border-width: 1px; border-style: solid;" width="143">
+                    <p>项目名称</p>
+                    </td>
+                    <td style="text-align: center;border-width: 1px; border-style: solid;" width="239">
+                    <p>优惠补贴</p>
+                    </td>
+                    <td style="text-align: center;border-width: 1px; border-style: solid;" width="136">
+                    <p style="text-align: center;">预计申报时间</p>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td style="text-align: center;border-width: 1px; border-style: solid;" width="58">
+                    <p>&nbsp;</p>
+                    </td>
+                    <td style="text-align: center;border-width: 1px; border-style: solid;" width="143">
+                    <p>&nbsp;</p>
+                    </td>
+                    <td style="text-align: center;border-width: 1px; border-style: solid;" width="239">
+                    <p>&nbsp;</p>
+                    </td>
+                    <td style="text-align: center;border-width: 1px; border-style: solid;" width="136">
+                    <p>&nbsp;</p>
+                    </td>
+                    </tr>
+                    </tbody>
+                    </table>
+                    <p style="text-align: center;"><strong>&nbsp;</strong></p>
+                    <h1 style="text-align: left;"><strong>四、亿账柜优势</strong></h1>
+                    <p style="text-align: left;text-indent: 32px;line-height:2em">1、税政解读（平台提供实时最新科技政策，并提供解读）；</p>
+                    <p style="text-align: left;text-indent: 32px;line-height:2em">2、一对一匹配（根据企业情况与项目申报时间相结合，匹配适合的项目为企业主申报）；</p>
+                    <p style="text-align: left;text-indent: 32px;line-height:2em">3、专业团队支持（亿账柜将提供由2位项目技术工程师、1位财务专家和项目经理组成的项目团队，实时跟进项目规划与申报）；</p>
+                    <p style="text-align: left;text-indent: 32px;line-height:2em">4、流程清晰明了（申报时，企业只需准备基础资料与报告，亿账柜将结合企业发展情况，制定申报材料）；</p>
+                    <p style="text-align: left;text-indent: 32px;line-height:2em">5、一站式服务（形成企业主的贴心项目管家，无论是资质认定、政府补贴，还是区域配套资金，都将为企业设计一整套服务方案与流程，节省时间成本和精力，亿账柜全部帮您搞定！</p>
+                    <p style="text-align: left;text-indent: 32px;">&nbsp;</p>
+                    <p style="text-align: right;">广州亿账柜信息科技有限公司</p>
+                    <p style="text-align: right;">销售名称:${this.userMsg[0].realname}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                    <p style="text-align: right;">联系方式:${this.userMsg[0].mobilephone}&nbsp;&nbsp;&nbsp;</p>
+                    </body>
+                    </html>`;
+
+      let temp2 = `<!DOCTYPE html>
                         <html>
                         <head>
                         </head>
@@ -137,7 +395,9 @@ export default {
                                 <strong><span style="line-height: 300%; font-size: 35px; font-family: 微软雅黑;"><img src="../ueditor1_4_3_3-utf8-jsp/utf8-jsp/jsp/upload/image/20180427/1524823137220094208.png" title="1524823137220094208.png" alt="QQ图片20180422141007.png" width="90%" /></span></strong>
                             </p>
                             <p style="margin-top:16px;margin-bottom:16px;margin-left:0;text-indent:0;text-align:center;line-height:300%">
-                                <strong><span style="line-height: 300%; font-size: 35px; font-family: 微软雅黑;">${this.companyname}</span></strong>
+                                <strong><span style="line-height: 300%; font-size: 35px; font-family: 微软雅黑;">${
+                                  this.companyname
+                                }</span></strong>
                             </p>
                             <p style="margin-top:0;margin-bottom:0;margin-left:0;text-indent:0;text-align:center">
                                 <strong><span style="font-size: 48px; font-family: 微软雅黑;">项目咨询方案</span></strong>
@@ -547,135 +807,52 @@ export default {
                                 <br/>
                             </p>
                         </body>
-                        </html>`
-            tinymce.get('tinymceEditer').setContent(temp);
-            this.content = temp
-        },
-
-        asyc_show(){
-            return new Promise(function(resolve,reject){
-
-            })
-        },
-
-        downAccoutProductivity(){
-            let _self = this
-            let field = [
-                    {field:'name',title:'职工'},
-                    {field:'product1',title:'0申报代理记账（9元/1分）'},
-                    {field:'product2',title:'小规模代理记账(25元/2分)'},
-                    {field:'product3',title:'一般纳税人代理记账(45元/5分)'},
-                    {field:'product4',title:'小规模高新(35元/3分)'},
-                    {field:'product5',title:'一般纳税人高新(85元/7.5分)'},
-                    {field:'totalmoney',title:'总计'},
-                    {field:'totalscore',title:'工作量总分'},
-                    // {field:'serverrealname',title:'服务人员'},
-                    // {field:'period',title:'服务周期'}
-                    ]
-                let url = `api/system/queryAccPerDetail/list`
-                let config = {
-                        sort:'updatedate',
-                        service_type:'dljz',
-                        page: '1',
-                        pageSize: '1000000',
-                        date:'201805',
-                        // CompanyName: _self.SearchValidate.CompanyName,
-                        // server_realname: _self.SearchValidate.server_realname,
-                        // followby_realname: _self.SearchValidate.followby_realname,
-                        // departname: _self.SearchValidate.departname,
-                        export: 'Y',
-                        exportField: encodeURI(JSON.stringify(field))
-                }
-                let toExcel = this.$MergeURL(url, config)
-                console.log(toExcel)
-                window.open(toExcel)
-        },
-        downMarketProductivityTotal(){
-            let _self = this
-            let field = [
-                    {field:'realname',title:'职工'},
-                    {field:'totalmoney',title:'订单总价'},
-                    {field:'ticheng',title:'提成'},
-                    ]
-                let url = `api/system/queryAccPerDetail/list`
-                let config = {
-                        sort:'updatedate',
-                        service_type:'dljz',
-                        page: '1',
-                        pageSize: '1000000',
-                        starttime:'2018-06-01',
-                        endtime:'2018-07-01',
-                        // CompanyName: _self.SearchValidate.CompanyName,
-                        // server_realname: _self.SearchValidate.server_realname,
-                        // followby_realname: _self.SearchValidate.followby_realname,
-                        // departname: _self.SearchValidate.departname,
-                        export: 'Y',
-                        exportField: encodeURI(JSON.stringify(field))
-                }
-                let toExcel = this.$MergeURL(url, config)
-                console.log(toExcel)
-                window.open(toExcel)
-        },
-        downMarketProductivityDetail(){
-            let _self = this
-            let field = [
-                    {field:'realname',title:'市场人员'},
-                    {field:'ordercode',title:'订单号'},
-                    {field:'paytime',title:'付款时间'},
-                    {field:'area',title:'地区'},
-                    {field:'departname',title:'部门'},
-                    {field:'paynumber',title:'paynumber'},
-                    {field:'realnumber',title:'realnumber'},
-                    {field:'name',title:'客户名称'},
-                    {field:'companyname',title:'公司名称'},
-                    {field:'totalnumber',title:'totalnumber'},
-                    {field:'itempaynumber',title:'itempaynumber'},
-                    {field:'product',title:'产品名称'},
-                    {field:'skuname',title:'skuname'},
-                    {field:'memo',title:'memo'},
-                    {field:'cluesources',title:'cluesources'},
-
-                    ]
-                let url = `api/system/queryAccPerDetail/list`
-                let config = {
-                        sort:'updatedate',
-                        service_type:'dljz',
-                        page: '1',
-                        pageSize: '1000000',
-                        starttime:'2018-06-01',
-                        endtime:'2018-07-01',
-                        // CompanyName: _self.SearchValidate.CompanyName,
-                        // server_realname: _self.SearchValidate.server_realname,
-                        // followby_realname: _self.SearchValidate.followby_realname,
-                        // departname: _self.SearchValidate.departname,
-                        export: 'Y',
-                        exportField: encodeURI(JSON.stringify(field))
-                }
-                let toExcel = this.$MergeURL(url, config)
-                console.log(toExcel)
-                window.open(toExcel)
-        },
-        openFollowUPdata(){
-            this.$bus.emit('global_follow_up_list',['36979',"广州时汇日用品有限公司","胡睿","45561"])
-        }
+                        </html>`;
+      tinymce.get("tinymceEditer").setContent(temp);
+      this.content = temp;
     },
-    mounted () {
-        this.init();
-        let template_array = []
-        for(let i = 0; i<this.list.length;i++){
+
+    asyc_show() {
+      return new Promise(function(resolve, reject) {});
+    },
+
+    text2html(){
+        let template_array = [];
+        for(let i = 0; i < this.rongYu.length; i++){
             let temp = `<tr>
-                    <td width="667" valign="top" style="border-width: 1px; border-style: solid;">${this.list[i].id}</td>
-                    <td width="256.66666666666674" valign="top" style="border-width: 1px; border-style: solid;">${this.list[i].content}</td>
-                 </tr>`
+                            <td width="260" style="border-width: 1px; border-style: solid;text-align: center;">
+                                <p>${this.rongYu[i].XMMC}</p>
+                            </td>
+                            <td width="314" style="border-width: 1px; border-style: solid;text-align: center;">
+                                <p>${this.rongYu[i].CreateDate}</p>
+                            </td>
+                        </tr>`
             template_array.push(temp)
         }
-        this.html = template_array.join("")
-        
-    },
-    destroyed () {
-        tinymce.get('tinymceEditer').destroy();
+        this.rongyuHtml = template_array.join("")
     }
-}
+  },
+  mounted() {
+    this.init();
+    this.text2html()
+    // let template_array = [];
+    // for (let i = 0; i < this.list.length; i++) {
+    //   let temp = `<tr>
+    //                 <td width="667" valign="top" style="border-width: 1px; border-style: solid;">${
+    //                   this.list[i].id
+    //                 }</td>
+    //                 <td width="256.66666666666674" valign="top" style="border-width: 1px; border-style: solid;">${
+    //                   this.list[i].content
+    //                 }</td>
+    //              </tr>`;
+    //   template_array.push(temp);
+    // }
+    // this.html = template_array.join("");
+  },
+  destroyed() {
+    tinymce.get("tinymceEditer").destroy();
+  }
+};
 </script>
 
 
@@ -820,3 +997,8 @@ blockquote:['blockquote_desc','mceBlockQuote'],
 reply:['replace_desc','reply'],
 
 -->
+
+<style>
+table {
+}
+</style>

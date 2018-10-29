@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<h1 style="text-align: center;"><strong>XX有限公司项目规划</strong></h1>
+<p><strong>&nbsp;</strong></p>
+<h1><strong>一、企业情况</strong></h1>
+<p style="text-align: center;">XX公司主营业务：</p>
+<table style="margin-left: auto; margin-right: auto;">
+<tbody>
+<tr>
+<td width="137" style="border-width: 1px; border-style: solid;">
+<p style="text-align: center;">企业名称</p>
+</td>
+<td style="text-align: center;border-width: 1px; border-style: solid;" width="138">
+<p>注册资本</p>
+</td>
+<td style="text-align: center;border-width: 1px; border-style: solid;" width="162">
+<p>注册时间</p>
+</td>
+<td width="138" style="border-width: 1px; border-style: solid;">
+<p style="text-align: center;">地址所属区</p>
+</td>
+</tr>
+<tr>
+<td width="137" style="border-width: 1px; border-style: solid;">
+<p>&nbsp;</p>
+</td>
+<td width="138" style="border-width: 1px; border-style: solid;">
+<p>&nbsp;</p>
+</td>
+<td width="162" style="border-width: 1px; border-style: solid;">
+<p>&nbsp;</p>
+</td>
+<td width="138" style="border-width: 1px; border-style: solid;">
+<p>&nbsp;</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<h1><strong>二、</strong><strong>企业</strong><strong>知产状况与规划</strong></h1>
+<table style="margin-left: auto; margin-right: auto;">
+<tbody>
+<tr>
+<td colspan="2" width="574" style="border-width: 1px; border-style: solid;">
+<p style="text-align: center;">现有知识产权及软著</p>
+</td>
+</tr>
+<tr style="text-align: center;">
+<td width="260" style="border-width: 1px; border-style: solid;">
+<p>类型</p>
+</td>
+<td width="314" style="border-width: 1px; border-style: solid;">
+<p>数量</p>
+</td>
+</tr>
+<tr style="text-align: center;">
+<td width="260" style="border-width: 1px; border-style: solid;">
+<p>外观新型</p>
+</td>
+<td width="314" style="border-width: 1px; border-style: solid;">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr style="text-align: center;">
+<td width="260" style="border-width: 1px; border-style: solid;">
+<p>实用专利</p>
+</td>
+<td width="314" style="border-width: 1px; border-style: solid;">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr style="text-align: center;">
+<td width="260" style="border-width: 1px; border-style: solid;">
+<p>发明专利</p>
+</td>
+<td width="314" style="border-width: 1px; border-style: solid;">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr style="text-align: center;">
+<td width="260" style="border-width: 1px; border-style: solid;">
+<p>软著</p>
+</td>
+<td width="314" style="border-width: 1px; border-style: solid;">
+<p>&nbsp;</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p style="text-align: center;"><strong>&nbsp;</strong></p>
+<table style="margin-left: auto; margin-right: auto;">
+<tbody>
+<tr>
+<td colspan="2" width="574" style="border-width: 1px; border-style: solid;">
+<p style="text-align: center;">荣誉</p>
+</td>
+</tr>
+<tr>
+<td style="text-align: center;" width="260" style="border-width: 1px; border-style: solid;">
+<p>申报内容</p>
+</td>
+<td style="text-align: center;border-width: 1px; border-style: solid;" width="314">
+<p>申报时间</p>
+</td>
+</tr>
+<tr>
+<td width="260" style="border-width: 1px; border-style: solid;">
+<p>&nbsp;</p>
+</td>
+<td width="314" style="border-width: 1px; border-style: solid;">
+<p>&nbsp;</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p style="text-align: center;"><strong>三、</strong><strong>科技项目规划</strong></p>
+<table>
+<tbody>
+<tr>
+<td style="text-align: center;border-width: 1px; border-style: solid;" width="58">
+<p>序号</p>
+</td>
+<td style="text-align: center;border-width: 1px; border-style: solid;" width="143">
+<p>项目名称</p>
+</td>
+<td style="text-align: center;border-width: 1px; border-style: solid;" width="239">
+<p>优惠补贴</p>
+</td>
+<td style="text-align: center;border-width: 1px; border-style: solid;" width="136">
+<p style="text-align: center;">预计申报时间</p>
+</td>
+</tr>
+<tr>
+<td style="text-align: center;border-width: 1px; border-style: solid;" width="58">
+<p>&nbsp;</p>
+</td>
+<td style="text-align: center;border-width: 1px; border-style: solid;" width="143">
+<p>&nbsp;</p>
+</td>
+<td style="text-align: center;border-width: 1px; border-style: solid;" width="239">
+<p>&nbsp;</p>
+</td>
+<td style="text-align: center;border-width: 1px; border-style: solid;" width="136">
+<p>&nbsp;</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p style="text-align: center;"><strong>&nbsp;</strong></p>
+<p style="text-align: left;"><strong>四、亿账柜优势</strong></p>
+<p style="text-align: left;text-indent: 32px;">1、税政解读（平台提供实时最新科技政策，并提供解读）；</p>
+<p style="text-align: left;text-indent: 32px;">2、一对一匹配（根据企业情况与项目申报时间相结合，匹配适合的项目为企业主申报）；</p>
+<p style="text-align: left;text-indent: 32px;">3、专业团队支持（亿账柜将提供由2位项目技术工程师、1位财务专家和项目经理组成的项目团队，实时跟进项目规划与申报）；</p>
+<p style="text-align: left;text-indent: 32px;">4、流程清晰明了（申报时，企业只需准备基础资料与报告，亿账柜将结合企业发展情况，制定申报材料）；</p>
+<p style="text-align: left;text-indent: 32px;">5、一站式服务（形成企业主的贴心项目管家，无论是资质认定、政府补贴，还是区域配套资金，都将为企业设计一整套服务方案与流程，节省时间成本和精力，亿账柜全部帮您搞定！</p>
+<p style="text-align: left;text-indent: 32px;">&nbsp;</p>
+<p style="text-align: right;">广州亿账柜信息科技有限公司</p>
+<p style="text-align: right;">销售名称</p>
+<p style="text-align: right;">联系方式</p>
+</body>
+</html>

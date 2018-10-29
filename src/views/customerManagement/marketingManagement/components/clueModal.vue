@@ -13,6 +13,7 @@
         <Modal 
             v-model="openClueModal"
             width="1000"
+            title="线索"
         >
             <Tabs value="name1"> 
                 <TabPane label="未领取" name="name1">

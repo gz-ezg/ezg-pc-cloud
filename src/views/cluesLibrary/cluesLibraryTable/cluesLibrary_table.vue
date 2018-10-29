@@ -507,7 +507,8 @@ import flowVue from '../../woa-components/next/flow.vue';
                     clueMemo: '',
                     customerName: '',
                     companyid:"",
-                    companyname:""
+                    companyname:"",
+                    customerId: ""
                 },
                 formValidate22: {
                     customerTel: '',
@@ -1336,18 +1337,19 @@ import flowVue from '../../woa-components/next/flow.vue';
                 }, 2000);
             },
 
-            rowSelect(a) {
-                let _self = this
-                _self.companyDetail = a
-            },
+            // rowSelect(a) {
+            //     let _self = this
+            //     _self.companyDetail = a
+            // },
 
-            ok3() {
-                let _self = this
-                _self.formValidate.companyname =  _self.companyDetail.CompanyName
-                _self.formValidate.companyid =  _self.companyDetail.cpid
-                // _self.formValidate.customerName = _self.companyDetail.customerName
-                // _self.formValidate.customerTel = _self.companyDetail.customerTel
-            },
+            // ok3() {
+            //     let _self = this
+            //     _self.formValidate.companyname =  _self.companyDetail.CompanyName
+            //     _self.formValidate.companyid =  _self.companyDetail.cpid
+            //     _self.formValidate.customerId = _self.companyDetail.customerId
+            //     // _self.formValidate.customerName = _self.companyDetail.customerName
+            //     // _self.formValidate.customerTel = _self.companyDetail.customerTel
+            // },
 
             pageChange3(a) {
                 this.page3 = a
@@ -1484,7 +1486,8 @@ import flowVue from '../../woa-components/next/flow.vue';
                             balance: _res.rows[i].balance,
                             gdsreport: _gds,
                             followby:_res.rows[i].followby,
-                            followbyid: _res.rows[i].followbyid
+                            followbyid: _res.rows[i].followbyid,
+                            customerId: _res.rows[i].customerId
                         })
                     }
                 }
@@ -1507,6 +1510,7 @@ import flowVue from '../../woa-components/next/flow.vue';
                 _self.formValidate.companyid = a.cpid
                 _self.formValidate.customerTel = a.TEL
                 _self.formValidate.customerName = a.NAME
+                _self.formValidate.customerId = a.customerId
                 _self.selectCompany = false
                 this.flag = false
             },

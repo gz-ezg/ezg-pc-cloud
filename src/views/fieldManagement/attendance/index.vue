@@ -75,6 +75,7 @@ export default {
             }
 
             function success(res){
+                _self.data2 = []
                 _self.data = res.data.data.rows
                 _self.user_alias_name = res.data.data.rows[0]['user_alias_name']
                 let temp = res.data.data.rows[0]

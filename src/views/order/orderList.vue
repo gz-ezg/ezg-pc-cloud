@@ -1731,6 +1731,7 @@
 
                 function doSuccess(response) {
                     _self.basePropertys = response.data.data
+                    console.log(_self.basePropertys)
                     document.getElementById('product_name').textContent = _self.basePropertys[0].product
                     _self.doProductSKU()
                 }

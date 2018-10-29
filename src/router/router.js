@@ -201,7 +201,7 @@ export const appRouter = [
             // },
             {
                 path: 'test5',
-                title: '工具测试',
+                title: '新订单测试',
                 name: 'test4_index',
                 component: resolve => {
                     require(['@/views/test/components/test5.vue'], resolve);
@@ -409,6 +409,16 @@ export const appRouter = [
                 name:"statistics_index",
                 component: resolve => {
                     require(['@/views/marketplaceManagement/statistics/index.vue'], resolve);
+                }
+            },
+            {
+                access: 6115,
+                meta: 6115,
+                path:'clueControl',
+                title:'公海池控制',
+                name:"clueControl_index",
+                component: resolve => {
+                    require(['@/views/marketplaceManagement/clueControl/index.vue'], resolve);
                 }
             }
         ]
@@ -624,17 +634,18 @@ export const appRouter = [
                 }
             },
             {
-                //  订单审批新
+                //  订单审批废弃easyUI版
                 access: 6019,
                 meta: 6019,
                 path: 'orderApprove',
-                title: '余款管理',
+                title: '订单审批',
                 name: 'orderApprove_index',
                 component: resolve => {
                     require(['@/views/order/orderApprove/index.vue'], resolve);
                 }
             },
             // {
+            //     //   easyUI版
             //     access: 6019,
             //     meta: 6019,
             //     path: 'orderApprove',
@@ -1105,6 +1116,13 @@ export const appRouter = [
         name: 'solutionTool',
         component: Main,
         children: [
+            {
+                access: 6141,
+                meta: 6141,
+                path: 'useRecord', title: '生成方案', name: 'tool_index', component: resolve => {
+                    require(['@/views/solutionTool/tools/index.vue'], resolve);
+                }
+            },
             {
                 access: 6141,
                 meta: 6141,
