@@ -665,7 +665,16 @@ export const appRouter = [
                     require(['@/views/order/spareManagement/spareManagement.vue'], resolve);
                 }
             },
-            
+            {
+                access: 6018,
+                meta: 6018,
+                path: 'invoiceManagement',
+                title: '发票管理',
+                name:"invoicelist_index",
+                component: resolve => {
+                    require(['@/views/order/invoiceManagement/index.vue'], resolve);
+                }
+            },
             // {
             //     access:6020,
             //     path: 'orderLog',
@@ -952,16 +961,6 @@ export const appRouter = [
                     require(['@/views/administrationManagement/resumeManagement/index.vue'], resolve);
                 }
             },
-            {
-                access: 6096,
-                meta: 6096,
-                path: 'invoiceManagement',
-                title: '发票管理',
-                name:"invoicelist_index",
-                component: resolve => {
-                    require(['@/views/administrationManagement/invoiceManagement/index.vue'], resolve);
-                }
-            },
         ]
     },
     {
@@ -1119,15 +1118,15 @@ export const appRouter = [
             {
                 access: 6141,
                 meta: 6141,
-                path: 'useRecord', title: '生成方案', name: 'tool_index', component: resolve => {
-                    require(['@/views/solutionTool/tools/index.vue'], resolve);
+                path: 'useRecord', title: '使用记录', name: 'useRecord_index', component: resolve => {
+                    require(['@/views/solutionTool/useRecord/index.vue'], resolve);
                 }
             },
             {
                 access: 6141,
                 meta: 6141,
-                path: 'useRecord', title: '使用记录', name: 'useRecord_index', component: resolve => {
-                    require(['@/views/solutionTool/useRecord/index.vue'], resolve);
+                path: 'product', title: '方案产品', name: 'tool_product_index', component: resolve => {
+                    require(['@/views/solutionTool/tools/index.vue'], resolve);
                 }
             },
         ]

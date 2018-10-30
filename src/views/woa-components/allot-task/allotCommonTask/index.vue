@@ -93,6 +93,14 @@
                                                 </FormItem>
                                             </Col>
                                         </Row>
+                                        <Row :gutter="16">
+                                            <Col span="8">
+                                                <FormItem prop="allottime" label="分配时间：">
+                                                    <DatePicker type="daterange" v-model="formInlineY.allottime" placeholder="" size="small">
+                                                    </DatePicker>
+                                                </FormItem>
+                                            </Col>
+                                        </Row>
                                         <FormItem>
                                             <Button type="primary" @click="searchY">搜索</Button>
                                             <Button type="ghost" style="margin-left:20px" @click="resetY">重置</Button>
@@ -138,6 +146,7 @@
 </template>
 
 <script>
+import { DateFormat } from "../../../../libs/utils.js"
 // import Bus from '../../../components/bus'
 import AllotDetail from './detail'
 import allotService from './allot_service'
@@ -176,7 +185,8 @@ import allotAccountService from './allot_accout_service'
                 formInlineY:{
                     companyname:'',
                     servicename:'',
-                    departname:""
+                    departname:"",
+                    allottime: []
                 },
                 //  未分配任务表头
                 columns: [
@@ -578,6 +588,7 @@ import allotAccountService from './allot_accout_service'
                 var _self = this
                 _self.Yloading = true
                 var url = 'api/order/workOrderList?&sortField=UpdateDate'
+                console.log(_self.formInlineY.allottime)
                 var config = {
                     params:{
                         page:_self.Ypage,
@@ -586,9 +597,12 @@ import allotAccountService from './allot_accout_service'
                         companyName:_self.formInlineY.companyname,
                         serviceName:_self.formInlineY.servicename,
                         departname: _self.formInlineY.departname,
-                        serviceDept:`${_self.local_router_name}`
+                        serviceDept:`${_self.local_router_name}`,
+                        ballottime: DateFormat(_self.formInlineY.allottime[0]),
+                        eallottime: DateFormat(_self.formInlineY.allottime[1]),
                     }
                 }
+
 
                 _self.$http.get(url,config).then(function(res){
                     _self.$backToLogin(res)                    
@@ -658,6 +672,7 @@ import allotAccountService from './allot_accout_service'
                 this.formInlineY.companyname = ""
                 this.formInlineY.servicename = ""
                 this.formInlineY.departname = ""
+                this.formInlineY.allottime = []
                 this.getDataY()
             },
             //  勾选检测

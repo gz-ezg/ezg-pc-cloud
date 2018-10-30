@@ -204,6 +204,11 @@ export default {
                     minWidth: 120
                 },
                 {
+                    title: "归属公司",
+                    key: "companyname",
+                    minWidth: 180
+                },
+                {
                     title: "申请备注",
                     key: "application_memo",
                     minWidth: 120
@@ -231,7 +236,7 @@ export default {
                 {
                     title: "操作",
                     key: "action",
-                    minWidth: 200,
+                    minWidth: 250,
                     render: (h, parmas) =>{
                         return h('div',[
                             h('Button',{
@@ -256,6 +261,17 @@ export default {
                                     }
                                 }
                             },'[协商记录]'),
+                            h('Button',{
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.cancel_request(parmas.row.id)
+                                    }
+                                }
+                            },'[取消交接]'),
                         ])
                     }
                 }
@@ -377,6 +393,23 @@ export default {
         select_row(e){
             // console.log(e)
             this.selectRow = e
+        },
+        cancel_request(e){
+            let _self = this
+            let url = `api/customer/file/connect/request/cancel`
+            let config = {
+                connectRequestId: e
+            }
+
+            function success(res){
+                _self.get_data()
+            }
+
+            function fail(err){
+            }
+
+            this.$Post(url, config, success, fail)
+            
         }
     },
     created(){

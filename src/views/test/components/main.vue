@@ -816,7 +816,7 @@ export default {
       return new Promise(function(resolve, reject) {});
     },
 
-    text2html(){
+    rongyu_text2html(){
         let template_array = [];
         for(let i = 0; i < this.rongYu.length; i++){
             let temp = `<tr>
@@ -830,6 +830,21 @@ export default {
             template_array.push(temp)
         }
         this.rongyuHtml = template_array.join("")
+    },
+    shenbao_text2html(){
+        let template_array = [];
+        for(let i = 0; i < this.rongYu.length; i++){
+            let temp = `<tr>
+                            <td width="260" style="border-width: 1px; border-style: solid;text-align: center;">
+                                <p>${this.rongYu[i].XMMC}</p>
+                            </td>
+                            <td width="314" style="border-width: 1px; border-style: solid;text-align: center;">
+                                <p>${this.rongYu[i].CreateDate}</p>
+                            </td>
+                        </tr>`
+            template_array.push(temp)
+        }
+        this.shenbaoHtml = template_array.join("")
     }
   },
   mounted() {

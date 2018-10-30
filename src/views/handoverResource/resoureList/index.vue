@@ -207,17 +207,20 @@ export default {
                     minWidth: 250,
                     render: (h, parmas) =>{
                         return h('div',[
-                            // h('Button',{
-                            //     props: {
-                            //         type: 'text',
-                            //         size: 'small'
-                            //     },
-                            //     on: {
-                            //         click: () => {
-                            //             this.open_img(parmas)
-                            //         }
-                            //     }
-                            // },'[ 查看照片 ]'),
+                            h('Button',{
+                                style: {
+                                    display: (localStorage.getItem("realname") == "管理员" ) ? "inline-block" : "none"
+                                },
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.delete_file(parmas.row)
+                                    }
+                                }
+                            },'[ 删除 ]'),
                             h('Button',{
                                 style: {
                                     display: (localStorage.getItem("realname") == "管理员" ) ? "inline-block" : "none"
@@ -373,6 +376,24 @@ export default {
         },
         select_change(e){
             this.selectRow = e
+        },
+        delete_file(e){
+            let _self = this
+            let url = `api/customer/file/del`
+
+            let config = {
+                id: e.id
+            }
+
+            function success(res){
+                _self.get_data()
+            }
+
+            function fail(err){
+
+            }
+
+            this.$Post(url, config, success, fail)
         }
     },
     created(){

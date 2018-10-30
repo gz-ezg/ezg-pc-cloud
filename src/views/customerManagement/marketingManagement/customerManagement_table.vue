@@ -453,6 +453,12 @@ export default {
           sortable: "custom"
         },
         {
+          title: "线索权重",
+          key: "clue_ranks",
+          minWidth: 120,
+          sortable: "custom"
+        },
+        {
           title: "更新时间",
           key: "updatedate",
           width: 120,
@@ -688,7 +694,7 @@ export default {
 
           a.createby = response[i].createbyname;
           a.followby = response[i].followbyname;
-
+          a.clue_ranks = response[i].clue_ranks;
           if (response[i].CREATEDATE == null) {
             a.updatedate = null;
           } else {

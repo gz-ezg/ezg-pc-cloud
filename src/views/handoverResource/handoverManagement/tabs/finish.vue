@@ -207,6 +207,11 @@ export default {
                     minWidth: 120
                 },
                 {
+                    title: "归属公司",
+                    key: "companyname",
+                    minWidth: 180
+                },
+                {
                     title: "申请备注",
                     key: "application_memo",
                     minWidth: 120

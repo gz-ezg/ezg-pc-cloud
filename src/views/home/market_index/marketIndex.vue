@@ -267,7 +267,8 @@
             >
                 <Row>
                     <center>
-                        <img src="../../../images/saomahuoqufangan.jpg" alt="">
+                        <!-- <img src="../../../images/saomahuoqufangan.jpg" alt=""> -->
+                        <div id="qrcode"></div>
                     </center>
                 </Row>
                 <div slot="footer"></div>
@@ -279,6 +280,7 @@
 </template>
 
 <script>
+import QRCode from "qrcodejs2";
 import attitude from './attitude'
 import classic from './classic'
 import baojia from './baojia'
@@ -544,6 +546,16 @@ export default {
         },
         open_fangan_code(){
             this.openFangAnCode = true
+            document.getElementById("qrcode").innerHTML = "";
+            let url = `http://wq.zgcfo.cn/#/project/` + localStorage.getItem("id");
+            let qr = new QRCode("qrcode", {
+                text: url,
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
         },
         open_clue(){
             // setTimeout(() => {

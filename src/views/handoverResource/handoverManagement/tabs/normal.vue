@@ -24,6 +24,12 @@
                                         </Input>
                                     </FormItem>
                                 </Col>
+                                <Col span="8">
+                                    <FormItem prop="companyname" label="归属公司：">
+                                        <Input type="text" size="small" v-model="seacrhFormInline.companyname" placeholder="">
+                                        </Input>
+                                    </FormItem>
+                                </Col>
                             </Row>
                             <FormItem>
                                 <Button type="primary" @click="search">搜索</Button>
@@ -37,8 +43,8 @@
         <Row>
             <ButtonGroup>
                 <Button type="primary" icon="plus" @click="create_file">交接入库</Button>
-                <Button type="primary" icon="plus" @click="create_request">申请交接</Button>
-                <Button type="primary" icon="plus" @click="create_out">交接出库</Button>
+                <Button type="primary" icon="plus" @click="create_request">内部交接</Button>
+                <Button type="primary" icon="plus" @click="create_out">交接客户</Button>
                 <Button type="primary" icon="plus" @click="confirm_request">交接处理</Button>
             </ButtonGroup>
         </Row>
@@ -190,6 +196,7 @@ export default {
             seacrhFormInline: {
                 receiver_realname: "",
                 applicant_realname: "",
+                companyname: ""
             },
             page: 1,
             pageSize: 10,
@@ -205,6 +212,11 @@ export default {
                     title: "接收人",
                     key: "receiver_name",
                     minWidth: 120
+                },
+                {
+                    title: "归属公司",
+                    key: "companyname",
+                    minWidth: 180
                 },
                 {
                     title: "申请备注",
@@ -303,6 +315,7 @@ export default {
                     pageSize: _self.pageSize,
                     applicant_realname: _self.seacrhFormInline.applicant_realname,
                     receiver_realname: _self.seacrhFormInline.receiver_realname,
+                    companyname: _self.seacrhFormInline.companyname,
                     application_status: "normal",
                     sortField: "id"
                 }
@@ -351,6 +364,7 @@ export default {
             this.page = 1
             this.seacrhFormInline.receiver_realname = ""
             this.seacrhFormInline.applicant_realname = ""
+            this.seacrhFormInline.companyname = ""
             this.get_data()
         },
         create_request(){

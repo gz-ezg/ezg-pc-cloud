@@ -56,18 +56,21 @@ export default {
                                     type: "text",
                                     size: "small"
                                 },
+                                "class": {
+                                    clueNum: true
+                                },
                                 on: {
                                     //  失去焦点触发
                                     "on-blur": function(event){
-                                        console.log(event)
+                                        // console.log(event)
                                         // _self.tableData[parmas.index].customer_receipt_max_num = event.target.value
                                         _self.save_new_clue_num(parmas.row.id, event.target.value)
                                     },
                                     //  敲回车触发
-                                    // "on-enter": function(event){
-                                    //     _self.tableData[parmas.index].customer_receipt_max_num = event.target.value
-                                    //     _self.save_new_clue_num(parmas.row.id, event.target.value)
-                                    // }
+                                    "on-enter": function(event){
+                                        // _self.tableData[parmas.index].customer_receipt_max_num = event.target.value
+                                        _self.save_new_clue_num(parmas.row.id, event.target.value)
+                                    }
                                 },
                                 style: {
                                     width: "100%"
@@ -156,7 +159,7 @@ export default {
     },
     save_new_clue_num(id, num){
         let _self = this
-        let url = `api/user/updateUser`
+        let url = `api/user/update/detail`
         let config = {
             id: id,
             customerReceiptMaxNum: num,
@@ -182,5 +185,7 @@ export default {
 </script>
 
 <style>
-
+.clueNum .ivu-input{
+    border: 0px solid #dddee1
+}
 </style>
