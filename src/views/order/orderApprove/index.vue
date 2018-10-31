@@ -10,7 +10,7 @@
                 </TabPane>
             </Tabs>
         </div>
-        <aduit-log></aduit-log>
+        <!-- <aduit-log></aduit-log> -->
         <deal-with-approve :payDirs="payDirs"></deal-with-approve>
         <order-detail :payDirs="payDirs"></order-detail>
     </div>
@@ -20,7 +20,7 @@
 import unApproveList from './unApproveList'
 import approveList from './approveList';
 
-import aduitLog from './common/aduitLog'
+// import aduitLog from './common/aduitLog'
 import dealWithApprove from './common/dealWithApprove'
 import orderDetail from './common/orderDetail'
 
@@ -29,7 +29,7 @@ export default {
     components:{
         unApproveList,
         approveList,
-        aduitLog,
+        // aduitLog,
         dealWithApprove,
         orderDetail
     },

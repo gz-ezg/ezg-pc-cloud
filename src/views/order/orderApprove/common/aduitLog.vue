@@ -1,6 +1,7 @@
 <template>
     <div>
         <Modal
+            ref="log"
             v-model="opencheckMemo"
             title="查看审批备注"
             width="70%">
@@ -60,6 +61,7 @@ export default {
     },
     created() {
         let _self = this
+        this.$bus.off("ORDER_APPROVELIST_LOG", true)
         this.$bus.on("ORDER_APPROVELIST_LOG", (e)=>{
             _self.get_data(e)
             _self.opencheckMemo = true

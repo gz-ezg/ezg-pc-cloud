@@ -229,7 +229,8 @@ Vue.prototype.$Get = function(url, config, success, fail=function(err){console.l
             }
         }
     }).catch(function(err){
-        _self.$Message.error('数据异常！')
+        // _self.$Message.error('数据异常！')
+        fail(err)
         console.error(err)
     })
 }

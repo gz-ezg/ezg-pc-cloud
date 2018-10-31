@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import editOrderDetail from '../../order/orderList/components/editOrderDetail'
+import editOrderDetail from '../../order/orderList/components/orderOp/editOrderDetail'
 export default {
     data(){
         return{

@@ -137,6 +137,7 @@
         <next></next>
         <set-finish-time></set-finish-time>
         <field-list-by-company-id></field-list-by-company-id>
+        <aduit-log></aduit-log>
     </div>
 </template>
 <script>
@@ -154,6 +155,7 @@
     import next from './woa-components/next/flow.vue';
     import setFinishTime from './woa-components/setFinishTime/setFinishTime'
     import fieldListByCompanyId from './woa-components/fieldListByCompanyId/index.vue'
+    import aduitLog from './order/orderApprove/common/aduitLog.vue'
 
     export default {
         components: {
@@ -168,7 +170,8 @@
             changePassword,
             next,
             setFinishTime,
-            fieldListByCompanyId
+            fieldListByCompanyId,
+            aduitLog
         },
         data () {
             return {
