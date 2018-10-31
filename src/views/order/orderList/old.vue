@@ -163,38 +163,6 @@
             </Row>
         </Card>
         <Modal
-                v-model="selectCompany"
-                title="选择公司"
-                width="80%">
-            <Row :gutter="16">
-                <Col span="8">
-                <Input v-model="searchCompany" placeholder="输入公司名称搜索" @on-keydown="keyDown">
-                <Button slot="append" icon="ios-search" @click="searchCompanyData"></Button>
-                </Input>
-                </Col>
-            </Row>
-            <Table
-                    style="margin-top: 10px"
-                    border
-                    highlight-row
-                    size="small"
-                    ref="selection"
-                    :columns="columns44"
-                    :data="data4"
-                    @on-row-dblclick="rowSelect"></Table>
-            <Page
-                    size="small"
-                    :total="pageTotal3"
-                    :current.sync="currentPage"
-                    show-total
-                    show-sizer
-                    show-elevator
-                    @on-change="pageChange3"
-                    @on-page-size-change="pageSizeChange3"
-                    style="margin-top: 10px"></Page>
-            <div slot="footer"></div>
-        </Modal>
-        <Modal
                 v-model="fuwux"
                 title="服务项"
                 width="50%"

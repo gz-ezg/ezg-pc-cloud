@@ -69,7 +69,7 @@
         </Row>
         <Row>
             <ButtonGroup>
-                <Button v-permission="['orderL.add']" type="primary" icon="plus" @click="orderAdd = true" name="order_add">录入</Button>
+                <Button v-permission="['orderL.add']" type="primary" icon="plus" @click="open_add" name="order_add">录入</Button>
                 <Button v-permission="['orderL.edit']" type="primary" icon="edit" @click="open_edit" name="order_edit">编辑</Button>
                 <Button v-permission="['orderL.detail']" type="primary" icon="ios-crop" @click="order_show" name="order_show">查看</Button>
                 <Button v-permission="['orderL.flowChart']" type="primary" icon="ios-crop" @click="open_flowChart">查看流程图</Button>
@@ -122,6 +122,7 @@
         <amend-order :payDirs="payDirs"></amend-order>
         <edit-order :payDirs="payDirs"></edit-order>
         <show-contarct></show-contarct>
+        <product-select></product-select>
     </div>
 </template>
 
@@ -132,6 +133,7 @@ import createOrder from './components/orderOp/createOrder'
 import amendOrder from './components/orderOp/amendOrder'
 import editOrder from './components/orderOp/editOrderDetail'
 import showContarct from './show_contarct'
+import productSelect from './components/productSelect'
 
 import { DateFormat } from '../../../libs/utils.js'
 
@@ -142,7 +144,8 @@ export default {
         createOrder,
         amendOrder,
         editOrder,
-        showContarct
+        showContarct,
+        productSelect
     },
     data(){
         return {
@@ -611,6 +614,7 @@ export default {
         open_flowChart(){
             let _self = this
             if(this.selectRow){
+                this.imgLoading = true
                 this.flowImgOpen = true
                 this.flowChartImg = '/api/dataCenter/activiti/getResourceInputStreamObj?bussinessKey=' + this.selectRow.id
                 setTimeout(()=>{
@@ -712,6 +716,10 @@ export default {
             }else{
                 this.$Message.warning("请选择一行进行操作！")
             }
+        },
+        //  【新增订单】
+        open_add(){
+            this.$bus.emit("OPEN_ORDERLIST_ADD", true)
         }
     },
     created() {

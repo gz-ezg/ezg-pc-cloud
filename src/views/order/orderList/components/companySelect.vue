@@ -117,6 +117,7 @@ export default {
     },
     created() {
         let _self = this
+        this.$bus.off("ORDER_OPEN_SELECT_COMPANY", true)
         this.$bus.on("ORDER_OPEN_SELECT_COMPANY", (e)=>{
             _self.get_data()
             _self.openSelectCompany = true

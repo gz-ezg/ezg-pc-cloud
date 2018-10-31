@@ -10,7 +10,7 @@ export default commonSetting = {
             orderDetail: {
                 id: "",
                 companyid: "",
-                isornotkp: "",
+                isornotkp: "N",
                 CompanyName: "",
                 tel: "",
                 name: "",
@@ -45,9 +45,9 @@ export default commonSetting = {
                 paydir: [
                     { required: true, message: '请补全！', trigger: 'change' }
                 ],
-                gdsreport: [
-                    { required: true, message: '请补全！', trigger: 'change' }
-                ],
+                // gdsreport: [
+                //     { required: true, message: '请补全！', trigger: 'change' }
+                // ],
             },
             orderItem: [],
             orderItemHeader: [
@@ -64,6 +64,7 @@ export default commonSetting = {
                             on:{
                                 click:()=>{
                                     this.orderItem.splice(params.index, 1)
+                                    this.computer_paynumber()
                                 }
                             }
                         }, 'x')
@@ -339,7 +340,7 @@ export default commonSetting = {
             let _self = this
             let temp = 0
             for(let i = 0; i < _self.orderItem.length; i++){
-                temp = temp + _self.orderItem[i].paynumber
+                temp = parseInt(temp) + parseInt(_self.orderItem[i].paynumber)
             }
             this.orderDetail.paynumber = parseInt(temp)
             this.orderDetail.realnumber = parseInt(temp)
@@ -348,7 +349,36 @@ export default commonSetting = {
         modal_status_change(e){
             if(!e){
                 this.$refs["orderDetail"].resetFields()
+                this.orderItem = []
+            }
+        },
+        //  检查代理记账税期是否填写
+        check_date(){
+            for(let i = 0; i<this.orderItem.length; i++){
+                if(this.orderItem[i].product.indexOf("记账") == "-1"){
+                    
+                }else{
+                    if(this.orderItem[i].servicestartdate){
+                        //  检查通过
+                    }else{
+                        //  检查不通过
+                        this.$Message.error("请输入服务开始税期！")
+                        console.log("false")
+                        return false;
+                    }
+                }
+                if(i == this.orderItem.length - 1){
+                    console.log("true")
+                    return true;
+                }
             }
         }
+    },
+    created(){
+        this.$bus.off("ADD_PRODUCT", true)
+        this.$bus.on("ADD_PRODUCT", (e) => {
+            this.orderItem.push(e)
+            this.computer_paynumber()
+        })
     }
 }

@@ -64,6 +64,7 @@
                 </Row>
                 <Row :gutter="16">
                     <FormItem>
+                        <Button type="primary" icon="plus" @click="open_product_list">新增</Button>
                         <Button type="primary" icon="plus" @click="show_contarct('edit')">查看合同</Button>
                         <!-- <Button type="primary" icon="plus" @click="kuaiji()" v-show="kjdj">查看会计到家服务项</Button> -->
                     </FormItem>
@@ -140,7 +141,14 @@ export default {
                     _self.loading = false
                 }
             })
-        }
+        },
+        open_product_list(){
+            if(this.orderDetail.companyid){
+                this.$bus.emit("OPEN_ORDER_PRODUCT_LIST", this.orderDetail.companyid)
+            }else{
+                this.$Message.warning("请先选择公司！")
+            }
+        },
     },
     created(){
         let _self = this
