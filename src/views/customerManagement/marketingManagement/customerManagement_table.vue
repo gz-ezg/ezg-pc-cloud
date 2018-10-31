@@ -873,7 +873,8 @@ export default {
 
         let config = {
           params: {
-            customerId: _self.customerid
+            customerId: _self.customerid,
+            redirectUrl: "/servicecenter"
           }
         };
 

@@ -73,7 +73,7 @@
                 </Col>
             </Row>
             <div slot="footer">
-                <Button type="primary" @click="submit_request" :loadind="submit_loading">提交申请</Button>
+                <Button type="primary" @click="submit_request" :loadind="submit_loading" :disabled="disabled">提交申请</Button>
             </div>
         </Modal>
     </div>
@@ -85,6 +85,15 @@ import tables from '../../woa-components/tables/tables'
 export default {
     components:{
         tables
+    },
+    computed:{
+        disabled(){
+            if(this.connectPlan && this.trackingNumber && this.fileList ){
+                return
+            }else{
+                return false
+            }
+        }
     },
     data(){
         return{

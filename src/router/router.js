@@ -154,63 +154,63 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    {
-        path: '/test',
-        icon: 'social-windows',
-        name: 'test',
-        title: 'Test',
-        component: Main,
-        children: [
-            {
-                path: 'test',
-                title: '测试页面',
-                name: '富文本编辑器测试',
-                component: resolve => {
-                    require(['@/views/test/components/main.vue'], resolve);
-                    // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+    // {
+    //     path: '/test',
+    //     icon: 'social-windows',
+    //     name: 'test',
+    //     title: 'Test',
+    //     component: Main,
+    //     children: [
+    //         {
+    //             path: 'test',
+    //             title: '测试页面',
+    //             name: '富文本编辑器测试',
+    //             component: resolve => {
+    //                 require(['@/views/test/components/main.vue'], resolve);
+    //                 // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-                }
-            },
-            {
-                path: 'test2',
-                title: '日程测试',
-                name: 'test2_index',
-                component: resolve => {
-                    require(['@/views/test/components/test2.vue'], resolve);
-                    // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             path: 'test2',
+    //             title: '日程测试',
+    //             name: 'test2_index',
+    //             component: resolve => {
+    //                 require(['@/views/test/components/test2.vue'], resolve);
+    //                 // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-                }
-            },
-            {
-                path: 'test3',
-                title: '可编辑表格测试',
-                name: 'test3_index',
-                component: resolve => {
-                    require(['@/views/test/components/test3.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             path: 'test3',
+    //             title: '可编辑表格测试',
+    //             name: 'test3_index',
+    //             component: resolve => {
+    //                 require(['@/views/test/components/test3.vue'], resolve);
 
-                }
-            },
-            // {
-            //     path: 'test4',
-            //     title: '树形表测试',
-            //     name: 'test4_index',
-            //     component: resolve => {
-            //         require(['@/views/test/components/test4.vue'], resolve);
+    //             }
+    //         },
+    //         // {
+    //         //     path: 'test4',
+    //         //     title: '树形表测试',
+    //         //     name: 'test4_index',
+    //         //     component: resolve => {
+    //         //         require(['@/views/test/components/test4.vue'], resolve);
 
-            //     }
-            // },
-            {
-                path: 'test5',
-                title: '新订单测试',
-                name: 'test4_index',
-                component: resolve => {
-                    require(['@/views/test/components/test5.vue'], resolve);
+    //         //     }
+    //         // },
+    //         {
+    //             path: 'test5',
+    //             title: '新订单测试',
+    //             name: 'test4_index',
+    //             component: resolve => {
+    //                 require(['@/views/test/components/test5.vue'], resolve);
 
-                }
-            },
+    //             }
+    //         },
             
-        ]
-    },
+    //     ]
+    // },
     // {
     //     path: '/allindex',
     //     icon: 'social-windows',
@@ -666,8 +666,8 @@ export const appRouter = [
                 }
             },
             {
-                access: 6018,
-                meta: 6018,
+                access: 11602,
+                meta: 11602,
                 path: 'invoiceManagement',
                 title: '发票管理',
                 name:"invoicelist_index",
@@ -1123,8 +1123,8 @@ export const appRouter = [
                 }
             },
             {
-                access: 6141,
-                meta: 6141,
+                access: 11601,
+                meta: 11601,
                 path: 'product', title: '方案产品', name: 'tool_product_index', component: resolve => {
                     require(['@/views/solutionTool/tools/index.vue'], resolve);
                 }

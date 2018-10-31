@@ -547,7 +547,7 @@ export default {
         open_fangan_code(){
             this.openFangAnCode = true
             document.getElementById("qrcode").innerHTML = "";
-            let url = `http://wq.zgcfo.cn/#/project/` + localStorage.getItem("id");
+            let url = `http://tools.zgcfo.com/#/project/` + localStorage.getItem("id");
             let qr = new QRCode("qrcode", {
                 text: url,
                 width: 200,

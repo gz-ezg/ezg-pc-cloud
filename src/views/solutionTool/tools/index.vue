@@ -71,7 +71,12 @@ export default {
     name: "tool_product_index",
     data(){
         return{
-            currentRow: {},
+            currentRow: {
+                productname: "",
+                concessions: "",
+                declaredate: "",
+                id: ""
+            },
             submitLoading: false,
             editLoading: false,
             loading: false,
@@ -106,7 +111,10 @@ export default {
                             on: {
                                 "click": ()=>{
                                     // console.log(params.row)
-                                    this.currentRow = params.row
+                                    this.currentRow.id = params.row.id
+                                    this.currentRow.productname = params.row.productname
+                                    this.currentRow.concessions = params.row.concessions
+                                    this.currentRow.declaredate = params.row.declaredate
                                     this.openEditProduct = true
                                 }
                             }

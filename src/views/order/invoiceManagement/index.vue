@@ -175,7 +175,7 @@ export default {
                 },
                 {
                     title: "备注",
-                    key: "memo",
+                    key: "tax_memo",
                     minWidth: 150
                 },
                 {
