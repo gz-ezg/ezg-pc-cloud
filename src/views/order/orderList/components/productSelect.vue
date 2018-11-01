@@ -21,6 +21,7 @@
                     <Table
                         :loading="loading"
                         highlight-row
+                        :row-class-name="rowClassName"
                         @on-row-click="select_product"
                         :columns="productColumns"
                         :data="productData">
@@ -153,7 +154,7 @@ export default {
     },
     computed:{
         disabled(){
-            if(this.queryProperty.length == this.selectProperty.length){
+            if((this.queryProperty.length == this.selectProperty.length) && this.queryProperty.length != 0 ){
                 return false
             }else{
                 return true
@@ -195,6 +196,10 @@ export default {
         },
         //  生成产品详情
         select_product(e){
+            if(e.id == "14"){
+                this.$Message.error("对不起，该产品已经不允许操作！")
+                return false;
+            }
             this.sideLoading = true
             this.selectProduct = e
             this.productPrice = 0
@@ -231,7 +236,9 @@ export default {
 
             function success(res){
                 _self.producSku = res.data.data
-                _self.sideLoading = false
+                setTimeout(()=>{
+                    _self.sideLoading = false
+                }, 200)
             }
 
             this.$Get(url, config, success)
@@ -357,6 +364,12 @@ export default {
         //  产品流程图
         open_flow_img(){
             window.open("/api/dataCenter/activiti/getInputStreamBySkuId?skuId=" + this.SKU)
+        },
+        //  限制某项产品
+        rowClassName(row, index){
+            if(row.id == "14"){
+                return 'disabled-row';
+            }
         }
     },
     watch: {
@@ -423,6 +436,9 @@ export default {
 }
 .productDetail-title-price > span > strong {
     font-size: 1.5rem;
+}
+.disabled-row{
+    color: #EAEAEA
 }
 </style>
 

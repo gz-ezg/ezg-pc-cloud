@@ -22,9 +22,9 @@
 </style>
 <template>
     <div>
-        <Button name="marketingManagement_index_orderlist_add" type="ghost" shape="circle" icon="plus" @click="setVal()" v-permission="['marketingM.order.add']">新增</Button>
+        <!-- <Button name="marketingManagement_index_orderlist_add" type="ghost" shape="circle" icon="plus" @click="setVal()" v-permission="['marketingM.order.add']">新增</Button> -->
         <Button name="marketingManagement_index_orderlist_check" type="ghost" shape="circle" icon="ios-search-strong" @click="detailCustomers">查看</Button>
-        <Button name="marketingManagement_index_orderlist_edit" type="ghost" shape="circle" icon="edit" @click="orderEdit" v-permission="['marketingM.order.edit']">编辑</Button>
+        <!-- <Button name="marketingManagement_index_orderlist_edit" type="ghost" shape="circle" icon="edit" @click="orderEdit" v-permission="['marketingM.order.edit']">编辑</Button> -->
         <Button name="marketingManagement_index_orderlist_money" type="ghost" shape="circle" icon="trash-b" @click="add_money" v-permission="['marketingM.order.pay']">补款</Button>
         <!-- <Button type="ghost" shape="circle" icon="trash-b" @click="money_detail">补款明细</Button> -->
         <Button name="marketingManagement_index_orderlist_resubmit" type="ghost" shape="circle" icon="ios-redo" @click="reApplyProcess()" v-permission="['marketingM.order.re']">重新提交</Button>

@@ -64,7 +64,7 @@
                 </Row>
                 <Row :gutter="16">
                     <FormItem>
-                        <Button type="primary" icon="plus" @click="open_product_list">新增</Button>
+                        <Button type="primary" icon="plus" @click="open_product_list">新增产品</Button>
                         <Button type="primary" icon="plus" @click="show_contarct('edit')">查看合同</Button>
                         <!-- <Button type="primary" icon="plus" @click="kuaiji()" v-show="kjdj">查看会计到家服务项</Button> -->
                     </FormItem>
@@ -82,7 +82,7 @@
                     :data="orderItem"></Table>
             </Row>
             <div slot="footer">
-                <Button type="primary" @click="edit" name="order_edit">编辑</Button>
+                <Button type="primary" @click="edit" name="order_edit" :loading="loading">编辑</Button>
                 <Button type="ghost" @click="openEditOrderDetail = false">关闭</Button>
             </div>
         </Modal>
@@ -125,11 +125,13 @@ export default {
                     console.log(config)
 
                     function success(res){
-                        _self.loading = false
-                        _self.openEditOrderDetail = false
-                        _self.$bus.emit("UPDATE_ORDER_LIST", true)
-                        _self.$refs["orderDetail"].resetFields()
-                        _self.orderItem = []
+                        setTimeout(()=>{
+                            _self.loading = false
+                            _self.openEditOrderDetail = false
+                            _self.$bus.emit("UPDATE_ORDER_LIST", true)
+                        }, 500)
+                        // _self.$refs["orderDetail"].resetFields()
+                        // _self.orderItem = []
                     }
 
                     function fail(err){

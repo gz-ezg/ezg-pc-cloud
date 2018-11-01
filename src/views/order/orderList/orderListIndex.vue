@@ -353,7 +353,7 @@ export default {
                 {
                     title: '撤回',
                     key: 'action',
-                    minWidth: 90,
+                    minWidth: 75,
                     render: (h, params)=>{
                         if(params.index != this.pageSize){
                             return h('div',[
@@ -368,9 +368,9 @@ export default {
                                             value: "orderL.cancelOrder"
                                         }
                                     ],
-                                    style:{
-                                            marginLeft: "10px"
-                                    },
+                                    // style:{
+                                    //         marginLeft: "10px"
+                                    // },
                                     on: {
                                         click: () => {
                                             this.order_cancelOrder(params)
@@ -386,7 +386,7 @@ export default {
             amdinOpertionCol: {
                 title: '订单操作',
                     key: 'action',
-                    minWidth: 200,
+                    minWidth: 180,
                     render: (h, params)=>{
                         if(params.index != this.pageSize){
                             return h('div',[
@@ -395,9 +395,9 @@ export default {
                                         type: 'warning',
                                         size: 'small',
                                     },
-                                    style:{
-                                            marginLeft: "10px"
-                                    },
+                                    // style:{
+                                    //         marginLeft: "10px"
+                                    // },
                                     on: {
                                         click: () => {
                                             _self.$ButtonCollect("order_rebuild_orderflow")
@@ -575,7 +575,11 @@ export default {
             }
         },
         select_row(e){
-            this.selectRow = e
+            if(e.id){
+                this.selectRow = e
+            }else{
+                this.selectRow = ""
+            }
         },
         get_data_center(){
             let _self = this

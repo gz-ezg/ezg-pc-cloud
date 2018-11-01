@@ -70,12 +70,12 @@ export default {
                 },
                 {
                     title: "操作按钮",
-                    key: 'button_name',
+                    key: 'buttonname',
                     width: 250
                 },
                 {
                     title: '按钮code',
-                    key: 'code',
+                    key: 'buttoncode',
                     width: 250
                 },
                 {
@@ -110,8 +110,8 @@ export default {
             }
 
             function success(res){
-                _self.data = res.data.data.mapInfo.rows
-                _self.pageTotal = res.data.data.mapInfo.total
+                _self.data = res.data.data.rows
+                _self.pageTotal = res.data.data.total
                 _self.loading = false
             }
 

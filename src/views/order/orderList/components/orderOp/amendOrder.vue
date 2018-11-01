@@ -74,7 +74,7 @@
                     :data="orderItem"></Table>
             </Row>
             <div slot="footer">
-                <Button type="primary" @click="xiugai">修改</Button>
+                <Button type="primary" @click="xiugai" :loading="loading">修改</Button>
                 <Button type="ghost" @click="openamendOrderDetail = false">关闭</Button>
             </div>
         </Modal>

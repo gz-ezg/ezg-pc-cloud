@@ -630,17 +630,18 @@ export const appRouter = [
                 title: '订单列表',
                 name: 'orderList_index',
                 component: resolve => {
-                    require(['@/views/order/orderList.vue'], resolve);
+                    require(['@/views/order/orderList/orderListIndex.vue'], resolve);
                 }
             },
+            //  订单审批废弃easyUI版
             {
                 meta: 6018,
                 access: 6018,
                 path: 'orderList2',
-                title: '新订单列表',
+                title: '订单列表（旧）',
                 name: 'orderList_index2',
                 component: resolve => {
-                    require(['@/views/order/orderList/orderListIndex.vue'], resolve);
+                    require(['@/views/order/orderList.vue'], resolve);
                 }
             },
             {

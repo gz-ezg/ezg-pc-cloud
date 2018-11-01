@@ -70,12 +70,12 @@ export default {
                 },
                 {
                     title: "操作菜单",
-                    key: 'interface_name',
+                    key: 'menuname',
                     width: 120
                 },
                 {
                     title: '菜单code',
-                    key: 'menu_id',
+                    key: 'menuid',
                     width: 120
                 },
                 {
@@ -111,8 +111,8 @@ export default {
 
             function success(res){
                 // console.log(res)
-                _self.data = res.data.data.mapInfo.rows
-                _self.pageTotal = res.data.data.mapInfo.total
+                _self.data = res.data.data.rows
+                _self.pageTotal = res.data.data.total
                 _self.loading = false
             }
 

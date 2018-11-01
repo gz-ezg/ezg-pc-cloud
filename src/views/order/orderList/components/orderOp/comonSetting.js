@@ -219,7 +219,9 @@ export default commonSetting = {
                                     value: this.orderItem[parmas.index].servicestartdate,
                                     type: "month",
                                     transfer: false,
-                                    size: "small"
+                                    size: "small",
+                                    disabled: !this.orderItem[parmas.index].hasOwnProperty("servicestartdate"),
+                                    readonly: !this.orderItem[parmas.index].hasOwnProperty("servicestartdate")
                                 },
                                 on: {
                                     "on-change": function(event){
@@ -295,7 +297,7 @@ export default commonSetting = {
                                 },
                                 on: {
                                     "on-blur": function(event){
-                                        console.log(event)
+                                        // console.log(event)
                                         _self.orderItem[parmas.index].memo = event.target.value
                                     },
                                     // "on-enter":function(event){
@@ -354,8 +356,16 @@ export default commonSetting = {
         },
         //  检查代理记账税期是否填写
         check_date(){
+            if(this.orderItem.length == 0){
+                this.$Message.warning("请选择产品！")
+                return false;
+            }
             for(let i = 0; i<this.orderItem.length; i++){
-                if(this.orderItem[i].product.indexOf("记账") == "-1"){
+                // if(this.orderItem[i].product.indexOf("记账") == "-1"){
+                console.log(this.orderItem[i].hasOwnProperty("servicestartdate"))
+                //  如果是周期性产品，则拥有服务开始时间字段，；两者均可行
+                //  编辑时不可使用该方法，否则所有数据需填写，因为返回给的是全部
+                if(!this.orderItem[i].hasOwnProperty("servicestartdate")){
                     
                 }else{
                     if(this.orderItem[i].servicestartdate){

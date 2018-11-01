@@ -846,7 +846,7 @@
             }
             console.log(year)
             console.log(month)
-            _self.time = year + month
+            _self.time = year.toString() + month.toString()
             Bus.$on('UPDATE_ALL_ACCOUNT_PAGE',(e)=>{
                 _self.getData()
             })

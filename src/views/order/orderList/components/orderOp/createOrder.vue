@@ -104,7 +104,7 @@
                     :data="orderItem"></Table>
             </Row>
             <div slot="footer">
-                <Button type="primary" @click="create">创建</Button>
+                <Button type="primary" @click="create" :loading="loading">创建</Button>
                 <Button type="ghost" @click="openCreateOrderDetail = false">关闭</Button>
             </div>
         </Modal>
@@ -126,7 +126,8 @@ export default {
     data(){
         return {
             show_file: [],
-            openCreateOrderDetail: false
+            openCreateOrderDetail: false,
+            loading: false
         }
     },
     methods: {
@@ -182,12 +183,57 @@ export default {
             }
         },
         create(){
-            this.check_date()
+            // this.check_date()
+            let _self = this
+            this.loading = true
+            this.$refs["orderDetail"].validate((valid) => {
+                if(valid && this.check_date()){
+                    _self.create_order()
+                    this.loading = false
+                }else{
+                    this.loading = false
+                }
+            })
+        },
+        create_order(){
+            let _self = this
+            let url = `api/order/create`
+
+            let config = {
+                companyId: _self.orderDetail.companyid,
+                payDir: _self.orderDetail.paydir,
+                orderPayNumber: _self.orderDetail.paynumber,
+                serviceStartDate: "",
+                GDSreport: _self.orderDetail.gdsreport,
+                payTime: _self.orderDetail.payTime,
+                isornotkp: _self.orderDetail.isornotkp,
+                orderitems: JSON.stringify(_self.orderItem)
+            }
+
+            function success(res){
+                if(_self.show_file.length != 0){
+                    _self.upload_img(res.data.data)
+                }else{
+                    _self.$Message.warning("订单创建成功！请及时上传合同！")
+                }
+                setTimeout(()=>{
+                    _self.loading = false
+                    _self.$bus.emit("UPDATE_ORDER_LIST", true)
+                    _self.openCreateOrderDetail = false
+                }, 200)
+            }
+
+            function fail(err){
+                _self.loading = false
+            }
+
+            this.$Post(url, config, success, fail)
         }
     },
     created(){
         this.$bus.off("OPEN_ORDERLIST_ADD", true)
         this.$bus.on("OPEN_ORDERLIST_ADD", (e) => {
+            this.orderItem = []
             this.openCreateOrderDetail = true
         })
     }
