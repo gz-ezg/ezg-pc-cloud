@@ -12,39 +12,38 @@
             <Form ref="formValidate" :rules="ruleValidate" :model="formValidate" :label-width="80">
                 <Row :gutter="16" style="height:56px">
                     <Col span="12">
-                    <FormItem label="姓名" prop="name">
-                        <Input size="small" v-model="formValidate.name"/>
-                    </FormItem>
+                      <FormItem label="姓名" prop="name">
+                          <Input size="small" v-model="formValidate.name"/>
+                      </FormItem>
                     </Col>
                     <Col span="12">
-                    <FormItem label="电话" prop="tel">
-                        <Input size="small" v-model="formValidate.tel"/>
-                    </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="16" style="height:56px">
-                    <Col span="12">
-                    <FormItem label="固话" prop="fixedphone">
-                        <Input size="small" v-model="formValidate.fixedphone"/>
-                    </FormItem>
-                    </Col>
-                    <Col span="12">
-                    <FormItem label="QQ" prop="qq">
-                        <Input size="small" v-model="formValidate.qq"/>
-                    </FormItem>
+                      <FormItem label="电话" prop="tel">
+                          <Input size="small" v-model="formValidate.tel"/>
+                      </FormItem>
                     </Col>
                 </Row>
                 <Row :gutter="16" style="height:56px">
                     <Col span="12">
-                    <FormItem label="微信" prop="weixin">
-                        <Input size="small" v-model="formValidate.weixin"/>
-                    </FormItem>
+                      <FormItem label="固话" prop="fixedphone">
+                          <Input size="small" v-model="formValidate.fixedphone"/>
+                      </FormItem>
+                    </Col>
+                    <Col span="12">
+                      <FormItem label="QQ" prop="qq">
+                          <Input size="small" v-model="formValidate.qq"/>
+                      </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="16" style="height:56px">
+                    <Col span="12">
+                      <FormItem label="微信" prop="weixin">
+                          <Input size="small" v-model="formValidate.weixin"/>
+                      </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="邮箱" prop="email">
                             <Input size="small" v-model="formValidate.email"/>
                         </FormItem>
-                    </Col>
                     </Col>
                 </Row>
                 <Row :gutter="16" style="height:56px">
@@ -62,33 +61,33 @@
                 </Row>
                 <Row :gutter="16" style="height:56px">
                     <Col span="12">
-                    <FormItem label="客户来源" prop="customersource">
-                        <Select transfer v-model="formValidate.customersource" size="small" @on-change="checkchannel">
-                            <Option v-for="item in cluesource" :value="item.typecode" :key="item.id">
-                                {{ item.typename }}
-                            </Option>
-                        </Select>
-                    </FormItem>
+                      <FormItem label="客户来源" prop="customersource">
+                          <Select transfer v-model="formValidate.customersource" size="small" @on-change="checkchannel">
+                              <Option v-for="item in cluesource" :value="item.typecode" :key="item.id">
+                                  {{ item.typename }}
+                              </Option>
+                          </Select>
+                      </FormItem>
                     </Col>
                     <Col span="12">
-                    <FormItem label="客户等级" prop="importlevel">
-                        <Select transfer v-model="formValidate.importlevel" size="small" placement="bottom">
-                            <Option v-for="item in impLevel" :value="item.typecode" :key="item.id">{{ item.typename
-                                }}
-                            </Option>
-                        </Select>
-                    </FormItem>
+                      <FormItem label="客户等级" prop="importlevel">
+                          <Select transfer v-model="formValidate.importlevel" size="small" placement="bottom">
+                              <Option v-for="item in impLevel" :value="item.typecode" :key="item.id">{{ item.typename
+                                  }}
+                              </Option>
+                          </Select>
+                      </FormItem>
                     </Col>
                 </Row>
                 <Row style="height:56px" :gutter="16" v-if="channel_show">
                     <Col span="12">
-                    <FormItem label="选择渠道" prop="channelTypeId">
-                        <Select transfer v-model="formValidate.channelTypeId" size="small">
-                            <Option v-for="item in ChannelType" :value="item.id" :key="item.id">
-                                {{ item.channel_type_name }}
-                            </Option>
-                        </Select>
-                    </FormItem>
+                      <FormItem label="选择渠道" prop="channelTypeId">
+                          <Select transfer v-model="formValidate.channelTypeId" size="small">
+                              <Option v-for="item in ChannelType" :value="item.id" :key="item.id">
+                                  {{ item.channel_type_name }}
+                              </Option>
+                          </Select>
+                      </FormItem>
                     </Col>
                     <Col span="12" style="opacity:0">....</Col>
                 </Row>
@@ -109,20 +108,20 @@
                 </Row> -->
                 <Row style="height:56px" :gutter="16" v-if="customer_show">
                     <Col span="12">
-                    <FormItem label="推荐客户" prop="recCustomer"  style="margin-bottom:0px">
-                        <Input size="small" v-model="formValidate.recCustomer" @on-focus="getCustomer" readonly />                    
-                    </FormItem>
+                      <FormItem label="推荐客户" prop="recCustomer"  style="margin-bottom:0px">
+                          <Input size="small" v-model="formValidate.recCustomer" @on-focus="getCustomer" readonly />                    
+                      </FormItem>
                     </Col>
                     <Col span="12" style="opacity:0">....</Col>
                 </Row>
                 <Row :gutter="16">
                     <Col span="12">
-                    <FormItem label="区域" prop="area">
-                        <Select transfer v-model="formValidate.area" size="small">
-                            <Option v-for="item in area" :value="item.typecode" :key="item.id">{{ item.typename }}
-                            </Option>
-                        </Select>
-                    </FormItem>
+                      <FormItem label="区域" prop="area">
+                          <Select transfer v-model="formValidate.area" size="small">
+                              <Option v-for="item in area" :value="item.typecode" :key="item.id">{{ item.typename }}
+                              </Option>
+                          </Select>
+                      </FormItem>
                     </Col>
                     <Col span="12">
                     <FormItem label="发送短信" prop="issend">
@@ -136,23 +135,23 @@
                 </Row>
                 <Row :gutter="16">
                     <Col span="12">
-                    <FormItem label="客户重要性" prop="importance">
-                        <Select transfer v-model="formValidate.importance" size="small">
-                            <Option v-for="item in importance" :value="item.typecode" :key="item.id">{{ item.typename }}
-                            </Option>
-                        </Select>
-                    </FormItem>
+                      <FormItem label="客户重要性" prop="importance">
+                          <Select transfer v-model="formValidate.importance" size="small">
+                              <Option v-for="item in importance" :value="item.typecode" :key="item.id">{{ item.typename }}
+                              </Option>
+                          </Select>
+                      </FormItem>
                     </Col>
                 </Row>
                 <Row :gutter="16">
                     <Col span="24">
-                    <FormItem label="标签" prop="customerTags" style="margin-top:5px;margin-bottom:10px">
-                        <Tag v-for="item in customerlabelGroup" :key="item" :name="item" :id="item.id" closable
-                            @on-close="handleClose2">
-                            {{ item.labelName }}
-                        </Tag>
-                        <Button name="marketingManagement_index_entry_add" icon="ios-plus-empty" type="dashed" size="small" @click="getLabelData();addTag = true">添加</Button>
-                    </FormItem>
+                      <FormItem label="标签" prop="customerTags" style="margin-top:5px;margin-bottom:10px">
+                          <Tag v-for="item in customerlabelGroup" :key="item" :name="item" :id="item.id" closable
+                              @on-close="handleClose2">
+                              {{ item.labelName }}
+                          </Tag>
+                          <Button name="marketingManagement_index_entry_add" icon="ios-plus-empty" type="dashed" size="small" @click="getLabelData();addTag = true">添加</Button>
+                      </FormItem>
                     </Col>
                 </Row>
                 <Row>
