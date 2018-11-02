@@ -244,6 +244,7 @@ export default {
                     _self.loading = false
                     // _self.$emit("update",true)
                     _self.reset_type()
+                    _self.formValidate.dataJson = []
                 }
 
                 function fail(err){
@@ -364,6 +365,7 @@ export default {
         this.get_center()
         this.$bus.off("OPEN_CREATE_RESOURE_FILE")
         this.$bus.on("OPEN_CREATE_RESOURE_FILE", (e)=>{
+            _self.formValidate.dataJson = []
             _self.$refs["formValidate"].resetFields()
             _self.$refs["fileItem"].resetFields()
             _self.get_all_file_type()
