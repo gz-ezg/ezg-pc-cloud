@@ -23,6 +23,7 @@
     // import Add from '../add'
 
     export default {
+        name: "WeChatPushLog",
         components:{
             sendLog,
             // Processed,

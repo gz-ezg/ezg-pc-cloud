@@ -11,6 +11,7 @@
             :menu-list="menuList" 
             :open-names="openNames"
             @on-change="handleChange"
+            :iconSize="20"
         ></sidebar-menu>
         <sidebar-menu-shrink 
             v-show="shrink"

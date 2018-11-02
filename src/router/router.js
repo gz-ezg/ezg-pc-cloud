@@ -156,7 +156,7 @@ export const otherRouter = {
 export const appRouter = [
     {
         path: '/test',
-        icon: 'social-windows',
+        icon: 'alert-circled',
         name: 'test',
         title: 'Test',
         component: Main,
@@ -326,7 +326,7 @@ export const appRouter = [
         access: 6200,
         meta: 6200,
         path: '/missionCenter',
-        icon: 'social-windows',
+        icon: 'calendar',
         name: 'missionCenter',
         title: "任务中心",
         component: Main,
@@ -376,7 +376,7 @@ export const appRouter = [
         access: 6110,
         meta: 6110,
         path: '/marketplaceManagement',
-        icon: 'social-windows',
+        icon: 'home',
         name: 'marketplaceManagement',
         title: '市场管理',
         component:Main,
@@ -481,7 +481,7 @@ export const appRouter = [
         access: 6009,
         meta: 6009,
         path: '/cluesLibrary',
-        icon: 'social-windows',
+        icon: 'android-share-alt',
         name: 'cluesLibrary',
         title: '线索库',
         // meta:{
@@ -523,7 +523,7 @@ export const appRouter = [
     },
     {
         path: '/customerService',
-        icon: 'social-windows', 
+        icon: 'person', 
         name: 'customerService',
         meta: 6060,
         access: 6060,
@@ -988,7 +988,7 @@ export const appRouter = [
         access: 6130,
         meta: 6130,
         path: '/handoverresource',
-        icon: 'social-windows',
+        icon: 'filing',
         name: 'handoverresource',
         title: '资料管理',
         component: Main,
@@ -1029,7 +1029,7 @@ export const appRouter = [
         access: 6075,
         meta: 6075,
         path: '/fieldManagement',
-        icon: 'social-windows',
+        icon: 'navigate',
         name: 'fieldManagement',
         title: '外勤管理',
         component: Main,
@@ -1070,7 +1070,7 @@ export const appRouter = [
         access: 6080,
         meta: 6080,
         path: '/stystemcomplaint',
-        icon: 'social-windows',
+        icon: 'help-circled',
         name: 'stystemcomplaint',
         title: '系统反馈',
         component: Main,
@@ -1101,7 +1101,7 @@ export const appRouter = [
         access: 6027,
         meta: 6027,
         path: '/publicPool',
-        icon: 'social-windows',
+        icon: 'search',
         title: '公海池',
         name: 'publicPool',
         component: Main,
@@ -1131,7 +1131,7 @@ export const appRouter = [
         access: 6140,
         meta: 6140,
         path: '/solutionTool',
-        icon: 'social-windows',
+        icon: 'document-text',
         title: '方案工具',
         name: 'solutionTool',
         component: Main,
@@ -1176,7 +1176,7 @@ export const appRouter = [
         access: 6028,
         meta: 6028,
         path: '/systemManagement',
-        icon: 'social-windows',
+        icon: 'gear-b',
         name: 'systemManagement',
         title: '系统管理',
         // meta:{
@@ -1276,11 +1276,51 @@ export const appRouter = [
             }
         ]
     },
+    //  是否对内容迁移待定
+    {
+        access: 6103,
+        meta: 6103,
+        path: '/messageLog',
+        icon: "chatbubble-working",
+        name: "messageLog",
+        title: "消息推送",
+        component: Main,
+        children: [
+            {
+                access: 6066,
+                path: 'WeChatPushLog',
+                title: '微信推送客户日志', 
+                // icon: "information-circled",
+                name: 'WeChatPushLog',
+                component: resolve => {
+                    require(['@/views/logManagement/WeChatPushLog/log_index.vue'], resolve);
+                }
+            },
+            {
+                access: 6066,
+                path: 'smsSendLog',
+                title: '短信发送日志', 
+                name: 'smsSendLog',
+                component: resolve => {
+                    require(['@/views/logManagement/smsSendLog.vue'], resolve);
+                }
+            },
+            {
+                access: 6066,
+                path: 'internalPushLog',
+                title: '微信内部推送日志', 
+                name: 'internalPushLog',
+                component: resolve => {
+                    require(['@/views/logManagement/internalPushLog.vue'], resolve);
+                }
+            },
+        ]
+    },
     {
         access: 6103,
         meta: 6103,
         path: '/allindex',
-        icon: 'social-windows',
+        icon: 'pie-graph',
         name: 'allindex',
         title: '数据中心',
         component: Main,
@@ -1347,7 +1387,7 @@ export const appRouter = [
         access: 6065,
         meta: 6065,
         path: '/materialHouse',
-        icon: 'social-windows',
+        icon: 'folder',
         name: 'materialHouse',
         title: '资源库',
         // meta:{
@@ -1374,64 +1414,14 @@ export const appRouter = [
                 component: resolve => {
                     require(['@/views/material-house/departMaterial/index.vue'], resolve);
                 }
-            },
-            // {
-            //     access: 6066,
-            //     meta: 6066,
-            //     path: 'CompanyInformation',
-            //     title: '公司资料',
-            //     name: 'CompanyInformation_index',
-            //     component: resolve => {
-            //         require(['@/views/material-house/CompanyInformation/CompanyInformation.vue'], resolve);
-            //     }
-            // },
-            // {
-            //     access: 6067,
-            //     meta: 6067,
-            //     path: 'contractType',
-            //     title: '合同类型',
-            //     name: 'contractType_index',
-            //     component: resolve => {
-            //         require(['@/views/material-house/contractType/contractType.vue'], resolve);
-            //     }
-            // },
-            // {
-            //     access: 6068,
-            //     meta: 6068,
-            //     path: 'DepartmentInformation',
-            //     title: '部门资料',
-            //     name: 'DepartmentInformation_index',
-            //     component: resolve => {
-            //         require(['@/views/material-house/DepartmentInformation/DepartmentInformation.vue'], resolve);
-            //     }
-            // },
-            // {
-            //     access: 6069,
-            //     meta: 6069,
-            //     path: 'LearningInformation',
-            //     title: '学习资料',
-            //     name: 'LearningInformation_index',
-            //     component: resolve => {
-            //         require(['@/views/material-house/LearningInformation/LearningInformation.vue'], resolve);
-            //     }
-            // },
-            // {
-            //     access: 6070,
-            //     meta: 6070,
-            //     path: 'VideoData',
-            //     title: '视频资料',
-            //     name: 'VideoData_index',
-            //     component: resolve => {
-            //         require(['@/views/material-house/VideoData/VideoData.vue'], resolve);
-            //     }
-            // }
+            }
         ]
     },
     {
         access: 6120,
         meta: 6120,
         path: '/logManagement',
-        icon: 'social-windows',
+        icon: 'information-circled',
         name: 'logManagement',
         title: '日志管理', 
         component: Main,

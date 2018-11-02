@@ -156,6 +156,7 @@
 
 <script>
 export default {
+    name: "internalPushLog",
   data() {
     return {
       loading: false,

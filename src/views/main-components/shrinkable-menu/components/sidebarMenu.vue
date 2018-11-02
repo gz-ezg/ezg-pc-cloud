@@ -24,7 +24,7 @@
             <!-- <Submenu v-if="item.children.length > 1" :name="item.name" :key="item.name"> -->
             <Submenu :name="item.name" :key="item.name">
                 <template slot="title">
-                    <Icon :type="item.icon" :size="iconSize"></Icon>
+                    <Icon :type="item.icon" :size="iconSize" style="width:17.5px"></Icon>
                     <span class="layout-text">{{ itemTitle(item) }}</span>
                 </template>
                 <template v-for="child in item.children">

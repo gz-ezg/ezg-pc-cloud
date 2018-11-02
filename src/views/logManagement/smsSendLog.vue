@@ -181,6 +181,7 @@
 
 <script>
 export default {
+    name: "smsSendLog",
   data() {
     return {
       showwidth: 24,

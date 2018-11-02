@@ -1,7 +1,8 @@
 <template>
     <div>
         <Table 
-            highlight-row 
+            highlight-row
+            :loading="sql_loading"
             :data="tableShowData" 
             :columns="header"
             @on-current-change="select_row"	 
@@ -10,7 +11,6 @@
     <div style="margin: 10px;">
         <div style="float: left;">
             <Page :total="total_Num"
-                :loading = "sql_loading"
                 :current="current_page" 
                 :page-size="pageSize" 
                 @on-page-size-change="pageSizeChange" 
@@ -30,7 +30,7 @@
         data () {
             return{
                 sql_loading:false,
-                total_Num:new Number(),
+                total_Num: 0,
                 pageSize:10,
                 current_page:1,
                 tableShowData:[],
@@ -39,8 +39,8 @@
                         title:'序号',
                         type:'index',
                         align:'center',
-                        width:60,
-                        fixed:'left'
+                        minWidth:60,
+                        // fixed:'left'
                     },
                     // {
                     //     title:'SQL查询',
@@ -50,7 +50,7 @@
                     {
                         title:'SQL组',
                         key:'sql_group',
-                        width:120
+                        minWidth:120
                     },
                     // {
                     //     title:'SQL主体',
@@ -60,12 +60,12 @@
                     {
                         title:'SQL编码',
                         key:'sql_code',
-                        width:120
+                        minWidth:120
                     },
                     {
                         title:'SQL名称',
                         key:'sql_name',
-                        width:120
+                        minWidth:120
                     },
                     // {
                     //     title:'SQL对应函数名称',
@@ -76,7 +76,7 @@
                     {
                         title:'包含角色权限',
                         key:'must_role_permission',
-                        width:180
+                        minWidth:180
                     },
                     {
                         title:'#',
