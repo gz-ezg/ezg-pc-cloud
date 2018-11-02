@@ -161,16 +161,16 @@ export const appRouter = [
         title: 'Test',
         component: Main,
         children: [
-            {
-                path: 'test',
-                title: '测试页面',
-                name: '富文本编辑器测试',
-                component: resolve => {
-                    require(['@/views/test/components/main.vue'], resolve);
-                    // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+            // {
+            //     path: 'test',
+            //     title: '测试页面',
+            //     name: '富文本编辑器测试',
+            //     component: resolve => {
+            //         require(['@/views/test/components/main.vue'], resolve);
+            //         // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-                }
-            },
+            //     }
+            // },
             {
                 path: 'test2',
                 title: '日程测试',
@@ -181,33 +181,33 @@ export const appRouter = [
 
                 }
             },
-            {
-                path: 'test3',
-                title: '可编辑表格测试',
-                name: 'test3_index',
-                component: resolve => {
-                    require(['@/views/test/components/test3.vue'], resolve);
-
-                }
-            },
             // {
-            //     path: 'test4',
-            //     title: '树形表测试',
-            //     name: 'test4_index',
+            //     path: 'test3',
+            //     title: '可编辑表格测试',
+            //     name: 'test3_index',
             //     component: resolve => {
-            //         require(['@/views/test/components/test4.vue'], resolve);
+            //         require(['@/views/test/components/test3.vue'], resolve);
 
             //     }
             // },
             {
-                path: 'test5',
-                title: '新订单测试',
+                path: 'test4',
+                title: '新营销测试',
                 name: 'test4_index',
                 component: resolve => {
-                    require(['@/views/test/components/test5.vue'], resolve);
+                    require(['@/views/test/components/test4.vue'], resolve);
 
                 }
             },
+            // {
+            //     path: 'test5',
+            //     title: '新订单测试',
+            //     name: 'test4_index',
+            //     component: resolve => {
+            //         require(['@/views/test/components/test5.vue'], resolve);
+
+            //     }
+            // },
             
         ]
     },
@@ -288,6 +288,16 @@ export const appRouter = [
                 name: 'marketingManagement_index',
                 component: resolve => {
                     require(['@/views/customerManagement/marketingManagement/customerManagement.vue'], resolve);
+                }
+            },
+            {
+                access: 6002,
+                meta: 6002,
+                path: 'marketingManagement2',
+                title: '营销管理2',
+                name: 'marketingManagement_index2',
+                component: resolve => {
+                    require(['@/views/customerManagement/marketingManagement2'], resolve);
                 }
             },
             {
