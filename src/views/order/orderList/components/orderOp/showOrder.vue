@@ -64,7 +64,7 @@
                 </Row>
                 <Row :gutter="16">
                     <FormItem>
-                        <Button type="primary" icon="plus" @click="show_contarct('onlyShow')">查看合同</Button>
+                        <Button type="primary" icon="plus" @click="show_contarct('edit')">查看合同</Button>
                         <!-- <Button type="primary" icon="plus" @click="kuaiji()" v-show="kjdj">查看会计到家服务项</Button> -->
                     </FormItem>
                 </Row>

@@ -1475,33 +1475,33 @@ export const appRouter = [
                     require(['@/views/logManagement/systemLog.vue'], resolve);
                 }
             },
-            {
-                access: 6066,
-                path: 'WeChatPushLog',
-                title: '微信推送客户日志', 
-                name: 'WeChatPushLog/log_index',
-                component: resolve => {
-                    require(['@/views/logManagement/WeChatPushLog/log_index.vue'], resolve);
-                }
-            },
-            {
-                access: 6066,
-                path: 'smsSendLog',
-                title: '短信发送日志', 
-                name: 'smsSendLog',
-                component: resolve => {
-                    require(['@/views/logManagement/smsSendLog.vue'], resolve);
-                }
-            },
-            {
-                access: 6066,
-                path: 'internalPushLog',
-                title: '微信内部推送日志', 
-                name: 'internalPushLog',
-                component: resolve => {
-                    require(['@/views/logManagement/internalPushLog.vue'], resolve);
-                }
-            },
+            // {
+            //     access: 6066,
+            //     path: 'WeChatPushLog',
+            //     title: '微信推送客户日志', 
+            //     name: 'WeChatPushLog/log_index',
+            //     component: resolve => {
+            //         require(['@/views/logManagement/WeChatPushLog/log_index.vue'], resolve);
+            //     }
+            // },
+            // {
+            //     access: 6066,
+            //     path: 'smsSendLog',
+            //     title: '短信发送日志', 
+            //     name: 'smsSendLog',
+            //     component: resolve => {
+            //         require(['@/views/logManagement/smsSendLog.vue'], resolve);
+            //     }
+            // },
+            // {
+            //     access: 6066,
+            //     path: 'internalPushLog',
+            //     title: '微信内部推送日志', 
+            //     name: 'internalPushLog',
+            //     component: resolve => {
+            //         require(['@/views/logManagement/internalPushLog.vue'], resolve);
+            //     }
+            // },
         ]
     },
 ];

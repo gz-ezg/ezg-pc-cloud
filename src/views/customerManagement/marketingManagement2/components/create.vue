@@ -8,7 +8,7 @@
             @on-visible-change="modal_status_change"
         >
             <Form ref="formValidate" :rules="ruleValidate" :model="formValidate" :label-width="80">
-                <Row :gutter="16" style="height:56px">
+                <Row :gutter="16" >
                     <Col span="12">
                     <FormItem label="姓名" prop="name">
                         <Input size="small" v-model="formValidate.name"/>
@@ -20,7 +20,7 @@
                     </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="16" style="height:56px">
+                <Row :gutter="16" >
                     <Col span="12">
                     <FormItem label="固话" prop="fixedphone">
                         <Input size="small" v-model="formValidate.fixedphone"/>
@@ -32,7 +32,7 @@
                     </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="16" style="height:56px">
+                <Row :gutter="16" >
                     <Col span="12">
                     <FormItem label="微信" prop="weixin">
                         <Input size="small" v-model="formValidate.weixin"/>
@@ -45,7 +45,7 @@
                     </Col>
                     </Col>
                 </Row>
-                <Row :gutter="16" style="height:56px">
+                <Row :gutter="16" >
                     <Col span="12">
                         <FormItem label="服务地址" prop="address">
                             <Input size="small" v-model="formValidate.address"/>
@@ -57,7 +57,7 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="16" style="height:56px">
+                <Row :gutter="16" >
                     <Col span="12">
                     <FormItem label="客户来源" prop="customersource">
                         <Select transfer v-model="formValidate.customersource" size="small" @on-change="check_channel">
@@ -73,7 +73,7 @@
                     </FormItem>
                     </Col>
                 </Row>
-                <Row style="height:56px" :gutter="16" v-if="channelShow">
+                <Row :gutter="16" v-if="channelShow">
                     <Col span="12">
                         <FormItem label="选择渠道" prop="channelTypeId">
                             <Select transfer v-model="formValidate.channelTypeId" size="small">
@@ -82,57 +82,56 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row style="height:56px" :gutter="16" v-if="customerShow">
+                <Row :gutter="16" v-if="customerShow">
                     <Col span="12">
-                        <FormItem label="推荐客户" prop="recCustomer"  style="margin-bottom:0px">
+                        <FormItem label="推荐客户" prop="recCustomer" >
                             <Input size="small" v-model="formValidate.recCustomer" @on-focus="getCustomer" readonly />                    
                         </FormItem>
                     </Col>
                 </Row>
                 <Row :gutter="16">
                     <Col span="12">
-                    <FormItem label="区域" prop="area">
-                        <Select transfer v-model="formValidate.area" size="small">
-                            <Option v-for="item in area" :value="item.typecode" :key="item.id">{{ item.typename }}</Option>
-                        </Select>
-                    </FormItem>
+                        <FormItem label="区域" prop="area">
+                            <Select transfer v-model="formValidate.area" size="small">
+                                <Option v-for="item in area" :value="item.typecode" :key="item.id">{{ item.typename }}</Option>
+                            </Select>
+                        </FormItem>
                     </Col>
                     <Col span="12">
-                    <FormItem label="发送短信" prop="issend">
-                        <Select transfer v-model="formValidate.issend" size="small">
-                            <Option v-for="item in sf_yn" :value="item.typecode" :key="item.id">{{ item.typename}}</Option>
-                        </Select>
-                    </FormItem>
+                        <FormItem label="发送短信" prop="issend">
+                            <Select transfer v-model="formValidate.issend" size="small">
+                                <Option v-for="item in sf_yn" :value="item.typecode" :key="item.id">{{ item.typename}}</Option>
+                            </Select>
+                        </FormItem>
                     </Col>
                 </Row>
                 <Row :gutter="16">
                     <Col span="12">
-                    <FormItem label="客户重要性" prop="importance">
-                        <Select transfer v-model="formValidate.importance" size="small">
-                            <Option v-for="item in importance" :value="item.typecode" :key="item.id">{{ item.typename }}</Option>
-                        </Select>
-                    </FormItem>
+                        <FormItem label="客户重要性" prop="importance">
+                            <Select transfer v-model="formValidate.importance" size="small">
+                                <Option v-for="item in importance" :value="item.typecode" :key="item.id">{{ item.typename }}</Option>
+                            </Select>
+                        </FormItem>
                     </Col>
                 </Row>
                 <Row :gutter="16">
                     <Col span="24">
-                    <FormItem label="标签" prop="customerTags" style="margin-top:5px;margin-bottom:10px">
-                        <Tag v-for="item in customerlabelGroup" :key="item" :name="item" :id="item.id" closable @on-close="handleClose2">{{ item.labelName }}</Tag>
-                        <Button name="marketingManagement_index_entry_add" icon="ios-plus-empty" type="dashed" size="small" @click="getLabelData();addTag = true">添加</Button>
-                    </FormItem>
+                        <FormItem label="标签" prop="customerTags" style="margin-bottom:10px">
+                            <Tag v-for="(item, index) in customerlabelGroup" :key="index" :name="index" closable @on-close="close_tag(index)">{{ item }}</Tag>
+                            <Button name="marketingManagement_index_entry_add" icon="ios-plus-empty" type="dashed" size="small" @click="open_tag">添加</Button>
+                        </FormItem>
                     </Col>
                 </Row>
                 <Row>
-                    <FormItem label="备注" prop="backup" style="marin-top:40px">
+                    <FormItem label="备注" prop="backup" style="marin-top:20px">
                         <Input size="small" type="textarea" v-model="formValidate.backup"/>
                     </FormItem>
                 </Row>
-                 <FormItem>
-                      <Button type="primary" @click="create">新增</Button>
-                      <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
-                  </FormItem>
             </Form>
-            <div slot="footer"></div>
+            <div slot="footer">
+                <Button type="primary" @click="create">新增</Button>
+                <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
+            </div>
         </Modal>
     </div>
 </template>
@@ -182,7 +181,11 @@ export default {
                             callback();
                         }
                     }
-                    _self.$Get(url, config, success);
+
+                    function fail(err){
+                        callback(new Error("验证错误"))
+                    }
+                    _self.$Get(url, config, success, fail);
                 } else {
                     callback(new Error("电话格式不正确"));
                 }
@@ -307,14 +310,65 @@ export default {
         },
         //  新增客户
         create(){
-            this.$refs["formValidate"].validate((valid) => {
-                // if(valid && this.check_date()){
-                //     _self.create_order()
-                //     this.loading = false
-                // }else{
-                //     this.loading = false
-                // }
-            })
+            this.$ButtonCollect("marketingManagement_index_entry_save");
+            if(this.formValidate.tel || this.formValidate.email || this.formValidate.fixedphone || this.formValidate.weixin){
+                this.loading = true
+                this.$refs["formValidate"].validate((valid) => {
+                    if(valid){
+                        this.create_customer()
+                    }else{
+                        this.loading = false
+                    }
+                })
+            }else{
+                this.$Message.warning("联系方式需至少填写一项！")
+            }
+        },
+
+        //  新增客户具体方法
+        create_customer(){
+            let _self = this
+            let url = `api/customer/saveCustomer`
+
+            //  标签处理
+            let labels = []
+            for(let i = 0;i<_self.customerlabelGroup.length;i++){
+                console.log(_self.customerlabelGroup[i])
+                labels.push(_self.customerlabelGroup[i])
+                // labels.push(_self.customerlabelGroup[i].id)
+            }
+
+            let config = {
+                address: _self.formValidate.address,
+                area: _self.formValidate.area,
+                name: _self.formValidate.name,
+                tel: _self.formValidate.tel,
+                backup: _self.formValidate.backup,
+                customertype: _self.formValidate.customertype.join("-"),
+                issend: _self.formValidate.issend,
+                fixedphone: _self.formValidate.fixedphone,
+                qq: _self.formValidate.qq,
+                weixin: _self.formValidate.weixin,
+                email: _self.formValidate.email,
+                customersource: _self.formValidate.customersource,
+                sourcesubdivision: _self.formValidate.sourcesubdivision,
+                importlevel: _self.formValidate.importlevel,
+                channelTypeId: _self.formValidate.channelTypeId,
+                recCustomer: _self.formValidate.recCustomer,
+                labels: labels.join(","),
+                importance: _self.formValidate.importance
+            }
+
+            function success(res){
+                _self.openCustomerCreate = false
+                _self.loading = false
+            }
+
+            function fail(err){
+                _self.loading = false
+            }
+
+            _self.$Post(url, config, success, fail)
         },
         handleReset(){
             this.$refs["formValidate"].resetFields()
@@ -343,7 +397,7 @@ export default {
             // }
         },
         get_channel_type(){
-            var _self = this
+            let _self = this
             let url = `api/channel/type/queryUserChannel?type=xs`
 
             let config = {}
@@ -353,13 +407,29 @@ export default {
             }
 
             this.$Get(url, config, success)
+        },
+        open_tag(){
+            let _self = this
+            //  传过去的必须为一个id数组
+            //  再写一个关联数组，用于显示
+            this.$bus.emit("OPEN_TAG", _self.customerlabelGroup)
+        },
+        close_tag(e){
+            // console.log(e)
+            this.customerlabelGroup.splice(e,1)
         }
     },
     mounted(){
         let _self = this
         this.$bus.on("CREATE_CUSTOMER", (e)=>{
+            _self.customerlabelGroup = []
             _self.openCustomerCreate = true
         })
+    },
+    watch:{
+        customerlabelGroup: function(){
+            //  用于计算展示的标签数组
+        }
     }
 }
 </script>

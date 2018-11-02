@@ -165,6 +165,8 @@
                 </Page>
             </Row>
         </Card>
+        
+        <tag-select></tag-select>
         <create-customer v-if="createCustomerStatus"
             :cluesources="cluesources"
             :customerrating="customerrating"
@@ -172,8 +174,8 @@
             :sf_yn="sf_yn"
             :importance="importance"
             :customerTypes_Casr="customerTypes_Casr"
-
         ></create-customer>
+        
     </div>
 </template>
 
@@ -181,12 +183,16 @@
 import commonVue from './commonVue'
 import { DateFormat } from '../../../libs/utils'
 
+import tagSelect from './components/tag_select'
+
 import createCustomer from './components/create'
+
 
 export default {
     mixins: [commonVue],
     components:{
-        createCustomer
+        createCustomer,
+        tagSelect
     },
     data(){
         return {

@@ -19,6 +19,17 @@
                                 <Input v-model="trackingNumber" placeholder="快递单号" v-if="connectPlan == 'express'"/>
                             </Col>
                         </Row>
+                        <Row :gutter="20" style="height:40px">
+                            <Col span="12">
+                                <RadioGroup v-model="outType">
+                                    <Radio label="customer">客户</Radio>
+                                    <Radio label="other">其他</Radio>
+                                </RadioGroup>
+                            </Col>
+                            <Col span="12" >
+                                <Input v-model="otherName" placeholder="文件去向" v-if="outType == 'other'"/>
+                            </Col>
+                        </Row>
                         <Row :gutter="20" style="margin-top:10px">
                             <tables
                                 ref="tables" 
@@ -73,7 +84,7 @@
                 </Col>
             </Row>
             <div slot="footer">
-                <Button type="primary" @click="submit_request" :loadind="submit_loading" :disabled="disabled">提交申请</Button>
+                <Button type="primary" @click="submit_request" :loading="submit_loading" :disabled="disabled">提交申请</Button>
             </div>
         </Modal>
     </div>
@@ -100,6 +111,8 @@ export default {
             //  提交操作
             connectPlan: "f_to_f",
             trackingNumber: "",
+            outType: "customer",
+            otherName: "",
             connect_plan: [],
             //  公司
             companyLoading: false,
@@ -197,11 +210,15 @@ export default {
     methods:{
         submit_request(){
             let _self = this
+            _self.submit_loading = true
+            if(this.outType == 'other' && !this.otherName){
+                _self.$Message.warning("请输入文件去向！")
+                return ;
+            }
             if(this.connectPlan == 'express' && !this.trackingNumber){
                 _self.$Message.warning("请输入快递单号！")
             }else{
                 let url = "api/customer/file/connect/request/customer/create"
-                _self.submit_loading = true
                 let temp = {}
                 for(let i = 0; i < _self.fileList.length; i++){
                     _self.fileList[i].num = parseInt(_self.fileList[i].num)
@@ -212,7 +229,9 @@ export default {
                 let config = {
                     connectPlan: _self.connectPlan,
                     trackingNumber: _self.trackingNumber,
-                    customerFileJson: JSON.stringify(temp)
+                    customerFileJson: JSON.stringify(temp),
+                    outType: _self.outType,
+                    otherName: _self.otherName
                 }
 
                 function success(res){
@@ -222,8 +241,11 @@ export default {
                     _self.trackingNumber = ""
                     //  根据返回值id，生成扫码页面，推送给客户
                     console.log(res.data)
-                    _self.send_customer_msg(res.data.data.id)
-                    _self.$bus.emit("OPEN_OUTER_QCODER", res.data.data.id)
+                    if(_self.outType == "customer"){
+                        _self.send_customer_msg(res.data.data.id)
+                        _self.$bus.emit("OPEN_OUTER_QCODER", res.data.data.id)
+                        _self.otherName = ""
+                    }
                     _self.$bus.emit("HANDOVER_FILE_UPDATE",true)
                 }
 
@@ -233,6 +255,7 @@ export default {
 
                 this.$Post(url, config, success, fail)
             }
+            _self.submit_loading = false
         },
 
         //  发送微信推送

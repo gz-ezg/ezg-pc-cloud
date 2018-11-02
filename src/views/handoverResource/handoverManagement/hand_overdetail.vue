@@ -31,6 +31,11 @@ export default {
             openDetail: false,
             fileHeader: [
                 {
+                    title: "序号",
+                    type: 'index',
+                    minWidth: 90
+                },
+                {
                     title: "资料名称",
                     key: "customer_file_name",
                     minWidth: 150

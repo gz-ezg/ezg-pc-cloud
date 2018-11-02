@@ -49,6 +49,7 @@
             </Collapse>
         </Row>
         <Row>
+            <Button type="primary" @click="downloadExcel">导出excel</Button>
         </Row>
         <Row style="margin-top: 10px;">
             <Table
@@ -294,6 +295,31 @@ export default {
         },
         open_flow(e){
             this.$bus.emit("OPEN_FILE_LOG", e)
+        },
+        downloadExcel(){
+            let field = [
+                {field:'companyname',title:'公司名称'},
+                {field:'name',title:'客户名称'},
+                {field:'customer_file_name',title:'资料名称'},
+                {field:'keeperrealname',title:'保管人'},
+                {field:'file_num',title:'数量'},
+                {field:'file_status',title:'文件状态', format:"customer_file_s"},         
+            ]
+            let _self = this
+            let url = `api/customer/file/list`
+            let config = {
+                page: '1',
+                pageSize: '1000000',
+                sortField: "id",
+                departname: _self.seacrhFormInline.departname,
+                file_type_name: _self.seacrhFormInline.file_type_name,
+                keeperrealname: _self.seacrhFormInline.keeperrealname,
+                companyname: _self.seacrhFormInline.companyname,
+                export: 'Y',
+                exportField: encodeURI(JSON.stringify(field))
+            }
+            let toExcel = this.$MergeURL(url, config)
+            window.open(toExcel)
         },
         get_data(){
             let _self = this

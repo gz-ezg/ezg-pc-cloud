@@ -364,6 +364,8 @@ export default {
         this.get_center()
         this.$bus.off("OPEN_CREATE_RESOURE_FILE")
         this.$bus.on("OPEN_CREATE_RESOURE_FILE", (e)=>{
+            _self.$refs["formValidate"].resetFields()
+            _self.$refs["fileItem"].resetFields()
             _self.get_all_file_type()
             _self.get_data_center()
             _self.openResoureFile = true
