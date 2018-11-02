@@ -55,10 +55,11 @@
                         </Collapse>
                     </Row>
                     <Row>
-                        <Button type="primary" icon="search" @click="dataCheck">查看</Button> 
+                        <!-- <Button type="primary" icon="search" @click="dataCheck">查看</Button>  -->
                     </Row>
                     <Row style="margin-top: 10px;">
                         <Table
+                                :loading="loading"
                                 highlight-row 
                                 border
                                 size="small"
@@ -157,6 +158,7 @@
 export default {
   data() {
     return {
+      loading: false,
       showwidth: 24,
       groupDataCenter: true,
       //  筛选相关
@@ -173,42 +175,45 @@ export default {
       fatherDataHeader: [
         {
           title: "模版名称",
-          key: "msgtname"
+          key: "msgtname",
+          minWidth: 180,
         },
         {
           title: "消息",
           key: "msg",
-          width: 200,
-          ellipsis: true
+          minWidth: 300,
+        //   ellipsis: true
         },
-        {
-          title: "企业应用Id",
-          width: 100,
-          key: "agentId"
-        },
+        // {
+        //   title: "企业应用Id",
+        //   width: 100,
+        //   key: "agentId"
+        // },
         {
           title: "发送时间",
           key: "sendDate",
-          width: 150
+          minWidth: 180
         },
         {
           title: "接收人",
           width: 80,
-          key: "receiveMan"
+          key: "wechatname",
+          minWidth: 90
         },
         {
           title: "接收人手机号",
-          width: 120,
-          key: "phone"
+          minWidth: 120,
+          key: "mobile"
         },
         {
           title: "是否成功",
-          width: 90,
+          minWidth: 90,
           key: "issuccess"
         },
         {
           title: "返回信息",
-          key: "resultMsg"
+          key: "resultMsg",
+          minWidth: 120
         }
       ],
 
@@ -231,8 +236,8 @@ export default {
   methods: {
     getData() {
       let _self = this;
-      let url =
-        "http://192.168.0.220:8888/Mock/simple?projectID=1&uri=/log/queryWechatCompanyLog/list";
+      let url = "api/system/log/queryWechatCompanyLog/list";
+      _self.loading = true
       let config = {
         params: {
           page: _self.page,
@@ -245,6 +250,7 @@ export default {
         }
       };
       function doSuccess(res) {
+        _self.loading = false
         _self.fatherData = res.data.data.rows;
         _self.pageTotal = res.data.data.total;
       }

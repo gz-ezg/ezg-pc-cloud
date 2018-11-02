@@ -278,9 +278,8 @@ export default {
   methods: {
     getData() {
       let _self = this;
-      let url =
-        "http://192.168.0.220:8888/Mock/simple?projectID=1&uri=/log/querySMSRquestLog/list";
-      let config = {
+      let url = "api/system/log/querySMSRquestLog/list"
+      let config= {
         params: {
           page: _self.page,
           pageSize: _self.pageSize,

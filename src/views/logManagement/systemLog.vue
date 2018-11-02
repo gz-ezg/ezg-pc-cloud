@@ -38,10 +38,11 @@
                         </Collapse>
                     </Row>
                     <Row>
-                        <Button type="primary" icon="search" @click="dataCheck">查看</Button> 
+                        <!-- <Button type="primary" icon="search" @click="dataCheck">查看</Button>  -->
                     </Row>
                     <Row style="margin-top: 10px;">
                         <Table
+                                :loading="loading"
                                 highlight-row 
                                 border
                                 size="small"
@@ -88,6 +89,7 @@
 
 <script>
 export default {
+  name: "systemLog",
   data() {
     return {
       showwidth: 24,
@@ -103,31 +105,38 @@ export default {
       fatherDataHeader: [
         {
           title: "日志类型",
-          key: "logType"
+          key: "logType",
+          minWidth: 90
         },
         {
           title: "日志内容",
-          key: "logcontent"
+          key: "logcontent",
+          minWidth: 400
         },
         {
           title: "操作IP",
-          key: "ip"
+          key: "ip",
+          minWidth: 90
         },
         {
           title: "操作人ID",
-          key: "userid"
+          key: "userid",
+          minWidth: 90
         },
         {
           title: "操作人名",
-          key: "update_name"
+          key: "update_name",
+          minWidth: 90
         },
         {
           title: "操作浏览器",
-          key: "broswer"
+          key: "broswer",
+          minWidth: 90
         },
         {
           title: "操作时间",
-          key: "operatetime"
+          key: "operatetime",
+          minWidth: 150
         }
       ],
       fatherData: [],
@@ -137,13 +146,14 @@ export default {
       pageSize: 10,
       // 查看模态框
       open_father_data: false,
+      loading: false
     };
   },
   methods: {
     getData() {
       let _self = this; 
-      let url =
-        "http://192.168.0.220:8888/Mock/simple?projectID=1&uri=/log/queryTSLog/list";
+      let url = "api/system/log/queryTSLog/list"
+      _self.loading = true
       let config = {
         params: {
           page: _self.page,
@@ -155,6 +165,8 @@ export default {
       function doSuccess(res) {
         _self.fatherData = res.data.data.rows;
         _self.pageTotal = res.data.data.total;
+        _self.loading = false
+
       }
       _self.$Get(url, config, doSuccess);
     },

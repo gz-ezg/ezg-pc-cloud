@@ -71,6 +71,7 @@
                     </Row>
                     <Row style="margin-top: 10px;">
                         <Table
+                                :loading="loading"
                                 highlight-row 
                                 border
                                 size="small"
@@ -155,6 +156,7 @@
 export default {
   data() {
     return {
+      loading: false,
       showwidth: 24,
       groupDataCenter: true,
       //  筛选相关
@@ -172,48 +174,49 @@ export default {
         {
           title: "模版名称",
           key: "templateName",
-          width: 130,
-          ellipsis: true
+          minWidth: 180,
         },
         {
           title: "发送时间",
           key: "sendDate",
-          width: 130,
-          ellipsis: true
+          minWidth: 150,
         },
         {
           title: "发送人",
-          key: "realname"
+          key: "realname",
+          minWidth: 90,
         },
         {
           title: "手机号",
-          key: "mobile"
+          key: "mobile",
+          minWidth: 120
         },
         {
           title: "客户",
-          key: "name"
+          key: "name",
+          minWidth: 90
         },
-        {
-          title: "销售人员",
-          key: "rname"
-        
-        },
+        // {
+        //   title: "销售人员",
+        //   key: "rname",
+        //   minWidth: 90
+        // },
         {
           title: "是否成功",
-          key: "isSuccess"
+          key: "isSuccess",
+          minWidth: 90
         },
         {
           title: "返回信息",
           key: "resultMsg",
-          width: 130,
-          ellipsis: true
+          minWidth: 130,
         },
-        {
-          title: "详情",
-          key: "id",
-          width: 130,
-          ellipsis: true
-        }
+        // {
+        //   title: "详情",
+        //   key: "id",
+        //   width: 130,
+        //   ellipsis: true
+        // }
       ],
 
       fatherData: [],
@@ -237,8 +240,8 @@ export default {
   methods: {
     getData() {
       let _self = this;
-      let url =
-        "http://192.168.0.220:8888/Mock/simple?projectID=1&uri=/log/queryWechatTemplatelog/list";
+      let url = "api/system/log/queryWechatTemplatelog/list"
+      _self.loading = true
       let config = {
         params: {
           page: _self.page,
@@ -253,9 +256,9 @@ export default {
         }
       };
       function doSuccess(res) {
-        // _self.fatherData = res.data.data.rows;
-        console.log(res.data.data);
-        _self.fatherData = res.data.data;
+          _self.loading = false
+        _self.fatherData = res.data.data.rows;
+        // _self.fatherData = res.data.data;
         
         _self.pageTotal = res.data.data.total;
       }
