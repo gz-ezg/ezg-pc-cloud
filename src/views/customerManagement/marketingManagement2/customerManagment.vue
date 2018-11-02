@@ -129,15 +129,15 @@
             <Row>
                 <ButtonGroup>
                     <Button type="primary" name="marketingManagement_index_edit_add" icon="plus" @click="create_customer" v-permission="['marketingM.add']">录入</Button>
-                    <!-- <Button type="primary" name="marketingManagement_index_edit_edit" icon="edit" @click="isEditChange" v-permission="['marketingM.edit']">编辑</Button>
-                    <Button type="primary" name="marketingManagement_index_edit_change" icon="ios-crop" @click="change_market" v-permission="['marketingM.change']">变更</Button>
-                    <Button type="primary" name="marketingManagement_index_edit_delete" icon="trash-b" @click="deleteCustomer" v-permission="['marketingM.delete']">删除</Button>
-                    <Button type="primary" name="marketingManagement_index_edit_qrcode" icon="grid" @click="getQRcode2">查看二维码</Button>
+                    <Button type="primary" name="marketingManagement_index_edit_edit" icon="edit" @click="open_edit" v-permission="['marketingM.edit']">编辑</Button>
+                    <Button type="primary" name="marketingManagement_index_edit_change" icon="ios-crop" @click="check_select('CUSTOMER_CHANGE_MARKETER')" v-permission="['marketingM.change']">变更</Button>
+                    <Button type="primary" name="marketingManagement_index_edit_delete" icon="trash-b" @click="check_select('DELETE_CUSTOMER')" v-permission="['marketingM.delete']">删除</Button>
+                    <Button type="primary" name="marketingManagement_index_edit_qrcode" icon="grid" @click="check_select('OPEN_CODE')">查看二维码</Button>
                     <Button type="primary" name="marketingManagement_index_edit_excel" icon="ios-color-filter-outline" @click="download_excel">导出Excel</Button>
-                    <Button type="primary" name="marketingManagement_index_info_log" icon="ios-color-filter-outline" @click="open_change_log">销售变更日志</Button>
-                    <Button type="primary" name="marketingManagement_index_edit_log" icon="ios-color-filter-outline" @click="open_change_info_log">客户动态</Button>
-                    <Button type="primary" name="marketingManagement_index_field_log" icon="ios-color-filter-outline" @click="open_field_info_log">客户外勤</Button>
-                    <Button type="primary" name="marketingManagement_index_field_log" icon="ios-color-filter-outline" @click="open_clue">客户线索</Button> -->
+                    <Button type="primary" name="marketingManagement_index_info_log" icon="ios-color-filter-outline" @click="check_select('OPEN_CHANGE_LOG')">销售变更日志</Button>
+                    <Button type="primary" name="marketingManagement_index_edit_log" icon="ios-color-filter-outline" @click="check_select('OPEN_CUSTOMER_LOG')">客户动态</Button>
+                    <Button type="primary" name="marketingManagement_index_field_log" icon="ios-color-filter-outline" @click="check_select('OPEN_CUSTOMER_FIELD_LOG')">客户外勤</Button>
+                    <Button type="primary" name="marketingManagement_index_field_log" icon="ios-color-filter-outline" @click="check_select('OPEN_CUSTOMER_CLUE_LOG')">客户线索</Button>
                 </ButtonGroup>
             </Row>
             <Row style="margin-top: 10px;">
@@ -175,7 +175,24 @@
             :importance="importance"
             :customerTypes_Casr="customerTypes_Casr"
         ></create-customer>
-        
+        <change-marker></change-marker>
+        <change-log></change-log>
+        <clue-log></clue-log>
+        <field></field>
+        <dymaic></dymaic>
+        <Qcode></Qcode>
+        <del-customer></del-customer>
+        <edit-customer 
+            :customer="selectRow"
+            @close-edit="close_edit" 
+            v-if="openEdit"
+            :cluesources="cluesources"
+            :customerrating="customerrating"
+            :area="area"
+            :sf_yn="sf_yn"
+            :importance="importance"
+            :customerTypes_Casr="customerTypes_Casr"
+        ></edit-customer>
     </div>
 </template>
 
@@ -186,16 +203,33 @@ import { DateFormat } from '../../../libs/utils'
 import tagSelect from './components/tag_select'
 
 import createCustomer from './components/create'
+import editCustomer from './edit/index'
 
+import changeMarker from './op/change'
+import changeLog from './op/changeLog'
+import clueLog from './op/clue'
+import field from './op/field'
+import dymaic from './op/dymaic'
+import Qcode from './op/code'
+import delCustomer from './op/del'
 
 export default {
     mixins: [commonVue],
     components:{
         createCustomer,
-        tagSelect
+        tagSelect,
+        changeMarker,
+        changeLog,
+        clueLog,
+        field,
+        dymaic,
+        Qcode,
+        delCustomer,
+        editCustomer
     },
     data(){
         return {
+            openEdit: false,
             search_model: "",
             header: [
                 {
@@ -544,7 +578,11 @@ export default {
             }
         },
         open_edit(){
-
+            if(this.selectRow){
+                this.openEdit = true
+            }else{
+                this.$Message.warning("请选择一行!")
+            }
         },
         //  转换客户状态
         findCustomerType(temp) {
@@ -572,6 +610,9 @@ export default {
             }else{
                 this.$bus.emit("CREATE_CUSTOMER", true)
             }
+        },
+        close_edit(){
+            this.openEdit = false
         }
     },
     created(){
@@ -590,8 +631,15 @@ export default {
             _self.$Message.error("属性转换失败！")
         })
         //  更新表格内容
+        this.$bus.off("UPDATE_CUSTOMER", true)
         this.$bus.on("UPDATE_CUSTOMER", (e)=>{
             _self.get_data()
+        })
+        this.$bus.off("CREATE_AFTER_EDIT", true)
+        this.$bus.on("CREATE_AFTER_EDIT", (e)=>{
+            e.ID = e.id
+            this.selectRow = e
+            this.openEdit = true
         })
     }
 }

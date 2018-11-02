@@ -117,7 +117,7 @@
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem label="标签" prop="customerTags" style="margin-bottom:10px">
-                            <Tag v-for="(item, index) in customerlabelGroup" :key="index" :name="index" closable @on-close="close_tag(index)">{{ item }}</Tag>
+                            <Tag v-for="(item, index) in LabelArray" :key="index" :name="index" closable @on-close="close_tag(index)">{{ item.labelName }}</Tag>
                             <Button name="marketingManagement_index_entry_add" icon="ios-plus-empty" type="dashed" size="small" @click="open_tag">添加</Button>
                         </FormItem>
                     </Col>
@@ -234,6 +234,9 @@ export default {
             channelShow: false,
             ChannelType: [],
 
+            //  标签
+            allLabel: [],
+            LabelArray: [],
             customerShow: false,    
             openCustomerCreate: false,
             formValidate: {
@@ -260,7 +263,8 @@ export default {
                 channelsource: "",
                 channelTypeId: "",
                 recCustomer: "",
-                importance: "ordinary"
+                importance: "ordinary",
+                labels: []
             },
             ruleValidate:{
                 name: [
@@ -294,7 +298,6 @@ export default {
                     { validator: validateQQ, trigger: "change" }
                 ]
             },
-            customerlabelGroup: []
         }
     },
     methods:{
@@ -331,12 +334,12 @@ export default {
             let url = `api/customer/saveCustomer`
 
             //  标签处理
-            let labels = []
-            for(let i = 0;i<_self.customerlabelGroup.length;i++){
-                console.log(_self.customerlabelGroup[i])
-                labels.push(_self.customerlabelGroup[i])
-                // labels.push(_self.customerlabelGroup[i].id)
-            }
+            // let labels = []
+            // for(let i = 0;i<_self.formValidate.labels.length;i++){
+            //     console.log(_self.formValidate.labels[i])
+            //     labels.push(_self.formValidate.labels[i])
+            //     // labels.push(_self.formValidate.labels[i].id)
+            // }
 
             let config = {
                 address: _self.formValidate.address,
@@ -355,13 +358,18 @@ export default {
                 importlevel: _self.formValidate.importlevel,
                 channelTypeId: _self.formValidate.channelTypeId,
                 recCustomer: _self.formValidate.recCustomer,
-                labels: labels.join(","),
+                labels: _self.formValidate.labels.join(","),
                 importance: _self.formValidate.importance
             }
 
             function success(res){
                 _self.openCustomerCreate = false
                 _self.loading = false
+                setTimeout(()=>{
+                    _self.$bus.emit("UPDATE_CUSTOMER", true)
+                },300)
+                _self.$bus.emit("CREATE_AFTER_EDIT", res.data.data)
+                
             }
 
             function fail(err){
@@ -412,23 +420,48 @@ export default {
             let _self = this
             //  传过去的必须为一个id数组
             //  再写一个关联数组，用于显示
-            this.$bus.emit("OPEN_TAG", _self.customerlabelGroup)
+            this.$bus.emit("OPEN_TAG", _self.formValidate.labels)
         },
         close_tag(e){
-            // console.log(e)
-            this.customerlabelGroup.splice(e,1)
+            this.formValidate.labels.splice(e,1)
+        },
+        get_all_label(){
+            let _self = this
+            let url = `api/system/label/list?page=1&pageSize=100`
+
+            let config = {}
+
+            function success(res){
+                _self.allLabel = res.data.data.rows
+            }
+
+            this.$Get(url, config, success)
         }
+    },
+    created(){
+        this.get_all_label()
     },
     mounted(){
         let _self = this
         this.$bus.on("CREATE_CUSTOMER", (e)=>{
-            _self.customerlabelGroup = []
+            _self.formValidate.labels = []
             _self.openCustomerCreate = true
         })
     },
     watch:{
-        customerlabelGroup: function(){
+        'formValidate.labels': function(){
             //  用于计算展示的标签数组
+            //  formValidate.labels id数组
+            //  LabelName 所有值数组
+            this.LabelArray = []
+            for(let i = 0; i< this.formValidate.labels.length; i++){
+                for(let j = 0; j < this.allLabel.length; j++){
+                    if(this.formValidate.labels[i] == this.allLabel[j].id){
+                        this.LabelArray.push(this.allLabel[j])
+                        break;
+                    }
+                }
+            }
         }
     }
 }

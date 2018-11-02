@@ -51,6 +51,14 @@ export default commonVue = {
                 }
                 this.$GetDataCenter(params, success)
             })
+        },
+        check_select(e){
+            console.log(e)
+            if(this.selectRow){
+                this.$bus.emit(e, this.selectRow)
+            }else{
+                this.$Message.warning("请选择需要操作的客户！")
+            }
         }
     },
     created(){
