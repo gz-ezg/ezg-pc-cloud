@@ -86,7 +86,7 @@
                 </Col>
             </Row>
             <div slot="footer">
-                <Button type="primary" @click="submit_request" :loadind="submit_loading">提交申请</Button>
+                <Button type="primary" @click="submit_request" :loading="submit_loading">提交申请</Button>
             </div>
         </Modal>
     </div>

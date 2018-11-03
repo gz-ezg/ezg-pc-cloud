@@ -53,7 +53,7 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Table 
+                <Table
                     id="show-order-item"
                     border
                     :columns="orderItemHeader" 
@@ -68,7 +68,11 @@
 
 <script>
 export default {
-    props: ['payDirs'],
+    props: {
+        payDirs: {
+            type: Array
+        }
+    },
     data(){
         return{
             openOrderDetail: false,
@@ -198,8 +202,8 @@ export default {
     },
     created() {
         let _self = this
-        this.$bus.on("OPEN_ORDER_DETAIL",(e)=>{
-            _self.get_data(e)
+        this.$bus.on("CUSTOMER_ORDER_DETAIL",(e)=>{
+            _self.get_data(e.id)
             _self.openOrderDetail = true
         })
     },
@@ -213,3 +217,4 @@ export default {
     background-color: rgba(0, 0, 0, 0);
 }
 </style>
+

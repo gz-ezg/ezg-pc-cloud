@@ -258,7 +258,8 @@
                                 h('Button', {
                                     props: {
                                         type: 'text',
-                                        size: 'small'
+                                        size: 'small',
+                                        transfer: true
                                     },
                                     on: {
                                         click: () => {

@@ -5,6 +5,7 @@
             v-model="openEdit"
             width="100"
             :styles="{height: '100%', top: '0px',minWidth: '900px'}"
+            @on-cancel="close"
         >
             <div slot="close">
                 <Icon type="close" @click="close" style="font-size:20px;padding-top:10px"></Icon>
@@ -28,31 +29,49 @@
                         <Panel name="company">
                             企业信息
                             <p slot="content">
-                                <company v-if="openPanel[0] == 'company'"></company>
+                                <company 
+                                    v-if="openPanel[0] == 'company'"
+                                    :customer="customer"
+                                    :cluesources="cluesources"
+                                    :customerrating="customerrating"
+                                ></company>
                             </p>
                         </Panel>
                         <Panel name="followUp">
                             客户跟进记录
                             <p slot="content">
-                                <follow v-if="openPanel[0] == 'followUp'"></follow>
+                                <follow 
+                                    v-if="openPanel[0] == 'followUp'"
+                                    :customer="customer"
+                                ></follow>
                             </p>
                         </Panel>
                         <Panel name="order">
                             订单详情
                             <p slot="content">
-                                <order v-if="openPanel[0] == 'order'"></order>
+                                <order 
+                                v-if="openPanel[0] == 'order'"
+                                :customer="customer"
+                                :cluesources="cluesources"
+                                ></order>
                             </p>
                         </Panel>
                         <Panel name="relation">
                             客户关系人
                             <p slot="content">
-                                <relation v-if="openPanel[0] == 'relation'"></relation>
+                                <relation 
+                                v-if="openPanel[0] == 'relation'"
+                                :customer="customer"
+                                ></relation>
                             </p>
                         </Panel>
                         <Panel name="dymaic">
                             服务动态
                             <p slot="content">
-                                <dymaic v-if="openPanel[0] == 'dymaic'"></dymaic>
+                                <dymaic 
+                                v-if="openPanel[0] == 'dymaic'"
+                                :customer="customer"    
+                            ></dymaic>
                             </p>
                         </Panel>
                         <Panel name="upload">
@@ -125,6 +144,9 @@ export default {
     methods: {
         close(){
             this.$emit("close-edit", true)
+        },
+        open(){
+            console.log("112")
         }
     }
 }

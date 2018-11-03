@@ -1,6 +1,7 @@
 <template>
     <div>
         <Modal
+            id="top"
             ref="log"
             v-model="opencheckMemo"
             title="查看审批备注"
@@ -69,4 +70,11 @@ export default {
     },
 }
 </script>
+
+<style>
+#top .ivu-modal-mask{
+    z-index: 9999
+}
+</style>
+
 

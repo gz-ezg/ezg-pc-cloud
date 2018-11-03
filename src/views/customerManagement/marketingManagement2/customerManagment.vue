@@ -384,7 +384,7 @@ export default {
             page: 1,
             pageSize: 10,
             total: 0,
-            tableLoading: false,
+            tableLoading: true,
             formValidate: {
                 name: "",
                 tel: "",
