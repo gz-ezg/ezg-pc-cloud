@@ -1,5 +1,5 @@
 //  营销管理-公共内容
-export default commonVue = {
+export default {
     data() {
         return {
             //  选中的一行

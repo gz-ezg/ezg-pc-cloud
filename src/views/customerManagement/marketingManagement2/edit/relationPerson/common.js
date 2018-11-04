@@ -1,4 +1,4 @@
-export default relationCommon = {
+export default {
     data(){
         const validateTel = (rule, value, callback) => {
             let re = /^1\d{10}$/;

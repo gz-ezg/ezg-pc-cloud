@@ -1,4 +1,4 @@
-export default relationCommon = {
+export default {
     props: {
         customer: {
             type: [Array, Object, String]

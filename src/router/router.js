@@ -199,15 +199,15 @@ export const appRouter = [
 
             //     }
             // },
-            // {
-            //     path: 'test5',
-            //     title: '新订单测试',
-            //     name: 'test4_index',
-            //     component: resolve => {
-            //         require(['@/views/test/components/test5.vue'], resolve);
+            {
+                path: 'test5',
+                title: '新订单测试',
+                name: 'test4_index',
+                component: resolve => {
+                    require(['@/views/test/components/test5.vue'], resolve);
 
-            //     }
-            // },
+                }
+            },
             
         ]
     },

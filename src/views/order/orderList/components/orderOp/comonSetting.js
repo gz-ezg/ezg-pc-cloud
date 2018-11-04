@@ -1,4 +1,4 @@
-export default commonSetting = {
+export default {
     props: {
         payDirs: {
             type: Array

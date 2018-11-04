@@ -93,7 +93,7 @@ axios.interceptors.response.use(
 
 //  异常监控及上传
 //  上传待接口完成后实现
-Vue.config.errorHandler = function (err, vm, info) {
+Vue.config.errorHandler = function (err, vm, info, a) {
     // handle error
     // `info` 是 Vue 特定的错误信息，比如错误所在的生命周期钩子
     // 只在 2.2.0+ 可用

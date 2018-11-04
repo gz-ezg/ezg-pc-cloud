@@ -1,19 +1,146 @@
 <template>
     <div>
-        <edit-order-detail></edit-order-detail>
+        <!-- 测试引入element-admin的树形表 -->
+        <!-- <edit-order-detail></edit-order-detail> -->
+        <!-- <Table :data="data" :columns="columns"></Table> -->
+        <!-- <el-button>123456</el-button> -->
+        <tree-table :data="data" :columns="columns" border/>
     </div>
 </template>
 
 <script>
-import editOrderDetail from '../../order/orderList/components/orderOp/editOrderDetail'
+// import Vue from 'vue';
+import treeTable from './TreeTable/index'
+// import { Button, Select } from 'element-ui';
+// import treeToArray from './eval'
+// import editOrderDetail from '../../order/orderList/components/orderOp/editOrderDetail'
 export default {
+    components: {
+        treeTable
+    },
     data(){
         return{
-
+            columns: [
+                {
+                text: '事件',
+                value: 'event',
+                width: 200
+                },
+                {
+                text: 'ID',
+                value: 'id'
+                },
+                {
+                text: '时间线',
+                value: 'timeLine'
+                },
+                {
+                text: '备注',
+                value: 'comment'
+                }
+            ],
+            data: [
+                {
+                    id: 0,
+                    event: '事件1',
+                    timeLine: 50,
+                    comment: '无'
+                },
+                {
+                    id: 1,
+                    event: '事件1',
+                    timeLine: 100,
+                    comment: '无',
+                    children: [
+                        {
+                            id: 2,
+                            event: '事件2',
+                            timeLine: 10,
+                            comment: '无'
+                        },
+                        {
+                            id: 3,
+                            event: '事件3',
+                            timeLine: 90,
+                            comment: '无',
+                            children: [
+                                {
+                                    id: 4,
+                                    event: '事件4',
+                                    timeLine: 5,
+                                    comment: '无'
+                                },
+                                {
+                                    id: 5,
+                                    event: '事件5',
+                                    timeLine: 10,
+                                    comment: '无'
+                                },
+                                {
+                                    id: 6,
+                                    event: '事件6',
+                                    timeLine: 75,
+                                    comment: '无',
+                                    children: [
+                                        {
+                                            id: 7,
+                                            event: '事件7',
+                                            timeLine: 50,
+                                            comment: '无',
+                                            children: [
+                                                {
+                                                    id: 71,
+                                                    event: '事件71',
+                                                    timeLine: 25,
+                                                    comment: 'xx'
+                                                },
+                                                {
+                                                    id: 72,
+                                                    event: '事件72',
+                                                    timeLine: 5,
+                                                    comment: 'xx'
+                                                },
+                                                {
+                                                    id: 73,
+                                                    event: '事件73',
+                                                    timeLine: 20,
+                                                    comment: 'xx'
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            id: 8,
+                                            event: '事件8',
+                                            timeLine: 25,
+                                            comment: '无'
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
     },
-    components:{
-        editOrderDetail
+    methods: {
+        formatData: function() {
+            let tmp
+            if (!Array.isArray(this.data)) {
+                tmp = [this.data]
+            } else {
+                tmp = this.data
+            }
+            const func = this.evalFunc || treeToArray
+            const args = this.evalArgs ? Array.concat([tmp, this.expandAll], this.evalArgs) : [tmp, this.expandAll]
+            return func.apply(null, args)
+        }
+    },
+    mounted(){
+        console.log(this.formatData)
+    },
+    computed:{
+        
     }
 }
 </script>
