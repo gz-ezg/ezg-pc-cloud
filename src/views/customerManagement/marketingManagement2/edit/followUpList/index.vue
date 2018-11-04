@@ -6,11 +6,11 @@
                 <Checkbox v-model="single" style="float:right" @on-change="get_data(customer.ID)">只看市场跟进</Checkbox>
             </Row>
         </Row>
-        <Spin fix v-if="spinShow">
-            <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
-            <div>加载跟进记录中...</div>
-        </Spin>
         <Scroll height="500">
+            <Spin fix v-if="spinShow">
+                <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
+                <div>加载跟进记录中...</div>
+            </Spin>
             <Timeline style="margin-top: 15px;margin-right:10px">
                 <div class="content">
                     <TimelineItem color="blue" v-for="(item, index) in followList" :key="index" >
@@ -119,7 +119,7 @@
                 </Timeline>
             </Scroll>
             <follow-field></follow-field>
-            <follow-create :followUpType="markert_follow_up_type" :customer="customer"></follow-create>
+            <follow-create :followUpType="markert_follow_up_type" :customer="customer" @update="get_data"></follow-create>
     </div>
 </template>
 

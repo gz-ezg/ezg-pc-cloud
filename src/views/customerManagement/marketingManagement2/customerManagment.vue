@@ -133,11 +133,11 @@
                     <Button type="primary" name="marketingManagement_index_edit_change" icon="ios-crop" @click="check_select('CUSTOMER_CHANGE_MARKETER')" v-permission="['marketingM.change']">变更</Button>
                     <Button type="primary" name="marketingManagement_index_edit_delete" icon="trash-b" @click="check_select('DELETE_CUSTOMER')" v-permission="['marketingM.delete']">删除</Button>
                     <Button type="primary" name="marketingManagement_index_edit_qrcode" icon="grid" @click="check_select('OPEN_CODE')">查看二维码</Button>
-                    <Button type="primary" name="marketingManagement_index_edit_excel" icon="ios-color-filter-outline" @click="download_excel">导出Excel</Button>
-                    <Button type="primary" name="marketingManagement_index_info_log" icon="ios-color-filter-outline" @click="check_select('OPEN_CHANGE_LOG')">销售变更日志</Button>
+                    <Button type="primary" name="marketingManagement_index_edit_excel" icon="ios-download" @click="download_excel">导出Excel</Button>
+                    <Button type="primary" name="marketingManagement_index_info_log" icon="drag" @click="check_select('OPEN_CHANGE_LOG')">销售变更日志</Button>
                     <Button type="primary" name="marketingManagement_index_edit_log" icon="ios-color-filter-outline" @click="check_select('OPEN_CUSTOMER_LOG')">客户动态</Button>
-                    <Button type="primary" name="marketingManagement_index_field_log" icon="ios-color-filter-outline" @click="check_select('OPEN_CUSTOMER_FIELD_LOG')">客户外勤</Button>
-                    <Button type="primary" name="marketingManagement_index_field_log" icon="ios-color-filter-outline" @click="check_select('OPEN_CUSTOMER_CLUE_LOG')">客户线索</Button>
+                    <Button type="primary" name="marketingManagement_index_field_log" icon="navigate" @click="check_select('OPEN_CUSTOMER_FIELD_LOG')">客户外勤</Button>
+                    <Button type="primary" name="marketingManagement_index_field_log" icon="android-share-alt" @click="check_select('OPEN_CUSTOMER_CLUE_LOG')">客户线索</Button>
                 </ButtonGroup>
             </Row>
             <Row style="margin-top: 10px;">
@@ -530,6 +530,7 @@ export default {
                         _self.data[i].importlevel = _self.customerrating_map.get(_self.data[i].importlevel.toString())
                     }
                     _self.data[i].AREA = _self.area_map.get(_self.data[i].AREA)
+                    _self.data[i].customersourceCode = _self.data[i].customersource
                     _self.data[i].customersource = _self.cluesources_map.get(_self.data[i].customersource)
                     _self.data[i].importance = _self.importance_map.get(_self.data[i].importance)
                     _self.data[i].isbound = _self.sf_yn_map.get(_self.data[i].isbound)

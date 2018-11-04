@@ -9,7 +9,7 @@ export default relationCommon = {
         companyarea: {
             type: Array
         },
-        customerrating: {
+        importance: {
             type: Array
         },
         cluesources: {
@@ -25,7 +25,7 @@ export default relationCommon = {
                 callback(new Error('企业名称必须为汉字'))
             } else {
                 value = encodeURI(value)
-                let url = '/customer/findCompanyByName'
+                let url = 'api/customer/findCompanyByName'
                 let config = {
                     params:{
                         companyName: value
@@ -54,9 +54,9 @@ export default relationCommon = {
                 legalrepresentative: '',
                 importlevel: '',
                 createby: localStorage.getItem('realname'),
-                cluesource: this.customer.cluesource,
+                cluesource: this.customer.customersourceCode,
                 customerid: this.customer.ID,
-                companyarea: []   
+                companyarea: []
             },
             ruleValidate: {
                 companyname: [
@@ -83,7 +83,7 @@ export default relationCommon = {
     methods: {
         //  校验
         check_data(success){
-                _self.$refs["formValidate"].validate((valid) => {
+                this.$refs["formValidate"].validate((valid) => {
                     if(valid){
                         success()
                     }else{
@@ -94,7 +94,7 @@ export default relationCommon = {
         }
     },
     created(){
-        // console.log(this.customerrating)
+        // console.log(this.importance)
         // console.log(this.taxtype)
         // console.log(this.companyarea)
         // console.log(this.cluesources)

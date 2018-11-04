@@ -2,6 +2,7 @@
     <div>
         <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="open_company_create">新增</Button>
         <Table
+                :loading="loading"
                 border
                 size="small"
                 :columns="header"
@@ -16,9 +17,9 @@
             @on-change="pageChange"
             v-if="total>10"
             style="margin-top: 10px"></Page> -->
-        <create-company v-if="close" @update="get_data" :taxtype="taxtype" :companyarea="companyarea_Casr" :customer="customer" :customerrating="customerrating" :cluesources="cluesources"></create-company>
-        <update-company v-if="close" @update="get_data" :taxtype="taxtype" :companyarea="companyarea_Casr" :customer="customer" :customerrating="customerrating" :cluesources="cluesources"></update-company>
-        <amend-company></amend-company>
+        <create-company v-if="close" @update="get_data" :taxtype="taxtype" :companyarea="companyarea_Casr" :customer="customer" :importance="importance" :cluesources="cluesources"></create-company>
+        <update-company v-if="close" @update="get_data" :taxtype="taxtype" :companyarea="companyarea_Casr" :customer="customer" :importance="importance" :cluesources="cluesources"></update-company>
+        <!-- <amend-company></amend-company> -->
         <change-log></change-log>
     </div>
 </template>
@@ -40,7 +41,7 @@ export default {
         customer:{
             type: [Array, Object, String]
         },
-        customerrating: {
+        importance: {
             type: Array
         },
         cluesources: {
@@ -49,6 +50,7 @@ export default {
     },
     data(){
         return {
+            loading: false,
             close: false,
             header: [
                 {
@@ -179,11 +181,13 @@ export default {
     methods: {
         get_data(e){
             let _self = this
+            _self.loading = true
             let url = 'api/customer/findCompanysByCustomerId/' + e
             let config = {}
 
             function success(res){
                 _self.data = res.data.data
+                _self.loading = false
             }
 
             this.$Get(url, config ,success)

@@ -32,8 +32,8 @@
                                 <company 
                                     v-if="openPanel[0] == 'company'"
                                     :customer="customer"
+                                    :importance="importance"
                                     :cluesources="cluesources"
-                                    :customerrating="customerrating"
                                 ></company>
                             </p>
                         </Panel>

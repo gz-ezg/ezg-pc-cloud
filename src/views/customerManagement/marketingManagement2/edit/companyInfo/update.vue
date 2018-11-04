@@ -23,7 +23,7 @@
                 </FormItem>
                 <FormItem label="重要等级" prop="importlevel">
                     <Select transfer v-model="formValidate.importlevel" size="small">
-                        <Option v-for="item in customerrating" :value="item.typecode" :key="item.typecode">{{ item.typename
+                        <Option v-for="item in importance" :value="item.typecode" :key="item.typecode">{{ item.typename
                             }}
                         </Option>
                     </Select>
@@ -38,15 +38,15 @@
                         </Option>
                     </Select>
                 </FormItem>
-                <FormItem label="企业纳税类型" prop="taxtype">
+                <!-- <FormItem label="企业纳税类型" prop="taxtype">
                     <Select transfer v-model="formValidate.taxtype" size="small">
                         <Option v-for="item in taxtype" :value="item.typecode" :key="item.typecode">{{ item.typename }}
                         </Option>
                     </Select>
-                </FormItem>
+                </FormItem> -->
             </Form>
             <div slot="footer">
-                <Button type="primary" @click="submit" :loading="loading">新增</Button>
+                <Button type="primary" @click="submit" :loading="loading">修改</Button>
             </div>
         </Modal>
     </div>
@@ -70,13 +70,19 @@ export default {
             let url = 'api/customer/updateCompany'
 
             let config = {
-
+                // 编辑待定
+                accountgrade: _self.formValidate.accountgrade,
+                cluesource: _self.formValidate.cluesource,
+                companyarea: _self.formValidate.companyarea.join("-"),
+                companyname: _self.formValidate.companyname,
+                id: _self.formValidate.id,
+                importlevel: _self.formValidate.importlevel.toString(),
             }
 
             function success(res){
                 _self.$refs["formValidate"].resetFields();
                 _self.loading = false
-                _self.$emit("update",true)
+                _self.$emit("update", _self.customer.ID)
                 _self.openUpdateCompany = false
             }
 
@@ -93,7 +99,10 @@ export default {
         this.$bus.on("OPEN_COMPANY_UPDATE",(e)=>{
             _self.formValidate = e
             if(_self.formValidate.companyarea){
-                _self.formValidate.companyarea.split("-")
+                _self.formValidate.companyarea = _self.formValidate.companyarea.split("-")
+                _self.formValidate.companyarea[0] = parseInt(_self.formValidate.companyarea[0])
+                _self.formValidate.companyarea[1] = parseInt(_self.formValidate.companyarea[1])
+                console.log(_self.formValidate.companyarea)
             }else{
                 _self.formValidate.companyarea = []
             }

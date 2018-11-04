@@ -23,8 +23,7 @@
                 </FormItem>
                 <FormItem label="重要等级" prop="importlevel">
                     <Select transfer v-model="formValidate.importlevel" size="small">
-                        <Option v-for="item in customerrating" :value="item.typecode" :key="item.typecode">{{ item.typename
-                            }}
+                        <Option v-for="item in importance" :value="item.typecode" :key="item.typecode">{{ item.typename }}
                         </Option>
                     </Select>
                 </FormItem>
@@ -33,8 +32,7 @@
                 </FormItem>
                 <FormItem label="企业来源" prop="cluesource">
                     <Select transfer v-model="formValidate.cluesource" placement="top" size="small">
-                        <Option v-for="item in cluesources" :value="item.typecode" :key="item.typecode">{{ item.typename
-                            }}
+                        <Option v-for="item in cluesources" :value="item.typecode" :key="item.typecode">{{ item.typename }}
                         </Option>
                     </Select>
                 </FormItem>
@@ -70,13 +68,20 @@ export default {
             let url = 'api/customer/saveCompany'
 
             let config = {
-
+                cluesource: _self.formValidate.cluesource,
+                companyarea: _self.formValidate.companyarea.join("-"),
+                companyname: _self.formValidate.companyname,
+                customerid: _self.formValidate.customerid,
+                importlevel: _self.formValidate.importlevel.toString(),
+                legalrepresentative: _self.formValidate.legalrepresentative,
+                taxtype: _self.formValidate.taxtype,
+                tel: _self.formValidate.tel
             }
 
             function success(res){
                 _self.$refs["formValidate"].resetFields();
                 _self.loading = false
-                _self.$emit("update",true)
+                _self.$emit("update", _self.customer.ID)
                 _self.openCreateCompany = false
             }
 
