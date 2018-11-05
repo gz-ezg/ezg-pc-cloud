@@ -639,6 +639,7 @@ export default {
         this.$bus.off("CREATE_AFTER_EDIT", true)
         this.$bus.on("CREATE_AFTER_EDIT", (e)=>{
             e.ID = e.id
+            e.customersourceCode = e.customersource
             this.selectRow = e
             this.openEdit = true
         })

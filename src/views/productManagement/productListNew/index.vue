@@ -51,7 +51,7 @@
                         style="margin-top: 10px"></Page>
                 </Col>
                 <Col span="12">
-                    <product-attr :product="selectRow"></product-attr>
+                    <product-attr :product="selectRow" style="margin-left:5px"></product-attr>
                 </Col>
             </Row>
         </Card>
