@@ -4,7 +4,7 @@
         <!-- <edit-order-detail></edit-order-detail> -->
         <!-- <Table :data="data" :columns="columns"></Table> -->
         <!-- <el-button>123456</el-button> -->
-        <tree-table :data="data" :columns="columns" border/>
+        <tree-table :data="data" :columns="columns" border @get-all-selection="get_all_selection" selection/>
     </div>
 </template>
 
@@ -134,6 +134,9 @@ export default {
             const func = this.evalFunc || treeToArray
             const args = this.evalArgs ? Array.concat([tmp, this.expandAll], this.evalArgs) : [tmp, this.expandAll]
             return func.apply(null, args)
+        },
+        get_all_selection(e){
+            console.log(e)
         }
     },
     mounted(){

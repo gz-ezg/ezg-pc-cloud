@@ -228,6 +228,24 @@ export default {
                 for(let i = 0;i<_self.events_temp.length;i++){
                     _self.events_temp[i].start = _self.events_temp[i].plan_date
                     _self.events_temp[i].title = _self.events_temp[i].task_name
+                    if(_self.events_temp[i].task_stage == "tesExecuting"){
+                        _self.events_temp[i].color = "blue"
+                    }
+                    if(_self.events_temp[i].plan_date.slice(0,10) == _self.local_date){
+                        _self.events_temp[i].color = "orange"
+                    }
+                    if(_self.events_temp[i].task_stage == "tesFinished"){
+                        _self.events_temp[i].color = "#228B22"
+                    }
+                    if(_self.events_temp[i].task_des_code == "tdOverdue"){
+                        _self.events_temp[i].color = "red"
+                    }
+                    if(_self.events_temp[i].task_kind == "tkClue" && _self.events_temp[i].task_stage != "tesFinished"){
+                        _self.events_temp[i].color = "#FF7F00"
+                    }
+                    if(_self.events_temp[i].task_kind == "tkClue" && _self.events_temp[i].task_stage == "tesFinished"){
+                        _self.events_temp[i].color = "#228B22"
+                    }
                 }
 
                 _self.events = _self.events_temp

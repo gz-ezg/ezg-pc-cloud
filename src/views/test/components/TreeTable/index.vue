@@ -1,5 +1,16 @@
 <template>
-  <el-table :data="formatData" :row-style="showRow" v-bind="$attrs">
+  <el-table 
+    :data="formatData" 
+    :row-style="showRow" 
+    v-bind="$attrs" 
+    ref="multipleTable" 
+    @select="handleSelectionChange"
+    @selection-change="get_all_change">
+    <el-table-column
+      v-if="selection"
+      type="selection"
+      width="55">
+    </el-table-column>
     <el-table-column v-if="columns.length===0" width="150">
       <template slot-scope="scope">
         <span v-for="space in scope.row._level" :key="space" class="ms-tree-space"/>
@@ -54,6 +65,10 @@ export default {
     expandAll: {
       type: Boolean,
       default: false
+    },
+    selection: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -84,6 +99,25 @@ export default {
     // 图标显示
     iconShow(index, record) {
       return (index === 0 && record.children && record.children.length > 0)
+    },
+    // 勾选状态转换
+    handleSelectionChange(rows, index){
+      if(index.children){
+        for(let i = 0; i<index.children.length; i++){
+          // console.log(index.children[i].event)
+          this.$refs.multipleTable.toggleRowSelection(index.children[i]);
+          this.handleSelectionChange("", index.children[i])
+        }
+      }
+      // if(rows[0].children){
+      //   console.log(rows[0].children)
+      //   // this.$refs.multipleTable.toggleRowSelection(rows[0].children[0]);
+      // }
+    },
+    //  获取所有节点
+    get_all_change(e){
+      // console.log(e)
+      this.$emit("get-all-selection",e)
     }
   }
 }

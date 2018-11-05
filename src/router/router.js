@@ -201,7 +201,7 @@ export const appRouter = [
             // },
             {
                 path: 'test5',
-                title: '新订单测试',
+                title: '树型表',
                 name: 'test4_index',
                 component: resolve => {
                     require(['@/views/test/components/test5.vue'], resolve);
@@ -575,52 +575,53 @@ export const appRouter = [
             },
         ]
     },
-    // {
-    //     access: 6012,
-    //     path: '/product',
-    //     icon: 'social-windows',
-    //     name: 'product',
-    //     title: '产品管理',
-    //     component: Main,
-    //     children: [
-    //         {
-    //             access: 6013,
-    //             path: 'productList',
-    //             title: '产品列表',
-    //             name: 'productList_index',
-    //             component: resolve => {
-    //                 require(['@/views/productManagement/productList/productList.vue'], resolve);
-    //             }
-    //         },
-    //         {
-    //             access: 6014,
-    //             path: 'productType',
-    //             title: '产品类型',
-    //             name: 'productType_index',
-    //             component: resolve => {
-    //                 require(['@/views/productManagement/productType/productType.vue'], resolve);
-    //             }
-    //         },
-    //         {
-    //             access: 6015,
-    //             path: 'productAttribute',
-    //             title: '属性管理',
-    //             name: 'productAttribute_index',
-    //             component: resolve => {
-    //                 require(['@/views/productManagement/productType/attributeManagement.vue'], resolve);
-    //             }
-    //         },
-    //         {
-    //             access: 6016,
-    //             path: 'areaManagement',
-    //             title: '地区管理',
-    //             name: 'areaManagement_index',
-    //             component: resolve => {
-    //                 require(['@/views/productManagement/productType/areaManagement.vue'], resolve);
-    //             }
-    //         },
-    //     ]
-    // },
+    {
+        access: 6012,
+        path: '/product',
+        icon: 'social-windows',
+        name: 'product',
+        title: '产品管理',
+        component: Main,
+        children: [
+            {
+                access: 6013,
+                path: 'productList',
+                title: '产品列表',
+                name: 'productList_index',
+                component: resolve => {
+                    // require(['@/views/productManagement/productList/productList.vue'], resolve);
+                    require(['@/views/productManagement/productListNew/index.vue'], resolve);
+                }
+            },
+            // {
+            //     access: 6014,
+            //     path: 'productType',
+            //     title: '产品类型',
+            //     name: 'productType_index',
+            //     component: resolve => {
+            //         require(['@/views/productManagement/productType/productType.vue'], resolve);
+            //     }
+            // },
+            // {
+            //     access: 6015,
+            //     path: 'productAttribute',
+            //     title: '属性管理',
+            //     name: 'productAttribute_index',
+            //     component: resolve => {
+            //         require(['@/views/productManagement/productType/attributeManagement.vue'], resolve);
+            //     }
+            // },
+            // {
+            //     access: 6016,
+            //     path: 'areaManagement',
+            //     title: '地区管理',
+            //     name: 'areaManagement_index',
+            //     component: resolve => {
+            //         require(['@/views/productManagement/productType/areaManagement.vue'], resolve);
+            //     }
+            // },
+        ]
+    },
     {
         access: 6017,
         meta: 6017,
