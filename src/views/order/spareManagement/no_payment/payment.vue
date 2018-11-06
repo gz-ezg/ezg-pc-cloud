@@ -54,7 +54,7 @@
                                     </ButtonGroup>
                                 </Row>
                                 <Row style="margin-top: 10px;">
-                                    <Table border :columns="header" :data="balanceItem" highlight-row @on-current-change="save_balance_row"	:loading="py_loading"></Table>
+                                    <Table border :columns="header" :data="balanceItem" highlight-row @on-current-change="save_balance_row"	:loading="py_loading" size="small"></Table>
                                 </Row>
                             </div>
                         </Panel>

@@ -154,63 +154,63 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    {
-        path: '/test',
-        icon: 'alert-circled',
-        name: 'test',
-        title: 'Test',
-        component: Main,
-        children: [
-            // {
-            //     path: 'test',
-            //     title: '测试页面',
-            //     name: '富文本编辑器测试',
-            //     component: resolve => {
-            //         require(['@/views/test/components/main.vue'], resolve);
-            //         // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+    // {
+    //     path: '/test',
+    //     icon: 'alert-circled',
+    //     name: 'test',
+    //     title: 'Test',
+    //     component: Main,
+    //     children: [
+    //         // {
+    //         //     path: 'test',
+    //         //     title: '测试页面',
+    //         //     name: '富文本编辑器测试',
+    //         //     component: resolve => {
+    //         //         require(['@/views/test/components/main.vue'], resolve);
+    //         //         // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-            //     }
-            // },
-            {
-                path: 'test2',
-                title: '日程测试',
-                name: 'test2_index',
-                component: resolve => {
-                    require(['@/views/test/components/test2.vue'], resolve);
-                    // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+    //         //     }
+    //         // },
+    //         {
+    //             path: 'test2',
+    //             title: '日程测试',
+    //             name: 'test2_index',
+    //             component: resolve => {
+    //                 require(['@/views/test/components/test2.vue'], resolve);
+    //                 // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-                }
-            },
-            // {
-            //     path: 'test3',
-            //     title: '可编辑表格测试',
-            //     name: 'test3_index',
-            //     component: resolve => {
-            //         require(['@/views/test/components/test3.vue'], resolve);
+    //             }
+    //         },
+    //         // {
+    //         //     path: 'test3',
+    //         //     title: '可编辑表格测试',
+    //         //     name: 'test3_index',
+    //         //     component: resolve => {
+    //         //         require(['@/views/test/components/test3.vue'], resolve);
 
-            //     }
-            // },
-            // {
-            //     path: 'test4',
-            //     title: '新营销测试',
-            //     name: 'test4_index',
-            //     component: resolve => {
-            //         require(['@/views/test/components/test4.vue'], resolve);
+    //         //     }
+    //         // },
+    //         // {
+    //         //     path: 'test4',
+    //         //     title: '新营销测试',
+    //         //     name: 'test4_index',
+    //         //     component: resolve => {
+    //         //         require(['@/views/test/components/test4.vue'], resolve);
 
-            //     }
-            // },
-            {
-                path: 'test5',
-                title: '树型表',
-                name: 'test4_index',
-                component: resolve => {
-                    require(['@/views/test/components/test5.vue'], resolve);
+    //         //     }
+    //         // },
+    //         {
+    //             path: 'test5',
+    //             title: '树型表',
+    //             name: 'test4_index',
+    //             component: resolve => {
+    //                 require(['@/views/test/components/test5.vue'], resolve);
 
-                }
-            },
+    //             }
+    //         },
             
-        ]
-    },
+    //     ]
+    // },
     // {
     //     path: '/allindex',
     //     icon: 'social-windows',
@@ -290,16 +290,16 @@ export const appRouter = [
                     require(['@/views/customerManagement/marketingManagement/customerManagement.vue'], resolve);
                 }
             },
-            {
-                access: 6002,
-                meta: 6002,
-                path: 'marketingManagement2',
-                title: '营销管理2',
-                name: 'marketingManagement_index2',
-                component: resolve => {
-                    require(['@/views/customerManagement/marketingManagement2'], resolve);
-                }
-            },
+            // {
+            //     access: 6002,
+            //     meta: 6002,
+            //     path: 'marketingManagement2',
+            //     title: '营销管理2',
+            //     name: 'marketingManagement_index2',
+            //     component: resolve => {
+            //         require(['@/views/customerManagement/marketingManagement2'], resolve);
+            //     }
+            // },
             {
                 access: 6003,
                 meta: 6003,
@@ -645,16 +645,16 @@ export const appRouter = [
                 }
             },
             //  订单审批废弃easyUI版
-            {
-                meta: 6018,
-                access: 6018,
-                path: 'orderList2',
-                title: '订单列表（旧）',
-                name: 'orderList_index2',
-                component: resolve => {
-                    require(['@/views/order/orderList.vue'], resolve);
-                }
-            },
+            // {
+            //     meta: 6018,
+            //     access: 6018,
+            //     path: 'orderList2',
+            //     title: '订单列表（旧）',
+            //     name: 'orderList_index2',
+            //     component: resolve => {
+            //         require(['@/views/order/orderList.vue'], resolve);
+            //     }
+            // },
             {
                 //  订单审批废弃easyUI版
                 access: 6019,
@@ -1279,8 +1279,8 @@ export const appRouter = [
     },
     //  是否对内容迁移待定
     {
-        access: 6103,
-        meta: 6103,
+        access: 11603,
+        meta: 11603,
         path: '/messageLog',
         icon: "chatbubble-working",
         name: "messageLog",
@@ -1288,7 +1288,7 @@ export const appRouter = [
         component: Main,
         children: [
             {
-                access: 6066,
+                access: 11604,
                 path: 'WeChatPushLog',
                 title: '微信推送客户日志', 
                 // icon: "information-circled",
@@ -1298,7 +1298,7 @@ export const appRouter = [
                 }
             },
             {
-                access: 6066,
+                access: 11605,
                 path: 'smsSendLog',
                 title: '短信发送日志', 
                 name: 'smsSendLog',
@@ -1307,7 +1307,7 @@ export const appRouter = [
                 }
             },
             {
-                access: 6066,
+                access: 11606,
                 path: 'internalPushLog',
                 title: '微信内部推送日志', 
                 name: 'internalPushLog',
@@ -1428,8 +1428,8 @@ export const appRouter = [
         component: Main,
         children: [
             {
-                access: 6102,
-                meta: 6102,
+                access: 11607,
+                meta: 11607,
                 path: 'stystemLog',
                 title: '系统日志',
                 name: 'stystemLog',
@@ -1468,10 +1468,10 @@ export const appRouter = [
                 }
             },
             {
-                access: 6066,
-                path: 'systemLog',
+                access: 11608,
+                path: 'systemLog2',
                 title: '日志', 
-                name: 'systemLog',
+                name: 'systemLog2',
                 component: resolve => {
                     require(['@/views/logManagement/systemLog.vue'], resolve);
                 }

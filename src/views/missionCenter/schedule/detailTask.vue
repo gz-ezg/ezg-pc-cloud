@@ -296,7 +296,7 @@ export default {
         },
         before_update_task(){
             let _self = this
-            if(_self.data.taskData[0].task_kind == "tkFollow" && _self.data.taskData[0].task_stage == "tesFinished"){
+            if(_self.data.taskData[0].task_kind == "tkFollow" && _self.data.taskData[0].task_stage == "tesFinished" && _self.data.taskData[0].company_id){
                 _self.$bus.emit("OPEN_SCHEDULE_FOLLOWUP",{
                     companyname: _self.data.taskData[0].companyname,
                     NAME: _self.data.taskData[0].custName,

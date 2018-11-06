@@ -10,7 +10,7 @@
                                 筛选
                                 <div slot="content" @keydown.enter="search">
                                     <Form ref="searchModel" :model="searchModel" :label-width="100">
-                                        <Row :gutter="16">
+                                        <!-- <Row :gutter="16">
                                             <Col span="4">
                                                 <FormItem prop="customer" label="客户：">
                                                     <Input size="small" type="text" v-model="searchModel.customer" placeholder="">
@@ -49,32 +49,29 @@
                                                     </Input>
                                                 </FormItem>
                                             </Col>
-                                        </Row>    
+                                        </Row>     -->
                                         <Row :gutter="16">
-                                            <Col span="4">
+                                            <!-- <Col span="4">
                                                 <FormItem prop="msg_content" label="短信内容：">
                                                     <Input size="small" type="text" v-model="searchModel.msg_content" placeholder="">
                                                     </Input>
                                                 </FormItem>
-                                            </Col>
-                                            <Col span="4">
+                                            </Col> -->
+                                            <Col span="8">
                                                 <FormItem prop="startdate" label="发送日期：">
-                                                    <DatePicker format="yyyy-MM-dd" type="date" style="width: 100%" size="small" v-model="searchModel.startdate"></DatePicker>
-                                                </FormItem>
-                                                <FormItem prop="enddate" label="发送日期：">
-                                                    <DatePicker format="yyyy-MM-dd" type="date" style="width: 100%" size="small" v-model="searchModel.enddate"></DatePicker>
+                                                    <DatePicker format="yyyy-MM-dd" type="daterange" style="width: 100%" size="small" v-model="searchModel.date"></DatePicker>
                                                 </FormItem>
                                             </Col>
-                                            <Col span="4">
+                                            <!-- <Col span="4">
                                                 <FormItem prop="sendMSMMan" label="短信发送人：">
                                                     <Input size="small" type="text" v-model="searchModel.sendMSMMan" placeholder="">
                                                     </Input>
                                                 </FormItem>
-                                            </Col>
+                                            </Col> -->
                                         </Row>
                                         <FormItem>
-                                             <Button type="primary" @click="search">查询</Button>
-                                            <Button type="ghost" style="margin-left:20px" @click="reset">清空</Button>
+                                                <Button type="primary" @click="search">查询</Button>
+                                                <Button type="ghost" style="margin-left:20px" @click="reset">清空</Button>
                                         </FormItem>
                                     </Form>
                                 </div>
@@ -82,13 +79,17 @@
                         </Collapse>
                     </Row>
                     <Row>
-                        <Button type="primary" icon="search" @click="dataCheck">查看</Button> 
+                        <ButtonGroup>
+                            <Button type="primary" icon="search" @click="dataCheck">查看</Button> 
+                            <Button type="primary" icon="search" @click="downloadExcel">下载</Button>                 
+                        </ButtonGroup>
                     </Row>
                     <Row style="margin-top: 10px;">
                         <Table
                                 highlight-row 
                                 border
                                 size="small"
+                                :loading="loading"
                                 :columns="fatherDataHeader"
                                 @on-current-change="selectFatherRow"
                                 :data="fatherData"></Table>
@@ -124,8 +125,8 @@
                 </Row>
                 <Row :gutter="16">
                     <Col span="12">
-                        <FormItem label="短信id：">
-                            <Input readonly size="small" type="text" v-model="currentRowData.msgID" placeholder="">
+                        <FormItem label="短信模板：">
+                            <Input readonly size="small" type="text" v-model="currentRowData.msgtname" placeholder="">
                             </Input>
                         </FormItem>
                     </Col>
@@ -133,16 +134,8 @@
 
                 <Row :gutter="16">
                     <Col span="12">
-                        <FormItem label="描述">
-                            <Input readonly size="small" type="text" v-model="currentRowData.info" placeholder="">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="12">
-                        <FormItem label="返回码：">
-                            <Input readonly size="small" type="text" v-model="currentRowData.return_code" placeholder="">
+                        <FormItem label="结果">
+                            <Input readonly size="small" type="textarea" :autosize="{maxRows: 8}" v-model="currentRowData.info" placeholder="">
                             </Input>
                         </FormItem>
                     </Col>
@@ -150,7 +143,7 @@
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem label="短信内容：">
-                            <Input  size="small" type="textarea" :autosize="{maxRows: 8}"  v-model="currentRowData.msg_content" placeholder="">
+                            <Input  size="small" type="textarea" :autosize="{maxRows: 8}"  v-model="currentRowData.msg_content" placeholder="" readonly>
                             </Input>
                         </FormItem>
                     </Col>
@@ -159,14 +152,6 @@
                     <Col span="12">
                         <FormItem label="发送日期：">
                             <Input readonly size="small" type="text" v-model="currentRowData.send_date" placeholder="">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="12">
-                        <FormItem label="短信类型：">
-                            <Input readonly size="small" type="text" v-model="currentRowData.msg_type" placeholder="">
                             </Input>
                         </FormItem>
                     </Col>
@@ -180,10 +165,13 @@
 </template>
 
 <script>
+import { DateFormat } from '../../libs/utils.js'
+
 export default {
     name: "smsSendLog",
   data() {
     return {
+        loading: false,
       showwidth: 24,
       groupDataCenter: true,
       //  筛选相关
@@ -199,62 +187,56 @@ export default {
         msg_content: "",
         startdate: "",
         enddate: "",
-        sendMSMMan: ""
+        sendMSMMan: "",
+        date: []
       },
       fatherDataHeader: [
         {
           title: "客户",
-          key: "customer"
+          minWidth: 120,
+          key: "name"
         },
         {
           title: "电话号码",
+          minWidth: 120,
           key: "phone"
         },
         {
-          title: "跟进人",
-          key: "fllowMan"
-        },
-        {
-          title: "服务人员",
-          key: "serviceMan"
-        },
-        {
           title: "模版名称",
+          minWidth: 180,
           key: "msgtname",
-          width: 130,
-          ellipsis: true
         },
         {
-          title: "描述",
+          title: "结果",
+          minWidth: 200,
           key: "info",
-          width: 130,
-          ellipsis: true
         },
-        {
-          title: "返回状态",
-          key: "return_code"
-        },
+        // {
+        //   title: "返回状态",
+        //   minWidth: 120,
+        //   key: "return_code"
+        // },
         {
           title: "公司",
-          key: "CompanyName",
-          width: 130,
-          ellipsis: true
+          key: "companyname",
+          minWidth: 180,
         },
         {
           title: "短信内容",
           key: "msg_content",
-          width: 130,
+          width: 300,
           ellipsis: true
         },
         {
           title: "发送日期",
           key: "send_date",
-          width: 130,
+          width: 150,
           ellipsis: true
         },
         {
           title: "短信发送人",
-          key: "sendMSMMan"
+          key: "realname",
+          minWidth: 120,
         }
       ],
 
@@ -277,27 +259,46 @@ export default {
     };
   },
   methods: {
+      downloadExcel(){
+            let field = [
+                {field:'name',title:'客户'},
+                {field:'msgtname',title:'模版名称'},
+                {field:'info',title:'结果'},
+                {field:'companyname',title:'公司'},
+                {field:'msg_content',title:'短信内容'},
+                {field:'send_date',title:'发送日期'},               
+                {field:'realname',title:'短信发送人'},               
+            ]
+            let _self = this
+            let url = `api/system/log/querySMSRquestLog/list`
+            let config = {
+                page: '1',
+                pageSize: '1000000',
+                bcreatedate: DateFormat(_self.searchModel.date[0]),
+                ecreatedate: DateFormat(_self.searchModel.date[1]),
+                export: 'Y',
+                exportField: encodeURI(JSON.stringify(field))
+            }
+            let toExcel = this.$MergeURL(url, config)
+            window.open(toExcel)
+        },
     getData() {
       let _self = this;
+      _self.loading = true
       let url = "api/system/log/querySMSRquestLog/list"
       let config= {
         params: {
           page: _self.page,
           pageSize: _self.pageSize,
-          customer: _self.searchModel.customer,
-          phone: _self.searchModel.phone,
-          fllowMan: _self.searchModel.fllowMan,
-          serviceMan: _self.searchModel.serviceMan,
-          retrunCode: _self.searchModel.state,
-          company: _self.searchModel.companyName,
-          msgContent: _self.searchModel.msg_content,
-          sendDate: _self.searchModel.startdate,
-          sendMan: _self.searchModel.sendMan
+          bcreatedate: DateFormat(_self.searchModel.date[0]),
+          ecreatedate: DateFormat(_self.searchModel.date[1])
         }
       };
       function doSuccess(res) {
         _self.fatherData = res.data.data.rows;
         _self.pageTotal = res.data.data.total;
+          _self.loading = false
+
       }
       _self.$Get(url, config, doSuccess);
     },
@@ -315,6 +316,7 @@ export default {
     },
     reset() {
       this.$refs["searchModel"].resetFields();
+      this.searchModel.date = []
       this.page = 1;
       this.pageSize = 10;
       this.getData();

@@ -388,6 +388,7 @@ export default {
                     key: 'action',
                     minWidth: 180,
                     render: (h, params)=>{
+                        let _self =  this
                         if(params.index != this.pageSize){
                             return h('div',[
                                 h("Button",{

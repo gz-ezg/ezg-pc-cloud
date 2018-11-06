@@ -89,7 +89,7 @@
 
 <script>
 export default {
-  name: "systemLog",
+  name: "systemLog2",
   data() {
     return {
       showwidth: 24,

@@ -11,15 +11,13 @@
                                 <div slot="content" @keydown.enter="search">
                                     <Form ref="searchModel" :model="searchModel" :label-width="100">
                                         <Row :gutter="16">
-                                            <Col span="5">
-                                                <FormItem prop="msgtname" label="模版名称：">
-                                                    <Input size="small" type="text" v-model="searchModel.msgtname" placeholder="">
-                                                    </Input>
+                                            <Col span="8">
+                                                <FormItem prop="date" label="发送时间：">
+                                                    <DatePicker format="yyyy-MM-dd" type="daterange" style="width: 100%" size="small" v-model="searchModel.date"></DatePicker>
                                                 </FormItem>
                                             </Col>
-                                            <Col span="5">
+                                            <!-- <Col span="5">
                                                 <FormItem prop="msg" label="消息：">
-                                                    <!-- <DatePicker format="yyyy-MM-dd" type="daterange" style="width: 100%" size="small" v-model="searchModel.msg"></DatePicker> -->
                                                     <Input size="small" type="text" v-model="searchModel.msg" placeholder="">
                                                     </Input>
                                                 </FormItem>
@@ -43,7 +41,7 @@
                                                         <Option value="N">失败</Option> 
                                                     </Select>  
                                                 </FormItem>
-                                            </Col>
+                                            </Col> -->
                                         </Row>
                                         <FormItem>
                                              <Button type="primary" @click="search">查询</Button>
@@ -56,6 +54,7 @@
                     </Row>
                     <Row>
                         <!-- <Button type="primary" icon="search" @click="dataCheck">查看</Button>  -->
+                        <Button type="primary" icon="search" @click="downloadExcel">下载</Button>
                     </Row>
                     <Row style="margin-top: 10px;">
                         <Table
@@ -155,6 +154,8 @@
 </template>
 
 <script>
+import { DateFormat } from '../../libs/utils.js'
+
 export default {
     name: "internalPushLog",
   data() {
@@ -171,13 +172,14 @@ export default {
         phone: "",
         customer: "",
         salesman: "",
-        state: ""
+        state: "",
+        date: []
       },
       fatherDataHeader: [
         {
           title: "模版名称",
           key: "msgtname",
-          minWidth: 180,
+          minWidth: 250,
         },
         {
           title: "消息",
@@ -214,7 +216,7 @@ export default {
         {
           title: "返回信息",
           key: "resultMsg",
-          minWidth: 120
+          minWidth: 180
         }
       ],
 
@@ -235,6 +237,28 @@ export default {
     };
   },
   methods: {
+      downloadExcel(){
+            let field = [
+                {field:'msgtname',title:'模版名称'},
+                {field:'msg',title:'消息'},
+                {field:'sendDate',title:'发送时间'},
+                {field:'wechatname',title:'接收人'},
+                {field:'issuccess',title:'是否成功'},
+                {field:'resultMsg',title:'返回信息'},               
+            ]
+            let _self = this
+            let url = `api/system/log/queryWechatCompanyLog/list`
+            let config = {
+                page: '1',
+                pageSize: '1000000',
+                bcreatedate: DateFormat(_self.searchModel.date[0]),
+                ecreatedate: DateFormat(_self.searchModel.date[1]),
+                export: 'Y',
+                exportField: encodeURI(JSON.stringify(field))
+            }
+            let toExcel = this.$MergeURL(url, config)
+            window.open(toExcel)
+        },
     getData() {
       let _self = this;
       let url = "api/system/log/queryWechatCompanyLog/list";
@@ -243,11 +267,8 @@ export default {
         params: {
           page: _self.page,
           pageSize: _self.pageSize,
-          msgtname: _self.searchModel.msgtname,
-          msg: _self.searchModel.msg,
-          receiveMan: _self.searchModel.receiveMan,
-          phone: _self.searchModel.phone,
-          issuccess: _self.searchModel.state
+          bcreatedate: DateFormat(_self.searchModel.date[0]),
+          ecreatedate: DateFormat(_self.searchModel.date[1]),
         }
       };
       function doSuccess(res) {
@@ -271,6 +292,7 @@ export default {
     },
     reset() {
       this.$refs["searchModel"].resetFields();
+      this.searchModel.date = []
       this.page = 1;
       this.pageSize = 10;
       this.getData();

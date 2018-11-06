@@ -73,6 +73,9 @@ export default {
 
 <style>
 #top .ivu-modal-mask{
+    z-index: 9998
+}
+#top .ivu-modal-wrap{
     z-index: 9999
 }
 </style>

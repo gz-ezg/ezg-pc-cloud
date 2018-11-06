@@ -189,7 +189,6 @@ export default {
             this.$refs["orderDetail"].validate((valid) => {
                 if(valid && this.check_date()){
                     _self.create_order()
-                    this.loading = false
                 }else{
                     this.loading = false
                 }

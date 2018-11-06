@@ -24,7 +24,7 @@
                 </div>
             </Row>
             <Row style="margin-top: 10px;">
-                <Table border :columns="header" :data="had_pay_list" highlight-row @on-current-change="save_current"></Table>
+                <Table border :columns="header" :data="had_pay_list" highlight-row @on-current-change="save_current" size="small"></Table>
                 <Page :total="total_NUM" show-elevator style="margin-top:10px" @on-change="PageChange" @on-page-size-change="PageSizeChange" show-sizer	></Page>
             </Row>     
         </Card>

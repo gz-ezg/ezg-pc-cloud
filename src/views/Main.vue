@@ -429,6 +429,16 @@
             // document.addEventListener("click",function(e){
             //     console.log(e.path)
             // })
+            this.$Notice.info({
+                title: '更新提示:',
+                desc: `1.重构了订单列表，修复了其中存在的问题，删除了部分消息提示及功能；</br>
+                2.新增消息推送，产品管理菜单，仅开放给部分用户；</br>
+                3.资料管理优化，现在可以修改存在位置地点和资料名称等信息；</br>
+                4.公海池的客户现在有领取限制（限量）,具体规则由市场部负责人制定；</br>
+                5.修复部分已知bug`,
+                duration: 10,
+                name: "updateNotice"
+            });
         },
         // beforeUpdate(){
         //     console.log("dom_mbeforeUpdate")

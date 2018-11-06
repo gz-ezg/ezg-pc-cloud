@@ -55,22 +55,22 @@ export default {
                 {
                     title: "id",
                     key: "id",
-                    width: 90
+                    minWidth: 90
                 },
                 {
                     title: "队列名称",
                     key: 'queues',
-                    width: 180
+                    minWidth: 180
                 },
                 {
                     title: "状态",
                     key: 'status',
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title: "内容",
                     key: 'content',
-                    width: 200,
+                    minWidth: 500,
                     // tooltip: true 3.0的设置
                 //     render:(h, params) => {
                 //         if(params.row.content == ''|| params.row.content == null){
@@ -106,12 +106,12 @@ export default {
                 {
                     title: '创建时间',
                     key: 'create_date',
-                    width: 200
+                    minWidth: 200
                 },
                 {
                     title: '方法名',
                     key: 'method_name',
-                    width: 120
+                    minWidth: 120
                 },
                 // {
                 //     title: '操作',

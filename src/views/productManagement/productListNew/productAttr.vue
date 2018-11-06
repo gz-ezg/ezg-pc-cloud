@@ -9,7 +9,7 @@
                     <Row class="productDetail-title" style="margin-bottom:20px">
                         <p id="product_name">{{product.product}}</p>
                         <p class="productDetail-title-price">
-                            <span>￥<strong id="product_price">{{productPrice}}</strong></span><InputNumber style="margin-left:20px;width:120px" :min="0" v-model="newPrice" v-if="isAdmin"></InputNumber><Button style="margin-left:10px" v-if="isAdmin" type="warning">修改价格</Button> 
+                            <span>￥<strong id="product_price">{{productPrice}}</strong></span><!-- <InputNumber style="margin-left:20px;width:120px" :min="0" v-model="newPrice" v-if="isAdmin"></InputNumber><Button style="margin-left:10px" v-if="isAdmin" type="warning">修改价格</Button>  -->
                         </p>
                         <div class="productDetail-title-content">
                         </div>

@@ -11,37 +11,38 @@
                                 <div slot="content" @keydown.enter="search">
                                     <Form ref="searchModel" :model="searchModel" :label-width="100">
                                         <Row :gutter="16">
-                                            <Col span="4">
+                                            <!-- <Col span="8">
                                                 <FormItem prop="templateName" label="模版名称：">
                                                     <Input size="small" type="text" v-model="searchModel.templateName" placeholder="">
                                                     </Input>
                                                 </FormItem>
-                                            </Col>
-                                            <Col span="6">
-                                                <FormItem prop="sendDate" label="发送时间：">
-                                                    <DatePicker format="yyyy-MM-dd" type="daterange" style="width: 100%" size="small" v-model="searchModel.sendDate"></DatePicker>
+                                            </Col> -->
+                                            <Col span="8">
+                                                <FormItem prop="date" label="发送时间：">
+                                                    <DatePicker format="yyyy-MM-dd" type="daterange" style="width: 100%" size="small" v-model="searchModel.date"></DatePicker>
                                                 </FormItem>
                                             </Col>
-                                            <Col span="4">
+                                            <!-- <Col span="8">
+                                                <FormItem prop="name" label="客户：">
+                                                    <Input size="small" type="text" v-model="searchModel.name" placeholder="">
+                                                    </Input>
+                                                </FormItem>
+                                            </Col> -->
+                                            <!-- <Col span="4">
                                                 <FormItem prop="sender" label="发送人：">
                                                     <Input size="small" type="text" v-model="searchModel.sender" placeholder="">
                                                     </Input>
                                                 </FormItem>
-                                            </Col>
-                                            <Col span="4">
+                                            </Col> -->
+                                            <Col span="8">
                                                 <FormItem prop="mobile" label="手机号：">
                                                     <Input size="small" type="text" v-model="searchModel.mobile" placeholder="">
                                                     </Input>
                                                 </FormItem>
                                             </Col>
-                                            <Col span="4">
-                                                <FormItem prop="customer" label="客户：">
-                                                    <Input size="small" type="text" v-model="searchModel.customer" placeholder="">
-                                                    </Input>
-                                                </FormItem>
-                                            </Col>
+                                            
                                         </Row>
-                                        <Row :gutter="16">
+                                        <!-- <Row :gutter="16">
                                             <Col span="4">
                                                 <FormItem prop="salesman" label="销售人员：">
                                                     <Input size="small" type="text" v-model="searchModel.salesman" placeholder="">
@@ -56,7 +57,7 @@
                                                     </Select>  
                                                 </FormItem>
                                             </Col>
-                                        </Row>
+                                        </Row> -->
                                         <FormItem>
                                              <Button type="primary" @click="search">查询</Button>
                                             <Button type="ghost" style="margin-left:20px" @click="reset">清空</Button>
@@ -67,7 +68,8 @@
                         </Collapse>
                     </Row>
                     <Row>
-                        <Button type="primary" icon="search" @click="dataCheck">查看</Button> 
+                        <!-- <Button type="primary" icon="search" @click="dataCheck">查看</Button>  -->
+                        <Button type="primary" icon="search" @click="downloadExcel">下载</Button>
                     </Row>
                     <Row style="margin-top: 10px;">
                         <Table
@@ -153,6 +155,8 @@
 </template>
 
 <script>
+import { DateFormat } from '../../../libs/utils.js'
+
 export default {
   data() {
     return {
@@ -162,13 +166,9 @@ export default {
       //  筛选相关
       search_model: "",
       searchModel: {
-        templateName: "",
-        sendDate: "",
-        sender: "",
-        mobile: "",
-        customer: "",
-        salesman: "",
-        state: ""
+        date: [],
+        name: "",
+        mobile: ""
       },
       fatherDataHeader: [
         {
@@ -238,6 +238,30 @@ export default {
     };
   },
   methods: {
+      downloadExcel(){
+            let field = [
+                {field:'templateName',title:'模版名称'},
+                {field:'sendDate',title:'发送时间'},
+                {field:'realname',title:'发送人'},
+                {field:'name',title:'客户'},
+                {field:'isSuccess',title:'是否成功'},
+                {field:'resultMsg',title:'返回信息'},               
+            ]
+            let _self = this
+            let url = `api/system/log/queryWechatTemplatelog/list`
+            let config = {
+                page: '1',
+                pageSize: '1000000',
+                mobile: _self.searchModel.mobile,
+                name: _self.searchModel.name,
+                bcreatedate: DateFormat(_self.searchModel.date[0]),
+                ecreatedate: DateFormat(_self.searchModel.date[1]),
+                export: 'Y',
+                exportField: encodeURI(JSON.stringify(field))
+            }
+            let toExcel = this.$MergeURL(url, config)
+            window.open(toExcel)
+        },
     getData() {
       let _self = this;
       let url = "api/system/log/queryWechatTemplatelog/list"
@@ -246,20 +270,15 @@ export default {
         params: {
           page: _self.page,
           pageSize: _self.pageSize,
-          templateName: _self.searchModel.templateName,
-          sendDate: _self.searchModel.sendDate,
-          realname: _self.searchModel.sender,
           mobile: _self.searchModel.mobile,
-          name: _self.searchModel.customer,
-          rname: _self.searchModel.salesman,
-          isSuccess: _self.searchModel.state
+          name: _self.searchModel.name,
+          bcreatedate: DateFormat(_self.searchModel.date[0]),
+          ecreatedate: DateFormat(_self.searchModel.date[1]),
         }
       };
       function doSuccess(res) {
           _self.loading = false
         _self.fatherData = res.data.data.rows;
-        // _self.fatherData = res.data.data;
-        
         _self.pageTotal = res.data.data.total;
       }
       _self.$Get(url, config, doSuccess);
@@ -280,6 +299,7 @@ export default {
       this.$refs["searchModel"].resetFields();
       this.page = 1;
       this.pageSize = 10;
+      this.searchModel.date = []
       this.getData();
     },
     search() {

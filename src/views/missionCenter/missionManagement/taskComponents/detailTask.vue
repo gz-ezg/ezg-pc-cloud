@@ -392,30 +392,7 @@ export default {
     created() {
         let _self = this
         this.$bus.on("OPEN_TASK_DETAIL",(e)=>{
-            // _self.data = {
-            //         taskData:[
-            //             {
-            //                 task_name: "",
-            //                 id: "",
-            //                 expect_start_date: "",
-            //                 task_stage: "",
-            //                 plan_date: "",
-            //                 company_name: "",
-            //                 task_content: ""
-            //             }
-            //         ],
-            //         log:[],
-            //         discuss: []
-            //     }
-                // _self.data.taskData[0].task_name = ""
-                // _self.data.taskData[0].id = ""
-                // _self.data.taskData[0].expect_start_date = ""
-                // _self.data.taskData[0].task_stage = ""
-                // _self.data.taskData[0].plan_date = ""
-                // _self.data.taskData[0].company_name = ""
-                // _self.data.taskData[0].task_content = ""
-
-            // console.log(e)
+            _self.task_memo = ""
             _self.get_data_center()
             _self.id = e.id
             _self.get_detail(e.id)

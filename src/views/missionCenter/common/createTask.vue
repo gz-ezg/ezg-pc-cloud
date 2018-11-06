@@ -167,7 +167,9 @@ export default {
             taskStage_map: new Map(),
             market_status_map: new Map(),
             markert_follow_up_type_map: new Map(),
-            userLoading: false
+            userLoading: false,
+            user: "",
+            useropen: false
 
         }
     },
@@ -311,7 +313,9 @@ export default {
         this.get_data_center()
         this.get_all_user()
         this.$bus.on("SCHEDULE_CREATE_TASK",(e)=>{
-            console.log(e)
+            // _self.user = localStorage.getItem("id")
+            // _self.newMission.executorId.push(parseInt(_self.user))
+
             _self.openAddMission = true
             _self.newMission.planDate = e
         })
