@@ -181,7 +181,7 @@ export default {
                     title: "存放位置",
                     key: "storage_code",
                     minWidth: 120
-                }
+                },
             ],
             fileData: [],
             openDetail:false,
@@ -212,7 +212,7 @@ export default {
                 {
                     title: "归属公司",
                     key: "companyname",
-                    minWidth: 180
+                    minWidth: 200
                 },
                 {
                     title: "申请备注",
@@ -233,6 +233,11 @@ export default {
                     title: "交接类型",
                     key: "connect_type",
                     minWidth: 90
+                },
+                {
+                    title:"快递单号",
+                    key: "tracking_number",
+                    minWidth: 120
                 },
                 {
                     title: "申请状态",

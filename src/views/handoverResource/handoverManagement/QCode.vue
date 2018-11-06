@@ -50,7 +50,7 @@ export default {
             this.$Get(url, config, success)
         }
     },
-    created() {
+    mounted() {
         //一个对内，企业微信登录，一个对外，我的服务登录
         let _self = this
         _self.$bus.on("OPEN_INNER_QCODER", (e)=>{

@@ -297,6 +297,7 @@ export default {
             }
 
             function success(res){
+                _self.userList = res.data.data.rows
                 _self.allUserList = res.data.data.rows
                 for(let i = 0;i<_self.allUserList.length;i++){
                     _self.allUserList_map.set(_self.allUserList[i].id.toString(),_self.allUserList[i].realname)
@@ -313,8 +314,8 @@ export default {
         this.get_data_center()
         this.get_all_user()
         this.$bus.on("SCHEDULE_CREATE_TASK",(e)=>{
-            // _self.user = localStorage.getItem("id")
-            // _self.newMission.executorId.push(parseInt(_self.user))
+            _self.user = localStorage.getItem("id")
+            _self.newMission.executorId.push(parseInt(_self.user))
 
             _self.openAddMission = true
             _self.newMission.planDate = e

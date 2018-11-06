@@ -88,6 +88,7 @@
         <!-- <create-file @update="get_data"></create-file> -->
         <!-- <create-request></create-request> -->
         <file-log :customer_f_s_a="customer_f_s_a_map"></file-log>
+        <update-file :customer_f_s_a="customer_f_s_a" @update="get_data"></update-file>
     </Card>
 </template>
 
@@ -95,11 +96,13 @@
 // import createFile from './create_file'
 // import createRequest from './create_request'
 import fileLog from './file_log'
+import updateFile from './update_file';
 
 export default {
     name: 'resourelist_index',
     components:{
-        fileLog
+        fileLog,
+        updateFile
         // createFile,
         // createRequest
     },
@@ -205,9 +208,41 @@ export default {
                 {
                     title: "操作",
                     key: "action",
-                    minWidth: 250,
+                    minWidth: 180,
                     render: (h, parmas) =>{
                         return h('div',[
+                            h('Button',{
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.edit_file(parmas.row)
+                                    }
+                                }
+                            },'[ 编辑 ]'),
+                            h('Button',{
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.open_flow(parmas.row)
+                                    }
+                                }
+                            },'[ 交接记录 ]')
+                        ])
+                    }
+                }
+            ],
+            adminHeader: 
+                {
+                    title: "管理员操作",
+                    minWidth: 150,
+                    render: (h, parmas) =>{
+                        return ("div",[
                             h('Button',{
                                 style: {
                                     display: (localStorage.getItem("realname") == "管理员" ) ? "inline-block" : "none"
@@ -236,22 +271,10 @@ export default {
                                         this.logout(parmas.row)
                                     }
                                 }
-                            },'[ 资料注销 ]'),
-                            h('Button',{
-                                props: {
-                                    type: 'text',
-                                    size: 'small'
-                                },
-                                on: {
-                                    click: () => {
-                                        this.open_flow(parmas.row)
-                                    }
-                                }
-                            },'[ 交接记录 ]')
+                            },'[ 注销 ]'),
                         ])
                     }
                 }
-            ]
         }
     },
     computed:{
@@ -420,14 +443,22 @@ export default {
             }
 
             this.$Post(url, config, success, fail)
+        },
+        edit_file(e){
+            this.$bus.emit("OPEN_UPDATE_FILE",e)
         }
     },
     created(){
         let _self = this
         this.get_data_center().then(
             () => {
+                if(localStorage.getItem('id')==10059){
+                    this.header.push(this.adminHeader)
+                }
                 _self.get_data()
+                
             }
+            
         )
     }
 }

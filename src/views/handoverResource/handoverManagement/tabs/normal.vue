@@ -216,7 +216,7 @@ export default {
                 {
                     title: "归属公司",
                     key: "companyname",
-                    minWidth: 180
+                    minWidth: 200
                 },
                 {
                     title: "申请备注",

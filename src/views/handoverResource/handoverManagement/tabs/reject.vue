@@ -24,6 +24,12 @@
                                         </Input>
                                     </FormItem>
                                 </Col>
+                                <Col span="8">
+                                    <FormItem prop="companyname" label="归属公司：">
+                                        <Input type="text" size="small" v-model="seacrhFormInline.companyname" placeholder="">
+                                        </Input>
+                                    </FormItem>
+                                </Col>
                             </Row>
                             <FormItem>
                                 <Button type="primary" @click="search">搜索</Button>
@@ -187,6 +193,7 @@ export default {
             seacrhFormInline: {
                 receiver_realname: "",
                 applicant_realname: "",
+                companyname: ""
             },
             page: 1,
             pageSize: 10,
@@ -206,7 +213,7 @@ export default {
                 {
                     title: "归属公司",
                     key: "companyname",
-                    minWidth: 180
+                    minWidth: 200
                 },
                 {
                     title: "申请备注",
@@ -320,6 +327,7 @@ export default {
                     pageSize: _self.pageSize,
                     applicant_realname: _self.seacrhFormInline.applicant_realname,
                     receiver_realname: _self.seacrhFormInline.receiver_realname,
+                    companyname: _self.seacrhFormInline.companyname,
                     application_status: "reject",
                     sortField: "id"
                 }
