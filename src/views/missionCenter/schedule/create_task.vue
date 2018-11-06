@@ -161,17 +161,7 @@ export default {
 
             function success(res){
                 _self.taskLevel = res.data.data.taskLevel
-                // _self.taskDesCode = res.data.data.taskDesCode
-                // _self.taskKind = res.data.data.taskKind
                 _self.taskStage = res.data.data.taskStage
-                // _self.market_status = res.data.data.market_status
-                // _self.markert_follow_up_type = res.data.data.markert_follow_up_type
-                // _self.taskLevel_map = _self.$array2map(_self.taskLevel)
-                // _self.taskDesCode_map = _self.$array2map(_self.taskDesCode)
-                // _self.taskKind_map = _self.$array2map(_self.taskKind)
-                // _self.taskStage_map = _self.$array2map(_self.taskStage)
-                // _self.market_status_map = _self.$array2map(_self.market_status)
-                // _self.markert_follow_up_type_map = _self.$array2map(_self.markert_follow_up_type)
             }
             this.$GetDataCenter(params, success)
         },

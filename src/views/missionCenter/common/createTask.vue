@@ -315,6 +315,7 @@ export default {
         this.get_all_user()
         this.$bus.on("SCHEDULE_CREATE_TASK",(e)=>{
             _self.user = localStorage.getItem("id")
+            _self.newMission.executorId = []
             _self.newMission.executorId.push(parseInt(_self.user))
 
             _self.openAddMission = true

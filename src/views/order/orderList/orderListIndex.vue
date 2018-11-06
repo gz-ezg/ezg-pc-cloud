@@ -71,11 +71,11 @@
             <ButtonGroup>
                 <Button v-permission="['orderL.add']" type="primary" icon="plus" @click="open_add" name="order_add">录入</Button>
                 <Button v-permission="['orderL.edit']" type="primary" icon="edit" @click="open_edit" name="order_edit">编辑</Button>
-                <Button v-permission="['orderL.detail']" type="primary" icon="ios-crop" @click="order_show" name="order_show">查看</Button>
+                <Button v-permission="['orderL.detail']" type="primary" icon="information-circled" @click="order_show" name="order_show">查看</Button>
                 <Button v-permission="['orderL.flowChart']" type="primary" icon="ios-crop" @click="open_flowChart">查看流程图</Button>
-                <Button v-permission="['orderL.resubmit']" type="primary" icon="ios-crop" @click="reapply_process" name="order_re_submit">重新提交</Button>
-                <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="xiugai_open" name="order_amend">修改</Button>
-                <Button v-permission="['orderL.delOrder']" type="primary" icon="ios-color-filter-outline" @click="del_order" name="order_amend">作废</Button>
+                <Button v-permission="['orderL.resubmit']" type="primary" icon="refresh" @click="reapply_process" name="order_re_submit">重新提交</Button>
+                <Button v-permission="['orderL.amend']" type="primary" icon="edit" @click="xiugai_open" name="order_amend">修改</Button>
+                <Button v-permission="['orderL.delOrder']" type="primary" icon="trash-b" @click="del_order" name="order_amend">作废</Button>
                 <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="get_data">刷新</Button>
                 <!--  ↓ ↓ 该功能暂定，代码勿删  -->
                 <!--<Button type="primary" icon="ios-color-filter-outline" @click="qihuaOpen()">企划(修改)</Button>-->

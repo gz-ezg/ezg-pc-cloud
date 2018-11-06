@@ -67,7 +67,7 @@ export default {
     },
     methods:{
         update(){
-            let url = `customer/file/updateCustomerFile`
+            let url = `api/customer/file/updateCustomerFile`
             let _self = this
             _self.loading = true
             let config = {

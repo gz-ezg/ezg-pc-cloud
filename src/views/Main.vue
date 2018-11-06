@@ -375,33 +375,6 @@
                 this.file.push(file)
                 return false;
             },
-            //  意见收集end
-            // wx_init(){
-            //     let _self = this
-            //     let url = "api/system/wechat/company/js_api_ticket"
-
-            //     let config = {
-            //         params:{
-            //             agentId: "1000028",
-            //             url: location.href.split('#')[0]
-            //         }
-            //     }
-                
-            //     function success(res){
-            //         console.log(res.data)
-            //         wx.config({
-            //             beta: true,// 必须这么写，否则wx.invoke调用形式的jsapi会有问题
-            //             debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-            //             appId: 'wx7666e5cbbd22b505', // 必填，企业微信的corpID
-            //             timestamp: res.data.data.timestamp, // 必填，生成签名的时间戳
-            //             nonceStr: res.data.data.noncestr, // 必填，生成签名的随机串
-            //             signature: res.data.data.sign,// 必填，签名，见附录1
-            //             jsApiList: ["getLocation"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-            //         })
-            //     }
-
-            //     this.$Get(url,config, success)
-            // }
         },
         watch: {
             '$route' (to) {
@@ -439,7 +412,7 @@
                     4.公海池优化：增加领取数量限制,具体规则由市场部负责人制定；</br>
                     5.消息推送优化：优化数条客户微信推送通知；</br>
                     6.其他：修复部分已知bug；</br>`,
-                    duration: 4.5,
+                    duration: 8,
                     name: "updateNotice"
                 });
             }
