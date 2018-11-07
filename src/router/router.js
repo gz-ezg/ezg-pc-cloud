@@ -422,8 +422,8 @@ export const appRouter = [
                 }
             },
             {
-                access: 6115,
-                meta: 6115,
+                access: 11609,
+                meta: 11609,
                 path:'clueControl',
                 title:'公海池控制',
                 name:"clueControl_index",
