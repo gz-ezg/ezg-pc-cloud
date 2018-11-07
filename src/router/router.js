@@ -759,16 +759,16 @@ export const appRouter = [
                     require(['@/views/commercialManagement/myCommonTask/myCommonTask_table.vue'], resolve);
                 }
             },
-            {
-                access: 6039,
-                meta: 6039,
-                path: 'rulemanagement',
-                title: '规则管理',
-                name: 'commercialRulemanagement',
-                component: resolve => {
-                    require(['@/views/commercialManagement/rule.vue'], resolve);
-                }
-            }
+            // {
+            //     access: 6039,
+            //     meta: 6039,
+            //     path: 'rulemanagement',
+            //     title: '规则管理',
+            //     name: 'commercialRulemanagement',
+            //     component: resolve => {
+            //         require(['@/views/commercialManagement/rule.vue'], resolve);
+            //     }
+            // }
         ]
     },
     {
@@ -1045,16 +1045,16 @@ export const appRouter = [
                     require(['@/views/fieldManagement/commonfield/commonFieldIndex.vue'], resolve);
                 }
             },
-            {
-                access:6078,
-                meta: 6078,
-                path: 'attendance',
-                title: '个人考勤',
-                name: 'attendance_index',
-                component: resolve => {
-                    require(['@/views/fieldManagement/attendance/index.vue'],resolve)
-                }
-            }
+            // {
+            //     access:6078,
+            //     meta: 6078,
+            //     path: 'attendance',
+            //     title: '个人考勤',
+            //     name: 'attendance_index',
+            //     component: resolve => {
+            //         require(['@/views/fieldManagement/attendance/index.vue'],resolve)
+            //     }
+            // }
             // {
             //     access:6078,
             //     meta: 6078,
@@ -1107,11 +1107,18 @@ export const appRouter = [
         name: 'publicPool',
         component: Main,
         children: [
+            // {
+            //     access: 6089,
+            //     meta: 6089,
+            //     path: 'index2', title: '公海池', name: 'publicPool_index', component: resolve => {
+            //         require(['@/views/publicPool/index/pubilcPool_table.vue'], resolve);
+            //     }
+            // },
             {
                 access: 6089,
                 meta: 6089,
                 path: 'index', title: '公海池', name: 'publicPool_index', component: resolve => {
-                    require(['@/views/publicPool/index/pubilcPool_table.vue'], resolve);
+                    require(['@/views/publicPool/publicPool'], resolve);
                 }
             },
             // {

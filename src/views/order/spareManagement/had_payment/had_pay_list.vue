@@ -25,7 +25,7 @@
             </Row>
             <Row style="margin-top: 10px;">
                 <Table border :columns="header" :data="had_pay_list" highlight-row @on-current-change="save_current" size="small"></Table>
-                <Page :total="total_NUM" show-elevator style="margin-top:10px" @on-change="PageChange" @on-page-size-change="PageSizeChange" show-sizer	></Page>
+                <Page :total="total_NUM" show-elevator style="margin-top:10px" @on-change="PageChange" @on-page-size-change="PageSizeChange" show-sizer	size="small"></Page>
             </Row>     
         </Card>
         <Display></Display>
@@ -57,12 +57,12 @@ export default {
                     {
                         title: '订单编号',
                         key: 'ordercode',
-                        width: 150
+                        minWidth: 150
                     },
                     {
                         title: '产品名称',
                         key: 'product',
-                        width: 150,
+                        minWidth: 150,
                         render:(h, params) => {
                             // console.log(params)
                             if(params.row.product == ''||params.row.product == null){
@@ -91,7 +91,7 @@ export default {
                     {
                         title: '公司名称',
                         key: 'companyName',
-                        width: 200,
+                        minWidth: 200,
                         render:(h, params) => {
                             // console.log(params)
                             if(params.row.companyName == ''||params.row.companyName == null){
@@ -125,27 +125,27 @@ export default {
                     {
                         title: '余款总额',
                         key: 'totalamount',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '已补余款',
                         key: 'paynumber',
-                        width: 100
+                        minWidth: 100
                     },
                     {
                         title: '剩余余款',
                         key: 'unpaidamount',
-                        width: 100
+                        minWidth: 100
                     },
                     {
                         title: '待审批金额',
                         key: 'zip',
-                        width: 100
+                        minWidth: 100
                     },
                     {
                         title: '跟进人',
                         key: 'followbyname',
-                        width: 100
+                        minWidth: 100
                     }
                 ]
             }

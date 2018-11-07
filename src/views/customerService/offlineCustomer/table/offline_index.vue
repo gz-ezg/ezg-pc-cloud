@@ -8,7 +8,7 @@
                 <processed></processed>
             </TabPane>
         </Tabs>
-        <customer-detail></customer-detail>
+        <!-- <customer-detail></customer-detail> -->
         <company-detail></company-detail>
         <Add></Add>
         <update></update>
@@ -19,7 +19,7 @@
 <script>
     import Untreated from './untreated.vue'
     import Processed from './processed.vue'
-    import customerDetail from '../../../woa-components/customerDetail/channelCustomer'
+    // import customerDetail from '../../../woa-components/customerDetail/channelCustomer'
     import companyDetail from '../../../woa-components/companyDetail/CompanyDetail'
     import Add from '../add'
     import update from '../update.vue'
@@ -31,7 +31,7 @@
         components:{
             Untreated,
             Processed,
-            customerDetail,
+            // customerDetail,
             companyDetail,
             Add,
             show,

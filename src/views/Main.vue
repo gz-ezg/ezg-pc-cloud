@@ -138,6 +138,7 @@
         <set-finish-time></set-finish-time>
         <field-list-by-company-id></field-list-by-company-id>
         <aduit-log></aduit-log>
+        <customer-detail v-if="gobalCustomerDetailShow" :customer="gobalCustomer"></customer-detail>
     </div>
 </template>
 <script>
@@ -156,6 +157,8 @@
     import setFinishTime from './woa-components/setFinishTime/setFinishTime'
     import fieldListByCompanyId from './woa-components/fieldListByCompanyId/index.vue'
     import aduitLog from './order/orderApprove/common/aduitLog.vue'
+    //  新版全局性客户详情
+    import customerDetail from './woa-components/customerDetail2/index'
 
     export default {
         components: {
@@ -171,7 +174,8 @@
             next,
             setFinishTime,
             fieldListByCompanyId,
-            aduitLog
+            aduitLog,
+            customerDetail
         },
         data () {
             return {
@@ -228,6 +232,13 @@
                 // console.log(this.$store.state.app.pageOpenedList)
                 // console.log(temp)
                 return temp
+            },
+            //  业务相关-全局性变量
+            gobalCustomerDetailShow() {
+                return this.$store.state.gobal.gobalCustomerDetailShow;
+            },
+            gobalCustomer() {
+                return this.$store.state.gobal.gobalCustomer;
             }
         },
         methods: {
@@ -417,24 +428,6 @@
             //     });
             // }
         },
-        // beforeUpdate(){
-        //     console.log("dom_mbeforeUpdate")
-        //     // this.spin_loading = true
-        // },
-        updated(){
-            // console.log("dom_mupdated")
-            // 记录性能时间
-            // let loadingTime = ""
-            // loadingTime = window.performance.getEntriesByType("navigation")
-            // console.log(loadingTime)
-            // this.spin_loading = false
-        },
-        // beforeDestroy(){
-        //     // console.log("beforeDestroy")
-        // },
-        // destroyed(){
-        //     // console.log('destroyed')
-        // },
         created () {
             // 显示打开的页面的列表
             this.$store.commit('setOpenedList');

@@ -106,22 +106,22 @@ export default {
                 {
                     title:"系统评价得分",
                     key:'score',
-                    width:150
+                    minWidth:150
                 },
                 {
                     title:"意见或建议",
                     key:'suggestion',
-                    width:300
+                    minWidth:300
                 },
                 {
                     title:"评价时间",
                     key:'createdate',
-                    width: 150
+                    minWidth: 150
                 },
                 {
                     title:"评价人",
                     key:'realname',
-                    width: 150
+                    minWidth: 150
                 }
             ],
             data:[],

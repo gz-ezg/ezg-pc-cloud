@@ -459,7 +459,7 @@
                     {
                         title: '客户名称',
                         key: 'customer_name',
-                        width: 120,
+                        minWidth: 120,
                     },
                     {
                         title: '联系方式',
@@ -506,37 +506,37 @@
                                 ])
                             ]);
                         },
-                        width: 150,
+                        minWidth: 150,
                     },
                     {
                         title: '客户状态',
                         key: 'customer_status',
-                        width: 150,                 
+                        minWidth: 150,                 
                     },
                     {
                         title: '地区',
                         key: 'customer_area',
-                        width: 80,                     
+                        minWidth: 80,                     
                     },
                     {
                         title: '跟进人',
                         key: 'followbyname',
-                        width: 120,                
+                        minWidth: 120,                
                     },
                     {
                         title: '创建人',
                         key: 'createrealname',
-                        width: 120,                     
+                        minWidth: 120,                     
                     },
                     {
                         title: '更新时间',
                         key: 'updatedate',
-                        width: 150,                   
+                        minWidth: 150,                   
                     },
                     {
                         title: '创建时间',
                         key: 'createdate',
-                        width: 150,                    
+                        minWidth: 150,                    
                     },
 /*                    {
                         title: '线索变化剩余时长',
@@ -562,8 +562,9 @@
                                     },
                                     on: {
                                         click: () => {
-                                            // console.log(params.row)
-                                            this.examine(params.row)
+                                            console.log(params.row)
+                                            // this.examine(params.row)
+                                            this.$store.commit('open_gobal_customer_detail_modal', {ID:params.row.customer_id});
                                         }
                                     }
                                 }, '查看')
@@ -575,7 +576,7 @@
                     {
                         title: '客户名称',
                         key: 'customer_name',
-                        width: 120,
+                        minWidth: 120,
                         sortable: true
                     },
                     {
@@ -623,48 +624,48 @@
                                 ])
                             ]);
                         },
-                        width: 150,
+                        minWidth: 150,
                     },
                     {
                         title: '客户状态',
                         key: 'customer_status',
-                        width: 150,
+                        minWidth: 150,
                         sortable: true                        
                     },
                     {
                         title: '线索状态',
                         key: 'clue_status',
-                        width: 120,
+                        minWidth: 120,
                         sortable: true                        
                     },
                     {
                         title: '地区',
                         key: 'customer_area',
-                        width: 80,
+                        minWidth: 80,
                         sortable: true                        
                     },
                     {
                         title: '销售',
                         key: 'followbyname',
-                        width: 120,
+                        minWidth: 120,
                         sortable: true                        
                     },
                     {
                         title: '创建人',
                         key: 'createrealname',
-                        width: 120,
+                        minWidth: 120,
                         sortable: true                        
                     },
                     {
                         title: '更新时间',
                         key: 'updatedate',
-                        width: 150,
+                        minWidth: 150,
                         sortable: true                        
                     },
                     {
                         title: '创建时间',
                         key: 'createdate',
-                        width: 150,
+                        minWidth: 150,
                         sortable: true                        
                     },
 /*                    {
@@ -692,7 +693,8 @@
                                     on: {
                                         click: () => {
                                             // console.log(params.row)
-                                            this.examine(params.row)
+                                            // this.examine(params.row)
+                                            this.$store.commit('open_gobal_customer_detail_modal', {ID:params.row.customer_id});
                                         }
                                     }
                                 }, '查看')

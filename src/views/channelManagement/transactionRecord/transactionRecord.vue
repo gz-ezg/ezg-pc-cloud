@@ -9,17 +9,6 @@
         }
     }
 </style>
-<style>
-    /*@import '../../../libs/easyUI/demo.css';*/
-    /* @import '../../../libs/easyUI/easyui.css';
-    @import '../../../libs/easyUI/icon.css'; */
-    .datagrid-row {
-        height: 42px;
-    }
-    .datagrid-cell {
-        line-height: 34px;
-    }
-</style>
 <template>
     <div>
         <Card>
@@ -76,6 +65,7 @@
             </Row>
             <Row style="margin-top: 10px;">
                 <Table
+                        :loading="tableLoading"
                         highlight-row
                         size="small"
                         :columns="columns"
@@ -104,54 +94,149 @@
                 <Row>
                     <Col span="12">
                     <FormItem label="公司名" prop="companyname">
-                        <Input v-model="formValidate.companyname" disabled></Input>
+                        <Input v-model="formValidate.companyname" readonly></Input>
                     </FormItem>
                     </Col>
                     <Col span="12">
                     <FormItem label="客户名" prop="name">
-                        <Input v-model="formValidate.name" disabled></Input>
+                        <Input v-model="formValidate.name" readonly></Input>
                     </FormItem>
                     </Col>
                 </Row>
                 <Row>
                     <Col span="12">
                     <FormItem label="已付款" prop="realnumber">
-                        <Input v-model="formValidate.realnumber" disabled></Input>
+                        <Input v-model="formValidate.realnumber" readonly></Input>
                     </FormItem>
                     </Col>
                     <Col span="12">
                     <FormItem label="电话" prop="tel">
-                        <Input v-model="formValidate.tel" disabled></Input>
+                        <Input v-model="formValidate.tel" readonly></Input>
                     </FormItem>
                     </Col>
                 </Row>
                 <Row>
                     <Col span="12">
                     <FormItem label="创建时间" prop="updatedate">
-                        <Input v-model="formValidate.updatedate" disabled></Input>
+                        <Input v-model="formValidate.updatedate" readonly></Input>
                     </FormItem>
                     </Col>
                     <Col span="12">
                     <FormItem label="创建人" prop="createby">
-                        <Input v-model="formValidate.createby" disabled></Input>
+                        <Input v-model="formValidate.createby" readonly></Input>
                     </FormItem>
                     </Col>
                 </Row>
             </Form>
-            <table width="100%" id="orderItemList3"></table>
+            <Row style="margin-top:10px">
+                <Table :columns="orderDetailListHeaderShow" :data="orderItem" :loading="loading" border size="small" id="show-order-item">
+                </Table>
+            </Row>
+            <div slot="footer"></div>
+            <!-- <table width="100%" id="orderItemList3"></table> -->
         </Modal>
     </div>
 </template>
 
 <script>
-    // import datagrid from '../../../libs/easyUI/jquery.easyui.min'
-    // import combobox from '../../../libs/easyUI/jquery.easyui.min'
     import { DateFormat } from './utils'
 
     export default {
         name:'transactionRecord_index',
         data() {
             return {
+                loading: false,
+                orderItem: [],
+                openShowOrderDetail: false,
+                orderDetailListHeaderShow: [
+                    {
+                        title: "序号",
+                        type: 'index',
+                        minWidth: 60,
+                        align: 'center'
+                    },
+                    {
+                        title: "产品名",
+                        key: "product",
+                        minWidth: 150,
+                    },
+                    {
+                        title: "产品属性",
+                        key: "propertys",
+                        minWidth: 250,
+                        render: (h, params) => {
+                            return h("div",{
+                                domProps:{
+                                    innerHTML: params.row.propertys
+                                }
+                            })
+                        }
+                    },
+                    {
+                        title: "产品价格",
+                        key: "oaprice",
+                        minWidth: 100,
+                    },
+                    {
+                        title: "产品数量（个/月）",
+                        key: "productnumber",
+                        minWidth: 150,
+                    },
+                    {
+                        title: "销售价格",
+                        key: "paynumber",
+                        minWidth: 100,
+                    },
+                    {
+                        title: "赠送数量",
+                        key: "givethenumber",
+                        minWidth: 100,
+                    },
+                    {
+                        title: "服务开始税期",
+                        key: "servicestartdate",
+                        minWidth: 120
+                    },
+                    {
+                        title: "服务部门",
+                        key: "departname",
+                        minWidth: 140
+                    },
+                    {
+                        title: "单价/月",
+                        key: "unitprice",
+                        minWidth: 90
+                    },
+                    {
+                        title: "备注",
+                        key: "memo",
+                        minWidth: 300,
+                        render: (h, params) => {
+                            // return h("div",{
+                            //     domProps:{
+                            //         innerHTML: "<div>"+params.row.memo+"</div>"
+                            //     }
+                            // })
+                            let reg = new RegExp("</br>", "g")
+                            let temp = params.row.memo.replace(reg ,"\n")
+                            //  先转换为textarea能够处理的格式，上传时可能需要处理空格转换为换行符
+                            return h('div',[
+                                h('Input',{
+                                    props:{
+                                        value: temp,
+                                        autosize: true,
+                                        type: "textarea",
+                                        size: "small",
+                                        readonly: true
+                                    },
+                                    style: {
+                                        width: "100%"
+                                    }
+                                })
+                            ])
+                        }
+                    }
+                ],
                 search_model:'',
                 ishandleSubmit:false,
                 SearchValidate:{
@@ -180,7 +265,7 @@
                     {
                         title: '订单号码',
                         key: 'ordercode',
-                        width: 150
+                        minWidth: 150
                     },
                     {
                         title: '公司名称',
@@ -217,32 +302,32 @@
                             }
                         },
                         ellipsis: true,
-                        width: 300
+                        minWidth: 300
                     },
                     {
                         title: '客户名称',
                         key: 'name',
-                        width: 100
+                        minWidth: 100
                     },
                     {
                         title: '客户电话',
                         key: 'tel',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '已付款',
                         key: 'realnumber',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '创建时间',
                         key: 'updatedate',
-                        width: 150
+                        minWidth: 150
                     },
                     {
                         title: '创建人',
                         key: 'crealname',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '操作',
@@ -290,10 +375,11 @@
                     }
                 ],
                 data: [],
-                pageTotal: new Number(),
+                pageTotal: 0,
                 page:1,
                 pageSize: 10,
-                customerid: ''
+                customerid: '',
+                tableLoading: false
             }
         },
         methods: {
@@ -343,7 +429,7 @@
             getTableData() {
                 let _self = this
                 let url = 'api/order/queryListByChannel'
-
+                _self.tableLoading = true
                 _self.data = []
                 var keys =[]
                     var config = {
@@ -368,6 +454,7 @@
                         }
                 }
                 function doSuccess(response) {
+                    _self.tableLoading = false
                     _self.pageTotal = response.data.data.total
 
                     for (let i = 0; i < response.data.data.rows.length; i++) {
@@ -403,28 +490,6 @@
                 let _self = this
                 _self.page = a
                 _self.getTableData()
-                // let url = '/order/queryListByChannel?page=' + a + '&pageSize=' + _self.pageSize + '&sortField=id&order=desc'
-
-                // _self.data = []
-
-                // function doSuccess(response) {
-                //     _self.pageTotal = response.data.data.total
-
-                //     for (let i = 0; i < response.data.data.rows.length; i++) {
-                //         _self.data.push({
-                //             ordercode: response.data.data.rows[i].ordercode,
-                //             companyname: response.data.data.rows[i].companyname,
-                //             name: response.data.data.rows[i].name,
-                //             tel: response.data.data.rows[i].tel,
-                //             updatedate: (response.data.data.rows[i].updatedate).substr(0,10),
-                //             createby: response.data.data.rows[i].createby,
-                //             realnumber: response.data.data.rows[i].realnumber,
-                //             id: response.data.data.rows[i].id,
-                //         })
-                //     }
-                // }
-
-                // this.GetData(url, doSuccess)
             },
 
             // 改变每页显示的数据条数
@@ -458,7 +523,11 @@
 
             detail(e) {
                 let _self = this
-                let url = '/order/detail/' + e.id
+                let url = 'api/order/detail/' + e.id
+
+                let config = {}
+
+                _self.loading = true
 
                 _self.modal2 = true
                 _self.formValidate.companyname = e.companyname[0].name
@@ -468,54 +537,57 @@
                 _self.formValidate.createby = e.crealname
                 _self.formValidate.realnumber = e.realnumber
 
-                function doSuccess(response) {
+                function success(response) {
                     let _data = response.data.data
-                    _self.orderItemList3 = _data.items
+                    _self.orderItem = _data.items
+                    _self.loading = false
+                //     _self.orderItemList3 = _data.items
 
-                    $('#orderItemList3').datagrid({
-                        idField: 'id',
-                        title: '',
-                        data: _self.orderItemList3,
-                        rownumbers: true,
-                        singleSelect: true,
-                        columns: [[
-                            {field: 'skuid', title: '编号', hidden: true, sortable: true},
-                            {field: 'iscycle', title: 'iscycle', hidden: true, sortable: true},
-                            {field: 'productid', title: '产品名', hidden: true, sortable: true},
-                            {field: 'product', title: '产品名', width: 150},
-                            {field: 'propertys', title: '产品属性', width: 250},
-                            {field: 'oaprice', title: '产品价格', width: 100},
-                            {field: 'productnumber', title: '产品数量', width: 80,},
-                            {
-                                field: 'paynumber',
-                                title: '销售价格',
-                                width: 80,
-                            },
-                            {field: 'givethenumber', title: '赠送数量', width: 100},
-                            {field:'servicestartdate',title:'服务开始税期',width:90,
-                                    formatter: function(val, row, a) {
-                                        return row.servicestartdate
-                                    }
-                                }, 
-                            {
-                                field: 'departname',
-                                title: '服务部门',
-                                width: 140,
-                            }, {field: 'departid', title: '服务部门id', hidden: true}, {
-                                field: 'servicedeparts',
-                                title: '服务部门id',
-                                hidden: true
-                            }, {
-                                field: 'unitprice',
-                                title: '单价/月',
-                                width: 140,
-                            },
-                            {field: 'memo', title: '备注 ', width: 220,}
-                        ]],
-                    })
+                //     $('#orderItemList3').datagrid({
+                //         idField: 'id',
+                //         title: '',
+                //         data: _self.orderItemList3,
+                //         rownumbers: true,
+                //         singleSelect: true,
+                //         columns: [[
+                //             {field: 'skuid', title: '编号', hidden: true, sortable: true},
+                //             {field: 'iscycle', title: 'iscycle', hidden: true, sortable: true},
+                //             {field: 'productid', title: '产品名', hidden: true, sortable: true},
+                //             {field: 'product', title: '产品名', width: 150},
+                //             {field: 'propertys', title: '产品属性', width: 250},
+                //             {field: 'oaprice', title: '产品价格', width: 100},
+                //             {field: 'productnumber', title: '产品数量', width: 80,},
+                //             {
+                //                 field: 'paynumber',
+                //                 title: '销售价格',
+                //                 width: 80,
+                //             },
+                //             {field: 'givethenumber', title: '赠送数量', width: 100},
+                //             {field:'servicestartdate',title:'服务开始税期',width:90,
+                //                     formatter: function(val, row, a) {
+                //                         return row.servicestartdate
+                //                     }
+                //                 }, 
+                //             {
+                //                 field: 'departname',
+                //                 title: '服务部门',
+                //                 width: 140,
+                //             }, {field: 'departid', title: '服务部门id', hidden: true}, {
+                //                 field: 'servicedeparts',
+                //                 title: '服务部门id',
+                //                 hidden: true
+                //             }, {
+                //                 field: 'unitprice',
+                //                 title: '单价/月',
+                //                 width: 140,
+                //             },
+                //             {field: 'memo', title: '备注 ', width: 220,}
+                //         ]],
+                //     })
                 }
 
-                this.GetData(url, doSuccess)
+                // this.GetData(url, doSuccess)
+                this.$Get(url, config, success)
             },
 
             // downloadExcel() {
@@ -549,3 +621,11 @@
         }
     }
 </script>
+
+<style>
+#show-order-item textarea.ivu-input{
+    border: 0px;
+    overflow-y: hidden;
+    background-color: rgba(0, 0, 0, 0);
+}
+</style>

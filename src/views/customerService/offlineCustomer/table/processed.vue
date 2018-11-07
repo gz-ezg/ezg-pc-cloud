@@ -241,7 +241,8 @@
                                     on: {
                                         click: () => {
                                             // this.customerDetail(params)
-                                            Bus.$emit('Open_customer_detail',params.row.customerid)
+                                            this.$store.commit('open_gobal_customer_detail_modal', {ID: params.row.customerid});
+                                            // Bus.$emit('Open_customer_detail',params.row.customerid)
                                         }
                                     }
                                 }, '[查看客户]'),

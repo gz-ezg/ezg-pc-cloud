@@ -113,27 +113,27 @@ export default {
                 {
                     title:"意见或建议",
                     key:'suggestion',
-                    width:300
+                    minWidth:300
                 },
                 {
                     title:"回复内容",
                     key:"replycontent",
-                    width:300
+                    minWidth:300
                 },
                 {
                     title:"回复时间",
                     key:'replytime',
-                    width: 150
+                    minWidth: 150
                 },
                 {
                     title:"回复人",
                     key:'replyname',
-                    width:150
+                    minWidth:150
                 },
                 {
                     title:"评价人",
                     key:'feedbackname',
-                    width: 150
+                    minWidth: 150
                 }
             ],
             data:[],

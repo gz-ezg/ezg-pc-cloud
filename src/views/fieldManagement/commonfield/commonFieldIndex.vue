@@ -1,13 +1,13 @@
 <template>
     <div>
-        <Tabs value="name1">
-            <TabPane label="普通外勤" name="name1">
+        <!-- <Tabs value="name1"> -->
+            <!-- <TabPane label="普通外勤" name="name1"> -->
                 <common-field></common-field>
-            </TabPane>
+            <!-- </TabPane> -->
             <!-- <TabPane label="会计到家外勤" name="name2">
                 <account-field></account-field>
             </TabPane> -->
-        </Tabs>
+        <!-- </Tabs> -->
         <!-- <Modal
             title="查看详情"
             v-model="open_detail"
@@ -37,13 +37,13 @@
             <div slot="footer"></div>
         </Modal> -->
 
-        <customer-detail></customer-detail>
+        <!-- <customer-detail></customer-detail> -->
     </div>
 </template>
 
 <script>
 import Bus from '../../../components/bus.js'
-import customerDetail from '../../woa-components/customerDetail/channelCustomer'
+// import customerDetail from '../../woa-components/customerDetail/channelCustomer'
 // import accountField from '../../accountantWorkOrder/accountantField/accountantField'
 import commonField from './commonFiedManagement'
 
@@ -52,7 +52,7 @@ export default {
     components:{
         // accountField,
         commonField,
-        customerDetail
+        // customerDetail
     },
     data(){
         return{

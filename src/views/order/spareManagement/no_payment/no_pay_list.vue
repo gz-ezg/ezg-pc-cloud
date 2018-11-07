@@ -21,9 +21,9 @@
             </Row>
             <Row style="margin-top: 10px;">
                 <!-- :row-class-name="rowClassName" -->
-                <Table  border :columns="header" :data="local_data" highlight-row @on-current-change="save_select_current" :loading="np_loading">
+                <Table  border :columns="header" :data="local_data" highlight-row @on-current-change="save_select_current" :loading="np_loading" size="small">
                 </Table> 
-                <Page :total="total_NUM" :current.sync="page" show-elevator style="margin-top:10px" @on-change="PageChange" @on-page-size-change="PageSizeChange" show-sizer	></Page>
+                <Page :total="total_NUM" :current.sync="page" show-elevator  style="margin-top:10px" @on-change="PageChange" @on-page-size-change="PageSizeChange" show-sizer size="small"	></Page>
             </Row>
         </Card>
         <Payment :isshow="isshow"></Payment>
@@ -56,12 +56,12 @@ export default {
                     {
                         title: '订单编号',
                         key: 'ordercode',
-                        width: 150
+                        minWidth: 150
                     },
                     {
                         title: '产品名称',
                         key: 'product',
-                        width: 150,
+                        minWidth: 150,
                         render:(h, params) => {
                             // console.log(params)
                             if(params.row.product == ''||params.row.product == null){
@@ -90,7 +90,7 @@ export default {
                     {
                         title: '公司名称',
                         // key: 'showcompanyname',
-                        width: 200,
+                        minWidth: 200,
                         render:(h, params) => {
                             // console.log(params)
                             if(params.row.companyName == ''||params.row.companyName == null){
@@ -124,27 +124,27 @@ export default {
                     {
                         title: '余款总额',
                         key: 'totalamount',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '已补余款',
                         key: 'paynumber',
-                        width: 100
+                        minWidth: 100
                     },
                     {
                         title: '剩余余款',
                         key: 'unpaidamount',
-                        width: 100
+                        minWidth: 100
                     },
                     {
                         title: '待审批金额',
                         key: 'approvalpendingamount',
-                        width: 100
+                        minWidth: 100
                     },
                     {
                         title: '跟进人',
                         key: 'followbyname',
-                        width: 100
+                        minWidth: 100
                     },{
                         title: '审批状态',
                         key:'action',

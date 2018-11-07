@@ -23,7 +23,7 @@
     import edit from './edit.vue'
     import show from './show.vue'
     import {arrayToMap} from '../../../../libs/utils'
-    import customerDetail from '../../../woa-components/customerDetail/channelCustomer'
+    // import customerDetail from '../../../woa-components/customerDetail/channelCustomer'
     import companyDetail from '../../../woa-components/companyDetail/CompanyDetail'
 
     export default {
@@ -31,7 +31,7 @@
         components:{
             Untreated,
             Processed,
-            customerDetail,
+            // customerDetail,
             companyDetail,
             // companyDetail,
             edit,

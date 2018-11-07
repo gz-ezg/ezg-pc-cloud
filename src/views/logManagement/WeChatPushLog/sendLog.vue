@@ -68,8 +68,10 @@
                         </Collapse>
                     </Row>
                     <Row>
-                        <!-- <Button type="primary" icon="search" @click="dataCheck">查看</Button>  -->
-                        <Button type="primary" icon="search" @click="downloadExcel">下载</Button>
+                        <ButtonGroup>
+                            <Button type="primary" icon="search" @click="dataCheck">查看</Button> 
+                            <Button type="primary" icon="search" @click="downloadExcel">下载</Button>
+                        </ButtonGroup>
                     </Row>
                     <Row style="margin-top: 10px;">
                         <Table
@@ -141,7 +143,23 @@
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem label="短信内容：">
-                            <Input  size="small" type="textarea" :autosize="{maxRows: 8}"  v-model="currentRowData.id" placeholder="">
+                            <Input  size="small" type="textarea" :autosize="{maxRows: 8}"  v-model="currentRowData.first" placeholder="">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="16">
+                    <Col span="24">
+                        <FormItem label="关键词：">
+                            <Input  size="small" type="textarea" :autosize="{maxRows: 8}"  v-model="currentRowData.keyword" placeholder="">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="16">
+                    <Col span="24">
+                        <FormItem label="链接标题：">
+                            <Input  size="small" type="textarea" :autosize="{maxRows: 8}"  v-model="currentRowData.remark" placeholder="">
                             </Input>
                         </FormItem>
                     </Col>
