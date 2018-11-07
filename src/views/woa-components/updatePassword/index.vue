@@ -80,7 +80,7 @@ export default {
         updatePassword(){
             let _self = this
             let url = `api/user/updatePasswordByUserId`
-            config = {
+            let config = {
                 id: _self.userID,
                 password: _self.formdata.password
             }

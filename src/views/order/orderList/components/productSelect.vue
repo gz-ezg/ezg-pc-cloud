@@ -6,8 +6,8 @@
             width="1000">
             <Row style="margin-bottom:10px">
                 <Col span="4">
-                        <Input v-model="searchProduct" placeholder="输入产品搜索" @on-enter="search_product">
-                            <Button slot="append" icon="ios-search" @click="search_product"></Button>
+                        <Input v-model="searchProduct" placeholder="输入产品搜索" @on-enter="search_product_1">
+                            <Button slot="append" icon="ios-search" @click="search_product_1"></Button>
                         </Input>
                 </Col>
             </Row>
@@ -50,9 +50,26 @@
                             <div class="productDetail-title-content">
                             </div>
                         </Row>
-                        <Row v-for="(item, index) in queryProperty" :key="index" class="type-select">
+                        <!-- 针对地址变更的暂时性处理 -->
+                        <Row class="type-select" v-if="selectProduct.id == 100 && changeArea">
+                            <!-- <Row v-for="(item, index) in queryProperty" :key="index" class="type-select"> -->
+                                <p>{{queryProperty[0].name}}</p>
+                                <RadioGroup v-model="selectProperty[0]" type="button" size="large" @on-change="property_change;selectProperty[1]='';productPrice=0" >
+                                    <Radio v-for="(type, index2) in queryProperty[0].children" :label="type.pvId" :key="index2">{{type.propertyValue}}</Radio>
+                                </RadioGroup>
+                                <p v-if="selectProperty[0]==310">{{queryProperty[2].name}}</p>
+                                <RadioGroup v-model="selectProperty[1]" type="button" size="large" v-if="selectProperty[0]==310" @on-change="property_change">
+                                    <Radio v-for="(type, index) in queryProperty[2].children" :label="type.pvId" :key="index">{{type.propertyValue}}</Radio>
+                                </RadioGroup>
+                                <p v-if="selectProperty[0]!=310">{{queryProperty[1].name}}</p>
+                                <RadioGroup v-model="selectProperty[1]" type="button" size="large" @on-change="property_change" v-if="selectProperty[0]!=310">
+                                    <Radio v-for="(type, index) in queryProperty[1].children" :label="type.pvId" :key="index">{{type.propertyValue}}</Radio>
+                                </RadioGroup>
+                            <!-- </Row> -->
+                        </Row>
+                        <Row v-if="selectProduct.id != 100" v-for="(item, index) in queryProperty" :key="index" class="type-select">
                             <p>{{item.name}}</p>
-                            <RadioGroup v-model="selectProperty[index]" type="button" size="large" @on-change="property_change">
+                            <RadioGroup v-model="selectProperty[index]" type="button" size="large" @on-change="property_change" >
                                 <Radio v-for="(type, index2) in item.children" :label="type.pvId" :key="index2">{{type.propertyValue}}</Radio>
                             </RadioGroup>
                         </Row>
@@ -113,6 +130,7 @@
 export default {
     data(){
         return {
+            changeArea: false,
             companyId: "",
             loading: false,
             sideLoading: false,
@@ -155,9 +173,22 @@ export default {
     computed:{
         disabled(){
             if((this.queryProperty.length == this.selectProperty.length) && this.queryProperty.length != 0 ){
-                return false
+                let flag = 1
+                for(let i = 0; i<this.selectProperty.length; i++){
+                    if(this.selectProperty[i]==undefined){
+                        flag = 0
+                        return true
+                    }
+                }
+                if(flag){
+                    return false
+                }
             }else{
-                return true
+                if(this.selectProperty[0] && this.selectProperty[1] && this.changeArea){
+                    return false
+                }else{
+                    return true
+                }
             }
         },
         isAdmin(){
@@ -169,6 +200,10 @@ export default {
         }
     },
     methods: {
+        search_product_1(){
+            this.page = 1
+            this.search_product()
+        },
         //  产品检索
         search_product(){
             let _self = this
@@ -220,6 +255,25 @@ export default {
 
             function success(res){
                 _self.queryProperty = res.data.data
+                if(e == 100){
+                    console.log(_self.queryProperty)
+                    let temp = []
+                    for(let i = 0; i< _self.queryProperty.length; i++){
+                        if(_self.queryProperty[i].propertyId == 95){
+                            temp[0] = _self.queryProperty[i]
+                        }
+                        if(_self.queryProperty[i].propertyId == 23){
+                            temp[1] = _self.queryProperty[i]
+                        }
+                        if(_self.queryProperty[i].propertyId == 16){
+                            temp[2] = _self.queryProperty[i]
+                        }
+                    }
+                    _self.queryProperty = temp
+                    _self.changeArea = true
+                }else{
+                    _self.changeArea = false
+                }
             }
 
             this.$Get(url, config, success)

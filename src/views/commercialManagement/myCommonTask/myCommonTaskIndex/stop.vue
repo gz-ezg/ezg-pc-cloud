@@ -31,26 +31,6 @@
                                     </FormItem>
                                 </Col>
                             </Row>
-                            <Row :gutter="16">
-                                <Col span="8">
-                                    <FormItem prop="departname" label="服务部门：">
-                                        <Input size="small"  type="text" v-model="formInline.departname" placeholder="">
-                                        </Input>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem prop="createdate" label="工单创建时间：">
-                                        <DatePicker type="daterange" size="small" transfer v-model="formInline.createdate" >
-                                        </DatePicker>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem prop="updatedate" label="实际完成时间：">
-                                        <DatePicker type="daterange" size="small" transfer v-model="formInline.updatedate" >
-                                        </DatePicker>
-                                    </FormItem>
-                                </Col>
-                            </Row>
                             <FormItem>
                                 <Button type="primary" @click="search">搜索</Button>
                                 <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
@@ -62,37 +42,33 @@
         </Row>
         <Row>
             <ButtonGroup style="float:left">
-                <!-- <Button type="primary" icon="information-circled" @click="showdetail">查看跟进记录</Button> -->
+                <!-- <Button type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button> -->
+                <Button type="primary" icon="ios-color-wand-outline" @click="open_set_time">设置计划完成时间</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="over_due_reason">逾期原因</Button>
+
+                <!-- <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button> -->
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
+                <Button type="primary" icon="information-circled" @click="company">查看公司</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="reset_wordorder_process" v-if="isAdmin">重新工单流程</Button>
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="product_error">产品异常</Button> -->
                 <!-- <Button type="primary" icon="ios-color-wand-outline">批量已读</Button>
                 <Button type="primary" icon="ios-color-wand-outline">批量未读</Button> -->
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="foundClues">发现线索</Button>                -->
             </ButtonGroup>
-            <!-- <Poptip 
-                title="筛选" 
-                placement="bottom-end" 
-                width="350" 
-                style="float:right;margin-right:20px" 
-            >
-                <Button type="text" size="small" icon="funnel">筛选</Button>
-                
-            </Poptip> -->
         </Row>
         <Row style="margin-top: 10px;">
             <Table
-            :loading="Sloading"
                 ref="selection"
                 highlight-row
                 size="small"
                 :columns="header"
                 :data="data"
                 @on-current-change="save_current_row"
+                :loading="Sloading"
                 @on-row-dblclick="showdetail"
-                @on-sort-change="sort"  
+                @on-sort-change="sort"       
+                @on-selection-change="get_all_selection"
+
                 ></Table>
             <Page
                 placement="top"
@@ -137,19 +113,18 @@
 </template>
 
 <script>
-import Search from './search'
+// import Search from './search'
 import Bus from '../../../../components/bus'
-import {DateFormat} from '../../../../libs/utils'
 
 export default {
-    components:{
-        Search
-    },
-    props:['companyarea'],
+    // components:{
+    //     Search
+    // },
     data() {
             return {
-                isAdmin:false,
                 managestatus:[],
+                order:'desc',
+                sortField:'updatedate',
                 search_model:"",
                 //  触发搜索
                 isSearh:false,
@@ -157,10 +132,7 @@ export default {
                 formInline:{
                     companyname:'',
                     servicename:'',
-                    product:'',
-                    updatedate:[],
-                    createdate:[],
-                    departname:""
+                    product:''
                 },
                 //  加载中
                 Sloading:false,
@@ -177,37 +149,22 @@ export default {
                 pageTotal:new Number(),
                 page:'1',
                 pageSize:'10',
-                data:[
-                ],
-                workOrderStatus:[],
-                workOrderStatus_map:new Map(),
-                sortField:"updatedate",
-                order:"desc",
+                data:[],
                 header: [
-                    {
-                        title: '工单状态',
-                        key: 'workOrderStatus',
-                        width:120,
-                        sortable: true,                        
-                        render:(h, params) => {
-                            // console.log(params.row.workOrderStatus)
-                            if(params.row.workOrderStatus == '10'){
-                                return h('div','未分配')
-                            }else if(params.row.workOrderStatus == '20'){
-                                return h('div','未开始')
-                            }else if(params.row.workOrderStatus == '30'){
-                                return h('div','服务中')
-                            }else if(params.row.workOrderStatus == '40'){
-                                return h('div','暂停')
-                            }else if(params.row.workOrderStatus == '50'){
-                                return h('div','退款终止')                            
-                            }else if(params.row.workOrderStatus == '60'){
-                                return h('div','已完结')                                
-                            }else{
-                                return h('div','无状态')
-                            }
-                        }                      
-                    },
+                    // {
+                    //     type: 'selection',
+                    //     width: 60,
+                    //     align: 'center'
+                    // },
+                    // {
+                    //     title: '工单状态',
+                    //     key: 'zhuangtai',
+                    //     width:100,
+                    //     render:(h,params) => {
+                    //         if(params.row.work)
+                    //         return h('div',"服务中")
+                    //     }                       
+                    // },
                     {
                         title: '归属公司',
                         key: 'companyname',
@@ -243,20 +200,16 @@ export default {
                             }
                         }
                     },
-                    {
-                        title: '公司注册地',
-                        key:'companyarea',
-                        width:120,
-                    },
+                    // {
+                    //     title: '提示',
+                    //     key: 'baseorderid',
+                    //     width: 120,
+                    //     sortable: true                        
+                    // },
                     // {
                     //     title: '经营状态',
                     //     key:'managestatusName',
                     //     width:120
-                    // },
-                    // {
-                    //     title: '提示',
-                    //     key: 'baseorderid',
-                    //     width: 120,                    
                     // },
                     // {
                     //     title: '订单',
@@ -319,41 +272,41 @@ export default {
                         title: '下个进度',
                         key: 'nextprocess',
                         width: 120,
-                        sortable: true
-                        
+                        sortable: true                        
+                    },
+                    {
+                        title: '计划完成时间',
+                        key: 'person_plan_finish_date',
+                        width: 140,
                     },
                     {
                         title: '服务开始时间',
                         key: 'ServiceStart',
                         width: 140,
-                        sortable: true
-                        
+                        sortable: true                        
                     },
                     // {
                     //     title: '创建时间',
                     //     key: 'CreateDate',
                     //     width: 140,
-                    //     sortable: true
-                        
+                    //     sortable: true                        
                     // },
                     // {
                     //     title: '预计完成时间',
                     //     key: 'baseorderid',
                     //     width: 120
                     // },
-                    {
-                        title: '实际完成时间',
-                        key: 'UpdateDate',
-                        width: 140,
-                        sortable: true
-                        
-                    },
+                    // {
+                    //     title: '实际完成时间',
+                    //     key: 'UpdateDate',
+                    //     sortable: true,                        
+                    //     width: 140
+                    // },
                     {
                         title: '服务人员',
                         key: 'servername',
                         width: 120,
-                        sortable: true
-                        
+                        sortable: true                        
                     },
                     {
                         title: '逾期原因',
@@ -396,8 +349,7 @@ export default {
                         title: '跟进人',
                         key: 'followname',
                         width: 120,
-                        sortable: true
-                        
+                        sortable: true      
                     },
                     {
                         title: '备注',
@@ -427,6 +379,7 @@ export default {
                                             width:"200px",
                                             whiteSpace: "normal"
                                         }
+                                        
                                     },[
                                         h('span',params.row.memo)
                                     ])
@@ -444,13 +397,25 @@ export default {
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
+                                // h('Button', {
+                                //     props: {
+                                //         type: 'text',
+                                //         size: 'small'
+                                //     },
+                                //     on: {
+                                //         click: () => {
+                                //             // console.log(params)
+                                //             Bus.$emit('showcompanydetail',params)
+                                //         }
+                                //     }
+                                // }, '[查看公司]'),
                                 h('Button', {
                                     props: {
                                         type: 'text',
                                         size: 'small'
                                     },
                                     on: {
-                                        click:() => {
+                                        click: () => {
                                             this.flowChart(params)
                                         }
                                     }
@@ -468,7 +433,6 @@ export default {
                                             if(params.row.resumeFlag == null || params.row.resumeFlag == 3){
                                                 let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=3`
                                                 this.$http.get(url).then(function(res){
-                                                    _self.$backToLogin(res)                                                    
                                                     if(res.data.msgCode == 40000){
                                                         _self.$Message.success(res.data.msg)
                                                     }else{
@@ -479,7 +443,6 @@ export default {
                                             }else if(params.row.resumeFlag == 2){
                                                 let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=2`
                                                 this.$http.get(url).then(function(res){
-                                                    _self.$backToLogin(res)
                                                     if(res.data.msgCode == 40000){
                                                         _self.$Message.success(res.data.msg)
                                                     }else{
@@ -491,83 +454,134 @@ export default {
                                         }
                                     }
                                 }, '[暂停/解锁]'),
+                                // h('Button', {
+                                //     props: {
+                                //         type: 'text',
+                                //         size: 'small'
+                                //     },
+                                //     on: {
+                                //         click: () => {
+                                //             this.endlife = true
+                                //         }
+                                //     }
+                                // }, '[退款终止]'),
                             ]);
                         }
                     }
-                ]
+                ],
+                tempArray:[]
             }
         },
     methods:{
-        sort(e){
-            this.sortField = e.key
-            if(e.order == 'normal'){
-                this.order = 'desc'
-                this.sortField = 'updatedate'
-            }else{
-                this.order = e.order
-            }
-            this.getData()
+        get_all_selection(e){
+            // console.log(e)
+            this.tempArray = e
         },
+        flow_all(){
+            let _self = this
+            if(this.tempArray.length == 0){
+                _self.$Message.warning("请选择需要流转的工单！")
+            }else{
+                for(let i = 0; i<this.tempArray.length;i++){
+                    let url = `api/order/next`
+                    let config = {
+                        workOrderId:_self.tempArray[i].id,
+                        backup:"批量流转"
+                    }
+                    function success(res){
+                        console.log("流转成功：" + _self.tempArray[i].id + ' - ' +_self.tempArray[i].companyname +' - ' +_self.tempArray[i].product)
+                        if(_self.tempArray.length == i+1){
+                            // _self.getData()
+                        _self.$bus.emit('flowsuccess',true)
+
+                        }
+                    }
+
+                    function fail(err){
+                        console.log("流转失败：" + _self.tempArray[i].id+ ' - ' +_self.tempArray[i].companyname + ' - ' +_self.tempArray[i].product)
+                        if(_self.tempArray.length == i+1){
+                            // _self.getData()
+                        _self.$bus.emit('flowsuccess',true)
+
+                        }
+                    }
+                    _self.$Post(url, config, success, fail)
+                }
+                
+            }
+        },
+        sort(e){
+                console.log(e)
+                if(e.key == ""){
+                    this.sortField = 'updatedate'   
+                }else{
+                    if(e.key == 'customer_area'){
+                        this.sortField = 'area'
+                    }else if(e.key == 'customer_status'){
+                        this.sortField = 'customertype'
+                    }else{
+                        this.sortField = e.key
+                    }
+                }
+                if(e.order == "normal"){
+                    this.order = ""
+                    this.sortField = "updatedate"
+                }else{
+                    this.order = e.order
+                }
+                
+                this.getData()
+            },
         downloadExcel(){
                 let field = [
-                    {field:'workOrderStatus',title:'工单状态',format:'workOrderStatus'},
+                    // {field:'workOrderStatus',title:'工单状态',format:'workOrderStatus'},
                     {field:'companyname',title:'公司名称'},
-                    {field:'companyarea',title:'公司注册地',format:'companyarea'},
-                    {field:'baseorderid',title:'提示'},
+                    // {field:'baseorderid',title:'提示'},
                     {field:'departname',title:'服务部门'},
                     {field:'product',title:'产品全称'},
                     {field:'CurrentProcess',title:'目前进度'},
                     {field:'nextprocess',title:'下个进度'},
                     {field:'ServiceStart',title:'服务开始时间'},
                     {field:'CreateDate',title:'创建时间'},                                                                   
-                    {field:'UpdateDate',title:'实际完成时间'},                                                                     
+                    {field:'ServiceEnd',title:'实际完成时间'},                                                                     
                     {field:'servername',title:'服务人员'},
-                    {field:'followname',title:'跟进人'},
+                    {field:'followname',title:'跟进人'} 
                 ]
                 let _self = this
                 let url = `api/order/workOrderList`
                 let config = {
+                        workOrderStatus:'40',
                         page: '1',
                         pageSize: '1000000',                     
                         companyName:_self.formInline.companyname,
                         serviceName:_self.formInline.servicename,
                         product:_self.formInline.product,
-                        bupdatedate: DateFormat(_self.formInline.updatedate[0]),
-                        eupdatedate: DateFormat(_self.formInline.updatedate[1]),
-                        bcreatedate: DateFormat(_self.formInline.createdate[0]),
-                        ecreatedate: DateFormat(_self.formInline.createdate[1]),
-                        departname: _self.formInline.departname,
                         serviceDept:"'BUSSINESS'",
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field))
                 }
                 let toExcel = this.$MergeURL(url, config)
                 window.open(toExcel)
-                console.log(toExcel)
             },
         getData(){
             var _self = this
             _self.Sloading = true
-            var url = 'api/order/workOrderList'
+            var url = 'api/order/workOrderList?workOrderStatus=40&'
             var config = {
                 params:{
                     sortField:_self.sortField,
-                    order: _self.order,
+                    order:_self.order,
                     page:_self.page,
                     pageSize:_self.pageSize,
                     companyName:_self.formInline.companyname,
                     serviceName:_self.formInline.servicename,
                     product:_self.formInline.product,
-                    bupdatedate: DateFormat(_self.formInline.updatedate[0]),
-                    eupdatedate: DateFormat(_self.formInline.updatedate[1]),
-                    bcreatedate: DateFormat(_self.formInline.createdate[0]),
-                    ecreatedate: DateFormat(_self.formInline.createdate[1]),
-                    departname: _self.formInline.departname,
                     serviceDept:"'BUSSINESS'"
                 }
             }
                 
-            _self.$http.get(url,config).then(function(res){          
+            _self.$http.get(url,config).then(function(res){
+                _self.$backToLogin(res)                
                 // console.log(res.data.data.rows)
                 _self.data = res.data.data.rows
                 _self.pageTotal = res.data.data.total
@@ -579,7 +593,6 @@ export default {
                             break
                         }
                     }
-
                     // console.log(_self.data[i])
                     if(_self.data[i].CreateDate!='' && _self.data[i].CreateDate!=null){
                         _self.data[i].CreateDate = _self.data[i].CreateDate.slice(0,10)
@@ -590,28 +603,18 @@ export default {
                     if(_self.data[i].UpdateDate!='' && _self.data[i].UpdateDate!=null){
                         _self.data[i].UpdateDate = _self.data[i].UpdateDate.slice(0,10)
                     }
-                    // console.log(_self.companyarea)
-                    if(_self.data[i].companyarea == null||_self.data[i].companyarea == ""){
-                        _self.data[i].companyarea = ""
-                    }else{
-                        let temp = _self.data[i].companyarea.split("-")
-                        // console.log(temp)
-                        for(let j = 0;j<_self.companyarea.length;j++){
-                            if(temp[0] == _self.companyarea[j].id){
-                                for(let k = 0;k<_self.companyarea[j].children.length;k++){
-                                    if(temp[1]== _self.companyarea[j].children[k].id){
-                                        _self.data[i].companyarea = _self.companyarea[j].typename + ' - ' + _self.companyarea[j].children[k].typename
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
                 }
                 _self.Sloading = false
             })
-            
         },
+        pageChange(e){
+            this.page = e
+            this.getData()
+        },
+        pageSizeChange(e){
+            this.pageSize = e
+            this.getData()
+        }, 
         search(){
             this.page = 1
             this.isSearh = true
@@ -623,22 +626,10 @@ export default {
             this.formInline.companyname = ""
             this.formInline.servicename = ""
             this.formInline.product = ""
-            this.formInline.updatedate = []
-            this.formInline.createdate = []
-            this.formInline.departname = ""
             this.getData()
         },
-        pageChange(e){
-            this.page = e
-            this.getData()
-        },
-        pageSizeChange(e){
-            this.pageSize = e
-            this.getData()
-        }, 
         //  保存当前选中行
         save_current_row(e){
-            // console.log(e)
             this.current_row = e
         },
         showdetail(){
@@ -649,32 +640,29 @@ export default {
             }
         },
         showflow(){
-            // console.log('111111111')
             if(this.current_row != ''){
-                Bus.$emit('myflow',this.current_row)
+                if(this.current_row.resumeFlag == 2){
+                    this.$Message.warning('当前工单已锁定！')
+                }else{
+                    Bus.$emit('myflow',this.current_row)
+                }
+                
             }else{
                 this.$Message.warning('请选择一行进行流转！')
             }
         },
-        reset_wordorder_process(){
-            console.log(this.current_row)
+        open_set_time(){
             let _self = this
             if(this.current_row != ''){
-                let url = `api/order/resetWorkOrderProcess`
-                let _self = this
-
-                let config = {
-                    params:{
-                        workOrderId: _self.current_row.id
-                    }
-                }
-
-                function success(res){
-                    console.log(res)
-                    _self.$Message.success(res.data.msg)
-                }
-
-                this.$Get(url, config, success)
+                _self.$bus.emit("OPEN_SET_FINISH_TIME",this.current_row)
+            }else{
+                this.$Message.warning('请选择一行进行流转！')
+            }
+        },
+        over_due_reason(){
+            let _self = this
+            if(this.current_row != ''){
+                _self.$bus.emit("OPEN_OVER_DUE_REASON",this.current_row)
             }else{
                 this.$Message.warning('请选择一行进行流转！')
             }
@@ -695,18 +683,6 @@ export default {
                 this.$Message.warning('请选择一行查看！')
             }
         },
-        getDataCenter(){
-                let _self = this
-
-                let params = "workOrderStatus"
-
-                function finish(res){
-                    _self.workOrderStatus = res.data.workOrderStatus
-                    _self.workOrderStatus_map = _self.$array2map(_self.workOrderStatus)
-                }
-
-                this.$GetDataCenter(params, finish)
-            },
         getGlobalDataCenter(){
             let _self = this
             let temp = JSON.parse(localStorage.getItem("global_datacenter"))
@@ -716,16 +692,10 @@ export default {
     created(){
         var _self = this
         this.getGlobalDataCenter()
-        this.getDataCenter()
         this.getData()
         Bus.$on('flowsuccess',(e)=>{
             _self.getData()
         })
-        if(localStorage.getItem('id')==10059){
-            _self.isAdmin = true
-        }else{
-            _self.isAdmin = false
-        }
     }
 
 }

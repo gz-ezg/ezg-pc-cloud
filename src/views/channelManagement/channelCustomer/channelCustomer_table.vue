@@ -1070,7 +1070,7 @@
             },
 
             examine(e) {
-                // console.log(e)
+                console.log(e)
                 localStorage.setItem('customerTag', e.customer_tags)
                 this.$emit('isExamine', [e.customer_id, e.customer_status])
             },

@@ -341,7 +341,6 @@ export default {
                                     ],
                                     on: {
                                         click: () => {
-                                            // console.log("111")
                                             _self.$bus.emit("ORDER_APPROVELIST_LOG", params.row.id)
                                         }
                                     }
@@ -355,6 +354,7 @@ export default {
                     key: 'action',
                     minWidth: 75,
                     render: (h, params)=>{
+                        let _self = this
                         if(params.index != this.pageSize){
                             return h('div',[
                                 h("Button",{
@@ -373,7 +373,20 @@ export default {
                                     // },
                                     on: {
                                         click: () => {
-                                            this.order_cancelOrder(params)
+                                            let url = `api/order/cancelOrder`
+
+                                            let config = {
+                                                params: {
+                                                    orderId: params.row.id
+                                                }
+                                            }
+
+                                            function success(res){
+                                                _self.$Message.success(res.data.msg)
+                                                _self.get_data()
+                                            }
+
+                                            this.$Get(url, config, success)
                                         }
                                     }
                                 },"撤回"),
@@ -725,7 +738,12 @@ export default {
         //  【新增订单】
         open_add(){
             this.$bus.emit("OPEN_ORDERLIST_ADD", true)
+        },
+        //  【撤回】
+        order_cancelOrder(){
+
         }
+
     },
     created() {
         this.loading = true

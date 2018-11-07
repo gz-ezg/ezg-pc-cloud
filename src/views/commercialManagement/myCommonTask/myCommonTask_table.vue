@@ -10,6 +10,9 @@
             <TabPane label="已完结" name="name3">
                 <finished :companyarea="companyarea"></finished>
             </TabPane>
+            <TabPane label="暂停" name="name5">
+                <stop :companyarea="companyarea"></stop>
+            </TabPane>
             <TabPane label="全部" name="name4">
                 <all :companyarea="companyarea"></all>
             </TabPane>
@@ -33,7 +36,7 @@ import Serving from './myCommonTaskIndex/serving'
 import All from './myCommonTaskIndex/all'
 import Finished from './myCommonTaskIndex/finished'
 import Notbegin from './myCommonTaskIndex/notbegin'
-
+import Stop from "./myCommonTaskIndex/stop";
     export default {
         name:'commercialTaskManagement',
         components:{
@@ -44,7 +47,8 @@ import Notbegin from './myCommonTaskIndex/notbegin'
             Detail,
             CompanyDetail,
             Flow,
-            overDueReason
+            overDueReason,
+            Stop
         },
         data(){
             return{
