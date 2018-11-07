@@ -364,6 +364,7 @@ export default {
             this.page = 1
             this.seacrhFormInline.receiver_realname = ""
             this.seacrhFormInline.applicant_realname = ""
+            this.seacrhFormInline.companyname = ""
             this.get_data()
         },
         create_request(){

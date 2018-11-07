@@ -4,132 +4,150 @@
 
 <template>
     <div>
-        <ButtonGroup style="margin-bottom:10px">
-            <Button type="primary" @click="create_menu('', 0)">新增一级菜单</Button>
-        </ButtonGroup>
-        <Table :columns="headers" :data="data" size="small"></Table>
+        <tree-table :data="data" :columns="header"></tree-table>
     </div>
 </template>
 <script>
-    import expandRow from './table-expand.vue';
-    export default {
-        components: { expandRow },
-        data () {
-            return {
-                headers: [
-                    {
-                        type: 'expand',
-                        width: 100,
-                        render: (h, params) => {
-                            if(params.row.children){
-                                return h(expandRow, {
-                                    props: {
-                                        row: params.row.children,
-                                        depth: 1
-                                    },
-                                    style: {
-                                        paddingLeft: "100px"
-                                    }
-                                })
-                            }else{
-                                return h('center',{
+import TreeTable from 'iview/src/components/table/table'
+import treeToArray from './TreeTable/eval'
 
-                                },'暂无菜单')
-                            }
-                        }
-                    },
-                    {
-                        title: '菜单名称',
-                        key: 'text',
-                        minWidth: 150
-                    },
-                    {
-                        title: '菜单编码',
-                        key: 'attributes.interface_code',
-                        minWidth: 180,
-                        render: (h, params) => {
-                            // console.log(params.row)
-                            return h('div',{
-                            }, params.row.attributes.interface_code)
-                        }
-                    },
-                    {
-                        title: "操作",
-                        key: "action",
-                        width: 300,
-                        render: (h, params) => {
-                            let _self = this
-                            return h('div',[
-                                h('Button',{
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small'
-                                    },
-                                    style: {
-                                        marginRight: "10px"
-                                    },
-                                    on: {
-                                        click: () => {
-                                            //  编辑的逻辑
-                                        }
-                                    }
-                                }, "编辑菜单"),
-                                h('Button',{
-                                    props: {
-                                        type: 'info',
-                                        size: 'small'
-                                    },
-                                    style: {
-                                        marginRight: "10px"
-                                    },
-                                    on: {
-                                        click: () => {
-                                            //  新增子菜单
-                                            _self.create_menu(params.row.id, 1)
-                                        }
-                                    }
-                                }, "新增子菜单"),
-                                h('Button',{
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            //  删除菜单，需要处理逻辑
-                                        }
-                                    }
-                                }, "删除菜单")
-                            ])
-                        }
-                    }
-                ],
-                data: []
-            }
-        },
-        methods: {
-            get_menu(){
-                let _self = this
-                let url = `api/menu/getMenuTree`
-
-                let config = {}
-
-                function success(res){
-                    _self.data = res.data.data
-                    console.log(_self.data)
+export default {
+    components: { TreeTable },
+    data(){
+        return {
+            header:[
+                {
+                    title: "1",
+                    key: "event"
+                },
+                {
+                    title: "2",
+                    key: "timeLine"
+                },
+                {
+                    title: "3",
+                    key: "comment"
+                },
+                {
+                    title: "4",
+                    key: "id"
                 }
+            ],
+            data: [
+                {
+                    id: 0,
+                    event: '事件1',
+                    timeLine: 50,
+                    comment: '无',
+                    level:0,
+                    treeOpen: false,
+                    parent:"",
+                    children: [
+                        {
+                            id: 12,
+                            event: '事件1',
+                            timeLine: 100,
+                            comment: '无',
+                            level: 1,
+                            parent: 0,
+                            show: true,
+                            treeOpen: false,
+                            children: [
+                                {
+                                    id: 22,
+                                    event: '事件1',
+                                    timeLine: 100,
+                                    comment: '无',
+                                    level: 2,
+                                    parent: 0,
+                                    show: false,
+                                    treeOpen: false,
+                                    children: []
+                                },
+                                {
+                                    id: 23,
+                                    event: '事件1',
+                                    timeLine: 100,
+                                    comment: '无',
+                                    level: 2,
+                                    parent: 0,
+                                    show: false,
+                                    treeOpen: false,
+                                    children: []
+                                },
+                            ]
+                        },
+                        {
+                            id: 13,
+                            event: '事件1',
+                            timeLine: 100,
+                            comment: '无',
+                            level: 1,
+                            parent: 0,
+                            show: false,
+                            treeOpen: false,
+                            children: []
+                        },
+                    ]
+                },
+                {
+                    id: 2,
+                    event: '事件1',
+                    timeLine: 100,
+                    comment: '无',
+                    level: 1,
+                    parent: 0
+                },
+                {
+                    id: 3,
+                    event: '事件1',
+                    timeLine: 100,
+                    comment: '无',
+                    level: 0,
+                },
+                {
+                    id: 4,
+                    event: '事件1',
+                    timeLine: 100,
+                    comment: '无',
+                    level: 1,
+                },
+                {
+                    id: 5,
+                    event: '事件1',
+                    timeLine: 100,
+                    comment: '无',
+                    level: 2,
+                },
+                {
+                    id: 6,
+                    event: '事件1',
+                    timeLine: 100,
+                    comment: '无',
+                    level: 0,
+                }
+            ]
+        }
+    },
+    computed: {
+        // 格式化数据源
+        // formatData: function() {
+        // let tmp
+        // if (!Array.isArray(this.data)) {
+        //     tmp = [this.data]
+        // } else {
+        //     tmp = this.data
+        // }
+        // const func = this.evalFunc || treeToArray
+        // const args = this.evalArgs ? Array.concat([tmp, this.expandAll], this.evalArgs) : [tmp, this.expandAll]
+        // return func.apply(null, args)
+        // }
+    },
+    methods:{
 
-                this.$Get(url, config, success)
-            },
-            create_menu( parentId, level ){
-                let _self = this
-                let url = `api/menu/createMenu`
-                console.log( parentId, level)
-            }
-        },
-        created() {
-            let _self = this
-            this.get_menu()
-        },
+    },
+    created(){
+        // console.log(this.formatData)
     }
+}
 </script>
