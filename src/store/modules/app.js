@@ -210,6 +210,15 @@ const app = {
             }
             state.pageOpenedList.push(tagObj);
             // localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
+        },
+        increateTagOnIndex (state, obj) {
+            if (!Util.oneOf(obj.tagObj.name, state.dontCache)) {
+                state.cachePage.push(obj.tagObj.name);
+                // 注释原因，页面未打开会刷出标签，可以直接访问，原因未知，cachePage的数据不知道哪里来的
+                // localStorage.cachePage = JSON.stringify(state.cachePage);
+            }
+            state.pageOpenedList.splice(obj.index, 0, obj.tagObj )
+            // localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
         }
     }
 };

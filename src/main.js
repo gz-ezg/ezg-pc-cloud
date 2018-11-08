@@ -22,8 +22,8 @@ import Cookies from 'js-cookie';
 
 import iviewArea from 'iview-area';
 
-// import datagrid from './libs/easyUI/jquery.easyui.min'
-// import combobox from './libs/easyUI/jquery.easyui.min'
+import datagrid from './libs/easyUI/jquery.easyui.min'
+import combobox from './libs/easyUI/jquery.easyui.min'
 
 // Vue.use(VueScroller)
 // Vue.use(VCharts)
@@ -32,7 +32,22 @@ Vue.use(iView);
 Vue.use(VueBus);
 Vue.use(iviewArea)
 
-
+//  全局混入
+// Vue.mixin({
+//     data(){
+//         return {
+//             globalRefresh: true
+//         }
+//     },
+//     method:{
+//         global_refresh(){
+            
+//         }
+//     },
+//     created(){
+//         // console.log(this.$options.name)
+//     }
+//   })
 
 //  axios 拦截器
 axios.interceptors.response.use(

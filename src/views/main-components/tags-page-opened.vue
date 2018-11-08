@@ -20,13 +20,14 @@
             <transition-group name="taglist-moving-animation">
                 <Tag 
                     type="dot"
-                    v-for="item in pageTagsList" 
+                    v-for="(item, index) in pageTagsList" 
                     ref="tagsPageOpened"
                     :key="item.name" 
                     :name="item.name" 
                     @on-close="closePage"
                     @click.native="linkTo(item)"
-                    @dblclick.native="dblclick(item)"
+                    @click.right.prevent="rightClick"
+                    @dblclick.native="dblClick(item,index,$event)"
                     :closable="item.name==='home_index'?false:true"
                     :color="item.children?(item.children[0].name===currentPageName?'blue':'default'):(item.name===currentPageName?'blue':'default')"
                 >{{ itemTitle(item) }}</Tag>
@@ -156,9 +157,17 @@ export default {
             }
         },
         //  双击刷新
-        dblclick(tag){
+        dblClick(tag, index, event){
+            this.$store.commit('removeTag', tag.name);
+            this.$store.commit('closePage', tag.name);
+            this.$emit("update-main-content", {id:index,tag:tag})
+            setTimeout(()=>{
+                this.linkTo(tag)
+            },0)
+        },
+        //  右键单击
+        rightClick(tag, index, event){
             console.log(tag)
-            window.location.reload(); 
         }
     },
     mounted () {

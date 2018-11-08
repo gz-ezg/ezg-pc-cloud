@@ -68,33 +68,19 @@ export default {
                         key: 'action',
                         width: 200,
                         render: (h, params) => {
-                            if(params.row.extend == "jpg" || params.row.extend == "png"){
                                 return h('div', [
-                                    h('Poptip', {
-                                    props: {
-                                        placement: 'left',
-                                        type: 'ghost',
-                                    },
-                                    },[
-                                        h('Button',{ 
-                                            props: {
-                                                type: 'text',
-                                                size: 'small',
-                                                placement: 'left',
+                                    h('Button',{ 
+                                        props: {
+                                            type: 'text',
+                                            size: 'small',
+                                            placement: 'left',
+                                        },
+                                        on: {
+                                            click: () =>{
+                                                this.beforeview(params.row)
                                             }
-                                        }, '预览'), [
-                                        h('div',{
-                                            slot: 'content'
-                                        },[
-                                            h('img',{
-                                                domProps: {
-                                                    height: 100,
-                                                    src: '/api/assets/'+params.row.realpath,
-                                                },
-                                            })
-                                        ])
-                                            ]
-                                        ]),
+                                        }
+                                    }, '预览'),
                                     h('Button', {
                                         props: {
                                             type: 'text',
@@ -127,63 +113,6 @@ export default {
                                         }, '删除')
                                     ])
                                 ]);
-                            }else{
-                                return h('div', [
-                                    h('Button',{
-                                        props: {
-                                            type: 'text',
-                                            size: 'small',
-                                            placement: 'left',
-                                        },
-                                        on:{
-                                            click:()=>{
-                                                let routeData = this.$router.resolve({
-                                                    name:'previewFile',
-                                                    params:{
-                                                        id: params.row.id
-                                                    }
-                                                })
-                                                window.open(routeData.href, '_blank');
-                                                // console.log(params.row.id)
-                                                // let url = "http://" + location.origin + "/#/previewFile/" + params.row.id
-                                                // window.open(url)
-                                            }
-                                        }
-                                    }, '预览'),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click:  () => {
-                                            this.fileDownload(params)
-                                        }
-                                    }
-                                }, '下载'),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    }
-                                },[
-                                    h('Poptip', {
-                                        props: {
-                                            confirm: true,
-                                            title: '您确定要删除此附件吗！',
-                                        },
-                                        on: {
-                                            'on-ok': ()=>{
-                                                this.files_delete(params)
-                                            },
-                                            'on-cancel': function(){
-                                            }
-                                        }
-                                    }, '删除')
-                                ])
-                            ]);
-                            }
-                            
                         }
                     }
                 ],
@@ -294,6 +223,13 @@ export default {
 
                 this.$Post(url, formdata, success, fail)
             },
+            beforeview(e){
+                if(e.extend == "docx"||e.extend == "doc" || e.extend == "ppt"||e.extend == "pptx" ||e.extend == "xls"||e.extend == "xlsx"){
+                    window.open("http://view.officeapps.live.com/op/view.aspx?src="+encodeURI("http://cloud.zgcfo.com/api/assets/upload/files/" + e.realpath))
+                }else{
+                    window.open("http://cloud.zgcfo.com/api/assets/" + e.realpath)
+                }
+            }
         },
         created(){
             let _self = this

@@ -59,14 +59,14 @@
                 </div>
             </div>
             <div class="tags-con">
-                <tags-page-opened :pageTagsList="pageTagsList"></tags-page-opened>
+                <tags-page-opened :pageTagsList="pageTagsList" @update-main-content="updateMainContent"></tags-page-opened>
             </div>
         </div>
         <div class="single-page-con" :style="{left: shrink?'60px':'200px'}">
             <div class="single-page" style="min-width:800px">
                 <keep-alive :include="keepPage">
                     <!-- <Spin size="large" fix v-if="spin_loading"></Spin> -->
-                    <router-view></router-view>
+                    <router-view v-if="globalRefresh"></router-view>
                 </keep-alive>
             </div>
         </div>
@@ -138,9 +138,9 @@
     import lockScreen from './main-components/lockscreen/lockscreen.vue';
     import messageTip from './main-components/message-tip.vue';
     import themeSwitch from './main-components/theme-switch/theme-switch.vue';
-    import systemComplain from './stystemComplain/complainReply/complainReply'
     import Cookies from 'js-cookie';
     import util from '@/libs/util.js';
+    import systemComplain from './stystemComplain/complainReply/complainReply'
     import next from './woa-components/next/flow.vue';
     import setFinishTime from './woa-components/setFinishTime/setFinishTime'
     import fieldListByCompanyId from './woa-components/fieldListByCompanyId/index.vue'
@@ -171,6 +171,7 @@
         },
         data () {
             return {
+                globalRefresh: true,
                 tipColse:false,
                 spin_loading:true,
                 show_stystem_complain:false,
@@ -390,6 +391,15 @@
                 this.file.push(file)
                 return false;
             },
+            //  双击标签更新页面
+            updateMainContent(e){
+                this.globalRefresh = false
+                // console.log(e)
+                setTimeout(()=>{
+                    this.$store.commit("increateTagOnIndex",{tagObj: e.tag, index: e.id})
+                    this.globalRefresh = true
+                }, 0)
+            }
         },
         watch: {
             '$route' (to) {
