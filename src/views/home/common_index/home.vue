@@ -126,9 +126,9 @@
                 </Row>
             </Col>
         </Row>-->
-        <Row :gutter="10" class="margin-top-10">
-            <Col :md="24" :lg="8" :style="{marginBottom: '10px'}">
-                <Card>
+        <Row :gutter="10" class="margin-top-10" style="height:450px">
+            <Col :md="24" :lg="12" :style="{marginBottom: '10px'}">
+                <Card style="height:450px">
                     <p slot="title" class="card-title">
                         <Icon type="android-map"></Icon>
                         上周每日来访量统计
@@ -138,19 +138,19 @@
                     </div>
                 </Card>
             </Col>
-            <Col :md="24" :lg="8" :style="{marginBottom: '10px'}">
-                <Card>
+            <Col :md="24" :lg="12" :style="{marginBottom: '10px'}">
+                <Card style="height:450px">
                     <p slot="title" class="card-title">
                         <Icon type="ios-pulse-strong"></Icon>
-                        数据来源统计
+                        平台访问数量
                     </p>
                     <div class="data-source-row">
                         <data-source-pie></data-source-pie>
                     </div>
                 </Card>
             </Col>
-            <Col :md="24" :lg="8">
-                <Card>
+            <!-- <Col :md="24" :lg="8">
+                <Card style="height:450px">
                     <p slot="title" class="card-title">
                         <Icon type="android-wifi"></Icon>
                         各类用户服务调用变化统计
@@ -159,13 +159,13 @@
                         <user-flow></user-flow>
                     </div>
                 </Card>
-            </Col>
+            </Col> -->
         </Row>
-        <Row class="margin-top-10">
-            <Card>
+        <Row class="margin-top-10" style="height:450px">
+            <Card style="height:450px">
                 <p slot="title" class="card-title">
                     <Icon type="ios-shuffle-strong"></Icon>
-                    上周每日服务调用量(万)
+                    上周每日核心业务调用量
                 </p>
                 <div class="line-chart-con">
                     <service-requests></service-requests>
@@ -181,7 +181,7 @@
 import dataSourcePie from './dataSourcePie.vue';
 import visiteVolume from './visiteVolume.vue';
 import serviceRequests from './serviceRequests.vue';
-import userFlow from './userFlow.vue';
+// import userFlow from './userFlow.vue';
 // import countUp from './components/countUp.vue';
 // import inforCard from './components/inforCard.vue';
 // import mapDataTable from './components/mapDataTable.vue';
@@ -194,7 +194,7 @@ export default {
         dataSourcePie,
         visiteVolume,
         serviceRequests,
-        userFlow,
+        // userFlow,
         // countUp,
         // inforCard,
         // toDoListItem,

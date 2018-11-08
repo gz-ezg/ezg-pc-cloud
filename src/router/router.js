@@ -290,16 +290,16 @@ export const appRouter = [
                     require(['@/views/customerManagement/marketingManagement/customerManagement.vue'], resolve);
                 }
             },
-            // {
-            //     access: 6002,
-            //     meta: 6002,
-            //     path: 'marketingManagement2',
-            //     title: '营销管理2',
-            //     name: 'marketingManagement_index2',
-            //     component: resolve => {
-            //         require(['@/views/customerManagement/marketingManagement2'], resolve);
-            //     }
-            // },
+            {
+                access: 6002,
+                meta: 6002,
+                path: 'marketingManagement2',
+                title: '营销管理2',
+                name: 'marketingManagement_index2',
+                component: resolve => {
+                    require(['@/views/customerManagement/marketingManagement2'], resolve);
+                }
+            },
             {
                 access: 6003,
                 meta: 6003,

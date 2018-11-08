@@ -104,9 +104,13 @@ export default {
     },
     methods: {
         handleUpload(file) {
-            this.showFile.push(file)
+            // this.showFile.push(file)
             var _self = this
-            yasuo(file, _self.fileArray)
+            // yasuo(file, _self.fileArray)
+            // return false;
+            console.log(file)
+            _self.fileArray.push(file)
+            _self.showFile.push(file)
             return false;
         },
         fileRemove(e) {
@@ -187,7 +191,8 @@ export default {
             let formdata = new FormData()
 
             for(let i = 0;i<_self.fileArray.length;i++){
-                formdata.append('files', _self.fileArray[i],"file_"+Date.parse(new Date())+".jpg")
+                // formdata.append('files', _self.fileArray[i],"file_"+Date.parse(new Date())+".jpg")
+                formdata.append('files', _self.fileArray[i])
             }
 
             function success(res){

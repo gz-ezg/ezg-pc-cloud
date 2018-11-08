@@ -12,7 +12,12 @@
             <Row :gutter="20">
                 <Col span="6" v-for="(item, index) in imgArray" :key="index">
                     <a target="_blank" :href="'/api/assets/' + item.realpath" >
-                        <img :src="'/api/assets/' +item.realpath" alt="不可预览"  width="100" height="100">
+                        <img :src="'/api/assets/upload/commonImg/excel.png'" alt="不可预览" v-if="item.extend == 'xls' || item.extend == 'xlsx'" width="100" height="100" onerror="this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null">
+                        <img :src="'/api/assets/upload/commonImg/word.png'" alt="不可预览" v-else-if="item.extend == 'doc' || item.extend == 'docx'" width="100" height="100" onerror="this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null">
+                        <img :src="'/api/assets/upload/commonImg/ppt.png'" alt="不可预览" v-else-if="item.extend == 'ppt' || item.extend == 'pptx'" width="100" height="100" onerror="this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null">
+                        <img :src="'/api/assets/upload/commonImg/txt.png'" alt="不可预览" v-else-if="item.extend == 'txt' " width="100" height="100" onerror="this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null">
+                        <img :src="'/api/assets/upload/commonImg/pdf.jpg'" alt="不可预览" v-else-if="item.extend == 'pdf' " width="100" height="100" onerror="this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null">
+                        <img :src="'/api/assets/' +item.realpath" alt="不可预览" v-else width="100" height="100" onerror="this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null">                    
                     </a>
                     <Button type="text" @click="img_remove(item.id)" v-if="isOperation">删除</Button>
                 </Col>

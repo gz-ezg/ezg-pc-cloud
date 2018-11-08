@@ -14,8 +14,8 @@
                 <all :managestatus="managestatus"></all>
             </TabPane>
         </Tabs>
-        <detail></detail>
-        <company-detail></company-detail>
+        <!-- <detail></detail> -->
+        <!-- <company-detail></company-detail> -->
         <!-- <set-finish-time></set-finish-time> -->
         <!-- <flow></flow> -->
     </div>
@@ -24,9 +24,9 @@
 <script>
 // import setFinishTime from './myCommonTaskIndex/setFinishTime';
 
-import Detail from './myCommonTaskIndex/detail'
+// import Detail from './myCommonTaskIndex/detail'
 // import CompanyDetail from './myCommonTaskIndex/companydetail'
-import CompanyDetail from '../../woa-components/companyDetail/CompanyDetail'
+// import CompanyDetail from '../../woa-components/companyDetail/CompanyDetail'
 
 import Flow from './myCommonTaskIndex/flow'
 
@@ -42,8 +42,8 @@ import Notbegin from './myCommonTaskIndex/notbegin'
             All,
             Finished,
             Notbegin,
-            Detail,
-            CompanyDetail,
+            // Detail,
+            // CompanyDetail,
             Flow,
             // setFinishTime
         },

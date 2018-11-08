@@ -1,6 +1,6 @@
 /* eslint-disable */
 import Vue from 'vue';
-import iView from 'iview';
+import iView from 'iview/dist/iview.min';
 import {router} from './router/index';
 import {appRouter} from './router/router';
 import 'iview/dist/styles/iview.css';
@@ -13,7 +13,7 @@ import VueI18n from 'vue-i18n';
 import util from '@/libs/util'; 
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import VCharts from 'v-charts';
+// import VCharts from 'v-charts';
 //  引入自定义主题文件
 // import './my-theme/index.less';
 // import "@babel/polyfill";
@@ -22,11 +22,11 @@ import VCharts from 'v-charts';
 
 import iviewArea from 'iview-area';
 
-import datagrid from './libs/easyUI/jquery.easyui.min'
-import combobox from './libs/easyUI/jquery.easyui.min'
+// import datagrid from './libs/easyUI/jquery.easyui.min'
+// import combobox from './libs/easyUI/jquery.easyui.min'
 
 // Vue.use(VueScroller)
-Vue.use(VCharts)
+// Vue.use(VCharts)
 Vue.use(VueI18n);
 Vue.use(iView);
 Vue.use(VueBus);

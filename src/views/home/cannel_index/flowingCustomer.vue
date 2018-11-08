@@ -1,16 +1,26 @@
 <template>
-    <div style="width:100%;height:100%;" id="visite_volume_con1"></div>
+    <ve-bar :data="chartData" style="width:100%;height:100%;" id="visite_volume_con1"></ve-bar>
 </template>
 
 <script>
-    import echarts from 'echarts';
+    // import echarts from 'echarts';
+    import VeBar from 'v-charts/lib/bar.common'
     export default {
+        components: {
+            VeBar
+        },
         name: 'visiteVolume',
         data () {
             return {
                 //
                 customerTypeGroupData: [],
                 customerT: 0,
+                chartData: {
+                    columns: ['type', '数量'],
+                    rows: [
+                        
+                    ]
+                }
             };
         },
         methods: {
@@ -28,12 +38,12 @@
                         for (let i = 0; i < _data.length; i++) {
                             _self.customerT = _self.customerT + parseInt(_data[i].value)
 
-                            _self.customerTypeGroupData.push({
-                                value: _data[i].value,
-                                name: _data[i].name,
+                            _self.chartData.rows.push({
+                                "数量": _data[i].value,
+                                type: _data[i].name,
                             })
                         }
-                        _self.getEcharts()
+                        // _self.getEcharts()
                     }
 
                     _self.GetData(url2, doSuccess2)

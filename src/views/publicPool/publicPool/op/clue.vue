@@ -283,8 +283,8 @@ import { DateFormat } from '../../../../libs//utils'
         },
         created(){
             let _self = this
-            _self.$bus.off('OPEN_CUSTOMER_CLUE_LOG',true)
-            _self.$bus.on('OPEN_CUSTOMER_CLUE_LOG',(e)=>{
+            _self.$bus.off('SHOW_OPEN_CUSTOMER_CLUE_LOG',true)
+            _self.$bus.on('SHOW_OPEN_CUSTOMER_CLUE_LOG',(e)=>{
                 _self.customerId = e.ID
                 _self.getTableDataN()
                 _self.getTableDataY()

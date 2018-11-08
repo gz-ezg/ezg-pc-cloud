@@ -7,8 +7,11 @@
 </template>
 
 <script>
+  import VeLine from 'v-charts/lib/line.common'
   export default {
-      
+    components: {
+      VeLine
+    },
     data: function () {
       this.extend = {
         series: {

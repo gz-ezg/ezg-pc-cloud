@@ -73,6 +73,10 @@ export default {
                                     domProps:{
                                         height: 120,
                                         src: '/api/assets/'+params.row.lianxikehu.image_url,
+                                        width: 120
+                                    },
+                                    attrs: {
+                                        onerror: "this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null"
                                     },
                                     on:{
                                         click:() => {
@@ -101,6 +105,10 @@ export default {
                                         domProps:{
                                             height: 120,
                                             src: '/api/assets/'+params.row.baoshui.image_url,
+                                            width: 120
+                                        },
+                                        attrs: {
+                                            onerror: "this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null"
                                         },
                                         on:{
                                             click:() => {
@@ -130,6 +138,10 @@ export default {
                                         domProps:{
                                             height: 120,
                                             src: '/api/assets/'+params.row.koukuan.image_url,
+                                            width: 120
+                                        },
+                                        attrs: {
+                                            onerror: "this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null"
                                         },
                                         on:{
                                             click:() => {
@@ -159,6 +171,10 @@ export default {
                                         domProps:{
                                             height: 120,
                                             src: '/api/assets/'+params.row.shebao.image_url,
+                                            width: 120
+                                        },
+                                        attrs: {
+                                            onerror: "this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null"
                                         },
                                         on:{
                                             click:() => {
@@ -187,6 +203,10 @@ export default {
                                         domProps:{
                                             height: 120,
                                             src: '/api/assets/'+params.row.gongjijin.image_url,
+                                            width: 120
+                                        },
+                                        attrs: {
+                                            onerror: "this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null"
                                         },
                                         on:{
                                             click:() => {
@@ -215,6 +235,10 @@ export default {
                                         domProps:{
                                             height: 120,
                                             src: '/api/assets/'+params.row.zuozhang.image_url,
+                                            width: 120
+                                        },
+                                        attrs:{
+                                            onerror: "this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null"
                                         },
                                         on:{
                                             click:() => {

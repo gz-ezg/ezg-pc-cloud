@@ -204,7 +204,7 @@ export default {
                 orderPayNumber: _self.orderDetail.paynumber,
                 serviceStartDate: "",
                 GDSreport: _self.orderDetail.gdsreport,
-                payTime: _self.orderDetail.payTime,
+                payTime: DateFormat(_self.orderDetail.payTime),
                 isornotkp: _self.orderDetail.isornotkp,
                 orderitems: JSON.stringify(_self.orderItem)
             }

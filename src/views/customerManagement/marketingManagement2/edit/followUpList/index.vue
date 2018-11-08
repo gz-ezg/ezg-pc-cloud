@@ -59,8 +59,9 @@
                             <!-- 图片 -->
                             <Row :gutter="12">
                                 <Col v-if="item.imgs" v-for="(url_img, imgIndex) in item.imgs" :key=imgIndex span="8" style="max-width:200px">
+                                <!-- <Col v-if="item.imgs" v-for="(url_img, imgIndex) in item.imgs" :key=imgIndex span="8" style="max-width:200px"> -->
                                     <a target="_blank" :href="url_img">
-                                        <img :src="url_img" alt="图片丢失" width="95%"/>
+                                        <img :src="url_img" alt="文件" width="95%" onerror="this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null"/>
                                     </a>
                                 </Col>
                             </Row>

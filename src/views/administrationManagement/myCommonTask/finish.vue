@@ -478,7 +478,8 @@ export default {
         },
         showdetail(){
             if(this.current_row != ''){
-                this.$bus.emit('myCommonTask',this.current_row)
+                this.$store.commit("open_gobal_work_order_detail_modal", this.current_row.id)
+                // this.$bus.emit('myCommonTask',this.current_row)
             }else{
                 this.$Message.warning('请选择一行查看详情！')
             }
@@ -519,7 +520,8 @@ export default {
         // }
         company(){
             if(this.current_row != ''){
-                this.$bus.emit('openCompanyDetail',this.current_row.company_id)
+                // this.$bus.emit('openCompanyDetail',this.current_row.company_id)
+                this.$store.commit("open_gobal_work_order_detail_modal", this.current_row.company_id)
             }else{
                 this.$Message.warning('请选择一行查看！')
             }

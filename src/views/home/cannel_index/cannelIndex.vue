@@ -5,9 +5,9 @@
 
 <template>
     <div style="min-width:900px">
-        <Row :gutter="10" class="margin-top-10">
+        <Row :gutter="10" class="margin-top-10" style="height:450px">
             <Col span="12" :style="{marginBottom: '10px'}">
-                <Card>
+                <Card style="height:450px">
                     <p slot="title" class="card-title">
                         <Icon type="android-map"></Icon>
                         客户统计
@@ -18,7 +18,7 @@
                 </Card>
             </Col>
             <Col span="12" :style="{marginBottom: '10px'}">
-                <Card>
+                <Card style="height:450px">
                     <p slot="title" class="card-title">
                         <Icon type="android-map"></Icon>
                         跟进中客户统计
@@ -29,9 +29,9 @@
                 </Card>
             </Col>
         </Row>
-        <Row :gutter="10" class="margin-top-10">
+        <Row :gutter="10" class="margin-top-10" style="height:450px">
             <Col span="12" :style="{marginBottom: '10px'}">
-                <Card>
+                <Card style="height:450px">
                     <p slot="title" class="card-title">
                         <Icon type="android-map"></Icon>
                         客户成交数量
@@ -42,7 +42,7 @@
                 </Card>
             </Col>
             <Col span="12" :style="{marginBottom: '10px'}">
-                <Card>
+                <Card style="height:450px">
                     <p slot="title" class="card-title">
                         <Icon type="android-map"></Icon>
                         近半年收款统计

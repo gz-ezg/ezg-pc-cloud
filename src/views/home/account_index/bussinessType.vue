@@ -30,7 +30,11 @@
 </template>
 
 <script>
+import VeHistogram from 'v-charts/lib/histogram.common'
 export default {
+    components: {
+        VeHistogram
+    },
     props:{
         year:{
             type: Number

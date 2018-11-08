@@ -1,7 +1,7 @@
 <template>
     <div>
         <channel-table @isExamine="isExamineChange"></channel-table>
-        <Modal
+        <!-- <Modal
                 v-model="modal"
                 width="100%"
                 :styles="{height: '100%', top: '0px'}"
@@ -28,9 +28,6 @@
                             <P slot="content">
                                 <channel-fllow-up v-if="isExamine"
                                                   :customerid='customerid'></channel-fllow-up>
-                                <!-- 以下组件未注册 -->
-                                <!-- <edit-collapse-follow-up v-if="isEdit"
-                                                         :customerid='customerid'></edit-collapse-follow-up> -->
                             </P>
                         </Panel>
                         <Panel name="Order">
@@ -58,29 +55,29 @@
                 </Card>
                 </Col>
             </Row>
-        </Modal>
+        </Modal> -->
     </div>
 </template>
 
 <script>
     import channelTable from './channelCustomer_table.vue'
-    import channelFrom from './channelManagement_examine_from.vue'
-    import channelCompany from './channelManagement_examine_company.vue'
-    import channelOrderList from './channelManagement_examine_orderList.vue'
-    import channelFllowUp from './channelManagement_examine_followUp.vue'
-    import channelRelationPerson from './channelManagement_examine_relationPerson.vue'
-    import channelServiceDynamic from './channelManagement_examine_serviceDynamic.vue'
+    // import channelFrom from './channelManagement_examine_from.vue'
+    // import channelCompany from './channelManagement_examine_company.vue'
+    // import channelOrderList from './channelManagement_examine_orderList.vue'
+    // import channelFllowUp from './channelManagement_examine_followUp.vue'
+    // import channelRelationPerson from './channelManagement_examine_relationPerson.vue'
+    // import channelServiceDynamic from './channelManagement_examine_serviceDynamic.vue'
 
     export default {
         name:'channelCustomer_index',
         components: {
             channelTable,
-            channelFrom,
-            channelCompany,
-            channelOrderList,
-            channelFllowUp,
-            channelRelationPerson,
-            channelServiceDynamic,
+            // channelFrom,
+            // channelCompany,
+            // channelOrderList,
+            // channelFllowUp,
+            // channelRelationPerson,
+            // channelServiceDynamic,
         },
         data() {
             return {

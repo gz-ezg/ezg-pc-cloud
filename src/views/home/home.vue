@@ -126,7 +126,7 @@
                 </Row>
             </Col>
         </Row>-->
-        <Row :gutter="10" class="margin-top-10">
+        <!-- <Row :gutter="10" class="margin-top-10">
             <Col :md="24" :lg="8" :style="{marginBottom: '10px'}">
                 <Card>
                     <p slot="title" class="card-title">
@@ -171,34 +171,34 @@
                     <service-requests></service-requests>
                 </div>
             </Card>
-        </Row>
+        </Row> -->
     </div>
 </template>
 
 <script>
-import cityData from './map-data/get-city-value.js';
-import homeMap from './components/map.vue';
-import dataSourcePie from './components/dataSourcePie.vue';
-import visiteVolume from './components/visiteVolume.vue';
-import serviceRequests from './components/serviceRequests.vue';
-import userFlow from './components/userFlow.vue';
-import countUp from './components/countUp.vue';
-import inforCard from './components/inforCard.vue';
-import mapDataTable from './components/mapDataTable.vue';
-import toDoListItem from './components/toDoListItem.vue';
+// import cityData from './map-data/get-city-value.js';
+// import homeMap from './components/map.vue';
+// import dataSourcePie from './components/dataSourcePie.vue';
+// import visiteVolume from './components/visiteVolume.vue';
+// import serviceRequests from './components/serviceRequests.vue';
+// import userFlow from './components/userFlow.vue';
+// import countUp from './components/countUp.vue';
+// import inforCard from './components/inforCard.vue';
+// import mapDataTable from './components/mapDataTable.vue';
+// import toDoListItem from './components/toDoListItem.vue';
 
 export default {
     name: 'home',
     components: {
-        homeMap,
-        dataSourcePie,
-        visiteVolume,
-        serviceRequests,
-        userFlow,
-        countUp,
-        inforCard,
-        mapDataTable,
-        toDoListItem,
+        // homeMap,
+        // dataSourcePie,
+        // visiteVolume,
+        // serviceRequests,
+        // userFlow,
+        // countUp,
+        // inforCard,
+        // mapDataTable,
+        // toDoListItem,
     },
     data () {
         return {

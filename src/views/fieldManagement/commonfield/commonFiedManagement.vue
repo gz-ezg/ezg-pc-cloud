@@ -209,7 +209,7 @@
                                             <img :src="'api/assets/' + item.realpath" alt=""  width="100" height="100">
                                         </a> -->
                                         <a target="_blank" :href="'/api/assets/' + item.realpath" >
-                                            <img :src="'/api/assets/' +item.realpath" alt=""  width="100" height="100">
+                                            <img :src="'/api/assets/' +item.realpath" alt=""  width="100" height="100" onerror="this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null">
                                         </a>
                                     </Row>
                                 </FormItem>

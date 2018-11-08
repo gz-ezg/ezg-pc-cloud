@@ -1074,7 +1074,8 @@
             examine(e) {
                 console.log(e)
                 localStorage.setItem('customerTag', e.customer_tags)
-                this.$emit('isExamine', [e.customer_id, e.customer_status])
+                this.$store.commit('open_gobal_customer_detail_modal', {ID:e.customer_id});
+                // this.$emit('isExamine', [e.customer_id, e.customer_status])
             },
             // 表格行选中事件
             selectRow(a) {

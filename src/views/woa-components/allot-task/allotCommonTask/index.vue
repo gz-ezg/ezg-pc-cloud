@@ -321,7 +321,8 @@ import allotAccountService from './allot_accout_service'
                                     },
                                     on: {
                                         click: () => {
-                                            this.$bus.emit('openAllotTask',params)
+                                            // this.$bus.emit('openAllotTask',params)
+                                            this.$store.commit("open_gobal_work_order_detail_modal", params.row.id)
                                         }
                                     }
                                 }, '详情')
@@ -490,7 +491,8 @@ import allotAccountService from './allot_accout_service'
                                     },
                                     on: {
                                         click: () => {
-                                            this.$bus.emit('openAllotTask',params)
+                                            // this.$bus.emit('openAllotTask',params)
+                                            this.$store.commit("open_gobal_work_order_detail_modal", params.row.id)
                                         }
                                     }
                                 }, '详情')

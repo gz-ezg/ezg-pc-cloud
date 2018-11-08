@@ -241,7 +241,7 @@
 <script>
     import SimpleMDE from 'simplemde';
     import '../../my-components/markdown-editor/simplemde.min.css';
-    import combotree from '../../../libs/easyUI/jquery.easyui.min'
+    // import combotree from '../../../libs/easyUI/jquery.easyui.min'
 
     export default {
         data() {

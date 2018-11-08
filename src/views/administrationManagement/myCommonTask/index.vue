@@ -15,8 +15,8 @@
             </TabPane>
         </Tabs>
         <!-- <flow></flow> -->
-        <detail></detail>
-        <company-detail></company-detail>
+        <!-- <detail></detail> -->
+        <!-- <company-detail></company-detail> -->
     </div>
 </template>
 
@@ -27,9 +27,9 @@ import finish from './finish'
 import all from './all'
 import flow from './flow'
 
-import detail from './detail'
+// import detail from './detail'
 // import CompanyDetail from './myCommonTaskIndex/companydetail'
-import CompanyDetail from '../../woa-components/companyDetail/CompanyDetail'
+// import CompanyDetail from '../../woa-components/companyDetail/CompanyDetail'
 
 export default {
     name:'administratiotaskmanagement',
@@ -38,8 +38,8 @@ export default {
         servicing,
         finish,
         all,
-        detail,
-        CompanyDetail,
+        // detail,
+        // CompanyDetail,
         flow
     }
 }

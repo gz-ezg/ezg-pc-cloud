@@ -108,21 +108,6 @@
                         </Input>
                     </Col>
                 </Row>
-                <!-- <Row style="margin-top:10px;">
-                    <Col span="1" style="visibility:hidden;margin-left:5px">1</Col> 
-                    <Col span="22">
-                        <Upload
-                            ref="upload"
-                            :before-upload="handleUpload"
-                            action=""
-                            >
-                            <Button type="ghost" icon="ios-cloud-upload-outline">上传附件</Button>
-                        </Upload>
-                        <div v-for="(item,index) in file" :key=index>{{ item.name }}
-                            <Button type="text" @click="fileRemove(item)">移除</Button>
-                        </div>
-                    </Col>
-                </Row> -->
                 <div slot="footer">
                     <Button type="primary" @click="submit_index" :loading="submit_button">提交</Button>
                     <Button type="ghost" @click="reset">重置</Button>
@@ -138,7 +123,10 @@
         <set-finish-time></set-finish-time>
         <field-list-by-company-id></field-list-by-company-id>
         <aduit-log></aduit-log>
+
         <customer-detail v-if="gobalCustomerDetailShow" :customer="gobalCustomer"></customer-detail>
+        <work-order-detail v-if="gobalWorkorderDetailShow" :workOrderId="gobalworkOrderId"></work-order-detail>
+        <company-detail v-if="gobalCompanyDetailShow" :companyId="gobalCompanyId"></company-detail>
     </div>
 </template>
 <script>
@@ -159,6 +147,8 @@
     import aduitLog from './order/orderApprove/common/aduitLog.vue'
     //  新版全局性客户详情
     import customerDetail from './woa-components/customerDetail2/index'
+    import workOrderDetail from './woa-components/workOrderDetail/index.vue';
+    import companyDetail from './woa-components/companyDetail/CompanyDetail.vue'
 
     export default {
         components: {
@@ -175,7 +165,9 @@
             setFinishTime,
             fieldListByCompanyId,
             aduitLog,
-            customerDetail
+            customerDetail,
+            workOrderDetail,
+            companyDetail
         },
         data () {
             return {
@@ -239,7 +231,19 @@
             },
             gobalCustomer() {
                 return this.$store.state.gobal.gobalCustomer;
-            }
+            },
+            gobalWorkorderDetailShow(){
+                return this.$store.state.gobal.gobalWorkorderDetailShow
+            },
+            gobalworkOrderId(){
+                return this.$store.state.gobal.gobalworkOrderId
+            },
+            gobalCompanyDetailShow(){
+                return this.$store.state.gobal.gobalCompanyDetailShow
+            },
+            gobalCompanyId(){
+                return this.$store.state.gobal.gobalCompanyId
+            },
         },
         methods: {
             close_stystem_complain(){

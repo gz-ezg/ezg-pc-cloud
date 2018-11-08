@@ -1,16 +1,26 @@
 <template>
-    <div style="width:100%;height:100%;" id="visite_volume_con2"></div>
+    <ve-histogram style="width:100%;height:100%;" :data="chartData"></ve-histogram>
 </template>
 
 <script>
-    import echarts from 'echarts';
+    // import echarts from 'echarts';
+    import VeHistogram from 'v-charts/lib/histogram.common'
     export default {
+        components:{
+            VeHistogram
+        },
         name: 'visiteVolume',
         data () {
             return {
                 //
                 customerDealSum: [],
                 customerT: 0,
+                chartData: {
+                    columns: ['月份', '总数'],
+                    rows: [
+                        
+                    ]
+                }
             };
         },
         methods: {
@@ -28,12 +38,12 @@
                             let _color = ''
                             _self.customerT = _self.customerT + parseInt(_data[i].value)
 
-                            _self.customerDealSum.push({
-                                value: _data[i].value,
-                                name: _data[i].name,
+                            _self.chartData.rows.push({
+                                "总数": _data[i].value,
+                                "月份": _data[i].name,
                             })
                         }
-                        _self.getEcharts()
+                        // _self.getEcharts()
                     }
 
                     _self.GetData(url2, doSuccess2)

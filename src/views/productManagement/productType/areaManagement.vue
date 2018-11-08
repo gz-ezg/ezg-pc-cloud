@@ -18,7 +18,7 @@
 </template>
 
 <script>
-    import treegrid from '../../../libs/easyUI/jquery.easyui.min'
+    // import treegrid from '../../../libs/easyUI/jquery.easyui.min'
 
     let editingId;
     export default {

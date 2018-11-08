@@ -138,7 +138,7 @@
                     <!-- <Button type="primary" name="marketingManagement_index_info_log" icon="drag" @click="check_select('OPEN_CHANGE_LOG')">销售变更日志</Button> -->
                     <!-- <Button type="primary" name="marketingManagement_index_edit_log" icon="ios-color-filter-outline" @click="check_select('OPEN_CUSTOMER_LOG')">客户动态</Button> -->
                     <!-- <Button type="primary" name="marketingManagement_index_field_log" icon="navigate" @click="check_select('OPEN_CUSTOMER_FIELD_LOG')">客户外勤</Button> -->
-                    <!-- <Button type="primary" name="marketingManagement_index_field_log" icon="android-share-alt" @click="check_select('OPEN_CUSTOMER_CLUE_LOG')">客户线索</Button> -->
+                    <Button type="primary" name="marketingManagement_index_field_log" icon="android-share-alt" @click="check_select('SHOW_OPEN_CUSTOMER_CLUE_LOG')">客户线索</Button>
                 </ButtonGroup>
             </Row>
             <Row style="margin-top: 10px;">
@@ -182,6 +182,7 @@
         <dymaic></dymaic>
         <Qcode></Qcode>
         <del-customer></del-customer> -->
+        <clue-log></clue-log>
         <edit-customer 
             :customer="selectRow"
             @close-edit="close_edit" 
@@ -227,7 +228,7 @@ import editCustomer from './edit/index'
 
 // import changeMarker from './op/change'
 // import changeLog from './op/changeLog'
-// import clueLog from './op/clue'
+import clueLog from './op/clue'
 // import field from './op/field'
 // import dymaic from './op/dymaic'
 // import Qcode from './op/code'
@@ -241,7 +242,7 @@ export default {
         // tagSelect,
         // changeMarker,
         // changeLog,
-        // clueLog,
+        clueLog,
         // field,
         // dymaic,
         // Qcode,

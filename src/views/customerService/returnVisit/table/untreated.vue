@@ -329,7 +329,7 @@
                                     on: {
                                         click: () => {
                                             // Bus.$emit('Open_customer_detail',params.row.customerid)
-                                            this.$store.commit('open_gobal_customer_detail_modal', {ID: params.row.customerid});
+                                            this.$store.commit('open_gobal_customer_detail_modal', { ID: params.row.customerid });
                                             // this.customerDetail(params)
                                         }
                                     }
@@ -341,7 +341,8 @@
                                     },
                                     on: {
                                         click: () => {
-                                            Bus.$emit('openCompanyDetail',params.row.companyid)
+                                            // Bus.$emit('openCompanyDetail',params.row.companyid)
+                                            this.$store.commit("open_gobal_work_order_detail_modal", params.row.companyid)
                                             // Bus.$emit('detail', params)
                                         }
                                     }

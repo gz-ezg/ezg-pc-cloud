@@ -1,7 +1,7 @@
 <template>
     <div>
         <Modal
-                v-model="detail"
+                v-model="openCompanyDetail"
                 title="公司详情"
                 width="850"
                 @on-cancel="cancel"
@@ -775,9 +775,14 @@
 
 
     export default {
-        props: ['companyId'],
+        props: {
+            companyId: {
+                type: [String, Number]
+            }
+        },
         data(){
             return {
+                openCompanyDetail: true,
                 followupshow:false,
                 warning:false,
                 //  上传图片相关
@@ -793,7 +798,7 @@
                     companyId:""
                 },
                 //
-                spinShow:false,
+                spinShow: true,
                 addcontentdetail:false,
                 contentdetail:false,
                 detailContent:{
@@ -809,8 +814,6 @@
                 realationPerson:[],
                 companyChangeDetail:[],
                 followUpData:[],
-                detail:false,
-                companyid: '',
                 financialLevel:"",
                 companyInfo:{
                     companyname: '',
@@ -879,32 +882,32 @@
                     {
                         title: '公司名称',
                         key: 'companyname',
-                        width: 190
+                        minWidth: 190
                     },
                     {
                         title: '所办服务',
                         key: 'product',
-                        width: 140
+                        minWidth: 140
                     },
                     {
                         title: '目前进度',
                         key: 'CurrentProcess',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '服务部门',
                         key: 'departname',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '服务人员',
                         key: 'servername',
-                        width: 100
+                        minWidth: 100
                     },
                     {
                         title: '联系方式',
                         key: 'servertel',
-                        width: 120
+                        minWidth: 120
                     },
                 ],
                 companyDynamicHeader: [
@@ -919,12 +922,12 @@
                     {
                         title: '创建人',
                         key: 'ksqj',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '创建时间',
                         key: 'yjjsqj',
-                        width: 120
+                        minWidth: 120
                     },
                 ],
                 realationPersonHeader: [
@@ -939,7 +942,7 @@
                     {
                         title: '备注',
                         key: 'memo',
-                        width: 120
+                        minWidth: 120
                     }
                 ],
                 companyChangeDetailHeader: [
@@ -954,29 +957,29 @@
                     {
                         title: '操作人',
                         key: 'ksqj',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '变更时间',
                         key: 'yjjsqj',
-                        width: 120
+                        minWidth: 120
                     },
                 ],
                 followUpHeader:[
                     {
                         title:'跟进时间',
                         key:'createdate',
-                        width:160
+                        minWidth:160
                     },
                     {
                         title:'跟进类型',
                         key: 'typename',
-                        width:120
+                        minWidth:120
                     },
                     {
                         title:'跟进内容',
                         key:'service_content',
-                        width: 300,
+                        minWidth: 300,
                         render:(h, params) => {
                             // console.log(params)
                             if(params.row.service_content == ''||params.row.service_content == null){
@@ -1012,7 +1015,7 @@
                     {
                         title:'跟进人',
                         key:'realname',
-                        width:100
+                        minWidth:100
                     },
                     {
                         title:'操作',
@@ -1047,16 +1050,15 @@
             getData() {
                 let _self = this
                 _self.spinShow = true
-                // let url = '/customer/company/detail?id=' + _self.companyid + '&detailTypes=basic,main,workOrder,taxManagement,customerRecord'
                 let url = 'api/customer/company/detail'
                 let config = {
                     params:{
-                        id:_self.companyid,
+                        id:_self.companyId,
                         detailTypes:"basic,main,workOrder,taxManagement,customerRecord,dynamic"
                     }
                 }
                 _self.detail = true
-                function doSuccess(res) {
+                function success(res) {
                     _self.companyInfo = res.data.data.basic.length != 0 ? res.data.data.basic[0] : {}
                     _self.mainInfo = res.data.data.main.length != 0 ? res.data.data.main[0] : {}
                     _self.workOrder = res.data.data.workOrder
@@ -1064,76 +1066,19 @@
                     _self.followUpData = res.data.data.customerRecord
                     _self.realationPerson = res.data.data.dynamic
                     _self.spinShow = false
-                    // _self.scroll = new Bscroll(_self.$refs.wrapper, {
-                    //     scrollbar:{
-                    //         fade: false
-                    //     },
-                    //     mouseWheel:{
-                    //         speed: 20,
-                    //         invert: false,
-                    //         easeTime: 300
-                    //     }
-                    // })
-                    // _self.scroll = new Bscroll(_self.$refs.wrapper1, {
-                    //     scrollbar:{
-                    //         fade: false
-                    //     },
-                    //     mouseWheel:{
-                    //         speed: 20,
-                    //         invert: false,
-                    //         easeTime: 300
-                    //     }
-                    // })
-                //     _self.$nextTick(() => {
-                //         // console.log('start')
-                //         _self.scroll = new Bscroll(_self.$refs.wrapper, {
-                //             scrollbar:{
-                //                 fade: false
-                //             },
-                //             mouseWheel:{
-                //                 speed: 20,
-                //                 invert: false,
-                //                 easeTime: 300
-                //             }
-                //         })
-                //         // _self.scroll.refresh()
-                //     })
-                //     _self.$nextTick(() => {
-                //         // console.log('start')
-                //         _self.scroll = new Bscroll(_self.$refs.wrapper1, {
-                //             scrollbar:{
-                //                 fade: false
-                //             },
-                //             mouseWheel:{
-                //                 speed: 20,
-                //                 invert: false,
-                //                 easeTime: 300
-                //             }
-                //         })
-                //         // _self.scroll.refresh()
-                // })
-                //     _self.$nextTick(() => {
-                //         // console.log('start')
-                //         _self.scroll = new Bscroll(_self.$refs.wrapper2, {
-                //             scrollbar:{
-                //                 fade: false
-                //             },
-                //             mouseWheel:{
-                //                 speed: 20,
-                //                 invert: false,
-                //                 easeTime: 300
-                //             }
-                //         })
-                //         // _self.scroll.refresh()
-                // })
                 }
-                this.$Get(url, config, doSuccess)
+
+                function fail(err){
+                     _self.$Message.error("对不起，当前查询的工单有误！请确认后重试！窗口将在2秒后关闭！")
+                }
+                this.$Get(url, config, success, fail)
                 // this.GetData(url, doSuccess)
             },
 
             cancel () {
                 this.detail = false
                 this.openTab = "name8"
+                this.$store.commit("close_gobal_work_order_detail_modal")
             },
             editTax(){
                 this.isEditTax = !this.isEditTax
@@ -1143,7 +1088,7 @@
                 this.submit_ing = true
                 let url = `api/customer/company/saveCompanyTaxManagement`
                 let config = {
-                    companyid:_self.companyid,
+                    companyid:_self.companyId,
                     companytype:_self.taxManagement.companytype,
                     nationaltax:_self.taxManagement.nationaltax,
                     Localtax:_self.taxManagement.Localtax,
@@ -1312,37 +1257,11 @@
             }
 
         },
-        created(){
+        mounted(){
             var _self = this
             this.getRole()
-            this.GetFollowUpType()            
-            Bus.$on('openCompanyDetail',(e)=>{
-                // _self.GetFollowUpType()
-                _self.openTab = "name8"
-                _self.detail = true
-                // console.log(e.row.company_id)
-                _self.companyid = e
-                _self.isEditTax = true
-                _self.getRole()
-                _self.getData()
-            })
-            this.$bus.on('openCompanyDetail',(e)=>{
-                // _self.GetFollowUpType()
-                _self.openTab = "name8"
-                _self.detail = true
-                // console.log(e.row.company_id)
-                _self.companyid = e
-                _self.isEditTax = true
-                _self.getRole()
-                _self.getData()
-            })
-            this.$bus.on('VueBusTest',(e)=>{
-                _self.openTab = "name8"
-                _self.detail = true
-                _self.companyid = e
-                _self.isEditTax = true
-                _self.getData()
-            })
+            this.GetFollowUpType()   
+            this.getData()         
         },
         beforeDestroy () {
             // this.$bus.off(['VueBusTest'])

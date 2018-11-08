@@ -533,22 +533,22 @@ import flowVue from '../../woa-components/next/flow.vue';
                     {
                         title: '客户名称',
                         key: 'customername',
-                        width: 130,
+                        minWidth: 130,
                     },
                     {
                         title: '客户电话',
                         key: 'tel',
-                        width: 130,
+                        minWidth: 130,
                     },
                     {
                         title: '线索状态',
                         key: 'cluesstatus',
-                        width: 100,
+                        minWidth: 100,
                     },
                     {
                         title: '线索详情',
                         key: 'memo',
-                        width: 300,
+                        minWidth: 300,
                         render:(h, params) =>{
                             // console.log(params)
                             return h("div",{
@@ -561,12 +561,12 @@ import flowVue from '../../woa-components/next/flow.vue';
                     {
                         title: '线索创建时间',
                         key: 'createdate',
-                        width: 160,
+                        minWidth: 160,
                     },
                     {
                         title: '创建人',
                         key: 'createby',
-                        width: 100,
+                        minWidth: 100,
                     },
 /*                    {
                         title: '领取人',
@@ -576,12 +576,12 @@ import flowVue from '../../woa-components/next/flow.vue';
                     {
                         title: '线索级别',
                         key: 'clue_level',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '客户类型',
                         key:'type',
-                        width:120
+                        minWidth:120
                     },
                     // {
                     //     title: '线索标签',
@@ -591,7 +591,7 @@ import flowVue from '../../woa-components/next/flow.vue';
                     {
                         title: '线索类型',
                         key: 'cluestype',
-                        width: 100,
+                        minWidth: 100,
                     },
                     // {
                     //     title: '线索说明',
@@ -629,27 +629,27 @@ import flowVue from '../../woa-components/next/flow.vue';
                     {
                         title: '客户名称',
                         key: 'customername',
-                        width: 130,
+                        minWidth: 130,
                     },
                     {
                         title: '客户电话',
                         key: 'tel',
-                        width: 130,
+                        minWidth: 130,
                     },
                     {
                         title:'客户类型',
                         key:'type',
-                        width:120
+                        minWidth:120
                     },
                     {
                         title: '线索状态',
                         key: 'cluesstatus',
-                        width: 100,
+                        minWidth: 100,
                     },
                     {
                         title: '线索详情',
                         key: 'memo',
-                        width: 300,
+                        minWidth: 300,
                         render:(h, params) =>{
                             // console.log(params)
                             return h("div",{
@@ -662,22 +662,22 @@ import flowVue from '../../woa-components/next/flow.vue';
                     {
                         title: '线索创建时间',
                         key: 'createdate',
-                        width: 160,
+                        minWidth: 160,
                     },
                     {
                         title: '创建人',
                         key: 'createby',
-                        width: 100,
+                        minWidth: 100,
                     },
                     {
                         title: '领取人',
                         key: 'receiptor',
-                        width: 100,
+                        minWidth: 100,
                     },
                     {
                         title: '线索级别',
                         key: 'clue_level',
-                        width: 120
+                        minWidth: 120
                     },
                     // {
                     //     title: '线索标签',
@@ -687,7 +687,7 @@ import flowVue from '../../woa-components/next/flow.vue';
                     {
                         title: '线索类型',
                         key: 'cluestype',
-                        width: 100,
+                        minWidth: 100,
                     },
                     {
                         title: '操作',

@@ -1,11 +1,44 @@
 <template>
-    <div style="width:100%;height:100%;" id="service_request_con"></div>
+    <ve-line :data="chartData" :settings="chartSettings" :extend="extend"></ve-line>
 </template>
 
 <script>
-import echarts from 'echarts';
+// import echarts from 'echarts';
+import VeLine from 'v-charts/lib/line.common'
 export default {
+    components: {
+        VeLine
+    },
     name: 'serviceRequests',
+    data () {
+      this.chartSettings = {
+        // stack: { '用户': ['访问用户', '下单用户'] },
+        // area: true
+      }
+      this.extend = {
+        series: {
+          label: {
+            normal: {
+              show: true
+            }
+          }
+        },
+      }
+      return {
+        chartData: {
+          columns: ['日期', '客户管理', '订单管理', '服务管理', '任务中心'],
+          rows: [
+            { '日期': '周一', '客户管理': 445, '订单管理': 321, '服务管理': 331, "任务中心": 120 },
+            { '日期': '周二', '客户管理': 452, '订单管理': 356, '服务管理': 331, "任务中心": 141 },
+            { '日期': '周三', '客户管理': 430, '订单管理': 278, '服务管理': 331, "任务中心": 109 },
+            { '日期': '周四', '客户管理': 390, '订单管理': 340, '服务管理': 331, "任务中心": 98 },
+            { '日期': '周五', '客户管理': 430, '订单管理': 405, '服务管理': 331, "任务中心": 80 },
+            { '日期': '周六', '客户管理': 105, '订单管理': 120, '服务管理': 331, "任务中心": 41 },
+            { '日期': '周日', '客户管理': 110, '订单管理': 99, '服务管理': 331, "任务中心": 15 },
+          ]
+        }
+      }
+    },
     mounted () {
         const option = {
             tooltip: {
@@ -90,12 +123,12 @@ export default {
                 }
             ]
         };
-        const serviceRequestCharts = echarts.init(document.getElementById('service_request_con'));
-        serviceRequestCharts.setOption(option);
+        // const serviceRequestCharts = echarts.init(document.getElementById('service_request_con'));
+        // serviceRequestCharts.setOption(option);
 
-        window.addEventListener('resize', function () {
-            serviceRequestCharts.resize();
-        });
+        // window.addEventListener('resize', function () {
+        //     serviceRequestCharts.resize();
+        // });
     }
 };
 </script>

@@ -54,7 +54,7 @@
                         <Row class="type-select" v-if="selectProduct.id == 100 && changeArea">
                             <!-- <Row v-for="(item, index) in queryProperty" :key="index" class="type-select"> -->
                                 <p>{{queryProperty[0].name}}</p>
-                                <RadioGroup v-model="selectProperty[0]" type="button" size="large" @on-change="property_change;selectProperty[1]='';productPrice=0" >
+                                <RadioGroup v-model="selectProperty[0]" type="button" size="large" @on-change="property_change;selectProperty[1]='';productPrice=0;SKU=''" >
                                     <Radio v-for="(type, index2) in queryProperty[0].children" :label="type.pvId" :key="index2">{{type.propertyValue}}</Radio>
                                 </RadioGroup>
                                 <p v-if="selectProperty[0]==310">{{queryProperty[2].name}}</p>
@@ -172,24 +172,30 @@ export default {
     },
     computed:{
         disabled(){
-            if((this.queryProperty.length == this.selectProperty.length) && this.queryProperty.length != 0 ){
-                let flag = 1
-                for(let i = 0; i<this.selectProperty.length; i++){
-                    if(this.selectProperty[i]==undefined){
-                        flag = 0
-                        return true
-                    }
-                }
-                if(flag){
-                    return false
-                }
+            // if((this.queryProperty.length == this.selectProperty.length) && this.queryProperty.length != 0 ){
+            //     let flag = 1
+            //     for(let i = 0; i<this.selectProperty.length; i++){
+            //         if(this.selectProperty[i]==undefined){
+            //             flag = 0
+            //             return true
+            //         }
+            //     }
+            //     if(flag){
+            //         return false
+            //     }
+            // }else{
+            //     if(this.selectProperty[0] && this.selectProperty[1] && this.changeArea){
+            //         return false
+            //     }else{
+            //         return true
+            //     }
+            // }
+            if(!this.SKU){
+                return true
             }else{
-                if(this.selectProperty[0] && this.selectProperty[1] && this.changeArea){
-                    return false
-                }else{
-                    return true
-                }
+                return false
             }
+
         },
         isAdmin(){
             if(localStorage.getItem("id") == "10059"){
@@ -235,6 +241,7 @@ export default {
                 this.$Message.error("对不起，该产品已经不允许操作！")
                 return false;
             }
+            this.SKU = ''
             this.sideLoading = true
             this.selectProduct = e
             this.productPrice = 0
@@ -290,6 +297,16 @@ export default {
 
             function success(res){
                 _self.producSku = res.data.data
+                let temp = _self.producSku[0].linkPropertys.split(",")
+                if(temp.length == 1){
+                    _self.selectProperty.push(parseInt(temp[0]))
+                    _self.property_change()
+                }
+
+                // for(let i = 0; i<temp.length; i++){
+                //     _self.selectProperty.push(parseInt(temp[i]))
+                // }
+                _self.property_change()
                 setTimeout(()=>{
                     _self.sideLoading = false
                 }, 200)

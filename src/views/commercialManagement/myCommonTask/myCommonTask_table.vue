@@ -17,19 +17,19 @@
                 <all :companyarea="companyarea"></all>
             </TabPane>
         </Tabs>
-        <detail></detail>
+        <!-- <detail></detail> -->
         <over-due-reason></over-due-reason>
 
-        <company-detail></company-detail>
+        <!-- <company-detail></company-detail> -->
         <!-- <flow></flow> -->
     </div>
 </template>
 
 <script>
 import overDueReason from './myCommonTaskIndex/overdueReason'
-import Detail from './myCommonTaskIndex/detail'
+// import Detail from './myCommonTaskIndex/detail'
 // import CompanyDetail from './myCommonTaskIndex/companydetail'
-import CompanyDetail from '../../woa-components/companyDetail/CompanyDetail'
+// import CompanyDetail from '../../woa-components/companyDetail/CompanyDetail'
 import Flow from './myCommonTaskIndex/flow'
 
 import Serving from './myCommonTaskIndex/serving'
@@ -44,8 +44,8 @@ import Stop from "./myCommonTaskIndex/stop";
             All,
             Finished,
             Notbegin,
-            Detail,
-            CompanyDetail,
+            // Detail,
+            // CompanyDetail,
             Flow,
             overDueReason,
             Stop

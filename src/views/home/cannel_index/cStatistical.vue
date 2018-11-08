@@ -1,16 +1,27 @@
 <template>
-    <div style="width:100%;height:100%;" id="visite_volume_con3"></div>
+    <div >
+        <ve-funnel :data="chartData" style="width:100%;height:200px" ></ve-funnel>
+    </div>
 </template>
 
 <script>
-    import echarts from 'echarts';
+import VeFunnel from 'v-charts/lib/funnel.common'
+
     export default {
+        components: {
+            VeFunnel
+        },
         name: 'visiteVolume',
         data () {
             return {
                 //
-                customerTypeGroupData: [],
+                // customerTypeGroupData: [],
                 customerT: 0,
+                chartData: {
+                    columns: ['状态', '数值'],
+                    rows: [
+                    ]
+                }
             };
         },
         methods: {
@@ -28,12 +39,12 @@
                             let _color = ''
                             _self.customerT = _self.customerT + parseInt(_data[i].value)
 
-                            _self.customerTypeGroupData.push({
-                                value: _data[i].value,
-                                name: _data[i].name,
+                            _self.chartData.rows.push({
+                                "数值": _data[i].value,
+                                "状态": _data[i].name,
                             })
                         }
-                        _self.getEcharts()
+                        // _self.getEcharts()
                     }
 
                     _self.GetData(url2, doSuccess2)

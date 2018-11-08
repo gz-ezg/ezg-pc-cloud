@@ -1,16 +1,25 @@
 <template>
-    <div style="width:100%;height:100%;" id="visite_volume_con5"></div>
+    <ve-histogram  :data="chartData" style="width:100%;height:100%;" id="visite_volume_con5"></ve-histogram>
 </template>
 
 <script>
-    import echarts from 'echarts';
+    // import echarts from 'echarts';
+    import VeHistogram from 'v-charts/lib/histogram.common'
     export default {
+        components: {
+            VeHistogram
+        },
         name: 'visiteVolume',
         data () {
             return {
                 //
                 customerTypeFollowGroup: [],
                 customerT: 0,
+                chartData: {
+                    columns: ['类型', '金额'],
+                    rows: [
+                    ]
+                }
             };
         },
         methods: {
@@ -19,21 +28,21 @@
                 let url = '/channel/type/queryUserChannel'
 
                 function doSuccess(re) {
-                    let url2 = '/customer/groupQueryByChannelId?channelTypeId='+re.data.data[0].id+'&reportTypes=customerTypeFollowGroup'
+                    let url2 = '/customer/groupQueryByChannelId?channelTypeId='+re.data.data[0].id+'&reportTypes=orderRealnumberSum'
 
                     function doSuccess2(re) {
-                        let _data = re.data.data.customerTypeFollowGroup
+                        let _data = re.data.data.orderRealnumberSum
                         // console.log(_data)
                         for (let i = 0; i < _data.length; i++) {
                             let _color = ''
                             _self.customerT = _self.customerT + parseInt(_data[i].value)
 
-                            _self.customerTypeFollowGroup.push({
-                                value: _data[i].value,
-                                name: _data[i].name,
+                            _self.chartData.rows.push({
+                                "金额": _data[i].value,
+                                "类型": _data[i].name,
                             })
                         }
-                        _self.getEcharts()
+                        // _self.getEcharts()
                     }
 
                     _self.GetData(url2, doSuccess2)
