@@ -50,6 +50,20 @@
                 </Row>
                 <Row>
                     <Col span="12">
+                        <FormItem label="别名：" prop="aliasName">
+                            <Input  size="small"  style="margin-right:5px" v-model="formdata.aliasName">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                    <Col span="12">
+                        <FormItem label="工作手机：" prop="officephone">
+                            <Input  size="small"  style="margin-right:5px" v-model="formdata.officephone">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span="12">
                         <FormItem label="工号：" prop="userAliasId">
                             <Input  size="small"  style="margin-right:5px" v-model="formdata.userAliasId">
                             </Input>
@@ -177,7 +191,9 @@ export default {
                 roleName: "",
                 orgName: "",
                 userAliasId:"",
-                probationTime: new Date()
+                probationTime: new Date(),
+                aliasName: "",
+                officephone: ""
             },
             formdataRule:{
                 username:[
@@ -195,6 +211,9 @@ export default {
                 ],
                 mobilePhone:[
                     // { message:"格式错误！",required: true, trigger: 'blur' },
+                    { message:"格式错误！", validator:validateTel,  trigger: 'change' },
+                ],
+                officephone:[
                     { message:"格式错误！", validator:validateTel,  trigger: 'change' },
                 ],
                 email:[
@@ -245,7 +264,9 @@ export default {
                 mobilephone: _self.formdata.mobilePhone,
                 email: _self.formdata.email,
                 userAliasId: _self.formdata.userAliasId,
-                probationTime: DateFormat(_self.formdata.probationTime)
+                probationTime: DateFormat(_self.formdata.probationTime),
+                officephone: _self.formdata.officephone,
+                aliasName: _self.formdata.aliasName
             }
 
             function success(res){
@@ -279,6 +300,8 @@ export default {
     created(){
         let _self = this
         this.$bus.on("CREATED_USER",(e) => {
+            _self.$refs['formdata'].resetFields()
+            _self.formdata.orgIds = ""
             _self.open_create_user = true
             // _self.formdata.roleIds = ""
             // _self.formdata.orgIds = ""

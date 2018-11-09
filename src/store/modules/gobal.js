@@ -7,7 +7,13 @@ const gobal = {
         gobalworkOrderId: "",
         gobalWorkorderDetailShow: false,
         gobalCompanyId: "",
-        gobalCompanyDetailShow: false
+        gobalCompanyDetailShow: false,
+        gobalWorkorderDetail: {
+            companyname: "",
+            product: "",
+            id: ""
+        },
+        gobalSetFinishTime: false,
 
     },
     mutations: {
@@ -32,6 +38,14 @@ const gobal = {
         close_gobal_work_order_detail_modal(state){
             state.gobalCompanyDetailShow = false
         },
+        open_gobal_set_finish_time_modal(state, workOrderDetail){
+            state.gobalSetFinishTime = true
+            state.gobalWorkorderDetail = workOrderDetail
+        },
+        close_gobal_set_finish_time_modal(state){
+            console.log("123")
+            state.gobalSetFinishTime = false
+        }
     }
 };
 

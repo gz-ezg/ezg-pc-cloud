@@ -120,13 +120,14 @@
         <change-password></change-password>
         <!-- 工单相关 -->
         <next></next>
-        <set-finish-time></set-finish-time>
+        
         <field-list-by-company-id></field-list-by-company-id>
         <aduit-log></aduit-log>
 
         <customer-detail v-if="gobalCustomerDetailShow" :customer="gobalCustomer"></customer-detail>
         <work-order-detail v-if="gobalWorkorderDetailShow" :workOrderId="gobalworkOrderId"></work-order-detail>
         <company-detail v-if="gobalCompanyDetailShow" :companyId="gobalCompanyId"></company-detail>
+        <set-finish-time :worderOrderDetail="gobalWorkorderDetail"></set-finish-time>
     </div>
 </template>
 <script>
@@ -245,6 +246,13 @@
             gobalCompanyId(){
                 return this.$store.state.gobal.gobalCompanyId
             },
+            //  设置完成时间存在莫名bug...激活取消事件之后窗口不消失，待确认
+            gobalSetFinishTime(){
+                return this.$store.state.gobal.gobalSetFinishTime
+            },
+            gobalWorkorderDetail(){
+                return this.$store.state.gobal.gobalWorkorderDetail
+            }
         },
         methods: {
             close_stystem_complain(){

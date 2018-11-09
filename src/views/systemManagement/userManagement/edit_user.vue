@@ -51,6 +51,20 @@
                 </Row>
                 <Row>
                     <Col span="12">
+                        <FormItem label="别名：" prop="aliasName">
+                            <Input  size="small"  style="margin-right:5px" v-model="formdata.aliasName">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                    <Col span="12">
+                        <FormItem label="工作手机：" prop="officephone">
+                            <Input  size="small"  style="margin-right:5px" v-model="formdata.officephone">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span="12">
                         <FormItem label="工号：" prop="userAliasId">
                             <Input  size="small"  style="margin-right:5px" v-model="formdata.userAliasId">
                             </Input>

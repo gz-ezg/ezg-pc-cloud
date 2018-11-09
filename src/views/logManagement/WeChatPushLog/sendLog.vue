@@ -263,7 +263,11 @@ export default {
                 {field:'realname',title:'发送人'},
                 {field:'name',title:'客户'},
                 {field:'isSuccess',title:'是否成功'},
-                {field:'resultMsg',title:'返回信息'},               
+                {field:'resultMsg',title:'返回信息'}, 
+                {field: 'first', title: "短信内容"},
+                {field: 'keyword', title: "关键词"},
+                {field: 'remark', title: "链接标题"},
+
             ]
             let _self = this
             let url = `api/system/log/queryWechatTemplatelog/list`

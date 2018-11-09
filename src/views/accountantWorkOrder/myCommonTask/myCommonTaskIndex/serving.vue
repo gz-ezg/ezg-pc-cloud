@@ -485,7 +485,7 @@ export default {
                         _self.data[i].UpdateDate = _self.data[i].UpdateDate.slice(0,10)
                     }
                 }
-                console.log(_self.manageStatus)
+                // console.log(_self.manageStatus)
                 _self.Sloading = false
             })
         },
@@ -537,6 +537,7 @@ export default {
             let _self = this
             if(this.current_row != ''){
                 _self.$bus.emit("OPEN_SET_FINISH_TIME",this.current_row)
+                // this.$store.commit("open_gobal_set_finish_time_modal", this.current_row)
             }else{
                 this.$Message.warning('请选择一行进行流转！')
             }

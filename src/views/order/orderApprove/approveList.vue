@@ -155,6 +155,11 @@ export default {
                         minWidth: 100
                     },
                     {
+                        title: '更新时间',
+                        key: 'updatedate',
+                        minWidth: 100
+                    },
+                    {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
@@ -231,7 +236,8 @@ export default {
                 {field:'paynumber',title:'订单总价'},
                 {field:'realnumber',title:'已付款'},
                 {field:'neednumber',title:'余款'},
-                {field:'ProcessType',title:'当前流程'}                               
+                {field:'ProcessType',title:'当前流程'},
+                {field:'updatedate',title:'更新时间'}                              
             ]
             let _self = this
             let url = `api/order/auditList`
@@ -279,6 +285,9 @@ export default {
                 for(let i = 0; i < _self.data.length; i++){
                     if(_self.data[i].base_createdate){
                         _self.data[i].createdate = _self.data[i].base_createdate.slice(0,10)
+                    }
+                    if(_self.data[i].updatedate){
+                        _self.data[i].updatedate = _self.data[i].updatedate.slice(0,10)
                     }
                     _self.data[i].paydirName = _self.payDirs_Map.get(_self.data[i].base_paydir)
                 }

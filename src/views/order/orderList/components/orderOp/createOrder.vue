@@ -27,13 +27,13 @@
                 </Row>
                 <Row :gutter="16">
                     <Col span="8">
-                    <FormItem label="订单总价" prop="realnumber">
-                        <Input size="small" v-model="orderDetail.realnumber" number readonly/>
+                    <FormItem label="订单总价" prop="paynumber">
+                        <Input size="small" v-model="orderDetail.paynumber" number readonly/>
                     </FormItem>
                     </Col>
                     <Col span="8">
-                    <FormItem label="已付款" prop="paynumber">
-                        <Input size="small" v-model="orderDetail.paynumber" number />
+                    <FormItem label="已付款" prop="realnumber">
+                        <Input size="small" v-model="orderDetail.realnumber" number />
                     </FormItem>
                     </Col>
                     <Col span="8">
@@ -201,7 +201,7 @@ export default {
             let config = {
                 companyId: _self.orderDetail.companyid,
                 payDir: _self.orderDetail.paydir,
-                orderPayNumber: _self.orderDetail.paynumber,
+                orderPayNumber: _self.orderDetail.realnumber,
                 serviceStartDate: "",
                 GDSreport: _self.orderDetail.gdsreport,
                 payTime: DateFormat(_self.orderDetail.payTime),

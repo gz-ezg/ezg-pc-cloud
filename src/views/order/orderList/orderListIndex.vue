@@ -138,7 +138,7 @@ import productSelect from './components/productSelect'
 import { DateFormat } from '../../../libs/utils.js'
 
 export default {
-    name: "orderList_index2",
+    name: "orderList_index",
     components:{
         showOrder,
         createOrder,

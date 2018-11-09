@@ -25,13 +25,13 @@
                 </Row>
                 <Row :gutter="16">
                     <Col span="8">
-                    <FormItem label="订单总价" prop="realnumber">
-                        <Input size="small" v-model="orderDetail.realnumber" readonly/>
+                    <FormItem label="订单总价" prop="paynumber">
+                        <Input size="small" v-model="orderDetail.paynumber" readonly/>
                     </FormItem>
                     </Col>
                     <Col span="8">
-                    <FormItem label="已付款" prop="paynumber">
-                        <Input size="small" v-model="orderDetail.paynumber" readonly/>
+                    <FormItem label="已付款" prop="realnumber">
+                        <Input size="small" v-model="orderDetail.realnumber" readonly/>
                     </FormItem>
                     </Col>
                     <Col span="8">

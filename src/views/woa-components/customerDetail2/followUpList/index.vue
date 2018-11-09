@@ -1,8 +1,8 @@
 <template>
     <div>
-        <Row style="height:56px">
+        <Row style="height:24px">
             <Row>
-                <Button name="marketingManagement_index_followUp_add" type="primary" shape="circle" icon="plus" @click="open_create_followUp">新增</Button>
+                <!-- <Button name="marketingManagement_index_followUp_add" type="primary" shape="circle" icon="plus" @click="open_create_followUp">新增</Button> -->
                 <Checkbox v-model="single" style="float:right" @on-change="get_data(customer.ID)">只看市场跟进</Checkbox>
             </Row>
         </Row>
@@ -81,7 +81,7 @@
                             </Row>
                             
                             <!-- 评价 -->
-                             <Div v-if="(item.followType == '11') || (item.followType == '12') || (item.followType == '13')">
+                            <Div v-if="(item.followType == '11') || (item.followType == '12') || (item.followType == '13')">
                                 <Row>
                                     <Col span="18">
                                         <Button type="ghost" @click="open_evaluate(item.serviceId, index)">评价（{{ item.evaluateNum }}）</Button>

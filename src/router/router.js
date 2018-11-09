@@ -1,6 +1,29 @@
 /* eslint-disable */
-
 import Main from '@/views/Main.vue';
+import Router from 'vue-router'
+//  动态加载路由
+const lazyRouter = {
+        path: '/test',
+        icon: 'alert-circled',
+        name: 'test',
+        title: 'Test',
+        component: Main,
+        children: [
+            {
+                path: 'test',
+                title: '测试页面',
+                name: '富文本编辑器测试',
+                component: resolve => {
+                    require(['@/views/test/components/main.vue'], resolve);
+                    // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+
+                }
+            },
+        ]
+    }
+
+
+
 // test作为测试页面接口，不部署到生产阶段，路径test也只适用于开发阶段
 // import Test from '@/views/test/App.vue'
 // 不作为Main组件的子页面展示的页面单独写，如下
@@ -154,63 +177,62 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    // {
-    //     path: '/test',
-    //     icon: 'alert-circled',
-    //     name: 'test',
-    //     title: 'Test',
-    //     component: Main,
-    //     children: [
-    //         // {
-    //         //     path: 'test',
-    //         //     title: '测试页面',
-    //         //     name: '富文本编辑器测试',
-    //         //     component: resolve => {
-    //         //         require(['@/views/test/components/main.vue'], resolve);
-    //         //         // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+    {
+        path: '/test',
+        icon: 'alert-circled',
+        name: 'test',
+        title: 'Test',
+        component: Main,
+        children: [
+            // {
+            //     path: 'test',
+            //     title: '测试页面',
+            //     name: '富文本编辑器测试',
+            //     component: resolve => {
+            //         require(['@/views/test/components/main.vue'], resolve);
+            //         // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-    //         //     }
-    //         // },
-    //         {
-    //             path: 'test2',
-    //             title: '日程测试',
-    //             name: 'test2_index',
-    //             component: resolve => {
-    //                 require(['@/views/test/components/test2.vue'], resolve);
-    //                 // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+            //     }
+            // },
+            // {
+            //     path: 'test2',
+            //     title: '日程测试',
+            //     name: 'test2_index',
+            //     component: resolve => {
+            //         require(['@/views/test/components/test2.vue'], resolve);
+            //         // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-    //             }
-    //         },
-    //         // {
-    //         //     path: 'test3',
-    //         //     title: '可编辑表格测试',
-    //         //     name: 'test3_index',
-    //         //     component: resolve => {
-    //         //         require(['@/views/test/components/test3.vue'], resolve);
+            //     }
+            // },
+            {
+                path: 'test3',
+                title: '树',
+                name: 'test3_index',
+                component: resolve => {
+                    require(['@/views/test/components/test3.vue'], resolve);
 
-    //         //     }
-    //         // },
-    //         {
-    //             path: 'test4',
-    //             title: '树形表测试',
-    //             name: 'test4_index',
-    //             component: resolve => {
-    //                 require(['@/views/test/components/test4.vue'], resolve);
+                }
+            },
+            // {
+            //     path: 'test4',
+            //     title: '树形表测试',
+            //     name: 'test4_index',
+            //     component: resolve => {
+            //         require(['@/views/test/components/test4.vue'], resolve);
 
-    //             }
-    //         },
-    //         {
-    //             path: 'test5',
-    //             title: '树型表',
-    //             name: 'test05_index',
-    //             component: resolve => {
-    //                 require(['@/views/test/components/test5.vue'], resolve);
+            //     }
+            // },
+            // {
+            //     path: 'test5',
+            //     title: '树型表',
+            //     name: 'test05_index',
+            //     component: resolve => {
+            //         require(['@/views/test/components/test5.vue'], resolve);
 
-    //             }
-    //         },
-            
-    //     ]
-    // },
+            //     }
+            // }
+        ]
+    },
     // {
     //     path: '/allindex',
     //     icon: 'social-windows',
@@ -1525,5 +1547,4 @@ export const routers = [
     page500,
     page403,
     page404,
-    
 ];

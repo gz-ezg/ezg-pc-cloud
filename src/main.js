@@ -580,8 +580,7 @@ Vue.prototype.matchingFields = function (a){
 
 
 //  路由跳转之前检查是否有权限访问该页面
-router.beforeEach((to, from, next)=>{
-    
+router.beforeEach((to, from, next)=>{    
     // Vue.$bus.emit("SPIN_START",true)
     let temp = JSON.parse(localStorage.getItem("access_array"))
     

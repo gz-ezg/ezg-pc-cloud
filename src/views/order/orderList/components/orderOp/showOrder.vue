@@ -31,9 +31,9 @@
                     </FormItem>
                     </Col>
                     <Col span="8">
-                    <FormItem label="已付款" prop="realnumber">
-                        <Input size="small" v-model="orderDetail.realnumber" readonly/>
-                    </FormItem>
+                        <FormItem label="已付款" prop="realname">
+                            <Input size="small" v-model="orderDetail.realname" readonly/>
+                        </FormItem>
                     </Col>
                     <Col span="8">
                     <FormItem label="缴费渠道" prop="paydir">

@@ -57,26 +57,30 @@
                                 <!-- <P :class="{warn:item.followType <= 18 && item.userName== '胡小红', error:item.followType == 18 && item.userName == '管理员' }" >{{ item.serviceContent }}</P> -->
                             </Row>
                             <!-- 图片 -->
-                            <Row :gutter="12">
-                                <Col v-if="item.imgs" v-for="(url_img, imgIndex) in item.imgs" :key=imgIndex span="8" style="max-width:200px">
-                                    <a target="_blank" :href="url_img.url" v-if="url_img.type == 'doc' || url_img.type == 'docx'">
-                                        <img :src="'/api/assets/upload/commonImg/word.png'" alt="word" width="95%"/>
-                                    </a>
-                                    <a target="_blank" :href="url_img.url" v-else-if="url_img.type == 'xls' || url_img.type == 'xlsx'">
-                                        <img :src="'/api/assets/upload/commonImg/excel.png'" alt="excel" width="95%"/>
-                                    </a>
-                                    <a target="_blank" :href="url_img.url" v-else-if="url_img.type == 'pptx' || url_img.type == 'ppt'">
-                                        <img :src="'/api/assets/upload/commonImg/ppt.png'" alt="ppt" width="95%"/>
-                                    </a>
-                                    <a target="_blank" :href="url_img.url" v-else-if="url_img.type == 'txt'">
-                                        <img :src="'/api/assets/upload/commonImg/txt.png'" alt="txt" width="95%"/>
-                                    </a>
-                                    <a target="_blank" :href="url_img.url" v-else-if="url_img.type == 'pdf'">
-                                        <img :src="'/api/assets/upload/commonImg/pdf.jpg'" alt="txt" width="95%"/>
-                                    </a>
-                                    <a target="_blank" :href="url_img.url" v-else>
-                                        <img :src="url_img.url" alt="图片" width="95%" onerror="this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null"/>
-                                    </a>
+                            <Row :gutter="12" v-if="item.imgs">
+                                <Row><Tag type="border" color="blue" style='margin-bottom:5px'>点击图标可预览</Tag></Row>
+                                <Col v-for="(url_img, imgIndex) in item.imgs" :key=imgIndex span="8" style="max-width:200px">
+                                    <Row>
+                                        <a target="_blank" :href="url_img.url" v-if="url_img.type == 'doc' || url_img.type == 'docx'">
+                                            <img :src="'/api/assets/upload/commonImg/word.png'" alt="word" width="95%"/>
+                                        </a>
+                                        <a target="_blank" :href="url_img.url" v-else-if="url_img.type == 'xls' || url_img.type == 'xlsx'">
+                                            <img :src="'/api/assets/upload/commonImg/excel.png'" alt="excel" width="95%"/>
+                                        </a>
+                                        <a target="_blank" :href="url_img.url" v-else-if="url_img.type == 'pptx' || url_img.type == 'ppt'">
+                                            <img :src="'/api/assets/upload/commonImg/ppt.png'" alt="ppt" width="95%"/>
+                                        </a>
+                                        <a target="_blank" :href="url_img.url" v-else-if="url_img.type == 'txt'">
+                                            <img :src="'/api/assets/upload/commonImg/txt.png'" alt="txt" width="95%"/>
+                                        </a>
+                                        <a target="_blank" :href="url_img.url" v-else-if="url_img.type == 'pdf'">
+                                            <img :src="'/api/assets/upload/commonImg/pdf.jpg'" alt="txt" width="95%"/>
+                                        </a>
+                                        <a target="_blank" :href="url_img.url" v-else>
+                                            <img :src="url_img.url" alt="图片" width="95%" onerror="this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null"/>
+                                        </a>
+                                    </Row>
+                                    <Row style="margin-bottom:5px"><center><Button type="text" size="small" @click="download(url_img)">下载</Button></center></Row>
                                 </Col>
                             </Row>
                             
@@ -220,15 +224,16 @@ export default {
                                 type: ""
                             }
                             tempUrl.url = 'api/assets/' + temp[j].split("``")[1]
+                            tempUrl.realpath = 'api/assets/' + temp[j].split("``")[1]
                             tempUrl.type = tempUrl.url.split(".")[1]
-                            if(tempUrl.type == 'doc' || tempUrl.type == "docx"){
+                            if(tempUrl.type == 'doc' || tempUrl.type == "docx" || tempUrl.type == "xls" || tempUrl.type == "xlxs" || tempUrl.type == "pptx" || tempUrl.type == "ppt"){
                                 //  必须是外网能够访问到的文件
                                 //  详情参见微软官网
-                                tempUrl.url = "http://view.officeapps.live.com/op/view.aspx?src="+encodeURI("http://cloud.zgcfo.com/" + tempUrl.url)
-                            }else if(tempUrl.type == "xls" || tempUrl.type == "xlxs"){
-                                tempUrl.url = "http://view.officeapps.live.com/op/view.aspx?src="+encodeURI("http://cloud.zgcfo.com/" + tempUrl.url)
-                            }else if(tempUrl.type == "pptx" || tempUrl.type == "ppt"){
-                                tempUrl.url = "http://view.officeapps.live.com/op/view.aspx?src="+encodeURI("http://cloud.zgcfo.com/" + tempUrl.url)
+                            //     tempUrl.url = "http://view.officeapps.live.com/op/view.aspx?src="+encodeURI("http://cloud.zgcfo.com/" + tempUrl.url)
+                            // }else if(tempUrl.type == "xls" || tempUrl.type == "xlxs"){
+                            //     tempUrl.url = "http://view.officeapps.live.com/op/view.aspx?src="+encodeURI("http://cloud.zgcfo.com/" + tempUrl.url)
+                            // }else if(tempUrl.type == "pptx" || tempUrl.type == "ppt"){
+                            //     tempUrl.url = "http://view.officeapps.live.com/op/view.aspx?src="+encodeURI("http://cloud.zgcfo.com/" + tempUrl.url)
                             }else{
 
                             }
@@ -344,6 +349,9 @@ export default {
         },
         open_detail(e){
             this.$bus.emit("OPEN_CUSTOMER_FOLLOW_FIELD", e)
+        },
+        download(url_img){
+            window.open(url_img.realpath)
         }
     },
     created(){
