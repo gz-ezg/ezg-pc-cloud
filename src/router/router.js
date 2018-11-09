@@ -280,22 +280,22 @@ export const appRouter = [
         //     keepAlive: false
         // },
         children: [
+            // {
+            //     access: 6002,
+            //     meta: 6002,
+            //     path: 'marketingManagement2',
+            //     title: '营销管理(old)',
+            //     name: 'marketingManagement_index2',
+            //     component: resolve => {
+            //         require(['@/views/customerManagement/marketingManagement/customerManagement.vue'], resolve);
+            //     }
+            // },
             {
                 access: 6002,
                 meta: 6002,
                 path: 'marketingManagement',
                 title: '营销管理',
                 name: 'marketingManagement_index',
-                component: resolve => {
-                    require(['@/views/customerManagement/marketingManagement/customerManagement.vue'], resolve);
-                }
-            },
-            {
-                access: 6002,
-                meta: 6002,
-                path: 'marketingManagement2',
-                title: '营销管理2',
-                name: 'marketingManagement_index2',
                 component: resolve => {
                     require(['@/views/customerManagement/marketingManagement2'], resolve);
                 }

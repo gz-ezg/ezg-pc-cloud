@@ -1,8 +1,8 @@
 <template>
     <div>
-        <Row style="height:56px">
+        <Row style="height:24px">
             <Row>
-                <Button name="marketingManagement_index_followUp_add" type="primary" shape="circle" icon="plus" @click="open_create_followUp">新增</Button>
+                <!-- <Button name="marketingManagement_index_followUp_add" type="primary" shape="circle" icon="plus" @click="open_create_followUp">新增</Button> -->
                 <Checkbox v-model="single" style="float:right" @on-change="get_data(customer.ID)">只看市场跟进</Checkbox>
             </Row>
         </Row>
@@ -11,7 +11,7 @@
                 <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
                 <div>加载跟进记录中...</div>
             </Spin>
-            <Timeline style="margin-top: 15px;margin-right:10px">
+            <Timeline style="margin-top: 5px;margin-right:10px">
                 <div class="content">
                     <TimelineItem color="blue" v-for="(item, index) in followList" :key="index" >
                         <Icon v-if="item.followType == '11'" type="ios-telephone" slot="dot"></Icon>
@@ -59,23 +59,8 @@
                             <!-- 图片 -->
                             <Row :gutter="12">
                                 <Col v-if="item.imgs" v-for="(url_img, imgIndex) in item.imgs" :key=imgIndex span="8" style="max-width:200px">
-                                    <a target="_blank" :href="url_img.url" v-if="url_img.type == 'doc' || url_img.type == 'docx'">
-                                        <img :src="'/api/assets/upload/commonImg/word.png'" alt="word" width="95%"/>
-                                    </a>
-                                    <a target="_blank" :href="url_img.url" v-else-if="url_img.type == 'xls' || url_img.type == 'xlsx'">
-                                        <img :src="'/api/assets/upload/commonImg/excel.png'" alt="excel" width="95%"/>
-                                    </a>
-                                    <a target="_blank" :href="url_img.url" v-else-if="url_img.type == 'pptx' || url_img.type == 'ppt'">
-                                        <img :src="'/api/assets/upload/commonImg/ppt.png'" alt="ppt" width="95%"/>
-                                    </a>
-                                    <a target="_blank" :href="url_img.url" v-else-if="url_img.type == 'txt'">
-                                        <img :src="'/api/assets/upload/commonImg/txt.png'" alt="txt" width="95%"/>
-                                    </a>
-                                    <a target="_blank" :href="url_img.url" v-else-if="url_img.type == 'pdf'">
-                                        <img :src="'/api/assets/upload/commonImg/pdf.jpg'" alt="txt" width="95%"/>
-                                    </a>
-                                    <a target="_blank" :href="url_img.url" v-else>
-                                        <img :src="url_img.url" alt="图片" width="95%" onerror="this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null"/>
+                                    <a target="_blank" :href="url_img">
+                                        <img :src="url_img" alt="图片丢失" width="95%"/>
                                     </a>
                                 </Col>
                             </Row>
@@ -93,7 +78,7 @@
                                 <Div v-if="currentIndex == index" style="margin-top:10px">
                                     <Row>
                                         <Col span="22">
-                                            <Input v-model="pinglun[index]" type="textarea" :autosize="true" placeholder="请输入您要评价的内容" :key="index" style="width:99%"/>
+                                            <Input v-model="pinglun[index]" type="textarea" :autosize="true" placeholder="请输入您要评价的内容" :key="index" style="width:99%" disabled/>
                                         </Col>
                                         <Col span="2">
                                             <Button style="float: right" type="primary" @click="send(item.bussinessId,index,item.ranks)">评价</Button>
@@ -118,7 +103,7 @@
                             <Row v-if="item.buttonDetail">
                                 <div style="float: right">
                                     <Button type="primary" shape="circle" v-for="(button, index) in item.buttonDetail" :key=index
-                                            :disabled="button.buttonsZt == '1'" @click="lingqu(button)" style="margin-left:5px">
+                                            disabled style="margin-left:5px">
                                         {{ button.buttonText }}
                                     </Button>
                                     <!-- <Button  shape="circle" v-for="(item2,index) in itemss" :key=index
@@ -213,29 +198,11 @@ export default {
                     if(_self.followList[i].imgurls != null){
                         let urls = []
                         let temp = _self.followList[i].imgurls.split(",")
-                        
+                        let tempUrl
                         for(let j = 0; j < temp.length; j++){
-                            let tempUrl = {
-                                url: "",
-                                type: ""
-                            }
-                            tempUrl.url = 'api/assets/' + temp[j].split("``")[1]
-                            tempUrl.type = tempUrl.url.split(".")[1]
-                            if(tempUrl.type == 'doc' || tempUrl.type == "docx"){
-                                //  必须是外网能够访问到的文件
-                                //  详情参见微软官网
-                                tempUrl.url = "http://view.officeapps.live.com/op/view.aspx?src="+encodeURI("http://cloud.zgcfo.com/" + tempUrl.url)
-                            }else if(tempUrl.type == "xls" || tempUrl.type == "xlxs"){
-                                tempUrl.url = "http://view.officeapps.live.com/op/view.aspx?src="+encodeURI("http://cloud.zgcfo.com/" + tempUrl.url)
-                            }else if(tempUrl.type == "pptx" || tempUrl.type == "ppt"){
-                                tempUrl.url = "http://view.officeapps.live.com/op/view.aspx?src="+encodeURI("http://cloud.zgcfo.com/" + tempUrl.url)
-                            }else{
-
-                            }
+                            tempUrl = 'api/assets/' + temp[j].split("``")[1]
                             urls.push(tempUrl)
-                            // console.log(tempUrl)
                         }
-                        // console.log(urls)
                         _self.followList[i].imgs = urls
                     }
                     //  线索
@@ -262,6 +229,7 @@ export default {
                             tempChat.name = tempEvaluate[j].split('``')[1]
                             _self.followList[i].chat.push(tempChat)
                         }
+                        // console.log(_self.followList[i].chat)
                     }else{
                         _self.followList[i].evaluateNum = 0
                         _self.followList[i].chat = []
@@ -274,26 +242,26 @@ export default {
             this.$Get(url, config, success)
         },
         //线索领取
-        lingqu(item){
-            let _self = this
-            let url = 'api' + item.buttonsdetail
+        // lingqu(item){
+        //     let _self = this
+        //     let url = 'api' + item.buttonsdetail
 
-            let config = {}
+        //     let config = {}
 
-            function success(res){
-                _self.$Message.success("领取成功！")
-                _self.get_data(_self.customer.ID)
-            }
+        //     function success(res){
+        //         _self.$Message.success("领取成功！")
+        //         _self.get_data(_self.customer.ID)
+        //     }
 
-            function fail(err){
-                _self.$Message.error("领取失败！")
-            }
+        //     function fail(err){
+        //         _self.$Message.error("领取失败！")
+        //     }
 
-            this.$Get(url, config, success)
-        },
+        //     this.$Get(url, config, success)
+        // },
         //  打开评论
         open_evaluate(id, index){
-            // console.log(index)
+            console.log(index)
             if(this.currentIndex == index){
                 this.currentIndex = -1
             }else{
@@ -339,11 +307,11 @@ export default {
 
             this.$Post(url, config, success, fail)
         },
-        open_create_followUp(){
-            this.$bus.emit("OPEN_CUSTOMER_CREATE_FOLLOW_UP", true)
-        },
+        // open_create_followUp(){
+        //     this.$bus.emit("OPEN_CUSTOMER_CREATE_FOLLOW_UP", true)
+        // },
         open_detail(e){
-            this.$bus.emit("OPEN_CUSTOMER_FOLLOW_FIELD", e)
+            this.$bus.emit("SHOW_OPEN_CUSTOMER_FOLLOW_FIELD", e)
         }
     },
     created(){

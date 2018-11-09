@@ -124,7 +124,7 @@
     import Bus from '../../../components/bus'
 
     export default {
-        name:'marketingManagement_index',
+        name:'marketingManagement_index2',
         components: {
             // HFdetail,
             addFrom,

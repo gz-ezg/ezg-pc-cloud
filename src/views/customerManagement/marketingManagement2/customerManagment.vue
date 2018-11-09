@@ -214,7 +214,7 @@ import Qcode from './op/code'
 import delCustomer from './op/del'
 
 export default {
-    name: "marketingManagement_index2",
+    name: "marketingManagement_index",
     mixins: [commonVue],
     components:{
         createCustomer,
