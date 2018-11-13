@@ -85,7 +85,8 @@
                 <Row :gutter="16" v-if="customerShow">
                     <Col span="12">
                         <FormItem label="推荐客户" prop="recCustomer" >
-                            <Input size="small" v-model="formValidate.recCustomer" @on-focus="getCustomer" readonly />                    
+                            <!-- <Input size="small" v-model="formValidate.recCustomer" @on-focus="getCustomer" readonly />               -->
+                            <Input size="small" v-model="formValidate.recCustomer" readonly />              
                         </FormItem>
                     </Col>
                 </Row>

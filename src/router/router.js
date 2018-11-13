@@ -206,7 +206,7 @@ export const appRouter = [
             // },
             {
                 path: 'test3',
-                title: '树',
+                title: '滑动验证码',
                 name: 'test3_index',
                 component: resolve => {
                     require(['@/views/test/components/test3.vue'], resolve);
@@ -615,24 +615,24 @@ export const appRouter = [
                     require(['@/views/productManagement/productListNew/index.vue'], resolve);
                 }
             },
-            // {
-            //     access: 6014,
-            //     path: 'productType',
-            //     title: '产品类型',
-            //     name: 'productType_index',
-            //     component: resolve => {
-            //         require(['@/views/productManagement/productType/productType.vue'], resolve);
-            //     }
-            // },
-            // {
-            //     access: 6015,
-            //     path: 'productAttribute',
-            //     title: '属性管理',
-            //     name: 'productAttribute_index',
-            //     component: resolve => {
-            //         require(['@/views/productManagement/productType/attributeManagement.vue'], resolve);
-            //     }
-            // },
+            {
+                access: 6014,
+                path: 'productType',
+                title: '产品类型',
+                name: 'productType_index',
+                component: resolve => {
+                    require(['@/views/productManagement/productTypeNew/index.vue'], resolve);
+                }
+            },
+            {
+                access: 6015,
+                path: 'productAttrList',
+                title: '属性管理',
+                name: 'productAttrList_index',
+                component: resolve => {
+                    require(['@/views/productManagement/productAttrList/index.vue'], resolve);
+                }
+            },
             // {
             //     access: 6016,
             //     path: 'areaManagement',

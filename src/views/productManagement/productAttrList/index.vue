@@ -29,8 +29,14 @@
                         </div>
                     </Panel>
                 </Collapse>
-            <Row style="margin-top: 10px;">
+            
+            <Row style="margin-top: 10px;" :gutter="20">
                 <Col span="12">
+                    <Row style="margin-bottom:10px" :gutter="20">
+                        <Col>
+                            <Button type="primary" @click="openCreateAttr=true">新增属性</Button>
+                        </Col>
+                    </Row>
                     <Table
                         :loading="loading"
                         highlight-row 
@@ -51,22 +57,26 @@
                         style="margin-top: 10px"></Page>
                 </Col>
                 <Col span="12">
-                    <product-attr :product="selectRow" style="margin-left:5px"></product-attr>
+                    <product-attr-list style="margin-left:5px" :productAttr="selectRow"></product-attr-list>
                 </Col>
             </Row>
         </Card>
+        <create-attr v-if="openCreateAttr" @close="openCreateAttr=false"></create-attr>
     </div>
 </template>
 
 <script>
-import productAttr from './productAttr'
+import productAttrList from './editProductAttr'
+import createAttr from './createAttr'
 export default {
-    name: "productList_index",
+    name: "productAttrList_index",
     components:{
-        productAttr
+        productAttrList,
+        createAttr
     },
     data(){
         return {
+            openCreateAttr: false,
             search_model: "",
             loading: false,
             header: [
@@ -76,20 +86,20 @@ export default {
                 //     width: 90
                 // },
                 {
-                    title: "产品名称",
-                    key: "product",
-                    minWidth: 180
-                },
-                {
-                    title: "状态",
-                    key: "statusText",
-                    minWidth: 90,
-                },
-                {
-                    title: "产品编码",
-                    key: "productCode",
+                    title: "分类",
+                    key: "typeName",
                     minWidth: 150
                 },
+                {
+                    title: "属性名称",
+                    key: "name",
+                    minWidth: 150,
+                },
+                // {
+                //     title: "产品编码",
+                //     key: "productCode",
+                //     minWidth: 150
+                // },
                 {
                     title: "操作",
                     key: "action",
@@ -129,6 +139,11 @@ export default {
                                     size: "small",
                                     icon: "trash-a",
                                     disabled: true
+                                },
+                                on: {
+                                    click: ()=>{
+                                        this.deleteProductAttr(params.row)
+                                    }
                                 }
                             }, "删除"),
                         ])
@@ -149,7 +164,7 @@ export default {
     methods:{
         get_data(){
             let _self = this
-            let url = `api/product/list`
+            let url = `api/product/property/list`
             _self.loading = true
             let config = {
                 params:{
@@ -163,13 +178,6 @@ export default {
             function success(res){
                 _self.data = res.data.data.rows
                 _self.total = res.data.data.total
-                for(let i = 0;i<_self.data.length; i++){
-                    if(_self.data[i].status == 0){
-                        _self.data[i].statusText = "下架"
-                    }else{
-                        _self.data[i].statusText = "在售"
-                    }
-                }
                 _self.loading = false
             }
 
@@ -195,6 +203,30 @@ export default {
         },
         select_row(e){
             this.selectRow = e
+        },
+        //  删除属性
+        deleteProductAttr(e){
+            let url = `api/product/property/delProperty`
+
+            let config = {
+                params: {
+                    id: e.id
+                }
+            }
+
+            function success(res){
+                _self.$Message.success("删除成功！")
+                _self.get_data()
+            }
+
+            function fail(err){
+                _self.$Message.error("删除失败！")
+            }
+
+            this.$Get(url, config, success, fail)
+        },
+        create_attr(){
+
         }
     },
     watch:{

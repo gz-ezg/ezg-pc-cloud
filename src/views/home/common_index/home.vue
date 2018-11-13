@@ -127,7 +127,7 @@
             </Col>
         </Row>-->
         <Row :gutter="10" class="margin-top-10" style="height:450px">
-            <Col :md="24" :lg="12" :style="{marginBottom: '10px'}">
+            <Col  :span="12" :style="{marginBottom: '10px'}">
                 <Card style="height:450px">
                     <p slot="title" class="card-title">
                         <Icon type="android-map"></Icon>
@@ -138,7 +138,7 @@
                     </div>
                 </Card>
             </Col>
-            <Col :md="24" :lg="12" :style="{marginBottom: '10px'}">
+            <Col :span="12" :style="{marginBottom: '10px'}">
                 <Card style="height:450px">
                     <p slot="title" class="card-title">
                         <Icon type="ios-pulse-strong"></Icon>

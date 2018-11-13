@@ -14,12 +14,28 @@
                         <div class="productDetail-title-content">
                         </div>
                     </Row>
-                    <Row v-for="(item, index) in queryProperty" :key="index" class="type-select">
-                        <p>{{item.name}}</p>
-                        <RadioGroup v-model="selectProperty[index]" type="button" size="large" @on-change="property_change">
-                            <Radio v-for="(type, index2) in item.children" :label="type.pvId" :key="index2">{{type.propertyValue}}</Radio>
-                        </RadioGroup>
-                    </Row>
+                    <Row class="type-select" v-if="selectProduct.id == 100 && changeArea">
+                        <!-- <Row v-for="(item, index) in queryProperty" :key="index" class="type-select"> -->
+                            <p>{{queryProperty[0].name}}</p>
+                            <RadioGroup v-model="selectProperty[0]" type="button" size="large" @on-change="property_change;selectProperty[1]='';productPrice=0;SKU=''" >
+                                <Radio v-for="(type, index2) in queryProperty[0].children" :label="type.pvId" :key="index2">{{type.propertyValue}}</Radio>
+                            </RadioGroup>
+                            <p v-if="selectProperty[0]==310">{{queryProperty[2].name}}</p>
+                            <RadioGroup v-model="selectProperty[1]" type="button" size="large" v-if="selectProperty[0]==310" @on-change="property_change">
+                                <Radio v-for="(type, index) in queryProperty[2].children" :label="type.pvId" :key="index">{{type.propertyValue}}</Radio>
+                            </RadioGroup>
+                            <p v-if="selectProperty[0]!=310">{{queryProperty[1].name}}</p>
+                            <RadioGroup v-model="selectProperty[1]" type="button" size="large" @on-change="property_change" v-if="selectProperty[0]!=310">
+                                <Radio v-for="(type, index) in queryProperty[1].children" :label="type.pvId" :key="index">{{type.propertyValue}}</Radio>
+                            </RadioGroup>
+                            <!-- </Row> -->
+                        </Row>
+                        <Row v-if="selectProduct.id != 100" v-for="(item, index) in queryProperty" :key="index" class="type-select">
+                            <p>{{item.name}}</p>
+                            <RadioGroup v-model="selectProperty[index]" type="button" size="large" @on-change="property_change" >
+                                <Radio v-for="(type, index2) in item.children" :label="type.pvId" :key="index2">{{type.propertyValue}}</Radio>
+                            </RadioGroup>
+                        </Row>
                     <Row style="margin-top:20px">
                         <p style="font-size:16px;padding-bottom:16px">地区</p>
                         <Col span="10">
@@ -27,7 +43,7 @@
                         </Col>
                     </Row>
                     <Row>
-                        <!-- <Button type="error" icon="bag" size="large" style="margin-top: 20px" @click="add_product" :disabled="disabled">立即购买</Button> -->
+                        <Button type="error" icon="bag" size="large" style="margin-top: 20px" @click="edit_product_price" :disabled="disabled">修改产品价格</Button>
                         <Button type="error" icon="bag" size="large" style="margin-top: 20px" @click="open_flow_img">查看流程图</Button>
                     </Row>
                 </Card>
@@ -43,6 +59,7 @@ export default {
     },
     data(){
         return {
+            changeArea: false,
             sideLoading: false,
             productPrice: 0,
             areaCode: ['440000', '440100', '440103'],
@@ -71,6 +88,7 @@ export default {
                 this.$Message.error("对不起，该产品已经不允许操作！")
                 return false;
             }
+            this.SKU = ""
             this.sideLoading = true
             this.selectProduct = this.product
             this.productPrice = 0
@@ -91,6 +109,25 @@ export default {
 
             function success(res){
                 _self.queryProperty = res.data.data
+                if(_self.product.id == 100){
+                    console.log(_self.queryProperty)
+                    let temp = []
+                    for(let i = 0; i< _self.queryProperty.length; i++){
+                        if(_self.queryProperty[i].propertyId == 95){
+                            temp[0] = _self.queryProperty[i]
+                        }
+                        if(_self.queryProperty[i].propertyId == 23){
+                            temp[1] = _self.queryProperty[i]
+                        }
+                        if(_self.queryProperty[i].propertyId == 16){
+                            temp[2] = _self.queryProperty[i]
+                        }
+                    }
+                    _self.queryProperty = temp
+                    _self.changeArea = true
+                }else{
+                    _self.changeArea = false
+                }
             }
 
             this.$Get(url, config, success)
@@ -247,11 +284,22 @@ export default {
             if(row.id == "14"){
                 return 'disabled-row';
             }
+        },
+
+        edit_product_price(){
+            
         }
     },
     computed:{
         isAdmin(){
             if(localStorage.getItem("id") == "10059"){
+                return true
+            }else{
+                return false
+            }
+        },
+        disabled(){
+            if(!this.SKU){
                 return true
             }else{
                 return false

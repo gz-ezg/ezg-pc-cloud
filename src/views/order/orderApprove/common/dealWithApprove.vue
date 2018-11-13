@@ -264,7 +264,7 @@ export default {
         //  办理审批
         submit(){
             let _self = this
-            _self.submit_loading = true
+            _self.submitLoading = true
             let url = 'api/activiti/toDoWorkFlowByBid'
             
             let config = {

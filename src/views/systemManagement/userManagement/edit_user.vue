@@ -194,7 +194,9 @@ export default {
                 roleName: "",
                 departName: "",
                 userAliasId: "",
-                visable: []
+                visable: [],
+                officephone: "",
+                aliasName: ""
             },
             formdataRule:{
                 username:[
@@ -227,6 +229,9 @@ export default {
                 // userAliasId:[
                 //     { message:"格式错误！",type: 'number', trigger: 'change' },
                 // ]
+                officephone: [
+                    { message:"格式错误！", validator:validateTel,  trigger: 'change' },
+                ]
             }
         }
     },
@@ -260,7 +265,9 @@ export default {
                 mobilephone: _self.formdata.mobilePhone,
                 email: _self.formdata.email,
                 userAliasId: _self.formdata.userAliasId,
-                visable: _self.formdata.visable.join(",")
+                visable: _self.formdata.visable.join(","),
+                aliasName: _self.formdata.aliasName,
+                officephone: _self.formdata.officephone
             }
 
             function success(res){
@@ -312,6 +319,9 @@ export default {
                 _self.formdata.orgIds = res.data.data.orgId
                 _self.formdata.departName = res.data.data.departName
                 _self.formdata.userAliasId = res.data.data.userAliasId
+                _self.formdata.aliasName = res.data.data.aliasName
+                _self.formdata.officephone = res.data.data.officephone
+
                 if(res.data.data.visable){
                     _self.formdata.visable = res.data.data.visable.split(",")
                 }
@@ -334,7 +344,7 @@ export default {
             this.$GetDataCenter(params, success)
         }
     },
-    created(){
+    mounted(){
         let _self = this
         _self.get_data_center()
         this.$bus.on("UPDATE_USER",(e) => {

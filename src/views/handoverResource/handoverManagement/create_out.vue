@@ -243,7 +243,7 @@ export default {
                     console.log(res.data)
                     if(_self.outType == "customer"){
                         _self.send_customer_msg(res.data.data.id)
-                        _self.$bus.emit("OPEN_OUTER_QCODER", res.data.data.id)
+                        // _self.$bus.emit("OPEN_OUTER_QCODER", res.data.data.id)
                         _self.otherName = ""
                     }
                     _self.$bus.emit("HANDOVER_FILE_UPDATE",true)
@@ -313,7 +313,7 @@ export default {
                     page: _self.page,
                     pageSize: _self.pageSize,
                     companyname: _self.companyName,
-                    file_status: "normal",
+                    file_status: "'normal'",
                     keeper_flag: 1
                 }
                 

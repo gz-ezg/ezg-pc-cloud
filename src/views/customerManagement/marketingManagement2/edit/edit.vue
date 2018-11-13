@@ -36,7 +36,8 @@
                 </Select>
             </FormItem>
             <FormItem label="推荐客户" prop="rec_customer" v-if="formValidate.customersource == 'khtj'" style="margin-bottom:0px">
-                <Input size="small" v-model="formValidate.rec_customer" @on-focus="getCustomer" readonly />                    
+                <!-- <Input size="small" v-model="formValidate.rec_customer" @on-focus="getCustomer" readonly />                     -->
+                <Input size="small" v-model="formValidate.rec_customer" readonly />                    
             </FormItem>
             <FormItem label="客户等级" prop="importlevel" style="margin-bottom:0px">
                 <Select transfer v-model="formValidate.importlevel" size="small" :disabled="formValidate.customerType[0] == 10919">
@@ -53,8 +54,8 @@
                     <Option v-for="item in area" :value="item.typecode" :key="item.id">{{ item.typename }}</Option>
                 </Select>
             </FormItem>
-            <FormItem label="发送短信" prop="issends" style="margin-bottom:0px">
-                <Select transfer v-model="formValidate.issends" size="small" >
+            <FormItem label="发送短信" prop="issend" style="margin-bottom:0px">
+                <Select transfer v-model="formValidate.issend" size="small" >
                     <Option v-for="item in sf_yn" :value="item.typecode" :key="item.id">{{ item.typename }}</Option>
                 </Select>
             </FormItem>
@@ -174,7 +175,7 @@ export default {
                 customersource: "",
                 importlevel: "",
                 AREA: "",
-                issends: "   ",
+                issend: "",
                 customerlabel: [],
                 createdate: "",
                 updatedate: "",
@@ -185,7 +186,7 @@ export default {
                 email: "",
                 channelsource: "",
                 channel_type_id: "",
-                recCustomer: "",
+                rec_customer: "",
                 importance: "",
                 labels: []
             },
@@ -326,7 +327,7 @@ export default {
                 tel: _self.formValidate.TEL,
                 backup: _self.formValidate.backup,
                 customertype: _self.formValidate.customerType.join("-"),
-                issend: _self.formValidate.issends,
+                issend: _self.formValidate.issend,
                 fixedphone: _self.formValidate.fixedPhone,
                 qq: _self.formValidate.qq,
                 weixin: _self.formValidate.weixin,
@@ -335,7 +336,7 @@ export default {
                 sourcesubdivision: _self.formValidate.sourcesubdivision,
                 importlevel: _self.formValidate.importlevel,
                 channelTypeId: _self.formValidate.channel_type_id,
-                recCustomer: _self.formValidate.recCustomer,
+                recCustomer: _self.formValidate.rec_customer,
                 labels: _self.formValidate.labels.join(","),
                 importance: _self.formValidate.importance
             }

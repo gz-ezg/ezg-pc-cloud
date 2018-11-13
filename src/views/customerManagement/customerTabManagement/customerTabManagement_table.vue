@@ -153,28 +153,28 @@
                 },
                 columns: [{
                     type: 'index',
-                    width: 60,
+                    minWidth: 60,
                     align: 'center'
                 },
                     {
                         title: '标签名称',
                         key: 'labelName',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '编码',
                         key: 'labelCode',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '是否为渠道商标签',
                         key: 'channelFlag',
-                        width: 150
+                        minWidth: 150
                     },
                     {
                         title: '说明',
                         key: 'labelMemo',
-                        width: 200
+                        minWidth: 200
                     },
                     {
                         title: '操作',
@@ -231,17 +231,6 @@
                 this.getTableData()
             },
 
-            //  搜索
-            // search(){
-            //     var _self = this
-            //     if(_self.searchformInline.labelName==''){
-            //         _self.isSearch = false
-            //         _self.getTableData()                                   
-            //     }else{
-            //         _self.isSearch = true
-            //         _self.getTableData()
-            //     }
-            // },
             reset(){
                 var _self = this
                 _self.isSearch = false

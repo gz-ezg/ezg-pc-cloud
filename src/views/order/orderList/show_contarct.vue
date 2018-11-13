@@ -63,10 +63,13 @@ export default {
     methods: {
         get_contarct_data(){
             let _self = this
-            let url = `/api/customer/findCustomerFilesById/` + _self.orderId
+            let url = `/api/customer/findCustomerFilesById`
 
             let config = {
-
+                params: {
+                    customerId: _self.orderId,
+                    bType: "OrderConctract"
+                }
             }
 
             function success(res){

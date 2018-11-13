@@ -246,7 +246,7 @@ export default {
                 {
                     title: "操作",
                     key: "action",
-                    minWidth: 120,
+                    minWidth: 180,
                     render: (h, parmas) =>{
                         return h('div',[
                             h('Button',{
@@ -260,17 +260,18 @@ export default {
                                     }
                                 }
                             },'[查看详情]'),
-                            // h('Button',{
-                            //     props: {
-                            //         type: 'text',
-                            //         size: 'small'
-                            //     },
-                            //     on: {
-                            //         click: () => {
-                            //             this.open_request(parmas.row.id)
-                            //         }
-                            //     }
-                            // },'[查看协商]'),
+                            h('Button',{
+                                props: {
+                                    type: 'text',
+                                    size: 'small',
+                                    disabled: !(parmas.row.connect_type == "出库")
+                                },
+                                on: {
+                                    click: () => {
+                                        this.send_customer_msg(parmas.row.id)
+                                    }
+                                }
+                            },'[微信推送]'),
                         ])
                     }
                 }
@@ -388,7 +389,25 @@ export default {
         select_row(e){
             // console.log(e)
             this.selectRow = e
-        }
+        },
+        send_customer_msg(e){
+            console.log(e)
+            let url = `api/customer/file/connect/request/customer/send`
+            let _self  = this
+            let config = {
+                connectRequestId: e
+            }
+
+            function success(res){
+                _self.$Message.success("推送发送成功！")
+            }
+
+            function fail(err){
+                _self.$Message.error("推送发送失败！")
+            }
+
+            this.$Post(url, config, success, fail)
+        },
     },
     created(){
         let _self = this

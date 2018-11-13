@@ -126,8 +126,17 @@ export default {
             get_file_list () {
                 var _self = this
                 _self.loading = true
-                let url = '/api/customer/findCustomerFilesById/' + _self.customer.ID
-                let config = {}
+                // let url = '/api/customer/findCustomerFilesById/' + _self.customer.ID
+                // let config = {}
+
+                let url = `/api/customer/findCustomerFilesById`
+
+                let config = {
+                    params:{
+                        customerId: _self.customer.ID,
+                        bType: "CustomerData"
+                    }
+                }
 
                 function success(res){
                     _self.data = res.data.data

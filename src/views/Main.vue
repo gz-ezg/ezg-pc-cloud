@@ -13,11 +13,9 @@
                 :menu-list="menuList">
                 <div slot="top" class="logo-con">
                     <img v-show="!shrink"  src="../images/LOGO.png" key="max-logo" />
-                    <!--<img v-show="shrink" src="../images/td_icon.ico" key="min-logo" />-->
                 </div>
             </shrinkable-menu>
         </div>
-        <!-- <div>{{keepPage}}</div> -->
         <div class="main-header-con" :style="{paddingLeft: shrink?'60px':'200px'}">
             <div class="main-header">
                 <div class="navicon-con">
@@ -32,8 +30,8 @@
                 </div>
                 <div class="header-avator-con">
                     <!-- <full-screen v-model="isFullScreen" @on-change="fullscreenChange"></full-screen>
-                    <lock-screen></lock-screen>
-                    <message-tip v-model="mesCount"></message-tip> -->
+                    <lock-screen></lock-screen> -->
+                    <!-- <message-tip v-model="mesCount"></message-tip> -->
                     <!-- <theme-switch></theme-switch> -->
                     <div style="height:100%">
                         <Button size="small" type="primary" style="margin-top:18px;margin-left:110px" @click="tip=true;tipColse=true">我要反馈</Button>
@@ -53,7 +51,8 @@
                                     <DropdownItem name="loginout" divided>退出登录</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
-                            <Avatar :src="avatorPath" style="background: #619fe7;margin-left: 10px;"></Avatar>
+                            <!-- <Avatar :src="avatorPath" style="background: #619fe7;margin-left: 10px;"></Avatar> -->
+                            <Avatar icon="person" style="background: #619fe7;margin-left: 10px;"></Avatar>
                         </Row>
                     </div>
                 </div>
@@ -65,7 +64,6 @@
         <div class="single-page-con" :style="{left: shrink?'60px':'200px'}">
             <div class="single-page" style="min-width:800px">
                 <keep-alive :include="keepPage">
-                    <!-- <Spin size="large" fix v-if="spin_loading"></Spin> -->
                     <router-view v-if="globalRefresh"></router-view>
                 </keep-alive>
             </div>
@@ -192,11 +190,9 @@
         },
         computed: {
             menuList () {
-                // console.log(this.$store.state.app.menuList)
                 return this.$store.state.app.menuList;
             },
             pageTagsList () {
-                // console.log(this.$store.state.app.pageOpenedList)
                 return this.$store.state.app.pageOpenedList; // 打开的页面的页面对象
             },
             currentPath () {
@@ -217,14 +213,13 @@
             mesCount () {
                 return this.$store.state.app.messageCount;
             },
+            //  页面缓存数组
             keepPage () {
                 //  作为keep-alive 的include数组
                 let temp = []
                 for(let i = 0;i<this.$store.state.app.pageOpenedList.length;i++){
                     temp.push(this.$store.state.app.pageOpenedList[i].name)
                 }
-                // console.log(this.$store.state.app.pageOpenedList)
-                // console.log(temp)
                 return temp
             },
             //  业务相关-全局性变量

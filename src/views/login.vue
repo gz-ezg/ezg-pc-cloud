@@ -280,88 +280,54 @@
                 let img = document.getElementById("randCodeImage");
                 img.src = '/api/user/createImg?a=' + date.getTime();
             });
-            let _self = this
-            let temp = location.href
-            //  sso登录
-            params = temp.split("?")
-            // console.log(params)
-                if(params.length>1){
-                    let config = params[1].split("&")
-                    // _self.get_sso_params(config).then(function(res){
-                    //     console.log(res)
-                    //     _self.sso_login(res[0], res[1], res[2])
-                    // })
-                    if(config.length == 3){
+            // let _self = this
+            // let temp = location.href
+            // //  sso登录（已注释）
+            // params = temp.split("?")
+            // // console.log(params)
+            //     if(params.length>1){
+            //         let config = params[1].split("&")
+            //         // _self.get_sso_params(config).then(function(res){
+            //         //     console.log(res)
+            //         //     _self.sso_login(res[0], res[1], res[2])
+            //         // })
+            //         if(config.length == 3){
                         
-                        // try {
-                            this.sso = false
-                            let userName = config[0].split("=")[1]
-                            let timeStamp = config[1].split("=")[1]
-                            let token = config[2].split("=")[1]
-                            console.log(userName, timeStamp, token)
-                            console.log("SSO登录！")
-                            // _self.sso_login(userName, timeStamp, token)
-                            setTimeout(function(){
-                                _self.sso_login(userName, timeStamp, token)
-                            },0)
-                        // } catch (error) {
-                        //     // console.log(error)
-                        //     _self.$Message.error(error)
-                        // }
-                    }
-                    console.log(config)
-                }else{
-                    this.sso = true
-                    console.log("正常登录！")
-                }
-            let user = Cookies.get('user')
-            let password = Cookies.get('password')
-            // console.log(user)
-            // console.log(password)
-            if(user == undefined || user == "" || password == undefined || password == ""){
-                // console.log('7天免登陆失效！')
-            }else{
-                _self.form.userName = user
-                _self.form.password = password
-                _self.handleSubmit()
-            }
+            //             // try {
+            //                 this.sso = false
+            //                 let userName = config[0].split("=")[1]
+            //                 let timeStamp = config[1].split("=")[1]
+            //                 let token = config[2].split("=")[1]
+            //                 console.log(userName, timeStamp, token)
+            //                 console.log("SSO登录！")
+            //                 // _self.sso_login(userName, timeStamp, token)
+            //                 setTimeout(function(){
+            //                     _self.sso_login(userName, timeStamp, token)
+            //                 },0)
+            //             // } catch (error) {
+            //             //     // console.log(error)
+            //             //     _self.$Message.error(error)
+            //             // }
+            //         }
+            //         console.log(config)
+            //     }else{
+            //         this.sso = true
+            //         console.log("正常登录！")
+            //     }
+            // let user = Cookies.get('user')
+            // let password = Cookies.get('password')
+            // // console.log(user)
+            // // console.log(password)
+            // if(user == undefined || user == "" || password == undefined || password == ""){
+            //     // console.log('7天免登陆失效！')
+            // }else{
+            //     _self.form.userName = user
+            //     _self.form.password = password
+            //     _self.handleSubmit()
+            // }
         },
         created(){
             let _self = this
-            // console.log(location.href)
-            // let temp = location.href
-            // params = temp.split("?")
-            // // console.log(params)
-            // if(params.length>1){
-            //     let config = params[1].split("&")
-            //     _self.get_sso_params(config).then(function(res){
-            //         console.log(res)
-            //         _self.sso_login(res[0], res[1], res[2])
-            //     })
-            //     // if(config.length == 3){
-            //     //     try {
-            //     //         let userName = config[0].split("=")[1]
-            //     //         let timeStamp = config[1].split("=")[1]
-            //     //         let token = config[2].split("=")[1]
-            //     //         console.log(userName, timeStamp, token)
-            //     //         console.log("SSO登录！")
-            //     //         _self.sso_login(userName, timeStamp, token)
-
-            //     //         // setTimeout(function(){
-            //     //         //     console.log("1111")
-            //     //         // },1000)
-            //     //         // setTimeout(function(){
-            //     //         //     _self.sso_login(userName, timeStamp, token)
-            //     //         // },1000)
-            //     //     } catch (error) {
-            //     //         // console.log(error)
-            //     //         _self.$Message.error(error)
-            //     //     }
-            //     // }
-            //     // console.log(config)
-            // }else{
-            //     console.log("正常登录！")
-            // }
         }
     };
 </script>

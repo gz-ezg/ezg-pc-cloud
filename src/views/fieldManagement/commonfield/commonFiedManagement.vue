@@ -483,7 +483,8 @@
                     {field:'fieldlength',title:'外勤时长'},
                     {field:'realname',title:'打卡人'},
                     {field:'remark',title:'总结'},
-                    {field:'service_record_status',title:'外勤结果',format:'field_total'}
+                    {field:'service_record_status',title:'外勤结果',format:'field_total'},
+                    {field:'assiststatus', title: "外勤类型"}
                     ]
                 let _self = this
                 let url = `api/legwork/legworkList`
@@ -504,6 +505,7 @@
                         exportField: encodeURI(JSON.stringify(field))
                 }
                 let toExcel = this.$MergeURL(url, config)
+                // console.log(toExcel)
                 window.open(toExcel)
             },
             //  筛选重置

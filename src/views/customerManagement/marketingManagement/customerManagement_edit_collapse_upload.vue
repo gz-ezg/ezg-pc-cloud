@@ -170,21 +170,46 @@
             getFileList () {
                 var _self = this
                 _self.data1 = []
-                this.$http.get('/api/customer/findCustomerFilesById/' + _self.customerid)
-                    .then(function (response) {
-                        // console.log(response)
-                        var _filesRes = response.data.data
-                        for (var i = 0; i < _filesRes.length; i++) {
-                            var _filesArray = {}
-                            _filesArray.attachmenttitle = _filesRes[i].attachmenttitle
-                            _filesArray.createdate = _filesRes[i].createdate
-                            _filesArray.extend = _filesRes[i].extend
-                            _filesArray.id = _filesRes[i].id
-                            _filesArray.realpath = _filesRes[i].realpath
-                            _filesArray.content = _filesRes[i].content
-                            _self.data1.push(_filesArray)
-                        }
-                    })
+                // this.$http.get('/api/customer/findCustomerFilesById/' + _self.customerid)
+                //     .then(function (response) {
+                //         // console.log(response)
+                //         var _filesRes = response.data.data
+                //         for (var i = 0; i < _filesRes.length; i++) {
+                //             var _filesArray = {}
+                //             _filesArray.attachmenttitle = _filesRes[i].attachmenttitle
+                //             _filesArray.createdate = _filesRes[i].createdate
+                //             _filesArray.extend = _filesRes[i].extend
+                //             _filesArray.id = _filesRes[i].id
+                //             _filesArray.realpath = _filesRes[i].realpath
+                //             _filesArray.content = _filesRes[i].content
+                //             _self.data1.push(_filesArray)
+                //         }
+                //     })
+
+                let url = `/api/customer/findCustomerFilesById`
+
+                let config = {
+                    params:{
+                        customerId: _self.customerid,
+                        bType: "CustomerData"
+                    }
+                }
+
+                function success(res){
+                    var _filesRes = res.data.data
+                    for (var i = 0; i < _filesRes.length; i++) {
+                        var _filesArray = {}
+                        _filesArray.attachmenttitle = _filesRes[i].attachmenttitle
+                        _filesArray.createdate = _filesRes[i].createdate
+                        _filesArray.extend = _filesRes[i].extend
+                        _filesArray.id = _filesRes[i].id
+                        _filesArray.realpath = _filesRes[i].realpath
+                        _filesArray.content = _filesRes[i].content
+                        _self.data1.push(_filesArray)
+                    }
+                }
+
+                this.$Get(url, config, success)
             },
             filesDelete (e) {
                 var _self = this;
