@@ -93,7 +93,11 @@ export default {
             _self.page = 1
             _self.selectTagArray = []
             //  必须为一个id数组
+            // if(!e){
+            //     e = []
+            // }
             _self.selectTagArray = e
+            console.log(_self.selectTagArray)
             _self.get_data()
             _self.openTag = true
         })

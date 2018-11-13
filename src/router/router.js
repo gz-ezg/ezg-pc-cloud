@@ -177,62 +177,62 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    {
-        path: '/test',
-        icon: 'alert-circled',
-        name: 'test',
-        title: 'Test',
-        component: Main,
-        children: [
-            // {
-            //     path: 'test',
-            //     title: '测试页面',
-            //     name: '富文本编辑器测试',
-            //     component: resolve => {
-            //         require(['@/views/test/components/main.vue'], resolve);
-            //         // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+    // {
+    //     path: '/test',
+    //     icon: 'alert-circled',
+    //     name: 'test',
+    //     title: 'Test',
+    //     component: Main,
+    //     children: [
+    //         // {
+    //         //     path: 'test',
+    //         //     title: '测试页面',
+    //         //     name: '富文本编辑器测试',
+    //         //     component: resolve => {
+    //         //         require(['@/views/test/components/main.vue'], resolve);
+    //         //         // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-            //     }
-            // },
-            // {
-            //     path: 'test2',
-            //     title: '日程测试',
-            //     name: 'test2_index',
-            //     component: resolve => {
-            //         require(['@/views/test/components/test2.vue'], resolve);
-            //         // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+    //         //     }
+    //         // },
+    //         // {
+    //         //     path: 'test2',
+    //         //     title: '日程测试',
+    //         //     name: 'test2_index',
+    //         //     component: resolve => {
+    //         //         require(['@/views/test/components/test2.vue'], resolve);
+    //         //         // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-            //     }
-            // },
-            {
-                path: 'test3',
-                title: '滑动验证码',
-                name: 'test3_index',
-                component: resolve => {
-                    require(['@/views/test/components/test3.vue'], resolve);
+    //         //     }
+    //         // },
+    //         {
+    //             path: 'test3',
+    //             title: '滑动验证码',
+    //             name: 'test3_index',
+    //             component: resolve => {
+    //                 require(['@/views/test/components/test3.vue'], resolve);
 
-                }
-            },
-            // {
-            //     path: 'test4',
-            //     title: '树形表测试',
-            //     name: 'test4_index',
-            //     component: resolve => {
-            //         require(['@/views/test/components/test4.vue'], resolve);
+    //             }
+    //         },
+    //         // {
+    //         //     path: 'test4',
+    //         //     title: '树形表测试',
+    //         //     name: 'test4_index',
+    //         //     component: resolve => {
+    //         //         require(['@/views/test/components/test4.vue'], resolve);
 
-            //     }
-            // },
-            // {
-            //     path: 'test5',
-            //     title: '树型表',
-            //     name: 'test05_index',
-            //     component: resolve => {
-            //         require(['@/views/test/components/test5.vue'], resolve);
+    //         //     }
+    //         // },
+    //         // {
+    //         //     path: 'test5',
+    //         //     title: '树型表',
+    //         //     name: 'test05_index',
+    //         //     component: resolve => {
+    //         //         require(['@/views/test/components/test5.vue'], resolve);
 
-            //     }
-            // }
-        ]
-    },
+    //         //     }
+    //         // }
+    //     ]
+    // },
     // {
     //     path: '/allindex',
     //     icon: 'social-windows',
@@ -615,24 +615,24 @@ export const appRouter = [
                     require(['@/views/productManagement/productListNew/index.vue'], resolve);
                 }
             },
-            {
-                access: 6014,
-                path: 'productType',
-                title: '产品类型',
-                name: 'productType_index',
-                component: resolve => {
-                    require(['@/views/productManagement/productTypeNew/index.vue'], resolve);
-                }
-            },
-            {
-                access: 6015,
-                path: 'productAttrList',
-                title: '属性管理',
-                name: 'productAttrList_index',
-                component: resolve => {
-                    require(['@/views/productManagement/productAttrList/index.vue'], resolve);
-                }
-            },
+            // {
+            //     access: 6014,
+            //     path: 'productType',
+            //     title: '产品类型',
+            //     name: 'productType_index',
+            //     component: resolve => {
+            //         require(['@/views/productManagement/productTypeNew/index.vue'], resolve);
+            //     }
+            // },
+            // {
+            //     access: 6015,
+            //     path: 'productAttrList',
+            //     title: '属性管理',
+            //     name: 'productAttrList_index',
+            //     component: resolve => {
+            //         require(['@/views/productManagement/productAttrList/index.vue'], resolve);
+            //     }
+            // },
             // {
             //     access: 6016,
             //     path: 'areaManagement',

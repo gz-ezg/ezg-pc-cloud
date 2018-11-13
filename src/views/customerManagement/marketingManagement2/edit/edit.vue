@@ -291,6 +291,9 @@ export default {
             let _self = this
             //  传过去的必须为一个id数组
             //  再写一个关联数组，用于显示
+            if(!_self.formValidate.labels){
+                _self.formValidate.labels = []
+            }
             this.$bus.emit("OPEN_TAG", _self.formValidate.labels)
         },
         close_tag(e){
@@ -313,12 +316,17 @@ export default {
         submit(){
             let _self = this
             let url = `api/customer/updateCustomer`
-            if(_self.formValidate.customerType.length>2){
-                console.log("1111")
-                for(let i = 2; i < _self.formValidate.customerType.length; i++){
-                    _self.formValidate.customerType[i] = null
-                }
-            }
+                    console.log("123456")
+
+            // if(_self.formValidate.customerType.length>2){
+            //     console.log("1111")
+            //     for(let i = 2; i < _self.formValidate.customerType.length; i++){
+            //         _self.formValidate.customerType[i] = null
+            //     }
+            // }
+
+            // console.log(_self.formValidate.labels)
+            console.log(_self.formValidate.labels.join(","))
             let config = {
                 id: _self.formValidate.ID,
                 address: _self.formValidate.ADDRESS,
@@ -326,7 +334,7 @@ export default {
                 name: _self.formValidate.NAME,
                 tel: _self.formValidate.TEL,
                 backup: _self.formValidate.backup,
-                customertype: _self.formValidate.customerType.join("-"),
+                customertype: _self.formValidate.customerType[0] + "-" + _self.formValidate.customerType[1],
                 issend: _self.formValidate.issend,
                 fixedphone: _self.formValidate.fixedPhone,
                 qq: _self.formValidate.qq,

@@ -54,9 +54,14 @@
                         @selected="change_date">
                         </datepicker>
                     </Row>
-                    <!-- <Row style="margin-bottom:10px">
-                        <Button  type="primary">新增日程</Button>
-                    </Row> -->
+                    <Row>
+                        <span>执行中的任务--蓝色<br/></span>
+                        <span>当天需要完结的任务--黄色<br/></span>
+                        <span>完结任务--绿色<br/></span>
+                        <span>逾期任务--红色<br/></span>
+                        <span>线索未完成--橙色<br/></span>
+                        <span>线索完成--绿色<br/></span>
+                    </Row>
                     <Row>
                         <Row style="margin-bottom:10px"><h3>{{local_date}}</h3></Row>
                         <Row>

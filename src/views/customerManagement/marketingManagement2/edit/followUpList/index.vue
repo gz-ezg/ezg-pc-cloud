@@ -229,7 +229,7 @@ export default {
                             if(tempUrl.type == 'doc' || tempUrl.type == "docx" || tempUrl.type == "xls" || tempUrl.type == "xlxs" || tempUrl.type == "pptx" || tempUrl.type == "ppt"){
                                 //  必须是外网能够访问到的文件
                                 //  详情参见微软官网
-                            //     tempUrl.url = "http://view.officeapps.live.com/op/view.aspx?src="+encodeURI("http://cloud.zgcfo.com/" + tempUrl.url)
+                                tempUrl.url = "http://view.officeapps.live.com/op/view.aspx?src="+encodeURI("http://cloud.zgcfo.com/" + tempUrl.url)
                             // }else if(tempUrl.type == "xls" || tempUrl.type == "xlxs"){
                             //     tempUrl.url = "http://view.officeapps.live.com/op/view.aspx?src="+encodeURI("http://cloud.zgcfo.com/" + tempUrl.url)
                             // }else if(tempUrl.type == "pptx" || tempUrl.type == "ppt"){

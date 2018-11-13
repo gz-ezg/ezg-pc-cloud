@@ -9,7 +9,7 @@
             </TabPane>
         </Tabs>
         <!-- <customer-detail></customer-detail> -->
-        <company-detail></company-detail>
+        <!-- <company-detail></company-detail> -->
         <Add></Add>
         <update></update>
         <show></show>
@@ -20,7 +20,7 @@
     import Untreated from './untreated.vue'
     import Processed from './processed.vue'
     // import customerDetail from '../../../woa-components/customerDetail/channelCustomer'
-    import companyDetail from '../../../woa-components/companyDetail/CompanyDetail'
+    // import companyDetail from '../../../woa-components/companyDetail/CompanyDetail'
     import Add from '../add'
     import update from '../update.vue'
     import show from '../show.vue'
@@ -32,7 +32,7 @@
             Untreated,
             Processed,
             // customerDetail,
-            companyDetail,
+            // companyDetail,
             Add,
             show,
             update

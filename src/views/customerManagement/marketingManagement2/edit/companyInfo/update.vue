@@ -9,8 +9,8 @@
                 <FormItem label="公司名称" prop="companyname">
                     <Input v-model="formValidate.companyname" size="small"></Input>
                 </FormItem>
-                <FormItem label="公司注册地" prop="companyarea">
-                    <Cascader :data="companyarea" v-model="formValidate.companyarea"></Cascader>
+                <FormItem label="公司注册地">
+                    <Cascader :data="companyarea" v-model="formValidate.companyarea_temp"></Cascader>
                 </FormItem>
                 <FormItem label="跟进销售" prop="followby">
                     <Input v-model="formValidate.followby" readonly size="small"></Input>
@@ -58,7 +58,8 @@ export default {
     mixins: [relationCommon],
     data(){
         return {
-            openUpdateCompany: false
+            openUpdateCompany: false,
+            // companyarea_temp: []
         }
     },
     methods: {
@@ -73,7 +74,7 @@ export default {
                 // 编辑待定
                 accountgrade: _self.formValidate.accountgrade,
                 cluesource: _self.formValidate.cluesource,
-                companyarea: _self.formValidate.companyarea.join("-"),
+                companyarea: _self.formValidate.companyarea_temp.join("-"),
                 companyname: _self.formValidate.companyname,
                 id: _self.formValidate.id,
                 importlevel: _self.formValidate.importlevel.toString(),
@@ -99,10 +100,11 @@ export default {
         this.$bus.on("OPEN_COMPANY_UPDATE",(e)=>{
             _self.formValidate = e
             if(_self.formValidate.companyarea){
-                _self.formValidate.companyarea = _self.formValidate.companyarea.split("-")
-                _self.formValidate.companyarea[0] = parseInt(_self.formValidate.companyarea[0])
-                _self.formValidate.companyarea[1] = parseInt(_self.formValidate.companyarea[1])
-                console.log(_self.formValidate.companyarea)
+                // console.log(_self.formValidate.companyarea)
+                _self.formValidate.companyarea_temp = _self.formValidate.companyarea.split("-")
+                _self.formValidate.companyarea_temp[0] = parseInt(_self.formValidate.companyarea_temp[0])
+                _self.formValidate.companyarea_temp[1] = parseInt(_self.formValidate.companyarea_temp[1])
+                // console.log(_self.formValidate.companyarea)
             }else{
                 _self.formValidate.companyarea = []
             }

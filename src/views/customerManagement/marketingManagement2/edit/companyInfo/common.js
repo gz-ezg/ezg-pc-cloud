@@ -56,7 +56,8 @@ export default {
                 createby: localStorage.getItem('realname'),
                 cluesource: this.customer.customersourceCode,
                 customerid: this.customer.ID,
-                companyarea: []
+                companyarea: [],
+                companyarea_temp: []
             },
             ruleValidate: {
                 companyname: [

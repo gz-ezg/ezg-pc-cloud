@@ -265,6 +265,7 @@ export default {
         submit(){
             let _self = this
             _self.submitLoading = true
+            _self.$ButtonCollect("order_approve_submit")
             let url = 'api/activiti/toDoWorkFlowByBid'
             
             let config = {

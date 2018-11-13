@@ -107,7 +107,8 @@ export default {
         const validateUsername = (rule, value, callback) => {
             let re = /^[a-z]+$/
             if (value == '') {
-                callback(new Error(' '));
+                // callback(new Error(' '));
+                callback()
             } else {
                 if (re.test(value)) {
                     callback();
@@ -213,9 +214,9 @@ export default {
                     // { message:"格式错误！",required: true, trigger: 'blur' },
                     { message:"格式错误！", validator:validateTel,  trigger: 'change' },
                 ],
-                officephone:[
-                    { message:"格式错误！", validator:validateTel,  trigger: 'change' },
-                ],
+                // officephone:[
+                //     { message:"格式错误！", validator:validateTel,  trigger: 'change' },
+                // ],
                 email:[
                     // { message:"格式错误！",required: true, trigger: 'blur' },
                     { message:"格式错误！", validator:validateEmail,  trigger: 'change' }

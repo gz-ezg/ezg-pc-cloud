@@ -326,7 +326,7 @@ export default {
         //  打开审批
         to_do_work_flow(e){
             if(e){
-                this.$ButtonCollect("order_approve_submit")
+                // this.$ButtonCollect("order_approve_submit")
                 this.$bus.emit("ORDER_APPROVE_DEALWITH", e.id)
             }else{
                 this.$Message.warning("请选择一行！")

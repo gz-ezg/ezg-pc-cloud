@@ -236,7 +236,7 @@ export default {
             this.$Post(url, config, success, fail)
         }
     },
-    created(){
+    mounted(){
         let _self = this
         this.get_data_center()
         this.$bus.on("OPEN_CUSTOMER_CREATE_FOLLOW_UP", (e)=>{

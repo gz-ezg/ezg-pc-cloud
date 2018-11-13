@@ -22,7 +22,7 @@
         <product-changes></product-changes>
         <distribution-of-accounting></distribution-of-accounting>
         <change-log></change-log>
-        <company-detail></company-detail>
+        <!-- <company-detail></company-detail> -->
         <order-detail></order-detail>
         <company-cancellation></company-cancellation>
         <detailx></detailx>
@@ -40,7 +40,7 @@
     import distributionOfAccounting from './BookkeepingAgencyIndex/DistributionOfAccounting'
     import changeLog from './BookkeepingAgencyIndex/ChangeLog'
     // import companyDetail from './BookkeepingAgencyIndex/CompanyDetail'
-    import companyDetail from '../../woa-components/companyDetail/CompanyDetail.vue'
+    // import companyDetail from '../../woa-components/companyDetail/CompanyDetail.vue'
     import orderDetail from './BookkeepingAgencyIndex/OrderDetail'
     import companyCancellation from './BookkeepingAgencyIndex/CompanyCancellation'
     import Notbegin from './BookkeepingAgencyIndex/Table/notbegin'
@@ -60,7 +60,7 @@
             All,
             Notbegin,
             Servicing,
-            companyDetail,
+            // companyDetail,
             changeLog,
             orderDetail,
             companyCancellation,
