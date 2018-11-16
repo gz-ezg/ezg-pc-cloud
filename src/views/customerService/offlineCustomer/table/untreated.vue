@@ -190,7 +190,8 @@
                                     },
                                     on: {
                                         click: () => {
-                                            Bus.$emit('openCompanyDetail',params.row.companyid)
+                                            // Bus.$emit('openCompanyDetail',params.row.companyid)
+                                            this.$store.commit("open_gobal_company_detail_modal", params.row.companyid)
                                             // Bus.$emit('detail', params)
                                         }
                                     }

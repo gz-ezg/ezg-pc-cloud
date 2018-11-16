@@ -223,6 +223,11 @@
                         width: 120
                     },
                     {
+                        title: '累计外勤',
+                        key: 'dljz_legwork',
+                        minWidth:100
+                    },
+                    {
                         title: '备注',
                         key: 'workordermemo',
                         width: 120,
@@ -270,7 +275,8 @@
                                     },
                                     on: {
                                         click: () => {
-                                            Bus.$emit('openCompanyDetail',params.row.company_id)
+                                            // Bus.$emit('openCompanyDetail',params.row.company_id)
+                                            this.$store.commit("open_gobal_company_detail_modal", params.row.company_id)
                                             // Bus.$emit('detail', params)
                                         }
                                     }
@@ -395,7 +401,8 @@
                             zl: '',
                             zz: '',
                             bs: '',
-                            cycle_work_order_id:_data.rows[i].cycle_work_order_id
+                            cycle_work_order_id:_data.rows[i].cycle_work_order_id,
+                            dljz_legwork: _data.rows[i].dljz_legwork
                             
                         })
                     }

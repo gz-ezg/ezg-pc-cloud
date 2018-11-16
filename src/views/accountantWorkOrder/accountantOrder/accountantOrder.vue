@@ -25,7 +25,7 @@
         <monthly-summary></monthly-summary>
         <service-tracking></service-tracking>
         <business-tracking></business-tracking>
-        <company-detail></company-detail>
+        <!-- <company-detail></company-detail> -->
         <service-item></service-item>
         <service-tracking2></service-tracking2>
         <detail></detail>
@@ -49,7 +49,7 @@
     import ServiceTracking from './accountantOrderIndex/serviceTracking'
     import ServiceTracking2 from './accountantOrderIndex/serviceTracking2'
     import BusinessTracking from './accountantOrderIndex/businessTracking'
-    import companyDetail from '../BookkeepingAgency/BookkeepingAgencyIndex/CompanyDetail'
+    // import companyDetail from '../BookkeepingAgency/BookkeepingAgencyIndex/CompanyDetail'
     import ServiceItem from './accountantOrderIndex/serviceItems'
     import detail from '../detail.vue'
 
@@ -58,7 +58,7 @@
         components:{
             detail,
             ServiceItem,
-            companyDetail,
+            // companyDetail,
             Stop,
             Arrears,
             Notbegin,

@@ -30,7 +30,7 @@
             </Col> -->
             <Col span="8">
                 <Col span="10"><span class="expand-key">累计外勤数量: </span></Col>
-                <Col span="10"><span class="expand-value">{{ row.legwork_valid_num }}</span></Col>
+                <Col span="10"><span class="expand-value">{{ row.dljz_legwork + row.kjdj_legwork }}</span></Col>
             </Col>
         </Row>
         <Row>

@@ -2,25 +2,25 @@
 import Main from '@/views/Main.vue';
 import Router from 'vue-router'
 //  动态加载路由
-const lazyRouter = {
-        path: '/test',
-        icon: 'alert-circled',
-        name: 'test',
-        title: 'Test',
-        component: Main,
-        children: [
-            {
-                path: 'test',
-                title: '测试页面',
-                name: '富文本编辑器测试',
-                component: resolve => {
-                    require(['@/views/test/components/main.vue'], resolve);
-                    // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+// const lazyRouter = {
+//         path: '/test',
+//         icon: 'alert-circled',
+//         name: 'test',
+//         title: 'Test',
+//         component: Main,
+//         children: [
+//             {
+//                 path: 'test',
+//                 title: '测试页面',
+//                 name: '富文本编辑器测试',
+//                 component: resolve => {
+//                     require(['@/views/test/components/main.vue'], resolve);
+//                     // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-                }
-            },
-        ]
-    }
+//                 }
+//             },
+//         ]
+//     }
 
 
 

@@ -325,8 +325,12 @@ export default {
             //     }
             // }
 
-            // console.log(_self.formValidate.labels)
-            console.log(_self.formValidate.labels.join(","))
+            console.log(_self.formValidate.labels)
+            // console.log(_self.formValidate.labels.join(","))
+            let labelTemp = ""
+            if(_self.formValidate.labels){
+                labelTemp = _self.formValidate.labels.join(",")
+            }
             let config = {
                 id: _self.formValidate.ID,
                 address: _self.formValidate.ADDRESS,
@@ -345,7 +349,7 @@ export default {
                 importlevel: _self.formValidate.importlevel,
                 channelTypeId: _self.formValidate.channel_type_id,
                 recCustomer: _self.formValidate.rec_customer,
-                labels: _self.formValidate.labels.join(","),
+                labels: labelTemp,
                 importance: _self.formValidate.importance
             }
 

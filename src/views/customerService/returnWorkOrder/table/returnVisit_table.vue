@@ -9,7 +9,7 @@
             </TabPane>
         </Tabs>
         <!-- <customer-detail></customer-detail> -->
-        <company-detail></company-detail>
+        <!-- <company-detail></company-detail> -->
         <!-- <companyDetail></companyDetail> -->
         <edit :hfwtlx="hfwtlx" :hfzt="hfzt" :hfwtlxMap="hfwtlx_map" :departAliasMap="departAlias_map" :departAlias="departAlias" :hfztMap="hfzt_map"></edit>
         <show :hfwtlx="hfwtlx" :hfzt="hfzt"></show>        
@@ -24,7 +24,7 @@
     import show from './show.vue'
     import {arrayToMap} from '../../../../libs/utils'
     // import customerDetail from '../../../woa-components/customerDetail/channelCustomer'
-    import companyDetail from '../../../woa-components/companyDetail/CompanyDetail'
+    // import companyDetail from '../../../woa-components/companyDetail/CompanyDetail'
 
     export default {
         name:'returnWorkOrder_index',
@@ -32,7 +32,7 @@
             Untreated,
             Processed,
             // customerDetail,
-            companyDetail,
+            // companyDetail,
             // companyDetail,
             edit,
             show

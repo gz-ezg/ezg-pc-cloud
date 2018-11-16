@@ -31,11 +31,11 @@ const gobal = {
         close_gobal_work_order_detail_modal(state){
             state.gobalWorkorderDetailShow = false
         },
-        open_gobal_work_order_detail_modal(state, companyId){
+        open_gobal_company_detail_modal(state, companyId){
             state.gobalCompanyDetailShow = true
             state.gobalCompanyId = companyId
         },
-        close_gobal_work_order_detail_modal(state){
+        close_gobal_company_detail_modal(state){
             state.gobalCompanyDetailShow = false
         },
         open_gobal_set_finish_time_modal(state, workOrderDetail){

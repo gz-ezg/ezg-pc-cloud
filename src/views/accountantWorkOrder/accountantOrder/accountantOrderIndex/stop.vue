@@ -222,6 +222,11 @@
                     //     width: 120
                     // },
                     {
+                        title: '累计外勤',
+                        key: 'kjdj_legwork',
+                        minWidth: 120
+                    },
+                    {
                         title: '备注',
                         key: 'workordermemo',
                         width: 120,
@@ -269,7 +274,8 @@
                                     },
                                     on: {
                                         click: () => {
-                                            Bus.$emit('detail', params)
+                                            // Bus.$emit('detail', params)
+                                            this.$store.commit("open_gobal_company_detail_modal", params.row.company_id)
                                         }
                                     }
                                 }, '[查看公司]'),

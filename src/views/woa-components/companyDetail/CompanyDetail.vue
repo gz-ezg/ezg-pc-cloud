@@ -1070,15 +1070,16 @@
 
                 function fail(err){
                      _self.$Message.error("对不起，当前查询的工单有误！请确认后重试！窗口将在2秒后关闭！")
+                     _self.cancel()
                 }
                 this.$Get(url, config, success, fail)
                 // this.GetData(url, doSuccess)
             },
 
             cancel () {
-                this.detail = false
+                // this.detail = false
                 this.openTab = "name8"
-                this.$store.commit("close_gobal_work_order_detail_modal")
+                this.$store.commit("close_gobal_company_detail_modal")
             },
             editTax(){
                 this.isEditTax = !this.isEditTax

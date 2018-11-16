@@ -94,6 +94,8 @@ export default {
                     temp.updatedate = result[i].updatedate
                     temp.service_time = result[i].service_time
                     temp.legwork_valid_num = result[i].legwork_valid_num
+                    temp.dljz_legwork = result[i].dljz_legwork
+                    temp.kjdj_legwork = result[i].kjdj_legwork
                     temp._expanded = false
                     _self.data.push(temp)
                 }
