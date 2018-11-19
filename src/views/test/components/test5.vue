@@ -1,30 +1,92 @@
 <template>
     <div>
-        <div 
-            id="capture" 
-            style="width:375px;height:667px;background-color:#666666;color:#ffffff" 
-            class="content" 
-            @mousemove.prevent="mouseMoveState && mouseMoveFn($event)" 
-            @mouseup.prevent="mouseMoveState && moseUpFn($event)">
-            <center>
-                <h1>这是测试页面</h1>
-                <div>
-                    <p
-                        id="p1"
-                        ref="p1" 
-                        @mousedown="mousedownFn($event)"
-                        style="position: absolute;top: 0px;left: 0px;padding:10px"
-                    >你猜我是谁！</p>
-                    <p id="p-2">不猜不猜我不猜！</p>
-                    <p id="p-3">你猜我是谁！</p>
-                    <p id="p-4">你猜我是谁！</p>
-                    <p id="p-5">你猜我是谁！</p>
-                </div>
-                <h3 class="footer">哈哈哈！</h3>
-            </center>
-        </div>
+        <Row>
+            <Col span="12">
+                <Card title="效果预览">
+                    <center style="margin-top:30px">
+                        <div 
+                            id="capture" 
+                            style="width:375px;height:667px;background-color:#666666;color:#ffffff;overflow:hidden"
+                            :style="{ backgroundImage:imgUrl}"
+                            class="content" 
+                            @mousemove.prevent=" current == 1 && mouseMoveState && mouseMoveFn($event)" 
+                            @mouseup.prevent="mouseMoveState && moseUpFn($event)">
+                                <h1 id="p-99999" @mousedown="mousedownFn($event)">这是测试页面</h1>
+                                <!-- <p
+                                    id="p1"
+                                    ref="p1" 
+                                    @mousedown="mousedownFn($event)"
+                                >你猜我是谁！</p>
+                                <p id="p-2" @mousedown="mousedownFn($event)">不猜不猜我不猜！</p>
+                                <p id="p-3" @mousedown="mousedownFn($event)">你猜我是谁！</p>
+                                <p id="p-4" @mousedown="mousedownFn($event)">你猜我是谁！</p>
+                                <p id="p-5" @mousedown="mousedownFn($event)">你猜我是谁！</p> -->
+                                <p v-for="(item, index) in textArray" :key="index" :style="{color: item.color, fontSize: item.fontSize + 'px'}" @mousedown="mousedownFn($event)" :id="`p-${index}`" @click.right.prevent="remove(index)">{{item.text}}</p>
+                        </div>
+                    </center>
+                </Card>
+            </Col>
+            <Col span="12">
+                <Card title="操作区">
+                    <Steps :current="current">
+                        <Step title="背景图" icon="camera"></Step>
+                        <Step title="编辑文字" icon="edit"></Step>
+                        <Step title="生成个性主页" icon="camera"></Step>
+                    </Steps>
+                    <div style='margin-top:20px'>
+                        <div v-if="current == 0">
+                            <Upload
+                                ref="upload"
+                                multiple
+                                :before-upload="handleUpload"
+                                action="/api/customer/addCustomerContentImg"
+                                >
+                            <Button type="primary" icon="ios-cloud-upload-outline">上传背景图</Button>
+                        </Upload>
+                        <Button type="primary" style="margin-top:20px" @click="current = 1">下一步</Button>
+                        </div>
+                        <div v-else-if="current == 1">
+                            <Tag color="blue" style="margin-bottom:10px">温馨提示：左侧面板中，文字可以任意拖动！右键点击文字可以清除！</Tag>
+                            <div style="margin-top:10px">
+                                <Row :gutter="12">
+                                    <Col span="12">
+                                        文字大小：
+                                        <Select v-model="tempTextSize" style="width:100px">
+                                            <Option v-for="(item, index) in fontSizeArray" :key="index" :value="item.size">{{item.text}}</Option>
+                                        </Select>
+                                    </Col>
+                                    <Col span="12">
+                                        字体颜色：
+                                        <ColorPicker v-model="tempColor"></ColorPicker>
+                                    </Col>
+                                </Row>
+                                <Row :gutter="12" style="margin-top:10px">
+                                    <Col>
+                                        <Input type="textarea" placeholder="请输入文字" v-model="tempText"/>
+                                    </Col>
+                                </Row>
+                                <Row :gutter="12" style="margin-top:10px">
+                                    <Col>
+                                        <Button long type="primary" @click="add_text_model">添加</Button>
+                                    </Col>
+                                </Row>
+                            </div>
+                            <Button type="primary" style="margin-top:20px" @click="current = 0">上一步</Button>
+                            <Button type="primary" style="margin-top:20px" @click="current = 2">下一步</Button>
+                        </div>
+                        <div v-else>
+                            <Row>
+                                <Button type="primary" @click="download" style="width:375px;margin-top:20px">导出</Button>
+                            </Row>
+                            <Row>
+                                <Button type="primary" style="margin-top:20px" @click="current = 1">上一步</Button>
+                            </Row>
+                        </div>
+                    </div>
+                </Card>
+            </Col>
+        </Row>
         <div id="canvas"></div>
-        <Button type="primary" @click="download">导出</Button>
         <!-- <a :href="img_href" id="img_src">导出的链接</a> -->
     </div>
 </template>
@@ -38,10 +100,35 @@ export default {
             img_href: "",
             mouseMoveState: false,
             beginClientX: "",
-            beginClientY: ""
+            beginClientY: "",
+            transformX: "",
+            transformY: "",
+            current: 0,
+            imgUrl: "",
+            tempColor: "#000000",
+            tempText: "",
+            tempTextSize: 18,
+            textArray: [],
+            fontSizeArray: [
+                { text: "12px", size: 12 },
+                { text: "14px", size: 14 },
+                { text: "16px", size: 16 },
+                { text: "18px", size: 18 },
+                { text: "20px", size: 20 },
+                { text: "22px", size: 22 },
+                { text: "24px", size: 24 },
+                { text: "26px", size: 26 },
+                { text: "28px", size: 28 },
+                { text: "30px", size: 30 },
+                { text: "32px", size: 32 },
+                { text: "34px", size: 34 },
+                { text: "36px", size: 36 },
+                { text: "38px", size: 38 },
+            ]
         }
     },
     methods: {
+        //  下载
         download(){
             html2canvas(document.querySelector("#capture")).then(canvas => {
                 // document.querySelector("#canvas").appendChild(canvas)
@@ -63,29 +150,57 @@ export default {
         mousedownFn(e){
             e.preventDefault && e.preventDefault();
             this.eleId = "#" + e.target.id
-            console.log(document.querySelector(this.eleId).style.left.replace("px",""))
-            console.log(document.querySelector(this.eleId).style.top.replace("px",""))
             this.mouseMoveState = true;
-            this.beginClientX = document.querySelector(this.eleId).style.left.replace("px","")
-            this.beginClientY = document.querySelector(this.eleId).style.top.replace("px","")
+            let bodyDom = document.querySelector(this.eleId)
+            let transform = /\(.*\)/.exec(bodyDom.style.transform)
+            if (transform) {
+                transform = transform[0].slice(1, transform[0].length - 1)
+                let splitxy = transform.split('px, ')
+                this.transformX = parseFloat(splitxy[0])
+                this.transformY = parseFloat(splitxy[1].split('px')[0])
+            }
+            this.beginClientX = e.pageX
+            this.beginClientY = e.pageY
         },
         mouseMoveFn(e){
             if(this.mouseMoveState){
-                console.log(e)
-                let width = e.offsetX - this.beginClientX;
-                let height = e.offsetY - this.beginClientY;
-                console.log(width, height)
-                if(width > 0 && width <= 375 && height > 0 && height <= 667){
-                    console.log(e.target.id)
-                    document.querySelector(this.eleId).style.left = width + 'px'
-                    document.querySelector(this.eleId).style.top = height + 'px'
-                }else{
-                }
+                let xOffset = e.pageX - this.beginClientX + this.transformX
+                let yOffset = e.pageY - this.beginClientY + this.transformY
+                //  计划作为界限判断，放弃
+                // if(xOffset > 0 && xOffset <= 375 && yOffset > 0 && yOffset <= 667){
+                let bodyDom = document.querySelector(this.eleId)
+                 bodyDom.style.transform = `translate(${xOffset}px, ${yOffset}px)`
+                
             }
         },
         moseUpFn(e){
-            console.log(e)
             this.mouseMoveState = false
+        },
+        //  背景图上传
+        handleUpload(file){
+            let _self = this
+            let reader = new FileReader()
+            reader.readAsDataURL(file)
+            let filename = file.name
+            reader.onload = function(e){
+                var imgMsg = {
+                    name: filename,
+                    src: this.result
+                }
+                _self.imgUrl = `url(${this.result})`
+            }
+            return false;
+        },
+        //  文字生成
+        add_text_model(){
+            this.textArray.push({
+                text: this.tempText,
+                color: this.tempColor,
+                fontSize: this.tempTextSize
+            })
+        },
+        remove(e){
+            this.textArray.splice(e, 1)
         }
     }
 }
