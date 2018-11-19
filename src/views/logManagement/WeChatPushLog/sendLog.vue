@@ -11,12 +11,12 @@
                                 <div slot="content" @keydown.enter="search">
                                     <Form ref="searchModel" :model="searchModel" :label-width="100">
                                         <Row :gutter="16">
-                                            <!-- <Col span="8">
+                                            <Col span="8">
                                                 <FormItem prop="templateName" label="模版名称：">
                                                     <Input size="small" type="text" v-model="searchModel.templateName" placeholder="">
                                                     </Input>
                                                 </FormItem>
-                                            </Col> -->
+                                            </Col>
                                             <Col span="8">
                                                 <FormItem prop="date" label="发送时间：">
                                                     <DatePicker format="yyyy-MM-dd" type="daterange" style="width: 100%" size="small" v-model="searchModel.date"></DatePicker>
@@ -28,36 +28,36 @@
                                                     </Input>
                                                 </FormItem>
                                             </Col> -->
+                                            <Col span="8">
+                                                <FormItem prop="realname" label="发送人：">
+                                                    <Input size="small" type="text" v-model="searchModel.realname" placeholder="">
+                                                    </Input>
+                                                </FormItem>
+                                            </Col>
+                                        </Row>
+                                        <Row :gutter="16">
                                             <!-- <Col span="4">
-                                                <FormItem prop="sender" label="发送人：">
-                                                    <Input size="small" type="text" v-model="searchModel.sender" placeholder="">
+                                                <FormItem prop="salesman" label="销售人员：">
+                                                    <Input size="small" type="text" v-model="searchModel.salesman" placeholder="">
                                                     </Input>
                                                 </FormItem>
                                             </Col> -->
+                                            
                                             <Col span="8">
                                                 <FormItem prop="mobile" label="手机号：">
                                                     <Input size="small" type="text" v-model="searchModel.mobile" placeholder="">
                                                     </Input>
                                                 </FormItem>
                                             </Col>
-                                            
-                                        </Row>
-                                        <!-- <Row :gutter="16">
-                                            <Col span="4">
-                                                <FormItem prop="salesman" label="销售人员：">
-                                                    <Input size="small" type="text" v-model="searchModel.salesman" placeholder="">
-                                                    </Input>
-                                                </FormItem>
-                                            </Col>
-                                            <Col span="4">
-                                                <FormItem prop="state" label="是否成功：">
-                                                    <Select transfer v-model="searchModel.state" placeholder="请选择">
-                                                        <Option value="500">成功</Option>
-                                                        <Option value="0">失败</Option> 
+                                            <Col span="8">
+                                                <FormItem prop="isSuccess" label="是否成功：">
+                                                    <Select transfer v-model="searchModel.isSuccess" placeholder="请选择" size="small">
+                                                        <Option value="Y">成功</Option>
+                                                        <Option value="N">失败</Option> 
                                                     </Select>  
                                                 </FormItem>
                                             </Col>
-                                        </Row> -->
+                                        </Row>
                                         <FormItem>
                                              <Button type="primary" @click="search">查询</Button>
                                             <Button type="ghost" style="margin-left:20px" @click="reset">清空</Button>
@@ -186,7 +186,10 @@ export default {
       searchModel: {
         date: [],
         name: "",
-        mobile: ""
+        mobile: "",
+        isSuccess: "",
+        templateName: "",
+        realname: ""
       },
       fatherDataHeader: [
         {
@@ -278,6 +281,9 @@ export default {
                 name: _self.searchModel.name,
                 bcreatedate: DateFormat(_self.searchModel.date[0]),
                 ecreatedate: DateFormat(_self.searchModel.date[1]),
+                isSuccess: _self.searchModel.isSuccess,
+                templateName: _self.searchModel.templateName,
+                realname: _self.searchModel.realname,
                 export: 'Y',
                 exportField: encodeURI(JSON.stringify(field))
             }
@@ -296,6 +302,9 @@ export default {
           name: _self.searchModel.name,
           bcreatedate: DateFormat(_self.searchModel.date[0]),
           ecreatedate: DateFormat(_self.searchModel.date[1]),
+          isSuccess: _self.searchModel.isSuccess,
+          templateName: _self.searchModel.templateName,
+          realname: _self.searchModel.realname
         }
       };
       function doSuccess(res) {

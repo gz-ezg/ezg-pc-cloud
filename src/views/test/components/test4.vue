@@ -1,153 +1,56 @@
-<!--
-    可以使用在菜单管理之中
--->
-
 <template>
-    <div>
-        <tree-table :data="data" :columns="header"></tree-table>
+    <div @click="close_right_menu">
+        <div>canvas实现在线海报，文字指定位置添加部分</div>
+        <!-- <img-edit></img-edit> -->
+        <!-- <div style="width:375px;height:667px;background-color:#666666" @click.right.prevent="right_click($event)"></div> -->
+        <Button v-if="right_click_show" :style="{top: rightTop + 'px', left: rightLeft + 'px'}" style="position:fixed;z-index:9000" type="primary" @click="add_text">新增文字</Button>
+        <canvas id="myCanvas" width="375" height="667" style="border:1px solid #666666;" @click.right.prevent="right_click($event)">
+</canvas>
     </div>
 </template>
+
 <script>
-import TreeTable from 'iview/src/components/table/table'
-import treeToArray from './TreeTable/eval'
+// import ImgEdit from '../../my-components/image-editor/image-editor'
 
 export default {
-    components: { TreeTable },
+    components: {
+        // ImgEdit
+    },
     data(){
         return {
-            header:[
-                {
-                    title: "1",
-                    key: "event"
-                },
-                {
-                    title: "2",
-                    key: "timeLine"
-                },
-                {
-                    title: "3",
-                    key: "comment"
-                },
-                {
-                    title: "4",
-                    key: "id"
-                }
-            ],
-            data: [
-                {
-                    id: 0,
-                    event: '事件1',
-                    timeLine: 50,
-                    comment: '无',
-                    level:0,
-                    treeOpen: false,
-                    parent:"",
-                    children: [
-                        {
-                            id: 12,
-                            event: '事件1',
-                            timeLine: 100,
-                            comment: '无',
-                            level: 1,
-                            parent: 0,
-                            show: true,
-                            treeOpen: false,
-                            children: [
-                                {
-                                    id: 22,
-                                    event: '事件1',
-                                    timeLine: 100,
-                                    comment: '无',
-                                    level: 2,
-                                    parent: 0,
-                                    show: false,
-                                    treeOpen: false,
-                                    children: []
-                                },
-                                {
-                                    id: 23,
-                                    event: '事件1',
-                                    timeLine: 100,
-                                    comment: '无',
-                                    level: 2,
-                                    parent: 0,
-                                    show: false,
-                                    treeOpen: false,
-                                    children: []
-                                },
-                            ]
-                        },
-                        {
-                            id: 13,
-                            event: '事件1',
-                            timeLine: 100,
-                            comment: '无',
-                            level: 1,
-                            parent: 0,
-                            show: false,
-                            treeOpen: false,
-                            children: []
-                        },
-                    ]
-                },
-                {
-                    id: 2,
-                    event: '事件1',
-                    timeLine: 100,
-                    comment: '无',
-                    level: 1,
-                    parent: 0
-                },
-                {
-                    id: 3,
-                    event: '事件1',
-                    timeLine: 100,
-                    comment: '无',
-                    level: 0,
-                },
-                {
-                    id: 4,
-                    event: '事件1',
-                    timeLine: 100,
-                    comment: '无',
-                    level: 1,
-                },
-                {
-                    id: 5,
-                    event: '事件1',
-                    timeLine: 100,
-                    comment: '无',
-                    level: 2,
-                },
-                {
-                    id: 6,
-                    event: '事件1',
-                    timeLine: 100,
-                    comment: '无',
-                    level: 0,
-                }
-            ]
+            right_click_show: false,
+            rightTop: "",
+            rightLeft: "",
+            el: "",
+            ctx: "",
+            event
         }
     },
-    computed: {
-        // 格式化数据源
-        // formatData: function() {
-        // let tmp
-        // if (!Array.isArray(this.data)) {
-        //     tmp = [this.data]
-        // } else {
-        //     tmp = this.data
-        // }
-        // const func = this.evalFunc || treeToArray
-        // const args = this.evalArgs ? Array.concat([tmp, this.expandAll], this.evalArgs) : [tmp, this.expandAll]
-        // return func.apply(null, args)
-        // }
+    methods: {
+        right_click(event){
+            console.log(event)
+            this.event = event
+            this.right_click_show = true
+            this.rightTop = event.y
+            this.rightLeft = event.x
+        },
+        add_text(){
+            console.log("123")
+            //  设置下一次画笔颜色
+            //  以下属性均可以自定义，同事layerY必须加上font-size的大小，否则会出现异常
+            this.ctx.fillStyle = 'red'
+            this.ctx.font="30px Arial";
+            this.ctx.fillText("Hello World",this.event.layerX,this.event.layerY+30);
+        },
+        close_right_menu(){
+            this.right_click_show = false
+        },
     },
-    methods:{
-
-    },
-    created(){
-        // console.log(this.formatData)
+    mounted(){
+        this.el = document.getElementById("myCanvas")
+        this.ctx = this.el.getContext("2d")
+        this.ctx.fillStyle="#666666";
+        this.ctx.fillRect(0,0,375,667);
     }
 }
 </script>

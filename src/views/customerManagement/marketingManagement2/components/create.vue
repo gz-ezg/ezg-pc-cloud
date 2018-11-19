@@ -130,7 +130,7 @@
                 </Row>
             </Form>
             <div slot="footer">
-                <Button type="primary" @click="create">新增</Button>
+                <Button type="primary" @click="create" :loading="loading">新增</Button>
                 <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
             </div>
         </Modal>
@@ -234,12 +234,12 @@ export default {
             //  可选项
             channelShow: false,
             ChannelType: [],
-
             //  标签
             allLabel: [],
             LabelArray: [],
             customerShow: false,    
             openCustomerCreate: false,
+            loading: false,
             formValidate: {
                 id: "",
                 name: "",
@@ -368,9 +368,9 @@ export default {
                 _self.loading = false
                 setTimeout(()=>{
                     _self.$bus.emit("UPDATE_CUSTOMER", true)
+                    console.log(res.data.data)
+                    _self.$bus.emit("CREATE_AFTER_EDIT", res.data.data)
                 },300)
-                _self.$bus.emit("CREATE_AFTER_EDIT", res.data.data)
-                
             }
 
             function fail(err){

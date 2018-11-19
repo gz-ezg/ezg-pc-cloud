@@ -106,7 +106,7 @@ export default {
         }
     },
     data(){
-                //  自定义规则
+        //  自定义规则
         const validateTel = (rule, value, callback) => {
             let re = /^1\d{10}$/;
             if (value == "" || value == null) {

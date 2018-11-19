@@ -1388,6 +1388,11 @@ caniuse-lite@^1.0.30000792:
   version "1.0.30000827"
   resolved "http://r.cnpmjs.org/caniuse-lite/download/caniuse-lite-1.0.30000827.tgz#2dad2354e4810c3c9bb1cfc57f655c270c25fa52"
 
+canvas2image@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/canvas2image/-/canvas2image-1.0.5.tgz#676a094b4363888a2b7662e58b9ce5d3bfbc9d14"
+  integrity sha1-Z2oJS0NjiIordmLli5zl07+8nRQ=
+
 caseless@~0.11.0:
   version "0.11.0"
   resolved "http://r.cnpmjs.org/caseless/download/caseless-0.11.0.tgz#715b96ea9841593cc33067923f5ec60ebda4f7d7"

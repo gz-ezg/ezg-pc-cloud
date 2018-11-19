@@ -28,6 +28,7 @@
     "axios": "^0.17.1",
     "babel-plugin-transform-remove-strict-mode": "0.0.2",
     "better-scroll": "^1.11.1",
+    "canvas2image": "^1.0.5",
     "clipboard": "^1.7.1",
     "countup": "^1.8.2",
     "cropperjs": "^1.2.1",

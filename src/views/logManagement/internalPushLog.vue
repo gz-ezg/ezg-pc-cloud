@@ -16,32 +16,32 @@
                                                     <DatePicker format="yyyy-MM-dd" type="daterange" style="width: 100%" size="small" v-model="searchModel.date"></DatePicker>
                                                 </FormItem>
                                             </Col>
-                                            <!-- <Col span="5">
-                                                <FormItem prop="msg" label="消息：">
-                                                    <Input size="small" type="text" v-model="searchModel.msg" placeholder="">
+                                            <Col span="8">
+                                                <FormItem prop="msgtname" label="消息模板：">
+                                                    <Input size="small" type="text" v-model="searchModel.msgtname" placeholder="">
                                                     </Input>
                                                 </FormItem>
                                             </Col>
-                                            <Col span="4">
-                                                <FormItem prop="receiveMan" label="接收人：">
-                                                    <Input size="small" type="text" v-model="searchModel.receiveMan" placeholder="">
+                                            <Col span="8">
+                                                <FormItem prop="wechatname" label="接收人：">
+                                                    <Input size="small" type="text" v-model="searchModel.wechatname" placeholder="">
                                                     </Input>
                                                 </FormItem>
                                             </Col>
-                                            <Col span="5">
-                                                <FormItem prop="phone" label="接收人手机号：">
-                                                    <Input size="small" type="text" v-model="searchModel.phone" placeholder="">
+                                            <Col span="8">
+                                                <FormItem prop="mobile" label="手机：">
+                                                    <Input size="small" type="text" v-model="searchModel.mobile" placeholder="">
                                                     </Input>
                                                 </FormItem>
                                             </Col>
-                                            <Col span="5">
-                                                <FormItem prop="state" label="是否成功：">
-                                                    <Select transfer v-model="searchModel.state" placeholder="请选择">
+                                            <Col span="8">
+                                                <FormItem prop="issuccess" label="是否成功：">
+                                                    <Select transfer v-model="searchModel.issuccess" placeholder="请选择" size="small">
                                                         <Option value="Y">成功</Option>
                                                         <Option value="N">失败</Option> 
                                                     </Select>  
                                                 </FormItem>
-                                            </Col> -->
+                                            </Col>
                                         </Row>
                                         <FormItem>
                                              <Button type="primary" @click="search">查询</Button>
@@ -166,13 +166,11 @@ export default {
       //  筛选相关
       search_model: "",
       searchModel: {
-        templateName: "",
+        wechatname: "",
         sendDate: "",
-        sender: "",
-        phone: "",
-        customer: "",
-        salesman: "",
-        state: "",
+        wechatname: "",
+        mobile: "",
+        issuccess: "",
         date: []
       },
       fatherDataHeader: [
@@ -253,6 +251,10 @@ export default {
                 pageSize: '1000000',
                 bcreatedate: DateFormat(_self.searchModel.date[0]),
                 ecreatedate: DateFormat(_self.searchModel.date[1]),
+                msgtname: _self.searchModel.msgtname,
+                wechatname: _self.searchModel.wechatname,
+                mobile: _self.searchModel.mobile,
+                issuccess: _self.searchModel.issuccess,
                 export: 'Y',
                 exportField: encodeURI(JSON.stringify(field))
             }
@@ -265,10 +267,14 @@ export default {
       _self.loading = true
       let config = {
         params: {
-          page: _self.page,
-          pageSize: _self.pageSize,
-          bcreatedate: DateFormat(_self.searchModel.date[0]),
-          ecreatedate: DateFormat(_self.searchModel.date[1]),
+            page: _self.page,
+            pageSize: _self.pageSize,
+            bcreatedate: DateFormat(_self.searchModel.date[0]),
+            ecreatedate: DateFormat(_self.searchModel.date[1]),
+            msgtname: _self.searchModel.msgtname,
+            wechatname: _self.searchModel.wechatname,
+            mobile: _self.searchModel.mobile,
+            issuccess: _self.searchModel.issuccess,
         }
       };
       function doSuccess(res) {

@@ -72,7 +72,7 @@
 <style scoped>
     .drag{
         position: relative;
-        background-color: #e8e8e8;
+        background-color: #553232;
         width: 100%;
         height: 34px;
         line-height: 34px;

@@ -10,46 +10,47 @@
                                 筛选
                                 <div slot="content" @keydown.enter="search">
                                     <Form ref="searchModel" :model="searchModel" :label-width="100">
-                                        <!-- <Row :gutter="16">
-                                            <Col span="4">
+                                        <Row :gutter="16">
+                                            <!-- <Col span="4">
                                                 <FormItem prop="customer" label="客户：">
                                                     <Input size="small" type="text" v-model="searchModel.customer" placeholder="">
                                                     </Input>
                                                 </FormItem>
+                                            </Col> -->
+                                            <Col span="8">
+                                                <FormItem prop="companyname" label="公司：">
+                                                    <Input size="small" type="text" v-model="searchModel.companyname" placeholder="">
+                                                    </Input>
+                                                </FormItem>
                                             </Col>
-                                            <Col span="4">
+                                            <Col span="8">
                                                 <FormItem prop="phone" label="电话号码：">
                                                     <Input size="small" type="text" v-model="searchModel.phone" placeholder="">
                                                     </Input>
                                                 </FormItem>
                                             </Col>
-                                            <Col span="4">
-                                                <FormItem prop="fllowMan" label="跟进人：">
-                                                    <Input size="small" type="text" v-model="searchModel.fllowMan" placeholder="">
+                                            <Col span="8">
+                                                <FormItem prop="msgtname" label="模板名称：">
+                                                    <Input size="small" type="text" v-model="searchModel.msgtname" placeholder="">
                                                     </Input>
                                                 </FormItem>
                                             </Col>
-                                            <Col span="4">
+                                            <!-- <Col span="4">
                                                 <FormItem prop="serviceMan" label="服务人员：">
                                                     <Input size="small" type="text" v-model="searchModel.serviceMan" placeholder="">
                                                     </Input>
                                                 </FormItem>
-                                            </Col>
-                                            <Col span="4">
+                                            </Col> -->
+                                            <!-- <Col span="4">
                                                 <FormItem prop="state" label="返回状态：">
                                                     <Select transfer v-model="searchModel.state" placeholder="请选择">
                                                         <Option value="500">成功</Option>
                                                         <Option value="0">失败</Option> 
                                                     </Select>  
                                                 </FormItem>
-                                            </Col>
-                                            <Col span="4">
-                                                <FormItem prop="companyName" label="公司：">
-                                                    <Input size="small" type="text" v-model="searchModel.companyName" placeholder="">
-                                                    </Input>
-                                                </FormItem>
-                                            </Col>
-                                        </Row>     -->
+                                            </Col> -->
+                                            
+                                        </Row>    
                                         <Row :gutter="16">
                                             <!-- <Col span="4">
                                                 <FormItem prop="msg_content" label="短信内容：">
@@ -62,12 +63,12 @@
                                                     <DatePicker format="yyyy-MM-dd" type="daterange" style="width: 100%" size="small" v-model="searchModel.date"></DatePicker>
                                                 </FormItem>
                                             </Col>
-                                            <!-- <Col span="4">
-                                                <FormItem prop="sendMSMMan" label="短信发送人：">
-                                                    <Input size="small" type="text" v-model="searchModel.sendMSMMan" placeholder="">
+                                            <Col span="8">
+                                                <FormItem prop="realname" label="发送人：">
+                                                    <Input size="small" type="text" v-model="searchModel.realname" placeholder="">
                                                     </Input>
                                                 </FormItem>
-                                            </Col> -->
+                                            </Col>
                                         </Row>
                                         <FormItem>
                                                 <Button type="primary" @click="search">查询</Button>
@@ -171,7 +172,7 @@ export default {
     name: "smsSendLog",
   data() {
     return {
-        loading: false,
+      loading: false,
       showwidth: 24,
       groupDataCenter: true,
       //  筛选相关
@@ -183,11 +184,11 @@ export default {
         phone: "",
         serviceMan: "",
         state: "",
-        companyName: "",
-        msg_content: "",
+        companyname: "",
+        msgtname: "",
         startdate: "",
         enddate: "",
-        sendMSMMan: "",
+        realname: "",
         date: []
       },
       fatherDataHeader: [
@@ -276,6 +277,10 @@ export default {
                 pageSize: '1000000',
                 bcreatedate: DateFormat(_self.searchModel.date[0]),
                 ecreatedate: DateFormat(_self.searchModel.date[1]),
+                realname: _self.searchModel.realname,
+                phone: _self.searchModel.phone,
+                msgtname: _self.searchModel.msgtname,
+                companyname: _self.searchModel.companyname,
                 export: 'Y',
                 exportField: encodeURI(JSON.stringify(field))
             }
@@ -288,16 +293,20 @@ export default {
       let url = "api/system/log/querySMSRquestLog/list"
       let config= {
         params: {
-          page: _self.page,
-          pageSize: _self.pageSize,
-          bcreatedate: DateFormat(_self.searchModel.date[0]),
-          ecreatedate: DateFormat(_self.searchModel.date[1])
+            page: _self.page,
+            pageSize: _self.pageSize,
+            bcreatedate: DateFormat(_self.searchModel.date[0]),
+            ecreatedate: DateFormat(_self.searchModel.date[1]),
+            realname: _self.searchModel.realname,
+            phone: _self.searchModel.phone,
+            msgtname: _self.searchModel.msgtname,
+            companyname: _self.searchModel.companyname,
         }
       };
       function doSuccess(res) {
         _self.fatherData = res.data.data.rows;
         _self.pageTotal = res.data.data.total;
-          _self.loading = false
+        _self.loading = false
 
       }
       _self.$Get(url, config, doSuccess);
