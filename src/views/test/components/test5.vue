@@ -199,6 +199,7 @@ export default {
                 fontSize: this.tempTextSize
             })
         },
+        //  移除文字
         remove(e){
             this.textArray.splice(e, 1)
         }
