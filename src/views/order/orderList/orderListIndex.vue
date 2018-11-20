@@ -482,7 +482,7 @@ export default {
                 {field:'base_paydir',title:'缴费渠道',format:'payDirs'},
                 {field:'paynumber',title:'订单价格'},
                 {field:'realnumber',title:'已付款'},                    
-                {field:'payamount',title:'余款'},                    
+                {field:'neednumber',title:'余款'},                    
                 {field:'base_createdate',title:'创建时间'},
                 {field:'crealname',title:'创建人'},
                 {field:'frealname',title:'跟进人'},                    

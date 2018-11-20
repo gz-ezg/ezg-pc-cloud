@@ -85,6 +85,7 @@
                         <Table
                                 highlight-row
                                 size="small"
+                                :loading="loadingN"
                                 :columns="tableColumns"
                                 :data="tableData"
                                 @on-current-change="selectRow"></Table>
@@ -177,6 +178,7 @@
                         <Table
                                 highlight-row
                                 size="small"
+                                :loading="loadingY"
                                 :columns="tableColumns2"
                                 :data="tableData2"
                                 @on-current-change="selectRow"></Table>
@@ -409,15 +411,20 @@
                         style="margin-top: 10px"></Page>
                 <div slot="footer"></div>
         </Modal>
+        <public-customer v-if="openPublicCustomer" :customer="currnetRow" @close="openPublicCustomer = false" @success="receipt_success"></public-customer>
     </div>
 </template>
 
 <script>
 import {DateFormat} from '../../../libs/utils'
 import flowVue from '../../woa-components/next/flow.vue';
+import publicCustomer from './publicCustomer'
 
     export default {
         name:'cluesLibrary_index',
+        components:{
+            publicCustomer
+        },
         data() {
             const validateTel = (rule, value, callback) => {
                 var re = /^1\d{10}$/
@@ -432,6 +439,12 @@ import flowVue from '../../woa-components/next/flow.vue';
                 }
             };
             return {
+                //  公海池相关
+                currnetRow: {},
+                openPublicCustomer: false,
+                //  
+                loadingN: false,
+                loadingY: false,
                 companyLoading:false,
                 flag:false,
                 searchCompany:"",
@@ -541,6 +554,11 @@ import flowVue from '../../woa-components/next/flow.vue';
                         minWidth: 130,
                     },
                     {
+                        title: '销售人员',
+                        key: 'saler_name',
+                        minWidth: 130
+                    },
+                    {
                         title: '线索状态',
                         key: 'cluesstatus',
                         minWidth: 100,
@@ -617,7 +635,7 @@ import flowVue from '../../woa-components/next/flow.vue';
                                     },
                                     on: {
                                         click: () => {
-                                            this.lingq(params)
+                                            this.lingq(params.row)
                                         }
                                     }
                                 }, '领取')
@@ -635,6 +653,11 @@ import flowVue from '../../woa-components/next/flow.vue';
                         title: '客户电话',
                         key: 'tel',
                         minWidth: 130,
+                    },
+                    {
+                        title: '销售人员',
+                        key: 'saler_name',
+                        minWidth: 130
                     },
                     {
                         title:'客户类型',
@@ -850,6 +873,7 @@ import flowVue from '../../woa-components/next/flow.vue';
             getTableData() {
                 let _self = this
                 let url = 'api/clue/list'
+                _self.loadingN = true
                 var keys =[]
                     var config = {
                         params:{
@@ -914,13 +938,15 @@ import flowVue from '../../woa-components/next/flow.vue';
                             createby: (response.data.data.rows[i].crealname),
                             labelName: response.data.data.rows[i].labelname,
                             createdate: response.data.data.rows[i].createdate,
-                            clue_level: _self.clue_level_map.get(response.data.data.rows[i].clue_level)
+                            clue_level: _self.clue_level_map.get(response.data.data.rows[i].clue_level),
+                            saler_name: response.data.data.rows[i].saler_name,
+                            customer_id: response.data.data.rows[i].customer_id
                         })
                     }
+                    _self.loadingN = false
                 }
 
-                _self.$http.get(url,config).then(function(res){
-                    _self.$backToLogin(res)                    
+                _self.$http.get(url,config).then(function(res){                   
                     doSuccess(res)
                 })
             },
@@ -928,7 +954,7 @@ import flowVue from '../../woa-components/next/flow.vue';
             getTableData2() {
                 let _self = this
                 let url = 'api/clue/list'
-
+                _self.loadingY = true
                 var keys =[]
                     var config = {
                         params:{
@@ -990,13 +1016,15 @@ import flowVue from '../../woa-components/next/flow.vue';
                             createby: response.data.data.rows[i].crealname,
                             labelName: response.data.data.rows[i].labelname,
                             createdate: response.data.data.rows[i].createdate,
-                            clue_level: _self.clue_level_map.get(response.data.data.rows[i].clue_level)
+                            clue_level: _self.clue_level_map.get(response.data.data.rows[i].clue_level),
+                            saler_name: response.data.data.rows[i].saler_name,
+                            customer_id: response.data.data.rows[i].customer_id
                         })
                     }
+                    _self.loadingY = false
                 }
 
-                _self.$http.get(url, config).then(function(res){
-                    _self.$backToLogin(res)                    
+                _self.$http.get(url, config).then(function(res){              
                     doSuccess(res)
                 })
             },
@@ -1375,9 +1403,10 @@ import flowVue from '../../woa-components/next/flow.vue';
 
             lingq(a) {
                 let _self = this
+                this.currnetRow = a
                 let url = 'api/clue/receiptClue'
                 let config = {
-                    id: a.row.id
+                    id: a.id
                 }
 
                 // function doSuccess(re) {
@@ -1392,23 +1421,12 @@ import flowVue from '../../woa-components/next/flow.vue';
                 }
 
                 function fail(err){
-
+                    if(err.data.msg == "请先从公海池领取该客户"){
+                        _self.openPublicCustomer = true
+                    }
+                    // _self.openPublicCustomer = true
+                    // console.log("1234")
                 }
-                // this.$http.post(url, _data).then(function(res){
-                //     console.log(res.data)
-                //     if(res.data.msgCode == 40000){
-                //         _self.$Message.success('领取成功!')
-                //         _self.getTableData()
-                //         _self.getTableData2()
-                //     }else{
-                //         if(res.data.msgCode == 50000){
-                //             _self.$Message.warning("您不在候选人名单，无法领取！")
-                //         }else{
-                //             _self.$Message.warning("领取失败！")
-                //         }
-                        
-                //     }
-                // })
 
                 this.$Post(url, config, success, fail)
                 // this.PostData(url, _data, doSuccess)
@@ -1525,6 +1543,9 @@ import flowVue from '../../woa-components/next/flow.vue';
                     console.log("1234")
                 }
             },
+            receipt_success(){
+                this.lingq(this.currnetRow)
+            }
         },
         mounted() {
             this.getDataCenter()

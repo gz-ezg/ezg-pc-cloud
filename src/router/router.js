@@ -177,61 +177,61 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    {
-        path: '/test',
-        icon: 'alert-circled',
-        name: 'test',
-        title: 'Test',
-        component: Main,
-        children: [
-            // {
-            //     path: 'test',
-            //     title: '测试页面',
-            //     name: '富文本编辑器测试',
-            //     component: resolve => {
-            //         require(['@/views/test/components/main.vue'], resolve);
-            //         // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+    // {
+    //     path: '/test',
+    //     icon: 'alert-circled',
+    //     name: 'test',
+    //     title: 'Test',
+    //     component: Main,
+    //     children: [
+    //         // {
+    //         //     path: 'test',
+    //         //     title: '测试页面',
+    //         //     name: '富文本编辑器测试',
+    //         //     component: resolve => {
+    //         //         require(['@/views/test/components/main.vue'], resolve);
+    //         //         // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-            //     }
-            // },
-            // {
-            //     path: 'test2',
-            //     title: '日程测试',
-            //     name: 'test2_index',
-            //     component: resolve => {
-            //         require(['@/views/test/components/test2.vue'], resolve);
-            //         // require(['@/views/woa-components/filePreview/index.vue'], resolve);
+    //         //     }
+    //         // },
+    //         // {
+    //         //     path: 'test2',
+    //         //     title: '日程测试',
+    //         //     name: 'test2_index',
+    //         //     component: resolve => {
+    //         //         require(['@/views/test/components/test2.vue'], resolve);
+    //         //         // require(['@/views/woa-components/filePreview/index.vue'], resolve);
 
-            //     }
-            // },
-            {
-                path: 'test3',
-                title: '滑动验证码',
-                name: 'test3_index',
-                component: resolve => {
-                    require(['@/views/test/components/test3.vue'], resolve);
+    //         //     }
+    //         // },
+    //         {
+    //             path: 'test3',
+    //             title: '滑动验证码',
+    //             name: 'test3_index',
+    //             component: resolve => {
+    //                 require(['@/views/test/components/test3.vue'], resolve);
 
-                }
-            },
-            {
-                path: 'test4',
-                title: 'canvas个人页制作',
-                name: 'test4_index',
-                component: resolve => {
-                    require(['@/views/test/components/test4.vue'], resolve);
+    //             }
+    //         },
+    //         {
+    //             path: 'test4',
+    //             title: 'canvas个人页制作',
+    //             name: 'test4_index',
+    //             component: resolve => {
+    //                 require(['@/views/test/components/test4.vue'], resolve);
 
-                }
-            },
-            {
-                path: 'test5',
-                title: 'html2canvas',
-                name: 'test05_index',
-                component: resolve => {
-                    require(['@/views/test/components/test5.vue'], resolve);
-                }
-            }
-        ]
-    },
+    //             }
+    //         },
+    //         {
+    //             path: 'test5',
+    //             title: 'html2canvas',
+    //             name: 'test05_index',
+    //             component: resolve => {
+    //                 require(['@/views/test/components/test5.vue'], resolve);
+    //             }
+    //         }
+    //     ]
+    // },
     // {
     //     path: '/allindex',
     //     icon: 'social-windows',

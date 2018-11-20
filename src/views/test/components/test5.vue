@@ -6,22 +6,22 @@
                     <center style="margin-top:30px">
                         <div 
                             id="capture" 
-                            style="width:375px;height:667px;background-color:#666666;color:#ffffff;overflow:hidden"
-                            :style="{ backgroundImage:imgUrl}"
+                            style="width:375px;height:667px;color:#ffffff;overflow:hidden"
+                            :style="{ backgroundImage:imgUrl, backgroundColor: backgroundColor}"
                             class="content" 
                             @mousemove.prevent=" current == 1 && mouseMoveState && mouseMoveFn($event)" 
                             @mouseup.prevent="mouseMoveState && moseUpFn($event)">
                                 <h1 id="p-99999" @mousedown="mousedownFn($event)">这是测试页面</h1>
-                                <!-- <p
+                                <p
                                     id="p1"
                                     ref="p1" 
                                     @mousedown="mousedownFn($event)"
-                                >你猜我是谁！</p>
-                                <p id="p-2" @mousedown="mousedownFn($event)">不猜不猜我不猜！</p>
+                                ><a href="#" id="p1" style="color:#fff">你猜我是谁！</a></p>
+                                <!-- <p id="p-2" @mousedown="mousedownFn($event)">不猜不猜我不猜！</p>
                                 <p id="p-3" @mousedown="mousedownFn($event)">你猜我是谁！</p>
                                 <p id="p-4" @mousedown="mousedownFn($event)">你猜我是谁！</p>
                                 <p id="p-5" @mousedown="mousedownFn($event)">你猜我是谁！</p> -->
-                                <p v-for="(item, index) in textArray" :key="index" :style="{color: item.color, fontSize: item.fontSize + 'px'}" @mousedown="mousedownFn($event)" :id="`p-${index}`" @click.right.prevent="remove(index)">{{item.text}}</p>
+                                <div v-for="(item, index) in textArray" :key="index" :style="{color: item.color, fontSize: item.fontSize + 'px'}" @mousedown="mousedownFn($event)" :id="`p-${index}`" @click.right.prevent="remove(index)">{{item.text}}</div>
                         </div>
                     </center>
                 </Card>
@@ -43,6 +43,9 @@
                                 >
                             <Button type="primary" icon="ios-cloud-upload-outline">上传背景图</Button>
                         </Upload>
+                        <Row>
+                            或选择背景色：<ColorPicker v-model="backgroundColor"></ColorPicker>
+                        </Row>
                         <Button type="primary" style="margin-top:20px" @click="current = 1">下一步</Button>
                         </div>
                         <div v-else-if="current == 1">
@@ -103,11 +106,12 @@ export default {
             beginClientY: "",
             transformX: "",
             transformY: "",
-            current: 0,
+            current: 1,
             imgUrl: "",
             tempColor: "#000000",
             tempText: "",
             tempTextSize: 18,
+            backgroundColor: "#666666",
             textArray: [],
             fontSizeArray: [
                 { text: "12px", size: 12 },
@@ -135,7 +139,9 @@ export default {
                 let dataURL = canvas.toDataURL("image/png");
                 let temp = this.convertBase64UrlToBlob(dataURL)
                 // this.img_href = URL.createObjectURL(temp)
-                window.open(URL.createObjectURL(temp))
+                // window.open(URL.createObjectURL(temp))
+                let tempDom = document.querySelector("#capture")
+                console.log(tempDom)
             });
         },
         convertBase64UrlToBlob(urlData){
@@ -152,6 +158,8 @@ export default {
             this.eleId = "#" + e.target.id
             this.mouseMoveState = true;
             let bodyDom = document.querySelector(this.eleId)
+            this.transformX = 0
+            this.transformY = 0
             let transform = /\(.*\)/.exec(bodyDom.style.transform)
             if (transform) {
                 transform = transform[0].slice(1, transform[0].length - 1)
@@ -169,8 +177,7 @@ export default {
                 //  计划作为界限判断，放弃
                 // if(xOffset > 0 && xOffset <= 375 && yOffset > 0 && yOffset <= 667){
                 let bodyDom = document.querySelector(this.eleId)
-                 bodyDom.style.transform = `translate(${xOffset}px, ${yOffset}px)`
-                
+                bodyDom.style.transform = `translate(${xOffset}px, ${yOffset}px)`
             }
         },
         moseUpFn(e){
@@ -201,6 +208,7 @@ export default {
         },
         //  移除文字
         remove(e){
+            // this.textArray[e].text = ""
             this.textArray.splice(e, 1)
         }
     }
