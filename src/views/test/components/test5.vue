@@ -9,8 +9,10 @@
                             style="width:375px;height:667px;color:#ffffff;overflow:hidden"
                             :style="{ backgroundImage:imgUrl, backgroundColor: backgroundColor}"
                             class="content" 
-                            @mousemove.prevent=" current == 1 && mouseMoveState && mouseMoveFn($event)" 
+                            @mousemove.prevent=" (current == 1 || current == 2) && mouseMoveState && mouseMoveFn($event)" 
                             @mouseup.prevent="mouseMoveState && moseUpFn($event)">
+                            <div v-for="(item, index) in imgaeArray" :key="index" @mousedown="mousedownFn($event)" :id="`image-${index}`" @click.right.prevent="remove_img(index)" :style="{backgroundImage: item.img, width: item.width+'px',height:item.height+'px'}" style="background-repeat:no-repeat;background-size:100%;">
+                            </div>
                                 <h1 id="p-99999" @mousedown="mousedownFn($event)">这是测试页面</h1>
                                 <p
                                     id="p1"
@@ -21,7 +23,10 @@
                                 <p id="p-3" @mousedown="mousedownFn($event)">你猜我是谁！</p>
                                 <p id="p-4" @mousedown="mousedownFn($event)">你猜我是谁！</p>
                                 <p id="p-5" @mousedown="mousedownFn($event)">你猜我是谁！</p> -->
-                                <div v-for="(item, index) in textArray" :key="index" :style="{color: item.color, fontSize: item.fontSize + 'px'}" @mousedown="mousedownFn($event)" :id="`p-${index}`" @click.right.prevent="remove(index)">{{item.text}}</div>
+                                <div v-for="(item, index) in textArray" :key="index" @mousedown="mousedownFn($event)" :id="`p-${index}`" @click.right.prevent="remove(index)">
+                                    <a :id="`p-${index}`" :style="{color: item.color, fontSize: item.fontSize + 'px'}" :href="item.url" target="_blank" v-if="item.url">{{item.text}}</a>
+                                    <span :id="`p-${index}`" :style="{color: item.color, fontSize: item.fontSize + 'px'}" v-else>{{item.text}}</span>
+                                </div>
                         </div>
                     </center>
                 </Card>
@@ -30,6 +35,7 @@
                 <Card title="操作区">
                     <Steps :current="current">
                         <Step title="背景图" icon="camera"></Step>
+                        <Step title="编辑图片" icon="image"></Step>
                         <Step title="编辑文字" icon="edit"></Step>
                         <Step title="生成个性主页" icon="camera"></Step>
                     </Steps>
@@ -48,7 +54,22 @@
                         </Row>
                         <Button type="primary" style="margin-top:20px" @click="current = 1">下一步</Button>
                         </div>
-                        <div v-else-if="current == 1">
+                        <div v-if="current == 1">
+                            <Upload
+                                ref="upload"
+                                multiple
+                                :before-upload="upload_img"
+                                action="/api/customer/addCustomerContentImg"
+                                >
+                            <Button type="primary" icon="ios-cloud-upload-outline">上传图片</Button>
+                        </Upload>
+                        <Row>
+
+                        </Row>
+                        <Button type="primary" style="margin-top:20px" @click="current = 0">上一步</Button>
+                        <Button type="primary" style="margin-top:20px" @click="current = 2">下一步</Button>
+                        </div>
+                        <div v-else-if="current == 2">
                             <Tag color="blue" style="margin-bottom:10px">温馨提示：左侧面板中，文字可以任意拖动！右键点击文字可以清除！</Tag>
                             <div style="margin-top:10px">
                                 <Row :gutter="12">
@@ -69,20 +90,26 @@
                                     </Col>
                                 </Row>
                                 <Row :gutter="12" style="margin-top:10px">
+                                    <Col><Tag color="blue" style="margin-bottom:10px">如果设置了url地址，请拖动文字附近空白区域，防止链接跳转</Tag></Col>
+                                    <Col>
+                                        <Input type="textarea" placeholder="请输入超链接" v-model="tempUrl"/>
+                                    </Col>
+                                </Row>
+                                <Row :gutter="12" style="margin-top:10px">
                                     <Col>
                                         <Button long type="primary" @click="add_text_model">添加</Button>
                                     </Col>
                                 </Row>
                             </div>
-                            <Button type="primary" style="margin-top:20px" @click="current = 0">上一步</Button>
-                            <Button type="primary" style="margin-top:20px" @click="current = 2">下一步</Button>
+                            <Button type="primary" style="margin-top:20px" @click="current = 1">上一步</Button>
+                            <Button type="primary" style="margin-top:20px" @click="current = 3">下一步</Button>
                         </div>
                         <div v-else>
                             <Row>
                                 <Button type="primary" @click="download" style="width:375px;margin-top:20px">导出</Button>
                             </Row>
                             <Row>
-                                <Button type="primary" style="margin-top:20px" @click="current = 1">上一步</Button>
+                                <Button type="primary" style="margin-top:20px" @click="current = 2">上一步</Button>
                             </Row>
                         </div>
                     </div>
@@ -110,6 +137,7 @@ export default {
             imgUrl: "",
             tempColor: "#000000",
             tempText: "",
+            tempUrl: "",
             tempTextSize: 18,
             backgroundColor: "#666666",
             textArray: [],
@@ -128,7 +156,8 @@ export default {
                 { text: "34px", size: 34 },
                 { text: "36px", size: 36 },
                 { text: "38px", size: 38 },
-            ]
+            ],
+            imgaeArray: []
         }
     },
     methods: {
@@ -141,7 +170,6 @@ export default {
                 // this.img_href = URL.createObjectURL(temp)
                 // window.open(URL.createObjectURL(temp))
                 let tempDom = document.querySelector("#capture")
-                console.log(tempDom)
             });
         },
         convertBase64UrlToBlob(urlData){
@@ -198,18 +226,43 @@ export default {
             }
             return false;
         },
+        //  上传图片
+        upload_img(file){
+            let _self = this
+            let reader = new FileReader()
+            reader.readAsDataURL(file)
+            let filename = file.name
+            reader.onload = function(e){
+                var imgMsg = {
+                    name: filename,
+                    src: this.result
+                }
+                _self.imgaeArray.push({
+                    img: `url(${this.result})`,
+                    width: 200,
+                    height: 400,
+                    
+                })
+            }
+            return false;
+        },
         //  文字生成
         add_text_model(){
             this.textArray.push({
                 text: this.tempText,
                 color: this.tempColor,
-                fontSize: this.tempTextSize
+                fontSize: this.tempTextSize,
+                url: this.tempUrl
             })
         },
         //  移除文字
         remove(e){
             // this.textArray[e].text = ""
             this.textArray.splice(e, 1)
+        },
+        //  移除图片
+        remove_img(e){
+            this.imgaeArray.splice(e, 1)
         }
     }
 }
