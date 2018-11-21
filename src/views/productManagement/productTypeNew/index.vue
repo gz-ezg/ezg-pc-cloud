@@ -9,15 +9,22 @@
                 <tree-table :data="data" :columns="columns" border expandAll @edit="edit" @delete="delete_type"/>
             </Row>
         </Card>
+        <create-type></create-type>
+        <update-type></update-type>
     </div>
 </template>
 
 <script>
 import treeTable from './TreeTable/index'
+import createType from './create'
+import updateType from './update'
+
 export default {
     name: "productType_index",
     components: {
-        treeTable
+        treeTable,
+        createType,
+        updateType
     },
     data(){
         return{
@@ -54,9 +61,11 @@ export default {
             this.currentRow = e
         },
         edit(e){
+            //  编辑
             // console.log(e)
         },
         delete_type(e){
+            //  删除
             // console.log(e)
         }
     },
