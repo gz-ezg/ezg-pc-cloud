@@ -102,6 +102,14 @@
                         </FormItem>
                     </Col>
                 </Row>
+                <Row :gutter="16">
+                    <Col span="1" style="visibility:hidden">1</Col>
+                    <Col span="20">
+                        <FormItem prop="followbusiness" label="跟进中的业务">
+                            <Input size="small" v-model="task_message.followbusiness" type="textarea" :autosize="{minRows: 2,maxRows: 5}" />
+                        </FormItem>
+                    </Col>
+                </Row>
             </Form>
             <div slot="footer">
                 <Button type="primary" @click="submit" >新增</Button>
@@ -226,7 +234,8 @@
                     endreason:"",
                     reasonformarketer:"",
                     reasonforcallback:"",
-                    tel:""
+                    tel:"",
+                    followbusiness: ""
                 },
                 task_message_rule:{
                     taxperiod:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
@@ -317,69 +326,9 @@
                     _self.task_message.marketername = ""
                     _self.task_message.servicername = ""
                     _self.task_message.tel = ""
-                    _self.task_message.taxperiod = ""   
+                    _self.task_message.taxperiod = ""
+                    _self.task_message.followbusiness = ""
             })
-            // Bus.$on('add', (e)=>{
-            //     if(e.type == 'add') {
-            //         _self.title = '录入'
-            //         _self.isshow = true  
-            //         _self.task_message.company = ""
-            //         _self.task_message.product = ""
-            //         _self.task_message.customer = ""
-            //         _self.task_message.id = ""
-            //         _self.task_message.servicebegindate = ""
-            //         _self.task_message.enddate = ""
-            //         _self.task_message.callbackdate = ""
-            //         _self.task_message.endreason = ""
-            //         _self.task_message.reasonformarketer = ""
-            //         _self.task_message.reasonforcallback = ""
-            //         _self.task_message.marketername = ""
-            //         _self.task_message.servicername = ""
-            //         _self.task_message.tel = ""
-            //         _self.task_message.taxperiod = ""                             
-            //     } else if(e.type == 'edit') {
-            //         console.log(e)
-            //         _self.isshow = true                    
-            //         _self.title = '编辑'
-            //         _self.task_message.company = e.CompanyName
-            //         _self.task_message.product = e.product
-            //         _self.task_message.customer = e.name
-            //         _self.task_message.id = e.id
-            //         _self.task_message.servicebegindate = e.servicebegindate
-            //         _self.task_message.enddate = e.enddate
-            //         _self.task_message.callbackdate = e.callbackdate
-            //         _self.task_message.endreason = e.endreason
-            //         _self.task_message.reasonformarketer = e.reasonformarketer
-            //         _self.task_message.reasonforcallback = e.reasonforcallback
-            //         _self.task_message.marketername = e.marketer
-            //         _self.task_message.servicername = e.servicer
-            //         _self.task_message.tel = e.TEL
-            //         _self.task_message.taxperiod = e.taxperiod
-            //     } else if(e.type == 'check') {
-            //         _self.isshow = false                    
-            //         _self.title = '查看'
-            //         _self.task_message.company = e.CompanyName
-            //         if(e.product == null||e.product == ""){
-            //             _self.task_message.product = "."
-            //         }else{
-            //             _self.task_message.product = e.product
-            //         }
-            //         _self.task_message.customer = e.name
-            //         _self.task_message.servicebegindate = e.servicebegindate
-            //         _self.task_message.enddate = e.enddate
-            //         _self.task_message.callbackdate = e.callbackdate
-            //         _self.task_message.endreason = e.endreason
-            //         _self.task_message.reasonformarketer = e.reasonformarketer
-            //         _self.task_message.reasonforcallback = e.reasonforcallback
-            //         _self.task_message.marketername = e.marketer
-            //         _self.task_message.servicername = e.servicer
-            //         _self.task_message.taxperiod = e.taxperiod                                     
-            //         _self.task_message.tel = e.TEL
-
-            //     }
-
-            //     _self.add = true
-            // })
         },
         methods: {
             cancel(){
@@ -389,16 +338,8 @@
                     this.$refs["task_message"].resetFields();
                     _self.task_message.companyid = ""
                     console.log(_self.task_message.companyid)
-                    // _self.task_message.company = ""
-                    // _self.task_message.product = ""
-                    // _self.task_message.customer = ""
                     _self.task_message.id = ""
-                    // _self.task_message.servicebegindate = ""
-                    // _self.task_message.enddate = ""
-                    // _self.task_message.callbackdate = ""
-                    // _self.task_message.endreason = ""
-                    // _self.task_message.reasonformarketer = ""
-                    // _self.task_message.reasonforcallback = ""
+
             },
             keydown3(e){
                 if(e.key == 'Enter'){
@@ -607,7 +548,8 @@
                     reasonformarketer: _self.task_message.reasonformarketer,
                     reasonforcallback: _self.task_message.reasonforcallback,
                     endreason: _self.task_message.endreason,
-                    taxperiod: _self.task_message.taxperiod
+                    taxperiod: _self.task_message.taxperiod,
+                    followbusiness: _self.task_message.followbusiness
                 }
 
                 
@@ -647,37 +589,6 @@
                 // this.PostData(url, _data, doSuccess)
                 this.$Post(url, _data, doSuccess, fail)
             },
-            
-            // postDataEdit() {
-            //     let _self = this
-            //     let url = 'api/customer/updateCustomerEnd'
-            //     let _data = {
-            //         id: _self.task_message.id,
-            //         // companyid: _self.task_message.companyid,
-            //         productid: _self.task_message.productid,
-            //         servicer: _self.task_message.servicer,
-            //         marketer: _self.task_message.marketer,
-            //         enddate: DateFormat(_self.task_message.enddate),
-            //         callbackdate: DateFormat(_self.task_message.callbackdate),
-            //         servicebegindate: DateFormat(_self.task_message.servicebegindate),
-            //         reasonformarketer: _self.task_message.reasonformarketer,
-            //         reasonforcallback: _self.task_message.reasonforcallback,
-            //         endreason: _self.task_message.endreason,
-            //         taxperiod: _self.task_message.taxperiod
-            //     }
-
-            //     function doSuccess(res) {
-            //         _self.add = false
-            //         // _self.$Message.success(res.data.msg)
-            //         Bus.$emit('updateofflinecustomer',true)
-            //         _self.cancel()
-            //     }
-            //     function fail(err){
-            //         console.log(err)
-            //     }
-            //     // this.PostData(url, _data, doSuccess)
-            //     this.$Post(url, _data, doSuccess, fail)
-            // }
         }
     }
 </script>

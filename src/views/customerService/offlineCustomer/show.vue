@@ -102,6 +102,14 @@
                         </FormItem>
                     </Col>
                 </Row>
+                <Row :gutter="16">
+                    <Col span="1" style="visibility:hidden">1</Col>
+                    <Col span="20">
+                        <FormItem prop="followbusiness" label="客户实际下线原因">
+                            <Input size="small" v-model="task_message.followbusiness" type="textarea" :autosize="{minRows: 2,maxRows: 5}"/>
+                        </FormItem>
+                    </Col>
+                </Row>
             </Form>
             <div slot="footer">
             </div>
@@ -110,8 +118,6 @@
 </template>
 
 <script>
-    // import Bus from '../../../components/bus'
-
     export default {
         data() {
             return {
@@ -131,7 +137,8 @@
                     endreason:"",
                     reasonformarketer:"",
                     reasonforcallback:"",
-                    tel:""
+                    tel:"",
+                    followbusiness: ""
                 }
             }
         },
@@ -157,6 +164,7 @@
                 _self.task_message.servicername = e.servicer
                 _self.task_message.taxperiod = e.taxperiod                                     
                 _self.task_message.tel = e.TEL
+                _self.task_message.followbusiness = e.followbusiness
             })
         }
     }

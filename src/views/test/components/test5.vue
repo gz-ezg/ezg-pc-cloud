@@ -11,8 +11,8 @@
                             class="content" 
                             @mousemove.prevent=" (current == 1 || current == 2) && mouseMoveState && mouseMoveFn($event)" 
                             @mouseup.prevent="mouseMoveState && moseUpFn($event)">
-                            <div v-for="(item, index) in imgaeArray" :key="index" @mousedown="mousedownFn($event)" :id="`image-${index}`" @click.right.prevent="remove_img(index)" :style="{backgroundImage: item.img, width: item.width+'px',height:item.height+'px'}" style="background-repeat:no-repeat;background-size:100%;">
-                            </div>
+                            <!-- <div v-for="(item, index) in imgaeArray" :key="index" @mousedown="mousedownFn($event)" :id="`image-${index}`" @click.right.prevent="remove_img(index)" :style="{backgroundImage: item.img, width: item.width+'px',height:item.height+'px'}" style="background-repeat:no-repeat;background-size:100%;"> -->
+                            <div v-for="(item, index) in imgaeArray" :key="index" v-html="item.imageDom.outerHTML" @mousedown="mousedownImg(item.imageDom, index, $event)" :id="`image-${index}`" @click.right.prevent="remove_img(index)"></div>
                                 <h1 id="p-99999" @mousedown="mousedownFn($event)">这是测试页面</h1>
                                 <p
                                     id="p1"
@@ -64,7 +64,16 @@
                             <Button type="primary" icon="ios-cloud-upload-outline">上传图片</Button>
                         </Upload>
                         <Row>
-
+                            <Row><span>当前选中的图片属性</span></Row>
+                            <Row>
+                                <Col span="4">witdh:</Col>
+                                <Col span="8"><Input v-model="currentImg.width"/></Col>
+                                <Col span="4">height:</Col>
+                                <Col span="8"><Input v-model="currentImg.height"/></Col>
+                                <Col span="4">缩放:</Col>
+                                <Col span="8"><Input v-model="scale"/></Col>
+                                <Button @click="change_img">修改</Button>
+                            </Row>
                         </Row>
                         <Button type="primary" style="margin-top:20px" @click="current = 0">上一步</Button>
                         <Button type="primary" style="margin-top:20px" @click="current = 2">下一步</Button>
@@ -157,7 +166,13 @@ export default {
                 { text: "36px", size: 36 },
                 { text: "38px", size: 38 },
             ],
-            imgaeArray: []
+            imgaeArray: [],
+            //  当前选中的图片
+            currentImg:{
+                width: "",
+                height: ""
+            },
+            scale: 1,
         }
     },
     methods: {
@@ -179,6 +194,26 @@ export default {
                 u8arr[n] = bstr.charCodeAt(n);
             }
             return new Blob([u8arr], {type:mime});
+        },
+        //  拖拽图片初始化
+        mousedownImg(imageTemp,index,e){
+            this.currentImg = imageTemp
+            console.log(e)
+            e.preventDefault && e.preventDefault();
+            this.eleId = "#" + e.target.id
+            this.mouseMoveState = true;
+            let bodyDom = document.querySelector(this.eleId)
+            this.transformX = 0
+            this.transformY = 0
+            let transform = /\(.*\)/.exec(bodyDom.style.transform)
+            if (transform) {
+                transform = transform[0].slice(1, transform[0].length - 1)
+                let splitxy = transform.split('px, ')
+                this.transformX = parseFloat(splitxy[0])
+                this.transformY = parseFloat(splitxy[1].split('px')[0])
+            }
+            this.beginClientX = e.pageX
+            this.beginClientY = e.pageY
         },
         //  拖拽部分
         mousedownFn(e){
@@ -202,10 +237,23 @@ export default {
             if(this.mouseMoveState){
                 let xOffset = e.pageX - this.beginClientX + this.transformX
                 let yOffset = e.pageY - this.beginClientY + this.transformY
+                let scale = 1
+                let bodyDom = document.querySelector(this.eleId)
+                // console.log(this.eleId.indexOf("image") )
+                if(this.eleId.indexOf("image") == 1){
+                    console.log(bodyDom.style.getPropertyValue("transform").indexOf("scale") != "-1")
+                    if(bodyDom.style.getPropertyValue("transform").indexOf("scale") != -1){
+                        console.log("success")
+                    }
+                }
                 //  计划作为界限判断，放弃
                 // if(xOffset > 0 && xOffset <= 375 && yOffset > 0 && yOffset <= 667){
-                let bodyDom = document.querySelector(this.eleId)
-                bodyDom.style.transform = `translate(${xOffset}px, ${yOffset}px)`
+                // let bodyDom = document.querySelector(this.eleId)
+                // console.log(bodyDom.style.getPropertyValue("transform"))
+                // for(x in bodyDom.style){
+                //     console.log(`${x}=>${bodyDom[x]}`)
+                // }
+                bodyDom.style.transform = `translate(${xOffset}px, ${yOffset}px) scale(${scale})`
             }
         },
         moseUpFn(e){
@@ -233,16 +281,38 @@ export default {
             reader.readAsDataURL(file)
             let filename = file.name
             reader.onload = function(e){
-                var imgMsg = {
-                    name: filename,
-                    src: this.result
+                let image = new Image()
+                // let width
+                // let height
+                image.src = e.target.result
+                image.onload = function (){
+                    // console.log(this.width, this.height)
+                    return new Promise((resolve, reject) => {
+                        _self.width = this.width
+                        _self.height = this.height
+                        // for(let x in this){
+                        //     console.log(x, this[x])
+                        // }
+                        if(this.width > 375){
+                            let radio = 375/this.width
+                            this.width = 375
+                            this.height = this.height*radio
+                        }
+                        let len = _self.imgaeArray.length
+                        this.id = `image-${len}`
+                        _self.imgaeArray.push({
+                            imageDom: this,
+                            width: this.width,
+                            height: this.height,
+                        })
+                        resolve()
+                    })
                 }
-                _self.imgaeArray.push({
-                    img: `url(${this.result})`,
-                    width: 200,
-                    height: 400,
-                    
-                })
+                // var imgMsg = {
+                //     name: filename,
+                //     src: this.result
+                // }
+                
             }
             return false;
         },
@@ -263,6 +333,11 @@ export default {
         //  移除图片
         remove_img(e){
             this.imgaeArray.splice(e, 1)
+        },
+        change_img(){
+            this.$set(this.imgaeArray[0].imageDom, "width", 100)
+            // this.$nextTick()
+            console.log(this.imgaeArray[0].imageDom.width)
         }
     }
 }
