@@ -912,6 +912,37 @@ export const appRouter = [
         ]
     },
     {
+        access: 6042,
+        meta: 6042,
+        path: '/etax',
+        icon: 'connection-bars',
+        name: 'etax',
+        title: '电子税务局',
+        component: Main,
+        children: [
+            {
+                access:6042,
+                meta: 6042,
+                path: 'taxResult',
+                title: '申报情况',
+                name:"taxResult",
+                component: resolve => {
+                    require(['@/views/etax/etaxResult/index.vue'], resolve);
+                }
+            },
+            {
+                access:6042,
+                meta: 6042,
+                path: 'etaxAccount',
+                title: '账号管理',
+                name:"etaxAccount",
+                component: resolve => {
+                    require(['@/views/etax/etaxAccount/index.vue'], resolve);
+                }
+            }
+        ]
+    },
+    {
         access: 6071,
         meta: 6071,
         path: '/auditWorkOrder',
