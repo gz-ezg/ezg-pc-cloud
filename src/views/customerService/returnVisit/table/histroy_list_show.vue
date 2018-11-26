@@ -1,93 +1,10 @@
 <template>
     <Card>
-                <!-- <Collapse v-model="search_model">
-                    <Panel name="1" >
-                        <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
-                        筛选
-                        <p slot="content">
-                            <div  slot="content" @keydown.enter="search">
-                                <Form ref="YformInline" :model="YformInline" :label-width="100">
-                                    <Row :gutter="16">
-                                        <Col span="8">
-                                            <FormItem prop="companyname" label="公司名称：">
-                                                <Input type="text" v-model="YformInline.companyname" placeholder="" size="small">
-                                                </Input>
-                                            </FormItem>
-                                        </Col>
-                                        <Col span="8">
-                                            <FormItem prop="name" label="客户名称：">
-                                                <Input type="text" v-model="YformInline.name" placeholder="" size="small">
-                                                </Input>
-                                            </FormItem>
-                                        </Col>
-                                        <Col span="8">
-                                            <FormItem prop="tel" label="客户电话：">
-                                                <Input type="text" v-model="YformInline.tel" placeholder="" size="small">
-                                                </Input>
-                                            </FormItem>
-                                        </Col>
-                                    </Row>
-                                    <Row :gutter="16">
-                                        <Col span="8">
-                                            <FormItem prop="servicename" label="服务人员：">
-                                                <Input type="text" v-model="YformInline.servicename" placeholder="" size="small">
-                                                </Input>
-                                            </FormItem>
-                                        </Col>
-                                        <Col span="8">
-                                            <FormItem prop="marketername" label="市场人员：">
-                                                <Input type="text" v-model="YformInline.marketername" placeholder="" size="small">
-                                                </Input>
-                                            </FormItem>
-                                        </Col>
-                                        <Col span="8">
-                                            <FormItem prop="depart" label="责任部门：">
-                                                <Select transfer v-model="YformInline.depart" placeholder="" size="small">
-                                                    <Option v-for="(item,index) in departAlias" :key=index :value="item.typecode">{{item.typename}}</Option>
-                                                </Select>
-                                            </FormItem>
-                                        </Col>
-                                    </Row>
-                                    <Row :gutter="16">
-                                        <Col span="8">
-                                            <FormItem prop="productname" label="产品名称：">
-                                                <Input type="text" v-model="YformInline.productname" placeholder="" size="small">
-                                                </Input>
-                                            </FormItem>
-                                        </Col>
-                                        <Col span="8">
-                                            <FormItem prop="createdate" label="创建时间：">
-                                                <DatePicker transfer type="daterange" placement="bottom-start" v-model="YformInline.createdate" style="width:100%" size="small"></DatePicker>
-                                            </FormItem>
-                                        </Col>
-                                        <Col span="8">
-                                            <FormItem prop="updatedate" label="回访时间：">
-                                                <DatePicker transfer type="daterange" placement="bottom-end" v-model="YformInline.updatedate" style="width:100%" size="small"></DatePicker>
-                                            </FormItem>
-                                        </Col>
-                                    </Row>
-                                    <FormItem>
-                                        <Button type="primary" @click="search">搜索</Button>
-                                        <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
-                                    </FormItem>
-                                </Form>
-                            </div>
-                        </p>
-                    </Panel>
-                </Collapse>
-            </Row> -->
-            <!-- <ButtonGroup>
-                <Button type="primary" icon="ios-color-wand-outline" @click="show" >查看</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="edit" v-permission="['returnVisitY-edit']">编辑</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
-            </ButtonGroup> -->
-
         <Row style="margin-top: 10px;">
             <Table
                     ref="selection"
                     highlight-row
                     size="small"
-                    @on-current-change="selectrow"
                     :columns="header"
                     :loading="loading"
                     :data="data"></Table>
@@ -109,11 +26,21 @@
 <script>
     import Bus from '../../../../components/bus'
     import { DateFormat } from '../../../channelManagement/channelCustomer/utils';
-    import { arrayToMap } from '../../../../libs/utils'
 
     export default {
-        props:['tel'],
-        components: {
+        props:{
+            companyname: {
+                type: [String]
+            },
+            hfwtlx: {
+                type: [Array, String]
+            },
+            hfzt: {
+                type: [Array, String]
+            },
+            departAlias: {
+                type: [Array, String]
+            },
         },
         data() {
             return {
@@ -140,18 +67,15 @@
                 data: [{
                     aaa: 111
                 }],
-                //数据字典相关
-                hfwtlx: [], //
-                hfzt:[],
-                departAlias:[],
-                hfwtlx_map: new Map(), //
+                // 数据字典相关
+                hfwtlx_map: new Map(),
                 hfzt_map: new Map(),
                 departAlias_map: new Map(),
                 header: [
                     {
                         title: '公司名称',
                         key: 'companyname',
-                        width: 260,
+                        minWidth: 260,
                         render:(h, params) => {
                             // console.log(params)
                             if(params.row.companyname == ''||params.row.companyname == null){
@@ -185,90 +109,80 @@
                     {
                         title: '客户名称',
                         key: 'name',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '客户手机',
-                        key: 'tel',
-                        width: 120
+                        key: 'TEL',
+                        minWidth: 120
                     },
                     {
                         title: '产品名称',
-                        key: 'product',
-                        width: 150
+                        key: 'alisname',
+                        minWidth: 150
                     },
                     {
                         title: '问题类型',
                         key: 'calltypeNAME',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '创建时间',
                         key: 'createdate',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '回访时间',
                         key: 'callbackdate',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '回访状态',
                         key: 'callbackstatusName',
-                        width:120
-                    },
-                    {
-                        title: '回访次数',
-                        key: 'callbackstatuseCount',
-                        width:120
+                        minWidth:120
                     },
                     {
                         title: '服务人员',
-                        key: 'servicename',
-                        width: 120
+                        key: 'server_realname',
+                        minWidth: 120
                     },
                     {
                         title: '市场人员',
-                        key: 'marketername',
-                        width: 120
+                        key: 'followby_realname',
+                        minWidth: 120
                     },
                     {
                         title: '责任部门',
                         key: 'departNAME',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '服务评分',
                         key: 'serviceranks',
-                        width: 120
+                        minWidth: 120
                     },
                     // {
-                    //     title:'回访次数',
-                    //     key:'',
-                    //     width: 120
-                    // },
-                    {
-                        title: '操作',
-                        key: 'action',
-                        fixed: 'right',
-                        width: 120,
-                        align: 'center',
-                        render: (h, params) => {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.show(params.row)
-                                        }
-                                    }
-                                }, '[查看]')
-                            ]);
-                        }
-                    }
+                    //     title: '操作',
+                    //     key: 'action',
+                    //     fixed: 'right',
+                    //     width: 120,
+                    //     align: 'center',
+                    //     render: (h, params) => {
+                    //         return h('div', [
+                    //             h('Button', {
+                    //                 props: {
+                    //                     type: 'text',
+                    //                     size: 'small'
+                    //                 },
+                    //                 on: {
+                    //                     click: () => {
+                    //                         this.show(params.row)
+                    //                     }
+                    //                 }
+                    //             }, '[查看]')
+                    //         ]);
+                    //     }
+                    // }
                 ]
             }
         },
@@ -282,14 +196,6 @@
                 this.pageSize = e
                 this.getData()
             },
-            cancel() {
-                var _self = this
-                _self.customerid = []
-                _self.isExamine = false
-            },
-            selectrow(e) {
-              this.row = e
-            },
 
             customerDetail(a) {
                 let _self = this
@@ -297,24 +203,9 @@
                 _self.isExamine = true
                 _self.modal = true
             },
-            // edit(){
-            //     let _self = this
-            //     // console.log(this.row)
-            //     // if(this.row == null || this.row == ""){
-            //     //     this.$Message.warning('请选择一行进行编辑！')                    
-            //     // }else{
-            //         Bus.$emit('open_returnVisit_edit', _self.row)
-            //     // }
-            // },
+            
             show(e){
-
                 let _self = this
-                // console.log(this.row)
-                // if(this.row == null || this.row == ""){
-                //     this.$Message.warning('请选择一行进行编辑！')                    
-                // }else{
-                    Bus.$emit('open_returnVisit_show', e)
-                // }
             },
             getData(){
                 let _self = this
@@ -326,24 +217,10 @@
                         sortField:'callbackdate',
                         page:_self.page,
                         pageSize:_self.pageSize,
-                        // status:'Y',
-                        tel:_self.tel,
-                        // name:_self.YformInline.name,
-                        // tel:_self.YformInline.tel,
-                        // servicename:_self.YformInline.servicename,
-                        // marketername:_self.YformInline.marketername,
-                        // depart:_self.YformInline.depart,
-                        // bcreatedate:DateFormat(_self.YformInline.createdate[0]),
-                        // ecreatedate:DateFormat(_self.YformInline.createdate[1]),
-                        // bcallbackdate:DateFormat(_self.YformInline.updatedate[0]),
-                        // ecallbackdate:DateFormat(_self.YformInline.updatedate[1]),
-                        // productname:_self.YformInline.productname                        
-
+                        companyname:_self.companyname,
                     }
                 }
                 this.$http.get(url,config).then(function(res){
-                    // _self.$backToLogin(res)
-                    // console.log(res)
                     _self.data = res.data.data.rows
                     _self.pageTotal = res.data.data.total
                     for(let i = 0;i<res.data.data.rows.length;i++){
@@ -367,15 +244,7 @@
                         }else{
                             let temp = _self.data[i].depart.split(',')
                             for(let j = 0;j<temp.length;j++){
-                                // if(temp[j] == "ACCOUNT"){
-                                //     temp[j] = "会计部"
-                                // }else if(temp[j] == "BUSSINESS"){
-                                //     temp[j] = "商事部"
-                                // }else if(temp[j] == "PLAN"){
-                                //     temp[j] = "企划部"
-                                // }else if(temp[j] == "MARKET"){
-                                //     temp[j] = "市场部"
-                                // }
+                                
                                 temp[j] = _self.departAlias_map.get(temp[j])
                             }
                             _self.data[i].departNAME = temp.join(',')
@@ -386,34 +255,18 @@
             },
             getDataCenter(){
                 let _self = this
-
-                let params = "hfwtlx,hfzt,departAlias"
-
-                function finish(res){
-                    _self.hfwtlx = res.data.data.hfwtlx
-                    _self.hfzt = res.data.data.hfzt
-                    _self.departAlias = res.data.data.departAlias
-                    _self.hfwtlx_map = arrayToMap(_self.hfwtlx)
-                    _self.hfzt_map = arrayToMap(_self.hfzt)
-                    _self.departAlias_map = arrayToMap(_self.departAlias)
-                }
-                
-                this.$GetDataCenter(params, finish)
-
+                _self.hfwtlx_map = _self.$array2map(_self.hfwtlx)
+                _self.hfzt_map = _self.$array2map(_self.hfzt)
+                _self.departAlias_map = _self.$array2map(_self.departAlias)
+                _self.getData()
             }
         },
         watch:{
-            'tel':'getData'
+            'companyname':'getData'
         },
         created() {
-            // this.init()
             let _self = this
             this.getDataCenter()
-            this.getData()
-            // Bus.$on('update_returnVisit_edit',(e)=>{
-            //     _self.getData()
-            // })
-            
         }
     }
 </script>

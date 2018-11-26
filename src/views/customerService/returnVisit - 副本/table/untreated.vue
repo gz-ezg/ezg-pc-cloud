@@ -81,7 +81,6 @@
             <ButtonGroup>
                 <Button type="primary" icon="ios-color-wand-outline" @click="show">查看</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="edit" v-permission="['returnVisitN-edit']">编辑</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="finish" v-permission="['returnVisitN-edit']">完结</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
             </ButtonGroup>
         </Row>
@@ -91,7 +90,6 @@
                     ref="selection"
                     highlight-row
                     size="small"
-                    @on-selection-change="select_change"
                     @on-current-change="selectrow"
                     :columns="header"
                     :loading="loading"
@@ -109,20 +107,87 @@
                     style="margin-top: 10px"></Page>
         </Row>
 
-        
+        <!-- <Modal
+                v-model="modal"
+                width="100%"
+                :styles="{height: '100%', top: '0px'}"
+                title="客户详情"
+                @on-cancel="cancel"
+                >
+            <Row>
+                <Col span="6">
+                <channel-from v-if="isExamine" :customerid='customerid'></channel-from>
+                </Col>
+                <Col span="18">
+                <Card>
+                    <Collapse accordion>
+                        <Panel name="Company">
+                            企业信息
+                            <P slot="content">
+                                <channel-company
+                                        v-if="isExamine"
+                                        :customerid='customerid'></channel-company>
+                            </P>
+                        </Panel>
+                        <Panel name="CustomerContent">
+                            客户跟进记录
+                            <P slot="content">
+                                <channel-fllow-up v-if="isExamine"
+                                                  :customerid='customerid'></channel-fllow-up>
+
+                            </P>
+                        </Panel>
+                        <Panel name="Order">
+                            订单详情
+                            <P slot="content">
+                                <channel-order-list v-if="isExamine"
+                                                     :customerid='customerid'></channel-order-list>
+                            </P>
+                        </Panel>
+                        <Panel name="CustomerRelation">
+                            客户关系人
+                            <P slot="content">
+                                <channel-relation-person v-if="isExamine"
+                                                         :customerid='customerid'></channel-relation-person>
+                            </P>
+                        </Panel>
+                        <Panel name="CustomerWorkOrder">
+                            服务动态
+                            <P slot="content">
+                                <channel-service-dynamic v-if="isExamine"
+                                                         :customerid='customerid'></channel-service-dynamic>
+                            </P>
+                        </Panel>
+                    </Collapse>
+                </Card>
+                </Col>
+            </Row>
+        </Modal> -->
     </Card>
 </template>
 
 <script>
+    import Bus from '../../../../components/bus'
+    // import channelFrom from '../../../channelManagement/channelCustomer/channelManagement_examine_from.vue'
+    // import channelCompany from '../../../channelManagement/channelCustomer/channelManagement_examine_company.vue'
+    // import channelOrderList from '../../../channelManagement/channelCustomer/channelManagement_examine_orderList.vue'
+    // import channelFllowUp from '../../../channelManagement/channelCustomer/channelManagement_examine_followUp.vue'
+    // import channelRelationPerson from '../../../channelManagement/channelCustomer/channelManagement_examine_relationPerson.vue'
+    // import channelServiceDynamic from '../../../channelManagement/channelCustomer/channelManagement_examine_serviceDynamic.vue'
     import { DateFormat } from '../../../channelManagement/channelCustomer/utils';
 
     export default {
         props:['hfwtlxMap','departAliasMap','departAlias','hfztMap'],
         components: {
+            // channelFrom,
+            // channelCompany,
+            // channelOrderList,
+            // channelFllowUp,
+            // channelRelationPerson,
+            // channelServiceDynamic,
         },
         data() {
             return {
-                selectRowArray: [],
                 loading:false,
                 search_model:"",
                 NformInline:{
@@ -146,16 +211,18 @@
                 data: [{
                     aaa: 111
                 }],
+                //数据字典相关
+                // hfwtlx: [], //
+                // hfzt:[],
+                // departAlias:[],
+                // hfwtlx_map: new Map(), //
+                // hfzt_map: new Map(),
+                // departAlias_map: new Map(),
                 header: [
-                    {
-                        title: "#",
-                        type: "selection",
-                        width: 60,
-                    },
                     {
                         title: '公司名称',
                         key: 'companyname',
-                        minWidth: 260,
+                        width: 260,
                         render:(h, params) => {
                             // console.log(params)
                             if(params.row.companyname == ''||params.row.companyname == null){
@@ -189,62 +256,57 @@
                     {
                         title: '客户名称',
                         key: 'name',
-                        minWidth: 120
+                        width: 120
                     },
                     {
                         title: '客户手机',
-                        key: 'TEL',
-                        minWidth: 120
+                        key: 'tel',
+                        width: 120
                     },
                     {
                         title: '产品名称',
-                        key: 'alisname',
-                        minWidth: 250
-                    },
-                    {
-                        title: '完结状态',
-                        key: 'isfinish',
-                        minWidth: 120
+                        key: 'product',
+                        width: 150
                     },
                     {
                         title: '问题类型',
                         key: 'calltypeNAME',
-                        minWidth: 120
+                        width: 120
                     },
                     {
                         title: '创建时间',
                         key: 'createdate',
-                        minWidth: 120
+                        width: 120
                     },
                     {
                         title: '回访时间',
                         key: 'callbackdate',
-                        minWidth: 120
+                        width: 120
                     },
                     {
                         title: '回访状态',
                         key: 'callbackstatusName',
-                        minWidth:120
+                        width:120
                     },
                     {
                         title: '服务人员',
-                        key: 'server_realname',
-                        minWidth: 120
+                        key: 'servicename',
+                        width: 120
                     },
                     {
                         title: '市场人员',
-                        key: 'followby_realname',
-                        minWidth: 120
+                        key: 'marketername',
+                        width: 120
                     },
                     {
                         title: '责任部门',
                         key: 'departNAME',
-                        minWidth: 120
+                        width: 120
                     },
                     {
                         title: '服务评分',
                         key: 'serviceranks',
-                        minWidth: 120
+                        width: 120
                     },
                     {
                         title:'回访次数',
@@ -266,7 +328,9 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.$store.commit('open_gobal_customer_detail_modal', {ID: params.row.customerid});
+                                            // Bus.$emit('Open_customer_detail',params.row.customerid)
+                                            this.$store.commit('open_gobal_customer_detail_modal', { ID: params.row.customerid });
+                                            // this.customerDetail(params)
                                         }
                                     }
                                 }, '[查看客户]'),
@@ -277,7 +341,9 @@
                                     },
                                     on: {
                                         click: () => {
+                                            // Bus.$emit('openCompanyDetail',params.row.companyid)
                                             this.$store.commit("open_gobal_company_detail_modal", params.row.companyid)
+                                            // Bus.$emit('detail', params)
                                         }
                                     }
                                 }, '[查看企业]'),
@@ -292,15 +358,18 @@
                 let field = [
                     {field:'name',title:'客户名称'},
                     {field:'companyname',title:'公司名称'},
+                    // {field:'baseorderid',title:'提示'},
                     {field:'product',title:'产品名称'},
                     {field:'calltype',title:'问题类型',format:'hfwtlx'},
                     {field:'createdate',title:'创建时间'},
                     {field:'callbackdate',title:'回访时间'},
+                    // {field:'ServiceStart',title:'服务开始时间'},
                     {field:'callbackstatus',title:'回访状态',format:'hfzt'},                    
                     {field:'servicename',title:'服务人员'},                                                                   
                     {field:'marketername',title:'市场人员'},                                                                     
                     {field:'depart',title:'责任部门',format:'departAlias'},
-                    {field:'serviceranks',title:'服务评分'},              
+                    {field:'serviceranks',title:'服务评分'},
+                    // {field:'product',title:'产品名称'}                    
                 ]
                 let _self = this
                 let url = `api/customer/customerCallbackList`
@@ -311,10 +380,10 @@
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field)),
                         sortField:'callbackdate',
-                        datatype:2,
                         companyname:_self.NformInline.companyname,
                         name:_self.NformInline.name,
                         tel:_self.NformInline.tel,
+                    	datatype:1,
                         servicename:_self.NformInline.servicename,
                         marketername:_self.NformInline.marketername,
                         depart:_self.NformInline.depart,
@@ -361,7 +430,7 @@
                 _self.isExamine = false
             },
             selectrow(e) {
-                this.row = e
+              this.row = e
             },
 
             customerDetail(a) {
@@ -372,18 +441,21 @@
             },
             edit(){
                 let _self = this
+                // console.log(this.row)
                 if(this.row == null || this.row == ""){
                     this.$Message.warning('请选择一行进行编辑！')                    
                 }else{
-                    _self.$emit("edit", _self.row)
+                    Bus.$emit('open_returnVisit_edit', _self.row)
                 }
             },
             show(){
+
                 let _self = this
+                // console.log(this.row)
                 if(this.row == null || this.row == ""){
                     this.$Message.warning('请选择一行进行编辑！')                    
                 }else{
-                    _self.$emit("show", _self.row)
+                    Bus.$emit('open_returnVisit_show', _self.row)
                 }
             },
             getDataN(){
@@ -403,7 +475,7 @@
                         servicename:_self.NformInline.servicename,
                         marketername:_self.NformInline.marketername,
                         depart:_self.NformInline.depart,
-                        datatype:1,
+                    	datatype: 1,
                         bcreatedate:DateFormat(_self.NformInline.createdate[0]),
                         ecreatedate:DateFormat(_self.NformInline.createdate[1]),
                         bcallbackdate:DateFormat(_self.NformInline.updatedate[0]),
@@ -414,6 +486,7 @@
                 }
                 this.$http.get(url,config).then(function(res){
                     _self.$backToLogin(res)
+                    // console.log(res)
                     _self.data = res.data.data.rows
                     _self.pageTotal = res.data.data.total
                     for(let i = 0;i<res.data.data.rows.length;i++){
@@ -439,6 +512,15 @@
                         }else{
                             let temp = _self.data[i].depart.split(',')
                             for(let j = 0;j<temp.length;j++){
+                                // if(temp[j] == "ACCOUNT"){
+                                //     temp[j] = "会计部"
+                                // }else if(temp[j] == "BUSSINESS"){
+                                //     temp[j] = "商事部"
+                                // }else if(temp[j] == "PLAN"){
+                                //     temp[j] = "企划部"
+                                // }else if(temp[j] == "MARKET"){
+                                //     temp[j] = "市场部"
+                                // }
                                 temp[j] = _self.departAliasMap.get(temp[j])
                             }
                             _self.data[i].departNAME = temp.join(',')
@@ -447,43 +529,41 @@
                     _self.loading = false
                 })
             },
-            select_change(e){
-                this.selectRowArray = e
-            },
-            finish(){
-                let _self = this
-                if(this.selectRowArray.length == 0){
-                    _self.$Message.warning("请先勾选需要批量处理的行！")
-                }else{
-                    let ids = []
-                    for(let i = 0; i<_self.selectRowArray.length; i++){
-                        ids.push(_self.selectRowArray[i].id)
-                    }
+            // getDataNCenter(){
+            //     let _self = this
+            //     let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
+            //     let config = {
+            //         params:{
+            //             groupCodes:"hfwtlx,hfzt,departAlias"
+            //         }
+            //     }
+            //     this.$http.get(url, config).then(function(res){
+            //         console.log(res.data.data)
+            //         _self.hfwtlx = res.data.data.hfwtlx
+            //         _self.hfzt = res.data.data.hfzt
+            //         _self.departAlias = res.data.data.departAlias
+            //         _self.hfwtlx_map = _self.$array2map(_self.hfwtlx)
+            //         _self.hfzt_map = _self.$array2map(_self.hfzt)
+            //         _self.departAlias_map = _self.$array2map(_self.departAlias)
+            //         console.log(_self.hfwtlx_map)                 
+            //     })
 
-                    let url = `api/customer/callback/batch/finish`
-
-                    let config = {
-                        ids: ids.join(",")
-                    }
-
-                    function success(res){
-                        // _self.getDataN()
-                        _self.$bus.emit("update_returnVisit_edit")
-                    }
-
-                    function fail(err){
-
-                    }
-
-                    _self.$Post(url, config, success, fail)
-                }
-            }
+            // }
+            // init(){
+            //     let _self = this
+            //     _self.hfwtlx_map = _self.$array2map(_self.hfwtlx)
+            //     // _self.hfzt_map = _self.$array2map(_self.hfzt)
+            //     _self.departAlias_map = _self.$array2map(_self.departAlias)
+            //     this.getDataN()
+            //     console.log(_self.departAlias_map)
+            // }
         },
         created() {
+            // this.init()
             let _self = this
+            // this.getDataNCenter()
             this.getDataN()
-
-            _self.$bus.on("update_returnVisit_edit", (e)=>{
+            Bus.$on('update_returnVisit_edit',(e)=>{
                 _self.getDataN()
             })
             

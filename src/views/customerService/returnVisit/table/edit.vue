@@ -4,48 +4,49 @@
             title="编辑"
             v-model="isOpenEdit"
             width = 800
+            @on-cancel="close"
         >
             <Tabs v-model="showTab">
                 <TabPane label="当前回访记录" name="1">
-                    <Form ref="add" :model="add" :label-width="140" style="margin:auto">
+                    <Form ref="data" :model="data" :label-width="140" style="margin:auto">
                     <Row :gutter="16">
                         <Col span="12">
                             <FormItem prop="companyname" label="公司名称：">
-                                <Input type="text" v-model="add.companyname" readonly>
+                                <Input type="text" v-model="data.companyname" readonly>
                                 </Input>
                             </FormItem> 
                         </Col>
                         <Col span="12">
                             <FormItem prop="name" label="客户名称：">
-                                <Input type="text" v-model="add.name"  readonly>
+                                <Input type="text" v-model="data.name" readonly>
                                 </Input>
                             </FormItem>
                         </Col>
                     </Row>
                     <Row :gutter="16">
                         <Col span="12">
-                            <FormItem prop="tel" label="客户电话：">
-                                <Input type="text" v-model="add.tel" readonly>
+                            <FormItem prop="TEL" label="客户电话：">
+                                <Input type="text" v-model="data.TEL" readonly>
                                 </Input>
                             </FormItem> 
                         </Col>
                         <Col span="12">
-                            <FormItem prop="product" label="产品名称：">
-                                <Input type="text" v-model="add.product"  readonly>
+                            <FormItem prop="alisname" label="产品名称：">
+                                <Input type="text" v-model="data.alisname"  readonly>
                                 </Input>
                             </FormItem>
                         </Col>
                     </Row>
                     <Row :gutter="16">
                         <Col span="12">
-                            <FormItem prop="servicename" label="服务人员：">
-                                <Input type="text" v-model="add.servicename" readonly>
+                            <FormItem prop="server_realname" label="服务人员：">
+                                <Input type="text" v-model="data.server_realname" readonly>
                                 </Input>
                             </FormItem> 
                         </Col>
                         <Col span="12">
                             <FormItem prop="marketername" label="市场人员：">
-                                <Input type="text" v-model="add.marketername"  readonly>
+                                <Input type="text" v-model="data.followby_realname"  readonly>
                                 </Input>
                             </FormItem>
                         </Col>
@@ -53,13 +54,13 @@
                     <Row :gutter="16">
                         <Col span="12">
                             <FormItem prop="serviceranks" label="服务评分：">
-                                <InputNumber  type="text" v-model="add.serviceranks" :max="10" :min="0" style="width:100%" :disabled="isreturn">
-                                </InputNumber>
+                                <Input  type="text" v-model="data.serviceranks" style="width:100%" :disabled="isreturn">
+                                </Input>
                             </FormItem> 
                         </Col>
                         <Col span="12">
                             <FormItem prop="calltype" label="问题类型：">
-                                <Select transfer v-model="add.calltype" placeholder="" :disabled="isreturn">
+                                <Select transfer v-model="data.calltype" placeholder="" :disabled="isreturn">
                                     <Option v-for="(item,index) in hfwtlx" :key=index :value="item.typecode">{{item.typename}}</Option>
                                 </Select>
                             </FormItem>
@@ -68,8 +69,8 @@
                     <Row :gutter="16">
                         <Col span="24">
                             <FormItem prop="depart" label="责任部门：">
-                                <CheckboxGroup v-model="add.depart">
-                                    <span v-for="item in departAlias" :key="item.id">
+                                <CheckboxGroup v-model="data.depart">
+                                    <span v-for="item in departAlias" :key=item.id>
                                         <Checkbox :label="item.typecode" :disabled="isreturn">
                                             <span>{{item.typename}}</span>
                                         </Checkbox>
@@ -81,50 +82,46 @@
                     <Row :gutter="16">
                         <Col span="12">
                             <FormItem prop="callbackstatus" label="回访状态：">
-                                <Select transfer v-model="add.callbackstatus" placeholder="" :disabled="isreturn">
+                                <Select transfer v-model="data.callbackstatus" placeholder="" :disabled="isreturn">
                                     <Option v-for="(item,index) in hfzt" :key=index :value="item.typecode">{{item.typename}}</Option>
                                 </Select>
                             </FormItem>
                         </Col>
                         <Col span="12">
                             <FormItem prop="callbackdate" label="回访时间：">
-                                    <DatePicker transfer type="date" placeholder="选择日期" style="width:100%" v-model="add.callbackdate" :disabled="isreturn"></DatePicker>
+                                    <DatePicker transfer type="date" placeholder="选择日期" style="width:100%" v-model="data.callbackdate" :disabled="isreturn"></DatePicker>
                             </FormItem>
                         </Col>
                     </Row>
                     <Row :gutter="16">
                         <Col span="24">
                             <FormItem prop="reason" label="问题反馈或建议：">
-                                <Input type="textarea" v-model="add.reason" :row="3" :disabled="isreturn"></Input>
+                                <Input type="textarea" v-model="data.reason" :row="3" :disabled="isreturn"></Input>
                             </FormItem> 
                         </Col>
                     </Row>
                     <Row :gutter="16">
                         <Col span="24">
                             <FormItem prop="solutionbymarketer" label="市场反馈：">
-                                <Input type="textarea" v-model="add.solutionbymarketer" :row="3" :disabled="ismarket"></Input>
+                                <Input type="textarea" v-model="data.solutionbymarketer" :row="3" :disabled="ismarket"></Input>
                             </FormItem> 
                         </Col>
                     </Row>
                     <Row :gutter="16">
                         <Col span="24">
                             <FormItem prop="solutionbyservicer" label="服务部门反馈：">
-                                <Input type="textarea" v-model="add.solutionbyservicer" :row="3" :disabled="isservice"></Input>
+                                <Input type="textarea" v-model="data.solutionbyservicer" :row="3" :disabled="isservice"></Input>
                             </FormItem> 
                         </Col>
                     </Row>
                     </Form>
                 </TabPane>
                 <TabPane label="历史回访记录" name="2">
-                    <history-list :tel="tel"></history-list>
+                    <history-list :companyname="data.companyname" :hfwtlx="hfwtlx" :hfzt="hfzt" :departAlias="departAlias"></history-list>
                 </TabPane>
             </Tabs>
-            
-
-            
             <div slot="footer">
-                <Button type="primary" @click="add_complaint_detail">修改</Button>
-                <Button type="ghost" @click="close_complaint_detail">关闭</Button>
+                <Button type="primary" @click="add_complaint_detail" :loading="loading">修改</Button>
             </div>
         </Modal>
     </div>
@@ -132,127 +129,91 @@
 
 <script>
     import Bus from '../../../../components/bus'
-    import {DateFormat} from '../../../../libs/utils.js'
+    import { DateFormat } from '../../../../libs/utils.js'
     import HistoryList from './histroy_list_show'
 
 export default {
     components:{
         HistoryList
     },
-    props:['hfwtlx','hfzt'],
+    props:{
+        hfwtlx: {
+            type: [String, Array, Object]
+        },
+        hfzt: {
+            type: [String, Array, Object]
+        },
+        data: {
+            type: [String, Array, Object]
+        },
+        departAlias: {
+            type: [String, Array, Object]
+        }
+    },
     data(){
         return{
+            loading: false,
             showTab:"1",
             companyname:"",
             isservice:true,
             ismarket:true,
             isreturn:true,
-            departAlias:[],
-            isOpenEdit:false,
-            name:"",
-            add:{
-
-            },
-            tel:""
+            isOpenEdit:true,
         }
     },
     methods: {
-        getDataCenter(){
-                let _self = this
-                // let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
-                // let config = {
-                //     params:{
-                //         groupCodes:"departAlias"
-                //     }
-                // }
-                // this.$http.get(url, config).then(function(res){
-                //     _self.departAlias = res.data.data.departAlias              
-                //     // console.log(_self.departAlias)
-                // })
-
-                let params = "departAlias"
-
-                function finish(res){
-                    _self.departAlias = []
-                    // _self.departAlias = res.data.data.departAlias
-                    for(let i = 0;i<res.data.data.departAlias.length; i++){
-                        _self.departAlias.push(res.data.data.departAlias[i])
-                    }
-                    // console.log(typeof(_self.departAlias))
-                    // console.log(_self.departAlias)
-                }
-
-                this.$GetDataCenter(params, finish)
-
-            },
-            add_complaint_detail(){
-                let _self = this
-                let url = `api/customer/updateCustomerCallback`
-                let depart = ""
-                if(_self.add.depart){
-                    depart = _self.add.depart.join(',')
-                }
-                let config = {
-                    callbackdate:DateFormat(_self.add.callbackdate),
-                    id:_self.add.id,
-                    solutionbymarketer:_self.add.solutionbymarketer,
-                    solutionbyservicer:_self.add.solutionbyservicer,
-                    depart: depart,
-                    serviceranks:_self.add.serviceranks,
-                    calltype :_self.add.calltype,
-                    callbackstatus:_self.add.callbackstatus,
-                    reason:_self.add.reason,
-                }
-                // console.log(config)
-                this.$http.post(url,config).then(function(res){
-                    // console.log(res.data.msgCode)
-                    if(res.data.msgCode == "40000"){
-                        _self.$Message.success(res.data.msg)
-                        _self.isOpenEdit = false
-                        Bus.$emit('update_returnVisit_edit',true)
-                    }else{
-                        _self.$Message.warning(res.data.msg)
-                    }
-                })
-            },
-            close_complaint_detail(){
-                this.isOpenEdit = false
+        add_complaint_detail(){
+            let _self = this
+            _self.loading = true
+            let url = `api/customer/updateCustomerCallback`
+            let config = {
+                callbackdate:DateFormat(_self.data.callbackdate),
+                id:_self.data.id,
+                solutionbymarketer:_self.data.solutionbymarketer,
+                solutionbyservicer:_self.data.solutionbyservicer,
+                depart:_self.data.depart.join(','),
+                serviceranks:_self.data.serviceranks,
+                calltype :_self.data.calltype,
+                callbackstatus:_self.data.callbackstatus,
+                reason:_self.data.reason,
             }
+
+            function success(res){
+                _self.loading = false
+                _self.$bus.emit('update_returnVisit_edit',true)
+                _self.close()
+            }
+
+            function fail(err){
+                _self.loading = false
+            }
+                
+            this.$Post(url, config, success, fail)
+        },
+        close(){
+            this.$emit("close")
+        }
     },
     created () {
-        this.getDataCenter()
         let _self = this
-        // console.log(this.departAlias)
-        Bus.$on('open_returnVisit_edit',(e)=>{
-            console.log(e)
-            _self.add = e
-            _self.isOpenEdit = true
-            _self.add.serviceranks = parseInt(_self.add.serviceranks)
-            // console.log(_self.add.depart)
-            // console.log(_self.add.depart)
-            if(_self.add.depart){
-                _self.add.depart = _self.add.depart.split(",")
-            }else{
-                _self.add.depart = []
-            }
-            // console.log(e)
-            _self.companyname = e.companyname
-            _self.name = e.name
-            _self.tel = e.tel
-            _self.showTab = "1"   
-        })
+        // _self.data.serviceranks = parseInt(_self.data.serviceranks)
+        console.log(Array.isArray(_self.data.depart))
+        if(Array.isArray(_self.data.depart) == false){
+            _self.data.depart = _self.data.depart.split(',')
+        }
+
+        //  权限设置
         let role = localStorage.getItem('Role')
-        // console.log(role)
+        let userID = localStorage.getItem("id")
         role = JSON.parse(role)
-        // console.log(role)
         for(let i = 0;i<role.length;i++){
-            if(role[i] == "salers"){
+            if(role[i] == "salers" || userID == 10059){
                 _self.ismarket = false
             }
-            if(role[i] == "hfgl"){
+            if(role[i] == "hfgl" || userID == 10059){
                 _self.isreturn = false
             }
-            if(role[i] == "kj" || role[i] == "servicer" || role[i] == "planner" || role[i] == "auditing" || role[i] == "ssbgd" || role[i] == "kjbgd" || role[i] == "qhbgd" || role[i] == "sjbgd"){
+            if(role[i] == "kj" || role[i] == "servicer" || role[i] == "planner" || role[i] == "auditing" || role[i] == "ssbgd" || role[i] == "kjbgd" || role[i] == "qhbgd" || role[i] == "sjbgd" || userID == 10059){
                 _self.isservice = false
             }
         }

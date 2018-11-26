@@ -52,11 +52,17 @@
                 @on-change="pageChange"
                 style="margin-top: 10px;padding-bottom:10px"></Page>
         </Row>
+        <update-relation v-if="openUpdateRelation" :relationData="currentRow" @close="close_update_relation"></update-relation>
     </div>
 </template>
 
 <script>
+import updateRelation from './updateRelation';
+
 export default {
+    components: {
+        updateRelation
+    },
     data(){
         return {
             data: [],
@@ -83,7 +89,45 @@ export default {
                 },
                 {
                     title: "操作",
-                    minWidth: 150
+                    minWidth: 150,
+                    render: (h, params) => {
+                        return h('div', [
+                            h('Button',{
+                                props: {
+                                    size: "small",
+                                    type: "primary"
+                                },
+                                on: {
+                                    click: ()=>{
+                                        this.currentRow = params.row
+                                        this.openUpdateRelation = true
+                                    }
+                                }
+                            }, '修改'),
+                            h('Button', {
+                                props: {
+                                    type: 'warning',
+                                    size: 'small'
+                                },
+                                style: {
+                                    'marginLeft': '5px'
+                                }
+                            },[
+                                h('Poptip', {
+                                    props: {
+                                        transfer: true,
+                                        confirm: true,
+                                        title: '您确定要删除此关系吗！',
+                                    },
+                                    on: {
+                                        'on-ok': ()=>{
+                                            this.del_realation(params.row.id)
+                                        },
+                                    }
+                                }, '删除')
+                            ])
+                        ])
+                    }
                 }
             ],
             total: 0,
@@ -95,7 +139,9 @@ export default {
                 companyName: "",
                 kj: "",
                 qyname: ""
-            }
+            },
+            currentRow: "",
+            openUpdateRelation: false
         }
     },
     methods: {
@@ -127,8 +173,6 @@ export default {
                 }
             }
 
-           
-
             function success(res){
                 _self.loading = false
                 _self.total = res.data.data.total
@@ -136,6 +180,26 @@ export default {
             }
 
             this.$Get(url, config, success)
+        },
+        del_realation(e){
+            let _self = this
+            let url = `api/customer/company/gdetax/delEtaxQyAndCompany`
+
+            let config = {
+                params: {
+                    id: e
+                }
+            }
+
+            function success(res){
+                _self.get_data()
+            }
+
+            this.$Get(url, config, success)
+        },
+        close_update_relation(){
+            this.openUpdateRelation = false
+            this.get_data()
         }
     },
     created(){

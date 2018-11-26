@@ -22,7 +22,7 @@
 <script>
 import cycleCompany from './components/cycleCompany';
 import companyList from './components/companyList';
-import relation from './components/relation';
+import relation from './components/relation/relation';
 import accountList from './components/account/accountList';
 
 

@@ -106,85 +106,14 @@
                     placement="top"
                     style="margin-top: 10px"></Page>
         </Row>
-
-        <!-- <Modal
-                v-model="modal"
-                width="100%"
-                :styles="{height: '100%', top: '0px'}"
-                title="客户详情"
-                @on-cancel="cancel"
-                >
-            <Row>
-                <Col span="6">
-                <channel-from v-if="isExamine" :customerid='customerid'></channel-from>
-                </Col>
-                <Col span="18">
-                <Card>
-                    <Collapse accordion>
-                        <Panel name="Company">
-                            企业信息
-                            <P slot="content">
-                                <channel-company
-                                        v-if="isExamine"
-                                        :customerid='customerid'></channel-company>
-                            </P>
-                        </Panel>
-                        <Panel name="CustomerContent">
-                            客户跟进记录
-                            <P slot="content">
-                                <channel-fllow-up v-if="isExamine"
-                                                  :customerid='customerid'></channel-fllow-up>
-                            </P>
-                        </Panel>
-                        <Panel name="Order">
-                            订单详情
-                            <P slot="content">
-                                <channel-order-list v-if="isExamine"
-                                                     :customerid='customerid'></channel-order-list>
-                            </P>
-                        </Panel>
-                        <Panel name="CustomerRelation">
-                            客户关系人
-                            <P slot="content">
-                                <channel-relation-person v-if="isExamine"
-                                                         :customerid='customerid'></channel-relation-person>
-                            </P>
-                        </Panel>
-                        <Panel name="CustomerWorkOrder">
-                            服务动态
-                            <P slot="content">
-                                <channel-service-dynamic v-if="isExamine"
-                                                         :customerid='customerid'></channel-service-dynamic>
-                            </P>
-                        </Panel>
-                    </Collapse>
-                </Card>
-                </Col>
-            </Row>
-        </Modal> -->
     </Card>
 </template>
 
 <script>
-    import Bus from '../../../../components/bus'
-    // import channelFrom from '../../../channelManagement/channelCustomer/channelManagement_examine_from.vue'
-    // import channelCompany from '../../../channelManagement/channelCustomer/channelManagement_examine_company.vue'
-    // import channelOrderList from '../../../channelManagement/channelCustomer/channelManagement_examine_orderList.vue'
-    // import channelFllowUp from '../../../channelManagement/channelCustomer/channelManagement_examine_followUp.vue'
-    // import channelRelationPerson from '../../../channelManagement/channelCustomer/channelManagement_examine_relationPerson.vue'
-    // import channelServiceDynamic from '../../../channelManagement/channelCustomer/channelManagement_examine_serviceDynamic.vue'
     import { DateFormat } from '../../../channelManagement/channelCustomer/utils';
 
     export default {
         props:['hfwtlxMap','departAliasMap','departAlias','hfztMap'],
-        components: {
-            // channelFrom,
-            // channelCompany,
-            // channelOrderList,
-            // channelFllowUp,
-            // channelRelationPerson,
-            // channelServiceDynamic,
-        },
         data() {
             return {
                 loading:false,
@@ -210,13 +139,6 @@
                 data: [{
                     aaa: 111
                 }],
-                //数据字典相关
-                // hfwtlx: [], //
-                // hfzt:[],
-                // departAlias:[],
-                // hfwtlx_map: new Map(), //
-                // hfzt_map: new Map(),
-                // departAlias_map: new Map(),
                 header: [
                     {
                         title: '公司名称',
@@ -259,13 +181,18 @@
                     },
                     {
                         title: '客户手机',
-                        key: 'tel',
+                        key: 'TEL',
                         width: 120
                     },
                     {
                         title: '产品名称',
-                        key: 'product',
-                        width: 150
+                        key: 'alisname',
+                        width: 250
+                    },
+                    {
+                        title: '完结状态',
+                        key: 'isfinish',
+                        width: 120
                     },
                     {
                         title: '问题类型',
@@ -294,12 +221,12 @@
                     },
                     {
                         title: '服务人员',
-                        key: 'servicename',
+                        key: 'server_realname',
                         width: 120
                     },
                     {
                         title: '市场人员',
-                        key: 'marketername',
+                        key: 'followby_realname',
                         width: 120
                     },
                     {
@@ -332,9 +259,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            // Bus.$emit('Open_customer_detail',params.row.customerid)
                                             this.$store.commit('open_gobal_customer_detail_modal', {ID: params.row.customerid});
-                                            // this.customerDetail(params)
                                         }
                                     }
                                 }, '[查看客户]'),
@@ -346,8 +271,6 @@
                                     on: {
                                         click: () => {
                                             this.$store.commit("open_gobal_company_detail_modal", params.row.companyid)
-                                            // Bus.$emit('openCompanyDetail',params.row.companyid)
-                                            // Bus.$emit('detail', params)
                                         }
                                     }
                                 }, '[查看企业]'),
@@ -362,18 +285,15 @@
                 let field = [
                     {field:'name',title:'客户名称'},
                     {field:'companyname',title:'公司名称'},
-                    // {field:'baseorderid',title:'提示'},
                     {field:'product',title:'产品名称'},
                     {field:'calltype',title:'问题类型',format:'hfwtlx'},
                     {field:'createdate',title:'创建时间'},
                     {field:'callbackdate',title:'回访时间'},
-                    // {field:'ServiceStart',title:'服务开始时间'},
                     {field:'callbackstatus',title:'回访状态',format:'hfzt'},
                     {field:'servicename',title:'服务人员'},                                                                   
                     {field:'marketername',title:'市场人员'},                                                                     
                     {field:'depart',title:'责任部门',format:'departAlias'},
                     {field:'serviceranks',title:'服务评分'},
-                    // {field:'product',title:'产品名称'}
                 ]
                 let _self = this
                 let url = `api/customer/customerCallbackList`
@@ -399,8 +319,6 @@
                 }
                 console.log(config)
                 let toExcel = this.$MergeURL(url, config)
-                // console.log(toExcel)
-                // console.log(toExcel)
                 window.open(toExcel)
             },
             search(){
@@ -418,8 +336,6 @@
                     this.YformInline.createdate = []
                     this.YformInline.updatedate = []
                     this.YformInline.productname = ""
-
-
                 this.getData()
             },
             pageChange(e) {
@@ -437,7 +353,7 @@
                 _self.isExamine = false
             },
             selectrow(e) {
-              this.row = e
+                this.row = e
             },
 
             customerDetail(a) {
@@ -448,21 +364,18 @@
             },
             edit(){
                 let _self = this
-                // console.log(this.row)
                 if(this.row == null || this.row == ""){
                     this.$Message.warning('请选择一行进行编辑！')                    
                 }else{
-                    Bus.$emit('open_returnVisit_edit', _self.row)
+                    _self.$emit("edit", _self.row)
                 }
             },
             show(){
-
                 let _self = this
-                // console.log(this.row)
                 if(this.row == null || this.row == ""){
                     this.$Message.warning('请选择一行进行编辑！')                    
                 }else{
-                    Bus.$emit('open_returnVisit_show', _self.row)
+                    _self.$emit("show", _self.row)
                 }
             },
             getData(){
@@ -479,10 +392,10 @@
                         companyname:_self.YformInline.companyname,
                         name:_self.YformInline.name,
                         tel:_self.YformInline.tel,
-                    	datatype:1,
                         servicename:_self.YformInline.servicename,
                         marketername:_self.YformInline.marketername,
                         depart:_self.YformInline.depart,
+                        datatype: 2,
                         bcreatedate:DateFormat(_self.YformInline.createdate[0]),
                         ecreatedate:DateFormat(_self.YformInline.createdate[1]),
                         bcallbackdate:DateFormat(_self.YformInline.updatedate[0]),
@@ -492,8 +405,6 @@
                     }
                 }
                 this.$http.get(url,config).then(function(res){
-                    _self.$backToLogin(res)
-                    // console.log(res)
                     _self.data = res.data.data.rows
                     _self.pageTotal = res.data.data.total
                     for(let i = 0;i<res.data.data.rows.length;i++){
@@ -518,15 +429,6 @@
                         }else{
                             let temp = _self.data[i].depart.split(',')
                             for(let j = 0;j<temp.length;j++){
-                                // if(temp[j] == "ACCOUNT"){
-                                //     temp[j] = "会计部"
-                                // }else if(temp[j] == "BUSSINESS"){
-                                //     temp[j] = "商事部"
-                                // }else if(temp[j] == "PLAN"){
-                                //     temp[j] = "企划部"
-                                // }else if(temp[j] == "MARKET"){
-                                //     temp[j] = "市场部"
-                                // }
                                 temp[j] = _self.departAliasMap.get(temp[j])
                             }
                             _self.data[i].departNAME = temp.join(',')
@@ -535,12 +437,12 @@
                     _self.loading = false
                 })
             },
+
         },
         created() {
-            // this.init()
             let _self = this
             this.getData()
-            Bus.$on('update_returnVisit_edit',(e)=>{
+            _self.$bus.on("update_returnVisit_edit", (e) => {
                 _self.getData()
             })
             

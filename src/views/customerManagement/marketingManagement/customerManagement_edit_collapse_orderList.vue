@@ -654,15 +654,9 @@
 </template>
 
 <script>
-// import datagrid from '../../../libs/easyUI/jquery.easyui.min'
-// import combobox from '../../../libs/easyUI/jquery.easyui.min'
-// import Vue from 'vue';
-// import iviewArea from 'iview-area';
 import Bus from "../../../components/bus";
 import ADDmoney from "./add_money";
 import MoneyList from "./money_list";
-
-// Vue.use(iviewArea);
 
 $.extend($.fn.datagrid.methods, {
   editCell: function(jq, param) {

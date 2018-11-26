@@ -642,9 +642,9 @@ export default {
             e.ID = e.id
             e.customersourceCode = e.customersource
             this.selectRow = e
-           setTimeout(()=>{
+            setTimeout(()=>{
                 this.openEdit = true
-           },300)
+            },300)
         })
     }
 }

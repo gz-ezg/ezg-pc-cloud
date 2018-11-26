@@ -28,8 +28,8 @@
 </script>
 
 <style>
-    @import './libs/easyUI/easyui.css';
-    @import './libs/easyUI/icon.css';
+    /* @import './libs/easyUI/easyui.css';
+    @import './libs/easyUI/icon.css'; */
 html,body{
     width: 100%;
     height: 100%;

@@ -22,8 +22,8 @@ import Cookies from 'js-cookie';
 
 import iviewArea from 'iview-area';
 
-import datagrid from './libs/easyUI/jquery.easyui.min'
-import combobox from './libs/easyUI/jquery.easyui.min'
+// import datagrid from './libs/easyUI/jquery.easyui.min'
+// import combobox from './libs/easyUI/jquery.easyui.min'
 
 // Vue.use(VueScroller)
 // Vue.use(VCharts)
@@ -52,9 +52,6 @@ Vue.use(iviewArea)
 //  axios 拦截器
 axios.interceptors.response.use(
     (response) => {
-        // let _self = this
-        // console.log(response.data.msgCode)
-        // console.log("这是拦截器弹出的！")
         if(response.data.msgCode == "50003" && Cookies.get('user')!=""){
             // Cookies.set('user', '');
             // Cookies.set('password', '');

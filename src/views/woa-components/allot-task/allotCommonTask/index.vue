@@ -805,7 +805,8 @@ import allotAccountService from './allot_accout_service'
                 })
         },
         init(){
-            this.local_router_name = this.$route.name
+            // this.local_router_name = this.$route.name
+            this.local_router_name = `'${this.$route.params.depart}'`
             this.Npage = 1
             this.Ypage = 1
             this.getDataY()
