@@ -395,7 +395,7 @@
                         servicename:_self.YformInline.servicename,
                         marketername:_self.YformInline.marketername,
                         depart:_self.YformInline.depart,
-                        datatype: 2,
+                        datatype: 1,
                         bcreatedate:DateFormat(_self.YformInline.createdate[0]),
                         ecreatedate:DateFormat(_self.YformInline.createdate[1]),
                         bcallbackdate:DateFormat(_self.YformInline.updatedate[0]),
