@@ -246,11 +246,11 @@
                         key: 'serviceranks',
                         minWidth: 120
                     },
-                    {
-                        title:'回访次数',
-                        key:'num',
-                        width: 120
-                    },
+                    // {
+                    //     title:'回访次数',
+                    //     key:'num',
+                    //     width: 120
+                    // },
                     {
                         title: '操作',
                         key: 'action',
@@ -408,7 +408,9 @@
                         ecreatedate:DateFormat(_self.NformInline.createdate[1]),
                         bcallbackdate:DateFormat(_self.NformInline.updatedate[0]),
                         ecallbackdate:DateFormat(_self.NformInline.updatedate[1]),
-                        productname:_self.NformInline.productname
+                        productname:_self.NformInline.productname,
+                        sortField: "updatedate",
+                        order: "desc"
                         
                     }
                 }

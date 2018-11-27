@@ -225,6 +225,11 @@
                         <Radio label="1">新客户</Radio>
                     </RadioGroup>
                 </FormItem>
+                <FormItem label="公司名称" prop="companyname">
+                    <Select v-model="formValidate.affiliationArea" size="small">
+                        <Option v-for="(item, index) in affiliation_area" :value="item.typecode" :key="index">{{item.typename}}</Option>
+                    </Select>
+                </FormItem>
                 <FormItem label="客户名称" prop="customerName">
                     <Input v-model="formValidate.customerName" size="small" :readonly="isOldCustomer" @on-focus="get_customer"></Input>
                 </FormItem>
@@ -521,7 +526,8 @@ import publicCustomer from './publicCustomer'
                     customerName: '',
                     companyid:"",
                     companyname:"",
-                    customerId: ""
+                    customerId: "",
+                    affiliationArea: "guangzhou"
                 },
                 formValidate22: {
                     customerTel: '',
@@ -795,7 +801,8 @@ import publicCustomer from './publicCustomer'
                 allUser: [],
                 cluetype: [],
                 clue_level: [],
-                clue_level_map:new Map()
+                clue_level_map:new Map(),
+                affiliation_area: []
             }
         },
         methods: {
@@ -842,13 +849,14 @@ import publicCustomer from './publicCustomer'
                     _self.allUser = temp;
                 });
 
-                let params = "cluetype,clue_level"
+                let params = "cluetype,clue_level,affiliation_area"
 
                 function finish(res){
                     var temp = res.data.data;
                     _self.cluetype = temp.cluetype
                     _self.clue_level = temp.clue_level
                     _self.clue_level_map = _self.$array2map(_self.clue_level)
+                    _self.affiliation_area = temp.affiliation_area
                 }
 
                 this.$GetDataCenter(params, finish)
@@ -1289,6 +1297,7 @@ import publicCustomer from './publicCustomer'
                                 _data.labels = _self.formValidate2.labels
                                 _data.id = _self.formValidate2.id
                                 _data.clueStatus = _self.formValidate2.cluesstatus
+                                _data.affiliationArea = _self.formValidate2.affiliationArea
 
                                 function doSuccess(response) {
                                     _self.$Message.success('更新成功!')

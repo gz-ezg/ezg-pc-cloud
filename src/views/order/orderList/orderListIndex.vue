@@ -580,6 +580,7 @@ export default {
         },
         pageSizeChange(e){
             this.pageSize = e
+            this.get_data()
         },
         //  列表分类处理
         rowClassName(row, index) {

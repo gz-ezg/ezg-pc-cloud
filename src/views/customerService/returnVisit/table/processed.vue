@@ -214,11 +214,11 @@
                         key: 'callbackstatusName',
                         width:120
                     },
-                    {
-                        title: '回访次数',
-                        key: 'callbackstatuseCount',
-                        width:120
-                    },
+                    // {
+                    //     title: '回访次数',
+                    //     key: 'callbackstatuseCount',
+                    //     width:120
+                    // },
                     {
                         title: '服务人员',
                         key: 'server_realname',
@@ -239,11 +239,11 @@
                         key: 'serviceranks',
                         width: 120
                     },
-                    {
-                        title:'回访次数',
-                        key:'num',
-                        width: 120
-                    },
+                    // {
+                    //     title:'回访次数',
+                    //     key:'num',
+                    //     width: 120
+                    // },
                     {
                         title: '操作',
                         key: 'action',
@@ -400,7 +400,9 @@
                         ecreatedate:DateFormat(_self.YformInline.createdate[1]),
                         bcallbackdate:DateFormat(_self.YformInline.updatedate[0]),
                         ecallbackdate:DateFormat(_self.YformInline.updatedate[1]),
-                        productname:_self.YformInline.productname                        
+                        productname:_self.YformInline.productname,
+                        sortField: "updatedate",
+                        order: "desc" 
 
                     }
                 }

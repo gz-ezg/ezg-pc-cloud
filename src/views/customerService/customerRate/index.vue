@@ -110,7 +110,7 @@ export default {
                 {
                     title: "服务态度",
                     minWidth: 120,
-                    key: "ability_ranks"
+                    key: "attitude_ranks"
                 },
                 {
                     title: "服务态度",

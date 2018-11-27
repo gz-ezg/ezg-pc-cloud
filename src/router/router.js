@@ -141,46 +141,46 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    {
-        path: '/test',
-        icon: 'alert-circled',
-        name: 'test',
-        title: 'Test',
-        component: Main,
-        children: [
-            // {
-            //     path: 'test',
-            //     title: '测试页面',
-            //     name: '富文本编辑器测试',
-            //     component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/main.vue')
-            //     component: () => import(/* webpackChunkName: "test" */ '@/views/woa-components/filePreview/index.vue')
-            // },
-            // {
-            //     path: 'test2',
-            //     title: '日程测试',
-            //     name: 'test2_index',
-            //     component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/test2.vue')
-            // },
-            {
-                path: 'test3',
-                title: '滑动验证码',
-                name: 'test3_index',
-                component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/test3.vue')
-            },
-            {
-                path: 'test4',
-                title: 'canvas个人页制作',
-                name: 'test4_index',
-                component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/test4.vue')
-            },
-            {
-                path: 'test5',
-                title: 'html2canvas',
-                name: 'test05_index',
-                component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/test5.vue')
-            }
-        ]
-    },
+    // {
+    //     path: '/test',
+    //     icon: 'alert-circled',
+    //     name: 'test',
+    //     title: 'Test',
+    //     component: Main,
+    //     children: [
+    //         // {
+    //         //     path: 'test',
+    //         //     title: '测试页面',
+    //         //     name: '富文本编辑器测试',
+    //         //     component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/main.vue')
+    //         //     component: () => import(/* webpackChunkName: "test" */ '@/views/woa-components/filePreview/index.vue')
+    //         // },
+    //         // {
+    //         //     path: 'test2',
+    //         //     title: '日程测试',
+    //         //     name: 'test2_index',
+    //         //     component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/test2.vue')
+    //         // },
+    //         {
+    //             path: 'test3',
+    //             title: '滑动验证码',
+    //             name: 'test3_index',
+    //             component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/test3.vue')
+    //         },
+    //         {
+    //             path: 'test4',
+    //             title: 'canvas个人页制作',
+    //             name: 'test4_index',
+    //             component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/test4.vue')
+    //         },
+    //         {
+    //             path: 'test5',
+    //             title: 'html2canvas',
+    //             name: 'test05_index',
+    //             component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/test5.vue')
+    //         }
+    //     ]
+    // },
     {
         access: 6001,
         meta: 6001,
@@ -434,10 +434,10 @@ export const appRouter = [
                 component: () => import(/* webpackChunkName: "complaintcenter" */ '@/views/customerService/offlineCustomer/table/offline_index.vue')
             },
             {
-                access: 6048,
+                access: 11613,
                 path: 'customerRate',
                 title: '客户评价',
-                meta: 6048,
+                meta: 11613,
                 name: 'customerRate_index',
                 component: () => import(/* webpackChunkName: "complaintcenter_index" */ '@/views/customerService/customerRate/index.vue')
             },
@@ -569,7 +569,6 @@ export const appRouter = [
                 },
                 title: '工单分配',
                 name:"allotBussinessWorkOrder",
-                
             },
             // {
             //     access:6049,
@@ -755,8 +754,8 @@ export const appRouter = [
         ]
     },
     {
-        access: 6042,
-        meta: 6042,
+        access: 11610,
+        meta: 11610,
         path: '/etax',
         icon: 'connection-bars',
         name: 'etax',
@@ -764,16 +763,16 @@ export const appRouter = [
         component: Main,
         children: [
             {
-                access:6042,
-                meta: 6042,
+                access:11611,
+                meta: 11611,
                 path: 'taxResult',
                 title: '申报情况',
                 name:"taxResult",
                 component: () => import(/* webpackChunkName: "taxResult" */ '@/views/etax/etaxResult/index.vue')
             },
             {
-                access:6042,
-                meta: 6042,
+                access:11612,
+                meta: 11612,
                 path: 'etaxAccount',
                 title: '账号管理',
                 name:"etaxAccount",
