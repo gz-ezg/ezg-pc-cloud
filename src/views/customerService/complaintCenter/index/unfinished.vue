@@ -235,7 +235,7 @@ export default {
                         bcreatedate:DateFormat(_self.NformInline.createdate[0]),
                         ecreatedate:DateFormat(_self.NformInline.createdate[1]),
                         bupdatedate:DateFormat(_self.NformInline.updatedate[0]),
-                        bupdatedate:DateFormat(_self.NformInline.updatedate[1]),
+                        eupdatedate:DateFormat(_self.NformInline.updatedate[1]),
                         departname:_self.NformInline.departname,
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field))

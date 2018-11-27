@@ -717,7 +717,7 @@ export const appRouter = [
                 path: 'BookkeepingAgency',
                 title: '代理记账管理',
                 name: 'BookkeepingAgency_index',
-                component: () => import(/* webpackChunkName: "BookkeepingAgency_index" */ '@/views/planManagement/myCommonTask/myCommonTask_table.vue')
+                component: () => import(/* webpackChunkName: "BookkeepingAgency_index" */ '@/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgency.vue')
             },
             {
                 access: 6046,
