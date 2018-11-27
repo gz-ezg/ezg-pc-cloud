@@ -320,8 +320,8 @@ export default {
         },
         getLocalType(code){
             let _self = this
-            tempstart = code.split("-")[0]
-            temp = code.split("-")[1]
+            let tempstart = code.split("-")[0]
+            let temp = code.split("-")[1]
             for(let i = 0;i<_self.customerTypes_Array.length;i++){
                 if(temp == _self.customerTypes_Array[i].id){
                     return _self.customerTypes_Array[i].ptypename + ' - ' + _self.customerTypes_Array[i].typename
@@ -338,7 +338,7 @@ export default {
         getDataCenter(){
             let _self = this
             function success(res){
-                console.log(res.data.data)
+                // console.log(res.data.data)
                 _self.customerrating = res.data.data.customerrating
                 _self.area = res.data.data.area
                 let temp_area = {

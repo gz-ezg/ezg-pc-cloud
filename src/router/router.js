@@ -433,6 +433,14 @@ export const appRouter = [
                 name: 'offlineCustomer_index',
                 component: () => import(/* webpackChunkName: "complaintcenter" */ '@/views/customerService/offlineCustomer/table/offline_index.vue')
             },
+            {
+                access: 6048,
+                path: 'customerRate',
+                title: '客户评价',
+                meta: 6048,
+                name: 'customerRate_index',
+                component: () => import(/* webpackChunkName: "complaintcenter_index" */ '@/views/customerService/customerRate/index.vue')
+            },
         ]
     },
     {
