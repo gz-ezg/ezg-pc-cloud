@@ -16,7 +16,11 @@
 </template>
 
 <script>
+import VePie from 'v-charts/lib/pie.common'
   export default {
+      components: {
+          VePie
+      },
     data () {
       return {
             type:"volume",

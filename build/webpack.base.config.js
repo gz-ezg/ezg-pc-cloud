@@ -15,11 +15,12 @@ module.exports = {
         main: '@/main',
         'vender-base': '@/vendors/vendors.base.js',
         'vender-exten': '@/vendors/vendors.exten.js',
-        // main: ["@babel/polyfill",'@/main'],
-        // 'vender-base': ["@babel/polyfill",'@/vendors/vendors.base.js'],
-        // 'vender-exten': ["@babel/polyfill",'@/vendors/vendors.exten.js'],
         'vender-exten2': '@/vendors/vendors.exten2.js',
-        'vender-vchart': '@/vendors/vendors.vchart.js'
+        'vender-vchart': '@/vendors/vendors.vchart.js',
+        //  兼容IE9
+        // // main: ["@babel/polyfill",'@/main'],
+        // // 'vender-base': ["@babel/polyfill",'@/vendors/vendors.base.js'],
+        // // 'vender-exten': ["@babel/polyfill",'@/vendors/vendors.exten.js'],
     },
     output: {
         path: path.resolve(__dirname, '../dist/static'),
@@ -105,6 +106,18 @@ module.exports = {
             $: "jquery",
             jQuery: "jquery"
         }),
+        // new webpack.DllReferencePlugin({
+        //     context: __dirname,
+        //     manifest: require('../dll/vue-manifest.json')
+        // }),
+        // new webpack.DllReferencePlugin({
+        //     context: __dirname,
+        //     manifest: require('../dll/iview-manifest.json')
+        // }),
+        // new webpack.DllReferencePlugin({
+        //     context: __dirname,
+        //     manifest: require('../dll/vchart-manifest.json')
+        // }),
         // new PrerenderSPAPlugin({
         //     // Required - The path to the webpack-outputted app to prerender.
         //     staticDir: path.join(__dirname, '../dist'),
@@ -116,7 +129,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.vue'],
         alias: {
-            'vue': 'vue/dist/vue.esm.js',
+            // 'vue': 'vue/dist/vue.esm.js',
             '@': resolve('../src'),
         }
     }

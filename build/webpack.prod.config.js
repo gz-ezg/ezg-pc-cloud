@@ -30,6 +30,18 @@ module.exports = merge(webpackBaseConfig, {
     // devtool: '#source-map',
     // productionSourceMap: true,
     plugins: [
+        new webpack.DllReferencePlugin({
+            context: __dirname,
+            manifest: require('../dll/vue-manifest.json')
+        }),
+        new webpack.DllReferencePlugin({
+            context: __dirname,
+            manifest: require('../dll/iview-manifest.json')
+        }),
+        new webpack.DllReferencePlugin({
+            context: __dirname,
+            manifest: require('../dll/vchart-manifest.json')
+        }),
         new cleanWebpackPlugin(['dist/*'], {
             root: path.resolve(__dirname, '../')
         }),
@@ -37,12 +49,13 @@ module.exports = merge(webpackBaseConfig, {
             filename: '[name].[chunkhash].css',
             allChunks: true
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-            // name: 'vendors',
-            // filename: 'vendors.[hash].js'
-            name: ['vender-exten', 'vender-base','vender-exten2','vender-vchart'],
-            minChunks: Infinity
-        }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     // name: 'vendors',
+        //     // filename: 'vendors.[hash].js'
+        //     name: ['vender-base','vender-exten2','vender-vchart'],
+        //     // name: ['vender-exten', 'vender-base','vender-exten2','vender-vchart'],
+        //     minChunks: Infinity
+        // }),
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: '"production"'
@@ -50,17 +63,18 @@ module.exports = merge(webpackBaseConfig, {
         }),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
-                warnings: false
+                warnings: false,
+                drop_console: true
             }
         }),
         // new UglifyJsParallelPlugin({
         //     workers: os.cpus().length,
         //     mangle: true,
         //     compressor: {
-        //       warnings: false,
-        //       drop_console: true,
-        //       drop_debugger: true
-        //      }
+        //         warnings: false,
+        //         drop_console: true,
+        //         drop_debugger: true
+        //     }
         // }),
         //  查看打包大小,图片展示，在生产环境下配置
         new BundleAnalyzerPlugin(),
@@ -78,10 +92,18 @@ module.exports = merge(webpackBaseConfig, {
             //     from: 'src/views/main-components/theme-switch/theme'
             // },
             //  富文本编辑器
-            // {
-            //     from: 'src/views/my-components/text-editor/tinymce',
-            //     to: 'tinymce'
-            // },
+            /** 
+             *  ！！！由于tinymce的配置问题，tinymce中数个文件夹需要与tinymce同级，否则会读取不到，需要修改npm包
+            */
+            {
+                from: 'src/views/my-components/text-editor/tinymce',
+                to: 'js'
+            },
+            //  npm缓存包
+            {
+                from: 'dll/static/',
+                to: "../dll"
+            },
             //  微信凭证
             {
                 from:'WW_verify_z793ZwW9R5YytI0x.txt',
