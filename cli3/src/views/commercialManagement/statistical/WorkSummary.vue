@@ -1,0 +1,63 @@
+<!--    人员工作统计汇总    -->
+<template>
+    <div>
+        <Table
+            :columns="header" 
+            :data="data1"
+        >
+        </Table>
+    </div>
+</template>
+
+<script>
+export default {
+    props:['time'],
+    data(){
+        return{
+            header:[
+                {
+                    title:'人员',
+                    key:''
+                },
+                {
+                    title:'外勤数量',
+                    key:''
+                },
+                {
+                    title:'无效外勤',
+                    key:''
+                },
+                {
+                    title:'完成节点',
+                    key:''
+                },
+                {
+                    title:'完成工单',
+                    key:''
+                },
+                {
+                    title:'节点产值',
+                    key:''
+                },
+                {
+                    title:'工单产值',
+                    key:''
+                },
+                {
+                    title:'命中节点数',
+                    key:''
+                },
+                {
+                    title:'额外节点数',
+                    key:''
+                },
+                {
+                    title:'命中节点外勤价值',
+                    key:''
+                }
+            ],
+            data1:[]
+        }
+    }
+}
+</script>
