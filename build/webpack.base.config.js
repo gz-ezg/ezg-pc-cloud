@@ -22,8 +22,8 @@ module.exports = {
         'vender-vchart': '@/vendors/vendors.vchart.js'
     },
     output: {
-        path: path.resolve(__dirname, '../dist/dist'),
-        filename: '[name].js',
+        path: path.resolve(__dirname, '../dist/static'),
+        filename: 'js/[name].js',
     },
     module: {
         rules: [

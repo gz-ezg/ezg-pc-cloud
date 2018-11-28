@@ -22,9 +22,9 @@ module.exports = merge(webpackBaseConfig, {
     output: {
         // publicPath: 'http://cloud.zgcfo.com/dist/',  // 修改 https://iv...admin 这部分为你的服务器域名
         // publicPath: 'http://192.168.0.220:8089/dist/',
-        publicPath:'/dist/', //可以配置成这样，相对路径，由服务器处理
-        filename: '[name].[chunkhash].js',
-        chunkFilename: '[name].[chunkhash].chunk.js'
+        publicPath:'/static/', //可以配置成这样，相对路径，由服务器处理
+        filename: 'js/[name].[chunkhash].js',
+        chunkFilename: 'js/[name].[chunkhash].chunk.js'
     },
     //  开启远程调试时使用,默认注释 
     // devtool: '#source-map',
@@ -68,15 +68,24 @@ module.exports = merge(webpackBaseConfig, {
             {
                 from: 'td_icon.ico'
             },
+            //  字体文件
             {
                 from: 'src/styles/fonts',
                 to: 'fonts'
             },
+            //  主题文件
+            // {
+            //     from: 'src/views/main-components/theme-switch/theme'
+            // },
+            //  富文本编辑器
+            // {
+            //     from: 'src/views/my-components/text-editor/tinymce',
+            //     to: 'tinymce'
+            // },
+            //  微信凭证
             {
-                from: 'src/views/main-components/theme-switch/theme'
-            },
-            {
-                from: 'src/views/my-components/text-editor/tinymce'
+                from:'WW_verify_z793ZwW9R5YytI0x.txt',
+                to: "../"
             }
         ], {
             ignore: [

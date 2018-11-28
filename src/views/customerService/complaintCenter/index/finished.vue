@@ -273,7 +273,7 @@ export default {
                     bcreatedate:DateFormat(_self.YformInline.createdate[0]),
                     ecreatedate:DateFormat(_self.YformInline.createdate[1]),
                     bupdatedate:DateFormat(_self.YformInline.updatedate[0]),
-                    bupdatedate:DateFormat(_self.YformInline.updatedate[1]),
+                    eupdatedate:DateFormat(_self.YformInline.updatedate[1]),
                     departname:_self.YformInline.departname                                                    
                 }
             }
