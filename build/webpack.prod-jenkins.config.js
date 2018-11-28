@@ -19,6 +19,9 @@ fs.open('./build/env.js', 'w', function(err, fd) {
 });
 
 module.exports = merge(webpackBaseConfig, {
+    entry: {
+        main: '@/main',
+    },
     output: {
         // publicPath: 'http://cloud.zgcfo.com/dist/',  // 修改 https://iv...admin 这部分为你的服务器域名
         // publicPath: 'http://192.168.0.220:8089/dist/',
