@@ -28,7 +28,6 @@ module.exports = merge(webpackBaseConfig, {
     },
     //  开启远程调试时使用,默认注释 
     devtool: '#source-map',
-    productionSourceMap: true,
     plugins: [
         //  dll 挂载不变文件
         new webpack.DllReferencePlugin({
