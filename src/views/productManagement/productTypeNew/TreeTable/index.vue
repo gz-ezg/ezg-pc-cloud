@@ -43,8 +43,9 @@
     </el-table-column>
     <el-table-column
       label="操作"
-      width="150">
+      width="200">
       <template slot-scope="scope">
+        <Button type="primary" size="small" @click="create(scope.row)">新增下级属性</Button>
         <Button type="primary" size="small" @click="edit(scope.row)">编辑</Button>
         <Button type="error" size="small" @click="del(scope.row)">删除</Button>
       </template>
@@ -143,6 +144,9 @@ export default {
     },
     del(e){
       this.$emit("delete", e)
+    },
+    create(e){
+      this.$emit("create", e)
     }
   }
 }

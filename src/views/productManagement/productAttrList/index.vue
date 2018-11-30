@@ -115,37 +115,28 @@ export default {
                                     marginRight: "5px"
                                 }
                             }, "编辑"),
-                            // h("Button",{
-                            //     props:{
-                            //         type: "primary",
-                            //         size: "small",
-                            //     },
-                            //     style:{
-                            //         marginRight: "5px"
-                            //     }
-                            // }, "修改价格"),
-                            // h("Button",{
-                            //     props:{
-                            //         type: "info",
-                            //         size: "small",
-                            //     },
-                            //     style:{
-                            //         marginRight: "5px"
-                            //     }
-                            // }, "查看价格"),
-                            h("Button",{
-                                props:{
-                                    type: "warning",
-                                    size: "small",
-                                    icon: "trash-a",
-                                    disabled: true
+                            h('Button', {
+                                props: {
+                                    type: 'warning',
+                                    size: 'small'
                                 },
-                                on: {
-                                    click: ()=>{
-                                        this.deleteProductAttr(params.row)
-                                    }
+                                style: {
+                                    'marginLeft': '5px'
                                 }
-                            }, "删除"),
+                            },[
+                                h('Poptip', {
+                                    props: {
+                                        transfer: true,
+                                        confirm: true,
+                                        title: '您确定要删除此附件吗！',
+                                    },
+                                    on: {
+                                        'on-ok': ()=>{
+                                            this.deleteProductAttr(params.row.id)
+                                        },
+                                    }
+                                }, '删除')
+                            ])
                         ])
                     }
                 }
