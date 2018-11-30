@@ -125,7 +125,7 @@ export default {
 
             let config = {
                 createDate: "",
-                page: 1,
+                page: _self.page,
                 pageSize: 10,
                 sortField: "id",
                 order: "desc",

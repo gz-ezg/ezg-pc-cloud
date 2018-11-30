@@ -20,7 +20,7 @@
     import show from './show.vue'
 
     export default {
-        name:'returnWorkOrder_index',
+        name:'returnVisit_index',
         components:{
             Untreated,
             Processed,

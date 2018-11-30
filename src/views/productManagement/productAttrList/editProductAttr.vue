@@ -14,7 +14,7 @@
                 </Row>
                 <Row :gutter="20" style="margin-bottom:5px">
                     <Col>
-                        <Button type="primary" @click="create_property">新增属性值</Button>
+                        <Button type="primary" @click="create_property" icon="plus">新增属性值</Button>
                     </Col>
                 </Row>
                 <Row :gutter="20" style="margin-bottom:5px">
@@ -27,9 +27,8 @@
                             :columns="header"
                             :data="propertyV"></Table>
                     </Col>
-                </Row>
-                    
-                </Card>
+                </Row>        
+            </Card>
     </div>
 </template>
 

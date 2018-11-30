@@ -143,7 +143,7 @@
                     {
                         title: '公司名称',
                         key: 'companyname',
-                        width: 260,
+                        minWidth: 260,
                         render:(h, params) => {
                             // console.log(params)
                             if(params.row.companyname == ''||params.row.companyname == null){
@@ -177,42 +177,42 @@
                     {
                         title: '客户名称',
                         key: 'name',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '客户手机',
                         key: 'TEL',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '产品名称',
                         key: 'alisname',
-                        width: 250
+                        minWidth: 250
                     },
                     {
                         title: '完结状态',
                         key: 'isfinish',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '问题类型',
                         key: 'calltypeNAME',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '创建时间',
                         key: 'createdate',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '回访时间',
                         key: 'callbackdate',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '回访状态',
                         key: 'callbackstatusName',
-                        width:120
+                        minWidth:120
                     },
                     // {
                     //     title: '回访次数',
@@ -222,12 +222,22 @@
                     {
                         title: '服务人员',
                         key: 'server_realname',
-                        width: 120
+                        minWidth: 120
+                    },
+                    {
+                        title: "开始税期",
+                        key: "begin_period",
+                        minWidth: 120
+                    },
+                    {
+                        title: "结束税期",
+                        key: "end_period",
+                        minWidth: 120
                     },
                     {
                         title: '市场人员',
                         key: 'followby_realname',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '责任部门',
@@ -237,7 +247,7 @@
                     {
                         title: '服务评分',
                         key: 'serviceranks',
-                        width: 120
+                        minWidth: 120
                     },
                     // {
                     //     title:'回访次数',
@@ -285,15 +295,20 @@
                 let field = [
                     {field:'name',title:'客户名称'},
                     {field:'companyname',title:'公司名称'},
-                    {field:'product',title:'产品名称'},
-                    {field:'calltype',title:'问题类型',format:'hfwtlx'},
+                    {field:'alisname',title:'产品名称'},
+                    // {field:'calltype',title:'问题类型',format:'hfwtlx'},
+                    {field:'calltype',title:'问题类型'},
                     {field:'createdate',title:'创建时间'},
                     {field:'callbackdate',title:'回访时间'},
-                    {field:'callbackstatus',title:'回访状态',format:'hfzt'},
-                    {field:'servicename',title:'服务人员'},                                                                   
-                    {field:'marketername',title:'市场人员'},                                                                     
-                    {field:'depart',title:'责任部门',format:'departAlias'},
+                    {field:'callbackstatus',title:'回访状态'},
+                    // {field:'callbackstatus',title:'回访状态',format:'hfzt'},
+                    {field:'server_realname',title:'服务人员'},                                                                   
+                    {field:'followby_realname',title:'市场人员'},                                                                     
+                    {field:'depart',title:'责任部门'},
+                    // {field:'depart',title:'责任部门',format:'departAlias'},
                     {field:'serviceranks',title:'服务评分'},
+                    {field:'begin_period',title:'开始税期'},
+                    {field:'end_period',title:'结束税期'}, 
                 ]
                 let _self = this
                 let url = `api/customer/customerCallbackList`
