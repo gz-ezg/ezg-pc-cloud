@@ -13,6 +13,9 @@
                     <Col span="12"><span>属性名称：</span></Col><Col span="12"><Input v-model="property[0].name" size="small"/></Col>
                 </Row>
                 <Row :gutter="20" style="margin-bottom:5px">
+                    <Col span="12"><span>分类：</span></Col><Col span="12"><Input v-model="property[0].typeName" size="small" readonly/></Col>
+                </Row>
+                <Row :gutter="20" style="margin-bottom:5px">
                     <Col>
                         <Button type="primary" @click="create_property" icon="plus">新增属性值</Button>
                     </Col>

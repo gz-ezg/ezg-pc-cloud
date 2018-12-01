@@ -106,15 +106,15 @@ export default {
                     width: 180,
                     render: (h, params) => {
                         return h("div", [
-                            h("Button",{
-                                props:{
-                                    type: "primary",
-                                    size: "small",
-                                },
-                                style:{
-                                    marginRight: "5px"
-                                }
-                            }, "编辑"),
+                            // h("Button",{
+                            //     props:{
+                            //         type: "primary",
+                            //         size: "small",
+                            //     },
+                            //     style:{
+                            //         marginRight: "5px"
+                            //     }
+                            // }, "编辑"),
                             h('Button', {
                                 props: {
                                     type: 'warning',

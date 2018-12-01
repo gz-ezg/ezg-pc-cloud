@@ -1039,10 +1039,18 @@ export const appRouter = [{
                 component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/userManagement/userM_index.vue')
             },
             {
+                access: 6031,
+                meta: 6031,
+                path: 'departManagement',
+                title: '部门管理',
+                name: 'departManagement_index',
+                component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/departManagement/index.vue')
+            },
+            {
                 access: 6032,
                 meta: 6032,
                 path: 'sqlDeal',
-                title: '管理SQL',
+                title: 'SQL管理',
                 name: 'admin_sql_deal',
                 component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/sql_admin/main.vue')
             },
@@ -1057,7 +1065,7 @@ export const appRouter = [{
                 access: 6085,
                 meta: 6085,
                 path: 'datacenterManagement',
-                title: '数据字典管理',
+                title: '数据字典',
                 name: 'datacenterManagement_index',
                 component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/dataCenterManagement/dataCenterManagement_index.vue')
             },
@@ -1065,7 +1073,7 @@ export const appRouter = [{
                 access: 6033,
                 meta: 6033,
                 path: 'systemparamsManagement',
-                title: '系统参数管理',
+                title: '系统参数',
                 name: 'systemparamsManagement_index',
                 component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/systemparamsManagement/systemparamsManagement_index.vue')
             },
