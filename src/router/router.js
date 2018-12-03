@@ -159,12 +159,12 @@ export const appRouter = [{
             //     component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/main.vue')
             //     // component: () => import(/* webpackChunkName: "test" */ '@/views/woa-components/filePreview/index.vue')
             // },
-            // {
-            //     path: 'test2',
-            //     title: '日程测试',
-            //     name: 'test2_index',
-            //     component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/test2.vue')
-            // },
+            {
+                path: 'test2',
+                title: '日程测试',
+                name: 'test2_index',
+                component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/test2.vue')
+            },
             {
                 path: 'test3',
                 title: '滑动验证码',

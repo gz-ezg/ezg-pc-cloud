@@ -10,63 +10,68 @@
                             <p>{{item.text}}</p>
                         </div>
                     </li>
-                    <li class="left-content">
+                    <li v-if="pending" class="left-content">
                         <i class="tl-circle"></i>
                     </li>
                 </ul>
             </div>
         </div>
-        <both-side-time-line></both-side-time-line>
     </div>
 </template>
 
 <script>
-import bothSideTimeLine from '../../woa-components/bothSideTimeLine/index.vue';
-
 export default {
-    components: {
-        bothSideTimeLine
+    props: {
+        pending: {
+            type: [String, Boolean],
+            default: false
+        },
+        data: {
+            type: [String, Array],
+            default: () => {
+                return [
+                    {
+                        id: 1,
+                        type: "left",
+                        text: "客户数据标识由正常变更为公海池",
+                        date: "2018-07-10"
+                    },
+                    {
+                        id: 2,
+                        type: "right",
+                        text: "客户数据标识由正常变更为公海池",
+                        date: "2018-07-14"
+                    },
+                    {
+                        id: 3,
+                        type: "left",
+                        text: "客户数据标识由正常变更为公海池",
+                        date: "2018-07-19"
+                    },
+                    {
+                        id: 4,
+                        type: "left",
+                        text: "客户数据标识由正常变更为公海池",
+                        date: "2018-07-22"
+                    },
+                    {
+                        id: 5,
+                        type: "left",
+                        text: "客户数据标识由正常变更为公海池",
+                        date: "2018-07-29"
+                    },
+                    {
+                        id: 6,
+                        type: "right",
+                        text: "客户数据标识由正常变更为公海池",
+                        date: "2018-07-30"
+                    }
+                ]
+            }
+        }
     },
     data(){
         return {
-            data: [
-                {
-                    id: 1,
-                    type: "left",
-                    text: "客户数据标识由正常变更为公海池",
-                    date: "2018-07-10"
-                },
-                {
-                    id: 2,
-                    type: "right",
-                    text: "客户数据标识由正常变更为公海池",
-                    date: "2018-07-14"
-                },
-                {
-                    id: 3,
-                    type: "left",
-                    text: "客户数据标识由正常变更为公海池",
-                    date: "2018-07-19"
-                },
-                {
-                    id: 4,
-                    type: "left",
-                    text: "客户数据标识由正常变更为公海池",
-                    date: "2018-07-22"
-                },
-                {
-                    id: 5,
-                    type: "left",
-                    text: "客户数据标识由正常变更为公海池",
-                    date: "2018-07-29"
-                },
-                {
-                    id: 6,
-                    type: "right",
-                    text: "客户数据标识由正常变更为公海池",
-                    date: "2018-07-30"
-                }
-            ]
         }
     }
 }

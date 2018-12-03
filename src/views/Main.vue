@@ -293,10 +293,15 @@
                                 // localStorage.setItem('isTip',"N")
                                 _self.$Message.success('注销成功!') 
                                 Cookies.set('user', '');
-                                Cookies.set('password', '');                                                            
-                                _self.$router.push({
-                                    name: 'login'
-                                });
+                                Cookies.set('password', '');
+                                Cookies.set('7password', '');
+                                Cookies.set('7user', '')
+                                Cookies.set('7issave', 'false')
+                                setTimeout(()=>{
+                                    _self.$router.push({
+                                        name: 'login'
+                                    });
+                                }, 300)
                                 
                             }
                         })

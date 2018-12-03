@@ -98,28 +98,28 @@ export default {
                 {
                     title:"客户名称",
                     key:"name",
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title:"公司名称",
                     key:"companyname",
-                    width: 180
+                    minWidth: 180
                 },
                 {
                     title:"联系方式",
                     key:"tel",
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title:"类型",
                     key: "typename",
                     align: "center",
-                    width: 200
+                    minWidth: 200
                 },
                 {
                     title:"动态",
                     key:"content",
-                    width:360,
+                    minWidth:360,
                     render: (h, params) => {
                             // console.log(params)
                             if(params.row.content == ''||params.row.content == null){
@@ -156,12 +156,12 @@ export default {
                 {
                     title: "变更时间",
                     key:"createdate",
-                    width: 150
+                    minWidth: 150
                 },
                 {
                     title: "操作人",
                     key: "realname",
-                    width: 150
+                    minWidth: 150
                 }
             ],
             data: [],
@@ -237,16 +237,6 @@ export default {
             }
         },
         get_data_center(){
-            // let _self = this
-            // let params = "customer_dynamic_type"
-
-            // function success(res){
-            //     _self.customerDynamicType = res.data.data.customer_dynamic_type
-            //     _self.get_data()
-            // }
-
-            // this.$GetDataCenter(params, success)
-
             return new Promise((resolve,reject) => {
                 let _self = this
                 let params = "customer_dynamic_type"

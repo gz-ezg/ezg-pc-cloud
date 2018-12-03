@@ -4,10 +4,10 @@
 
 <template>
     <div class="login" @keydown.enter="handleSubmit" >
-         <Spin size="large" v-if="!sso" fix>
+        <Spin size="large" v-if="!sso" fix>
             <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
             <div>正在登录中...</div>
-         </Spin>
+        </Spin>
         <div class="login-con">
             <Card :bordered="false">
                 <p slot="title">
@@ -28,13 +28,13 @@
                                     <Icon :size="14" type="locked"></Icon>
                                 </span>
                         </FormItem>
-                        <FormItem prop="code" style="display: none" id="code">
+                        <FormItem prop="code" v-if="yzmShow" id="code">
                             <Input v-model="form.code" placeholder="验证码" style="width: 60%"/>
-                            <Img id="randCodeImage" src="/api/user/createImg" style="float: right;height: 32px"/>
+                            <Img id="randCodeImage" :src="yzm_url" style="float: right;height: 32px" @click="change_yzm"/>
                         </FormItem>
-                        <!-- <FormItem prop="isSave" style="margin-bottom:24px">
+                        <FormItem prop="isSave" style="margin-bottom:6px">
                             <Checkbox v-model="isSave">七天免登陆</Checkbox>
-                        </FormItem> -->
+                        </FormItem>
                         <FormItem>
                             <Button @click="handleSubmit" type="primary" long>登录</Button>
                         </FormItem>
@@ -62,14 +62,14 @@
                 },
                 rules: {
                     userName: [
-                        {required: true, message: '账号不能为空', trigger: 'blur'}
+                        { required: true, message: '账号不能为空', trigger: 'blur'}
                     ],
                     password: [
-                        {required: true, message: '密码不能为空', trigger: 'blur'}
+                        { required: true, message: '密码不能为空', trigger: 'blur'}
                     ]
                 },
-                managestatus:[],
-                managestatus_Map: new Map()
+                yzm_url: "/api/user/createImg",
+                yzmShow: false
             };
         },
         methods: {
@@ -84,76 +84,81 @@
 
                 this.$refs.loginForm.validate((valid) => {
                     if (valid) {
-                        let url = '/user/login/'
-                        function doSccess(response) {
+                        let url = 'api/user/login/'
+                        function success(response) {
                             if(_self.isSave == true){
-                                Cookies.set('user', _self.form.userName, { expires: 7 });
-                                Cookies.set('password', _self.form.password, { expires: 7 });
+                                Cookies.set('7user', _self.form.userName, { expires: 7 });
+                                Cookies.set('7password', _self.form.password, { expires: 7 });
+                                Cookies.set('7issave', _self.isSave, { expires: 7 });
                             }else{
-                                Cookies.set('user', _self.form.userName);
-                                Cookies.set('password', _self.form.password);
+                                Cookies.set('7user', "");
+                                Cookies.set('7password', "");
+                                Cookies.set('7issave', "");
                             }
+
+                            Cookies.set('user', _self.form.userName);
+                            Cookies.set('password', _self.form.password);
                             localStorage.setItem('realname', response.data.data.user.realname)
                             localStorage.setItem('id', response.data.data.user.id)
                             localStorage.setItem("companyname","")
-                            _self.getManagestatus()
-                            _self.getAllTSTypeGroups()
                             _self.getInterfaceItem(response.data.data.user.id)
                             _self.getUserRole(response.data.data.user.id)
                         }
-                        function otherConditions(response) {
+                        function fail(response) {
                             _self.count = response.data.errCount
                             if (_self.count > 2) {
                                 _self.$Message.error(response.data.msg);
+                                _self.yzmShow = true
                                 _self.getImg()
-                                $('#code').show()
+                                // $('#code').show()
                             } else if (_self.count < 3) {
                                 _self.$Message.error(response.data.msg);
-                                $('#code').hide()
+                                // $('#code').hide()
+                                _self.yzmShow = false
                                 _self.getImg()
                             } else {
                                 _self.$Message.error(response.data.msg);
                                 _self.getImg()
                             }
                         }
-                        this.PostData(url, _submit, doSccess, otherConditions)
+                        this.$Post(url, _submit, success, fail)
                     }
                 });
             },
             getInterfaceItem(re) {
                 let _self = this
-                let url = '/menu/getInterfaceItemByUserId?userId=' + re
+                let url = 'api/menu/getInterfaceItemByUserId'
+
+                let config = {
+                    params: {
+                        userId: re
+                    }
+                }
+                // 跳过登录校验
                 // Cookies.set('access', '1,2'); 
                 // Cookies.set('operations', '1,2'); 
 
-                function doSuccess(re) {
+                function success(re) {
                     Cookies.set('access', (re.data.data.interfaces).join()); 
                     // alert(JSON.stringify(re.data.data.interfaces))
                     localStorage.setItem("access_array",JSON.stringify(re.data.data.interfaces))
                     Cookies.set('operations', (re.data.data.operations).join());
-                    //  确保菜单重新生成，防止菜单组件被缓存
+                    //  确保菜单重新生成，防止菜单组件被缓存 ====>
                     window.location.reload();
                     setTimeout(() => {
                         _self.$router.push({
                             name: 'home_index'
                         });
-                    }, 1000)
+                    }, 300)
                 }
 
-                this.GetData(url, doSuccess)
-            },
-            getAllTSTypeGroups () {
-                // let _self = this
-                // this.$http.get('/api/dataCenter/system/queryAllTSTypeGroups/')
-                //     .then(function (response) {
-                //         let str = JSON.stringify(response.data)
-                //         localStorage.setItem('AllTSTypeGroups', str)
-                //     })
+                this.$Get(url, config, success)
             },
             getImg() {
                 let date = new Date();
-                let img = document.getElementById("randCodeImage");
-                img.src = '/api/user/createImg?a=' + date.getTime();
+                // let img = document.getElementById("randCodeImage");
+                // img.src = '/api/user/createImg?a=' + date.getTime();
+                this.yzm_url = '/api/user/createImg?a=' + date.getTime();
             },
 
             keyDown(e) {
@@ -165,59 +170,108 @@
             },
             getUserRole(e){
                 let _self = this
-                this.$http.get('/api/user/checkUserRoleByUserId?userId='+ e).then(function(res){
-                    // let str = JSON.stringify(res.data.data)  
-                    // localStorage.setItem('Role',str)
-                    if(res.data.msgCode == "40000"){
-                        let temp = []
-                        for(let i = 0;i<res.data.data.length;i++){
-                            temp.push(res.data.data[i].rolecode)
-                        }
-                        for(let j = 0;j<temp.length;j++){
-                            if(temp[j] == "salers"){
-                                localStorage.setItem('Main_Role',"salers")
-                                break
-                            }else if(temp[j] == "kj" || temp[j] == "kjbgd"){
-                                localStorage.setItem('Main_Role',"kuaiji")
-                                break
-                            }else if(temp[j] == "servicer" || temp[j] == "ssbgd"){
-                                localStorage.setItem('Main_Role',"shangshi")
-                                break
-                            }else if(temp[j] == "planner" || temp[j] == "qhbgd"){
-                                localStorage.setItem('Main_Role',"qihua")
-                                break
-                            }else if(temp[j] == "auditing" || temp[j] == "sjbgd"){
-                                localStorage.setItem('Main_Role',"shenji")
-                                break
-                            }else if(temp[j] == "jianzhi"){
-                                localStorage.setItem('Main_Role',"qudao")
-                                break
-                            }else if( j == temp.length - 1){
-                                localStorage.setItem('Main_Role',"other")
-                            }
-                        }
-                        let str = JSON.stringify(temp)
-                        localStorage.setItem('Role',str)
-                    }else{
-                        _self.$Message.error(res.data.msg)
+
+                let url = `api/user/checkUserRoleByUserId`
+
+                let config = {
+                    params: {
+                        userId: e
                     }
-                })
-            },
-            //  获取全局的数据字典
-            getManagestatus(){
-                let _self = this
+                }
                 
                 function success(res){
-                    _self.managestatus = res.data.data.managestatus
-                    _self.managestatus_Map = _self.$array2map(_self.managestatus)
-                    // console.log(res)
-                    // console.log(_self.managestatus)
-                    // console.log(_self.managestatus_Map)
-                    let temp = JSON.stringify(_self.managestatus_Map)
-                    localStorage.setItem("global_datacenter",temp)
+                    let temp = []
+                    for(let i = 0;i<res.data.data.length;i++){
+                        temp.push(res.data.data[i].rolecode)
+                    }
+                    let roleMap = new Map()
+
+                    //  主要角色map对象 或者可以写成一个枚举对象，使用对象实现
+                    roleMap.set("salers", "salers")
+                    roleMap.set("kj", "kuaiji")
+                    roleMap.set("kjbgd", "kuaiji")
+                    roleMap.set("servicer", "shangshi")
+                    roleMap.set("ssbgd", "shangshi")
+                    roleMap.set("planner", "qihua")
+                    roleMap.set("qhbgd", "qihua")
+                    roleMap.set("auditing", "shenji")
+                    roleMap.set("sjbgd", "shenji")
+                    roleMap.set("jianzhi", "qudao")
+                        
+                    for(let j = 0; j< temp.length; j++){
+                        if(roleMap.get(temp[j])){
+                            localStorage.setItem('Main_Role', roleMap.get(temp[j]))
+                            break;
+                        }else if (j== temp.length - 1){
+                            localStorage.setItem('Main_Role', "other")
+                        }
+                    }
+
+                    let str = JSON.stringify(temp)
+                    localStorage.setItem('Role',str)
                 }
 
-                this.$GetDataCenter("managestatus",success)
+                this.$Get(url, config, success)
+
+                // this.$http.get('/api/user/checkUserRoleByUserId?userId='+ e).then(function(res){
+                //     // let str = JSON.stringify(res.data.data)  
+                //     // localStorage.setItem('Role',str)
+                //     if(res.data.msgCode == "40000"){
+                //         let temp = []
+                //         for(let i = 0;i<res.data.data.length;i++){
+                //             temp.push(res.data.data[i].rolecode)
+                //         }
+                //         let roleMap = new Map()
+
+                //         //  主要角色map对象 或者可以写成一个枚举对象，使用对象实现
+                //         roleMap.set("salers", "salers")
+                //         roleMap.set("kj", "kuaiji")
+                //         roleMap.set("kjbgd", "kuaiji")
+                //         roleMap.set("servicer", "shangshi")
+                //         roleMap.set("ssbgd", "shangshi")
+                //         roleMap.set("planner", "qihua")
+                //         roleMap.set("qhbgd", "qihua")
+                //         roleMap.set("auditing", "shenji")
+                //         roleMap.set("sjbgd", "shenji")
+                //         roleMap.set("jianzhi", "qudao")
+                        
+                //         for(let j = 0; j< temp.length; j++){
+                //             if(roleMap.get(temp[j])){
+                //                 localStorage.setItem('Main_Role', roleMap.get(temp[j]))
+                //                 break;
+                //             }else if (j== temp.length - 1){
+                //                 localStorage.setItem('Main_Role', "other")
+                //             }
+                //         }
+                //         // for(let j = 0;j<temp.length;j++){
+                //         //     if(temp[j] == "salers"){
+                //         //         localStorage.setItem('Main_Role',"salers")
+                //         //         break
+                //         //     }else if(temp[j] == "kj" || temp[j] == "kjbgd"){
+                //         //         localStorage.setItem('Main_Role',"kuaiji")
+                //         //         break
+                //         //     }else if(temp[j] == "servicer" || temp[j] == "ssbgd"){
+                //         //         localStorage.setItem('Main_Role',"shangshi")
+                //         //         break
+                //         //     }else if(temp[j] == "planner" || temp[j] == "qhbgd"){
+                //         //         localStorage.setItem('Main_Role',"qihua")
+                //         //         break
+                //         //     }else if(temp[j] == "auditing" || temp[j] == "sjbgd"){
+                //         //         localStorage.setItem('Main_Role',"shenji")
+                //         //         break
+                //         //     }else if(temp[j] == "jianzhi"){
+                //         //         localStorage.setItem('Main_Role',"qudao")
+                //         //         break
+                //         //     }else if( j == temp.length - 1){
+                //         //         localStorage.setItem('Main_Role',"other")
+                //         //     }
+                //         // }
+                //         let str = JSON.stringify(temp)
+                //         localStorage.setItem('Role',str)
+                //     }else{
+                //         _self.$Message.error(res.data.msg)
+                //     }
+                // })
             },
             sso_login(userName, timeStamp, token){
                 console.log(userName, timeStamp, token)
@@ -239,8 +293,7 @@
                     localStorage.setItem('realname', response.data.data.user.realname)
                     localStorage.setItem('id', response.data.data.user.id)
                     localStorage.setItem("companyname","")
-                    _self.getManagestatus()
-                    _self.getAllTSTypeGroups()
+                    // _self.getAllTSTypeGroups()
                     _self.getInterfaceItem(response.data.data.user.id)
                     _self.getUserRole(response.data.data.user.id)
                 }
@@ -260,26 +313,35 @@
                     return new Promise(function(resolve, reject){
                         let params = []
                             for(let i = 0;i<config.length;i++){
-                            params[i] = config[i].split("=")[1]
-                            console.log(params)
-                        }
-                        resolve(params)
-                        alert(params)
-
-                    })
+                                params[i] = config[i].split("=")[1]
+                                console.log(params)
+                            }
+                            resolve(params)
+                        })
+                    }
+                else{
+                    console.log("正常登录！")
                 }
-                // console.log(config)
-            else{
-                console.log("正常登录！")
+            },
+            //  修改验证码
+            change_yzm(){
+                this.getImg()
             }
         },
-        },
         mounted() {
-            $('#randCodeImage').click(function () {
-                let date = new Date();
-                let img = document.getElementById("randCodeImage");
-                img.src = '/api/user/createImg?a=' + date.getTime();
-            });
+            let _self = this
+            this.isSave = JSON.parse(Cookies.get("7issave"))
+            if(Cookies.get("7user") && this.isSave){
+                _self.form.userName = Cookies.get("7user")
+                _self.form.password = Cookies.get("7password")
+                _self.handleSubmit()
+            }
+            // $('#randCodeImage').click(function () {
+            //     let date = new Date();
+            //     let img = document.getElementById("randCodeImage");
+            //     img.src = '/api/user/createImg?a=' + date.getTime();
+            // });
+            
             // let _self = this
             // let temp = location.href
             // //  sso登录（已注释）
@@ -328,6 +390,7 @@
         },
         created(){
             let _self = this
+
         }
     };
 </script>
