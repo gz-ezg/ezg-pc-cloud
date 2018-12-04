@@ -137,7 +137,12 @@ export default {
         Search
     },
     props:{
-        managestatus:Array
+        managestatus:{
+            type: [String, Array],
+            default: ()=>{
+                return []
+            }
+        }
     },
     data() {
             return {
@@ -489,8 +494,8 @@ export default {
                 for(let i = 0;i<res.data.data.rows.length;i++){
 
                     for(let j = 0;j<_self.managestatus.length;j++){
-                        if(_self.data[i].managestatus == _self.managestatus[j][0]){
-                            _self.data[i].managestatusName = _self.managestatus[j][1]
+                        if(_self.data[i].managestatus == _self.managestatus[j].typecode){
+                            _self.data[i].managestatusName = _self.managestatus[j].typename
                             break
                         }
                     }

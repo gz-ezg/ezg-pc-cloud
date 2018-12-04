@@ -27,7 +27,13 @@
                         </FormItem>
                     </Col>
                 </Row>
-                
+                <Row :gutter="16">
+                    <Col>
+                        <FormItem prop="isClue">
+                            <Checkbox v-model="isClue">生成线索</Checkbox>
+                        </FormItem>
+                    </Col>
+                </Row>
                 <FormItem label="跟进记录" prop="content" style="margin-bottom:20px">
                     <Input size="small" type="textarea" v-model="formValidate.content"/>
                 </FormItem>
@@ -99,7 +105,8 @@ export default {
             showFile: [],
             fileArray: [],
             market_status: [],
-            companynameArray: []
+            companynameArray: [],
+            isClue: false
         }
     },
     methods: {
@@ -218,6 +225,34 @@ export default {
                 companyId: _self.formValidate.companyId,
                 followResult: _self.formValidate.followResult,
                 followUpType: _self.formValidate.followUpType,
+                content: _self.formValidate.content,
+                attIds: _self.formValidate.attIds,
+                customerId: _self.formValidate.customerId
+            }
+
+            function success(res){
+                if(_self.isClue){
+                    _self.CreateClue()
+                }else{
+                    _self.loading = false
+                    _self.openFollowCreate = false
+                    _self.$emit("update", _self.customer.ID)
+                }
+            }
+
+            function fail(err){
+                _self.loading = false
+            }
+
+            this.$Post(url, config, success, fail)
+        },
+        CreateClue(){
+            let _self = this
+            let url = `api/customer/addCustomerContentNote`
+
+            let config = {
+                companyId: _self.formValidate.companyId,
+                followUpType: "20",
                 content: _self.formValidate.content,
                 attIds: _self.formValidate.attIds,
                 customerId: _self.formValidate.customerId

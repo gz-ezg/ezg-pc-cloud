@@ -136,7 +136,12 @@ import Bus from '../../../../components/bus'
 
 export default {
     props:{
-        managestatus: Array
+        managestatus:{
+            type: [String, Array],
+            default: ()=>{
+                return []
+            }
+        }
     },
     data() {
             return {
@@ -473,8 +478,8 @@ export default {
 
 
                     for(let j = 0;j<_self.managestatus.length;j++){
-                        if(_self.data[i].managestatus == _self.managestatus[j][0]){
-                            _self.data[i].managestatusName = _self.managestatus[j][1]
+                        if(_self.data[i].managestatus == _self.managestatus[j].typecode){
+                            _self.data[i].managestatusName = _self.managestatus[j].typename
                             break
                         }
                     }

@@ -50,37 +50,6 @@
                 <Button type="primary" icon="ios-color-wand-outline">批量未读</Button> -->
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="foundClues">发现线索</Button>                -->
             </ButtonGroup>
-            <!-- <Poptip 
-                title="筛选" 
-                placement="bottom-end" 
-                width="350" 
-                style="float:right;margin-right:20px"
-                
-                >
-                <Button type="text" size="small" icon="funnel">筛选</Button>
-                <div  slot="content" @keydown.enter="search">
-                <Form ref="formInline" :model="formInline" :label-width="100">
-                    <Row :gutter="16">
-                        <Col span="22">
-                            <FormItem prop="companyName" label="公司名称：">
-                                <Input size="small"  type="text" v-model="formInline.companyname" placeholder="">
-                                </Input>
-                            </FormItem>
-                        </Col>
-                        <Col span="22">
-                            <FormItem prop="servicename" label="服务人员名称：">
-                                <Input size="small"  type="text" v-model="formInline.servicename" placeholder="">
-                                </Input>
-                            </FormItem>
-                        </Col>
-                    </Row>
-                    <FormItem>
-                        <Button type="primary" @click="search">搜索</Button>
-                        <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
-                    </FormItem>
-                </Form>
-                </div>
-            </Poptip> -->
         </Row>
         <Row style="margin-top: 10px;">
             <Table
@@ -513,14 +482,12 @@ export default {
                 _self.data = res.data.data.rows
                 _self.pageTotal = res.data.data.total
                 for(let i = 0;i<res.data.data.rows.length;i++){
-                    // console.log(_self.data[i])
-
-                    for(let j = 0;j<_self.managestatus.length;j++){
-                        if(_self.data[i].managestatus == _self.managestatus[j][0]){
-                            _self.data[i].managestatusName = _self.managestatus[j][1]
-                            break
-                        }
-                    }
+                    // for(let j = 0;j<_self.managestatus.length;j++){
+                    //     if(_self.data[i].managestatus == _self.managestatus[j][0]){
+                    //         _self.data[i].managestatusName = _self.managestatus[j][1]
+                    //         break
+                    //     }
+                    // }
                     
                     if(_self.data[i].CreateDate!='' && _self.data[i].CreateDate!=null){
                         _self.data[i].CreateDate = _self.data[i].CreateDate.slice(0,10)
@@ -561,7 +528,6 @@ export default {
         },
         showdetail(){
             if(this.current_row != ''){
-                // Bus.$emit('myCommonTask',this.current_row)
                 this.$store.commit("open_gobal_work_order_detail_modal", this.current_row.id)
             }else{
                 this.$Message.warning('请选择一行查看详情！')
@@ -585,12 +551,8 @@ export default {
                 _self.flowChart1 = true
                 _self.flowChartImg = '/api/dataCenter/activiti/getResourceInputStreamObj?bussinessKey=' + a.row.id +'&bussinessType=20&time='+new Date()
         },
-        // foundClues(){
-        //     Bus.$emit('workOrderClues',true)
-        // }
         company(){
             if(this.current_row != ''){
-                // Bus.$emit('openCompanyDetail',this.current_row.company_id)
                 this.$store.commit("open_gobal_company_detail_modal", this.current_row.company_id)
             }else{
                 this.$Message.warning('请选择一行查看！')

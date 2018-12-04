@@ -228,6 +228,11 @@
                         minWidth: 120
                     },
                     {
+                        title: "实名账号",
+                        key: "has_account",
+                        minWidth: 120
+                    },
+                    {
                         title: '备注',
                         key: 'workordermemo',
                         width: 120,
@@ -288,7 +293,7 @@
                                     on: {
                                         click: () => {
                                             // console.log("11111")
-                                           if(params.row.batchBookId != null){
+                                            if(params.row.batchBookId != null){
                                                 Bus.$emit('open_yichang_detail',params.row.batchBookId)
                                             }else{
                                                 this.$Message.warning('未绑定账本')
@@ -469,7 +474,7 @@
                 if (_self.id.id == '' || _self.id.id == undefined) {
                     this.$Message.warning('请选择要查看的项目')
                 } else {
-                  Bus.$emit('yuefw', _self.id)  
+                    Bus.$emit('yuefw', _self.id)  
                 }
             },
 
@@ -479,7 +484,7 @@
                 if (_self.id.id == '' || _self.id.id == undefined) {
                     this.$Message.warning('请选择要查看的项目')
                 } else {
-                  Bus.$emit('zongjie', _self.id)
+                    Bus.$emit('zongjie', _self.id)
                 }
             },
 
@@ -489,7 +494,7 @@
                 if (_self.id.id == '' || _self.id.id == undefined) {
                     this.$Message.warning('请选择要查看的项目')
                 } else {
-                  Bus.$emit('fuwux',  _self.id.company_id)
+                    Bus.$emit('fuwux',  _self.id.company_id)
                 }
             },
 

@@ -49,14 +49,8 @@ import Notbegin from './myCommonTaskIndex/notbegin'
             }
         },
         methods:{
-            getGlobalDataCenter(){
-                let _self = this
-                let temp = JSON.parse(localStorage.getItem("global_datacenter"))
-                _self.managestatus = temp
-            }
         },
         created(){
-            this.getGlobalDataCenter()
         }
 
     }

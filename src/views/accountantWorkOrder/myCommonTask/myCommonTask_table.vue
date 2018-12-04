@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Tabs value="name1">
+        <Tabs value="name1" v-if="loading">
             <TabPane label="未开始" name="name1">
                 <notbegin :managestatus="managestatus"></notbegin>
             </TabPane>
@@ -14,20 +14,10 @@
                 <all :managestatus="managestatus"></all>
             </TabPane>
         </Tabs>
-        <!-- <detail></detail> -->
-        <!-- <company-detail></company-detail> -->
-        <!-- <set-finish-time></set-finish-time> -->
-        <!-- <flow></flow> -->
     </div>
 </template>
 
 <script>
-// import setFinishTime from './myCommonTaskIndex/setFinishTime';
-
-// import Detail from './myCommonTaskIndex/detail'
-// import CompanyDetail from './myCommonTaskIndex/companydetail'
-// import CompanyDetail from '../../woa-components/companyDetail/CompanyDetail'
-
 import Flow from './myCommonTaskIndex/flow'
 
 import Serving from './myCommonTaskIndex/serving'
@@ -42,27 +32,32 @@ import Notbegin from './myCommonTaskIndex/notbegin'
             All,
             Finished,
             Notbegin,
-            // Detail,
-            // CompanyDetail,
             Flow,
-            // setFinishTime
         },
         data(){
             return{
-                managestatus:"",
+                managestatus:[],
+                loading: false
             }
         },
 
         methods:{
             getGlobalDataCenter(){
                 let _self = this
-                let temp = JSON.parse(localStorage.getItem("global_datacenter"))
-                _self.managestatus = temp
+                // let temp = JSON.parse(localStorage.getItem("global_datacenter"))
+                let params = "managestatus"
+
+                function success(res){
+                    console.log(res)
+                    _self.managestatus = res.data.data.managestatus
+                    _self.loading = true
+                }
+                
+                this.$GetDataCenter(params, success)
             }
         },
-        created(){
-            this.getGlobalDataCenter()
-        }
-
+        created() {
+            this.getGlobalDataCenter()  
+        },
     }
 </script>

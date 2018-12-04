@@ -182,6 +182,11 @@
                         key: 'end_period',
                         width: 120
                     },
+                    {
+                        title: "实名账号",
+                        key: "has_account",
+                        minWidth: 120
+                    },
                     // {
                     //     title: '收资料',
                     //     key: 'zl',
@@ -406,7 +411,8 @@
                             zz: '',
                             bs: '',
                             cycle_work_order_id:_data.rows[i].cycle_work_order_id,
-                            dljz_legwork: _data.rows[i].dljz_legwork
+                            dljz_legwork: _data.rows[i].dljz_legwork,
+                            has_account: _data.rows[i].has_account
                         })
                     }
 

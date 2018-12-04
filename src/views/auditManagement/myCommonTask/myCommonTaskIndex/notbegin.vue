@@ -232,11 +232,11 @@ export default {
                     //     key: 'ordercode',
                     //     width: 150
                     // },
-                    {
-                        title: '经营状态',
-                        key:'managestatusName',
-                        width:120
-                    },
+                    // {
+                    //     title: '经营状态',
+                    //     key:'managestatusName',
+                    //     width:120
+                    // },
                     {
                         title: '服务部门',
                         key: 'departname',
@@ -516,13 +516,12 @@ export default {
                 _self.data = res.data.data.rows
                 _self.pageTotal = res.data.data.total
                 for(let i = 0;i<res.data.data.rows.length;i++){
-                    for(let j = 0;j<_self.managestatus.length;j++){
-                        if(_self.data[i].managestatus == _self.managestatus[j][0]){
-                            _self.data[i].managestatusName = _self.managestatus[j][1]
-                            break
-                        }
-                    }
-                    // console.log(_self.data[i])
+                    // for(let j = 0;j<_self.managestatus.length;j++){
+                    //     if(_self.data[i].managestatus == _self.managestatus[j][0]){
+                    //         _self.data[i].managestatusName = _self.managestatus[j][1]
+                    //         break
+                    //     }
+                    // }
                     if(_self.data[i].CreateDate!='' && _self.data[i].CreateDate!=null){
                         _self.data[i].CreateDate = _self.data[i].CreateDate.slice(0,10)
                     }

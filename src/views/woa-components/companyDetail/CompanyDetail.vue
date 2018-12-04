@@ -30,12 +30,17 @@
                                 </Col>
                             </Row>
                             <Row :gutter="16" v-if="followupshow">
-                                <Col span="20">
+                                <Col span="12">
                                     <FormItem prop="followUpType" label="跟进类型：" style="margin-bottom:5px">
                                         <!-- <Select transfer v-model="addDetailContent.followUpType" size="small" :disabled="followupshow"> -->
                                         <Select transfer v-model="addDetailContent.followUpType" size="small">
                                             <Option v-for="item in followTypeText" :value="item.typecode" :key="item.typecode">{{item.typename}}</Option>
                                         </Select>
+                                    </FormItem>
+                                </Col>
+                                <Col span="12">
+                                    <FormItem prop="isClue">
+                                        <Checkbox v-model="isClue">生成线索</Checkbox>
                                     </FormItem>
                                 </Col>
                             </Row>
@@ -46,6 +51,7 @@
                                     </FormItem>
                                 </Col>
                             </Row>
+                            
                             <Row :gutter="16">
                                     <Col span="20">
                                     <FormItem style="margin-bottom:5px" label="沟通证据：">
@@ -69,19 +75,10 @@
                         </Form>
                         <Row>
                             <Col :push="3"><Button type="primary" @click="upload" :loading="followUp_loading">新增跟进</Button></Col>
-                            <!-- <Button type="primary" @click="add_workorder_followup" :loading="followUp_loading">新增</Button> -->
-                            
-                            <!-- <Button type="ghost" @click="cancel_workorder_followup">重置</Button>  -->
                         </Row>
                                                
                     </Row>
-                    <!-- <Row>
-                        <Button type="primary" @click="create_new_followup" style="margin-left:10px">新增跟进记录</Button>
-                    </Row> -->
                     <Row>
-                        <!-- <div style="margin-top: 20px;margin-left:10px;margin-right:10px;max-height:450px;overflow:hidden" class="wrapper" ref="wrapper">
-                            <div class="content"> -->
-                            <!-- <Scroll height="300" style="margin-top:15px"> -->
                             <Table
                                 style="margin-top:15px"
                                 height="300"
@@ -91,12 +88,6 @@
                                 :columns="followUpHeader"
                                 :data="followUpData">
                             </Table>
-                                <!-- <Row>
-                                    <center style="padding-bottom:30px;padding-top:30px">--没有更多记录！--</center>
-                                </Row> -->
-                            <!-- </Scroll> -->
-                            <!-- </div>
-                        </div> -->
                     </Row>
                 </TabPane>
                 <TabPane label="企业信息" name="name1">
@@ -782,6 +773,7 @@
         },
         data(){
             return {
+                isClue: false,
                 openCompanyDetail: true,
                 followupshow:false,
                 warning:false,
@@ -1149,10 +1141,35 @@
                     attIds:_self.attIds
                 }
                 function success(res){
+                    if(_self.isClue){
+                        _self.create_clue()
+                    }else{
+                        _self.getData()
+                        _self.cancel_workorder_followup()
+                        _self.addcontentdetail = false
+                        _self.followUp_loading = false
+                    }
+                }
+                function fail(res){
+                    _self.followUp_loading = false
+                }
+                this.$Post(url, config, success, fail)
+            },
+            create_clue(){
+                let url =  `api/customer/addCustomerContentNote`
+                let _self = this
+                let config = {
+                    content: _self.addDetailContent.content,
+                    customerId: _self.companyInfo.customerid,
+                    companyId:_self.companyInfo.id,
+                    followUpType: "20",
+                }
+                function success(res){
                     _self.getData()
                     _self.cancel_workorder_followup()
                     _self.addcontentdetail = false
                     _self.followUp_loading = false
+                    _self.isClue = false
                 }
                 function fail(res){
                     _self.followUp_loading = false

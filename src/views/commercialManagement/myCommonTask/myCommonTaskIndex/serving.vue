@@ -586,14 +586,6 @@ export default {
                 _self.data = res.data.data.rows
                 _self.pageTotal = res.data.data.total
                 for(let i = 0;i<res.data.data.rows.length;i++){
-
-                    for(let j = 0;j<_self.managestatus.length;j++){
-                        if(_self.data[i].managestatus == _self.managestatus[j][0]){
-                            _self.data[i].managestatusName = _self.managestatus[j][1]
-                            break
-                        }
-                    }
-                    // console.log(_self.data[i])
                     if(_self.data[i].CreateDate!='' && _self.data[i].CreateDate!=null){
                         _self.data[i].CreateDate = _self.data[i].CreateDate.slice(0,10)
                     }
@@ -634,7 +626,6 @@ export default {
         },
         showdetail(){
             if(this.current_row != ''){
-                // Bus.$emit('myCommonTask',this.current_row)
                 this.$store.commit("open_gobal_work_order_detail_modal", this.current_row.id)
             }else{
                 this.$Message.warning('请选择一行查看详情！')
@@ -685,15 +676,9 @@ export default {
                 this.$Message.warning('请选择一行查看！')
             }
         },
-        getGlobalDataCenter(){
-            let _self = this
-            let temp = JSON.parse(localStorage.getItem("global_datacenter"))
-            _self.managestatus = temp
-        }
     },
     created(){
         var _self = this
-        this.getGlobalDataCenter()
         this.getData()
         Bus.$on('flowsuccess',(e)=>{
             _self.getData()

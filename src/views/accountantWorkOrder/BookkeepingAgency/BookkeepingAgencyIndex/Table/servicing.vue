@@ -134,6 +134,7 @@
             return {
                 time:"",
                 managestatus:[],
+                managestatus_map: new Map(),
                 finsih_loading:false,
                 upload_id:"",
                 finsih_work:false,
@@ -436,6 +437,11 @@
                         minWidth:100
                     },
                     {
+                        title: "实名账号",
+                        key: "has_account",
+                        minWidth: 120
+                    },
+                    {
                         title: '备注',
                         key: 'memo',
                         width: 120,
@@ -578,20 +584,18 @@
                         end_end_period: _self.SearchValidate.end_end_period,
                     }
                 }
-                this.$http.get(url,config).then(function(res){
+
+                function success(res){
                     _self.data = res.data.data.rows 
                     _self.pageTotal = res.data.data.total
                     for(let i = 0;i<_self.data.length;i++){
                         _self.data[i].service_status = _self.cservicest_map.get(_self.data[i].service_status)
-                        for(let j = 0;j<_self.managestatus.length;j++){
-                            if(_self.data[i].managestatus == _self.managestatus[j][0]){
-                                _self.data[i].managestatusName = _self.managestatus[j][1]
-                                break
-                            }
-                        }
+                        _self.data[i].managestatusName = _self.managestatus_map.get(_self.data[i].managestatus)
                     }
                     _self.loading = false
-                })
+                }
+
+                this.$Get(url, config, success)
             },
             pageChange(a) {
                 let _self = this
@@ -635,7 +639,7 @@
                             serviceStatus: 'stop'
                         }
 
-                        function doSuccess() {
+                        function success() {
                             _self.$Message.success('已停止该服务')
                             _self.page = 1
                             _self.getData()
@@ -645,8 +649,7 @@
 
                         }
 
-                        // _self.PostData(url, _data, doSuccess)
-                        _self.$Post(url, _data, doSuccess, fail)
+                        _self.$Post(url, _data, success, fail)
                     },
                     onCancel: () => {}
                 });
@@ -672,7 +675,6 @@
 
             selectRow(e){
                 this.current_row = e
-                // console.log(this.current_row)
             },
             fileRemove(e) {
                 this.img_array.splice(this.img_array.indexOf(e), 1);
@@ -681,9 +683,7 @@
 
             handleUpload(file){
                 let _self = this
-                // console.log(file)
                 this.img_array.push(file)
-                // yasuo(file,_self.img_array)
                 let reader = new FileReader()
                 reader.readAsDataURL(file)
                 let filename = file.name
@@ -718,7 +718,6 @@
                     let url = `api/order/cycle/month/service/item/finish`
                     
                     function success(res){
-                        // console.log(res)
                         _self.finsih_work = false
                         _self.finsih_loading = false
                         _self.img_array = []
@@ -742,15 +741,20 @@
                     return 'demo-table-error-row2';
                 }
             },
-            getCservicest(){
+            async get_data_center(){
                 let _self = this
-                let config = "cservicest"
+                let config = "cservicest,managestatus,financialLevel"
                 function finsih(res){
                     _self.cservicest = res.data.data.cservicest
                     _self.cservicest_map = _self.$array2map(_self.cservicest)
-                    // console.log(_self.cservicest_map)
+                    _self.managestatus = res.data.data.managestatus
+                    _self.managestatus_map = _self.$array2map(_self.managestatus)
+                    _self.financialLevel = res.data.data.financialLevel
                 }
                 this.$GetDataCenter(config, finsih)
+
+                await this.getData()
+                
             },
             setLevel(){
                 let _self = this
@@ -780,18 +784,6 @@
 
                 this.$Post(url,config,success,fail)
             },
-            getDataCenter(){
-                let _self = this
-                let params = `financialLevel`
-                
-                function success(res){
-                    _self.financialLevel = res.data.data.financialLevel
-                }
-
-                this.$GetDataCenter(params, success)
-            },
-
-
             openFollow(){
                 let _self = this
                 if(_self.current_row == "" || _self.current_row == null){
@@ -800,11 +792,11 @@
                     _self.$bus.emit('open_booking_follow',_self.current_row)
                 }
             },
-            getGlobalDataCenter(){
-                let _self = this
-                let temp = JSON.parse(localStorage.getItem("global_datacenter"))
-                _self.managestatus = temp
-            },
+            // getGlobalDataCenter(){
+            //     let _self = this
+            //     let temp = JSON.parse(localStorage.getItem("global_datacenter"))
+            //     _self.managestatus = temp
+            // },
 
             //  打开会计变更日志（由于接口问题，暂时关闭，等接口修复完成后发布）
             open_change_log(){
@@ -829,13 +821,11 @@
             }
         },
         mounted() {
-            this.getData()
-            this.getDataCenter()
+            this.get_data_center()
         },
         created () {
             let _self = this
-            this.getGlobalDataCenter()
-            this.getCservicest()
+            // this.getGlobalDataCenter()
             let now = new Date()
             let year = ""
             let month = ""
