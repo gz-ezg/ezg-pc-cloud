@@ -478,6 +478,7 @@ export default {
                 {field:'ordercode',title:'订单号码'},
                 {field:'companyname',title:'公司名称'},
                 {field:'name',title:'客户名称'},
+                {field:'productname',title:'产品名称'},
                 {field:'ProcessType',title:'流程状态'},
                 {field:'base_paydir',title:'缴费渠道',format:'payDirs'},
                 {field:'paynumber',title:'订单价格'},

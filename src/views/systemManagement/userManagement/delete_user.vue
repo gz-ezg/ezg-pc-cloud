@@ -35,7 +35,7 @@ export default {
             let _self = this
             _self.loading = true
             let url = `api/user/deleteUserByUsreId`
-            config = {
+            let config = {
                 id: _self.userID,
                 flag: 1
             }
