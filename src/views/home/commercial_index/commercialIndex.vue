@@ -51,6 +51,16 @@
                 </Card>
             </Col>
         </Row>
+        <Row :gutter="10" class="margin-top-10" style="height:600px">
+            <Col span="24" :style="{marginBottom: '10px'}">
+                <Card style="height:400px">
+                    <div class="data-source-row">
+                        <detail-analysis></detail-analysis>
+                    </div>
+                </Card>
+            </Col>
+        </Row>
+        
         <Modal
             title="工单提醒"
             width="400"
@@ -76,6 +86,7 @@
             </Row>
             <div slot="footer"></div>
         </Modal>
+        
     </div>
 </template>
 
@@ -83,12 +94,14 @@
 import fieldAnaylist from './field_anaylist';
 import workorderAnaylist from './workorder_anaylist';
 import personSumTable from './personSumTable';
+import detailAnalysis from './detailAnalysis';
 
 export default {
     components:{
         fieldAnaylist,
         workorderAnaylist,
-        personSumTable
+        personSumTable,
+        detailAnalysis
     },
     data(){
         return{

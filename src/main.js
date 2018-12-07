@@ -25,8 +25,16 @@ import iviewArea from 'iview-area';
 // import datagrid from './libs/easyUI/jquery.easyui.min'
 // import combobox from './libs/easyUI/jquery.easyui.min'
 
-// Vue.use(VueScroller)
-// Vue.use(VCharts)
+//  异常上报机制
+import Raven from 'raven-js';
+import RavenVue from 'raven-js/plugins/vue';
+
+//  测试库版
+Raven
+    .config('http://f2091129504342718fd23e9de52bdd84@sentry.roderickt1an.cn/1')
+    .addPlugin(RavenVue, Vue)
+    .install();
+
 Vue.use(VueI18n);
 Vue.use(iView);
 Vue.use(VueBus);
@@ -99,42 +107,43 @@ axios.interceptors.response.use(
         return response;
     },
     (error) => {
+        Raven.captureException(error);
         return Promise.reject(error)
     }
 )
 
 //  异常监控及上传
 //  上传待接口完成后实现
-Vue.config.errorHandler = function (err, vm, info, a) {
-    // handle error
-    // `info` 是 Vue 特定的错误信息，比如错误所在的生命周期钩子
-    // 只在 2.2.0+ 可用
-    // console.log("errorHandler - start")
-    // console.log(router.history.current.name)
-    // console.log(info)
-    console.log(err)
+// Vue.config.errorHandler = function (err, vm, info, a) {
+//     // handle error
+//     // `info` 是 Vue 特定的错误信息，比如错误所在的生命周期钩子
+//     // 只在 2.2.0+ 可用
+//     // console.log("errorHandler - start")
+//     // console.log(router.history.current.name)
+//     // console.log(info)
+//     console.log(err)
 
-    let _self = this
-    let url = 'api/system/saveFontErrMsg'
-    let config = {
-        name: router.history.current.name,
-        hook: info,
-        page: "",
-        err: err.toString()
-    }
-    // console.log(config)
+//     let _self = this
+//     let url = 'api/system/saveFontErrMsg'
+//     let config = {
+//         name: router.history.current.name,
+//         hook: info,
+//         page: "",
+//         err: err.toString()
+//     }
+//     // console.log(config)
 
-    axios.post(url, config).then(function(res){
-        if(res.data.msgCode == "40000"){
-            console.log("上报成功")
-        }else{
-            console.log(res)
-        }
-    }).catch(function(err){
-        console.log(err)
-    })
+//     axios.post(url, config).then(function(res){
+//         if(res.data.msgCode == "40000"){
+//             console.log("上报成功")
+//         }else{
+//             console.log(res)
+//         }
+//     }).catch(function(err){
+//         console.log(err)
+//     })
 
-  }
+//   }
 
 
 // 按钮采集

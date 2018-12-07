@@ -42,6 +42,7 @@
     "js-cookie": "^2.2.0",
     "qrcodejs2": "^0.0.2",
     "rasterizehtml": "^1.2.4",
+    "raven-js": "^3.27.0",
     "simplemde": "^1.11.2",
     "sortablejs": "^1.7.0",
     "tinymce": "^4.7.4",
