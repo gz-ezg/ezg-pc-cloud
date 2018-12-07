@@ -92,7 +92,7 @@
                 </div>
             </Col>            
         </Row>
-        <Row :gutter="10" class="margin-top-10">
+        <!-- <Row :gutter="10" class="margin-top-10">
             <Col span="12" :style="{marginBottom: '10px'}">
                 <Card style="height:500px">
                     <p slot="title" class="card-title">
@@ -112,6 +112,32 @@
                     </p>
                     <div class="data-source-row">
                         <attitude></attitude>
+                    </div>
+                </Card>
+            </Col>
+        </Row> -->
+        <Row style="margin-top:1px">
+            <Col span="16" :style="{marginBottom: '10px'}">
+                <Card style="height:600px">
+                    <p slot="title" class="card-title">
+                        <Icon type="android-map"></Icon>
+                        客户成交周期
+                    </p>
+                    <div class="data-source-row">
+                        <deal-cycle></deal-cycle>
+                        <!-- <classic></classic> -->
+                    </div>
+                </Card>
+            </Col>
+            <Col span="8" :style="{marginBottom: '10px'}">
+                <Card style="height:600px">
+                    <p slot="title" class="card-title">
+                        <Icon type="android-map"></Icon>
+                        二次成交比例
+                    </p>
+                    <div class="data-source-row">
+                        <second-cycle></second-cycle>
+                        <!-- <attitude></attitude> -->
                     </div>
                 </Card>
             </Col>
@@ -281,8 +307,10 @@
 
 <script>
 import QRCode from "qrcodejs2";
-import attitude from './attitude'
-import classic from './classic'
+import secondCycle from './secondDeal'
+import dealCycle from './dealCycle'
+// import attitude from './attitude'
+// import classic from './classic'
 import baojia from './baojia'
 import teamTotalSum from './TeamTotalSum';
 import personHistory from './showHistory';
@@ -377,12 +405,14 @@ export default {
         }
     },
     components: {
-        attitude,
-        classic,
+        // attitude,
+        // classic,
         baojia,
         teamTotalSum,
         personHistory,
-        indexClue
+        indexClue,
+        secondCycle,
+        dealCycle
     },
     computed:{
         //  浮动栏是否显示
@@ -558,11 +588,6 @@ export default {
             });
         },
         open_clue(){
-            // setTimeout(() => {
-            //     this.$router.push({
-            //         name: 'cluesLibrary_index'
-            //     });
-            // }, 500)
             let _self = this
             this.$bus.emit("OPEN_INDEX_CLUE",true)
         },

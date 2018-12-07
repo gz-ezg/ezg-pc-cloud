@@ -184,19 +184,22 @@
                     for(let i = 0;i<res.data.data.length;i++){
                         temp.push(res.data.data[i].rolecode)
                     }
-                    let roleMap = new Map()
 
                     //  主要角色map对象 或者可以写成一个枚举对象，使用对象实现
-                    roleMap.set("salers", "salers")
-                    roleMap.set("kj", "kuaiji")
-                    roleMap.set("kjbgd", "kuaiji")
-                    roleMap.set("servicer", "shangshi")
-                    roleMap.set("ssbgd", "shangshi")
-                    roleMap.set("planner", "qihua")
-                    roleMap.set("qhbgd", "qihua")
-                    roleMap.set("auditing", "shenji")
-                    roleMap.set("sjbgd", "shenji")
-                    roleMap.set("jianzhi", "qudao")
+                    let roleMap = new Map([
+                        ["salers", "salers"],
+                        ["kj", "kuaiji"],
+                        ["kjbgd", "kuaiji"],
+                        ["jzkj","kuaiji"],
+                        ["servicer", "shangshi"],
+                        ["ssbgd", "shangshi"],
+                        ["planner", "qihua"],
+                        ["qhbgd", "qihua"],
+                        ["auditing", "shenji"],
+                        ["sjbgd", "shenji"],
+                        ["jianzhi", "qudao"],
+
+                    ])
                         
                     for(let j = 0; j< temp.length; j++){
                         if(roleMap.get(temp[j])){
@@ -212,66 +215,6 @@
                 }
 
                 this.$Get(url, config, success)
-
-                // this.$http.get('/api/user/checkUserRoleByUserId?userId='+ e).then(function(res){
-                //     // let str = JSON.stringify(res.data.data)  
-                //     // localStorage.setItem('Role',str)
-                //     if(res.data.msgCode == "40000"){
-                //         let temp = []
-                //         for(let i = 0;i<res.data.data.length;i++){
-                //             temp.push(res.data.data[i].rolecode)
-                //         }
-                //         let roleMap = new Map()
-
-                //         //  主要角色map对象 或者可以写成一个枚举对象，使用对象实现
-                //         roleMap.set("salers", "salers")
-                //         roleMap.set("kj", "kuaiji")
-                //         roleMap.set("kjbgd", "kuaiji")
-                //         roleMap.set("servicer", "shangshi")
-                //         roleMap.set("ssbgd", "shangshi")
-                //         roleMap.set("planner", "qihua")
-                //         roleMap.set("qhbgd", "qihua")
-                //         roleMap.set("auditing", "shenji")
-                //         roleMap.set("sjbgd", "shenji")
-                //         roleMap.set("jianzhi", "qudao")
-                        
-                //         for(let j = 0; j< temp.length; j++){
-                //             if(roleMap.get(temp[j])){
-                //                 localStorage.setItem('Main_Role', roleMap.get(temp[j]))
-                //                 break;
-                //             }else if (j== temp.length - 1){
-                //                 localStorage.setItem('Main_Role', "other")
-                //             }
-                //         }
-                //         // for(let j = 0;j<temp.length;j++){
-                //         //     if(temp[j] == "salers"){
-                //         //         localStorage.setItem('Main_Role',"salers")
-                //         //         break
-                //         //     }else if(temp[j] == "kj" || temp[j] == "kjbgd"){
-                //         //         localStorage.setItem('Main_Role',"kuaiji")
-                //         //         break
-                //         //     }else if(temp[j] == "servicer" || temp[j] == "ssbgd"){
-                //         //         localStorage.setItem('Main_Role',"shangshi")
-                //         //         break
-                //         //     }else if(temp[j] == "planner" || temp[j] == "qhbgd"){
-                //         //         localStorage.setItem('Main_Role',"qihua")
-                //         //         break
-                //         //     }else if(temp[j] == "auditing" || temp[j] == "sjbgd"){
-                //         //         localStorage.setItem('Main_Role',"shenji")
-                //         //         break
-                //         //     }else if(temp[j] == "jianzhi"){
-                //         //         localStorage.setItem('Main_Role',"qudao")
-                //         //         break
-                //         //     }else if( j == temp.length - 1){
-                //         //         localStorage.setItem('Main_Role',"other")
-                //         //     }
-                //         // }
-                //         let str = JSON.stringify(temp)
-                //         localStorage.setItem('Role',str)
-                //     }else{
-                //         _self.$Message.error(res.data.msg)
-                //     }
-                // })
             },
             sso_login(userName, timeStamp, token){
                 console.log(userName, timeStamp, token)
@@ -287,7 +230,7 @@
                 }
 
                 function success(response){
-                    console.log(response)
+                    // console.log(response)
                     Cookies.set('user', userName);
                     Cookies.set('password', "123456");
                     localStorage.setItem('realname', response.data.data.user.realname)
