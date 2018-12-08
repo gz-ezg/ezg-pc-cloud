@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- <DatePicker type="daterange"  placeholder="选择日期" style="width: 200px;margin-bottom:10px" size="small" transfer @on-change="change"></DatePicker> -->
         <Table
             :loading="loading"
             highlight-row
@@ -20,7 +21,10 @@
 </template>
 
 <script>
+import dealCycle from './dealCycle'
+
 export default {
+    mixins: [dealCycle],
     data(){
         return {
             data: [],
@@ -29,11 +33,6 @@ export default {
                     title: "部门",
                     key:"departname",
                     minWidth: 120
-                },
-                {
-                    title: "市场",
-                    key: "realname",
-                    minWidth: 90
                 },
                 {
                     title: "10天内成交",
@@ -48,7 +47,7 @@ export default {
                             on: {
                                 click: ()=>{
                                     this.$router.push({
-                                        path: `/customerList?type=dealCycle&dealType=c1&idType=user&id=${params.row.id}`
+                                        path: `/customerList?type=dealCycle&dealType=c1&idType=depart&id=${params.row.id}`
                                     })
                                 },
                             }
@@ -68,7 +67,7 @@ export default {
                             on: {
                                 click: ()=>{
                                     this.$router.push({
-                                        path: `/customerList?type=dealCycle&dealType=c2&idType=user&id=${params.row.id}`
+                                        path: `/customerList?type=dealCycle&dealType=c2&idType=depart&id=${params.row.id}`
                                     })
                                 },
                             }
@@ -88,7 +87,7 @@ export default {
                             on: {
                                 click: ()=>{
                                     this.$router.push({
-                                        path: `/customerList?type=dealCycle&dealType=c3&idType=user&id=${params.row.id}`
+                                        path: `/customerList?type=dealCycle&dealType=c3&idType=depart&id=${params.row.id}`
                                     })
                                 },
                             }
@@ -108,7 +107,7 @@ export default {
                             on: {
                                 click: ()=>{
                                     this.$router.push({
-                                        path: `/customerList?type=dealCycle&dealType=c4&idType=user&id=${params.row.id}`
+                                        path: `/customerList?type=dealCycle&dealType=c4&idType=depart&id=${params.row.id}`
                                     })
                                 },
                             }
@@ -119,37 +118,9 @@ export default {
             loading: false,
             page: 1,
             pageSize: 10,
-            total: 0
+            total: 0,
+            type: "depart"
         }
-    },
-    methods: {
-        get_data(){
-            let _self = this
-            let url = `api/crm/sale/index/customer/deal/cycle`
-            _self.loading = true
-            let config = {
-                params: {
-                    type: "user",
-                    page: _self.page,
-                    pageSize: _self.pageSize
-                }
-            }
-
-            function success(res){
-                _self.loading = false
-                _self.data = res.data.data.rows
-                _self.total = res.data.data.total
-            }
-
-            this.$Get(url, config, success)
-        },
-        pageChange(e){
-            this.page = e
-            this.get_data()
-        }
-    },
-    created(){
-        this.get_data()
     }
 }
 </script>

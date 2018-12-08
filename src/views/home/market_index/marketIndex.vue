@@ -118,7 +118,7 @@
         </Row> -->
         <Row style="margin-top:1px">
             <Col span="16" :style="{marginBottom: '10px'}">
-                <Card style="height:600px">
+                <Card style="height:650px">
                     <p slot="title" class="card-title">
                         <Icon type="android-map"></Icon>
                         客户成交周期
@@ -130,13 +130,13 @@
                 </Card>
             </Col>
             <Col span="8" :style="{marginBottom: '10px'}">
-                <Card style="height:600px">
+                <Card style="height:650px">
                     <p slot="title" class="card-title">
                         <Icon type="android-map"></Icon>
                         二次成交比例
                     </p>
                     <div class="data-source-row">
-                        <second-cycle></second-cycle>
+                        <second-deal></second-deal>
                         <!-- <attitude></attitude> -->
                     </div>
                 </Card>
@@ -307,8 +307,8 @@
 
 <script>
 import QRCode from "qrcodejs2";
-import secondCycle from './secondDeal'
-import dealCycle from './dealCycle'
+import secondDeal from './secondDeal/index'
+import dealCycle from './dealCycle/index'
 // import attitude from './attitude'
 // import classic from './classic'
 import baojia from './baojia'
@@ -317,6 +317,7 @@ import personHistory from './showHistory';
 import indexClue from './clue';
 
 export default {
+    name: "marketIndex_index",
     data(){
         const Re = (rule, value, callback) => {
                 let re = /^[0-9]\d*$/
@@ -411,7 +412,7 @@ export default {
         teamTotalSum,
         personHistory,
         indexClue,
-        secondCycle,
+        secondDeal,
         dealCycle
     },
     computed:{

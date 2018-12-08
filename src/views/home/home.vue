@@ -188,7 +188,7 @@
 // import toDoListItem from './components/toDoListItem.vue';
 
 export default {
-    name: 'home',
+    name: 'home_index',
     components: {
         // homeMap,
         // dataSourcePie,
@@ -261,38 +261,51 @@ export default {
         // 跳转各个部门首页
         let _self = this
         let temp = localStorage.getItem('Main_Role')
-        switch(temp){
-            case "kuaiji":
-                this.$router.push({
-                    name:'accountIndex_index'
-                })
-                break
-            case "shangshi":
-                this.$router.push({
-                    name:'commercialIndex_index'
-                })
-                break
-            // case "qihua":
-            //     this.$router.push({
-            //         name:'planIndex_index'
-            //     })
-            //     break
-            // case "shenji":
-            //     this.$router.push({
-            //         name:'auditIndex_index'
-            //     })
-            //     break
-            case "salers":
-                this.$router.push({
-                    name:'marketIndex_index'
-                })
-                break
-            case "qudao":
-                this.$router.push({
-                    name: 'cannelIndex_index'
-                })
-            default:
+        let IndexMap = new Map([
+            ["kuaiji", "accountIndex_index"],
+            ["shangshi", "commercialIndex_index"],
+            ["salers", "marketIndex_index"],
+            ["qudao", "cannelIndex_index"],
+            // ["qihua", "accountIndex_index"],
+            // ["shenji", "accountIndex_index"],
+        ])
+        if(IndexMap.get(temp)){
+            this.$router.push({
+                name: Index.get(temp)
+            })
         }
+        // switch(temp){
+        //     case "kuaiji":
+        //         this.$router.push({
+        //             name:'accountIndex_index'
+        //         })
+        //         break
+        //     case "shangshi":
+        //         this.$router.push({
+        //             name:'commercialIndex_index'
+        //         })
+        //         break
+        //     // case "qihua":
+        //     //     this.$router.push({
+        //     //         name:'planIndex_index'
+        //     //     })
+        //     //     break
+        //     // case "shenji":
+        //     //     this.$router.push({
+        //     //         name:'auditIndex_index'
+        //     //     })
+        //     //     break
+        //     case "salers":
+        //         this.$router.push({
+        //             name:'marketIndex_index'
+        //         })
+        //         break
+        //     case "qudao":
+        //         this.$router.push({
+        //             name: 'cannelIndex_index'
+        //         })
+        //     default:
+        // }
         // if(localStorage.getItem('Main_Role')=="管理员"){
         //     this.$router.push({
         //          name:'cannelIndex_index'

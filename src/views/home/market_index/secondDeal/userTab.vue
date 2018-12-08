@@ -20,9 +20,12 @@
 </template>
 
 <script>
+import secondDeal from './secondDeal'
 export default {
+    mixins: [secondDeal],
     data(){
         return {
+            type: "user",
             data: [],
             header: [
                 {
@@ -49,7 +52,7 @@ export default {
                             on: {
                                 click: ()=>{
                                     this.$router.push({
-                                        path: `/customerList?type=secondDeal&dealType=dljz&idType=depart&id=${params.row.id}`
+                                        path: `/customerList?type=secondDeal&dealType=dljz&idType=user&id=${params.row.id}`
                                     })
                                 },
                             }
@@ -69,7 +72,9 @@ export default {
                             },
                             on: {
                                 click: ()=>{
-                                    console.log("1234")
+                                    this.$router.push({
+                                        path: `/customerList?type=secondDeal&dealType=dljz&idType=user&id=${params.row.id}`
+                                    })
                                 },
                             }
                         }, params.row.renew_order_count)
@@ -81,35 +86,6 @@ export default {
             pageSize: 10,
             total: 0
         }
-    },
-    methods: {
-        get_data(){
-            let _self = this
-            let url = `api/crm/sale/index/customer/second/deal`
-            _self.loading = true
-            let config = {
-                params: {
-                    type: "user",
-                    page: _self.page,
-                    pageSize: _self.pageSize
-                }
-            }
-
-            function success(res){
-                _self.loading = false
-                _self.data = res.data.data.rows
-                _self.total = res.data.data.total
-            }
-
-            this.$Get(url, config, success)
-        },
-        pageChange(e){
-            this.page = e
-            this.get_data()
-        }
-    },
-    created(){
-        this.get_data()
     }
 }
 </script>

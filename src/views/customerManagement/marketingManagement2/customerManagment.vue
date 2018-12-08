@@ -237,12 +237,12 @@ export default {
                     title: "姓名",
                     key: "NAME",
                     sortable: "custom",
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title: "归属公司",
                     key: "companynames",
-                    width: 210,
+                    minWidth: 210,
                     render: (h, params) => {
                         if (params.row.companynames == "" || params.row.companynames == null) {
                             return "";
@@ -308,59 +308,59 @@ export default {
                 {
                     title: "剩余时间(天)",
                     key: "residue_time",
-                    width: 130,
+                    minWidth: 130,
                     sortable: "custom"
                 },
                 {
                     title: "电话",
                     key: "TEL",
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title: "客户状态",
                     key: "customerType",
-                    width: 140,
+                    minWidth: 140,
                     sortable: "custom"
                 },
                 {
                     title: "客户来源",
                     key: "customersource",
-                    width: 120,
+                    minWidth: 120,
                     sortable: "custom"
                 },
                 {
                     title: "客户等级",
                     key: "importlevel",
-                    width: 120,
+                    minWidth: 120,
                     sortable: "custom"
                 },
                 {
                     title: "客户重要性",
                     key: "importance",
-                    width: 120,
+                    minWidth: 120,
                 },
                 {
                     title: "区域",
                     key: "AREA",
-                    width: 80,
+                    minWidth: 80,
                     sortable: "custom"
                 },
                 {
                     title: "渠道名称",
                     key: "channelTypeName",
-                    width: 140,
+                    minWidth: 140,
                     sortable: "custom"
                 },
                 {
                     title: "跟进人",
                     key: "followbyname",
-                    width: 120,
+                    minWidth: 120,
                     sortable: "custom"
                 },
                 {
                     title: "创建时间",
                     key: "CREATEDATE",
-                    width: 120,
+                    minWidth: 120,
                     sortable: "custom"
                 },
                 {
@@ -372,13 +372,13 @@ export default {
                 {
                     title: "更新时间",
                     key: "updatedate",
-                    width: 120,
+                    minWidth: 120,
                     sortable: "custom"
                 },
                 {
                     title: "微信绑定",
                     key: "isbound",
-                    width: 90
+                    minWidth: 90
                 }
             ],
             data: [],

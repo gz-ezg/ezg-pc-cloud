@@ -11,11 +11,13 @@ const app = {
         openedSubmenuArr: [], // 要展开的菜单数组
         menuTheme: 'dark', // 主题
         themeColor: '',
-        pageOpenedList: [{
-            title: '首页',
-            path: '',
-            name: 'home_index'
-        }],
+        pageOpenedList: [
+            {
+                title: '首页',
+                path: '',
+                name: 'home_index'
+            }
+        ],
         currentPageName: '',
         currentPath: [
             {

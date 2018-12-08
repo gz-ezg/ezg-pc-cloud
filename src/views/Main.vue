@@ -429,12 +429,6 @@
             this.init();
             this.rate_start()
             this.spin_loading = false
-            console.log("dom_mounted")
-            // this.wx_init()
-            //  全局监听click事件，并获取dom元素
-            // document.addEventListener("click",function(e){
-            //     console.log(e.path)
-            // })
             // if(Date.now()<1541474969029 + 3600000*24){
             //     this.$Notice.info({
             //         title: '更新提示:',

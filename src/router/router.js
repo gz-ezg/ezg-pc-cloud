@@ -145,7 +145,7 @@ export const otherRouter = {
             path: 'customerList',
             title: "客户列表",
             name: "customerList",
-            component: () => import( /* webpackChunkName: "productList" */ '@/views/home/market_index/customerList/index.vue')
+            component: () => import( /* webpackChunkName: "customerList" */ '@/views/home/market_index/customerList/index.vue')
         }
     ]
 };
