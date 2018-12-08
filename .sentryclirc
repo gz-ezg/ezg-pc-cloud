@@ -1,0 +1,7 @@
+[defaults]
+url = http://sentry.roderickt1an.cn
+org = sentry
+project = my-vue-project
+
+[auth]
+token = ca3726518c34489db2aee9eabaa76a1f8a1ff8a53416499a902a4ec4f64660e9

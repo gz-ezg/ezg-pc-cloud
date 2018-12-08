@@ -148,11 +148,11 @@ export default {
                     key: "updatedate",
                     minWidth: 120,
                 },
-                {
-                    title: "微信绑定",
-                    key: "isbound",
-                    minWidth: 90
-                }
+                // {
+                //     title: "微信绑定",
+                //     key: "isbound",
+                //     minWidth: 90
+                // }
             ],
             data: [],
             page: 1,
@@ -216,20 +216,40 @@ export default {
                 config.params.c4 = 1
             }
 
-            config.params.page = this.page
-            config.params.pageSize = this.pageSize
-            config.params.bcreatedate = ''
-            config.params.ecreatedate = ''
-
             this.get_all_data(url, config)
         },
         get_second_deal(params){
+            let config = {
+                params: {
 
+                }
+            }
+
+            let url = `api/crm/sale/index/customer/second/deal/list`
+
+            if(params.idType == 'depart'){
+                config.params.departId = params.id
+            }else{
+                config.params.userId = params.id
+            }
+
+            if(params.type== "second"){
+                config.params.renew_order_count = 1
+            }
+
+            this.get_all_data(url, config)
         },
         get_all_data(url, config){
+            let commonParams = {
+                page: this.page,
+                pageSize: this.pageSize,
+                bcreatedate: '',
+                ecreatedate: ''
+            }
+
+            Object.assign(config.params, commonParams)
             let _self = this
             function success(res){
-                console.log(res)
                 _self.data = res.data.data.rows
                 _self.total = res.data.data.total
                 for(let i = 0; i<_self.data.length; i++){
@@ -247,18 +267,6 @@ export default {
                     }
                     if (_self.data[i].updatedate) {
                         _self.data[i].updatedate = _self.data[i].updatedate.slice(0, 10);
-                    }
-                    
-                    //  剩余跟进时间
-                    if (_self.data[i].residue_time == null) {
-                    } else {
-                        if (_self.data[i].residue_time < 1) {
-                            let time = new Date();
-                            let hour = 24 - time.getHours();
-                            _self.data[i].residue_time = hour + "小时";
-                        } else {
-                            _self.data[i].residue_time = _self.data[i].residue_time;
-                        }
                     }
                 }
                 _self.tableLoading = false

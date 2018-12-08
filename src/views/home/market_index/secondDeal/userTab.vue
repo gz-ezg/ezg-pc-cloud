@@ -73,7 +73,7 @@ export default {
                             on: {
                                 click: ()=>{
                                     this.$router.push({
-                                        path: `/customerList?type=secondDeal&dealType=dljz&idType=user&id=${params.row.id}`
+                                        path: `/customerList?type=secondDeal&dealType=second&idType=user&id=${params.row.id}`
                                     })
                                 },
                             }

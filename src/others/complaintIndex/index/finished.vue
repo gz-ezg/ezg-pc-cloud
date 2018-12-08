@@ -277,9 +277,7 @@ export default {
                 }
             }
             // console.log(config)
-            this.$http.get(url, config).then(function(res){
-                // console.log(res.data.data.rows)
-                _self.$backToLogin(res)                
+            this.$http.get(url, config).then(function(res){             
                 _self.Ydata =res.data.data.rows
                 _self.NpageTotal = res.data.data.total
                 // console.log(_self.Ydata.length)

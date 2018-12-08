@@ -11,7 +11,7 @@ const fs = require('fs');
 const path = require('path');
 const package = require('../package.json');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
+const SentryCliPlugin = require('@sentry/webpack-plugin');
 
 fs.open('./build/env.js', 'w', function(err, fd) {
     const buf = 'export default "production";';
@@ -68,7 +68,8 @@ module.exports = merge(webpackBaseConfig, {
             compress: {
                 warnings: false,
                 drop_console: true
-            }
+            },
+            sourceMap: true
         }),
         // new UglifyJsParallelPlugin({
         //     workers: os.cpus().length,
@@ -124,5 +125,10 @@ module.exports = merge(webpackBaseConfig, {
             template: './src/template/index.ejs',
             inject: false
         }),
+        //  sentry 上传
+        // new SentryCliPlugin({
+        //     include: '.',
+        //     ignore: ['node_modules', 'webpack.config.js'],
+        // }),
     ]
 });

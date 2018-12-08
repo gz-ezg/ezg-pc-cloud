@@ -71,7 +71,7 @@ export default {
                                     })
                                 },
                             }
-                        }, params.row.c1)
+                        }, params.row.c2)
                     }
                 },
                 {
@@ -91,7 +91,7 @@ export default {
                                     })
                                 },
                             }
-                        }, params.row.c1)
+                        }, params.row.c3)
                     }
                 },
                 {
@@ -111,7 +111,7 @@ export default {
                                     })
                                 },
                             }
-                        }, params.row.c1)
+                        }, params.row.c4)
                     }
                 },
             ],

@@ -14,9 +14,16 @@ const gobal = {
             id: ""
         },
         gobalSetFinishTime: false,
+        gobalReloginShow: false
 
     },
     mutations: {
+        open_gobal_relogin_modal(state){
+            state.gobalReloginShow = true
+        },
+        close_gobal_relogin_modal(state){
+            state.gobalReloginShow = false
+        },
         open_gobal_customer_detail_modal(state, customer){
             state.gobalCustomerDetailShow = true
             state.gobalCustomer = customer

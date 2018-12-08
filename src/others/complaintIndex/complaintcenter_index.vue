@@ -54,8 +54,7 @@ export default {
             //         groupCodes:'complaintType,processType'
             //     }
             // }
-            // this.$http.get(url, config).then(function(res){
-            //     _self.$backToLogin(res)                
+            // this.$http.get(url, config).then(function(res){            
             //     let temp = res.data.data
             //     // _self.smsDept = temp.smsDept.reverse()
             //     _self.complaintType = temp.complaintType

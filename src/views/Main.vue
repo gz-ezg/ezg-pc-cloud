@@ -126,6 +126,7 @@
         <work-order-detail v-if="gobalWorkorderDetailShow" :workOrderId="gobalworkOrderId"></work-order-detail>
         <company-detail v-if="gobalCompanyDetailShow" :companyId="gobalCompanyId"></company-detail>
         <set-finish-time :worderOrderDetail="gobalWorkorderDetail"></set-finish-time>
+        <re-login v-if="gobalReloginShow"></re-login>
     </div>
 </template>
 <script>
@@ -148,6 +149,7 @@
     import customerDetail from './woa-components/customerDetail2/index'
     import workOrderDetail from './woa-components/workOrderDetail/index.vue';
     import companyDetail from './woa-components/companyDetail/CompanyDetail.vue'
+    import reLogin from './woa-components/relogin/index'
 
     export default {
         components: {
@@ -166,7 +168,8 @@
             aduitLog,
             customerDetail,
             workOrderDetail,
-            companyDetail
+            companyDetail,
+            reLogin
         },
         data () {
             return {
@@ -247,6 +250,9 @@
             },
             gobalWorkorderDetail(){
                 return this.$store.state.gobal.gobalWorkorderDetail
+            },
+            gobalReloginShow(){
+                return this.$store.state.gobal.gobalReloginShow
             }
         },
         methods: {

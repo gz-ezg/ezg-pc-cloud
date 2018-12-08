@@ -76,7 +76,7 @@ export default {
                                     })
                                 },
                             }
-                        }, params.row.c1)
+                        }, params.row.c2)
                     }
                 },
                 {
@@ -96,7 +96,7 @@ export default {
                                     })
                                 },
                             }
-                        }, params.row.c1)
+                        }, params.row.c3)
                     }
                 },
                 {
@@ -104,6 +104,23 @@ export default {
                     key:"c4",
                     minWidth: 120,
                     render: (h,params) => {
+                        // return h('Button',{
+                        //     props: {
+                        //         type: 'text',
+                        //         size: 'small'
+                        //     },
+                        //     style: {
+                        //         width: "100%",
+                        //         // color: "#2d8cf0"
+                        //     },
+                        //     on: {
+                        //         click: ()=>{
+                        //             this.$router.push({
+                        //                 path: `/customerList?type=dealCycle&dealType=c4&idType=user&id=${params.row.id}`
+                        //             })
+                        //         },
+                        //     }
+                        // }, params.row.c4)
                         return h('div',{
                             style: {
                                 width: "100%",
@@ -116,7 +133,7 @@ export default {
                                     })
                                 },
                             }
-                        }, params.row.c1)
+                        }, params.row.c4)
                     }
                 },
             ],

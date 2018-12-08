@@ -61,45 +61,27 @@ Vue.use(iviewArea)
 axios.interceptors.response.use(
     (response) => {
         if(response.data.msgCode == "50003" && Cookies.get('user')!=""){
-            // Cookies.set('user', '');
-            // Cookies.set('password', '');
-            let _self = this
-            let user = Cookies.get('user')
-            let password = Cookies.get('password')
-            if(user == undefined || user == "" || password == undefined || password == ""){
-                iView.Message.warning('对不起，您还未登陆！即将回到登陆页面！')
+            console.log(response)
+            iView.Message.warning('对不起，您还未登陆！')
+            iView.Message.destroy()
+            //  只有post求情失败才打开重新登录窗口
+            Cookies.set('user', '');
+            Cookies.set('password', '');
+            let backLoginIndex = setTimeout(()=>{
                 router.push({
                     name:'login'
                 })
-            }else{
-                let url = `api/user/login/`
-
-                let config = {
-                    username: user,
-                    password: password
-                }
-
-                axios.post(url, config).then(function(res){
-                    if(res.data.msgCode == "40000"){
-                        iView.$Message.success('重新登录成功！')
-                    }else{
-                        Cookies.set('user', '');
-                        Cookies.set('password', '');
-                        router.push({
-                            name:'login'
-                        })
-                    }
-                }).catch(function(err){
-                    Cookies.set('user', '');
-                    Cookies.set('password', '');
-                    router.push({
-                        name:'login'
-                    })
-                })
+            },800)
+            if(response.config.method == "post"){
+                store.commit("open_gobal_relogin_modal")
+                //  如果遇到post请求，就取消定时器
+                clearTimeout(backLoginIndex)
+                return false
             }
         }
         if(response.data.msgCode == '60000'){
             iView.Message.warning('对不起，您没有权限访问该页面！')
+            iView.Message.destroy()
             router.push({
                 name:'home_index'
             })
@@ -235,11 +217,9 @@ Vue.prototype.$changeCars = function(data){
         return data2
 }
 
-//  this.$http.get()
 Vue.prototype.$Get = function(url, config, success, fail=function(err){console.log(err);_self.$Message.error(err)}){
     let _self = this
     this.$http.get(url,config).then(function(res){
-        // _self.$backToLogin(res)
         if(res.data.msgCode == "40000"){
             success(res)
         }else{
@@ -256,11 +236,9 @@ Vue.prototype.$Get = function(url, config, success, fail=function(err){console.l
     })
 }
 
-//  this.$http.post()
 Vue.prototype.$Post = function(url, config, success, fail){
     let _self = this
     this.$http.post(url,config).then(function(res){
-        // _self.$backToLogin(res)
         if(res.data.msgCode == "40000"){
             if(res.data.msg){
                 _self.$Message.success(res.data.msg)
@@ -278,7 +256,6 @@ Vue.prototype.$Post = function(url, config, success, fail){
     })
 }
 
-// this.$http.getDataCenter()
 //  获取数据字典
 Vue.prototype.$GetDataCenter = function(params, finish){
     let _self = this
@@ -337,17 +314,12 @@ Vue.prototype.$backToLogin = function(res){
     // if(res.data.msgCode == '50003'||res == ""){
     if(res.data.msgCode == '50003'){
         this.$Message.warning('对不起，您还未登陆！即将回到登陆页面！')
-        // Cookies.set('user', '');
-        // Cookies.set('password', '');
         this.$router.push({
             name:'login'
         })
     }
     if(res.data.msgCode == '60000'){
         this.$Message.warning('对不起，您没有权限访问该页面！')
-        // this.$router.push({
-        //     name:'home_index'
-        // })
     }
 }
 
@@ -361,7 +333,6 @@ Vue.prototype.$MergeURL = function(url, config){
         let params = `${i}=${config[i]}&`
         temp = temp + params
     }
-    // console.log(temp)
     return temp
 }
 
@@ -420,8 +391,7 @@ Vue.prototype.GetData = function (url, doSuccess, otherConditions=function(err){
                     _self.$store.commit('clearAllTags')
                     _self.$http.get('/api/user/logOut')
                         .then(function (response) {
-                            if (response.data.msgCode == '40000') {
-                                // _self.winReload()                                                       
+                            if (response.data.msgCode == '40000') {                                                    
                                 _self.$router.push({
                                     name: 'login'
                                 });
@@ -463,26 +433,6 @@ Vue.prototype.PostData = function (url, data, doSuccess, otherConditions){
                 otherConditions(response)
             }
         })
-}
-
-Vue.prototype.DownloadExcel = function (url, objdata) {
-    let _url = url + '?isExportExcel=Y&filedKeyValues=' + encodeURIComponent(objdata)
-
-    window.location.href = '/api' + _url
-
-/*    this.$http({
-        method: 'get',
-        async: false,
-        responseType: 'arraybuffer',
-        url: '/api' + _url,
-    })
-        .then(function (response) {
-            let blob = new Blob([response.data], {type: "application/vnd.ms-excel"});
-
-            let objectUrl = URL.createObjectURL(blob);
-
-            window.location.href = objectUrl;
-        })*/
 }
 
 Vue.prototype.PostFiles = function (url, data, doSuccess, otherConditions){
@@ -586,8 +536,24 @@ Vue.prototype.matchingFields = function (a){
 
 
 //  路由跳转之前检查是否有权限访问该页面
-router.beforeEach((to, from, next)=>{    
-    // Vue.$bus.emit("SPIN_START",true)
+router.beforeEach((to, from, next)=>{
+    if(to.name == "login" || to.name == "home_index"){
+        
+    }else{
+        let url = 'api/system/addGather'
+    
+        let config = {
+            params:{
+                code: to.name
+            }
+        }
+
+        axios.get(url,config).then(function(res){
+
+        }).catch(function(err){
+            console.log(err)
+        })
+    }
     let temp = JSON.parse(localStorage.getItem("access_array"))
     
     if(JSON.stringify(to.meta) == "{}"){
