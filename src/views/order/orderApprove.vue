@@ -714,8 +714,14 @@
                                     props: {
                                         type: 'primary',
                                         size: 'small',
-                                        permission: "['orderA.detail']"
+                                        // permission: "['orderA.detail']"
                                     },
+                                    directives: [
+                                        {
+                                            name: "permission",
+                                            value: "orderA.detail"
+                                        }
+                                    ],
                                     style: {
                                         marginRight: '5px'
                                     },
@@ -729,8 +735,14 @@
                                     props: {
                                         type: 'warning',
                                         size: 'small',
-                                        permission: "['orderA.recordY']"
+                                        // permission: "['orderA.recordY']"
                                     },
+                                    directives: [
+                                        {
+                                            name: "permission",
+                                            value: "orderA.recordY"
+                                        }
+                                    ],
                                     on: {
                                         click: () => {
                                             this.cksp(params)

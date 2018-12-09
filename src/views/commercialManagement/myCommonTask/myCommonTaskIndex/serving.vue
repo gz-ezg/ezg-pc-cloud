@@ -423,12 +423,17 @@ export default {
                                 h('Button', {
                                     props: {
                                         type: 'text',
-                                        size: 'small'
+                                        size: 'small',
                                     },
+                                    directives: [
+                                        {
+                                            name: "permission",
+                                            value: "commercialStop"
+                                        }
+                                    ],
                                     on: {
                                         click: () => {
                                             var _self = this
-                                            console.log(params)
                                             //  暂停
                                             if(params.row.resumeFlag == null || params.row.resumeFlag == 3){
                                                 let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=3`

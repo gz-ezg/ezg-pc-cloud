@@ -555,8 +555,14 @@
                                     props: {
                                         type: 'text',
                                         size: 'small',
-                                        permission: "['channelC.cheek']"
+                                        // permission: "['channelC.cheek']"
                                     },
+                                    directives: [
+                                        {
+                                            name: "permission",
+                                            value: "channelC.cheek"
+                                        }
+                                    ],
                                     style: {
                                         marginRight: '5px'
                                     },
@@ -685,8 +691,14 @@
                                     props: {
                                         type: 'text',
                                         size: 'small',
-                                        permission: "['channelC.cheek']"
+                                        // ssion: "['channelC.cheek']"
                                     },
+                                    directives: [
+                                        {
+                                            name: "permission",
+                                            value: "channelC.cheek"
+                                        }
+                                    ],
                                     style: {
                                         marginRight: '5px'
                                     },

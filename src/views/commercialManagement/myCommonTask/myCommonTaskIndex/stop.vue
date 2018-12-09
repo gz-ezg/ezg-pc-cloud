@@ -423,7 +423,8 @@ export default {
                                 h('Button', {
                                     props: {
                                         type: 'text',
-                                        size: 'small'
+                                        size: 'small',
+                                        permission: "['commercialStop']"
                                     },
                                     on: {
                                         click: () => {
@@ -454,17 +455,6 @@ export default {
                                         }
                                     }
                                 }, '[暂停/解锁]'),
-                                // h('Button', {
-                                //     props: {
-                                //         type: 'text',
-                                //         size: 'small'
-                                //     },
-                                //     on: {
-                                //         click: () => {
-                                //             this.endlife = true
-                                //         }
-                                //     }
-                                // }, '[退款终止]'),
                             ]);
                         }
                     }

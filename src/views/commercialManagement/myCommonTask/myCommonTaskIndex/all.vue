@@ -455,42 +455,42 @@ export default {
                                         }
                                     }
                                 }, '[流程图]'),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            var _self = this
-                                            console.log(params)
-                                            //  暂停
-                                            if(params.row.resumeFlag == null || params.row.resumeFlag == 3){
-                                                let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=3`
-                                                this.$http.get(url).then(function(res){
-                                                    _self.$backToLogin(res)                                                    
-                                                    if(res.data.msgCode == 40000){
-                                                        _self.$Message.success(res.data.msg)
-                                                    }else{
-                                                        _self.$Message.error(res.data.msg)
-                                                    }
-                                                    _self.getData()
-                                                })
-                                            }else if(params.row.resumeFlag == 2){
-                                                let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=2`
-                                                this.$http.get(url).then(function(res){
-                                                    _self.$backToLogin(res)
-                                                    if(res.data.msgCode == 40000){
-                                                        _self.$Message.success(res.data.msg)
-                                                    }else{
-                                                        _self.$Message.error(res.data.msg)
-                                                    }
-                                                    _self.getData()
-                                                })
-                                            }else{}
-                                        }
-                                    }
-                                }, '[暂停/解锁]'),
+                                // h('Button', {
+                                //     props: {
+                                //         type: 'text',
+                                //         size: 'small'
+                                //     },
+                                //     on: {
+                                //         click: () => {
+                                //             var _self = this
+                                //             console.log(params)
+                                //             //  暂停
+                                //             if(params.row.resumeFlag == null || params.row.resumeFlag == 3){
+                                //                 let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=3`
+                                //                 this.$http.get(url).then(function(res){
+                                //                     _self.$backToLogin(res)                                                    
+                                //                     if(res.data.msgCode == 40000){
+                                //                         _self.$Message.success(res.data.msg)
+                                //                     }else{
+                                //                         _self.$Message.error(res.data.msg)
+                                //                     }
+                                //                     _self.getData()
+                                //                 })
+                                //             }else if(params.row.resumeFlag == 2){
+                                //                 let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=2`
+                                //                 this.$http.get(url).then(function(res){
+                                //                     _self.$backToLogin(res)
+                                //                     if(res.data.msgCode == 40000){
+                                //                         _self.$Message.success(res.data.msg)
+                                //                     }else{
+                                //                         _self.$Message.error(res.data.msg)
+                                //                     }
+                                //                     _self.getData()
+                                //                 })
+                                //             }else{}
+                                //         }
+                                //     }
+                                // }, '[暂停/解锁]'),
                             ]);
                         }
                     }

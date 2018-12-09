@@ -170,8 +170,14 @@ export default {
                                     props: {
                                         type: 'primary',
                                         size: 'small',
-                                        permission: "['orderA.detail']"
+                                        // permission: "['orderA.detail']"
                                     },
+                                    directives: [
+                                        {
+                                            name: "permission",
+                                            value: "orderA.detail"
+                                        }
+                                    ],
                                     style: {
                                         marginRight: '5px'
                                     },
