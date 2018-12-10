@@ -53,7 +53,7 @@
         </Row>
         <Row :gutter="10" class="margin-top-10" style="height:600px">
             <Col span="24" :style="{marginBottom: '10px'}">
-                <Card style="height:400px">
+                <Card style="height:600px">
                     <div class="data-source-row">
                         <detail-analysis></detail-analysis>
                     </div>
