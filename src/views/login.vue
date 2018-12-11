@@ -273,12 +273,15 @@
         },
         mounted() {
             let _self = this
-            this.isSave = JSON.parse(Cookies.get("7issave"))
-            if(Cookies.get("7user") && this.isSave){
-                _self.form.userName = Cookies.get("7user")
-                _self.form.password = Cookies.get("7password")
-                _self.handleSubmit()
+            if(Cookies.get("7issave")){
+                this.isSave = JSON.parse(Cookies.get("7issave"))
+                if(Cookies.get("7user") && this.isSave){
+                    _self.form.userName = Cookies.get("7user")
+                    _self.form.password = Cookies.get("7password")
+                    _self.handleSubmit()
+                }
             }
+            
             // $('#randCodeImage').click(function () {
             //     let date = new Date();
             //     let img = document.getElementById("randCodeImage");

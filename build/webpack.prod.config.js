@@ -11,7 +11,6 @@ const fs = require('fs');
 const path = require('path');
 const package = require('../package.json');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const SentryCliPlugin = require('@sentry/webpack-plugin');
 
 fs.open('./build/env.js', 'w', function(err, fd) {
     const buf = 'export default "production";';
@@ -30,7 +29,7 @@ module.exports = merge(webpackBaseConfig, {
         chunkFilename: 'js/[name].[chunkhash].chunk.js'
     },
     //  开启远程调试时使用,默认注释 
-    // devtool: '#source-map',
+    devtool: '#source-map',
     // productionSourceMap: true,
     plugins: [
         new webpack.DllReferencePlugin({
@@ -126,9 +125,6 @@ module.exports = merge(webpackBaseConfig, {
             inject: false
         }),
         //  sentry 上传
-        // new SentryCliPlugin({
-        //     include: '.',
-        //     ignore: ['node_modules', 'webpack.config.js'],
-        // }),
+        
     ]
 });

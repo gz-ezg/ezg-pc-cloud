@@ -48,6 +48,11 @@ module.exports = merge(webpackBaseConfig, {
         chunkFilename: '[name].chunk.js'
     },
     plugins: [
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: '"development"'
+            }
+        }),
         // new webpack.HotModuleReplacementPlugin(),
         new ExtractTextPlugin({
             filename: '[name].css',
@@ -82,7 +87,7 @@ module.exports = merge(webpackBaseConfig, {
         new FriendlyErrorsPlugin({
             compilationSuccessInfo: {
                 messages: ['Now Proxy in 220; You application is running here http://localhost:8089'],
-              },
+            },
             clearConsole: true
         }
         )

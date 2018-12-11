@@ -10,6 +10,8 @@ const os = require('os');
 const fs = require('fs');
 const path = require('path');
 const package = require('../package.json');
+const SentryCliPlugin = require('@sentry/webpack-plugin');
+
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 
@@ -60,7 +62,7 @@ module.exports = merge(webpackBaseConfig, {
         // }),
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: '"production"'
+                NODE_ENV: '"jenkins"'
             }
         }),
         new webpack.optimize.UglifyJsPlugin({
@@ -116,6 +118,9 @@ module.exports = merge(webpackBaseConfig, {
             filename: '../index.html',
             template: './src/template/index.ejs',
             inject: false
+        }),
+        new SentryCliPlugin({
+            include: './dist/'
         }),
     ]
 });
