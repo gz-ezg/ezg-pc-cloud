@@ -49,7 +49,7 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
                         <FormItem prop="servicebegindate" label="服务开始时间">
-                            <DatePicker type="date" v-model="task_message.servicebegindate" style="width:100%" size="small"></DatePicker>
+                            <DatePicker type="month" v-model="task_message.servicebegindate" style="width:100%" size="small"></DatePicker>
                         </FormItem>
                     </Col>
                     <Col span="10">

@@ -29,7 +29,7 @@ module.exports = merge(webpackBaseConfig, {
         chunkFilename: 'js/[name].[chunkhash].chunk.js'
     },
     //  开启远程调试时使用,默认注释 
-    devtool: '#source-map',
+    // devtool: '#source-map',
     // productionSourceMap: true,
     plugins: [
         new webpack.DllReferencePlugin({
