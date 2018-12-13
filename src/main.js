@@ -18,7 +18,6 @@ import Cookies from 'js-cookie';
 // import './my-theme/index.less';
 // import "@babel/polyfill";
 // import echarts from 'echarts';
-// import VueScroller from 'vue-scroller'
 
 import iviewArea from 'iview-area';
 
