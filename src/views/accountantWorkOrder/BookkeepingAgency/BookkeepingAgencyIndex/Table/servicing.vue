@@ -185,7 +185,7 @@
                     {
                         title: '产品名称',
                         key: 'product',
-                        width: 160
+                        minWidth: 180
                     },
                     {
                         title: '服务人员',
@@ -202,7 +202,45 @@
                         key: 'end_period',
                         width: 120
                     },
-
+                    {
+                        title: '备注',
+                        key: 'memo',
+                        minWidth: 200,
+                        render: (h, params) => {
+                            return h('div', {
+                                domProps:{
+                                    innerHTML: params.row.memo
+                                }
+                            })
+                        }
+                        // render:(h,params) => {
+                        //     if(params.row.memo == ''||params.row.memo == null){
+                        //         return ''
+                        //     }else if(params.row.memo.length>12){
+                        //         return h('Poptip',{
+                        //             props:{
+                        //                 trigger:'hover',
+                        //                 placement:'bottom'
+                        //             }
+                        //         },[
+                        //             h('span',params.row.memo.slice(0,12)+'...'),
+                        //             h('Icon', {
+                        //                 props: {
+                        //                     type: 'arrow-down-b',
+                        //                 }
+                        //             }),
+                        //             h('div',{
+                        //                 slot:'content',
+                                        
+                        //             },[
+                        //                 h('span',params.row.memo)
+                        //             ])
+                        //         ])
+                        //     }else{
+                        //         return h('span',params.row.memo)
+                        //     }
+                        // }
+                    },
                     {
                         title: '联系客户',
                         key: 'lianxikehu',
@@ -440,38 +478,6 @@
                         title: "实名账号",
                         key: "has_account",
                         minWidth: 120
-                    },
-                    {
-                        title: '备注',
-                        key: 'memo',
-                        width: 120,
-                        render:(h,params) => {
-                            if(params.row.memo == ''||params.row.memo == null){
-                                return ''
-                            }else if(params.row.memo.length>5){
-                                return h('Poptip',{
-                                    props:{
-                                        trigger:'hover',
-                                        placement:'bottom'
-                                    }
-                                },[
-                                    h('span',params.row.memo.slice(0,5)+'...'),
-                                    h('Icon', {
-                                        props: {
-                                            type: 'arrow-down-b',
-                                        }
-                                    }),
-                                    h('div',{
-                                        slot:'content',
-                                        
-                                    },[
-                                        h('span',params.row.memo)
-                                    ])
-                                ])
-                            }else{
-                                return h('span',params.row.memo)
-                            }
-                        }
                     },
                     {
                         title: '操作',

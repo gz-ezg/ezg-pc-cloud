@@ -136,7 +136,7 @@ export const otherRouter = {
             component: () => import( /* webpackChunkName: "workorderAllot" */ '@/views/woa-components/allot-task/allotCommonTask/index.vue')
         },
         {
-            path: 'productPrice/:skuId',
+            path: 'productPrice/:id',
             title: "修改产品价格",
             name: "updateProductPrice",
             component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/updateProductPrice/index.vue')
@@ -502,14 +502,14 @@ export const appRouter = [
                 component: () => import( /* webpackChunkName: "orderList_index" */ '@/views/order/orderList/orderListIndex.vue')
             },
             //  订单审批废弃easyUI版
-            // {
-            //     meta: 6018,
-            //     access: 6018,
-            //     path: 'orderList2',
-            //     title: '订单列表（旧）',
-            //     name: 'orderList_index2',
-            //     component: () => import(/* webpackChunkName: "orderList_index2" */ '@/views/order/orderList.vue')
-            // },
+            {
+                meta: 6018,
+                access: 6018,
+                path: 'orderList2',
+                title: '订单列表（旧）',
+                name: 'orderList_index2',
+                component: () => import(/* webpackChunkName: "orderList_index2" */ '@/views/order/orderList.vue')
+            },
             {
                 //  订单审批废弃easyUI版
                 access: 6019,

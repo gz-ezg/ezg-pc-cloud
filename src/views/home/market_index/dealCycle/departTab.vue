@@ -2,7 +2,6 @@
     <div>
         <!-- <DatePicker type="daterange"  placeholder="选择日期" style="width: 200px;margin-bottom:10px" size="small" transfer @on-change="change"></DatePicker> -->
         <Table
-            :loading="loading"
             highlight-row
             size="small"
             border

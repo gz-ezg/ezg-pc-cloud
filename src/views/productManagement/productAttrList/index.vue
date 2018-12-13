@@ -57,11 +57,11 @@
                         style="margin-top: 10px"></Page>
                 </Col>
                 <Col span="12">
-                    <product-attr-list style="margin-left:5px" :productAttr="selectRow"></product-attr-list>
+                    <product-attr-list style="margin-left:5px" :productAttr="selectRow" @update="get_data"></product-attr-list>
                 </Col>
             </Row>
         </Card>
-        <create-attr v-if="openCreateAttr" @close="openCreateAttr=false"></create-attr>
+        <create-attr v-if="openCreateAttr" @close="close_create_attr"></create-attr>
     </div>
 </template>
 
@@ -103,8 +103,8 @@ export default {
                 {
                     title: "操作",
                     key: "action",
-                    width: 180,
-                    render: (h, params) => {
+                    width: 90,
+                    render: (h, parmas) => {
                         return h("div", [
                             // h("Button",{
                             //     props:{
@@ -132,7 +132,7 @@ export default {
                                     },
                                     on: {
                                         'on-ok': ()=>{
-                                            this.deleteProductAttr(params.row.id)
+                                            this.deleteProductAttr(parmas.row.id)
                                         },
                                     }
                                 }, '删除')
@@ -197,12 +197,11 @@ export default {
         },
         //  删除属性
         deleteProductAttr(e){
+            let _self = this
             let url = `api/product/property/delProperty`
 
             let config = {
-                params: {
-                    id: e.id
-                }
+                id: e
             }
 
             function success(res){
@@ -214,10 +213,16 @@ export default {
                 _self.$Message.error("删除失败！")
             }
 
-            this.$Get(url, config, success, fail)
+            this.$Post(url, config, success, fail)
         },
-        create_attr(){
+        // create_attr(){
 
+        // },
+        close_create_attr(e){
+            this.openCreateAttr = false
+            if(e){
+                this.get_data()
+            }
         }
     },
     watch:{

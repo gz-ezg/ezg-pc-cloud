@@ -88,14 +88,14 @@
         </Col>
       </Row>
       <Row>
-        <Button
+        <!-- <Button
           type="error"
           icon="bag"
           size="large"
           style="margin-top: 20px"
           @click="edit_product_price"
           :disabled="disabled"
-        >修改产品价格</Button>
+        >修改产品价格</Button> -->
         <Button
           type="error"
           icon="bag"
