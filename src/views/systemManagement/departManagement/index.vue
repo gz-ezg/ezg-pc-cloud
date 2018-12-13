@@ -20,15 +20,47 @@
                     @setting="setting"/>
             </Row>
         </Card>
+        <create-depart 
+            v-if="openCreate" 
+            :parentdepartid="parentdepartid"
+            :parentdepartName="parentdepartName"
+            @close="close_create"
+        ></create-depart>
+        <update-depart 
+            v-if="openUpdate" 
+            :formValidate="currentRow"
+            @close="close_update"
+        ></update-depart>
+        <Modal
+            title="删除部门"
+            v-model="openDelete"
+            width="300"
+        >
+            <Row :gutter="20">
+                <center>
+                    <Icon type="alert" style="color:red;font-size:80px"></Icon>
+                </center>
+            </Row>
+            <Row :gutter="20"><h3><center>当前选择部门:<h2 style="margin-top:10px;color:red">{{currentRow.departname}}</h2></center></h3></Row>
+            <div slot="footer">
+                <!-- 用户状态选择哪个 -->
+                <Button type="warning" @click="confirm_delete_depart" long :loading="delLoading">删除部门</Button>
+            </div>
+        </Modal>
     </div>
 </template>
 
 <script>
 import treeTable from './TreeTable/index'
+import createDepart from './create'
+import updateDepart from './update';
+
 export default {
     name: "departManagement_index",
     components: {
-        treeTable
+        treeTable,
+        createDepart,
+        updateDepart
     },
     data(){
         return {
@@ -55,7 +87,14 @@ export default {
                     width: 150
                 }
             ],
-            loading: false
+            loading: false,
+            parentdepartid: "",
+            parentdepartName: "",
+            openCreate: false,
+            openUpdate: false,
+            openDelete: false,
+            currentRow: "",
+            delLoading: false
         }
     },
     methods: {
@@ -73,19 +112,61 @@ export default {
             this.$Get(url, config, success)
         },
         edit_depart(e){
-
+            this.currentRow = e
+            this.openUpdate = true
         },
         create_depart(e){
+            if(e){
+                this.parentdepartid = e.ID
+                this.parentdepartName = e.departname
+            }else{
+                this.parentdepartid = ""
+                this.parentdepartName = ""
+            }
 
+            this.openCreate = true
         },
         delete_depart(e){
+            this.currentRow = e
+            this.openDelete = true
+        },
+        confirm_delete_depart(){
+            this.delLoading = true
+            let _self = this
+            let url = `api/system/depart/del`
+            let config = {
+                departId: _self.currentRow.ID
+            }
 
+            function success(res){
+                _self.delLoading = false
+                _self.get_data()
+                _self.openDelete = false
+            }
+
+            function fail(err){
+                _self.delLoading = false
+            }
+            
+            this.$Post(url, config, success, fail)
         },
         show_person(e){
 
         },
         setting(e){
 
+        },
+        close_create(e){
+            this.openCreate = false
+            if(e){
+                this.get_data()
+            }
+        },
+        close_update(e){
+            this.openUpdate = false
+            if(e){
+                this.get_data()
+            }
         }
     },
     created(){

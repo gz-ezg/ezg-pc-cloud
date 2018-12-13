@@ -87,7 +87,7 @@ export default {
 
             function success(res){
                 _self.loading = false
-                _self.close()
+                _self.close(true)
             }
 
             function fail(err){
@@ -96,8 +96,8 @@ export default {
 
             this.$Post(url, config, success, fail)
         },
-        close(){
-            this.$emit("close")
+        close(e){
+            this.$emit("close",e)
         }
     }
 }
