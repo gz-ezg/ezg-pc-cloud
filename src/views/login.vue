@@ -36,7 +36,7 @@
                             <Checkbox v-model="isSave">七天免登陆</Checkbox>
                         </FormItem>
                         <FormItem>
-                            <Button @click="handleSubmit" type="primary" long>登录</Button>
+                            <Button @click="handleSubmit" type="primary" long :loading="loading">登录</Button>
                         </FormItem>
                     </Form>
                     <p class="login-tip">© 亿账柜版权所有woa3.0</p>
@@ -69,13 +69,15 @@
                     ]
                 },
                 yzm_url: "/api/user/createImg",
-                yzmShow: false
+                yzmShow: false,
+                loading: false
             };
         },
         methods: {
             handleSubmit() {
                 let _self = this
                 let _submit = {}
+                this.loading = true
                 _submit.username = _self.form.userName
                 _submit.password = _self.form.password
                 if (_self.count > 2) {
@@ -86,6 +88,7 @@
                     if (valid) {
                         let url = 'api/user/login/'
                         function success(response) {
+                            _self.loading = true
                             if(_self.isSave == true){
                                 Cookies.set('7user', _self.form.userName, { expires: 7 });
                                 Cookies.set('7password', _self.form.password, { expires: 7 });
@@ -105,6 +108,7 @@
                             _self.getUserRole(response.data.data.user.id)
                         }
                         function fail(response) {
+                            _self.loading = false
                             _self.count = response.data.errCount
                             if (_self.count > 2) {
                                 _self.$Message.error(response.data.msg);

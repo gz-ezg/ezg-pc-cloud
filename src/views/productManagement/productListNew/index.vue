@@ -93,8 +93,9 @@ export default {
                 {
                     title: "操作",
                     key: "action",
-                    width: 180,
+                    width: 220,
                     render: (h, params) => {
+                        let _self = this
                         return h("div", [
                             h("Button",{
                                 props:{
@@ -105,15 +106,21 @@ export default {
                                     marginRight: "5px"
                                 }
                             }, "编辑"),
-                            // h("Button",{
-                            //     props:{
-                            //         type: "primary",
-                            //         size: "small",
-                            //     },
-                            //     style:{
-                            //         marginRight: "5px"
-                            //     }
-                            // }, "修改价格"),
+                            h("Button",{
+                                props:{
+                                    type: "info",
+                                    size: "small",
+                                },
+                                style:{
+                                    marginRight: "5px"
+                                },
+                                on :{
+                                    "click": function(event){
+                                        _self.edit_product_price(params.row.id)
+                                        event.stopPropagation()
+                                    }
+                                }
+                            }, "修改价格"),
                             // h("Button",{
                             //     props:{
                             //         type: "info",
@@ -195,6 +202,15 @@ export default {
         },
         select_row(e){
             this.selectRow = e
+        },
+        edit_product_price(e) {
+            let _self = this;
+            this.$router.push({
+                name: "updateProductPrice",
+                params: {
+                    id: e
+                },
+            });
         }
     },
     watch:{

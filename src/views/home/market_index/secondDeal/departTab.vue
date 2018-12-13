@@ -1,7 +1,6 @@
 <template>
     <div>
         <Table
-            :loading="loading"
             highlight-row
             size="small"
             border

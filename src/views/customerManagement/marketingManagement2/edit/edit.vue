@@ -241,6 +241,8 @@ export default {
                     _self.formValidate.customerType = _self.formValidate.customerType.split("-")
                     _self.formValidate.customerType[0] = parseInt(_self.formValidate.customerType[0])
                     _self.formValidate.customerType[1] = parseInt(_self.formValidate.customerType[1])
+                }else{
+                    _self.formValidate.customerType = []
                 }
                 if(_self.formValidate.importlevel){
                     _self.formValidate.importlevel = ''+_self.formValidate.importlevel
