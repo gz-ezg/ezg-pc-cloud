@@ -65,6 +65,8 @@
                 <Row :gutter="16">
                     <FormItem>
                         <Button type="primary" icon="plus" @click="show_contarct('edit')">查看合同</Button>
+                        <Button type="primary" icon="plus" @click="openServiceItem = true" v-if="showAccountHomeItem">查看会计到家服务项</Button>
+                        
                         <!-- <Button type="primary" icon="plus" @click="kuaiji()" v-show="kjdj">查看会计到家服务项</Button> -->
                     </FormItem>
                 </Row>
@@ -77,17 +79,23 @@
                 <Button @click="openShowOrderDetail = false">关闭</Button>
             </div>
         </Modal>
+        <service-item @close="close_item" v-if="openServiceItem" :id="orderDetail.companyid" :readonly="false"></service-item>
     </div>
 </template>
 
 
 <script>
+import serviceItem from '../accountHomeTree'
 import commonSetting from './comonSetting.js'
 
 export default {
     mixins: [commonSetting],
+    components: {
+        serviceItem
+    },
     data(){
         return {
+            openServiceItem: false,
             openShowOrderDetail: false,
             orderDetailListHeaderShow: [
                 {
@@ -181,7 +189,12 @@ export default {
         }
     },
     methods: {
-        
+        open_service_item(){
+            this.openServiceItem = true
+        },
+        close_item(){
+            this.openServiceItem = false
+        }
     },
     created() {
         let _self = this

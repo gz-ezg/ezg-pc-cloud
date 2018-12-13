@@ -145,7 +145,7 @@ export default {
         amendOrder,
         editOrder,
         showContarct,
-        productSelect
+        productSelect,
     },
     data(){
         return {

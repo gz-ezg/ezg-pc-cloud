@@ -6,6 +6,7 @@ export default {
     },
     data: function () {
         return {
+            showAccountHomeItem: false,
             loading: false,
             orderDetail: {
                 id: "",
@@ -63,6 +64,9 @@ export default {
                             },
                             on:{
                                 click:()=>{
+                                    if(params.row.product == "会计到家"){
+                                        this.showAccountHomeItem = false
+                                    }
                                     this.orderItem.splice(params.index, 1)
                                     this.computer_paynumber()
                                 }
@@ -321,12 +325,19 @@ export default {
         get_data(e){
             let _self = this
             let url = `api/order/detail/` + e
+            _self.showAccountHomeItem = false
             _self.loading = true
             let config = {}
 
             function success(res){
                 _self.orderDetail = res.data.data
                 _self.orderItem = res.data.data.items
+                for(let i = 0; i<_self.orderItem.length;i++){
+                    if(_self.orderItem[i].product == "会计到家"){
+                        _self.showAccountHomeItem = true
+                        break
+                    }
+                }
                 _self.loading = false
             }
 
@@ -387,8 +398,12 @@ export default {
     created(){
         this.$bus.off("ADD_PRODUCT", true)
         this.$bus.on("ADD_PRODUCT", (e) => {
+            if(e.product == "会计到家"){
+                this.showAccountHomeItem = true
+            }
             this.orderItem.push(e)
             this.computer_paynumber()
         })
+        
     }
 }

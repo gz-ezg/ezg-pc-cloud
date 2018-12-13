@@ -87,7 +87,7 @@
                         <FormItem label="选择产品" >
                             <Button type="primary" icon="plus" @click="open_product_list">新增</Button>
                             <!-- <Button type="primary" icon="plus" @click="removeRows()">删除</Button> -->
-                            <!-- <Button type="primary" icon="plus" @click="kuaiji()" v-show="kjdj">查看会计到家服务项</Button> -->
+                            <Button type="primary" icon="plus" @click="open_service_item" v-if="showAccountHomeItem">查看会计到家服务项</Button>
                         </FormItem>
                     </Col>
                 </Row>
@@ -109,11 +109,13 @@
             </div>
         </Modal>
         <company-select @company-change="setting_company"></company-select>
+        <service-item @close="close_item" v-if="openServiceItem" :id="orderDetail.companyid"></service-item>
     </div>
     </div>
 </template>
 
 <script>
+import serviceItem from '../accountHomeTree'
 import commonSetting from './comonSetting.js'
 import companySelect from '../companySelect'
 import { DateFormat } from '../../../../../libs/utils.js'
@@ -121,16 +123,24 @@ import { DateFormat } from '../../../../../libs/utils.js'
 export default {
     mixins: [commonSetting],
     components: {
-        companySelect
+        companySelect,
+        serviceItem
     },
     data(){
         return {
+            openServiceItem: false,
             show_file: [],
             openCreateOrderDetail: false,
             loading: false
         }
     },
     methods: {
+        //  打开会计到家服务项
+        open_service_item(){
+            if(this.orderDetail.companyid){
+                this.openServiceItem = true
+            }
+        },
         //  打开公司选择
         open_company(){
             this.$bus.emit("ORDER_OPEN_SELECT_COMPANY", true)
@@ -227,6 +237,9 @@ export default {
             }
 
             this.$Post(url, config, success, fail)
+        },
+        close_item(){
+            this.openServiceItem = false
         }
     },
     created(){
