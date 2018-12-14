@@ -8,11 +8,11 @@
     @selection-change="get_all_change"
     @current-change="get_current_click"
     size="small">
-    <el-table-column
+    <!-- <el-table-column
       type="index"
       label="序号"
       width="60"
-    >
+    > -->
     </el-table-column>
     <el-table-column
       v-if="selection"
@@ -29,7 +29,7 @@
         {{ scope.$index }}
       </template>
     </el-table-column>
-    <el-table-column v-for="(column, index) in columns" v-else :key="column.value" :label="column.text" :width="column.width">
+    <el-table-column v-for="(column, index) in columns" v-else :key="column.value" :label="column.text" :minWidth="column.width">
       <template slot-scope="scope">
         <!-- Todo -->
         <!-- eslint-disable-next-line vue/no-confusing-v-for-v-if -->
@@ -41,7 +41,7 @@
         {{ scope.row[column.value] }}
       </template>
     </el-table-column>
-    <el-table-column
+    <!-- <el-table-column
       label="操作"
       width="200">
       <template slot-scope="scope">
@@ -49,7 +49,7 @@
         <Button type="primary" size="small" @click="edit(scope.row)">编辑</Button>
         <Button type="error" size="small" @click="del(scope.row)">删除</Button>
       </template>
-    </el-table-column>
+    </el-table-column> -->
     <slot/>
   </el-table>
 </template>

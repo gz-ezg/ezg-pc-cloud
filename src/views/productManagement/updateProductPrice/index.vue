@@ -5,23 +5,28 @@
             <div v-for="(item, index) in queryProperty" :key="index" style="margin-top:10px">
                 <Row>
                     <Col span="4">
-                        <span style="padding-right:10px;padding-left:10px;width:100px;display:inline-block;text-align:right">{{item.name}} :</span>
+                        <span style="padding-right:10px;padding-left:10px;width:100px;display:inline-block;text-align:right;line-height:32px;">{{item.name}} :</span>
                     </Col>
                     <Col span="20">
                         <RadioGroup v-model="typeArray[index]" type="button">
-                            <Radio v-for="(item2, index2) in item.children" :label="item2.ppvId" :key="index2">{{item2.propertyValue}}</Radio>
+                            <Radio v-for="(item2, index2) in item.children" :label="item2.pvId" :key="index2">{{item2.propertyValue}}</Radio>
                         </RadioGroup>
                     </Col>
                 </Row> 
+                <Row style="margin-top:10px;margin-left:20px;">
+                    <Button type="primary" @click="get_price">查询</Button>
+                </Row>
             </div>
-            <Row>
-                <Col span="24">
-                    <tree-table 
+            <Row :gutter="20" style="margin-top:10px">
+                <Spin v-if="loading" size="large" fix></Spin>
+                <Col span="24" v-else>
+                    <tree-table
+                        selection
                         :data="data" 
                         :columns="columns" 
-                        border 
-                    />
-                    </Col>
+                        border
+                        @get-all-selection="get_all_selection"/>
+                </Col>
             </Row>
         </Card>
     </div>
@@ -37,22 +42,47 @@ export default {
     },
     data() {
         return {
+            loading: false,
             queryProperty: [],
             typeArray: [],
             title: "",
             columns: [
                 {
-                    text: '类型名称',
-                    value: 'typeName',
-                    width: 350
+                    text: '地区全称',
+                    value: 'areafullname',
+                    width: 200
                 },
                 {
-                    text: '类型排序',
-                    value: 'typeLevel',
+                    text: '地区名称',
+                    value: 'realname',
+                    width: 150
+                },
+                {
+                    text: "地区编码",
+                    value: "dispid",
+                    width: 120
+                },
+                {
+                    text: '基础价格',
+                    value: 'baseprice',
+                    width: 120
+                },
+                {
+                    text: '系统价格',
+                    value: 'oaprice',
+                    width: 120
+                },
+                {
+                    text: '状态',
+                    value: 'statusName',
                     width: 120
                 },
             ],
             data: [],
+            selectRow: [],
+            dbaseprice: "",
+            doaprice: "",
+            status: 1
         };
     },
     methods: {
@@ -88,6 +118,79 @@ export default {
             }
             this.$Get(url, config, success);
         },
+        get_price(){
+            let _self = this
+            this.loading = true
+            let url = `api/product/area/findTreeSkuArea`
+
+            let config = {
+                params: {
+                    propertys: _self.typeArray.join(","),
+                    productId: _self.$route.params.id
+                }
+            }
+
+            function success(res){
+                _self.data = res.data.data
+                tran_status(_self.data)
+                _self.loading = false
+            }
+
+            function tran_status(child){
+                for(let i = 0; i< child.length; i++){
+                    if(child[i].status == 1){
+                        child[i].statusName = "销售中"
+                    }else{
+                        child[i].statusName = "未上架"
+                    }
+
+                    if(child[i].children){
+                        tran_status(child[i].children)
+                    }
+                }
+            }
+
+            this.$Get(url, config, success)
+        },
+        get_all_selection(e){
+            this.selectRow = e
+        },
+        update_product_price(){
+            let _self = this
+            let url = `api/product/area/saveProductSku`
+
+            let areaPrices = []
+
+            for(let i = 0; i<_self.selectRow.length;i++){
+                let temp = {}
+                temp.areaid = _self.selectRow[i].dispid
+                temp.skuareaid = _self.selectRow[i].skuAreaId
+                temp.status = _self.status
+                temp.baseprice = _self.dbaseprice
+                temp.oaprice = _self.doaprice
+
+                areaPrices.push(temp)
+            }
+
+            let config = {
+                productId: _self.$route.params.id,
+                propertys: _self.typeArray.join(","),
+                doaprice: _self.doaprice,
+                dbaseprice: _self.dbaseprice,
+                areaPrices: JSON.stringify(areaPrices)
+            }
+
+            function success(res){
+                _self.get_price()
+                // _self.$bus.emit("update-price")
+            }
+
+            function fail(err){
+
+            }
+
+            this.$Post(url, config, success, fail)
+        }
     },
     watch: {
         '$route'(to, from){
