@@ -16,6 +16,15 @@
                 </Row>
                 <Row :gutter="16" >
                     <Col span="24">
+                        <FormItem label="部门别名：" prop="aliasCode">
+                            <Select v-model="formValidate.alias_code" size="small" style="width:100%">
+                                <Option v-for="(item, index) in departAlias" :value="item.typecode" :key="index">{{item.typename}}</Option>
+                            </Select>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="16" >
+                    <Col span="24">
                         <FormItem label="部门描述：" prop="description">
                             <Input size="small" v-model="formValidate.description" type="textarea"/>
                         </FormItem>
@@ -58,8 +67,12 @@ export default {
                     address: "",
                     depart_order: "",
                     affiliation_area: "",
+                    alias_code: ""
                 }
             }
+        },
+        departAlias: {
+            type: [String, Array]
         }
     },
     data(){
@@ -69,7 +82,7 @@ export default {
                 departname: [
                     { required: true, trigger: "change", message: "部门名称不能为空" }
                 ],
-                aliasCode: [
+                alias_code: [
                     { required: true, message: "部门编码不能为空", trigger: "change" }
                 ]
             },

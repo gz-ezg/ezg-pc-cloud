@@ -25,6 +25,11 @@ export default {
             default: ""
         }
     },
+    watch: {
+        "departId"(){
+            this.get_data()
+        }
+    },
     data(){
         return {
             data: [],

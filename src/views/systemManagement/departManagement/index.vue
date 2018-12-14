@@ -40,11 +40,13 @@
             v-if="openCreate" 
             :parentdepartid="parentdepartid"
             :parentdepartName="parentdepartName"
+            :departAlias="departAlias"
             @close="close_create"
         ></create-depart>
         <update-depart 
             v-if="openUpdate" 
             :formValidate="currentRow"
+            :departAlias="departAlias"
             @close="close_update"
         ></update-depart>
         <Modal
@@ -64,24 +66,26 @@
             </div>
         </Modal>
         <Modal
-            title="删除部门"
+            title="新增成员"
             v-model="openCreateUser"
             width="300"
         >
             <Row :gutter="20">
-                <Select 
-                    v-model="userId" 
-                    placeholder="接收人" 
-                    filterable
-                    remote
-                    :remote-method="get_user"
-                    :loading="userLoading"
-                >
-                    <Option v-for="item in userList" :key="item.id" :value="item.id" :label="item.realname">
-                        <span>{{item.realname}}</span>
-                        <!-- <span style="float:right;color:#ccc">{{item.departname}}</span> -->
-                    </Option>
-                </Select>
+                <Col span="24">
+                    <Select 
+                        v-model="userId" 
+                        placeholder="用户名称" 
+                        filterable
+                        remote
+                        :remote-method="get_user"
+                        :loading="userLoading"
+                    >
+                        <Option v-for="item in userList" :key="item.id" :value="item.id" :label="item.realname">
+                            <span>{{item.realname}}</span>
+                            <!-- <span style="float:right;color:#ccc">{{item.departname}}</span> -->
+                        </Option>
+                    </Select>
+                </Col>
             </Row>
             <div slot="footer">
                 <!-- 用户状态选择哪个 -->
@@ -147,8 +151,8 @@ export default {
             currentRow: {},
             delLoading: false,
             userList: [],
-            userLoading: false
-
+            userLoading: false,
+            departAlias: []
         }
     },
     methods: {
@@ -261,6 +265,10 @@ export default {
 
             function success(res){
                 _self.createLoading = false
+                _self.showDepartUser = false
+                setTimeout(()=>{
+                    _self.showDepartUser = true
+                }, 300)
             }
 
             function fail(err){
@@ -268,10 +276,21 @@ export default {
             }
 
             this.$Post(url, config, success, fail)
+        },
+        get_data_center(){
+            let _self = this
+            let params = "departAlias"
+            function success(res){
+                _self.departAlias = res.data.data.departAlias
+            }
+
+            this.$GetDataCenter(params, success)
         }
     },
     created(){
-        this.get_data()
+        let _self = this
+        _self.get_data_center()
+        _self.get_data()
     }
 }
 </script>

@@ -21,8 +21,8 @@ import Cookies from 'js-cookie';
 
 import iviewArea from 'iview-area';
 
-import datagrid from './libs/easyUI/jquery.easyui.min'
-import combobox from './libs/easyUI/jquery.easyui.min'
+// import datagrid from './libs/easyUI/jquery.easyui.min'
+// import combobox from './libs/easyUI/jquery.easyui.min'
 
 //  异常上报机制
 import Raven from 'raven-js';

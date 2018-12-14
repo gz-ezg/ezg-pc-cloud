@@ -49,7 +49,7 @@
         <Button type="primary" size="small" @click="create(scope.row)" icon="plus">新增部门</Button>
         <Button type="success" size="small" @click="edit(scope.row)" icon="edit">编辑</Button>
         <Button type="info" size="small" @click="show_person(scope.row)" icon="person">查看成员</Button>
-        <Button type="info" size="small" @click="setting(scope.row)" icon="grid">角色设置</Button>
+        <Button type="info" size="small" @click="setting(scope.row)" icon="grid" disabled>角色设置</Button>
         <Button type="error" size="small" @click="del(scope.row)" icon="trash-a">删除</Button>
       </template>
     </el-table-column>

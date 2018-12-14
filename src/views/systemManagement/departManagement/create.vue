@@ -16,8 +16,11 @@
                 </Row>
                 <Row :gutter="16" >
                     <Col span="24">
-                        <FormItem label="部门编码：" prop="aliasCode">
-                            <Input size="small" v-model="formValidate.aliasCode"/>
+                        <FormItem label="部门别名：" prop="aliasCode">
+                            <Select v-model="formValidate.aliasCode" size="small" style="width:100%">
+                                <Option v-for="(item, index) in departAlias" :value="item.typecode" :key="index">{{item.typename}}</Option>
+                            </Select>
+                            <!-- <Input size="small" v-model="formValidate.aliasCode"/> -->
                         </FormItem>
                     </Col>
                 </Row>
@@ -75,6 +78,9 @@ export default {
         parentdepartName: {
             type: [String],
             default: ""
+        },
+        departAlias: {
+            type: [String, Array]
         }
     },
     data(){
