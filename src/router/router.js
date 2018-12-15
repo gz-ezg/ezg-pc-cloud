@@ -142,6 +142,12 @@ export const otherRouter = {
             component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/updateProductPrice/index.vue')
         },
         {
+            path: 'productDetail',
+            title: "产品详情",
+            name: "productDetail",
+            component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/productDetail/index.vue')
+        },
+        {
             path: 'customerList',
             title: "客户列表",
             name: "customerList",

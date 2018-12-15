@@ -3,20 +3,38 @@
         <Card>
             <span slot="title"><h3>{{title}}</h3></span>
             <div v-for="(item, index) in queryProperty" :key="index" style="margin-top:10px">
-                <Row>
-                    <Col span="4">
-                        <span style="padding-right:10px;padding-left:10px;width:100px;display:inline-block;text-align:right;line-height:32px;">{{item.name}} :</span>
-                    </Col>
-                    <Col span="20">
+                <Row style="display:flex;justify-content:flex-start">
+                    <!-- <Col span="4"> -->
+                        <div style="padding-right:20px;padding-left:10px;width:120px;display:inline-block;text-align:right;line-height:32px;">{{item.name}} :</div>
+                    <!-- </Col> -->
+                    <!-- <Col span="20"> -->
                         <RadioGroup v-model="typeArray[index]" type="button">
                             <Radio v-for="(item2, index2) in item.children" :label="item2.pvId" :key="index2">{{item2.propertyValue}}</Radio>
                         </RadioGroup>
-                    </Col>
+                    <!-- </Col> -->
                 </Row> 
-                <Row style="margin-top:10px;margin-left:20px;">
-                    <Button type="primary" @click="get_price">查询</Button>
-                </Row>
             </div>
+            <Row style="margin-top:10px;margin-left:10px;">
+                <ButtonGroup>
+                    <Button type="primary" @click="get_price">查询</Button>
+                    <Button type="primary" @click="showUpdatePrice=true;dbaseprice='';doaprice=''">修改价格</Button>
+                </ButtonGroup>
+            </Row>
+            <Row style="margin-top:10px;margin-left:10px" v-if="showUpdatePrice">
+                <div style="display:flex;justify-content:flex-start;align-items:center">
+                    <span>基础价格：</span><Input style="width:150px;margin-right:40px;" v-model="dbaseprice" />
+                    <span>系统价格：</span><Input style="width:150px;margin-right:40px;" v-model="doaprice"/>
+                    <span>状态：</span>
+                    <Select style="width:150px;margin-right:40px;" v-model="status">
+                        <Option value="0">未上架</Option>
+                        <Option value="1">销售中</Option>
+                    </Select>
+                    <ButtonGroup>
+                        <Button @click="update_product_price" type="warning">确认修改</Button>
+                        <Button @click="showUpdatePrice=false" type="ghost">关闭</Button>
+                    </ButtonGroup>
+                </div>
+            </Row>
             <Row :gutter="20" style="margin-top:10px">
                 <Spin v-if="loading" size="large" fix></Spin>
                 <Col span="24" v-else>
@@ -42,6 +60,7 @@ export default {
     },
     data() {
         return {
+            showUpdatePrice: false,
             loading: false,
             queryProperty: [],
             typeArray: [],
@@ -82,7 +101,7 @@ export default {
             selectRow: [],
             dbaseprice: "",
             doaprice: "",
-            status: 1
+            status: "1"
         };
     },
     methods: {

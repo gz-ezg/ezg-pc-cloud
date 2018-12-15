@@ -9,13 +9,13 @@
                             <Form ref="formValidate" :model="formValidate" :label-width="120" style="margin-top: 15px">
                                 <Row :gutter="16" style="height:56px">
                                     <Col span="8">
-                                        <FormItem label="产品名称：" prop="product">
-                                            <Input v-model="formValidate.product" size="small"></Input>
+                                        <FormItem label="分类名称：" prop="typeName">
+                                            <Input v-model="formValidate.typeName" size="small"></Input>
                                         </FormItem>
                                     </Col>
                                     <Col span="8">
-                                        <FormItem label="产品编码：" prop="productCode">
-                                            <Input v-model="formValidate.productCode" size="small"></Input>
+                                        <FormItem label="属性名称：" prop="name">
+                                            <Input v-model="formValidate.name" size="small"></Input>
                                         </FormItem>
                                     </Col>
                                 </Row>
@@ -128,7 +128,7 @@ export default {
                                     props: {
                                         transfer: true,
                                         confirm: true,
-                                        title: '您确定要删除此附件吗！',
+                                        title: '您确定要删除此属性吗！',
                                     },
                                     on: {
                                         'on-ok': ()=>{
@@ -147,8 +147,8 @@ export default {
             total: 0,
             selectRow: "",
             formValidate: {
-                product: "",
-                productCode: ""
+                typeName: "",
+                name: ""
             }
         }
     },
@@ -161,8 +161,8 @@ export default {
                 params:{
                     page: _self.page,
                     pageSize: _self.pageSize,
-                    product: _self.formValidate.product,
-                    productCode: _self.formValidate.productCode
+                    typeName: _self.formValidate.typeName,
+                    name: _self.formValidate.name
                 }
             }
 

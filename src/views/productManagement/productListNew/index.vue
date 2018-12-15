@@ -29,6 +29,11 @@
                         </div>
                     </Panel>
                 </Collapse>
+            <Row style="margin-top: 10px">
+                <ButtonGroup>
+                    <Button @click="create" type="primary">新增产品</Button>
+                </ButtonGroup>
+            </Row>
             <Row style="margin-top: 10px;">
                 <Col span="12">
                     <Table
@@ -104,6 +109,14 @@ export default {
                                 },
                                 style:{
                                     marginRight: "5px"
+                                },
+                                on: {
+                                    "click": function(event){
+                                        _self.$router.push({
+                                            path: '/productDetail?id=' + params.row.id
+                                        })
+                                        event.stopPropagation()
+                                    }
                                 }
                             }, "编辑"),
                             h("Button",{
@@ -121,15 +134,6 @@ export default {
                                     }
                                 }
                             }, "修改价格"),
-                            // h("Button",{
-                            //     props:{
-                            //         type: "info",
-                            //         size: "small",
-                            //     },
-                            //     style:{
-                            //         marginRight: "5px"
-                            //     }
-                            // }, "查看价格"),
                             h("Button",{
                                 props:{
                                     type: "warning",
@@ -211,6 +215,11 @@ export default {
                     id: e
                 },
             });
+        },
+        create(){
+            this.$router.push({
+                 path: '/productDetail?id='
+            })
         }
     },
     watch:{
@@ -218,6 +227,10 @@ export default {
     },
     created(){
         this.get_data()
+        this.$bus.off("UPDATE_PRODUCT_LIST")
+        this.$bus.on("UPDATE_PRODUCT_LIST",()=>{
+            this.get_data()
+        })
     }
 }
 </script>
