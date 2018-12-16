@@ -55,14 +55,26 @@
                     </FormItem>
                     </Col>
                     <Col span="8">
-                    <FormItem label="是否提供发票" prop="isornotkp">
-                        <Select transfer v-model="orderDetail.isornotkp" size="small" style="width:100%" >
-                            <Option value="Y">是</Option>
-                            <Option value="N">否</Option>
-                        </Select>
-                    </FormItem>
+                        <FormItem label="是否提供发票" prop="isornotkp">
+                            <Select transfer v-model="orderDetail.isornotkp" size="small" style="width:100%" >
+                                <Option value="Y">是</Option>
+                                <Option value="N">否</Option>
+                            </Select>
+                        </FormItem>
                     </Col>
                 </Row>
+                <!-- <Row :gutter="16">
+                    <Col span="8" v-if="orderDetail.isornotkp=='Y'">
+                        <FormItem>
+                            <Button @click="open_isornotkp('create')" type="info" size="small">开票信息</Button>
+                        </FormItem>
+                    </Col>
+                    <Col span="8" v-if="orderDetail.isornotkp=='Y'">
+                        <FormItem>
+                            <Button @click="open_isornotkp('create')" type="info" size="small">开票信息</Button>
+                        </FormItem>
+                    </Col>
+                </Row> -->
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem style="margin-bottom:10px">

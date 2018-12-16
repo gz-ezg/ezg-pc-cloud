@@ -9,6 +9,7 @@ export default {
             showAccountHomeItem: false,
             loading: false,
             orderDetail: {
+                customerid: "",
                 id: "",
                 companyid: "",
                 isornotkp: "N",
@@ -393,6 +394,15 @@ export default {
                     return true;
                 }
             }
+        },
+        //  开票选项
+        open_isornotkp(e){
+            this.$bus.emit("OPEN_ORDER_INVOICE", {
+                customerId: this.orderDetail.customerid,
+                companyId: this.orderDetail.companyid,
+                orderId: this.orderDetail.id,
+                type: e
+            })
         }
     },
     created(){

@@ -61,6 +61,11 @@
                         </Select>
                     </FormItem>
                     </Col>
+                    <!-- <Col span="8" v-if="orderDetail.isornotkp=='Y'">
+                        <FormItem>
+                            <Button @click="open_isornotkp('update')" type="info" size="small">开票信息</Button>
+                        </FormItem>
+                    </Col> -->
                 </Row>
                 <Row :gutter="16">
                     <FormItem>

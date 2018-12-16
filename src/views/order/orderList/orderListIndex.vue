@@ -123,6 +123,7 @@
         <edit-order :payDirs="payDirs"></edit-order>
         <show-contarct></show-contarct>
         <product-select></product-select>
+        <!-- <invoice></invoice> -->
     </div>
 </template>
 
@@ -134,6 +135,7 @@ import amendOrder from './components/orderOp/amendOrder'
 import editOrder from './components/orderOp/editOrderDetail'
 import showContarct from './show_contarct'
 import productSelect from './components/productSelect'
+// import invoice from './components//invoice/index'
 
 import { DateFormat } from '../../../libs/utils.js'
 
@@ -146,6 +148,7 @@ export default {
         editOrder,
         showContarct,
         productSelect,
+        // invoice
     },
     data(){
         return {
