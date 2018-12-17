@@ -560,6 +560,11 @@ import publicCustomer from './publicCustomer'
                         minWidth: 130,
                     },
                     {
+                        title: "公司名称",
+                        key: "CompanyName",
+                        minWidth: 200
+                    },
+                    {
                         title: '销售人员',
                         key: 'saler_name',
                         minWidth: 130
@@ -659,6 +664,11 @@ import publicCustomer from './publicCustomer'
                         title: '客户电话',
                         key: 'tel',
                         minWidth: 130,
+                    },
+                    {
+                        title: "公司名称",
+                        key: "CompanyName",
+                        minWidth: 200
                     },
                     {
                         title: '销售人员',
@@ -948,7 +958,8 @@ import publicCustomer from './publicCustomer'
                             createdate: response.data.data.rows[i].createdate,
                             clue_level: _self.clue_level_map.get(response.data.data.rows[i].clue_level),
                             saler_name: response.data.data.rows[i].saler_name,
-                            customer_id: response.data.data.rows[i].customer_id
+                            customer_id: response.data.data.rows[i].customer_id,
+                            CompanyName: response.data.data.rows[i].CompanyName
                         })
                     }
                     _self.loadingN = false
@@ -1026,7 +1037,8 @@ import publicCustomer from './publicCustomer'
                             createdate: response.data.data.rows[i].createdate,
                             clue_level: _self.clue_level_map.get(response.data.data.rows[i].clue_level),
                             saler_name: response.data.data.rows[i].saler_name,
-                            customer_id: response.data.data.rows[i].customer_id
+                            customer_id: response.data.data.rows[i].customer_id,
+                            CompanyName: response.data.data.rows[i].CompanyName
                         })
                     }
                     _self.loadingY = false

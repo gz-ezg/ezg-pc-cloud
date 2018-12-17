@@ -51,6 +51,20 @@
                                     </FormItem>
                                 </Col>
                             </Row>
+                            <Row :gutter="16">
+                                <Col span="8">
+                                    <FormItem prop="customerName" label="客户名称：">
+                                        <Input size="small"  type="text" v-model="formInline.customerName" placeholder="">
+                                        </Input>
+                                    </FormItem>
+                                </Col>
+                                <Col span="8">
+                                    <FormItem prop="tel" label="客户电话：">
+                                        <Input size="small"  type="text" v-model="formInline.tel" placeholder="">
+                                        </Input>
+                                    </FormItem>
+                                </Col>
+                            </Row>
                             <FormItem>
                                 <Button type="primary" @click="search">搜索</Button>
                                 <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
@@ -160,7 +174,9 @@ export default {
                     product:'',
                     updatedate:[],
                     createdate:[],
-                    departname:""
+                    departname:"",
+                    customerName: "",
+                    tel: ""
                 },
                 //  加载中
                 Sloading:false,
@@ -536,6 +552,8 @@ export default {
                         eupdatedate: DateFormat(_self.formInline.updatedate[1]),
                         bcreatedate: DateFormat(_self.formInline.createdate[0]),
                         ecreatedate: DateFormat(_self.formInline.createdate[1]),
+                        customerName: _self.formInline.customerName,
+                        tel: _self.formInline.tel,
                         departname: _self.formInline.departname,
                         serviceDept:"'BUSSINESS'",
                         export: 'Y',
@@ -563,6 +581,8 @@ export default {
                     bcreatedate: DateFormat(_self.formInline.createdate[0]),
                     ecreatedate: DateFormat(_self.formInline.createdate[1]),
                     departname: _self.formInline.departname,
+                    customerName: _self.formInline.customerName,
+                    tel: _self.formInline.tel,
                     serviceDept:"'BUSSINESS'"
                 }
             }
@@ -619,6 +639,8 @@ export default {
             this.formInline.updatedate = []
             this.formInline.createdate = []
             this.formInline.departname = ""
+            this.formInline.tel = ""
+            this.formInline.customerName = ""
             this.getData()
         },
         pageChange(e){

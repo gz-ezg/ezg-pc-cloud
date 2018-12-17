@@ -281,12 +281,12 @@ export default {
             let config = {}
 
             function success(res){
-                _self.$Message.success("领取成功！")
+                // _self.$Message.success("领取成功！")
                 _self.get_data(_self.customer.ID)
             }
 
             function fail(err){
-                _self.$Message.error("领取失败！")
+                // _self.$Message.error("领取失败！")
             }
 
             this.$Get(url, config, success)
