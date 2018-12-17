@@ -294,8 +294,8 @@ export default {
                 iscycle: _self.data.iscycle,
                 defaultdepartalias: _self.data.defaultdepartalias,
                 departalias: _self.data.departalias.join(","),
-                producttypeid: _self.data.productTypeID,
-                propertys: JSON.stringify(attrList),
+                productTypeId: _self.data.productTypeID,
+                propertyIds: JSON.stringify(attrList),
             }
 
             function success(res){
