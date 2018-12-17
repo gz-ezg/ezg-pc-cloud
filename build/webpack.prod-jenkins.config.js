@@ -10,7 +10,7 @@ const os = require('os');
 const fs = require('fs');
 const path = require('path');
 const package = require('../package.json');
-const SentryCliPlugin = require('@sentry/webpack-plugin');
+// const SentryCliPlugin = require('@sentry/webpack-plugin');
 
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
@@ -119,8 +119,8 @@ module.exports = merge(webpackBaseConfig, {
             template: './src/template/index.ejs',
             inject: false
         }),
-        new SentryCliPlugin({
-            include: './dist/'
-        }),
+        // new SentryCliPlugin({
+        //     include: './dist/'
+        // }),
     ]
 });

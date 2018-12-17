@@ -29,12 +29,12 @@ import Raven from 'raven-js';
 import RavenVue from 'raven-js/plugins/vue';
 
 //  测试库版
-if(process.env.NODE_ENV == 'jenkins' ){
-    Raven
-        .config('http://f2091129504342718fd23e9de52bdd84@sentry.roderickt1an.cn/1')
-        .addPlugin(RavenVue, Vue)
-        .install();
-    }
+// if(process.env.NODE_ENV == 'jenkins' ){
+//     Raven
+//         .config('http://f2091129504342718fd23e9de52bdd84@sentry.roderickt1an.cn/1')
+//         .addPlugin(RavenVue, Vue)
+//         .install();
+//     }
 
 Vue.use(VueI18n);
 Vue.use(iView);
@@ -90,9 +90,9 @@ axios.interceptors.response.use(
         return response;
     },
     (error) => {
-        if(process.env.NODE_ENV == 'jenkins' ){
-            Raven.captureException(error);
-        }
+        // if(process.env.NODE_ENV == 'jenkins' ){
+        //     Raven.captureException(error);
+        // }
         return Promise.reject(error)
     }
 )
@@ -100,11 +100,11 @@ axios.interceptors.response.use(
 //  异常监控及上传
 //  上传待接口完成后实现
 console.log(process.env.NODE_ENV)
-if(process.env.NODE_ENV == 'jenkins' ){
-    Vue.config.errorHandler = function(err, vm, info) {
-        Raven.captureException(err)
-    }
-  }
+// if(process.env.NODE_ENV == 'jenkins' ){
+//     Vue.config.errorHandler = function(err, vm, info) {
+//         Raven.captureException(err)
+//     }
+//   }
 //     // handle error
 //     // `info` 是 Vue 特定的错误信息，比如错误所在的生命周期钩子
 //     // 只在 2.2.0+ 可用
