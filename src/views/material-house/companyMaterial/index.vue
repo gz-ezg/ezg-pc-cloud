@@ -116,28 +116,28 @@ export default {
                 {
                     type: 'index',
                     title: '序号',
-                    width: 60,
+                    minWidth: 60,
                     align: 'center'
                 },
                 {
                     title: '文件名称',
                     key: 'filename',
-                    width: 280
+                    minWidth: 280
                 },
                 {
                     title: '文件类型',
                     key: 'resourceTypeName',
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title: '文件说明',
                     key: 'sourcememo',
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title: '视频文件',
                     key: 'isvideo',
-                    width: 120,
+                    minWidth: 120,
                     render:(h,params) =>{
                         if(params.row.isvideo == "N"){
                             return h('div','否')
@@ -149,12 +149,12 @@ export default {
                 {
                     title: '创建人',
                     key: 'realname',
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title: '创建时间',
                     key: 'createdate',
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title: '操作',

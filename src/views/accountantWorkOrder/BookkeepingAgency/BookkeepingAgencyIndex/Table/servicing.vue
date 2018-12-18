@@ -241,33 +241,33 @@
                         //     }
                         // }
                     },
-                    {
-                        title: '联系客户',
-                        key: 'lianxikehu',
-                        width: 120,
-                        align: "center",
-                        render: (h, params) => {
-                            // console.log(params.row.lianxikehu.confirm_date)
-                            let reg=/^[-+]?\d*$/; 
-                            if(params.row.lianxikehu.confirm_date == undefined){
-                                return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    on:{
-                                        click:()=>{
-                                            this.zlwc(params.row.lianxikehu)
-                                        }
-                                    }
-                                }, '[ 完成 ]'),
-                            ]);
-                            }else{
-                                return h('div', params.row.lianxikehu.confirm_date.slice(0,10))
-                            }
-                        }
-                    },
+                    // {
+                    //     title: '联系客户',
+                    //     key: 'lianxikehu',
+                    //     width: 120,
+                    //     align: "center",
+                    //     render: (h, params) => {
+                    //         // console.log(params.row.lianxikehu.confirm_date)
+                    //         let reg=/^[-+]?\d*$/; 
+                    //         if(params.row.lianxikehu.confirm_date == undefined){
+                    //             return h('div', [
+                    //             h('Button', {
+                    //                 props: {
+                    //                     type: 'text',
+                    //                     size: 'small'
+                    //                 },
+                    //                 on:{
+                    //                     click:()=>{
+                    //                         this.zlwc(params.row.lianxikehu)
+                    //                     }
+                    //                 }
+                    //             }, '[ 完成 ]'),
+                    //         ]);
+                    //         }else{
+                    //             return h('div', params.row.lianxikehu.confirm_date.slice(0,10))
+                    //         }
+                    //     }
+                    // },
                     {
                         title: '报税',
                         key: 'baoshui',
@@ -305,105 +305,105 @@
                             }
                         }
                     },
-                    {
-                        title: '扣款',
-                        key: 'koukuan',
-                        align: "center",
-                        width:120,
-                        render: (h, params) => {
-                            let reg=/^[-+]?\d*$/;                            
-                            // console.log(isNaN(params.row.zlwc))
-                            if(params.row.koukuan.confirm_date == undefined){
-                                // let color
-                                // if(params.row.balance_count <= 2){
-                                //     color = 'red'
-                                // }else{
-                                //     color = 'black'
-                                // }
-                                return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    // style:{
-                                    //     color: color
-                                    // },
-                                    on:{
-                                        click:()=>{
-                                            this.zlwc(params.row.koukuan)
-                                        }
-                                    }
-                                }, '[ 完成 ]'),
-                            ]);
-                            }else{
-                                return h('div', params.row.koukuan.confirm_date.slice(0,10))
-                            }
-                        }
-                    },
-                    {
-                        title: '社保',
-                        key: 'shebao',
-                        align: "center",
-                        width:120,
-                        render: (h, params) => {
-                            let reg=/^[-+]?\d*$/;
+                    // {
+                    //     title: '扣款',
+                    //     key: 'koukuan',
+                    //     align: "center",
+                    //     width:120,
+                    //     render: (h, params) => {
+                    //         let reg=/^[-+]?\d*$/;                            
+                    //         // console.log(isNaN(params.row.zlwc))
+                    //         if(params.row.koukuan.confirm_date == undefined){
+                    //             // let color
+                    //             // if(params.row.balance_count <= 2){
+                    //             //     color = 'red'
+                    //             // }else{
+                    //             //     color = 'black'
+                    //             // }
+                    //             return h('div', [
+                    //             h('Button', {
+                    //                 props: {
+                    //                     type: 'text',
+                    //                     size: 'small'
+                    //                 },
+                    //                 // style:{
+                    //                 //     color: color
+                    //                 // },
+                    //                 on:{
+                    //                     click:()=>{
+                    //                         this.zlwc(params.row.koukuan)
+                    //                     }
+                    //                 }
+                    //             }, '[ 完成 ]'),
+                    //         ]);
+                    //         }else{
+                    //             return h('div', params.row.koukuan.confirm_date.slice(0,10))
+                    //         }
+                    //     }
+                    // },
+                    // {
+                    //     title: '社保',
+                    //     key: 'shebao',
+                    //     align: "center",
+                    //     width:120,
+                    //     render: (h, params) => {
+                    //         let reg=/^[-+]?\d*$/;
                             
-                            // console.log(isNaN(params.row.zlwc))
-                            if(params.row.shebao.confirm_date == undefined){
-                                // let color
-                                // if(params.row.balance_count <= 2){
-                                //     color = 'red'
-                                // }else{
-                                //     color = 'black'
-                                // }
-                                return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    // style:{
-                                    //     color: color
-                                    // },
-                                    on:{
-                                        click:()=>{
-                                            this.zlwc(params.row.shebao)
-                                        }
-                                    }
-                                }, '[ 完成 ]'),
-                            ]);
-                            }else{
-                                return h('div', params.row.shebao.confirm_date.slice(0,10))
-                            }
-                        }
-                    },
-                    {
-                        title: '公积金',
-                        key: 'gongjijin',
-                        align: "center",
-                        width:120,
-                        render: (h, params) => {
-                            let reg=/^[-+]?\d*$/;
-                            if(params.row.gongjijin.confirm_date == undefined){
-                                return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    on:{
-                                        click:()=>{
-                                            this.zlwc(params.row.gongjijin)
-                                        }
-                                    }
-                                }, '[ 完成 ]'),
-                            ]);
-                            }else{
-                                return h('div', params.row.gongjijin.confirm_date.slice(0,10))
-                            }
-                        }
-                    },
+                    //         // console.log(isNaN(params.row.zlwc))
+                    //         if(params.row.shebao.confirm_date == undefined){
+                    //             // let color
+                    //             // if(params.row.balance_count <= 2){
+                    //             //     color = 'red'
+                    //             // }else{
+                    //             //     color = 'black'
+                    //             // }
+                    //             return h('div', [
+                    //             h('Button', {
+                    //                 props: {
+                    //                     type: 'text',
+                    //                     size: 'small'
+                    //                 },
+                    //                 // style:{
+                    //                 //     color: color
+                    //                 // },
+                    //                 on:{
+                    //                     click:()=>{
+                    //                         this.zlwc(params.row.shebao)
+                    //                     }
+                    //                 }
+                    //             }, '[ 完成 ]'),
+                    //         ]);
+                    //         }else{
+                    //             return h('div', params.row.shebao.confirm_date.slice(0,10))
+                    //         }
+                    //     }
+                    // },
+                    // {
+                    //     title: '公积金',
+                    //     key: 'gongjijin',
+                    //     align: "center",
+                    //     width:120,
+                    //     render: (h, params) => {
+                    //         let reg=/^[-+]?\d*$/;
+                    //         if(params.row.gongjijin.confirm_date == undefined){
+                    //             return h('div', [
+                    //             h('Button', {
+                    //                 props: {
+                    //                     type: 'text',
+                    //                     size: 'small'
+                    //                 },
+                    //                 on:{
+                    //                     click:()=>{
+                    //                         this.zlwc(params.row.gongjijin)
+                    //                     }
+                    //                 }
+                    //             }, '[ 完成 ]'),
+                    //         ]);
+                    //         }else{
+                    //             return h('div', params.row.gongjijin.confirm_date.slice(0,10))
+                    //         }
+                    //     }
+                    // },
                     {
                         title: '做账',
                         key: 'zuozhang',
@@ -430,35 +430,35 @@
                             }
                         }
                     },
-                    {
-                        title: '扫票',
-                        key: 'saopiao',
-                        align: "center",
-                        width:120,
-                        render: (h, params) => {
-                            let reg=/^[-+]?\d*$/;
-                            if(params.row.saopiao.confirm_date == undefined){
-                                return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    // style:{
-                                    //     color: color
-                                    // },
-                                    on:{
-                                        click:()=>{
-                                            this.zlwc(params.row.saopiao)
-                                        }
-                                    }
-                                }, '[ 完成 ]'),
-                            ]);
-                            }else{
-                                return h('div', params.row.saopiao.confirm_date.slice(0,10))
-                            }
-                        }
-                    },
+                    // {
+                    //     title: '扫票',
+                    //     key: 'saopiao',
+                    //     align: "center",
+                    //     width:120,
+                    //     render: (h, params) => {
+                    //         let reg=/^[-+]?\d*$/;
+                    //         if(params.row.saopiao.confirm_date == undefined){
+                    //             return h('div', [
+                    //             h('Button', {
+                    //                 props: {
+                    //                     type: 'text',
+                    //                     size: 'small'
+                    //                 },
+                    //                 // style:{
+                    //                 //     color: color
+                    //                 // },
+                    //                 on:{
+                    //                     click:()=>{
+                    //                         this.zlwc(params.row.saopiao)
+                    //                     }
+                    //                 }
+                    //             }, '[ 完成 ]'),
+                    //         ]);
+                    //         }else{
+                    //             return h('div', params.row.saopiao.confirm_date.slice(0,10))
+                    //         }
+                    //     }
+                    // },
                     {
                         title: '警戒值',
                         key: 'accounter_security_line',

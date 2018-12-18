@@ -75,16 +75,16 @@ export default {
                 //     key: "koukuan",
                 //     width: 80
                 // },
-                {
-                    title: "社保",
-                    key: "shebao",
+                // {
+                //     title: "社保",
+                //     key: "shebao",
 
-                },
-                {
-                    title: "公积金",
-                    key: "gongjijin",
+                // },
+                // {
+                //     title: "公积金",
+                //     key: "gongjijin",
 
-                },
+                // },
                 {
                     title: "做账",
                     key: "zuozhang",

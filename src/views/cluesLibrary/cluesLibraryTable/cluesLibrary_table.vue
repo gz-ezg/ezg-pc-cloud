@@ -233,8 +233,8 @@
                 <FormItem label="客户名称" prop="customerName">
                     <Input v-model="formValidate.customerName" size="small" :readonly="isOldCustomer" @on-focus="get_customer"></Input>
                 </FormItem>
-                <FormItem label="公司名称" prop="companyname">
-                    <Input v-model="formValidate.companyname" @on-focus="get_customer" :readonly="isOldCustomer" size="small"></Input>
+                <FormItem label="公司名称" prop="companyName">
+                    <Input v-model="formValidate.companyName" @on-focus="get_customer" :readonly="isOldCustomer" size="small"></Input>
                 </FormItem>
                 <FormItem label="客户电话" prop="customerTel">
                     <Input v-model="formValidate.customerTel" size="small" @on-focus="get_customer" :readonly="isOldCustomer"></Input>
@@ -525,7 +525,7 @@ import publicCustomer from './publicCustomer'
                     clueMemo: '',
                     customerName: '',
                     companyid:"",
-                    companyname:"",
+                    companyName:"",
                     customerId: "",
                     affiliationArea: "guangzhou"
                 },
@@ -561,7 +561,7 @@ import publicCustomer from './publicCustomer'
                     },
                     {
                         title: "公司名称",
-                        key: "CompanyName",
+                        key: "company_name",
                         minWidth: 200
                     },
                     {
@@ -667,7 +667,7 @@ import publicCustomer from './publicCustomer'
                     },
                     {
                         title: "公司名称",
-                        key: "CompanyName",
+                        key: "company_name",
                         minWidth: 200
                     },
                     {
@@ -959,7 +959,7 @@ import publicCustomer from './publicCustomer'
                             clue_level: _self.clue_level_map.get(response.data.data.rows[i].clue_level),
                             saler_name: response.data.data.rows[i].saler_name,
                             customer_id: response.data.data.rows[i].customer_id,
-                            CompanyName: response.data.data.rows[i].CompanyName
+                            company_name: response.data.data.rows[i].company_name
                         })
                     }
                     _self.loadingN = false
@@ -1038,7 +1038,7 @@ import publicCustomer from './publicCustomer'
                             clue_level: _self.clue_level_map.get(response.data.data.rows[i].clue_level),
                             saler_name: response.data.data.rows[i].saler_name,
                             customer_id: response.data.data.rows[i].customer_id,
-                            CompanyName: response.data.data.rows[i].CompanyName
+                            company_name: response.data.data.rows[i].company_name
                         })
                     }
                     _self.loadingY = false
@@ -1087,7 +1087,7 @@ import publicCustomer from './publicCustomer'
                 let url = '/order/queryListByCustomer?customerId=' + e.row.oacustomerid + '&page=1&pageSize=10000'
 
                 _self.modal2 = true
-                _self.formValidate.companyname = e.row.companyname
+                _self.formValidate.companyName = e.row.companyname
                 _self.formValidate.name = e.row.name
                 _self.formValidate.tel = e.row.tel
                 _self.formValidate.updatedate = e.row.updatedate
@@ -1545,7 +1545,7 @@ import publicCustomer from './publicCustomer'
             rowSelect(a) {
                 let _self = this
                 console.log(a)
-                _self.formValidate.companyname = a.CompanyName
+                _self.formValidate.companyName = a.CompanyName
                 _self.formValidate.companyid = a.cpid
                 _self.formValidate.customerTel = a.TEL
                 _self.formValidate.customerName = a.NAME

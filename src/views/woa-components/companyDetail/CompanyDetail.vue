@@ -76,7 +76,6 @@
                         <Row>
                             <Col :push="3"><Button type="primary" @click="upload" :loading="followUp_loading">新增跟进</Button></Col>
                         </Row>
-                                               
                     </Row>
                     <Row>
                             <Table
@@ -102,6 +101,14 @@
                             <Col span="10">
                                 <FormItem prop="NAME" label="归属客户：" style="margin-bottom:5px">
                                     {{companyInfo.NAME}}
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <Row :gutter="16">
+                            <Col span="1" style="visibility:hidden">1</Col>
+                            <Col span="10">
+                                <FormItem prop="companyname" label="客户等级：" style="margin-bottom:5px">
+                                    {{companyInfo.customer_importlevel}}
                                 </FormItem>
                             </Col>
                         </Row>
@@ -152,7 +159,7 @@
                                 </FormItem>
                             </Col>
                         </Row>
-                        <Row :gutter="16">
+                        <!-- <Row :gutter="16">
                             <Col span="1" style="visibility:hidden">1</Col>
                             <Col span="10">
                                 <FormItem prop="bankcode" label="机构代码：" style="margin-bottom:5px">
@@ -164,8 +171,8 @@
                                     {{companyInfo.bankcode}}
                                 </FormItem>
                             </Col>
-                        </Row>
-                        <Row :gutter="16">
+                        </Row> -->
+                        <!-- <Row :gutter="16">
                             <Col span="1" style="visibility:hidden">1</Col>
                             <Col span="10">
                                 <FormItem prop="bankcode" label="开户许可证：" style="margin-bottom:5px">
@@ -190,7 +197,7 @@
                                     {{companyInfo.simplebank}}
                                 </FormItem>
                             </Col>
-                        </Row>
+                        </Row> -->
                         <Row :gutter="16">
                             <Col span="1" style="visibility:hidden">1</Col>
                             <Col span="10">
@@ -462,6 +469,13 @@
                                     </Select>
                                 </FormItem>
                             </Col>
+                            <!-- <Col span="11">
+                                <FormItem prop="importlevel" label="企业等级：" style="margin-bottom:5px">
+                                    <Select transfer v-model="taxManagement.importlevel" placeholder="" disabled>
+                                        <Option v-for="item in customerrating" :value="item.typecode" :key="item.id">{{item.typename}}</Option>                                   
+                                    </Select>
+                                </FormItem>
+                            </Col> -->
                         </Row>
                         <Row :gutter="16">
                             <Col span="1" style="visibility:hidden">1</Col>                            
@@ -806,6 +820,7 @@
                 realationPerson:[],
                 companyChangeDetail:[],
                 followUpData:[],
+                customerrating: [],
                 financialLevel:"",
                 companyInfo:{
                     companyname: '',
@@ -1061,8 +1076,8 @@
                 }
 
                 function fail(err){
-                     _self.$Message.error("对不起，当前查询的工单有误！请确认后重试！窗口将在2秒后关闭！")
-                     _self.cancel()
+                    _self.$Message.error("对不起，当前查询的工单有误！请确认后重试！窗口将在2秒后关闭！")
+                    _self.cancel()
                 }
                 this.$Get(url, config, success, fail)
                 // this.GetData(url, doSuccess)
@@ -1185,10 +1200,11 @@
             GetFollowUpType(){
                 var _self = this
                 _self.followTypeText = []
-                let params = "follow_up_type,financialLevel"
+                let params = "follow_up_type,financialLevel,customerrating"
                 
                 function success(res){
                     _self.financialLevel = res.data.data.financialLevel
+                    _self.customerrating = res.data.data.customerrating
                     for(let i = 0;i<res.data.data.follow_up_type.length;i++){
                         var temp={}
                         if(res.data.data.follow_up_type[i].typecode == 21||res.data.data.follow_up_type[i].typecode == 22){

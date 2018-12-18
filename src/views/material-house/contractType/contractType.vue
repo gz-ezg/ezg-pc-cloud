@@ -124,33 +124,33 @@ export default {
                 {
                     type: 'index',
                     title: '序号',
-                    width: 60,
+                    minWidth: 60,
                     align: 'center'
                 },
                 {
                     title: '合同类型',
                     key: 'contractTypeName',
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title: '文件名称',
                     key: 'fileName',
-                    width: 280
+                    minWidth: 280
                 },
                 {
                     title: '文件说明',
                     key: 'fileMemo',
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title: '创建人',
                     key: 'realname',
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title: '创建时间',
                     key: 'createdate',
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title: '操作',

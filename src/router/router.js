@@ -138,12 +138,14 @@ export const otherRouter = {
         {
             path: 'productPrice/:id',
             title: "修改产品价格",
+            access: 6013,
             name: "updateProductPrice",
             component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/updateProductPrice/index.vue')
         },
         {
             path: 'productDetail',
             title: "产品详情",
+            access: 6013,
             name: "productDetail",
             component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/productDetail/index.vue')
         },
