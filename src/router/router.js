@@ -904,7 +904,16 @@ export const appRouter = [
         name: 'handoverresource',
         title: '资料管理',
         component: Main,
-        children: [{
+        children: [
+            {
+                access: 6131,
+                meta: 6131,
+                path: 'handovermanagement2',
+                title: '资料交接',
+                name: 'handovermanagement2_index',
+                component: () => import( /* webpackChunkName: "handovermanagement_index" */ '@/views/handoverResource/handoverTest/index.vue')
+            },
+            {
                 access: 6131,
                 meta: 6131,
                 path: 'handovermanagement',

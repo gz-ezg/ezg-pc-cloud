@@ -41,7 +41,8 @@
 
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
                 <Button type="primary" icon="information-circled" @click="company">查看公司</Button>
-                
+                <Button type="primary" icon="ios-color-wand-outline" @click="pass_workorder" >通过</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="income_detail" >收款明细</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="finsih_workerorder" >一键完结</Button>
 
@@ -110,8 +111,9 @@
 <script>
 // import Search from './search'
 import Bus from '../../../../components/bus'
-
+import mixin from './mixin.js'
 export default {
+    mixins: [mixin],
     props:{
         managestatus: Array
     },

@@ -29,6 +29,7 @@ import iviewArea from 'iview-area';
 // import RavenVue from 'raven-js/plugins/vue';
 
 //  测试库版
+// console.log(process)
 // if(process.env.NODE_ENV == 'jenkins' ){
 //     Raven
 //         .config('http://f2091129504342718fd23e9de52bdd84@sentry.roderickt1an.cn/1')

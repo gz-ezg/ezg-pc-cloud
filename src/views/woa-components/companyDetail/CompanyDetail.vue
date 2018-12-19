@@ -511,6 +511,16 @@
                                 </FormItem>
                             </Col>
                         </Row>
+                        <Row :gutter="16">
+                            <Col span="1" style="visibility:hidden">1</Col>
+                            <Col span="11">
+                                <FormItem prop="accounttype" label="账号类型：" style="margin-bottom:5px">
+                                    <Select transfer v-model="taxManagement.accounttype" placeholder="" :disabled="isEditTax">
+                                        <Option  v-for="(item, index) in etax_account_type" :key="index" :value="item.typecode">{{item.typename}}</Option>                                        
+                                    </Select>
+                                </FormItem>
+                            </Col>
+                        </Row>
                         <!-- <Row :gutter="16">
                             <Col span="1" style="visibility:hidden">1</Col>
                             <Col span="11">
@@ -787,6 +797,7 @@
         },
         data(){
             return {
+                etax_account_type: [],
                 isClue: false,
                 openCompanyDetail: true,
                 followupshow:false,
@@ -1114,7 +1125,8 @@
                     taxdisk:_self.taxManagement.taxdisk,
                     Providentfundpsw: _self.taxManagement.Providentfundpsw,
                     Providentfundnum: _self.taxManagement.Providentfundnum,
-                    socialsecuritypsw: _self.taxManagement.socialsecuritypsw
+                    socialsecuritypsw: _self.taxManagement.socialsecuritypsw,
+                    accounttype: _self.taxManagement.accounttype
                 }
                 function success(res){
                     _self.isEditTax = true  
@@ -1200,11 +1212,12 @@
             GetFollowUpType(){
                 var _self = this
                 _self.followTypeText = []
-                let params = "follow_up_type,financialLevel,customerrating"
+                let params = "follow_up_type,financialLevel,customerrating,etax_account_type"
                 
                 function success(res){
                     _self.financialLevel = res.data.data.financialLevel
                     _self.customerrating = res.data.data.customerrating
+                    _self.etax_account_type = res.data.data.etax_account_type
                     for(let i = 0;i<res.data.data.follow_up_type.length;i++){
                         var temp={}
                         if(res.data.data.follow_up_type[i].typecode == 21||res.data.data.follow_up_type[i].typecode == 22){

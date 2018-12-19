@@ -14,16 +14,12 @@
                 <all :managestatus="managestatus"></all>
             </TabPane>
         </Tabs>
-        <!-- <detail></detail> -->
-        <!-- <company-detail></company-detail> -->
-        <!-- <flow></flow> -->
+        <income-detail :id="id" v-if="openIncomeDetail" @close="close"></income-detail>
     </div>
 </template>
 
 <script>
-// import Detail from './myCommonTaskIndex/detail'
-// import CompanyDetail from './myCommonTaskIndex/companydetail'
-// import CompanyDetail from '../../woa-components/companyDetail/CompanyDetail'
+import incomeDetail from './incomeDetail'
 import Flow from './myCommonTaskIndex/flow'
 
 import Serving from './myCommonTaskIndex/serving'
@@ -38,19 +34,28 @@ import Notbegin from './myCommonTaskIndex/notbegin'
             All,
             Finished,
             Notbegin,
-            // Detail,
-            // CompanyDetail,
-            Flow
+            Flow,
+            incomeDetail
         },
         data(){
             return{
                 managestatus:[],
                 hash:new Map(),
+                id: "",
+                openIncomeDetail: false
             }
         },
         methods:{
+            close(e){
+                this.openIncomeDetail = false
+            }
         },
         created(){
+            let _self = this
+            this.$bus.on("PLAN_WORKORDER_INCOME_DETAIL", (e)=>{
+                _self.id = e
+                _self.openIncomeDetail = true
+            })
         }
 
     }

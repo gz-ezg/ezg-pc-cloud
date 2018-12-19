@@ -107,6 +107,7 @@
             return {
                 loading: false,
                 managestatus:[],
+                managestatus_map: new Map(),
                 search_model:"",
                 SearchValidate:{
                     CompanyName:'',
@@ -417,22 +418,6 @@
                     }
 
                     _self.loading = false
-
-                    // let _url = '/order/cycle/month/service/item/details?monthServiceIds=' + _ids.join()
-
-                    // function doSuccess2(res2) {
-                    //     let _obj = res2.data.data
-
-                    //     for (let i = 0; i < _self.data.length; i++) {
-                    //         if (_self.data[i].month_service_id != null) {
-                    //             _self.data[i].zl = res2.data.data[_self.data[i].month_service_id][0].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][0].confirm_date.substr(0,10):''
-                    //             _self.data[i].zz = res2.data.data[_self.data[i].month_service_id][1].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][1].confirm_date.substr(0,10):''
-                    //             _self.data[i].bs = res2.data.data[_self.data[i].month_service_id][2].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][2].confirm_date.substr(0,10):''
-                    //         }
-                    //     }
-                    // }
-
-                    // _self.GetData(_url, doSuccess2)
                 }
 
                 this.GetData(url, doSuccess)
@@ -653,10 +638,28 @@
                     // console.log(_self.id)
                     _self.$bus.emit('OPEN_FIELD_LIST_BY_COMPANYID', [_self.id.company_id,_self.id.CompanyName])
                 }
-            }
+            },
+            get_data_center(){
+                let _self = this
+                let config = "managestatus"
+                function finsih(res){
+                    _self.managestatus = res.data.data.managestatus
+                    _self.managestatus_map = _self.$array2map(_self.managestatus)
+                }
+                this.$GetDataCenter(config, finsih)
+
+                // await this.getData()
+                
+            },
         },
         mounted() {
-            this.getData()
+            let _self = this
+            async function start() {
+                await _self.get_data_center()
+                await _self.getData()
+            }
+
+            start()
         },
         created () {
             this.getGlobalDataCenter()

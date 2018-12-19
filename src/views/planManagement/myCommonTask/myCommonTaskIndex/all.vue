@@ -5,10 +5,6 @@
                 <Panel name="1">
                     <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
                     筛选
-                        <!-- <div slot="content">
-                            111111
-                        </div> -->
-                    <!-- <Search slot="content"></Search> -->
                     <div  slot="content" @keydown.enter="search">
                         <Form ref="formInline" :model="formInline" :label-width="100">
                             <Row :gutter="16">
@@ -39,43 +35,11 @@
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="pass_workorder" >通过</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="income_detail" >收款明细</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="reCreate" v-if="isAdmin">重新生成流程</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="finsih_workerorder" >一键完结</Button>
-                <!-- <Button type="primary" icon="ios-color-wand-outline" @click="product_error">产品异常</Button> -->
-                <!-- <Button type="primary" icon="ios-color-wand-outline">批量已读</Button>
-                <Button type="primary" icon="ios-color-wand-outline">批量未读</Button> -->
-                <!-- <Button type="primary" icon="ios-color-wand-outline" @click="foundClues">发现线索</Button>                -->
             </ButtonGroup>
-            <!-- <Poptip 
-                title="筛选" 
-                placement="bottom-end" 
-                width="350" 
-                style="float:right;margin-right:20px" 
-            >
-                <Button type="text" size="small" icon="funnel">筛选</Button>
-                <div  slot="content" @keydown.enter="search">
-                <Form ref="formInline" :model="formInline" :label-width="100">
-                    <Row :gutter="16">
-                        <Col span="22">
-                            <FormItem prop="companyName" label="公司名称：">
-                                <Input size="small"  type="text" v-model="formInline.companyname" placeholder="">
-                                </Input>
-                            </FormItem>
-                        </Col>
-                        <Col span="22">
-                            <FormItem prop="servicename" label="服务人员名称：">
-                                <Input size="small"  type="text" v-model="formInline.servicename" placeholder="">
-                                </Input>
-                            </FormItem>
-                        </Col>
-                    </Row>
-                    <FormItem>
-                        <Button type="primary" @click="search">搜索</Button>
-                        <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
-                    </FormItem>
-                </Form>
-                </div>
-            </Poptip> -->
         </Row>
         <Row style="margin-top: 10px;">
             <Table
@@ -133,8 +97,10 @@
 <script>
 import Search from './search'
 import Bus from '../../../../components/bus'
+import mixin from './mixin.js'
 
 export default {
+    mixins: [mixin],
     props:{
         managestatus: Array
     },
@@ -631,7 +597,27 @@ export default {
             }else{
                 this.$Message.warning('请选择一行！')
             }
-        }
+        },
+        // pass_workorder(){
+        //     let _self = this
+        //     if(this.current_row != ''){
+        //         let url = `api/order/goFinshWorkOrderProcess`
+        //         let config = {
+        //             params:{
+        //                 workOrderId: _self.current_row.id
+        //             }
+        //         }
+        //         function success(res){
+        //             _self.$Message.success(res.data.msg)
+        //         }
+        //         _self.$Get(url,config,success)
+        //     }else{
+        //         this.$Message.warning('请选择一行！')
+        //     }
+        // },
+        // income_detail(){
+
+        // }
     },
     created(){
         var _self = this

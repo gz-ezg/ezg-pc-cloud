@@ -9,6 +9,7 @@ module.exports = merge(baseConfig, {
     open: false,
     disableHostCheck: true,
     port: 8089,
+    inline: false,
     proxy: {
       '/api': {
         target: 'http://192.168.0.220:9000',
