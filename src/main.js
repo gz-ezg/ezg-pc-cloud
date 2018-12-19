@@ -20,6 +20,9 @@ import Cookies from 'js-cookie';
 // import echarts from 'echarts';
 
 import iviewArea from 'iview-area';
+if(process.env.NODE_ENV == 'development'){
+    Vue.config.devtools = true;
+}
 
 // import datagrid from './libs/easyUI/jquery.easyui.min'
 // import combobox from './libs/easyUI/jquery.easyui.min'

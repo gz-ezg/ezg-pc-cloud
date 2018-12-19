@@ -3,17 +3,35 @@
         <Card
             title="文件签收表"
         >
-            <div style="width:700px">
+            <Button @click="submit" type="primary">提交</Button>
+            {{fileList}}
+            <div style="width:800px">
                 <Collapse v-model="openPage">
                     <Panel name="1">
                         工商
-                        <p slot="content">
+                        <p slot="content" style="display:flex">
                             <Table
                                 ref="selection"
                                 highlight-row
                                 size="small"
                                 :columns="header"
-                                :data="data"
+                                :data="data.slice(0,10)"
+                            >
+                            </Table>
+                            <Table
+                                ref="selection"
+                                highlight-row
+                                size="small"
+                                :columns="header"
+                                :data="data.slice(10,20)"
+                            >
+                            </Table>
+                            <Table
+                                ref="selection"
+                                highlight-row
+                                size="small"
+                                :columns="header"
+                                :data="data.slice(20)"
                             >
                             </Table>
                         </p>
@@ -44,6 +62,7 @@
 export default {
     data(){
         return {
+            fileList: [],
             openPage: [1],
             total: 0,
             data: [],
@@ -67,12 +86,11 @@ export default {
                         return h('InputNumber', {
                             props: {
                                 min: 0,
-                                value: 0
+                                value: params.row.num
                             },
                             on: {
                                 "on-change": (e)=>{
-                                    console.log(e)
-                                    console.log(params)
+                                    this.change_num(params.row.id, e)
                                 }
                             }
                         })
@@ -89,7 +107,7 @@ export default {
             let config = {
                 params:{
                     page: 1,
-                    pageSize: 10,
+                    pageSize: 30,
                     sortField: 'id'
                 } 
             }
@@ -97,10 +115,28 @@ export default {
             function success(res){
                 _self.total = res.data.data.total
                 _self.data = res.data.data.rows
+                _self.data.map((item)=>{
+                    item.num = 0
+                })
             }
 
             this.$Get(url, config, success)
         },
+        change_num(id, num){
+            this.data.find((item)=>{
+                if(item.id == id){
+                    item.num = num
+                }
+            })
+        },
+        submit(){
+            this.fileList = []
+            this.data.map((item)=>{
+                if(item.num != 0){
+                    this.fileList.push(item)
+                }
+            })
+        }
     },
     created(){
         this.get_data()
