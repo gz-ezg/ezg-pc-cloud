@@ -25,8 +25,8 @@ import iviewArea from 'iview-area';
 // import combobox from './libs/easyUI/jquery.easyui.min'
 
 //  异常上报机制
-import Raven from 'raven-js';
-import RavenVue from 'raven-js/plugins/vue';
+// import Raven from 'raven-js';
+// import RavenVue from 'raven-js/plugins/vue';
 
 //  测试库版
 // if(process.env.NODE_ENV == 'jenkins' ){

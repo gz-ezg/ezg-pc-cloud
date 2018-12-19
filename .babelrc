@@ -1,27 +1,29 @@
-// {
-//     "presets": ["env"],
-//     "plugins": ["transform-runtime","transform-remove-strict-mode"],
-//     "comments": false
-// }
 {
-    "presets": [["env", { "modules": false }]],
+    "presets": [
+        ["env", {
+            "modules": false,
+            "targets": {
+                "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
+            }
+        }]
+    ],
     "plugins": [
-      "syntax-dynamic-import",
-      [
-        "component",
-        {
-          "libraryName": "element-ui",
-          "styleLibraryName": "theme-chalk"
-        }
-      ],
-      [
-        "transform-runtime",
-        {
-          "helpers": false,
-          "polyfill": false,
-          "regenerator": true,
-          "moduleName": "babel-runtime"
-        }
-      ]
+        "syntax-dynamic-import",
+        [
+            "component",
+            {
+                "libraryName": "element-ui",
+                "styleLibraryName": "theme-chalk"
+            }
+        ],
+        [
+            "transform-runtime",
+            {
+                "helpers": false,
+                "polyfill": false,
+                "regenerator": true,
+                "moduleName": "babel-runtime"
+            }
+        ]
     ]
-  }
+}
