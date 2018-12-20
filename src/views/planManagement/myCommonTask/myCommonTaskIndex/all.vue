@@ -71,31 +71,10 @@
                 <img :src='flowChartImg'/>
             </center>
         </Modal>
-        <!-- <Modal
-            v-model="pause"
-            title="提示信息"
-        >
-            <div style="font-size:20px;"><Icon type="alert-circled"></Icon>是否暂停/解锁</div>
-            <div slot="footer">
-                <Button type="primary" @click="pausetask">确定</Button>
-                <Button type="ghost" style="margin-left:20px" @click="pause=!pause">取消</Button>
-            </div>
-        </Modal>
-        <Modal
-            v-model="endlife"
-            title="提示信息"
-        >
-            <div style="font-size:20px;"><Icon type="alert-circled"></Icon>是否退款终止</div>
-            <div slot="footer">
-                <Button type="primary" @click="endlifetask">确定</Button>
-                <Button type="ghost" style="margin-left:20px" @click="endlife=!endlife">取消</Button>
-            </div>
-        </Modal> -->
     </Card>
 </template>
 
 <script>
-import Search from './search'
 import Bus from '../../../../components/bus'
 import mixin from './mixin.js'
 
@@ -103,9 +82,6 @@ export default {
     mixins: [mixin],
     props:{
         managestatus: Array
-    },
-    components:{
-        Search
     },
     data() {
             return {
@@ -146,10 +122,6 @@ export default {
                         width:140,
                         sortable: true,                                                
                         render:(h, params) => {
-                            // console.log(params.row.workOrderStatus.toString())
-                            
-                            // let temp = this.workOrderStatus_map.get(params.row.workOrderStatus.toString())
-                            // return h('div',temp)
                             if(params.row.workOrderStatus == '10'){
                                 return h('div','未分配')
                             }else if(params.row.workOrderStatus == '20'){
@@ -212,11 +184,11 @@ export default {
                     //     key: 'ordercode',
                     //     width: 150
                     // },
-                    {
-                        title: '经营状态',
-                        key:'managestatusName',
-                        width:120
-                    },
+                    // {
+                    //     title: '经营状态',
+                    //     key:'managestatusName',
+                    //     width:120
+                    // },
                     {
                         title: '服务部门',
                         key: 'departname',
@@ -508,14 +480,14 @@ export default {
             // console.log(e)
             this.current_row = e
         },
-        showdetail(){
-            if(this.current_row != ''){
-                // Bus.$emit('myCommonTask',this.current_row)
-                this.$store.commit("open_gobal_work_order_detail_modal", this.current_row.id)
-            }else{
-                this.$Message.warning('请选择一行查看详情！')
-            }
-        },
+        // showdetail(){
+        //     if(this.current_row != ''){
+        //         // Bus.$emit('myCommonTask',this.current_row)
+        //         this.$store.commit("open_gobal_work_order_detail_modal", this.current_row.id)
+        //     }else{
+        //         this.$Message.warning('请选择一行查看详情！')
+        //     }
+        // },
         showflow(){
             // console.log('111111111')
             if(this.current_row != ''){
@@ -543,17 +515,6 @@ export default {
         },
         getDataCenter(){
                 let _self = this
-                // let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
-                // let config = {
-                //     params:{
-                //         groupCodes:'workOrderStatus'
-                //     }
-                // }
-                // this.$http.get(url, config).then(function(res){
-                //     // console.log(res.data.data.workOrderStatus)
-                //     _self.workOrderStatus = res.data.workOrderStatus
-                //     _self.workOrderStatus_map = _self.$array2map(_self.workOrderStatus)
-                // })
 
                 let params = "workOrderStatus"
 
@@ -598,26 +559,6 @@ export default {
                 this.$Message.warning('请选择一行！')
             }
         },
-        // pass_workorder(){
-        //     let _self = this
-        //     if(this.current_row != ''){
-        //         let url = `api/order/goFinshWorkOrderProcess`
-        //         let config = {
-        //             params:{
-        //                 workOrderId: _self.current_row.id
-        //             }
-        //         }
-        //         function success(res){
-        //             _self.$Message.success(res.data.msg)
-        //         }
-        //         _self.$Get(url,config,success)
-        //     }else{
-        //         this.$Message.warning('请选择一行！')
-        //     }
-        // },
-        // income_detail(){
-
-        // }
     },
     created(){
         var _self = this

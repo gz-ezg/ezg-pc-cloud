@@ -79,6 +79,7 @@
                                 :total="total"
                                 show-total
                                 show-elevator
+                                :current.sync="page"
                                 @on-change="pageChange"
                                 style="margin-top: 10px"></Page>
                         </Row>
@@ -273,6 +274,7 @@ export default {
         //  获取资料
         get_company(query){
             let _self = this
+            _self.page = 1
             _self.companyLoading = true
             let url = "api/customer/company/list"
             let config = {

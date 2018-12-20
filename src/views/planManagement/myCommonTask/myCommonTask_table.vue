@@ -1,7 +1,7 @@
 <template>
     <div>
         <Tabs value="name1">
-            <TabPane label="未开始" name="name1">
+            <!-- <TabPane label="未开始" name="name1">
                 <notbegin :managestatus="managestatus"></notbegin>
             </TabPane>
             <TabPane label="服务中" name="name2">
@@ -12,42 +12,67 @@
             </TabPane>
             <TabPane label="全部" name="name4">
                 <all :managestatus="managestatus"></all>
+            </TabPane> -->
+            <TabPane label="未开始" name="name1">
+                <notbegin @open-flow-chart="open_flow_chart"></notbegin>
+            </TabPane>
+            <TabPane label="服务中" name="name2">
+                <serving @open-flow-chart="open_flow_chart"></serving>
+            </TabPane>
+            <TabPane label="已完结" name="name3">
+                <finished @open-flow-chart="open_flow_chart"></finished>
+            </TabPane>
+            <TabPane label="全部" name="name4">
+                <all @open-flow-chart="open_flow_chart"></all>
             </TabPane>
         </Tabs>
         <income-detail :id="id" v-if="openIncomeDetail" @close="close"></income-detail>
+        <Modal
+            v-model="flowChartShow"
+            title="查看流程图"
+            width="80%">
+            <center>
+                <img :src='flowChartImg' witdh="100%"/>
+            </center>
+            <div slot="footer"></div>
+        </Modal>
     </div>
 </template>
 
 <script>
 import incomeDetail from './incomeDetail'
-import Flow from './myCommonTaskIndex/flow'
 
-import Serving from './myCommonTaskIndex/serving'
-import All from './myCommonTaskIndex/all'
-import Finished from './myCommonTaskIndex/finished'
-import Notbegin from './myCommonTaskIndex/notbegin'
+import all from './myCommonTaskIndex/tabpanes/all'
+import finished from './myCommonTaskIndex/tabpanes/finished'
+import serving from './myCommonTaskIndex/tabpanes/servicing'
+import notbegin from './myCommonTaskIndex/tabpanes/notbegin'
 
     export default {
         name:'plantaskmanagement',
         components:{
-            Serving,
-            All,
-            Finished,
-            Notbegin,
-            Flow,
-            incomeDetail
+            incomeDetail,
+            all,
+            finished,
+            serving,
+            notbegin
         },
         data(){
             return{
                 managestatus:[],
-                hash:new Map(),
                 id: "",
-                openIncomeDetail: false
+                openIncomeDetail: false,
+                flowChartShow: false,
+                flowChartImg: ""
             }
         },
         methods:{
             close(e){
                 this.openIncomeDetail = false
+            },
+            open_flow_chart(e){
+                let _self = this
+                _self.flowChartShow = true
+                _self.flowChartImg = '/api/dataCenter/activiti/getResourceInputStreamObj?bussinessKey=' + e +'&bussinessType=20&time='+new Date()
             }
         },
         created(){
@@ -57,6 +82,5 @@ import Notbegin from './myCommonTaskIndex/notbegin'
                 _self.openIncomeDetail = true
             })
         }
-
     }
 </script>

@@ -2,11 +2,24 @@
     <div>
         <Card
             title="文件签收表"
+            style="width:650px;margin:auto"
         >
-            <Button @click="submit" type="primary">提交</Button>
-            {{fileList}}
-            <div style="width:800px">
-                <Collapse v-model="openPage">
+            <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+                <Row :gutter="20">
+                    <Col span="10">
+                        <FormItem label="客户" prop="name">
+                            <Input v-model="formValidate.name" ></Input>
+                        </FormItem>
+                    </Col>
+                    <Col span="10">
+                        <FormItem label="业务" prop="workId">
+                            <Input v-model="formValidate.workId"></Input>
+                        </FormItem>
+                    </Col>
+                </Row> 
+            </Form>
+            <div style="width:610px">
+                <Collapse v-model="openPage" id="fileTable">
                     <Panel name="1">
                         工商
                         <p slot="content" style="display:flex">
@@ -16,6 +29,7 @@
                                 size="small"
                                 :columns="header"
                                 :data="data.slice(0,10)"
+                                style="width:304px"
                             >
                             </Table>
                             <Table
@@ -24,35 +38,39 @@
                                 size="small"
                                 :columns="header"
                                 :data="data.slice(10,20)"
-                            >
-                            </Table>
-                            <Table
-                                ref="selection"
-                                highlight-row
-                                size="small"
-                                :columns="header"
-                                :data="data.slice(20)"
+                                style="width:304px"
                             >
                             </Table>
                         </p>
                     </Panel>
                     <Panel name="2">
                         个人信息
-                        <p slot="content">斯蒂夫·盖瑞·沃兹尼亚克（Stephen Gary Wozniak），美国电脑工程师，曾与史蒂夫·乔布斯合伙创立苹果电脑（今之苹果公司）。斯蒂夫·盖瑞·沃兹尼亚克曾就读于美国科罗拉多大学，后转学入美国著名高等学府加州大学伯克利分校（UC Berkeley）并获得电机工程及计算机（EECS）本科学位（1987年）。</p>
+                        <p slot="content">
+                            <Table
+                                ref="selection"
+                                highlight-row
+                                size="small"
+                                :columns="header"
+                                :data="data.slice(10,20)"
+                                style="width:304px"
+                            >
+                            </Table>
+                        </p>
                     </Panel>
                     <Panel name="3">
                         税务
-                        <p slot="content">乔纳森·伊夫是一位工业设计师，现任Apple公司设计师兼资深副总裁，英国爵士。他曾参与设计了iPod，iMac，iPhone，iPad等众多苹果产品。除了乔布斯，他是对苹果那些著名的产品最有影响力的人。</p>
+                        <p slot="content">2</p>
                     </Panel>
                     <Panel name="4">
                         银行
-                        <p slot="content">乔纳森·伊夫是一位工业设计师，现任Apple公司设计师兼资深副总裁，英国爵士。他曾参与设计了iPod，iMac，iPhone，iPad等众多苹果产品。除了乔布斯，他是对苹果那些著名的产品最有影响力的人。</p>
+                        <p slot="content">4</p>
                     </Panel>
                     <Panel name="5">
                         其他
-                        <p slot="content">乔纳森·伊夫是一位工业设计师，现任Apple公司设计师兼资深副总裁，英国爵士。他曾参与设计了iPod，iMac，iPhone，iPad等众多苹果产品。除了乔布斯，他是对苹果那些著名的产品最有影响力的人。</p>
+                        <p slot="content">3</p>
                     </Panel>
                 </Collapse>
+                <Button @click="submit" type="primary" style="width:100%;margin-top:5px;">提交</Button>
             </div>
         </Card>
     </div>
@@ -62,15 +80,19 @@
 export default {
     data(){
         return {
+            formValidate: {
+                name: "",
+                workId: ""
+            },
             fileList: [],
-            openPage: [1],
+            openPage: [1,2,3,4,5],
             total: 0,
             data: [],
             header: [
                 {
                     title: "资料名称",
                     key: "file_type_name",
-                    width: 120
+                    minWidth: 150
                 },
                 // {
                 //     title: "",
@@ -86,7 +108,8 @@ export default {
                         return h('InputNumber', {
                             props: {
                                 min: 0,
-                                value: params.row.num
+                                value: params.row.num,
+                                max: params.row.plural == 'N'?1:9999
                             },
                             on: {
                                 "on-change": (e)=>{
@@ -144,3 +167,29 @@ export default {
 }
 </script>
 
+<style>
+#fileTable .ivu-table-small td{
+    height: 32px;
+}
+#fileTable .ivu-input-number-input-wrap{
+    height: 28px;
+}
+#fileTable .ivu-input-number-input{
+    height: 28px;
+    line-height: 28px;
+}
+#fileTable .ivu-input-number{
+    height: 28px;
+    line-height: 28px;
+    border: none;
+}
+#fileTable .ivu-input-number-handler{
+    height: 14px;
+}
+#fileTable .ivu-collapse-content{
+    padding: 0px;
+}
+#fileTable .ivu-collapse-content>.ivu-collapse-content-box{
+    padding: 0px;
+}
+</style>

@@ -199,11 +199,11 @@ export default {
                         key: 'baseorderid',
                         width: 120,
                     },
-                    {
-                        title: '经营状态',
-                        key:'managestatusName',
-                        width:120
-                    },
+                    // {
+                    //     title: '经营状态',
+                    //     key:'managestatusName',
+                    //     width:120
+                    // },
                     // {
                     //     title: '订单',
                     //     key: 'ordercode',
@@ -528,13 +528,13 @@ export default {
         save_current_row(e){
             this.current_row = e
         },
-        showdetail(){
-            if(this.current_row != ''){
-                this.$store.commit("open_gobal_work_order_detail_modal", this.current_row.id)
-            }else{
-                this.$Message.warning('请选择一行查看详情！')
-            }
-        },
+        // showdetail(){
+        //     if(this.current_row != ''){
+        //         this.$store.commit("open_gobal_work_order_detail_modal", this.current_row.id)
+        //     }else{
+        //         this.$Message.warning('请选择一行查看详情！')
+        //     }
+        // },
         showflow(){
             if(this.current_row != ''){
                 if(this.current_row.resumeFlag == 2){

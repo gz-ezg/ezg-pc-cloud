@@ -98,6 +98,7 @@ export default {
                         _self.loading = false
                         // _self.backup = ''
                         Bus.$emit('flowsuccess',true)
+                        _self.$bus.emit("FLOW_NEXT")
                     }else{
                         _self.$Message.warning(res.data.msg)
                         _self.loading = false
