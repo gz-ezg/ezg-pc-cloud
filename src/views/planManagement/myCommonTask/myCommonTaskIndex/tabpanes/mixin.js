@@ -76,10 +76,9 @@ export default {
             }
 
             function success(res){
-                _self.data = res.data.data.rows
+                // _self.data = res.data.data.rows
                 _self.total = res.data.data.total
-
-                _self.data.map((item)=>{
+                _self.data = res.data.data.rows.map((item)=>{
                     if(item.CreateDate){
                         item.CreateDate = item.CreateDate.slice(0,10)
                     }
@@ -89,6 +88,7 @@ export default {
                     if(item.UpdateDate){
                         item.UpdateDate = item.UpdateDate.slice(0,10)
                     }
+                    return item
                 })
                 _self.loading = false
             }
@@ -184,11 +184,9 @@ export default {
                     workOrderId: _self.currentRow.id
                 }
                 function success(res){
-                    // _self.$Message.success(res.data.msg)
                     _self.get_data()
                 }
                 function fail(err){
-                    // _self.$Message.success(err)
                 }
                 _self.$Post(url,config,success,fail)
             }else{
