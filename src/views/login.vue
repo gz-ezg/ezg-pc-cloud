@@ -111,17 +111,17 @@
                             _self.loading = false
                             _self.count = response.data.errCount
                             if (_self.count > 2) {
-                                _self.$Message.error(response.data.msg);
+                                // _self.$Message.error(response.data.msg);
                                 _self.yzmShow = true
                                 _self.getImg()
                                 // $('#code').show()
                             } else if (_self.count < 3) {
-                                _self.$Message.error(response.data.msg);
+                                // _self.$Message.error(response.data.msg);
                                 // $('#code').hide()
                                 _self.yzmShow = false
                                 _self.getImg()
                             } else {
-                                _self.$Message.error(response.data.msg);
+                                // _self.$Message.error(response.data.msg);
                                 _self.getImg()
                             }
                         }

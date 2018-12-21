@@ -520,6 +520,14 @@
                                     </Select>
                                 </FormItem>
                             </Col>
+                            <Col span="11">
+                                <FormItem prop="validflag" label="账号类型：" style="margin-bottom:5px">
+                                    <Select transfer v-model="taxManagement.validflag" placeholder="" :disabled="isEditTax">
+                                        <Option value="Y">有效</Option>
+                                        <Option value="N">无效</Option>
+                                    </Select>
+                                </FormItem>
+                            </Col>
                         </Row>
                         <!-- <Row :gutter="16">
                             <Col span="1" style="visibility:hidden">1</Col>
@@ -892,7 +900,9 @@
                     taxdisk:'Y',
                     socialsecuritypsw:"",
                     Providentfundnum:"",
-                    Providentfundpsw:""
+                    Providentfundpsw:"",
+                    validflag: "",
+                    accounttype: ""
                 },
                 dynamic:[],
                 workOrder:[],
@@ -1126,7 +1136,8 @@
                     Providentfundpsw: _self.taxManagement.Providentfundpsw,
                     Providentfundnum: _self.taxManagement.Providentfundnum,
                     socialsecuritypsw: _self.taxManagement.socialsecuritypsw,
-                    accounttype: _self.taxManagement.accounttype
+                    accounttype: _self.taxManagement.accounttype,
+                    validflag: _self.taxManagement.validflag
                 }
                 function success(res){
                     _self.isEditTax = true  
