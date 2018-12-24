@@ -1116,13 +1116,15 @@
                 let _self = this
                 this.submit_ing = true
                 let url = `api/customer/company/saveCompanyTaxManagement`
+
+                // console.log(_self.taxManagement.nationalnum.replace(/\s+/g,""))
                 let config = {
                     companyid:_self.companyId,
                     companytype:_self.taxManagement.companytype,
                     nationaltax:_self.taxManagement.nationaltax,
                     Localtax:_self.taxManagement.Localtax,
-                    nationalnum:_self.taxManagement.nationalnum,
-                    nationalpsw:_self.taxManagement.nationalpsw,
+                    nationalnum:_self.taxManagement.nationalnum.replace(/\s+/g,""),
+                    nationalpsw:_self.taxManagement.nationalpsw.replace(/\s+/g,""),
                     Localnum:_self.taxManagement.Localnum,
                     Localpsw:_self.taxManagement.Localpsw,
                     addedvaluetax:_self.taxManagement.addedvaluetax,
