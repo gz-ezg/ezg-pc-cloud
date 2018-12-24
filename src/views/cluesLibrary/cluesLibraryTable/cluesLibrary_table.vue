@@ -979,7 +979,7 @@ import publicCustomer from './publicCustomer'
                         params:{
                             receipt:'Y',
                             // isAudit:'Y',
-                            sortField:'clue_level',
+                            sortField:'receipt_time',
                             order:'asc',
                             page:_self.pagey,
                             pageSize:_self.pageSizey,

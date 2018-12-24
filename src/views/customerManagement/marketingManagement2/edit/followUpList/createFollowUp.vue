@@ -27,6 +27,16 @@
                         </FormItem>
                     </Col>
                 </Row>
+                <Row :gutter="16" v-if="openFinish">
+                    <Col span="12">
+                        <FormItem label="完成状态" prop="finishFlag">
+                            <Select transfer v-model="formValidate.finishFlag" size="small">
+                                <Option value="Y" >完成</Option>
+                                <Option value="N" >未完成</Option>
+                            </Select>
+                        </FormItem>
+                    </Col>
+                </Row>
                 <Row :gutter="16">
                     <Col>
                         <FormItem prop="isClue">
@@ -37,17 +47,17 @@
                 <FormItem label="跟进记录" prop="content" style="margin-bottom:20px">
                     <Input size="small" type="textarea" v-model="formValidate.content"/>
                 </FormItem>
-                <!-- <FormItem label="事件通知时间" prop="date" style="margin-top:20px;margin-bottom:20px">
+                <FormItem label="通知时间" prop="date" style="margin-top:20px;margin-bottom:20px">
                     <Row>
                         <Col span="11">
-                            <DatePicker transfer type="date" placeholder="选择日期" v-model="formValidate.followupdate"></DatePicker>
+                            <DatePicker transfer type="date" placeholder="选择日期" v-model="formValidate.followupdate" size="small"></DatePicker>
                         </Col>
                         <Col span="2" style="text-align: center">-</Col>
                         <Col span="11">
-                            <TimePicker  transfer type="time" placeholder="选择时间" hide-disabled-options :disabled-hours="[0,1,2,3,4,5,6,7]" v-model="formValidate.followuptime"></TimePicker>
+                            <TimePicker transfer type="time" format="HH:mm" placeholder="选择时间" hide-disabled-options :disabled-hours="[0,1,2,3,4,5,6,7]" v-model="formValidate.followuptime" size="small"></TimePicker>
                         </Col>
                     </Row>
-                </FormItem> -->
+                </FormItem>
                 <FormItem style="margin-bottom:20px">
                     <div slot="label">沟通证据</div>
                     <Upload
@@ -62,18 +72,23 @@
                         <Button name="marketingManagement_index_followUp_removefile" type="text" @click="fileRemove(index)">移除</Button>
                     </div>
                 </FormItem>
-                <FormItem>
+                <!-- <FormItem>
                     <Button name="marketingManagement_index_followUp_submit" type="primary" @click="submit" :loading="loading">提交</Button>
                     <Button type="ghost" @click="cancel" style="margin-left: 8px">重置</Button>
-                </FormItem>
+                </FormItem> -->
             </Form>
-            <div slot="footer"></div>
+            <div slot="footer">
+                <Button name="marketingManagement_index_followUp_submit" type="primary" @click="submit" :loading="loading" :disabled="loading">提交</Button>
+                <Button type="ghost" @click="cancel" style="margin-left: 8px">重置</Button>
+            </div>
         </Modal>
     </div>
 </template>
 
 <script>
 import { yasuo } from '../../../../../libs/img_beforeUpload'
+import { DateFormat } from '../../../../../libs/utils.js'
+
 
 export default {
     props:{
@@ -86,6 +101,7 @@ export default {
     },
     data(){
         return {
+            openFinish: false,
             openFollowCreate: false,
             formValidate: {
                 companyId: "",
@@ -93,7 +109,10 @@ export default {
                 followUpType: "",
                 content: "",
                 attIds: "",
-                customerId: this.customer.ID
+                customerId: this.customer.ID,
+                followupdate: "",
+                followuptime: "",
+                finishFlag: ""
             },
             ruleValidate: {
                 content:[
@@ -145,6 +164,8 @@ export default {
                 switch(temp){
                     case "kuaiji":
                         _self.formValidate.followUpType = "18"
+                        _self.openFinish = true
+                        _self.formValidate.finishFlag = 'N'
                         break;
                     case "shangshi":
                         _self.formValidate.followUpType = "17"
@@ -158,6 +179,7 @@ export default {
                 }
             }else{
                 _self.followupshow = true
+                _self.openFinish = true
             }
         },
         get_data_center(){
@@ -192,6 +214,7 @@ export default {
         //  可以改写成promise
         uploadImg(){
             let _self = this
+            _self.loading = true
             _self.$ButtonCollect("marketingManagement_index_followUp_submit");
             let url = "/api/customer/addCustomerContentImg"
 
@@ -227,14 +250,19 @@ export default {
                 followUpType: _self.formValidate.followUpType,
                 content: _self.formValidate.content,
                 attIds: _self.formValidate.attIds,
-                customerId: _self.formValidate.customerId
+                customerId: _self.formValidate.customerId,
+                finishFlag: _self.formValidate.finishFlag,
+                notifyDate: (DateFormat(_self.formValidate.followupdate) + ' ' + _self.formValidate.followuptime)
+                // notifyDate: "2018-10-24 13:00"
             }
 
             function success(res){
                 if(_self.isClue){
                     _self.CreateClue()
                 }else{
-                    _self.loading = false
+                    setTimeout(()=>{
+                        _self.loading = false
+                    },300)
                     _self.openFollowCreate = false
                     _self.$emit("update", _self.customer.ID)
                 }
@@ -255,11 +283,13 @@ export default {
                 followUpType: "20",
                 content: _self.formValidate.content,
                 attIds: _self.formValidate.attIds,
-                customerId: _self.formValidate.customerId
+                customerId: _self.formValidate.customerId,
             }
 
             function success(res){
-                _self.loading = false
+                setTimeout(()=>{
+                    _self.loading = false
+                },300)
                 _self.openFollowCreate = false
                 _self.$emit("update", _self.customer.ID)
             }

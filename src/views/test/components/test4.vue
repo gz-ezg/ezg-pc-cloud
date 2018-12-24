@@ -5,7 +5,7 @@
         <!-- <div style="width:375px;height:667px;background-color:#666666" @click.right.prevent="right_click($event)"></div> -->
         <Button v-if="right_click_show" :style="{top: rightTop + 'px', left: rightLeft + 'px'}" style="position:fixed;z-index:9000" type="primary" @click="add_text">新增文字</Button>
         <canvas id="myCanvas" width="375" height="667" style="border:1px solid #666666;" @click.right.prevent="right_click($event)">
-</canvas>
+        </canvas>
     </div>
 </template>
 
@@ -23,7 +23,8 @@ export default {
             rightLeft: "",
             el: "",
             ctx: "",
-            event
+            event,
+            current: "12345"
         }
     },
     methods: {
