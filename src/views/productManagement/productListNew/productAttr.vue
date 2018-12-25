@@ -202,15 +202,21 @@ export default {
 
       function success(res) {
         _self.producSku = res.data.data;
-        let temp = _self.producSku[0].linkPropertys.split(",");
-        if (temp.length == 1) {
-          _self.selectProperty.push(parseInt(temp[0]));
-          _self.property_change();
-        }
+        try {
+          let temp = _self.producSku[0].linkPropertys.split(",");
+          if (temp.length == 1) {
+            _self.selectProperty.push(parseInt(temp[0]));
+            _self.property_change();
+          }
 
-        setTimeout(() => {
-          _self.sideLoading = false;
-        }, 200);
+          setTimeout(() => {
+            _self.sideLoading = false;
+          }, 200);
+        } catch (error) {
+          setTimeout(() => {
+            _self.sideLoading = false;
+          }, 200);
+        }
       }
 
       this.$Get(url, config, success);

@@ -8,13 +8,14 @@ const os = require('os');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin") 
 
 module.exports = {
     entry: {
         main: path.resolve(__dirname, '../src/main.js')
     },
     output: {
-        path: path.resolve(__dirname, '../dist/static'),
+        path: path.resolve(__dirname, '../dist'),
         filename: 'js/[name].[hash].js'
     },
     module: {
@@ -67,7 +68,8 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: [
-                    "vue-style-loader", // creates style nodes from JS strings
+                    "vue-style-loader",
+                    // 'MiniCssExtractPlugin.loader', // creates style nodes from JS strings
                     "css-loader", // translates CSS into CommonJS
                     "sass-loader" // compiles Sass to CSS, using Node Sass by default
                 ]
@@ -75,6 +77,10 @@ module.exports = {
         ]
     },
     plugins: [
+        // new ExtractTextPlugin({
+        //     filename: '[name].[chunkhash].css',
+        //     allChunks: true
+        // }),
         new HappyPack({
             id: 'happybabel',
             loaders: ['babel-loader?cacheDirectory=true'],

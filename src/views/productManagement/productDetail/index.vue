@@ -37,6 +37,16 @@
                         <FormItem label="产品编码：" prop="productCode">
                             <Input v-model="data.productCode" :readonly="readonly"></Input>
                         </FormItem>
+                        <FormItem label="产品状态：" prop="status">
+                            <!-- <Input v-model="data.status" :readonly="readonly"></Input> -->
+                            <Select style="width:100%" v-model="data.status" :disabled="readonly">
+                                <Option :value="0">未上架</Option>
+                                <Option :value="1">销售中</Option>
+                            </Select>
+                        </FormItem>
+                        <FormItem label="产品排序：" prop="ordernumber">
+                            <Input v-model="data.ordernumber" :readonly="readonly"></Input>
+                        </FormItem>
                         <FormItem v-if="$route.query.id">
                             <Button type="primary" @click="before_update_product">修改</Button>
                             <Button type="ghost" @click="cancel" style="margin-left: 8px">重置</Button>
@@ -264,7 +274,9 @@ export default {
                 departalias: _self.data.departalias.join(","),
                 producttypeid: _self.data.productTypeID,
                 propertys: JSON.stringify(attrList),
-                sortid: 0
+                sortid: _self.data.ordernumber,
+                status: _self.data.status,
+                ordernumber: _self.data.ordernumber
             }
 
             function success(res){
@@ -296,6 +308,9 @@ export default {
                 departalias: _self.data.departalias.join(","),
                 productTypeId: _self.data.productTypeID,
                 propertyIds: JSON.stringify(attrList),
+                // sortid: _self.data.ordernumber,
+                // status: _self.data.status,
+                // ordernumber: _self.data.ordernumber
             }
 
             function success(res){

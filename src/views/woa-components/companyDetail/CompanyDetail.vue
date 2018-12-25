@@ -44,6 +44,29 @@
                                     </FormItem>
                                 </Col>
                             </Row>
+                            <Row :gutter="16" v-if="openFinish">
+                                <Col span="12">
+                                    <FormItem label="完成状态：" prop="finishFlag">
+                                        <Select transfer v-model="addDetailContent.finishFlag" size="small">
+                                            <Option value="Y" >完成</Option>
+                                            <Option value="N" >未完成</Option>
+                                        </Select>
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row :gutter="16">
+                                <Col span="20">
+                                    <FormItem label="通知时间：" prop="date">
+                                        <Col span="8">
+                                            <DatePicker transfer type="date" placeholder="选择日期" v-model="addDetailContent.followupdate" size="small"></DatePicker>
+                                        </Col>
+                                        <Col span="2" style="text-align: center">-</Col>
+                                        <Col span="8">
+                                            <TimePicker transfer type="time" format="HH:mm" placeholder="选择时间" hide-disabled-options :disabled-hours="[0,1,2,3,4,5,6,7]" v-model="addDetailContent.followuptime" size="small"></TimePicker>
+                                        </Col>
+                                    </FormItem>
+                                </Col>
+                            </Row>
                             <Row :gutter="16">
                                 <Col span="20">
                                     <FormItem prop="content" label="跟进内容：" style="margin-bottom:5px">
@@ -521,7 +544,7 @@
                                 </FormItem>
                             </Col>
                             <Col span="11">
-                                <FormItem prop="validflag" label="账号类型：" style="margin-bottom:5px">
+                                <FormItem prop="validflag" label="有效性：" style="margin-bottom:5px">
                                     <Select transfer v-model="taxManagement.validflag" placeholder="" :disabled="isEditTax">
                                         <Option value="Y">有效</Option>
                                         <Option value="N">无效</Option>
@@ -794,6 +817,7 @@
     // import Bscroll from 'better-scroll'
     // import { yasuo } from '../../../libs/img_beforeUpload.js'
     import { yasuo } from '../../../libs/img_beforeUpload'
+    import { DateFormat } from '../../../libs/utils.js'
 
 
 
@@ -805,6 +829,7 @@
         },
         data(){
             return {
+                openFinish: false,
                 etax_account_type: [],
                 isClue: false,
                 openCompanyDetail: true,
@@ -820,7 +845,10 @@
                     followUpType:"",
                     content:"",
                     customerId:"",
-                    companyId:""
+                    companyId:"",
+                    finishFlag: "",
+                    followupdate: "",
+                    followuptime: ""
                 },
                 //
                 spinShow: true,
@@ -1046,6 +1074,30 @@
                         minWidth:100
                     },
                     {
+                        title:'完成状态',
+                        key:'realname',
+                        minWidth:100,
+                        render: (h, params) => {
+                            if(params.row.finish_flag == 'N'){
+                                return h('Button', {
+                                    props: {
+                                        type: 'info',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: ()=>{
+                                            this.update_customer_flag(params.row, 'Y')
+                                        }
+                                    }
+                                },"完成")
+                            }else if(params.row.finish_flag == 'Y'){
+                                return h('div',"完成")
+                            }else{
+                                return h('div')
+                            }
+                        }
+                    },
+                    {
                         title:'操作',
                         key: 'action',
                         fixed: 'right',
@@ -1073,6 +1125,25 @@
         }
         },
         methods: {
+            update_customer_flag(row, status){
+                console.log(row)
+                let _self = this
+                let url = `api/customer/updateCustomerContentNoteKj`
+                let config  = {
+                    id: row.id,
+                    finishFlag: status
+                }
+
+                function success(res){
+                    _self.getData()
+                }
+
+                function fail(err){
+                    _self.getData()
+                }
+
+                this.$Post(url, config, success, fail)
+            },
             fpkj(){},
             ckbgrz(){},
             getData() {
@@ -1097,7 +1168,7 @@
                 }
 
                 function fail(err){
-                    _self.$Message.error("对不起，当前查询的工单有误！请确认后重试！窗口将在2秒后关闭！")
+                    _self.$Message.error("对不起，当前查询的公司有误！请确认后重试！窗口将在2秒后关闭！")
                     _self.cancel()
                 }
                 this.$Get(url, config, success, fail)
@@ -1178,7 +1249,9 @@
                     customerId: _self.companyInfo.customerid,
                     companyId:_self.companyInfo.id,
                     followUpType: _self.addDetailContent.followUpType,
-                    attIds:_self.attIds
+                    attIds:_self.attIds,
+                    finishFlag: _self.addDetailContent.finishFlag,
+                    notifyDate: (DateFormat(_self.addDetailContent.followupdate) + ' ' + _self.addDetailContent.followuptime)
                 }
                 function success(res){
                     if(_self.isClue){
@@ -1300,6 +1373,8 @@
                     switch(temp){
                         case "kuaiji":
                             _self.addDetailContent.followUpType = "18"
+                            _self.openFinish = true
+                            _self.addDetailContent.finishFlag = "N"
                             break;
                         case "shangshi":
                             _self.addDetailContent.followUpType = "17"
@@ -1321,7 +1396,7 @@
             var _self = this
             this.getRole()
             this.GetFollowUpType()   
-            this.getData()         
+            this.getData()
         },
         beforeDestroy () {
             // this.$bus.off(['VueBusTest'])

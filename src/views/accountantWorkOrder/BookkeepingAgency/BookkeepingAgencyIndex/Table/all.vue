@@ -43,6 +43,14 @@
                                         <Input v-model="SearchValidate.end_end_period" size="small" style="width:40%" placeholder="201807"></Input>
                                     </FormItem>
                                     </Col>
+                                    <Col span="8">
+                                        <FormItem label="完成状态：" prop="note_kj_flag">
+                                            <Select v-model="SearchValidate.note_kj_flag" size="small" style="width:100%">
+                                                <Option value="Y">完成</Option>
+                                                <Option value="N">未完成</Option>
+                                            </Select>
+                                        </FormItem>
+                                    </Col>
                                 </Row>
                                 <center>
                                     <FormItem>
@@ -115,7 +123,8 @@
                     followby_realname:'',
                     departname:'',
                     begin_end_period:"",
-                    end_end_period:""
+                    end_end_period:"",
+                    note_kj_flag: ""
                 },
                 page: 1,
                 pageSize: 10,
@@ -212,6 +221,11 @@
                         title: '累计外勤',
                         key: 'dljz_legwork',
                         minWidth:100
+                    },
+                    {
+                        title: "完成状态",
+                        key: "note_kj_flag",
+                        minWidth: 120,
                     },
                     {
                         title: '备注',
@@ -316,6 +330,7 @@
                         departname: _self.SearchValidate.departname,
                         begin_end_period: _self.SearchValidate.begin_end_period,
                         end_end_period: _self.SearchValidate.end_end_period,
+                        note_kj_flag: _self.SearchValidate.note_kj_flag,
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field))
                 }
@@ -329,6 +344,7 @@
                 this.SearchValidate.departname = ""
                 this.SearchValidate.end_end_period = ""
                 this.SearchValidate.begin_end_period = ""
+                this.SearchValidate.note_kj_flag = ''
                 this.Search()               
             },
             Search(){
@@ -344,7 +360,24 @@
             getData() {
                 let _self = this
                 _self.loading = true
-                let url = '/order/cycle/service/record/list?sortField=updatedate&service_type=dljz&page=' + _self.page + '&pageSize=' + _self.pageSize +'&followby_realname='+_self.SearchValidate.followby_realname + '&CompanyName=' + _self.SearchValidate.CompanyName +'&server_realname=' +_self.SearchValidate.server_realname +'&departname='+ _self.SearchValidate.departname + '&begin_end_period=' + _self.SearchValidate.begin_end_period + "&end_end_period=" + _self.SearchValidate.end_end_period
+                let url = 'api/order/cycle/service/record/list'
+
+                let config = {
+                    params: {
+                        sortField: "updatedate",
+                        service_type: "dljz",
+                        page: _self.page,
+                        pageSize: _self.pageSize,
+                        followby_realname: _self.SearchValidate.followby_realname,
+                        CompanyName: _self.SearchValidate.CompanyName,
+                        server_realname: _self.SearchValidate.server_realname,
+                        CompanyName: _self.SearchValidate.CompanyName,
+                        departname: _self.SearchValidate.departname,
+                        begin_end_period: _self.SearchValidate.begin_end_period,
+                        end_end_period: _self.SearchValidate.end_end_period,
+                        note_kj_flag: _self.SearchValidate.note_kj_flag
+                    }
+                }
 
                 function doSuccess(res) {
                     let _data = res.data.data
@@ -413,14 +446,16 @@
                             bs: '',
                             cycle_work_order_id:_data.rows[i].cycle_work_order_id,
                             dljz_legwork: _data.rows[i].dljz_legwork,
-                            has_account: _data.rows[i].has_account
+                            has_account: _data.rows[i].has_account,
+                            note_kj_flag: _data.rows[i].note_kj_flag == 'Y'? "完成": "未完成"
                         })
                     }
 
                     _self.loading = false
                 }
 
-                this.GetData(url, doSuccess)
+                // this.GetData(url, doSuccess)
+                this.$Get(url,config, doSuccess)
             },
 
             pageChange(a) {

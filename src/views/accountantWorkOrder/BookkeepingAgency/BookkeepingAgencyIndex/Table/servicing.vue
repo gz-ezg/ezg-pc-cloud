@@ -19,17 +19,28 @@
                                     </FormItem>
                                     </Col>
                                     <Col span="8">
-                                    <FormItem label="结束账期：" prop="followby_realname">
-                                        <Input v-model="SearchValidate.begin_end_period" size="small" style="width:40%" placeholder="201807"></Input>
-                                        -
-                                        <Input v-model="SearchValidate.end_end_period" size="small" style="width:40%" placeholder="201807"></Input>
-                                    </FormItem>
+                                        <FormItem label="结束账期：" prop="followby_realname">
+                                            <Input v-model="SearchValidate.begin_end_period" size="small" style="width:40%" placeholder="201807"></Input>
+                                            -
+                                            <Input v-model="SearchValidate.end_end_period" size="small" style="width:40%" placeholder="201807"></Input>
+                                        </FormItem>
                                     </Col>
+                                    
                                     <!-- <Col span="8">
                                     <FormItem label="结束账期：" prop="followby_realname">
                                         <Input v-model="SearchValidate.followby_realname" size="small"></Input>
                                     </FormItem>
                                     </Col> -->
+                                </Row>
+                                 <Row :gutter="8" style="height:56px">
+                                    <Col span="8">
+                                        <FormItem label="完成状态：" prop="note_kj_flag">
+                                            <Select v-model="SearchValidate.note_kj_flag" size="small" style="width:100%">
+                                                <Option value="Y">完成</Option>
+                                                <Option value="N">未完成</Option>
+                                            </Select>
+                                        </FormItem>
+                                    </Col>
                                 </Row>
                                 <center>
                                     <FormItem>
@@ -152,7 +163,8 @@
                     server_realname:'',
                     followby_realname:'',
                     begin_end_period:"",
-                    end_end_period:""
+                    end_end_period:"",
+                    note_kj_flag: ""
                 },
                 current_row:"",
                 page: 1,
@@ -460,6 +472,11 @@
                     //     }
                     // },
                     {
+                        title: "完成状态",
+                        key: "note_kj_flag",
+                        minWidth: 120,
+                    },
+                    {
                         title: '警戒值',
                         key: 'accounter_security_line',
                         width: 120
@@ -549,6 +566,7 @@
                         followbyrealname: _self.SearchValidate.followby_realname,
                         begin_end_period: _self.SearchValidate.begin_end_period,
                         end_end_period: _self.SearchValidate.end_end_period,
+                        note_kj_flag: _self.SearchValidate.note_kj_flag,
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field))
                 }
@@ -561,6 +579,7 @@
                 this.SearchValidate.followby_realname = ""
                 this.SearchValidate.begin_end_period = ""
                 this.SearchValidate.end_end_period = "" 
+                this.SearchValidate.note_kj_flag = ""
                 this.Search()               
             },
             Search(){
@@ -588,6 +607,7 @@
                         followbyrealname: _self.SearchValidate.followby_realname,
                         begin_end_period: _self.SearchValidate.begin_end_period,
                         end_end_period: _self.SearchValidate.end_end_period,
+                        note_kj_flag: _self.SearchValidate.note_kj_flag
                     }
                 }
 
@@ -597,6 +617,7 @@
                     for(let i = 0;i<_self.data.length;i++){
                         _self.data[i].service_status = _self.cservicest_map.get(_self.data[i].service_status)
                         _self.data[i].managestatusName = _self.managestatus_map.get(_self.data[i].managestatus)
+                        _self.data[i].note_kj_flag = _self.data[i].note_kj_flag=="Y"?"完成":"未完成"
                     }
                     _self.loading = false
                 }

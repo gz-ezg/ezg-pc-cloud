@@ -104,8 +104,8 @@
                             localStorage.setItem('realname', response.data.data.user.realname)
                             localStorage.setItem('id', response.data.data.user.id)
                             localStorage.setItem("companyname","")
-                            _self.getInterfaceItem(response.data.data.user.id)
                             _self.getUserRole(response.data.data.user.id)
+                            //  此处需要写一个promise.all
                         }
                         function fail(response) {
                             _self.loading = false
@@ -184,6 +184,7 @@
                 }
                 
                 function success(res){
+                    _self.getInterfaceItem(e)
                     let temp = []
                     for(let i = 0;i<res.data.data.length;i++){
                         temp.push(res.data.data[i].rolecode)
