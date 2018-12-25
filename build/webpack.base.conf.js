@@ -8,7 +8,7 @@ const os = require('os');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin") 
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
     entry: {
@@ -37,7 +37,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: ['vue-style-loader', 'css-loader']
+                use: [ MiniCssExtractPlugin.loader, 'css-loader']
             },
             {
                 test: /\.js$/,
@@ -47,20 +47,30 @@ module.exports = {
             {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: [
-                    'file-loader'
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit:1024,
+                            name:"img/[name].[ext]",
+                            // outputPath: "dist/"
+                        }
+                    }
                 ]
             },
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
                 use: [
-                    'file-loader'
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit:1024,
+                            //  开启此项，可以减小main.css体积，但需要手动将文件挪至css文件夹中
+                        //     name:"[name].[ext]",
+                        //     outputPath: "css/"
+                        }
+                    }
                 ]
             },
-            // 与下面的scss重复使用，会报错，故注释
-            // {
-            //     test: /\.css$/,
-            //     use: ['vue-style-loader', 'css-loader']
-            // },
             {
                 test: /\.less$/,
                 use: ['vue-style-loader', 'css-loader', 'less-loader']
@@ -77,10 +87,11 @@ module.exports = {
         ]
     },
     plugins: [
-        // new ExtractTextPlugin({
-        //     filename: '[name].[chunkhash].css',
-        //     allChunks: true
-        // }),
+        new MiniCssExtractPlugin({
+            filename: "css/[name].[hash].css",
+            chunkFilename: "css/[name].[hash].css"
+        }),
+        new VueLoaderPlugin(),
         new HappyPack({
             id: 'happybabel',
             loaders: ['babel-loader?cacheDirectory=true'],
@@ -99,7 +110,6 @@ module.exports = {
                 'copyright': '@亿账柜信息科技有限公司'
             }
         }),
-        new VueLoaderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new AutoDllPlugin({
             inject: true, // will inject the DLL bundle to index.html
