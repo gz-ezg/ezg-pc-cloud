@@ -39,7 +39,8 @@
                     </FormItem>
                     </Col>
                     <Col span="12">
-                        <FormItem label="邮箱" prop="email">
+                        <!-- <FormItem label="邮箱" prop="email"> -->
+                            <FormItem label="邮箱">
                             <Input size="small" v-model="formValidate.email"/>
                         </FormItem>
                     </Col>

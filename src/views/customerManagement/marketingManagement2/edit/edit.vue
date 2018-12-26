@@ -16,7 +16,8 @@
             <FormItem label="微信" prop="weixin" style="margin-bottom:0px"> 
                 <Input size="small" v-model="formValidate.weixin"/>
             </FormItem>
-            <FormItem label="邮箱" prop="email" style="margin-bottom:0px">
+            <!-- <FormItem label="邮箱" prop="email" style="margin-bottom:0px"> -->
+            <FormItem label="邮箱" style="margin-bottom:0px">
                 <Input size="small" v-model="formValidate.email"/>
             </FormItem>
             <FormItem label="服务地址" prop="ADDRESS" style="margin-bottom:0px">
