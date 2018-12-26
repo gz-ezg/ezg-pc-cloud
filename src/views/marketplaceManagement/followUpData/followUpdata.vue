@@ -102,12 +102,12 @@ export default {
                 {
                     title:'客户名称',
                     key:'name',
-                    width:100
+                    minWidth:100
                 },
                 {
                     title:'联系方式',
                     key: 'tel',
-                    width: 120
+                    minWidth: 120
                 },
                 {
                     title:'公司名称',
@@ -146,7 +146,12 @@ export default {
                 {
                     title:'跟进类型',
                     key:'followuptype',
-                    width: 100
+                    minWidth: 100
+                },
+                {
+                    title:'完成状态',
+                    key:'finish_flag',
+                    minWidth: 100
                 },
                 {
                     title:'跟进内容',
@@ -190,27 +195,27 @@ export default {
                 {
                     title:'录入人',
                     key:'servicename',
-                    width:100
+                    minWidth:100
                 },
                 {
                     title:'录入部门',
                     key:'departname',
-                    width:120
+                    minWidth:120
                 },
                 {
                     title:'创建时间',
                     key:'createdate',
-                    width:180
+                    minWidth:180
                 },
                 {
                     title:'跟进人',
                     key:'followname',
-                    width:100
+                    minWidth:100
                 },
                 {
                     title:'更新时间',
                     key:'contentcreatedate',
-                    width:180
+                    minWidth:180
                 }
 
             ],
@@ -322,6 +327,13 @@ export default {
                 
                 for(let i = 0;i<_self.data.length;i++){
                     _self.data[i].followuptype = _self.followUpType_Map.get(_self.data[i].followuptype)
+                    if(_self.data[i].finish_flag == 'Y'){
+                        _self.data[i].finish_flag = "完成"
+                    }else if(_self.data[i].finish_flag == 'N'){
+                        _self.data[i].finish_flag = "未完成"
+                    }else{
+
+                    }
                 }
             }
 

@@ -34,7 +34,7 @@
                                 </Row>
                                  <Row :gutter="8" style="height:56px">
                                     <Col span="8">
-                                        <FormItem label="完成状态：" prop="note_kj_flag">
+                                        <FormItem label="客户跟进：" prop="note_kj_flag">
                                             <Select v-model="SearchValidate.note_kj_flag" size="small" style="width:100%">
                                                 <Option value="Y">完成</Option>
                                                 <Option value="N">未完成</Option>
@@ -134,6 +134,19 @@
                 <Button type="primary"  style="margin:auto" @click="finsih_upload" :loading="finsih_loading">提交</Button>
             </div>
         </Modal>
+        <Modal
+            title="无效账号企业"
+            width="500"
+            v-model="openInvalidCompany"
+        >   
+            <Table
+                size="small"
+                :columns="inValidHeader"
+                :data="detailList"
+            ></Table>
+            <div slot="footer">
+            </div>
+        </Modal>
     </Card>
 </template>
 
@@ -143,6 +156,38 @@
     export default {
         data() {
             return {
+                //  异常信息
+                openInvalidCompany: false,
+                countList: [],
+                detailList: [],
+                inValidHeader: [
+                    {
+                        title: "企业名称",
+                        key: "companyname",
+                    },
+                    {
+                        title: "服务状态",
+                        key: "service_status",
+                        width: 90
+                    },
+                    {
+                        title: "操作",
+                        width: 120,
+                        render: (h, params)=>{
+                            return h('Button',{
+                                props: {
+                                    type: "text",
+                                    size: "small"
+                                },
+                                on: {
+                                    click:()=>{
+                                        this.$store.commit("open_gobal_company_detail_modal", params.row.companyid)
+                                    }
+                                }
+                            }, "[查看公司]")
+                        }
+                    }
+                ],
                 time:"",
                 managestatus:[],
                 managestatus_map: new Map(),
@@ -472,7 +517,7 @@
                     //     }
                     // },
                     {
-                        title: "完成状态",
+                        title: "客户跟进",
                         key: "note_kj_flag",
                         minWidth: 120,
                     },
@@ -845,6 +890,46 @@
                     console.log(_self.current_row)
                     _self.$bus.emit('OPEN_FIELD_LIST_BY_COMPANYID', [_self.current_row.company_id,_self.current_row.companyname])
                 }
+            },
+            //  获取电子税务局账号异常的信息
+            get_etax_error(){
+                let _self = this
+                let url = `api/customer/company/getNotRecordTaxAccountCompanyInfos`
+
+                let config = {}
+
+                function success(res){
+                    let { countList, detailList } = res.data.data
+                    _self.countList = countList
+                    _self.detailList = detailList
+                    if(_self.detailList.length){
+                        _self.$Notice.info({
+                            name: "etax",
+                            title: '账号异常通知',
+                            duration: 0,
+                            render: h => {
+                                return h('div', [
+                                    '部分企业电子税务局账号无效！',
+                                    h('Button', {
+                                        props: {
+                                            type: "info",
+                                            size: "small"
+                                        },
+                                        on: {
+                                            click: ()=>{
+                                                // console.log("1234567")
+                                                _self.$Notice.close("etax")
+                                                _self.openInvalidCompany = true
+                                            }
+                                        }
+                                    }, "查看详情")
+                                ])
+                            }
+                        });
+                    }
+                }
+
+                this.$Get(url, config, success)
             }
         },
         mounted() {
@@ -869,6 +954,7 @@
             }
             console.log(year)
             console.log(month)
+            this.get_etax_error()
             _self.time = year.toString() + month.toString()
             Bus.$on('UPDATE_ALL_ACCOUNT_PAGE',(e)=>{
                 _self.getData()

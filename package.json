@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node build/build.js",
+    "jen": "node build/jenkins.js",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js"
   },
   "keywords": [],
@@ -30,7 +31,7 @@
     "iview-loader": "^1.2.2",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
-    "mini-css-extract-plugin": "^0.5.0",
+    "mini-css-extract-plugin": "^0.4.1",
     "node-sass": "^4.11.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",

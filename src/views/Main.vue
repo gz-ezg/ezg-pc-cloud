@@ -69,16 +69,18 @@
             </div>
         </div>
         <!--系统反馈，需要优化-->
+        <div v-if="show_stystem_complain">
             <Modal
                 title="系统反馈"
                 width="60%"
-                v-model="show_stystem_complain"
-                @cancel="close_stystem_complain"
+                :value="true"
+                @on-cancel="close_stystem_complain"
             >
-
                 <system-complain></system-complain>
                 <div slot="footer"></div>
             </Modal>
+        </div>
+            
         <!-- 意见收集 -->
         <Modal
                 v-model="tip"
@@ -86,7 +88,6 @@
                 width="500"
                 @on-ok="submit"
                 :mask-closable="false"
-                :closable="tipColse"
             >
                 <Row :gutter="16">
                     <Col span="1" style="visibility:hidden">1</Col>
@@ -130,6 +131,8 @@
     </div>
 </template>
 <script>
+    const companyDetail =  () => import( /* webpackChunkName: "CompanyDetail" */ './woa-components/companyDetail/CompanyDetail.vue')
+    const customerDetail =  () => import( /* webpackChunkName: "CompanyDetail" */ './woa-components/customerDetail2/index')
     import changePassword from './woa-components/updatePassword/index.vue'
     import shrinkableMenu from './main-components/shrinkable-menu/shrinkable-menu.vue';
     import tagsPageOpened from './main-components/tags-page-opened.vue';
@@ -146,10 +149,11 @@
     import fieldListByCompanyId from './woa-components/fieldListByCompanyId/index.vue'
     import aduitLog from './order/orderApprove/common/aduitLog.vue'
     //  新版全局性客户详情
-    import customerDetail from './woa-components/customerDetail2/index'
     import workOrderDetail from './woa-components/workOrderDetail/index.vue';
-    import companyDetail from './woa-components/companyDetail/CompanyDetail.vue'
     import reLogin from './woa-components/relogin/index'
+    // 以下两个文件由于过大，单独打包
+    // import customerDetail from './woa-components/customerDetail2/index'
+    // import companyDetail from './woa-components/companyDetail/CompanyDetail.vue'
 
     export default {
         components: {
@@ -166,13 +170,17 @@
             setFinishTime,
             fieldListByCompanyId,
             aduitLog,
-            customerDetail,
             workOrderDetail,
-            companyDetail,
-            reLogin
+            reLogin,
+            customerDetail,
+            companyDetail
+            //  需要使用时引入，并且只引入一次
+            // customerDetail: () => import( /* webpackChunkName: "customer&companyDetail" */ './woa-components/customerDetail2/index'),
+            // companyDetail: ()=> import( /* webpackChunkName: "customer&companyDetail" */ './woa-components/companyDetail/CompanyDetail.vue'),
         },
         data () {
             return {
+                systemComplainStatus: true,
                 globalRefresh: true,
                 tipColse:false,
                 spin_loading:true,
@@ -256,7 +264,7 @@
             }
         },
         methods: {
-            close_stystem_complain(){
+            close_stystem_complain(e){
                 this.show_stystem_complain = false
             },
             open_stystem_complain(){
@@ -303,6 +311,7 @@
                                 Cookies.set('7password', '');
                                 Cookies.set('7user', '')
                                 Cookies.set('7issave', 'false')
+                                Cookies.set("feedback", "")
                                 setTimeout(()=>{
                                     _self.$router.push({
                                         name: 'login'
@@ -343,6 +352,17 @@
             },
             //  意见收集
             rate_start(){
+                if((new Date()).getDay() == 1){
+                    Cookies.set("feedback", "")
+                }
+                if(localStorage.getItem('id')==10059){
+                    return ;
+                }
+
+                if(Cookies.get("feedback") == "finished"){
+                    console.log(Cookies.get("feedback"))
+                    return ;
+                }
                 let _self = this
                 let url = `api/system/checkSystemFeedbackStatusByUserId`
                 let config = {
@@ -352,15 +372,15 @@
                 }
 
                 function success(res){
-                    // console.log(res.data.data.isNeedFeedback)
                     if(res.data.data.isNeedFeedback == "N"){
-                        if(localStorage.getItem('id')==10059){
-                            _self.tip = false
-                        }else{
+                        // if(localStorage.getItem('id')==10059){
+                            // _self.tip = false
+                        // }else{
                             _self.tip = true
-                        }
+                        // }
                     }else{
                         _self.tip = false
+                        Cookies.set('feedback', "finished", { expires: 7 });
                     }
                 }
 

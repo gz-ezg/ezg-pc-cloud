@@ -16,7 +16,8 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, '../dist'),
-        filename: 'js/[name].[hash].js'
+        filename: 'js/[name].[hash].js',
+        publicPath: "/"
     },
     module: {
         rules: [{
@@ -63,9 +64,9 @@ module.exports = {
                     {
                         loader: 'url-loader',
                         options: {
-                            limit:1024,
+                            limit:10000,
                             //  开启此项，可以减小main.css体积，但需要手动将文件挪至css文件夹中
-                        //     name:"[name].[ext]",
+                            name:"fonts/[name].[ext]",
                         //     outputPath: "css/"
                         }
                     }

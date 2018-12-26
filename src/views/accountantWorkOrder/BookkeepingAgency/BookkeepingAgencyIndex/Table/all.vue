@@ -44,7 +44,7 @@
                                     </FormItem>
                                     </Col>
                                     <Col span="8">
-                                        <FormItem label="完成状态：" prop="note_kj_flag">
+                                        <FormItem label="客户跟进：" prop="note_kj_flag">
                                             <Select v-model="SearchValidate.note_kj_flag" size="small" style="width:100%">
                                                 <Option value="Y">完成</Option>
                                                 <Option value="N">未完成</Option>
@@ -223,7 +223,7 @@
                         minWidth:100
                     },
                     {
-                        title: "完成状态",
+                        title: "客户跟进",
                         key: "note_kj_flag",
                         minWidth: 120,
                     },
