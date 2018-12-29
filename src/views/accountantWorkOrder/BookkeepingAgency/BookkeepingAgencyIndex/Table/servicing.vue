@@ -6,7 +6,7 @@
                         <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
                         筛选
                         <div slot="content" @keydown="show">
-                            <Form ref="SearchValidate" :model="SearchValidate" :label-width="80" style="margin-top: 15px">
+                            <Form ref="SearchValidate" :model="SearchValidate" :label-width="130" style="margin-top: 15px">
                                 <Row :gutter="8" style="height:56px">
                                     <Col span="8">
                                     <FormItem label="企业名称：" prop="CompanyName">
@@ -38,6 +38,15 @@
                                             <Select v-model="SearchValidate.note_kj_flag" size="small" style="width:100%">
                                                 <Option value="Y">完成</Option>
                                                 <Option value="N">未完成</Option>
+                                            </Select>
+                                        </FormItem>
+                                    </Col>
+                                    <Col span="8">
+                                        <FormItem label="电子税务局状态：" prop="etaxStatus">
+                                            <Select v-model="SearchValidate.etaxStatus" size="small" style="width:100%">
+                                                <Option :value="1">账号正常</Option>
+                                                <Option :value="2">账号异常</Option>
+                                                <Option :value="3">无账号</Option>
                                             </Select>
                                         </FormItem>
                                     </Col>
@@ -209,7 +218,8 @@
                     followby_realname:'',
                     begin_end_period:"",
                     end_end_period:"",
-                    note_kj_flag: ""
+                    note_kj_flag: "",
+                    etaxStatus: ""
                 },
                 current_row:"",
                 page: 1,
@@ -612,6 +622,9 @@
                         begin_end_period: _self.SearchValidate.begin_end_period,
                         end_end_period: _self.SearchValidate.end_end_period,
                         note_kj_flag: _self.SearchValidate.note_kj_flag,
+                        hasEAccount: _self.SearchValidate.etaxStatus==1?1:"",
+                        hasEAccountAndWrong: _self.SearchValidate.etaxStatus==2?1:"",
+                        hasNotEAccount: _self.SearchValidate.etaxStatus==3?1:"",
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field))
                 }
@@ -625,6 +638,7 @@
                 this.SearchValidate.begin_end_period = ""
                 this.SearchValidate.end_end_period = "" 
                 this.SearchValidate.note_kj_flag = ""
+                this.SearchValidate.etaxStatus = ""
                 this.Search()               
             },
             Search(){
@@ -652,7 +666,10 @@
                         followbyrealname: _self.SearchValidate.followby_realname,
                         begin_end_period: _self.SearchValidate.begin_end_period,
                         end_end_period: _self.SearchValidate.end_end_period,
-                        note_kj_flag: _self.SearchValidate.note_kj_flag
+                        note_kj_flag: _self.SearchValidate.note_kj_flag,
+                        hasEAccount: _self.SearchValidate.etaxStatus==1?1:"",
+                        hasEAccountAndWrong: _self.SearchValidate.etaxStatus==2?1:"",
+                        hasNotEAccount: _self.SearchValidate.etaxStatus==3?1:"",
                     }
                 }
 

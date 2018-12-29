@@ -29,6 +29,7 @@
                         <Option value="0">未上架</Option>
                         <Option value="1">销售中</Option>
                     </Select>
+                    <span>SKU别名：</span><Input style="width:150px;margin-right:40px;" v-model="alisname"/>
                     <ButtonGroup>
                         <Button @click="update_product_price" type="warning">确认修改</Button>
                         <Button @click="showUpdatePrice=false" type="ghost">关闭</Button>
@@ -101,7 +102,8 @@ export default {
             selectRow: [],
             dbaseprice: "",
             doaprice: "",
-            status: "1"
+            status: "1",
+            alisname: ""
         };
     },
     methods: {
