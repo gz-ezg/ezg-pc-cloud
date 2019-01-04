@@ -359,41 +359,45 @@ export default {
                     render: (h, params)=>{
                         let _self = this
                         if(params.index != this.pageSize){
-                            return h('div',[
-                                h("Button",{
-                                    props: {
-                                        type: 'error',
-                                        size: 'small',
-                                    },
-                                    directives: [
-                                        {
-                                            name: "permission",
-                                            value: "orderL.cancelOrder"
-                                        }
-                                    ],
-                                    // style:{
-                                    //         marginLeft: "10px"
-                                    // },
-                                    on: {
-                                        click: () => {
-                                            let url = `api/order/cancelOrder`
+                            return h('Button', {
+                                        props: {
+                                            type: 'error',
+                                            size: 'small',
+                                        },
+                                        directives: [
+                                            {
+                                                name: "permission",
+                                                value: "orderL.cancelOrder"
+                                            }
+                                        ],
+                                    },[
+                                    h('Poptip', {
+                                        props: {
+                                            transfer: true,
+                                            confirm: true,
+                                            title: '您确定要撤回此订单项吗！',
+                                        },
+                                        on: {
+                                            'on-ok': ()=>{
+                                                console.log(params.row)
+                                                let url = `api/order/cancelOrder`
 
-                                            let config = {
-                                                params: {
-                                                    orderId: params.row.id
+                                                let config = {
+                                                    params: {
+                                                        orderId: params.row.id
+                                                    }
                                                 }
-                                            }
 
-                                            function success(res){
-                                                _self.$Message.success(res.data.msg)
-                                                _self.get_data()
-                                            }
+                                                function success(res){
+                                                    _self.$Message.success(res.data.msg)
+                                                    _self.get_data()
+                                                }
 
-                                            this.$Get(url, config, success)
+                                                this.$Get(url, config, success)
+                                            },
                                         }
-                                    }
-                                },"撤回"),
-                            ])
+                                    }, '撤回')
+                                ])
                         }
                     }
                 }
@@ -756,7 +760,7 @@ export default {
             this.get_data()
         )
         if(localStorage.getItem('id')==10059){
-            this.header.push(this.amdinOpertionCol)
+            // this.header.push(this.amdinOpertionCol)
         }
         this.$bus.on("UPDATE_ORDER_LIST", (e)=>{
             this.get_data()

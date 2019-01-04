@@ -100,13 +100,14 @@ export default {
     },
     data(){
         return {
+            orderId: "",
             openServiceItem: false,
             openShowOrderDetail: false,
             orderDetailListHeaderShow: [
                 {
                     title: "序号",
                     type: 'index',
-                    minWidth: 60,
+                    minWidth: 80,
                     align: 'center'
                 },
                 {
@@ -190,7 +191,37 @@ export default {
                         ])
                     }
                 }
-            ]
+            ],
+            dangerOperation:{
+                title: "撤回",
+                minWidth: 80,
+                align: 'center',
+                render: (h, params) => {
+                    return h('Button', {
+                        props: {
+                            type: 'error',
+                            size: 'small'
+                        },
+                        style: {
+                            'marginLeft': '5px'
+                        }
+                    },[
+                        h('Poptip', {
+                            props: {
+                                transfer: true,
+                                confirm: true,
+                                title: '您确定要撤回此订单项吗！',
+                            },
+                            on: {
+                                'on-ok': ()=>{
+                                    console.log(params.row.itemid)
+                                    this.cancel_order(this.orderId, params.row.itemid)
+                                },
+                            }
+                        }, '撤回')
+                    ])
+                }
+            },
         }
     },
     methods: {
@@ -199,13 +230,39 @@ export default {
         },
         close_item(){
             this.openServiceItem = false
+        },
+        cancel_order(orderId, orderItemId){
+            let url = `api/order/cancelOrder`
+            let _self = this
+            let config = {
+                params: {
+                    orderId: orderId,
+                    orderItemId: orderItemId
+                }
+            }
+
+            function success(res){
+                _self.$Message.success(res.data.msg)
+                _self.get_data(orderId)
+            }
+
+            function fail(err){
+                _self.$Message.fail("撤回失败！")
+                _self.get_data(orderId)
+            }
+
+            this.$Get(url, config, success, fail)
         }
     },
     created() {
         let _self = this
         this.$bus.off("OPEN_ORDERLIST_DETAIL", true)
         this.$bus.on("OPEN_ORDERLIST_DETAIL", (e)=>{
+            if(localStorage.getItem('id')==10059){
+                this.orderDetailListHeaderShow.unshift(this.dangerOperation)
+            }
             this.get_data(e)
+            this.orderId = e
             this.openShowOrderDetail = true
         })
     },
