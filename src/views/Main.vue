@@ -303,8 +303,6 @@
                     this.$http.get('/api/user/logOut')
                         .then(function (response) {
                             if (response.data.msgCode == '40000') {
-                                // _self.winReload()
-                                // localStorage.setItem('isTip',"N")
                                 _self.$Message.success('注销成功!') 
                                 Cookies.set('user', '');
                                 Cookies.set('password', '');

@@ -12,6 +12,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
     entry: {
+        // main: ['babel-polyfill', path.resolve(__dirname, '../src/main.js')]
         main: path.resolve(__dirname, '../src/main.js')
     },
     output: {
@@ -35,10 +36,6 @@ module.exports = {
                         }
                     }
                 ]
-            },
-            {
-                test: /\.css$/,
-                use: [ MiniCssExtractPlugin.loader, 'css-loader']
             },
             {
                 test: /\.js$/,
@@ -71,27 +68,10 @@ module.exports = {
                         }
                     }
                 ]
-            },
-            {
-                test: /\.less$/,
-                use: ['vue-style-loader', 'css-loader', 'less-loader']
-            },
-            {
-                test: /\.scss$/,
-                use: [
-                    "vue-style-loader",
-                    // 'MiniCssExtractPlugin.loader', // creates style nodes from JS strings
-                    "css-loader", // translates CSS into CommonJS
-                    "sass-loader" // compiles Sass to CSS, using Node Sass by default
-                ]
             }
         ]
     },
     plugins: [
-        new MiniCssExtractPlugin({
-            filename: "css/[name].[hash].css",
-            chunkFilename: "css/[name].[hash].css"
-        }),
         new VueLoaderPlugin(),
         new HappyPack({
             id: 'happybabel',
@@ -100,6 +80,7 @@ module.exports = {
             verbose: true
         }),
         new HtmlWebpackPlugin({
+            inject: true,
             template: path.resolve(__dirname, '../index.html'),
             title: "亿账柜信息管理平台",
             favicon: path.resolve(__dirname, '../src/images/td_icon.ico'),
@@ -114,7 +95,7 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new AutoDllPlugin({
             inject: true, // will inject the DLL bundle to index.html
-            debug: true,
+            debug: false,
             filename: '[name]_[hash].js',
             path: './dll',
             entry: {
@@ -158,6 +139,7 @@ module.exports = {
         })
     ],
     resolve: {
+        mainFields: ['main'],
         extensions: ['*', '.js', '.json', '.vue'],
         alias: {
             // 'vue$': 'vue/dist/vue.esm.js',

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import env from '../../build/env';
+// import env from '../../build/env';
 import semver from 'semver';
 import packjson from '../../package.json';
 
@@ -11,14 +11,8 @@ util.title = function (title) {
     window.document.title = title;
 };
 
-const ajaxUrl = env === 'development'
-    ? 'http://127.0.0.1:8888'
-    : env === 'production'
-        ? 'https://www.url.com'
-        : 'https://debug.url.com';
-
 util.ajax = axios.create({
-    baseURL: ajaxUrl,
+    // baseURL: ajaxUrl,
     timeout: 30000
 });
 

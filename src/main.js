@@ -152,11 +152,9 @@ Vue.prototype.$ButtonCollect = function(name){
     this.$http.get(url,config).then(function(res){
         if(res.data.msgCode == "40000"){
             if(res.data.msg){
-                // _self.$Message.success(res.data.msg)
                 console.log("采集成功");
             }
         }else{
-            // _self.$Message.error(res.data.msg)
             console.warn(res.data.msg)
         }
     }).catch(function(err){
@@ -320,6 +318,7 @@ Vue.prototype.$GetDataCenter = function(params, finish){
 }
 
 //  此项作废，改由axios拦截器负责
+//  代码仍存留，需要清除
 //  判断是否登录及权限值
 Vue.prototype.$backToLogin = function(res){
     // 待测试
@@ -433,12 +432,7 @@ Vue.prototype.PostData = function (url, data, doSuccess, otherConditions){
             if (response.data.msgCode == '40000') {
                 doSuccess(response)
             } else if (response.data.msgCode == '50003') {
-                // _self.$Message.error('抱歉，您还未登录，即将前往登录页面');
-                // setTimeout(() => {
-                //     _self.$router.push({
-                //         name: 'login'
-                //     });
-                // }, 2000);
+
             } else if (response.data.msgCode == '60000') {
                 _self.$Message.error('抱歉，您没有权限');
             } else {
@@ -463,15 +457,7 @@ Vue.prototype.PostFiles = function (url, data, doSuccess, otherConditions){
             if (response.data.msgCode == '40000') {
                 doSuccess(response)
             } else if (response.data.msgCode == '50003') {
-                // _self.$Message.error('抱歉，您还未登录，即将前往登录页面');
-                // setTimeout(() => {
-                //     Cookies.set('user', '');
-                //     Cookies.set('password', '');
-                //     localStorage.clear()
-                //     _self.$router.push({
-                //         name: 'login'
-                //     });
-                // }, 1000);
+
             } else if (response.data.msgCode == '60000') {
                 _self.$Message.error('抱歉，您没有权限');
             } else {
@@ -480,71 +466,71 @@ Vue.prototype.PostFiles = function (url, data, doSuccess, otherConditions){
         })
 }
 
-Vue.prototype.matchingFields = function (a){
+// Vue.prototype.matchingFields = function (a){
 
-    let _self = this
+//     let _self = this
 
-    _self.searchTypegroup('customerType')
+//     _self.searchTypegroup('customerType')
 
-    let _customerTypeArr = JSON.parse(localStorage.getItem('customerType'))
+//     let _customerTypeArr = JSON.parse(localStorage.getItem('customerType'))
 
-    // 级联下拉框-客户状态
-    let mapdata = new Map()  //用作临时转换
-    let subIdToParentMap = new Map()
-    let sourceData = _customerTypeArr  //结果集
-    let finalArrayData = new Array()   //vue要求的数据格式
+//     // 级联下拉框-客户状态
+//     let mapdata = new Map()  //用作临时转换
+//     let subIdToParentMap = new Map()
+//     let sourceData = _customerTypeArr  //结果集
+//     let finalArrayData = new Array()   //vue要求的数据格式
 
-    for (let i = 0; i < sourceData.length; i++) {
-        let _sub = new Object()
+//     for (let i = 0; i < sourceData.length; i++) {
+//         let _sub = new Object()
 
-        _sub.value = sourceData[i].subid.toString()
-        _sub.label = sourceData[i].subtypename
+//         _sub.value = sourceData[i].subid.toString()
+//         _sub.label = sourceData[i].subtypename
 
-        subIdToParentMap.set(_sub.value, sourceData[i].id)
+//         subIdToParentMap.set(_sub.value, sourceData[i].id)
 
-        let _value = mapdata.get(sourceData[i].id)
+//         let _value = mapdata.get(sourceData[i].id)
 
-        if (_value) {
-            let _valueArray = _value.children
+//         if (_value) {
+//             let _valueArray = _value.children
 
-            _valueArray.push(_sub)
+//             _valueArray.push(_sub)
 
-            let _valueObject = new Object()
+//             let _valueObject = new Object()
 
-            _valueObject.value = _value.value.toString()
-            _valueObject.label = _value.label
-            _valueObject.children = _valueArray
+//             _valueObject.value = _value.value.toString()
+//             _valueObject.label = _value.label
+//             _valueObject.children = _valueArray
 
-            mapdata.set(sourceData[i].id, _valueObject)
-        } else {
-            let _child = new Array()
+//             mapdata.set(sourceData[i].id, _valueObject)
+//         } else {
+//             let _child = new Array()
 
-            _child.push(_sub)
+//             _child.push(_sub)
 
-            let _main = new Object()
+//             let _main = new Object()
 
-            _main.value = sourceData[i].id.toString()
-            _main.label = sourceData[i].typename
-            _main.children = _child
+//             _main.value = sourceData[i].id.toString()
+//             _main.label = sourceData[i].typename
+//             _main.children = _child
 
-            mapdata.set(sourceData[i].id, _main)
-        }
-    }
+//             mapdata.set(sourceData[i].id, _main)
+//         }
+//     }
 
-    mapdata.forEach((value, key) => {
-        finalArrayData.push(value)
-    });
+//     mapdata.forEach((value, key) => {
+//         finalArrayData.push(value)
+//     });
 
-    for (let i = 0; i < finalArrayData.length; i++) {
+//     for (let i = 0; i < finalArrayData.length; i++) {
 
-        for (let j = 0; j < finalArrayData[i].children.length; j++) {
+//         for (let j = 0; j < finalArrayData[i].children.length; j++) {
 
-            if ((finalArrayData[i].children[j].value) == (a)) {
+//             if ((finalArrayData[i].children[j].value) == (a)) {
 
-            }
-        }
-    }
-}
+//             }
+//         }
+//     }
+// }
 
 
 //  路由跳转之前检查是否有权限访问该页面

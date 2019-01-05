@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node build/build.js",
     "jen": "node build/jenkins.js",
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js"
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev:dll": "webpack-dev-server --progress --config build/webpack.dll.conf.js"
   },
   "keywords": [],
   "author": "roderickt1an@gmail.com",
@@ -20,8 +21,11 @@
     "babel-plugin-component": "^1.1.1",
     "babel-plugin-syntax-dynamic-import": "*",
     "babel-preset-env": "^1.7.0",
+    "chalk": "^2.4.1",
+    "clean-css-loader": "^1.1.0",
     "clean-webpack-plugin": "^1.0.0",
     "copy-webpack-plugin": "^4.6.0",
+    "css-hot-loader": "^1.4.3",
     "css-loader": "^2.0.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^2.0.0",
@@ -31,11 +35,17 @@
     "iview-loader": "^1.2.2",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
-    "mini-css-extract-plugin": "^0.4.1",
+    "mini-css-extract-plugin": "0.4.1",
     "node-sass": "^4.11.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "ora": "^3.0.0",
     "postcss-loader": "^3.0.0",
+    "progress-bar-webpack-plugin": "^1.11.0",
+    "rimraf": "^2.6.3",
     "sass-loader": "^7.1.0",
+    "semver": "^5.6.0",
+    "shelljs": "^0.8.3",
+    "speed-measure-webpack-plugin": "^1.2.5",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "url-loader": "^1.1.2",
@@ -46,14 +56,16 @@
     "webpack": "^4.27.1",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10",
+    "webpack-dev-server": "^3.1.14",
     "webpack-merge": "^4.1.5",
+    "webpack-parallel-uglify-plugin": "^1.1.0",
     "zrender": "4.0.4"
   },
   "dependencies": {
     "area-data": "^1.0.0",
     "axios": "^0.17.1",
     "babel-plugin-transform-remove-strict-mode": "0.0.2",
+    "babel-polyfill": "^6.26.0",
     "canvas2image": "^1.0.5",
     "clipboard": "^1.7.1",
     "countup": "^1.8.2",
@@ -75,5 +87,14 @@
     "vue-router": "^3.0.2",
     "vuejs-datepicker": "^1.5.3",
     "vuex": "^3.0.1"
-  }
+  },
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }

@@ -4,12 +4,27 @@ const baseConfig = require('./webpack.base.conf');
 module.exports = merge(baseConfig, {
   mode: 'development',
   devtool: 'inline-source-map',
-  // rule: [
-  //   {
-  //     test: /\.css$/,
-  //     use: ['vue-style-loader', 'css-loader']
-  //   },
-  // ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [ 'vue-style-loader','css-hot-loader', 'css-loader']
+      },
+      {
+        test: /\.less$/,
+        use: ['vue-style-loader','css-hot-loader', 'css-loader', 'less-loader']
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          "vue-style-loader",
+          'css-hot-loader',
+          "css-loader", // translates CSS into CommonJS
+          "sass-loader" // compiles Sass to CSS, using Node Sass by default
+        ]
+      }
+    ]
+  },
   devServer: {
     contentBase: path.resolve(__dirname, '../dist'),
     open: false,
