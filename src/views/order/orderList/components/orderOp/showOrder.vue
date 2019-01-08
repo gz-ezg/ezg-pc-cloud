@@ -256,11 +256,11 @@ export default {
     },
     created() {
         let _self = this
+        if(localStorage.getItem('id')==10059){
+            this.orderDetailListHeaderShow.unshift(this.dangerOperation)
+        }
         this.$bus.off("OPEN_ORDERLIST_DETAIL", true)
         this.$bus.on("OPEN_ORDERLIST_DETAIL", (e)=>{
-            if(localStorage.getItem('id')==10059){
-                this.orderDetailListHeaderShow.unshift(this.dangerOperation)
-            }
             this.get_data(e)
             this.orderId = e
             this.openShowOrderDetail = true

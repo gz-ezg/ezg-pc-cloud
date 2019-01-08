@@ -95,7 +95,7 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new AutoDllPlugin({
             inject: true, // will inject the DLL bundle to index.html
-            debug: false,
+            debug: true,
             filename: '[name]_[hash].js',
             path: './dll',
             entry: {

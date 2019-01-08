@@ -205,6 +205,11 @@
                         key: 'end_period',
                         width: 120
                     },
+                    {
+                        title: '单价',
+                        key: 'unitprice',
+                        minWidth: 120
+                    },
                     // {
                     //     title: '收资料',
                     //     key: 'zl',
@@ -316,6 +321,7 @@
                     {field:'balance_count',title:'剩余时长'},
                     {field:'begin_period',title:'开始期间'},
                     {field:'end_period',title:'结束期间'},
+                    {field:'unitprice',title:'单价'},
                     // {field:'serverrealname',title:'服务人员'},
                     // {field:'period',title:'服务周期'}
                     ]

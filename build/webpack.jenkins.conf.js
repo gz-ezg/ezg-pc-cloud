@@ -4,6 +4,7 @@ const path = require('path');
 const baseConfig = require('./webpack.base.conf');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = merge(baseConfig, {
   mode: 'production',
@@ -40,5 +41,6 @@ module.exports = merge(baseConfig, {
       filename: "css/[name].[hash].css",
       chunkFilename: "css/[name].[hash].css"
     }),
+    new BundleAnalyzerPlugin(),
   ]
 });

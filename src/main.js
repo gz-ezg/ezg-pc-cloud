@@ -65,6 +65,15 @@ Vue.use(iviewArea)
 //  axios 拦截器
 axios.interceptors.response.use(
     (response) => {
+        if(response.data.msgCode != 40000 && response.config.url != "api/legwork/apiLoginByWechatCode"){
+            let url = 'api/system/saveFontErrMsg'
+            let config = {
+                name: "cloud",
+                page: response.config.url,
+                err: JSON.stringify(response)
+            }
+            axios.post(url, config).then(function(res){}).catch((err)=>{})
+        }
         if(response.data.msgCode == "50003" && Cookies.get('user')!=""){
             console.log(response)
             iView.Message.warning('对不起，您还未登陆！')

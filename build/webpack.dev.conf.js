@@ -34,7 +34,7 @@ module.exports = merge(baseConfig, {
     proxy: {
       '/api': {
         // target: 'http://cloud.zgcfo.com/api/',
-        target: 'http://192.168.0.220:9000',
+        target: 'http://192.168.0.222:9000',
         pathRewrite: {
           '^/api': ''
         },
