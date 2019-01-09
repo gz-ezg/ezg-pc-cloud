@@ -30,8 +30,12 @@
                         </FormItem>
                     </Col>
                     <Col span="8">
-                        <FormItem label="已付款" prop="realnumber">
-                            <Input size="small" v-model="formValidateDetail.realnumber" readonly/>
+                        <FormItem label="国地税报道" prop="GDSreport">
+                            <Select transfer v-model="formValidateDetail.gdsreport" disabled size="small">
+                                <Option value="ybd">已报道</Option>
+                                <Option value="wbd">未报道</Option>
+                                <Option value="bybd">不用报道</Option>
+                            </Select>
                         </FormItem>
                     </Col>
                     <Col span="8">
@@ -44,12 +48,15 @@
                 </Row>
                 <Row :gutter="16">
                     <Col span="8">
-                        <FormItem label="国地税报道" prop="GDSreport">
-                            <Select transfer v-model="formValidateDetail.gdsreport" disabled size="small">
-                                <Option value="ybd">已报道</Option>
-                                <Option value="wbd">未报道</Option>
-                                <Option value="bybd">不用报道</Option>
-                            </Select>
+                        <FormItem label="已付款" prop="realnumber">
+                            <Input size="small" v-model="formValidateDetail.realnumber" readonly/>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="16">
+                    <Col span="8">
+                        <FormItem label="使用余额" prop="usebalance">
+                            <Input size="small" v-model="formValidateDetail.usebalance" number readonly />
                         </FormItem>
                     </Col>
                 </Row>
@@ -128,7 +135,8 @@ export default {
                 paynumber: "",
                 realnumber: "",
                 paydir: "",
-                gdsreport: ""
+                gdsreport: "",
+                usebalance: ""
             },
             submitLoading: false,
             banlishenpi: {

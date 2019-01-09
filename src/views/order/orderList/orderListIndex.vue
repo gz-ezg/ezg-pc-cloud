@@ -75,7 +75,7 @@
                 <Button v-permission="['orderL.flowChart']" type="primary" icon="ios-crop" @click="open_flowChart">查看流程图</Button>
                 <Button v-permission="['orderL.resubmit']" type="primary" icon="refresh" @click="reapply_process" name="order_re_submit">重新提交</Button>
                 <Button v-permission="['orderL.amend']" type="primary" icon="edit" @click="xiugai_open" name="order_amend">修改</Button>
-                <Button v-permission="['orderL.delOrder']" type="primary" icon="trash-b" @click="del_order" name="order_amend">作废</Button>
+                <Button v-permission="['orderL.delOrder']" type="primary" icon="trash-b" @click="del_order" name="order_amend">删除</Button>
                 <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="get_data">刷新</Button>
                 <!--  ↓ ↓ 该功能暂定，代码勿删  -->
                 <!--<Button type="primary" icon="ios-color-filter-outline" @click="qihuaOpen()">企划(修改)</Button>-->
@@ -353,7 +353,7 @@ export default {
                     }
                 },
                 {
-                    title: '撤回',
+                    title: '退款',
                     key: 'action',
                     minWidth: 75,
                     render: (h, params)=>{
@@ -375,17 +375,15 @@ export default {
                                         props: {
                                             transfer: true,
                                             confirm: true,
-                                            title: '您确定要撤回此订单项吗！',
+                                            title: '您确定要退款此订单吗！',
                                         },
                                         on: {
                                             'on-ok': ()=>{
                                                 console.log(params.row)
-                                                let url = `api/order/cancelOrder`
+                                                let url = `api/order/refund`
 
                                                 let config = {
-                                                    params: {
-                                                        orderId: params.row.id
-                                                    }
+                                                    id: params.row.id
                                                 }
 
                                                 function success(res){
@@ -393,10 +391,14 @@ export default {
                                                     _self.get_data()
                                                 }
 
-                                                this.$Get(url, config, success)
+                                                function fail(err){
+
+                                                }
+
+                                                this.$Post(url, config, success, fail)
                                             },
                                         }
-                                    }, '撤回')
+                                    }, '退款')
                                 ])
                         }
                     }
@@ -701,21 +703,22 @@ export default {
             let _self = this
             if(this.selectRow){
                 _self.$ButtonCollect("order_rebuild_orderflow")
-                let url = `api/order/abolishOrder`
+                let url = `api/order/del`
                 _self.$ButtonCollect("order_del")
                 let config = {
-                    params:{
-                        orderId: _self.selectRow.id
-                    }
+                    id: _self.selectRow.id
                 }
 
                 function success(res){
-                    _self.$Message.success(res.data.msg)
+                    // _self.$Message.success(res.data.msg)
                     setTimeout(()=>{
                         _self.get_data()
                     }, 500)
                 }
-                _self.$Get(url, config, success)
+                function fail(err){
+
+                }
+                _self.$Post(url, config, success, fail)
             }else{
                 this.$Message.warning("请选择一行进行操作！")
             }
@@ -760,7 +763,7 @@ export default {
             this.get_data()
         )
         if(localStorage.getItem('id')==10059){
-            // this.header.push(this.amdinOpertionCol)
+            this.header.push(this.amdinOpertionCol)
         }
         this.$bus.on("UPDATE_ORDER_LIST", (e)=>{
             this.get_data()

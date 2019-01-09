@@ -41,6 +41,6 @@ module.exports = merge(baseConfig, {
       filename: "css/[name].[hash].css",
       chunkFilename: "css/[name].[hash].css"
     }),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ]
 });

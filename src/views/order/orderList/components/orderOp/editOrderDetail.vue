@@ -31,9 +31,13 @@
                     </FormItem>
                     </Col>
                     <Col span="8">
-                    <FormItem label="已付款" prop="realnumber">
-                        <Input size="small" v-model="orderDetail.realnumber" number />
-                    </FormItem>
+                        <FormItem label="国地税报道" prop="gdsreport">
+                            <Select transfer v-model="orderDetail.gdsreport" disabled size="small" style="width:100%">
+                                <Option value="ybd">已报道</Option>
+                                <Option value="wbd">未报道</Option>
+                                <Option value="bybd">不用报道</Option>
+                            </Select>
+                        </FormItem>
                     </Col>
                     <Col span="8">
                     <FormItem label="缴费渠道" prop="paydir">
@@ -45,12 +49,8 @@
                 </Row>
                 <Row :gutter="16">
                     <Col span="8">
-                    <FormItem label="国地税报道" prop="gdsreport">
-                        <Select transfer v-model="orderDetail.gdsreport" size="small" >
-                            <Option value="ybd">已报道</Option>
-                            <Option value="wbd">未报道</Option>
-                            <Option value="bybd">不用报道</Option>
-                        </Select>
+                    <FormItem label="已付款" prop="realnumber">
+                        <Input size="small" v-model="orderDetail.realnumber" number />
                     </FormItem>
                     </Col>
                     <Col span="8">
@@ -75,6 +75,17 @@
                         
                         <!-- <Button type="primary" icon="plus" @click="kuaiji()" v-show="kjdj">查看会计到家服务项</Button> -->
                     </FormItem>
+                </Row>
+                <Row :gutter="16">
+                    <Col span="8">
+                        <FormItem label="使用余额" prop="usebalance">
+                            <div style="display:inline-block">
+                                <Input size="small" v-model="orderDetail.usebalance" style="width:50%" number />
+                                <Button type="info" size="small" @click="get_balance('create', orderDetail.customerid)">查询</Button>
+                                <span style="line-height:24px;height:24px;display:inline-block;margin-left:10px">可用余额：</span><span style="line-height:24px;height:24px;display:inline-block">{{allUseBalance}}</span>
+                            </div>
+                        </FormItem>
+                    </Col>
                 </Row>
             </Form>
             <Row>
