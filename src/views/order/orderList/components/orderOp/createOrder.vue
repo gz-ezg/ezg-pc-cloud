@@ -32,9 +32,14 @@
                     </FormItem>
                     </Col>
                     <Col span="8">
-                    <FormItem label="已付款" prop="realnumber">
-                        <Input size="small" v-model="orderDetail.realnumber" number />
+                    <FormItem label="国地税报道" prop="gdsreport">
+                        <Select transfer v-model="orderDetail.gdsreport" size="small" >
+                            <Option value="ybd">已报道</Option>
+                            <Option value="wbd">未报道</Option>
+                            <Option value="bybd">不用报道</Option>
+                        </Select>
                     </FormItem>
+                    
                     </Col>
                     <Col span="8">
                     <FormItem label="缴费渠道" prop="paydir">
@@ -46,13 +51,9 @@
                 </Row>
                 <Row :gutter="16">
                     <Col span="8">
-                    <FormItem label="国地税报道" prop="gdsreport">
-                        <Select transfer v-model="orderDetail.gdsreport" size="small" >
-                            <Option value="ybd">已报道</Option>
-                            <Option value="wbd">未报道</Option>
-                            <Option value="bybd">不用报道</Option>
-                        </Select>
-                    </FormItem>
+                        <FormItem label="实付金额" prop="realnumber">
+                            <Input size="small" v-model="orderDetail.realnumber" number />
+                        </FormItem>
                     </Col>
                     <Col span="8">
                         <FormItem label="是否提供发票" prop="isornotkp">
@@ -60,6 +61,17 @@
                                 <Option value="Y">是</Option>
                                 <Option value="N">否</Option>
                             </Select>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="16">
+                    <Col span="8">
+                        <FormItem label="使用余额" prop="usebalance">
+                            <div style="display:inline-block">
+                                <Input size="small" v-model="orderDetail.usebalance" style="width:50%" number />
+                                <Button type="info" size="small" @click="get_balance('create', orderDetail.customerid)">查询</Button>
+                                <span style="line-height:24px;height:24px;display:inline-block;margin-left:10px">可用余额：</span><span style="line-height:24px;height:24px;display:inline-block">{{allUseBalance}}</span>
+                            </div>
                         </FormItem>
                     </Col>
                 </Row>
@@ -165,6 +177,7 @@ export default {
             this.orderDetail.tel = e.customerTel
             this.orderDetail.gdsreport = e.gdsreport
             this.orderDetail.companyid = e.id
+            this.orderDetail.customerid = e.customerId
         },
         //  ======== 合同文件上传start ========
         handleUpload(file) {
@@ -228,6 +241,7 @@ export default {
                 GDSreport: _self.orderDetail.gdsreport,
                 payTime: DateFormat(_self.orderDetail.payTime),
                 isornotkp: _self.orderDetail.isornotkp,
+                usebalance: _self.orderDetail.usebalance,
                 orderitems: JSON.stringify(_self.orderItem)
             }
 

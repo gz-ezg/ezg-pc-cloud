@@ -1,6 +1,9 @@
 const merge = require('webpack-merge');
 const path = require('path');
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+const config = require("./config")
 const baseConfig = require('./webpack.base.conf');
+
 module.exports = merge(baseConfig, {
   mode: 'development',
   devtool: 'inline-source-map',
@@ -45,5 +48,13 @@ module.exports = merge(baseConfig, {
       errors: true,
     },
     quiet: true,
-  }
+  },
+  plugins: [
+    new FriendlyErrorsPlugin({
+      compilationSuccessInfo: {
+          messages: ['Now Proxy in 220(test); You application is running here http://localhost:8089'],
+      },
+      clearConsole: true
+    })
+  ]
 });

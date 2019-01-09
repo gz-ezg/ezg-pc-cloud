@@ -6,7 +6,6 @@ const AutoDllPlugin = require('autodll-webpack-plugin');
 const HappyPack = require('happypack');
 const os = require('os');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
@@ -95,12 +94,21 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new AutoDllPlugin({
             inject: true, // will inject the DLL bundle to index.html
-            debug: false,
+            debug: true,
             filename: '[name]_[hash].js',
             path: './dll',
             entry: {
+<<<<<<< HEAD
                 vue: ['vue', 'vue-router', 'vuex'],
                 iview: ['iview','iview-area'],
+=======
+                vue: [
+                    'vue/dist/vue.runtime.common', 
+                    'vue-router/dist/vue-router.common', 
+                    'vuex/dist/vuex.common'
+                ],
+                iview: ['iview/dist/iview.min','iview-area'],
+>>>>>>> 31825008137c3ccdd25e326d5ba559ad4df7b3a8
                 vchart: [
                     'v-charts/lib/line.common',
                     'v-charts/lib/bar.common',
@@ -130,13 +138,7 @@ module.exports = {
                     'text-editor.vue'
                 ]
             }
-        ),
-        new FriendlyErrorsPlugin({
-            compilationSuccessInfo: {
-                messages: ['Now Proxy in 220; You application is running here http://localhost:8089'],
-            },
-            clearConsole: true
-        })
+        )
     ],
     resolve: {
         mainFields: ['main'],

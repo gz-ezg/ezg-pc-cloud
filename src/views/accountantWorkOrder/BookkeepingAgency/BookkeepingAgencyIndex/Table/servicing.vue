@@ -242,7 +242,7 @@
                     {
                         title: '对应企业',
                         key: 'companyname',
-                        width: 250
+                        minWidth: 250
                     },
                     {
                         title: '企业经营状态',
@@ -257,17 +257,22 @@
                     {
                         title: '服务人员',
                         key: 'realname',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title:'服务状态',
                         key: 'service_status',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '结束税期',
                         key: 'end_period',
-                        width: 120
+                        minWidth: 120
+                    },
+                    {
+                        title: '单价',
+                        key: 'unitprice',
+                        minWidth: 120
                     },
                     {
                         title: '备注',
@@ -534,12 +539,12 @@
                     {
                         title: '警戒值',
                         key: 'accounter_security_line',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '账务等级',
                         key: 'accountgrade',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '累计外勤',
@@ -602,6 +607,7 @@
                     {field:'product',title:'产品名称'},
                     {field:'realname',title:'服务人员'},
                     {field:'followbyrealname',title:'市场'},
+                    {field:'unitprice',title:'单价'},
                     // {field:'balance_count',title:'剩余时长'},
                     // {field:'begin_period',title:'开始期间'},
                     {field:'end_period',title:'结束期间'},
@@ -924,7 +930,7 @@
                             name: "etax",
                             title: '账号异常通知',
                             duration: 0,
-                            render: h => {
+                            render: (h, params) => {
                                 return h('div', [
                                     '部分企业电子税务局账号无效！',
                                     h('Button', {
@@ -932,9 +938,9 @@
                                             type: "info",
                                             size: "small"
                                         },
+                                        class: "ivu-btn ivu-btn-info",
                                         on: {
                                             click: ()=>{
-                                                // console.log("1234567")
                                                 _self.$Notice.close("etax")
                                                 _self.openInvalidCompany = true
                                             }

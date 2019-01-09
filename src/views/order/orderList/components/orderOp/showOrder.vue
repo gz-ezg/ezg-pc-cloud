@@ -31,8 +31,12 @@
                     </FormItem>
                     </Col>
                     <Col span="8">
-                        <FormItem label="已付款" prop="realnumber">
-                            <Input size="small" v-model="orderDetail.realnumber" readonly/>
+                        <FormItem label="国地税报道" prop="gdsreport">
+                            <Select transfer v-model="orderDetail.gdsreport" disabled size="small" style="width:100%">
+                                <Option value="ybd">已报道</Option>
+                                <Option value="wbd">未报道</Option>
+                                <Option value="bybd">不用报道</Option>
+                            </Select>
                         </FormItem>
                     </Col>
                     <Col span="8">
@@ -45,13 +49,9 @@
                 </Row>
                 <Row :gutter="16">
                     <Col span="8">
-                    <FormItem label="国地税报道" prop="gdsreport">
-                        <Select transfer v-model="orderDetail.gdsreport" disabled size="small" style="width:100%">
-                            <Option value="ybd">已报道</Option>
-                            <Option value="wbd">未报道</Option>
-                            <Option value="bybd">不用报道</Option>
-                        </Select>
-                    </FormItem>
+                        <FormItem label="实付金额" prop="realnumber">
+                            <Input size="small" v-model="orderDetail.realnumber" readonly/>
+                        </FormItem>
                     </Col>
                     <Col span="8">
                     <FormItem label="是否提供发票" prop="isornotkp">
@@ -66,6 +66,17 @@
                             <Button @click="open_isornotkp('show')" type="info" size="small">开票信息</Button>
                         </FormItem>
                     </Col> -->
+                </Row>
+                 <Row :gutter="16">
+                    <Col span="8">
+                        <FormItem label="使用余额" prop="usebalance">
+                            <div style="display:inline-block">
+                                <Input size="small" v-model="orderDetail.usebalance" style="width:50%" number readonly/>
+                                <Button type="info" size="small" @click="get_balance('create', orderDetail.customerid)">查询</Button>
+                                <span style="line-height:24px;height:24px;display:inline-block;margin-left:10px">可用余额：</span><span style="line-height:24px;height:24px;display:inline-block">{{allUseBalance}}</span>
+                            </div>
+                        </FormItem>
+                    </Col>
                 </Row>
                 <Row :gutter="16">
                     <FormItem>
@@ -193,7 +204,7 @@ export default {
                 }
             ],
             dangerOperation:{
-                title: "撤回",
+                title: "退款",
                 minWidth: 80,
                 align: 'center',
                 render: (h, params) => {
@@ -210,7 +221,7 @@ export default {
                             props: {
                                 transfer: true,
                                 confirm: true,
-                                title: '您确定要撤回此订单项吗！',
+                                title: '您确定要退款此订单项吗！',
                             },
                             on: {
                                 'on-ok': ()=>{
@@ -218,7 +229,7 @@ export default {
                                     this.cancel_order(this.orderId, params.row.itemid)
                                 },
                             }
-                        }, '撤回')
+                        }, '退款')
                     ])
                 }
             },
@@ -232,13 +243,13 @@ export default {
             this.openServiceItem = false
         },
         cancel_order(orderId, orderItemId){
-            let url = `api/order/cancelOrder`
+            let url = `api/order/item/refund`
             let _self = this
             let config = {
-                params: {
-                    orderId: orderId,
-                    orderItemId: orderItemId
-                }
+                // params: {
+                    // orderId: orderId,
+                    itemId: orderItemId
+                // }
             }
 
             function success(res){
@@ -247,20 +258,20 @@ export default {
             }
 
             function fail(err){
-                _self.$Message.fail("撤回失败！")
+                // _self.$Message.fail("退款失败！")
                 _self.get_data(orderId)
             }
 
-            this.$Get(url, config, success, fail)
+            this.$Post(url, config, success, fail)
         }
     },
     created() {
         let _self = this
+        if(localStorage.getItem('id')==10059){
+            this.orderDetailListHeaderShow.unshift(this.dangerOperation)
+        }
         this.$bus.off("OPEN_ORDERLIST_DETAIL", true)
         this.$bus.on("OPEN_ORDERLIST_DETAIL", (e)=>{
-            if(localStorage.getItem('id')==10059){
-                this.orderDetailListHeaderShow.unshift(this.dangerOperation)
-            }
             this.get_data(e)
             this.orderId = e
             this.openShowOrderDetail = true

@@ -8,6 +8,7 @@ export default {
         return {
             showAccountHomeItem: false,
             loading: false,
+            allUseBalance: "待查询",
             orderDetail: {
                 customerid: "",
                 id: "",
@@ -23,7 +24,8 @@ export default {
                 realnumber: "",
                 paydir: "",
                 gdsreport: "",
-                performanceMoney: ""
+                performanceMoney: "",
+                usebalance: 0
             },
             orderDetailRule:{
                 isornotkp: [
@@ -363,6 +365,8 @@ export default {
         modal_status_change(e){
             if(!e){
                 this.$refs["orderDetail"].resetFields()
+                this.orderDetail.customerid = ""
+                this.orderDetail.companyid = ""
                 this.orderItem = []
             }
         },
@@ -403,6 +407,37 @@ export default {
                 orderId: this.orderDetail.id,
                 type: e
             })
+        },
+        //  账户余额
+        async get_balance(type, id){
+            let _self = this
+            console.log(type, id)
+            if(!id){
+                this.$Message.warning("请选择归属公司！")
+                return false
+            }
+
+            let url = 'api/customer/account/detail'
+            let config = {
+                params: {
+                    customerId: id
+                }                
+            }
+
+            function success(res){
+                console.log(res.data.data)
+                let temp = res.data.data
+                if(type == "create"){
+                    _self.allUseBalance = (temp.accountAmount - temp.lockAmount).toFixed(2)
+                }else if(type == "update"){
+                    _self.allUseBalance = (temp.accountAmount - temp.lockAmount + _self.orderDetail.usebalance).toFixed(2)
+                }else{
+                    return false
+                }
+                
+            }
+            this.$Get(url, config, success)
+
         }
     },
     created(){

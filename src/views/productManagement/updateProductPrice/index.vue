@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Card>
+        <Card style="min-width:1400px">
             <span slot="title"><h3>{{title}}</h3></span>
             <div v-for="(item, index) in queryProperty" :key="index" style="margin-top:10px">
                 <Row style="display:flex;justify-content:flex-start">
@@ -152,7 +152,8 @@ export default {
             }
 
             function success(res){
-                _self.data = res.data.data
+                _self.data = res.data.data.data
+                _self.alisname = res.data.data.alisname
                 tran_status(_self.data)
                 _self.loading = false
             }
@@ -198,7 +199,8 @@ export default {
                 propertys: _self.typeArray.join(","),
                 doaprice: _self.doaprice,
                 dbaseprice: _self.dbaseprice,
-                areaPrices: JSON.stringify(areaPrices)
+                areaPrices: JSON.stringify(areaPrices),
+                alisname: _self.alisname
             }
 
             function success(res){

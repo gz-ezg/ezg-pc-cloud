@@ -36,12 +36,12 @@ export default {
                 {
                     title: "router",
                     key: "name",
-                    minWidth: 250
+                    width: 150
                 },
                 {
                     title: "hook",
                     key: "hook",
-                    minWidth: 200
+                    width: 150
                 },
                 {
                     title: "err",
@@ -51,12 +51,12 @@ export default {
                 {
                     title: "createdate",
                     key: "createdate",
-                    minWidth: 150
+                    width: 150
                 },
                 {
                     title: "realname",
                     key: "realname",
-                    minWidth: 150
+                    width: 150
                 },
             ],
             loading: false

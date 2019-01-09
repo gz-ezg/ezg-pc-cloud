@@ -44,8 +44,8 @@
                                     <Icon type="arrow-down-b"></Icon>
                                 </a>
                                 <DropdownMenu slot="list">
-                                    <!--<DropdownItem name="ownSpace">个人中心</DropdownItem>-->
-                                    <DropdownItem>个人中心</DropdownItem>
+                                    <DropdownItem name="ownSpace">个人中心</DropdownItem>
+                                    <!-- <DropdownItem>个人中心</DropdownItem> -->
                                     <DropdownItem name="stystem_complain" divided>系统反馈</DropdownItem>
                                     <DropdownItem name="updatePassWord" divided>修改密码</DropdownItem>
                                     <DropdownItem name="loginout" divided>退出登录</DropdownItem>

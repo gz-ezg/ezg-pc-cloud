@@ -117,12 +117,12 @@ export const otherRouter = {
         //     name: 'planIndex_index', 
         //     component: () => import(/* webpackChunkName: "planIndex" */ '@/views/home/plan_index/planIndex.vue')
         // },
-        // {
-        //     path: 'ownspace', 
-        //     title: '个人中心', 
-        //     name: 'ownspace_index',
-        //     component: () => import(/* webpackChunkName: "commonIndex" */ '@/views/own-space/own-space.vue')
-        // },
+        {
+            path: 'ownspace', 
+            title: '个人中心', 
+            name: 'ownspace_index',
+            component: () => import(/* webpackChunkName: "ownspace" */ '@/views/own-space/own-space.vue')
+        },
         {
             path: 'message',
             title: '消息中心',
@@ -911,14 +911,14 @@ export const appRouter = [
         title: '资料管理',
         component: Main,
         children: [
-            {
-                access: 6131,
-                meta: 6131,
-                path: 'handovermanagement2',
-                title: '资料交接',
-                name: 'handovermanagement2_index',
-                component: () => import( /* webpackChunkName: "handovermanagement_index" */ '@/views/handoverResource/handoverTest/index.vue')
-            },
+            // {
+            //     access: 6131,
+            //     meta: 6131,
+            //     path: 'handovermanagement2',
+            //     title: '资料交接',
+            //     name: 'handovermanagement2_index',
+            //     component: () => import( /* webpackChunkName: "handovermanagement_index" */ '@/views/handoverResource/handoverTest/index.vue')
+            // },
             {
                 access: 6131,
                 meta: 6131,

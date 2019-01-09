@@ -7,7 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node build/build.js",
     "jen": "node build/jenkins.js",
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "npm run dev-test",
+    "dev-test": "webpack-dev-server --inline --progress --config build/webpack.dev-test.conf.js --env test",
+    "dev-224": "webpack-dev-server --inline --progress --config build/webpack.dev-224.conf.js",
+    "dev-222": "webpack-dev-server --inline --progress --config build/webpack.dev-222.conf.js",
     "dev:dll": "webpack-dev-server --progress --config build/webpack.dll.conf.js"
   },
   "keywords": [],

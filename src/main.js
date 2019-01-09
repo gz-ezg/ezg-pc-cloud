@@ -65,6 +65,15 @@ Vue.use(iviewArea)
 //  axios 拦截器
 axios.interceptors.response.use(
     (response) => {
+        if(response.data.msgCode != 40000 && response.config.url != "api/legwork/apiLoginByWechatCode"){
+            let url = 'api/system/saveFontErrMsg'
+            let config = {
+                name: "cloud",
+                page: response.config.url,
+                err: JSON.stringify(response)
+            }
+            axios.post(url, config).then(function(res){}).catch((err)=>{})
+        }
         if(response.data.msgCode == "50003" && Cookies.get('user')!=""){
             console.log(response)
             iView.Message.warning('对不起，您还未登陆！')
@@ -100,10 +109,10 @@ axios.interceptors.response.use(
         return Promise.reject(error)
     }
 )
-
+console.log(process.env)
 //  异常监控及上传
 //  上传待接口完成后实现
-console.log(process.env.NODE_ENV)
+// console.log(process.env)
 // if(process.env.NODE_ENV == 'jenkins' ){
 //     Vue.config.errorHandler = function(err, vm, info) {
 //         Raven.captureException(err)
@@ -535,7 +544,8 @@ Vue.prototype.PostFiles = function (url, data, doSuccess, otherConditions){
 
 //  路由跳转之前检查是否有权限访问该页面
 router.beforeEach((to, from, next)=>{
-    if(to.name == "login" || to.name == "home_index"){
+    // console.log()
+    if(to.name == "login" || to.name == "home_index" || JSON.stringify(to.meta) == "{}"){
         
     }else{
         let url = 'api/system/addGather'
