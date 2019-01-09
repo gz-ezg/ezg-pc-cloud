@@ -232,6 +232,14 @@ export const appRouter = [
                 component: () => import( /* webpackChunkName: "marketingManagement_index" */ '@/views/customerManagement/marketingManagement2')
             },
             {
+                access: 6002,
+                meta: 6002,
+                path: 'customerAccount',
+                title: '账户管理',
+                name: 'customerAccount_index',
+                component: () => import( /* webpackChunkName: "customerAccount_index" */ '@/views/customerManagement/customerAccount/index.vue')
+            },
+            {
                 access: 6003,
                 meta: 6003,
                 path: 'customerTabManagement',
