@@ -1,6 +1,8 @@
 <template>
     <Card style="min-width:800px">
         <Row style="margin-bottom:10px;">
+            <search @search="search">
+            </search>
             <!-- <Collapse v-model="search_model">
                     <Panel name="1" >
                         <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
@@ -84,14 +86,17 @@
 </template>
 
 <script>
+import search from './search'
 import detail from './detail'
 export default {
     name: "customerAccount_index",
     components: {
-        detail
+        detail,
+        search
     },
     data(){
         return {
+            form: {},
             openDetail: false,
             data: [],
             header: [
@@ -146,10 +151,21 @@ export default {
             pageSize: 10,
             accountChangeType: new Map(),
             accountChangeItemType: new Map(),
-            currentId: ""
+            currentId: "",
+            searchForm: ""
         }
     },
     methods: {
+        search(e){
+            console.log(e)
+            this.searchForm = e
+            if(this.searchForm.hasOwnProperty("createdate")){
+                this.searchForm["bcreatedate"] = this.searchForm.createdate[0]
+                this.searchForm["ecreatedate"] = this.searchForm.createdate[1]
+                delete this.searchForm.createdate
+            }
+            this.get_data()
+        },
         get_data(){
             let _self = this
             _self.loading = true
@@ -160,6 +176,14 @@ export default {
                     pageSize: _self.pageSize
                 }
             }
+
+            Object.assign(config.params, this.searchForm)
+            for(let x in config.params){
+                if(config.params[x]==undefined){
+                    config.params[x] = ""
+                }
+            }
+            console.log(config.params)
 
             function success(res){
                 let {total, rows} = res.data.data
