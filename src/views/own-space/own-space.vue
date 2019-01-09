@@ -109,9 +109,9 @@ export default {
                     { required: true, message: '请输入手机号码！' },
                     { validator: validePhone }
                 ],
-                officephone: [
-                    { validator: validePhone }
-                ],
+                // officephone: [
+                //     { validator: validePhone }
+                // ],
                 // email: [
                 //     { message: '请输入姓名！', trigger: 'change', type: "email"}
                 // ]

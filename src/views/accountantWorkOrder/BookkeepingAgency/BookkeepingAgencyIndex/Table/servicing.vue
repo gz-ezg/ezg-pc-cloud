@@ -930,7 +930,7 @@
                             name: "etax",
                             title: '账号异常通知',
                             duration: 0,
-                            render: h => {
+                            render: (h, params) => {
                                 return h('div', [
                                     '部分企业电子税务局账号无效！',
                                     h('Button', {
@@ -938,9 +938,9 @@
                                             type: "info",
                                             size: "small"
                                         },
+                                        class: "ivu-btn ivu-btn-info",
                                         on: {
                                             click: ()=>{
-                                                // console.log("1234567")
                                                 _self.$Notice.close("etax")
                                                 _self.openInvalidCompany = true
                                             }
@@ -977,7 +977,7 @@
             }
             console.log(year)
             console.log(month)
-            // this.get_etax_error()
+            this.get_etax_error()
             _self.time = year.toString() + month.toString()
             Bus.$on('UPDATE_ALL_ACCOUNT_PAGE',(e)=>{
                 _self.getData()

@@ -23,7 +23,8 @@ export default {
                 realnumber: "",
                 paydir: "",
                 gdsreport: "",
-                performanceMoney: ""
+                performanceMoney: "",
+                usebalance: 0
             },
             orderDetailRule:{
                 isornotkp: [
@@ -403,6 +404,12 @@ export default {
                 orderId: this.orderDetail.id,
                 type: e
             })
+        },
+        //  账户余额
+        get_balance(type, id){
+            if(id){
+                this.$Message.warning("请选择归属公司！")
+            }
         }
     },
     created(){

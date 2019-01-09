@@ -112,7 +112,7 @@ axios.interceptors.response.use(
 
 //  异常监控及上传
 //  上传待接口完成后实现
-console.log(process.env.NODE_ENV)
+// console.log(process.env)
 // if(process.env.NODE_ENV == 'jenkins' ){
 //     Vue.config.errorHandler = function(err, vm, info) {
 //         Raven.captureException(err)
@@ -544,7 +544,8 @@ Vue.prototype.PostFiles = function (url, data, doSuccess, otherConditions){
 
 //  路由跳转之前检查是否有权限访问该页面
 router.beforeEach((to, from, next)=>{
-    if(to.name == "login" || to.name == "home_index"){
+    // console.log()
+    if(to.name == "login" || to.name == "home_index" || JSON.stringify(to.meta) == "{}"){
         
     }else{
         let url = 'api/system/addGather'

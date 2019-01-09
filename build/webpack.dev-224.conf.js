@@ -1,5 +1,7 @@
 const merge = require('webpack-merge');
 const path = require('path');
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+
 const baseConfig = require('./webpack.base.conf');
 module.exports = merge(baseConfig, {
   mode: 'development',
@@ -29,12 +31,11 @@ module.exports = merge(baseConfig, {
     contentBase: path.resolve(__dirname, '../dist'),
     open: false,
     disableHostCheck: true,
-    port: 8089,
+    port: 9999,
     inline: false,
     proxy: {
       '/api': {
-        // target: 'http://cloud.zgcfo.com/api/',
-        target: 'http://192.168.0.222:9000',
+        target: 'http://192.168.0.224:9000',
         pathRewrite: {
           '^/api': ''
         },
@@ -45,5 +46,13 @@ module.exports = merge(baseConfig, {
       errors: true,
     },
     quiet: true,
-  }
+  },
+  plugins: [
+    new FriendlyErrorsPlugin({
+      compilationSuccessInfo: {
+          messages: ['Now Proxy in 224(yrl); You application is running here http://localhost:9999'],
+      },
+      clearConsole: true
+    })
+  ]
 });

@@ -6,7 +6,6 @@ const AutoDllPlugin = require('autodll-webpack-plugin');
 const HappyPack = require('happypack');
 const os = require('os');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
@@ -134,13 +133,7 @@ module.exports = {
                     'text-editor.vue'
                 ]
             }
-        ),
-        new FriendlyErrorsPlugin({
-            compilationSuccessInfo: {
-                messages: ['Now Proxy in 220; You application is running here http://localhost:8089'],
-            },
-            clearConsole: true
-        })
+        )
     ],
     resolve: {
         mainFields: ['main'],
