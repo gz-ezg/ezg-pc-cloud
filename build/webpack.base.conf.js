@@ -100,7 +100,7 @@ module.exports = {
             path: './dll',
             entry: {
                 vue: ['vue', 'vue-router', 'vuex'],
-                iview: ['iview/dist/iview.min','iview-area'],
+                iview: ['iview','iview-area'],
                 vchart: [
                     'v-charts/lib/line.common',
                     'v-charts/lib/bar.common',
