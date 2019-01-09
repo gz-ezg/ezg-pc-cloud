@@ -186,12 +186,12 @@ export const appRouter = [
     //             name: 'test3_index',
     //             component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/test3.vue')
     //         },
-    //         {
-    //             path: 'test4',
-    //             title: 'canvas个人页制作',
-    //             name: 'test4_index',
-    //             component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/test4.vue')
-    //         },
+            // {
+            //     path: 'test4',
+            //     title: 'canvas个人页制作',
+            //     name: 'test4_index',
+            //     component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/test4.vue')
+            // },
     //         {
     //             path: 'test5',
     //             title: 'html2canvas',
@@ -224,6 +224,14 @@ export const appRouter = [
                 title: '营销管理',
                 name: 'marketingManagement_index',
                 component: () => import( /* webpackChunkName: "marketingManagement_index" */ '@/views/customerManagement/marketingManagement2')
+            },
+            {
+                access: 6002,
+                meta: 6002,
+                path: 'customerAccount',
+                title: '账户管理',
+                name: 'customerAccount_index',
+                component: () => import( /* webpackChunkName: "customerAccount_index" */ '@/views/customerManagement/customerAccount/index.vue')
             },
             {
                 access: 6003,

@@ -149,6 +149,7 @@ export default {
                         isornotkp: _self.orderDetail.isornotkp,
                         orderPayNumber: _self.orderDetail.realnumber,
                         orderitems: JSON.stringify(_self.orderItem),
+                        usebalance: _self.orderDetail.usebalance,
                         serviceStartDate: ""
                     }
 

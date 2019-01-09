@@ -1,6 +1,6 @@
 /* eslint-disable */
 import Vue from 'vue';
-import iView from 'iview/dist/iview.min';
+import iView from 'iview';
 import {router} from './router/index';
 import {appRouter} from './router/router';
 import 'iview/dist/styles/iview.css';
@@ -66,6 +66,9 @@ Vue.use(iviewArea)
 axios.interceptors.response.use(
     (response) => {
         if(response.data.msgCode != 40000 && response.config.url != "api/legwork/apiLoginByWechatCode"){
+            if(process.env.NODE_ENV == "development"){
+                return false
+            }
             let url = 'api/system/saveFontErrMsg'
             let config = {
                 name: "cloud",
