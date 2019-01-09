@@ -98,17 +98,8 @@ module.exports = {
             filename: '[name]_[hash].js',
             path: './dll',
             entry: {
-<<<<<<< HEAD
                 vue: ['vue', 'vue-router', 'vuex'],
                 iview: ['iview','iview-area'],
-=======
-                vue: [
-                    'vue/dist/vue.runtime.common', 
-                    'vue-router/dist/vue-router.common', 
-                    'vuex/dist/vuex.common'
-                ],
-                iview: ['iview/dist/iview.min','iview-area'],
->>>>>>> 31825008137c3ccdd25e326d5ba559ad4df7b3a8
                 vchart: [
                     'v-charts/lib/line.common',
                     'v-charts/lib/bar.common',
