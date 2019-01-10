@@ -1,13 +1,17 @@
 <template>
     <div>
         <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="open_company_create">新增</Button>
+        <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="shift_company" v-permission="['company.shift']">转移</Button>
         <Table
                 :loading="loading"
+                highlight-row
+                @on-current-change="select_row"
                 border
                 size="small"
                 :columns="header"
                 :data="data"
                 style="margin-top: 15px"
+                
         ></Table>
         <!-- <Page
             size="small"
@@ -21,6 +25,7 @@
         <update-company v-if="close" @update="get_data" :taxtype="taxtype" :companyarea="companyarea_Casr" :customer="customer" :importance="importance" :cluesources="cluesources"></update-company>
         <!-- <amend-company></amend-company> -->
         <change-log></change-log>
+        <shift-company v-if="openShiftCompany" @close="close_shift_company" :company="selectCompany"></shift-company>
     </div>
 </template>
 
@@ -29,13 +34,15 @@ import createCompany from "./create"
 import updateCompany from "./update"
 import amendCompany from "./amend"
 import changeLog from "./changeLog"
+import shiftCompany from './shift'
 
 export default {
     components: {
         createCompany,
         updateCompany,
         amendCompany,
-        changeLog
+        changeLog,
+        shiftCompany
     },
     props: {
         customer:{
@@ -175,7 +182,9 @@ export default {
             ],
             data: [],
             companyarea_Casr: [],
-            taxtype: []
+            taxtype: [],
+            openShiftCompany: false,
+            selectCompany: ""
         }
     },
     methods: {
@@ -191,6 +200,9 @@ export default {
             }
 
             this.$Get(url, config ,success)
+        },
+        select_row(e){
+            this.selectCompany = e
         },
         get_data_center(){
             let _self = this
@@ -209,6 +221,18 @@ export default {
         },
         open_company_create(){
             this.$bus.emit("OPEN_COMPANY_CREATE",true)
+        },
+        shift_company(){
+            if(this.selectCompany){
+                this.openShiftCompany = true
+            }else{
+                this.$Message.warning("请选择需要变更的公司！")
+            }
+        },
+        close_shift_company(){
+            this.openShiftCompany = false
+            this.selectCompany = ""
+            this.get_data(this.customer.ID)
         }
     },
     created(){

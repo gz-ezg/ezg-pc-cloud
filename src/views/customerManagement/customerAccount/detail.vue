@@ -11,7 +11,8 @@
                 size="small"
                 :columns="header"
                 :data="data"
-                :loading = "loading"
+                :loading="loading"
+                class="expand-table"
             ></Table>
             <Page
                 size="small"
@@ -28,6 +29,7 @@
 </template>
 
 <script>
+import expandItem from './expandDetail'
 export default {
     props: {
         id: {
@@ -40,17 +42,34 @@ export default {
             type: [Map, String]
         },
     },
+    components: {
+        expandItem
+    },
     data(){
         return {
+            loading: false,
             openAccountFlow: true,
             total: 0,
             page: 1,
             pageSize: 10,
             header: [
+                // {
+                //     title: "序号",
+                //     type: "index",
+                //     width: 90
+                // },
                 {
-                    title: "序号",
-                    type: "index",
-                    width: 90
+                    type: 'expand',
+                    width: 50,
+                    render: (h, params) => {
+                        let _self = this
+                        return h(expandItem, {
+                            props: {
+                                id: params.row.id,
+                                accountChangeItemType: _self.accountChangeItemType
+                            }
+                        })
+                    }
                 },
                 {
                     title: "流水类型",
@@ -89,11 +108,14 @@ export default {
         get_data(id){
             let _self = this
             let url = `api/customer/account/record/list`
+            _self.loading = true
             let config = {
                 params: {
                     customer_account_id: id,
                     page: this.page,
-                    pageSize: this.pageSize
+                    pageSize: this.pageSize,
+                    sortField: "id",
+                    order: "desc"
                 }
             }
 
@@ -111,6 +133,7 @@ export default {
 
                     return item
                 })
+                _self.loading = false
             }
 
             this.$Get(url, config, success)
@@ -130,3 +153,8 @@ export default {
 }
 </script>
 
+<style>
+.expand-table .td.ivu-table-expanded-cell{
+    padding: 0;
+}
+</style>

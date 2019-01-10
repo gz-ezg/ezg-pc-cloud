@@ -253,8 +253,9 @@ export default {
             }
 
             function success(res){
-                _self.$Message.success(res.data.msg)
+                // _self.$Message.success(res.data.msg)
                 _self.get_data(orderId)
+                _self.$bus.emit("UPDATE_ORDER_LIST")
             }
 
             function fail(err){

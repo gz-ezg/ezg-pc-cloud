@@ -145,6 +145,7 @@ export default {
     },
     created(){
         let _self = this
+        this.orderItemHeader.shift()
         this.$bus.off("OPEN_ORDERLIST_AMEND", true)
         this.$bus.on("OPEN_ORDERLIST_AMEND", (e) => {
             this.get_data(e)

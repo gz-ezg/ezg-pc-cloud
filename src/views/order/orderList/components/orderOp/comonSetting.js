@@ -367,6 +367,7 @@ export default {
                 this.$refs["orderDetail"].resetFields()
                 this.orderDetail.customerid = ""
                 this.orderDetail.companyid = ""
+                this.allUseBalance = "待查询"
                 this.orderItem = []
             }
         },
