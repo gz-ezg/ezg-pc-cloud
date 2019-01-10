@@ -1,6 +1,6 @@
 /* eslint-disable */
 import Vue from 'vue';
-import iView from 'iview/dist/iview.min';
+import iView from 'iview';
 import {router} from './router/index';
 import {appRouter} from './router/router';
 import 'iview/dist/styles/iview.css';

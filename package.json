@@ -11,6 +11,7 @@
     "dev-test": "webpack-dev-server --inline --progress --config build/webpack.dev-test.conf.js",
     "dev-224": "webpack-dev-server --inline --progress --config build/webpack.dev-224.conf.js",
     "dev-222": "webpack-dev-server --inline --progress --config build/webpack.dev-222.conf.js",
+    "dev-cloud": "webpack-dev-server --inline --progress --config build/webpack.dev-cloud.conf.js",
     "dev:dll": "webpack-dev-server --progress --config build/webpack.dll.conf.js"
   },
   "keywords": [],
