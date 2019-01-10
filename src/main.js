@@ -109,7 +109,7 @@ axios.interceptors.response.use(
         return Promise.reject(error)
     }
 )
-
+console.log(process.env)
 //  异常监控及上传
 //  上传待接口完成后实现
 // console.log(process.env)

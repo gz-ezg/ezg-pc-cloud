@@ -67,8 +67,9 @@
                     <Col span="8">
                         <FormItem label="使用余额" prop="usebalance">
                             <div style="display:inline-block">
-                                <Input size="small" v-model="orderDetail.usebalance" style="width:120px" number />
-                                <Button type="info" size="small" @click="get_balance('create', this.customerid)">查询余额</Button>
+                                <Input size="small" v-model="orderDetail.usebalance" style="width:50%" number />
+                                <Button type="info" size="small" @click="get_balance('create', orderDetail.customerid)">查询</Button>
+                                <span style="line-height:24px;height:24px;display:inline-block;margin-left:10px">可用余额：</span><span style="line-height:24px;height:24px;display:inline-block">{{allUseBalance}}</span>
                             </div>
                         </FormItem>
                     </Col>
@@ -175,6 +176,7 @@ export default {
             this.orderDetail.tel = e.customerTel
             this.orderDetail.gdsreport = e.gdsreport
             this.orderDetail.companyid = e.id
+            this.orderDetail.customerid = e.customerId
         },
         //  ======== 合同文件上传start ========
         handleUpload(file) {

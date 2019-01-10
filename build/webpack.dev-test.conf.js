@@ -1,8 +1,9 @@
 const merge = require('webpack-merge');
 const path = require('path');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-
+const config = require("./config")
 const baseConfig = require('./webpack.base.conf');
+
 module.exports = merge(baseConfig, {
   mode: 'development',
   devtool: 'inline-source-map',
