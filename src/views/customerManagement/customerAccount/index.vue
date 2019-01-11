@@ -1,35 +1,41 @@
+import { runInThisContext } from "vm";
+
 <template>
     <div>
-        <Table 
-            size="small"
-            highlight-row
-            :columns="columns1" 
-            :data="tableData"
-            :loading="loading">
-        </Table>
-        <Page
-            size="small"
-            show-total
-            show-sizer
-            show-elevator
-            :total="pageTotal"
-            :current.sync = "page"
-            @on-change="pageChange"
-            @on-page-size-change="pageSizeChange"
-        >
-        </Page>
+        <Card>
+            <Table 
+                size="small"
+                highlight-row
+                :columns="columns1" 
+                :data="tableData"
+                :loading="loading">
+            </Table>
+            <Page
+                size="small"
+                show-total
+                show-sizer
+                show-elevator
+                :total="pageTotal"
+                :current.sync = "page"
+                @on-change="pageChange"
+                @on-page-size-change="pageSizeChange"
+            >
+            </Page>
+        </Card>
 
         <Modal
-            v-model="modal1"
+            v-model="itemModalStatus"
             title="账户流水"
             width='850'
-            @on-ok="ok"
             @on-cancel="cancel">
             <Table
                 size="small"
+                highlight-row
                 :columns="columns2"
                 :data="tableData2"
                 :loading="loading2"
+                ref="currentRowTable"
+                @on-expand="test"
             ></Table>
             <Page
                 size="small"
@@ -39,18 +45,22 @@
                 :current.sync = "page2"
                 @on-change="pageChange2"
             ></Page>
+            <div slot="footer">
+            </div>
         </Modal>
     </div>
 </template>
 
 <script>
 import {DateFormat} from '../../../libs/utils'
+import expandRow from './flow-detail.vue'
 
 export default {
+    components: { expandRow },
     data () {
         return {
             params: {},
-            modal1: false,
+            itemModalStatus: false,
             loading: false,
             page: 1,
             pageSize: 10,
@@ -59,28 +69,34 @@ export default {
             columns1: [
                 {
                     title: '序号',
-                    key: 'serialNum'
+                    key: 'serialNum',
+                    minWidth: 100
                 },
                 {
                     title: '客户',
-                    key: 'customer'
+                    key: 'customer',
+                    minWidth: 100
                 },
                 {
                     title: '联系方式',
-                    key: 'tel'
+                    key: 'tel',
+                    minWidth: 150
                 },
                 {
                     title: '账户余额',
-                    key: 'account_amount'
+                    key: 'account_amount',
+                    minWidth: 100
                 },
                 {
                     title: '冻结余额',
-                    key: 'lock_amount'
+                    key: 'lock_amount',
+                    minWidth: 100
                 },
                 {
                     title: '操作',
                     key: 'action',
                     aligin: 'center',
+                    minWidth: 150,
                     render: (h,params)=> {
                         return h('div',[
                             h('Button',{
@@ -107,6 +123,18 @@ export default {
             //流水相关
             loading2: false,
             columns2: [
+                {
+                    type: 'expand',
+                    render: (h, params) => {
+                        console.log(this.tableData2[0].detailData)
+                        return h(expandRow, {
+                            props: {
+                                row: params.row
+                                // row: this.tableData2.detailData
+                            }
+                        })
+                    }
+                },
                 {
                     title: '序号',
                     key: 'id',
@@ -141,7 +169,9 @@ export default {
             tableData2: [],
             page2: 1,
             pageSize2: 10,
-            pageTotal2: new Number()
+            pageTotal2: new Number(),
+            detailData:[],
+            recordId:''
         }
     },
     methods: {
@@ -194,7 +224,7 @@ export default {
             let _self = this
             _self.currnetRow = a
             _self.searchId = a.serialNum
-            _self.modal1 = true
+            _self.itemModalStatus = true
             let url = 'api/customer/account/record/list'
             _self.loading2 = true
             let config = {
@@ -215,7 +245,8 @@ export default {
                         actual_amount:res.data.data.rows[i].actual_amount,
                         companyname:res.data.data.rows[i].companyname,
                         actual_date:DateFormat(res.data.data.rows[i].actual_date),
-                        createdate:DateFormat(res.data.data.rows[i].createdate)
+                        createdate:DateFormat(res.data.data.rows[i].createdate),
+                        detailData:[]
                     })
                 }
                 _self.loading2 = false
@@ -252,7 +283,58 @@ export default {
         cancel () {
             this.tableData2 =[];
             this.page2 =1;
+        },
+
+        
+        getFlowDetail() {
+            let _self = this
+            let url = 'api/customer/account/record/items'
+            let config ={
+                params: {
+                    recordId :_self.recordId
+                }
+            }
+
+            function success(res){
+                console.log(res.data.data.length)
+                for(var i=0;i<_self.tableData2.length;i++){
+                    _self.tableData2[i].detailData = []
+                    if(_self.tableData2[i].id ==_self.recordId){
+                        for(var j=0;j<res.data.data.length;j++){
+                            _self.tableData2[i].detailData.push({
+                                customer_account_record_id:res.data.data[j].customer_account_record_id,
+                                id:res.data.data[j].id,
+                                item_amount:res.data.data[j].item_amount,
+                                item_type:res.data.data[j].item_type,
+                                order_id:res.data.data[j].order_id,
+                                ordercode:res.data.data[j].ordercode
+                            })
+                        }
+                        return
+                    }
+                }
+                // for(var i=0;i<res.data.data.length;i++){
+                //     _self.detailData.push({
+                //         customer_account_record_id:res.data.data.customer_account_record_id,
+                //         id:res.data.data.id,
+                //         item_amount:res.data.data.item_amount,
+                //         item_type:res.data.data.item_type,
+                //         order_id:res.data.data.order_id,
+                //         ordercode:res.data.data
+                //     })
+                // }
+            }
+
+            this.$Get(url,config,success)
+        },
+        test(a){
+            // console.log(a)
+            let _self = this
+            _self.recordId = a.id
+            this.getFlowDetail()
+            console.log(this.tableData2)
         }
+
     },
     mounted() {
         this.getTableData()
@@ -264,3 +346,20 @@ export default {
 
 </style>
 
+// table:[
+//     {
+//         tableDetail:[
+//             {
+//                 one
+//             },
+//             {
+//                 two
+//             }
+//         ],
+//         id:,
+
+//     },
+//     {
+
+//     }
+// ]
