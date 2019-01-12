@@ -6,22 +6,39 @@
 
 <script>
 import axios from 'axios'
+// import Vue from 'vue';
 
-function fail(err){
-    console.log(err)
+function commonFail(err){
+    console.log("fail")
+    if(err.status == 200){
+        alert(err.data.msg)
+    }else{
+        alert(err)
+    }
 }
 
-function AjaxGet(url, config, success, fail=fail){
+function AjaxGet(url, config, success, fail=commonFail){
     let baseUrl = 'api/' + url
     return new Promise((resolve, reject)=>{
         axios.get(baseUrl, config).then((res)=>{
-            if(res.data.msgCode == 40000){
-                resolve(success(res.data))
+            // console.log(res)
+            if(res.status == 200 && res.data.msgCode == 40000){
+                resolve(success(res.data.data))
+            }else{
+                fail(res)
             }
+        }).catch((err)=>{
+            fail(err)
         })
     })
 }
 
+function getData(url, config, success, fail){
+
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxGet(url, config, success))
+    })
+}
 
 export default {
     data() {
@@ -30,7 +47,7 @@ export default {
         }
     },
     methods: {
-        get_data(){
+        async get_data(){
             let url = 'customer/list'
             let config = {
                 params: {
@@ -40,13 +57,16 @@ export default {
             }
 
             function success(res){
-                console.log(res)
+                // console.log(res)
+                return res
             }
-
-            function result(resolve, reject){
-                resolve(AjaxGet(url, config, success))
-            }
-            return new Promise(result)
+            
+            let {total, rows} = await getData(url, config, success)
+            await console.log(total)
+            console.log(rows)
+            // return new Promise((resolve, reject)=>{
+            //     resolve(AjaxGet(url, config, success))
+            // })        
         },
         get_data2(){
             console.log("this is get_data2!")
