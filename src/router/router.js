@@ -202,7 +202,7 @@ export const appRouter = [
                 path: 'test7',
                 title: 'axios',
                 name: 'test07_index',
-                component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/test7.vue')
+                component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/apiTest/test7.vue')
             }
         ]
     },

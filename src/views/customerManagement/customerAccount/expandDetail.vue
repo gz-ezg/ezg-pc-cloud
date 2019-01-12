@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import * as api from './api';
+
 export default {
     props: {
         id: {
@@ -49,26 +51,25 @@ export default {
         }
     },
     methods: {
-        get_data(id){
+        async get_data(id){
             let _self = this
-            let url = `api/customer/account/record/items`
             _self.loading = true
             let config = {
                 params:{
                     recordId: id
                 }
             }
-
-            function success(res){
-                let { data } = res.data
+            try {
+                let data = await api.getAccountRecordItem(config)
                 _self.data = data.map((item)=>{
                     item.item_type = _self.accountChangeItemType.get(item.item_type)
                     return item
                 })
                 _self.loading = false
+            } catch (error) {
+                console.log(error)          
+                _self.$Message.error("页面错误！")
             }
-
-            this.$Get(url, config, success)
         }
     },
     mounted(){

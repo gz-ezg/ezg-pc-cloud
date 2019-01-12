@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import * as api from './api'
 export default {
     props: {
         company: {
@@ -92,9 +93,8 @@ export default {
         }
     },
     methods: {
-        get_data(){
+        async get_data(){
             let _self = this
-            let url = `api/customer/list`
             _self.loading = true
             let config = {
                 params: {
@@ -103,9 +103,9 @@ export default {
                     name: _self.searchName,
                 }
             };
-
-            function success(res){
-                let {total, rows} = res.data.data
+            
+            try {
+                let { total, rows } = await api.getCustomerList(config)
                 _self.total = total
                 _self.data = rows.map((item)=>{
                     let temp = {}
@@ -114,10 +114,13 @@ export default {
                     temp.tel = item.TEL
                     return temp
                 })
-                _self.loading = false
+            } catch (error) {
+                console.log(error)
+                _self.$Message.error("页面异常！")
             }
 
-            this.$Get(url, config, success)
+            _self.loading = false
+
         },
         row_select_customer(e){
             this.customerName = e.name
@@ -130,24 +133,24 @@ export default {
         close(){
             this.$emit("close")
         },
-        submit(){
+        async submit(){
             let _self = this
             if(this.companyId && this.customerId){
-                let url = "api/customer/company/shift"
                 let config = {
                     companyId: _self.companyId,
                     customerId: _self.customerId
                 }
 
-                function success(res){
-                    _self.close()
+                try {
+                    let {status, data} = await api.postCustomerCompayShift(config)
+                    // console.log(status, data)
+                    if(status){
+                        _self.close()
+                    }
+                } catch (error) {
+                    _self.$Message.error("页面异常！")
                 }
 
-                function fail(err){
-
-                }
-
-                this.$Post(url, config, success, fail)
             }else{
                 this.$Message.warning("请先选择变更对象！")
             }
