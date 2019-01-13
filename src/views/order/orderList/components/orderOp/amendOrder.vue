@@ -49,7 +49,7 @@
                 <Row :gutter="16">
                     <Col span="8">
                     <FormItem label="已付款" prop="realnumber">
-                        <Input size="small" v-model="orderDetail.realnumber" readonly/>
+                        <Input size="small" v-model="orderDetail.realnumber"/>
                     </FormItem>
                     </Col>
                     <Col span="8">
@@ -70,8 +70,8 @@
                     <Col span="8">
                         <FormItem label="使用余额" prop="usebalance">
                             <div style="display:inline-block">
-                                <Input size="small" v-model="orderDetail.usebalance" style="width:50%" number readonly/>
-                                <Button type="info" size="small" @click="get_balance('create', orderDetail.customerid)">查询</Button>
+                                <Input size="small" v-model="orderDetail.usebalance" style="width:40%" number />
+                                <Button type="info" size="small" @click="get_balance('update', orderDetail.customerid)">查询</Button>
                                 <span style="line-height:24px;height:24px;display:inline-block;margin-left:10px">可用余额：</span><span style="line-height:24px;height:24px;display:inline-block">{{allUseBalance}}</span>
                             </div>
                         </FormItem>
@@ -120,6 +120,8 @@ export default {
                         id: _self.orderDetail.id,
                         paydir: _self.orderDetail.paydir,
                         paytime: DateFormat(_self.orderDetail.payTime),
+                        realnumber: _self.orderDetail.realnumber,
+                        usebalance: _self.orderDetail.usebalance,
                         items: JSON.stringify(_self.orderItem)
                     }
 

@@ -5,7 +5,7 @@ function postCustomerCompayShift(config, success, fail){
     return new Promise((resolve, reject)=>{
         resolve(AjaxPost(url, config, success, fail))
     }).catch((err)=>{
-        reject(err)
+        return err
     })
 }
 
@@ -14,7 +14,7 @@ function getCustomerList(config, success, fail){
     return new Promise((resolve, reject)=>{
         resolve(AjaxGet(url, config, success, fail))
     }).catch((err)=>{
-        reject(err)
+        return err
         // console.log(err)
     })
 }

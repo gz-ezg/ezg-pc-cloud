@@ -5,7 +5,7 @@ function getCustomerAccountList(config, success, fail){
     return new Promise((resolve, reject)=>{
         resolve(AjaxGet(url, config, success, fail))
     }).catch((err)=>{
-        reject(err)
+        return err
     })
 }
 
@@ -13,7 +13,7 @@ function getDictionary(params){
     return new Promise((resolve, reject)=>{
         resolve(AjaxDic(params))
     }).catch((err)=>{
-        reject(err)
+        return err
     })
 }
 
@@ -22,7 +22,7 @@ function getAccountRecordList(config, success, fail){
     return new Promise((resolve, reject)=>{
         resolve(AjaxGet(url, config, success, fail))
     }).catch((err)=>{
-        reject(err)
+        return err
     })
 }
 
@@ -31,7 +31,7 @@ function getAccountRecordItem(config, success, fail){
     return new Promise((resolve, reject)=>{
         resolve(AjaxGet(url, config, success, fail))
     }).catch((err)=>{
-        reject(err)
+        return err
     })
 }
 

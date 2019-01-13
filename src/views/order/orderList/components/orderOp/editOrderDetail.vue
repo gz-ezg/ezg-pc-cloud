@@ -68,24 +68,22 @@
                     </Col> -->
                 </Row>
                 <Row :gutter="16">
-                    <FormItem>
-                        <Button type="primary" icon="plus" @click="open_product_list">新增产品</Button>
-                        <Button type="primary" icon="plus" @click="show_contarct('edit')">查看合同</Button>
-                        <Button type="primary" icon="plus" @click="openServiceItem = true" v-if="showAccountHomeItem">查看会计到家服务项</Button>
-                        
-                        <!-- <Button type="primary" icon="plus" @click="kuaiji()" v-show="kjdj">查看会计到家服务项</Button> -->
-                    </FormItem>
-                </Row>
-                <Row :gutter="16">
                     <Col span="8">
                         <FormItem label="使用余额" prop="usebalance">
                             <div style="display:inline-block">
-                                <Input size="small" v-model="orderDetail.usebalance" style="width:50%" number />
-                                <Button type="info" size="small" @click="get_balance('create', orderDetail.customerid)">查询</Button>
+                                <Input size="small" v-model="orderDetail.usebalance" style="width:40%" number />
+                                <Button type="info" size="small" @click="get_balance('update', orderDetail.customerid)">查询</Button>
                                 <span style="line-height:24px;height:24px;display:inline-block;margin-left:10px">可用余额：</span><span style="line-height:24px;height:24px;display:inline-block">{{allUseBalance}}</span>
                             </div>
                         </FormItem>
                     </Col>
+                </Row>
+                <Row :gutter="16">
+                    <FormItem>
+                        <Button type="primary" icon="plus" @click="open_product_list">新增产品</Button>
+                        <Button type="primary" icon="plus" @click="show_contarct('edit')">查看合同</Button>
+                        <Button type="primary" icon="plus" @click="openServiceItem = true" v-if="showAccountHomeItem">查看会计到家服务项</Button>
+                    </FormItem>
                 </Row>
             </Form>
             <Row>
@@ -112,6 +110,7 @@
 import serviceItem from '../accountHomeTree'
 import commonSetting from './comonSetting.js'
 import { DateFormat } from '../../../../../libs/utils.js'
+import * as orderApi from '../../api'
 
 export default {
     mixins: [commonSetting],
@@ -136,10 +135,10 @@ export default {
             let _self = this
             _self.$ButtonCollect("order_edit")
             _self.loading = true
-            this.$refs["orderDetail"].validate((valid) => {
+            this.$refs["orderDetail"].validate(async (valid) => {
                 if(valid){
-                    let url = `api/order/update`
-                    console.log(_self.orderDetail.payTime)
+                    // let url = `api/order/update`
+                    // console.log(_self.orderDetail.payTime)
                     let config = {
                         id: _self.orderDetail.id,
                         payDir: _self.orderDetail.paydir,
@@ -155,24 +154,37 @@ export default {
 
                     console.log(config)
 
-                    function success(res){
-                        setTimeout(()=>{
-                            _self.loading = false
-                            _self.openEditOrderDetail = false
-                            _self.$bus.emit("UPDATE_ORDER_LIST", true)
-                        }, 500)
-                        // _self.$refs["orderDetail"].resetFields()
-                        // _self.orderItem = []
+                    // function success(res){
+                    //     setTimeout(()=>{
+                    //         _self.loading = false
+                    //         _self.openEditOrderDetail = false
+                    //         _self.$bus.emit("UPDATE_ORDER_LIST", true)
+                    //     }, 500)
+                    //     // _self.$refs["orderDetail"].resetFields()
+                    //     // _self.orderItem = []
+                    // }
+                    try {
+                        let {status, data} = await orderApi.orderUpdate(config)
+                        if(status){
+                            setTimeout(()=>{
+                                _self.loading = false
+                                _self.openEditOrderDetail = false
+                                _self.$bus.emit("UPDATE_ORDER_LIST", true)
+                            }, 500)
+                        }
+                    } catch (error) {
+                        console.log(error)
                     }
+                    // _self.loading = false
+                    // function fail(err){
+                    //     _self.loading = true
+                    // }
 
-                    function fail(err){
-                        _self.loading = true
-                    }
-
-                    _self.$Post(url, config, success, fail)
+                    // _self.$Post(url, config, success, fail)
                 }else{
-                    _self.loading = false
+                    // _self.loading = false
                 }
+                _self.loading = false
             })
         },
         open_product_list(){
