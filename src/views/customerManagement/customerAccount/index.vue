@@ -137,7 +137,8 @@ export default {
                     return item
                 })
             } catch (error) {
-                _self.$Message.error("页面异常！")
+                console.log(error)
+                // _self.$Message.error(error)
             }
             _self.loading = false
         },
@@ -159,7 +160,8 @@ export default {
                 _self.accountChangeType = _self.$array2map(account_change_type)
                 _self.accountChangeItemType = _self.$array2map(account_change_item_type)
             }catch(error){
-                _self.$Message.error("页面异常！")
+                // console.log(error)
+                // _self.$Message.error("页面异常！")
             }
         }
     },

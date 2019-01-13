@@ -446,6 +446,8 @@ export default {
         this.$bus.on("ADD_PRODUCT", (e) => {
             if(e.product == "会计到家"){
                 this.showAccountHomeItem = true
+            }else{
+                this.showAccountHomeItem = false
             }
             this.orderItem.push(e)
             this.computer_paynumber()

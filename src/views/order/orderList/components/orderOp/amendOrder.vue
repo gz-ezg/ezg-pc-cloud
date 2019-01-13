@@ -100,6 +100,7 @@
 <script>
 import commonSetting from './comonSetting.js'
 import { DateFormat } from '../../../../../libs/utils.js'
+import * as orderApi from '../../api.js'
 export default {
     mixins: [commonSetting],
     data(){
@@ -112,9 +113,9 @@ export default {
         xiugai(){
             let _self = this
             _self.loading = true
-            this.$refs["orderDetail"].validate((valid) => {
+            this.$refs["orderDetail"].validate(async (valid) => {
                 if(valid){
-                    let url = `api/order/finishedUpdate`
+                    // let url = `api/order/finishedUpdate`
                     let config = {
                         id: _self.orderDetail.id,
                         paydir: _self.orderDetail.paydir,
@@ -124,22 +125,24 @@ export default {
 
                     console.log(config)
 
-                    function success(res){
-                        _self.loading = false
-                        _self.openamendOrderDetail = false
-                        _self.$refs["orderDetail"].resetFields()
-                        _self.orderItem = []
-                        _self.$bus.emit("UPDATE_ORDER_LIST", true)
-                    }
-
-                    function fail(err){
-                        _self.loading = true
-                    }
-
-                    _self.$Post(url, config, success, fail)
-                }else{
+                    try {
+                        let {status, data} = await orderApi.orderFinishUpdate(config)
+                        if(status){
+                            _self.$refs["orderDetail"].resetFields()
+                            _self.orderItem = []
+                            _self.$bus.emit("UPDATE_ORDER_LIST", true)
+                            _self.openamendOrderDetail = false
+                        }
+                        // console.log("1234")
+                        } catch (error) {
+                            
+                        }
                     _self.loading = false
+                    // _self.loading = false
+                }else{
+                    // _self.loading = false
                 }
+                _self.loading = false
             })
         }
     },

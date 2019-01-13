@@ -9,6 +9,8 @@ function commonFail(err){
     }else{
         iView.Message.error("服务器异常！"+ err.message)
     }
+
+    // return false
 }
 // 
 function AjaxGet(url, config, success, fail=commonFail){
@@ -22,7 +24,7 @@ function AjaxGet(url, config, success, fail=commonFail){
                 fail(res)
             }
         }).catch((err)=>{
-            fail(err)
+            reject(fail(err))
         })
     })
 }
@@ -45,7 +47,7 @@ function AjaxPost(url, config, success, fail=commonFail){
                 })
             }
         }).catch((err)=>{
-            fail(err)
+            reject(fail(err))
         })
     })
 }
@@ -65,7 +67,7 @@ function AjaxDic(params){
                 fail(res)
             }
         }).catch((err)=>{
-            fail(err)
+            reject(fail(err))
         })
     })
 }
