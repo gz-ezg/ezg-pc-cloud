@@ -4,9 +4,10 @@
             v-model="follow_open"
             title="服务详情"
             width="100%"
+            @on-cancel="close"
         >
             <Row>
-                <center><h2>{{row.companyname}}</h2></center>
+                <center><h2>{{company.companyname}}</h2></center>
             </Row>
             <Row style="margin-top:20px">
                 <Table
@@ -14,6 +15,7 @@
                     highlight-row
                     size="small"
                     :columns="header"
+                    :loading="loading"
                     :data="data"></Table>
                 <Page
                     size="small"
@@ -22,6 +24,7 @@
                     show-sizer
                     show-elevator
                     @on-change="pageChange"
+                    :current.sync="page"
                     placement="top"
                     style="margin-top: 10px"></Page>
             </Row>
@@ -32,47 +35,53 @@
 </template>
 
 <script>
+import * as accountApi from '../../api'
+
 export default {
+    props: {
+        company: {
+            type: [String, Object]
+        }
+    },
     data(){
         return {
-            follow_open:false,
+            follow_open:true,
             header:[
                 {
                     title:"公司名称",
                     key:"companyname",
-                    width:250
+                    minWidth:250
                 },
                 {
                     title:"会计",
                     key:"realname",
-                    width:120
+                    minWidth:120
                 },
                 {
                     title: '产品名称',
                     key: 'product',
-                    width: 160
+                    minWidth: 160
                 },
                 {
                     title:"账期",
                     key:'period',
-                    width:120
+                    minWidth:120
                 },
                 {
-                    title: '联系客户',
-                    key: 'lianxikehu',
-                    width: 120,
+                    title: '报税',
+                    key: 'baoshui',
+                    minWidth:120,
                     align: "center",
                     render: (h, params) => {
-                            // console.log(params.row.lianxikehu.confirm_date)
-                        let reg=/^[-+]?\d*$/; 
-                        if(params.row.lianxikehu.confirm_date == undefined){
+                        let reg =/^[-+]?\d*$/;
+                        if(params.row.baoshui.confirm_date == undefined){
                             return h('div','[ 未完成 ]');
                         }else{
                             return h('div', [
                                 h('img',{
                                     domProps:{
                                         height: 120,
-                                        src: '/api/assets/'+params.row.lianxikehu.image_url,
+                                        src: '/api/assets/'+params.row.baoshui.image_url,
                                         width: 120
                                     },
                                     attrs: {
@@ -80,232 +89,102 @@ export default {
                                     },
                                     on:{
                                         click:() => {
-                                                window.open('/api/assets/'+params.row.lianxikehu.image_url)
-                                            }
-                                    
+                                            window.open('/api/assets/'+params.row.baoshui.image_url)
+                                        }
+                                        
                                     }
                                 }),
-                                h('div',params.row.lianxikehu.confirm_date.slice(0,10))
+                                h('div',params.row.baoshui.confirm_date.slice(0,10))
                             ])
                         }
                     }
                 },
-                    {
-                        title: '报税',
-                        key: 'baoshui',
-                        width:120,
-                        align: "center",
-                        render: (h, params) => {
-                            let reg =/^[-+]?\d*$/;
-                            if(params.row.baoshui.confirm_date == undefined){
-                                return h('div','[ 未完成 ]');
-                            }else{
-                                return h('div', [
-                                    h('img',{
-                                        domProps:{
-                                            height: 120,
-                                            src: '/api/assets/'+params.row.baoshui.image_url,
-                                            width: 120
-                                        },
-                                        attrs: {
-                                            onerror: "this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null"
-                                        },
-                                        on:{
-                                            click:() => {
-                                                    window.open('/api/assets/'+params.row.baoshui.image_url)
-                                                }
-                                        
+                {
+                    title: '做账',
+                    key: 'zuozhang',
+                    align: "center",
+                    minWidth:120,
+                    render: (h, params) => {
+                        let reg=/^[-+]?\d*$/;
+                        if(params.row.zuozhang.confirm_date == undefined){
+                            return h('div','[ 未完成 ]');
+                        }else{
+                            return h('div', [
+                                h('img',{
+                                    domProps:{
+                                        height: 120,
+                                        src: '/api/assets/'+params.row.zuozhang.image_url,
+                                        width: 120
+                                    },
+                                    attrs:{
+                                        onerror: "this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null"
+                                    },
+                                    on:{
+                                        click:() => {
+                                            window.open('/api/assets/'+params.row.zuozhang.image_url)
                                         }
-                                    }),
-                                    h('div',params.row.baoshui.confirm_date.slice(0,10))
-                                ])
-                            }
+                                    }
+                                }),
+                                h('div',params.row.zuozhang.confirm_date.slice(0,10))
+                            ])
                         }
-                    },
-                    {
-                        title: '扣款',
-                        key: 'koukuan',
-                        align: "center",
-                        width:120,
-                        render: (h, params) => {
-                            let reg=/^[-+]?\d*$/;                            
-                            // console.log(isNaN(params.row.zlwc))
-                            if(params.row.koukuan.confirm_date == undefined){
-                                return h('div','[ 未完成 ]');
-                            }else{
-                                return h('div', [
-                                    h('img',{
-                                        domProps:{
-                                            height: 120,
-                                            src: '/api/assets/'+params.row.koukuan.image_url,
-                                            width: 120
-                                        },
-                                        attrs: {
-                                            onerror: "this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null"
-                                        },
-                                        on:{
-                                            click:() => {
-                                                    window.open('/api/assets/'+params.row.koukuan.image_url)
-                                                }
-                                        
-                                        }
-                                    }),
-                                    h('div',params.row.koukuan.confirm_date.slice(0,10))
-                                ])
-                            }
-                        }
-                    },
-                    {
-                        title: '社保',
-                        key: 'shebao',
-                        align: "center",
-                        width:120,
-                        render: (h, params) => {
-                            let reg=/^[-+]?\d*$/;
-                            
-                            if(params.row.shebao.confirm_date == undefined){
-                                return h('div','[ 未完成 ]');
-                            }else{
-                                return h('div', [
-                                    h('img',{
-                                        domProps:{
-                                            height: 120,
-                                            src: '/api/assets/'+params.row.shebao.image_url,
-                                            width: 120
-                                        },
-                                        attrs: {
-                                            onerror: "this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null"
-                                        },
-                                        on:{
-                                            click:() => {
-                                                    window.open('/api/assets/'+params.row.shebao.image_url)
-                                                }
-                                        
-                                        }
-                                    }),
-                                    h('div',params.row.shebao.confirm_date.slice(0,10))
-                                ])
-                            }
-                        }
-                    },
-                    {
-                        title: '公积金',
-                        key: 'gongjijin',
-                        align: "center",
-                        width:120,
-                        render: (h, params) => {
-                            let reg=/^[-+]?\d*$/;
-                            if(params.row.gongjijin.confirm_date == undefined){
-                                return h('div','[ 未完成 ]');
-                            }else{
-                                return h('div', [
-                                    h('img',{
-                                        domProps:{
-                                            height: 120,
-                                            src: '/api/assets/'+params.row.gongjijin.image_url,
-                                            width: 120
-                                        },
-                                        attrs: {
-                                            onerror: "this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null"
-                                        },
-                                        on:{
-                                            click:() => {
-                                                    window.open('/api/assets/'+params.row.gongjijin.image_url)
-                                                }
-                                        
-                                        }
-                                    }),
-                                    h('div',params.row.gongjijin.confirm_date.slice(0,10))
-                                ])
-                            }
-                        }
-                    },
-                    {
-                        title: '做账',
-                        key: 'zuozhang',
-                        align: "center",
-                        width:120,
-                        render: (h, params) => {
-                            let reg=/^[-+]?\d*$/;
-                            if(params.row.zuozhang.confirm_date == undefined){
-                                return h('div','[ 未完成 ]');
-                            }else{
-                                return h('div', [
-                                    h('img',{
-                                        domProps:{
-                                            height: 120,
-                                            src: '/api/assets/'+params.row.zuozhang.image_url,
-                                            width: 120
-                                        },
-                                        attrs:{
-                                            onerror: "this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null"
-                                        },
-                                        on:{
-                                            click:() => {
-                                                    window.open('/api/assets/'+params.row.zuozhang.image_url)
-                                                }
-                                        
-                                        }
-                                    }),
-                                    h('div',params.row.zuozhang.confirm_date.slice(0,10))
-                                ])
-                            }
-                        }
-                    },
-                    {
-                        title: '警戒值',
-                        key: 'accounter_security_line',
-                        width: 120
-                    },
+                    }
+                },
+                {
+                    title: '警戒值',
+                    key: 'accounter_security_line',
+                    minWidth: 120
+                },
                 {
                     title:"财务等级",
                     key:'accountgrade',
-                    width:120
+                    minWidth:120
                 },
                 
             ],
             data:[],
-            row:"",
+            info:"",
             page: 1,
-            pageTotal:new Number()
+            pageTotal: 0
         }
     },
     methods:{
         pageChange(e){
             this.page = e
-            this.getData()
+            this.getData(this.company.cycle_service_record_id)
         },
-        getData(){
+        async getData(id){
             let _self = this
             _self.loading =  true
-            let url = `api/order/cycle/month/service/list`
             let config = {
                 params:{
                     page: _self.page,
                     pageSize: 10,
                     sortField:"updatedate",
-                    cycle_service_record_id: _self.row.cycle_service_record_id
+                    cycle_service_record_id: id
                 }
             }
 
-            function success(res){
-                _self.data = res.data.data.rows
-                _self.pageTotal = res.data.data.total
-                _self.loading = false
+            try {
+                let { total, rows } = await accountApi.orderCycleMonthServiceList(config)
+                _self.pageTotal = total
+                _self.data = rows
+            } catch (error) {
+                console.log(error)
             }
 
-            this.$Get(url, config, success)
+            _self.loading = false
         },
+        close(){
+            this.$emit("close")
+        }
     },
     created(){
+        this.loading = true
+    },
+    mounted(){
         let _self = this
-        _self.$bus.on('open_booking_follow',(e)=>{
-            // console.log(e)
-            _self.row = e
-            // console.log(_self.row)
-            _self.getData()
-            _self.follow_open = true
-        })
+        this.getData(this.company.cycle_service_record_id)
     }
 }
 </script>

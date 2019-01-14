@@ -33,7 +33,7 @@
 <script>
     import Bus from '../../../components/bus'
     //  代理记账详情
-    import BookFollow from './BookkeepingAgencyIndex//Table/followUp'
+    // import BookFollow from './BookkeepingAgencyIndex/Table/followUp'
     import CheekError from './BookkeepingAgencyIndex/cheekError'
     import ProductChanges from '../accountantOrder/accountantOrderIndex/productChanges'
     import ChangeTheLength from '../accountantOrder/accountantOrderIndex/changeTheLength'
@@ -68,7 +68,7 @@
             ChangeTheLength,
             ProductChanges,
             CheekError,
-            BookFollow
+            // BookFollow
         },
     }
 </script>
