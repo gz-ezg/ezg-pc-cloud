@@ -49,7 +49,7 @@
                 <Row :gutter="16">
                     <Col span="8">
                     <FormItem label="已付款" prop="realnumber">
-                        <Input size="small" v-model="orderDetail.realnumber"/>
+                        <Input size="small" v-model="orderDetail.realnumber" number/>
                     </FormItem>
                     </Col>
                     <Col span="8">
@@ -137,7 +137,7 @@ export default {
                         }
                         // console.log("1234")
                         } catch (error) {
-                            
+                            console.log(error)
                         }
                     _self.loading = false
                     // _self.loading = false
