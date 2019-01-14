@@ -26,6 +26,7 @@
                         :columns="header"
                         :loading="loading"
                         :data="data"
+                        size='small'
                         @on-row-dblclick='row_select_customer'
                     ></Table>
                     <Page
@@ -49,9 +50,9 @@
 <script>
 import relationCommon from './common'
 export default {
-    mixins: [relationCommon],
     data(){
         return {
+            loading:false,
             openCreateCompany: false,
             page:1,
             pageSize:10,
@@ -59,12 +60,12 @@ export default {
                 {
                   title: "客户名称",
                   key: "NAME",
-                  minWidth: 250
+                  minWidth: 200
                 },
                 {
-                  title: "ID",
-                  key: "ID",
-                  minWidth: 200
+                  title: "联系电话",
+                  key: "TEL",
+                  minWidth: 250
                 }
               ],
             data:[],
@@ -72,6 +73,7 @@ export default {
             //新客户信息
             newCustomerName:'',
             newCustomerId:null,
+            newCustomerTel:null,
             
             submit_loading:false,
             searchName:''
@@ -83,6 +85,7 @@ export default {
     methods: {
         get_data(){
             let _self = this
+            _self.loading = true
             let url = 'api/customer/list'
             let config = {
                 params:{
@@ -96,6 +99,7 @@ export default {
                 console.log(res)
                 _self.data = res.data.data.rows
                 _self.total = res.data.data.total
+                _self.loading = false
             }
 
             this.$Get(url,config,success)
@@ -115,13 +119,17 @@ export default {
                 console.log(res)
                 _self.submit_loading = false;
                 _self.openCreateCompany = false
+                _self.$bus.emit("UPDATE_CUSTOMER", true);
+                this.data = []
             }
 
             this.$Post(url,config,success);
         },
         row_select_customer(e){
+            console.log(e)
             this.newCustomerName = e.NAME
             this.newCustomerId = e.ID
+            this.newCustomerTel = e.TEL
         },
         pageChange(e){
             console.log(e)

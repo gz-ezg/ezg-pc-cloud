@@ -24,7 +24,7 @@
         <update-company v-if="close" @update="get_data" :taxtype="taxtype" :companyarea="companyarea_Casr" :customer="customer" :importance="importance" :cluesources="cluesources"></update-company>
         <!-- <amend-company></amend-company> -->
         <change-log></change-log>
-        <change-company v-if="close" @update="get_data" :companyData='companyData' :taxtype="taxtype" :companyarea="companyarea_Casr" :customer="customer" :importance="importance" :cluesources="cluesources"></change-company>
+        <change-company v-if="close" :companyData='companyData'></change-company>
     </div>
 </template>
 
@@ -56,7 +56,7 @@ export default {
     },
     data(){
         return {
-            selectRow:{},
+            selectRow:"",
             companyData:[],
             loading: false,
             close: false,
@@ -220,7 +220,11 @@ export default {
             this.$bus.emit("OPEN_COMPANY_CREATE",true)
         },
         open_company_change(){
-            this.$bus.emit("OPEN_COMPANY_CHANGE",true)
+            if(this.selectRow){
+                this.$bus.emit("OPEN_COMPANY_CHANGE",this.selectRow)
+            }else{
+                this.$Message.warning("请选择需要查看的企业信息！")
+            }
         },
         select_row(e){
             console.log(e)
@@ -229,8 +233,16 @@ export default {
         },
     },
     created(){
+        let _self = this
         this.get_data_center()
         this.get_data(this.customer.ID)
+
+        //更新表格内容
+        this.$bus.off("UPDATE_CUSTOMER", true)
+        this.$bus.on("UPDATE_CUSTOMER", (e)=>{
+            _self.get_data(this.customer.ID)
+            _self.selectRow = ''
+        })
     }
 }
 </script>
