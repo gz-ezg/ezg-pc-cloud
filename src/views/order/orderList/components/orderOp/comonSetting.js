@@ -1,3 +1,4 @@
+import * as orderApi from '../../api'
 export default {
     props: {
         payDirs: {
@@ -227,8 +228,10 @@ export default {
                                     type: "month",
                                     transfer: false,
                                     size: "small",
-                                    disabled: !this.orderItem[parmas.index].hasOwnProperty("servicestartdate"),
-                                    readonly: !this.orderItem[parmas.index].hasOwnProperty("servicestartdate")
+                                    // disabled: !this.orderItem[parmas.index].hasOwnProperty("servicestartdate"),
+                                    // readonly: !this.orderItem[parmas.index].hasOwnProperty("servicestartdate")
+                                    disabled: this.orderItem[parmas.index].iscycle == 'N',
+                                    readonly: this.orderItem[parmas.index].iscycle == 'N',
                                 },
                                 on: {
                                     "on-change": function(event){
@@ -325,26 +328,45 @@ export default {
     },
     methods: {
         //  取订单详情
-        get_data(e){
+        async get_data(e){
             let _self = this
-            let url = `api/order/detail/` + e
-            _self.showAccountHomeItem = false
-            _self.loading = true
-            let config = {}
+            // let url = `api/order/detail/` + e
+            // _self.showAccountHomeItem = false
+            // _self.loading = true
+            // let config = {}
 
-            function success(res){
-                _self.orderDetail = res.data.data
-                _self.orderItem = res.data.data.items
-                for(let i = 0; i<_self.orderItem.length;i++){
-                    if(_self.orderItem[i].product == "会计到家"){
-                        _self.showAccountHomeItem = true
-                        break
+            // function success(res){
+            //     _self.orderDetail = res.data.data
+            //     _self.orderItem = res.data.data.items
+            //     for(let i = 0; i<_self.orderItem.length;i++){
+            //         if(_self.orderItem[i].product == "会计到家"){
+            //             _self.showAccountHomeItem = true
+            //             break
+            //         }
+            //     }
+            //     _self.loading = false
+            // }
+
+            // this.$Get(url, config, success)
+
+            this.showAccountHomeItem = false
+            this.loading = true
+            // let config = {}
+
+            try {
+                let data  = await orderApi.orderDetail(e)
+                this.orderDetail = data
+                this.orderItem = data.items.map((item)=>{
+                    if(item.product == "会计到家"){
+                        this.showAccountHomeItem = true
                     }
-                }
-                _self.loading = false
+                    return item
+                })
+            } catch (error) {
+                console.log(error)
             }
 
-            this.$Get(url, config, success)
+            this.loading = false
         },
         //  取合同
         show_contarct(e){
@@ -367,6 +389,7 @@ export default {
                 this.$refs["orderDetail"].resetFields()
                 this.orderDetail.customerid = ""
                 this.orderDetail.companyid = ""
+                this.allUseBalance = "待查询"
                 this.orderItem = []
             }
         },
@@ -378,7 +401,7 @@ export default {
             }
             for(let i = 0; i<this.orderItem.length; i++){
                 // if(this.orderItem[i].product.indexOf("记账") == "-1"){
-                console.log(this.orderItem[i].hasOwnProperty("servicestartdate"))
+                // console.log(this.orderItem[i].hasOwnProperty("servicestartdate"))
                 //  如果是周期性产品，则拥有服务开始时间字段，；两者均可行
                 //  编辑时不可使用该方法，否则所有数据需填写，因为返回给的是全部
                 if(!this.orderItem[i].hasOwnProperty("servicestartdate")){
@@ -394,7 +417,7 @@ export default {
                     }
                 }
                 if(i == this.orderItem.length - 1){
-                    console.log("true")
+                    // console.log("true")
                     return true;
                 }
             }
@@ -410,33 +433,51 @@ export default {
         },
         //  账户余额
         async get_balance(type, id){
-            let _self = this
+            // let _self = this
             console.log(type, id)
             if(!id){
                 this.$Message.warning("请选择归属公司！")
                 return false
             }
-
-            let url = 'api/customer/account/detail'
+            
             let config = {
                 params: {
                     customerId: id
                 }                
             }
 
-            function success(res){
-                console.log(res.data.data)
-                let temp = res.data.data
+            try {
+                let data = await orderApi.customerAccountDetail(config)
                 if(type == "create"){
-                    _self.allUseBalance = (temp.accountAmount - temp.lockAmount).toFixed(2)
+                    this.allUseBalance = (data.accountAmount - data.lockAmount).toFixed(2)
                 }else if(type == "update"){
-                    _self.allUseBalance = (temp.accountAmount - temp.lockAmount + _self.orderDetail.usebalance).toFixed(2)
+                    this.allUseBalance = (data.accountAmount - data.lockAmount + this.orderDetail.usebalance).toFixed(2)
                 }else{
                     return false
                 }
-                
+            } catch (error) {
+                console.log(error)
             }
-            this.$Get(url, config, success)
+            // let url = 'api/customer/account/detail'
+            // let config = {
+            //     params: {
+            //         customerId: id
+            //     }                
+            // }
+
+            // function success(res){
+            //     // console.log(res.data.data)
+            //     let temp = res.data.data
+            //     if(type == "create"){
+            //         _self.allUseBalance = (temp.accountAmount - temp.lockAmount).toFixed(2)
+            //     }else if(type == "update"){
+            //         _self.allUseBalance = (temp.accountAmount - temp.lockAmount + _self.orderDetail.usebalance).toFixed(2)
+            //     }else{
+            //         return false
+            //     }
+                
+            // }
+            // this.$Get(url, config, success)
 
         }
     },

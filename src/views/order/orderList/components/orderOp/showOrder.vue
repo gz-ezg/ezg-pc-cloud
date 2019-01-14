@@ -71,7 +71,7 @@
                     <Col span="8">
                         <FormItem label="使用余额" prop="usebalance">
                             <div style="display:inline-block">
-                                <Input size="small" v-model="orderDetail.usebalance" style="width:50%" number readonly/>
+                                <Input size="small" v-model="orderDetail.usebalance" style="width:40%" number readonly/>
                                 <Button type="info" size="small" @click="get_balance('create', orderDetail.customerid)">查询</Button>
                                 <span style="line-height:24px;height:24px;display:inline-block;margin-left:10px">可用余额：</span><span style="line-height:24px;height:24px;display:inline-block">{{allUseBalance}}</span>
                             </div>
@@ -103,6 +103,7 @@
 <script>
 import serviceItem from '../accountHomeTree'
 import commonSetting from './comonSetting.js'
+import * as orderApi from '../../api'
 
 export default {
     mixins: [commonSetting],
@@ -225,7 +226,7 @@ export default {
                             },
                             on: {
                                 'on-ok': ()=>{
-                                    console.log(params.row.itemid)
+                                    // console.log(params.row.itemid)
                                     this.cancel_order(this.orderId, params.row.itemid)
                                 },
                             }
@@ -242,27 +243,20 @@ export default {
         close_item(){
             this.openServiceItem = false
         },
-        cancel_order(orderId, orderItemId){
-            let url = `api/order/item/refund`
-            let _self = this
+        async cancel_order(orderId, orderItemId){
             let config = {
-                // params: {
-                    // orderId: orderId,
-                    itemId: orderItemId
+                itemId: orderItemId
+            }
+
+            try {
+                let { status, data} = await orderApi.orderItemRefund(config)
+                // if( status ){
+                this.get_data(orderId)
+                this.$bus.emit("UPDATE_ORDER_LIST")
                 // }
+            } catch (error) {
+                console.log(error)
             }
-
-            function success(res){
-                _self.$Message.success(res.data.msg)
-                _self.get_data(orderId)
-            }
-
-            function fail(err){
-                // _self.$Message.fail("退款失败！")
-                _self.get_data(orderId)
-            }
-
-            this.$Post(url, config, success, fail)
         }
     },
     created() {
