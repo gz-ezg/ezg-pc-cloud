@@ -1,12 +1,15 @@
 <template>
     <div>
         <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="open_company_create">新增</Button>
+        <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="ios-crop" @click="open_company_change">公司变更</Button>
         <Table
                 :loading="loading"
                 border
+                highlight-row
                 size="small"
                 :columns="header"
                 :data="data"
+                @on-current-change="select_row"
                 style="margin-top: 15px"
         ></Table>
         <!-- <Page
@@ -21,6 +24,7 @@
         <update-company v-if="close" @update="get_data" :taxtype="taxtype" :companyarea="companyarea_Casr" :customer="customer" :importance="importance" :cluesources="cluesources"></update-company>
         <!-- <amend-company></amend-company> -->
         <change-log></change-log>
+        <change-company v-if="close" @update="get_data" :companyData='companyData' :taxtype="taxtype" :companyarea="companyarea_Casr" :customer="customer" :importance="importance" :cluesources="cluesources"></change-company>
     </div>
 </template>
 
@@ -29,13 +33,15 @@ import createCompany from "./create"
 import updateCompany from "./update"
 import amendCompany from "./amend"
 import changeLog from "./changeLog"
+import changeCompany from "./changeCompany"
 
 export default {
     components: {
         createCompany,
         updateCompany,
         amendCompany,
-        changeLog
+        changeLog,
+        changeCompany
     },
     props: {
         customer:{
@@ -50,6 +56,8 @@ export default {
     },
     data(){
         return {
+            selectRow:{},
+            companyData:[],
             loading: false,
             close: false,
             header: [
@@ -186,6 +194,7 @@ export default {
             let config = {}
 
             function success(res){
+                console.log(res.data.data)
                 _self.data = res.data.data
                 _self.loading = false
             }
@@ -209,7 +218,15 @@ export default {
         },
         open_company_create(){
             this.$bus.emit("OPEN_COMPANY_CREATE",true)
-        }
+        },
+        open_company_change(){
+            this.$bus.emit("OPEN_COMPANY_CHANGE",true)
+        },
+        select_row(e){
+            console.log(e)
+            this.selectRow = e
+            this.companyData = this.selectRow
+        },
     },
     created(){
         this.get_data_center()
