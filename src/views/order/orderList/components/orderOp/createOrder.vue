@@ -32,14 +32,9 @@
                     </FormItem>
                     </Col>
                     <Col span="8">
-                    <FormItem label="国地税报道" prop="gdsreport">
-                        <Select transfer v-model="orderDetail.gdsreport" size="small" >
-                            <Option value="ybd">已报道</Option>
-                            <Option value="wbd">未报道</Option>
-                            <Option value="bybd">不用报道</Option>
-                        </Select>
-                    </FormItem>
-                    
+                        <FormItem label="已付款" prop="realnumber">
+                            <Input size="small" v-model="orderDetail.realnumber" number />
+                        </FormItem>
                     </Col>
                     <Col span="8">
                     <FormItem label="缴费渠道" prop="paydir">
@@ -51,8 +46,12 @@
                 </Row>
                 <Row :gutter="16">
                     <Col span="8">
-                        <FormItem label="实付金额" prop="realnumber">
-                            <Input size="small" v-model="orderDetail.realnumber" number />
+                        <FormItem label="国地税报道" prop="gdsreport">
+                            <Select transfer v-model="orderDetail.gdsreport" size="small" >
+                                <Option value="ybd">已报道</Option>
+                                <Option value="wbd">未报道</Option>
+                                <Option value="bybd">不用报道</Option>
+                            </Select>
                         </FormItem>
                     </Col>
                     <Col span="8">
@@ -64,7 +63,7 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="16">
+                <!-- <Row :gutter="16">
                     <Col span="8">
                         <FormItem label="使用余额" prop="usebalance">
                             <div style="display:inline-block">
@@ -74,7 +73,7 @@
                             </div>
                         </FormItem>
                     </Col>
-                </Row>
+                </Row> -->
                 <!-- <Row :gutter="16">
                     <Col span="8" v-if="orderDetail.isornotkp=='Y'">
                         <FormItem>
