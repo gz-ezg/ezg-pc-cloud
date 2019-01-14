@@ -271,8 +271,56 @@
                     },
                     {
                         title: '单价',
-                        key: 'unitprice',
-                        minWidth: 120
+                        key: 'unit_price',
+                        minWidth: 120,
+                        render: (h, params) =>{
+                            let status = true
+                            if(status){
+                                return h('div', [
+                                    h('span',{
+                                        style: {
+                                            display: "inline-block",
+                                            lineHeight: "24px",
+                                            height: "24px"
+                                        }
+                                    },params.row.unit_price),
+                                    h('Button',{
+                                        props: {
+                                            type: "text",
+                                            size: "small"
+                                        },
+                                        on: {
+                                            click: function(){
+                                                console.log("123")
+                                                console.log(status)
+                                                status = false
+                                            }
+                                        }
+                                    }, "修改")
+                                ])
+                            }else{
+                                return h('div', [
+                                    h('span',{
+                                        style: {
+                                            display: "inline-block",
+                                            lineHeight: "24px",
+                                            height: "24px"
+                                        }
+                                    },params.row.unit_price),
+                                    h('Button',{
+                                        props: {
+                                            type: "text",
+                                            size: "small"
+                                        },
+                                        on: {
+                                            // click: ()=>{
+                                            //     status = true
+                                            // }
+                                        }
+                                    }, "修改2")
+                                ])
+                            }
+                        }
                     },
                     {
                         title: '备注',
