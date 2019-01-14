@@ -7,6 +7,7 @@ export default {
     },
     data: function () {
         return {
+            checkBalance: false,
             showAccountHomeItem: false,
             loading: false,
             allUseBalance: "待查询",
@@ -452,6 +453,7 @@ export default {
                     this.allUseBalance = (data.accountAmount - data.lockAmount).toFixed(2)
                 }else if(type == "update"){
                     this.allUseBalance = (data.accountAmount - data.lockAmount + this.orderDetail.usebalance).toFixed(2)
+                    this.checkBalance = true
                 }else{
                     return false
                 }

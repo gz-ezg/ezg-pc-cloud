@@ -212,6 +212,7 @@
                 v-model="modal2"
                 title="新增线索"
                 class-name="vertical-center-modal"
+                mask-closable
                 ok-text="保存"
                 :styles="{top: '10%'}"
                 :loading="loading"

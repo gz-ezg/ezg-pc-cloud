@@ -68,7 +68,7 @@
                         <FormItem label="使用余额" prop="usebalance">
                             <div style="display:inline-block">
                                 <Input size="small" v-model="orderDetail.usebalance" style="width:40%" number />
-                                <Button type="info" size="small" @click="get_balance('create', orderDetail.customerid)">查询</Button>
+                                <Button type="info" size="small" @click="get_balance('create', orderDetail.customerid)" :disabled="checkBalance">查询</Button>
                                 <span style="line-height:24px;height:24px;display:inline-block;margin-left:10px">可用余额：</span><span style="line-height:24px;height:24px;display:inline-block">{{allUseBalance}}</span>
                             </div>
                         </FormItem>
