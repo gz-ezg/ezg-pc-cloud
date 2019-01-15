@@ -1,4 +1,4 @@
-import * as orderApi from '../../api'
+import * as orderApi from './api'
 export default {
     props: {
         payDirs: {
@@ -57,28 +57,6 @@ export default {
             },
             orderItem: [],
             orderItemHeader: [
-                {
-                    title: "删除",
-                    key: 'action',
-                    minWidth: 60,
-                    render: (h, params) => {
-                        return h('Button',{
-                            props:{
-                                type:'text',
-                                size:'small'
-                            },
-                            on:{
-                                click:()=>{
-                                    if(params.row.product == "会计到家"){
-                                        this.showAccountHomeItem = false
-                                    }
-                                    this.orderItem.splice(params.index, 1)
-                                    this.computer_paynumber()
-                                }
-                            }
-                        }, 'x')
-                    }
-                },
                 {
                     title: "序号",
                     type: 'index',
@@ -331,24 +309,6 @@ export default {
         //  取订单详情
         async get_data(e){
             let _self = this
-            // let url = `api/order/detail/` + e
-            // _self.showAccountHomeItem = false
-            // _self.loading = true
-            // let config = {}
-
-            // function success(res){
-            //     _self.orderDetail = res.data.data
-            //     _self.orderItem = res.data.data.items
-            //     for(let i = 0; i<_self.orderItem.length;i++){
-            //         if(_self.orderItem[i].product == "会计到家"){
-            //             _self.showAccountHomeItem = true
-            //             break
-            //         }
-            //     }
-            //     _self.loading = false
-            // }
-
-            // this.$Get(url, config, success)
 
             this.showAccountHomeItem = false
             this.loading = true
@@ -358,9 +318,6 @@ export default {
                 let data  = await orderApi.orderDetail(e)
                 this.orderDetail = data
                 this.orderItem = data.items.map((item)=>{
-                    if(item.product == "会计到家"){
-                        this.showAccountHomeItem = true
-                    }
                     if(item.deleteflag == 5){
                         item.product = item.product.concat("（已退款）")
                     }
@@ -371,11 +328,6 @@ export default {
             }
 
             this.loading = false
-        },
-        //  取合同
-        show_contarct(e){
-            let _self = this
-            this.$bus.emit("ORDER_LIST_CONTARCT_PIC_OPEN", {id: _self.orderDetail.id, type: e})
         },
         //  计算总金额
         computer_paynumber(){
@@ -436,55 +388,6 @@ export default {
             })
         },
         //  账户余额
-        async get_balance(type, id){
-            // let _self = this
-            console.log(type, id)
-            if(!id){
-                this.$Message.warning("请选择归属公司！")
-                return false
-            }
-            
-            let config = {
-                params: {
-                    customerId: id
-                }                
-            }
-
-            try {
-                let data = await orderApi.customerAccountDetail(config)
-                if(type == "create"){
-                    this.allUseBalance = (data.accountAmount - data.lockAmount).toFixed(2)
-                }else if(type == "update"){
-                    this.allUseBalance = (data.accountAmount - data.lockAmount + this.orderDetail.usebalance).toFixed(2)
-                    this.checkBalance = true
-                }else{
-                    return false
-                }
-            } catch (error) {
-                console.log(error)
-            }
-            // let url = 'api/customer/account/detail'
-            // let config = {
-            //     params: {
-            //         customerId: id
-            //     }                
-            // }
-
-            // function success(res){
-            //     // console.log(res.data.data)
-            //     let temp = res.data.data
-            //     if(type == "create"){
-            //         _self.allUseBalance = (temp.accountAmount - temp.lockAmount).toFixed(2)
-            //     }else if(type == "update"){
-            //         _self.allUseBalance = (temp.accountAmount - temp.lockAmount + _self.orderDetail.usebalance).toFixed(2)
-            //     }else{
-            //         return false
-            //     }
-                
-            // }
-            // this.$Get(url, config, success)
-
-        }
     },
     created(){
         this.$bus.off("ADD_PRODUCT", true)
