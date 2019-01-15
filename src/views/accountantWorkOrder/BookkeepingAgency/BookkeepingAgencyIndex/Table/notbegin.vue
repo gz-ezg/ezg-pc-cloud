@@ -5,7 +5,7 @@
                     <Panel name="1" >
                         <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
                         筛选
-                        <div slot="content" @keydown="show">
+                        <div slot="content" @keydown.enter="Search">
                             <Form ref="SearchValidate" :model="SearchValidate" :label-width="80" style="margin-top: 15px">
                                 <Row :gutter="8" style="height:56px">
                                     <Col span="8">
@@ -23,11 +23,6 @@
                                         <Input v-model="SearchValidate.followby_realname" size="small"></Input>
                                     </FormItem>
                                     </Col>
-                                    <!-- <Col span="8">
-                                    <FormItem label="服务部门：" prop="followby_realname">
-                                        <Input v-model="SearchValidate.followby_realname" size="small"></Input>
-                                    </FormItem>
-                                    </Col> -->
                                 </Row>
                                 <Row :gutter="8" style="height:56px">
                                     <Col span="8">
@@ -64,53 +59,10 @@
             </Row>
         <Row>
             <ButtonGroup>
-                <!-- <Button type="primary" icon="information-circled" @click="scbd">时长变动日志</Button> -->
-                <Button type="primary" icon="ios-color-wand-outline" @click="ksfw">开始服务</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="stop_service">开始服务</Button>
                 <Button type="primary" icon="information-circled" @click="fpkj">变更会计</Button>
-                <!-- <Button type="primary" icon="ios-color-wand-outline" @click="zlwc" v-if="zl">资料完成</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="zzwc" v-if="zz">做账完成</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="bswc" v-if="bs">报税完成</Button> -->
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
             </ButtonGroup>
-            <!-- <Poptip
-                        style="float: right"
-                        placement="bottom-end"
-                        width="400">
-                    <Button type="text" icon="funnel">筛选</Button>
-                    <div slot="content" @keydown="show">
-                        <Form ref="SearchValidate" :model="SearchValidate" :label-width="120" style="margin-top: 15px">
-                            <Row :gutter="16" style="height:56px">
-                                <Col span="22">
-                                <FormItem label="企业名称：" prop="CompanyName">
-                                    <Input v-model="SearchValidate.CompanyName" size="small"></Input>
-                                </FormItem>
-                                </Col>
-                            </Row>
-                            <Row :gutter="16" style="height:56px">
-                                <Col span="22">
-                                <FormItem label="服务人员：" prop="server_realname">
-                                    <Input v-model="SearchValidate.server_realname" size="small"></Input>
-                                </FormItem>
-                                </Col>
-                            </Row>
-                            <Row :gutter="16" style="height:56px">
-                                <Col span="22">
-                                <FormItem label="跟进人：" prop="followby_realname">
-                                    <Input v-model="SearchValidate.followby_realname" size="small"></Input>
-                                </FormItem>
-                                </Col>
-                            </Row>
-                            <center>
-                                <FormItem style="margin-top:10px">
-                                    <Button type="primary" @click="Search">搜索</Button>
-                                    <Button type="ghost" @click="handleReset" style="margin-left: 8px">
-                                        重置
-                                    </Button>
-                                </FormItem>
-                            </center>
-                        </Form>
-                    </div>
-                </Poptip> -->
         </Row>
         <Row style="margin-top: 10px;">
             <Table
@@ -118,6 +70,7 @@
                     highlight-row
                     size="small"
                     @on-row-click="selectrow"
+                    :loading="loading"
                     :columns="header"
                     :data="data"></Table>
             <Page
@@ -128,6 +81,7 @@
                     show-elevator
                     @on-change="pageChange"
                     @on-page-size-change="pageSizeChange"
+                    :current.sync="page"
                     placement="top"
                     style="margin-top: 10px"></Page>
         </Row>
@@ -136,6 +90,7 @@
 
 <script>
     import Bus from '../../../../../components/bus'
+    import * as accountApi from '../../api'
 
     export default {
         data() {
@@ -158,8 +113,13 @@
                 zlid: '',
                 zzid: '',
                 bsid: '',
-                id: {},
-                pageTotal: new Number(),
+                currentRow: "",
+                gdsreportMap:new Map([
+                    ["ybd","已报道"],
+                    ["wbd","未报道"],
+                    ["bybd","不用报道"]
+                ]),
+                pageTotal: 0,
                 task_message:{
                     companyName:'1111111111'
                 },
@@ -168,67 +128,52 @@
                     {
                         title: '对应企业',
                         key: 'CompanyName',
-                        width: 250
+                        minWidth: 250
                     },
                     {
                         title: '产品名称',
                         key: 'product',
-                        width: 160
+                        minWidth: 160
                     },
                     {
                         title: '国地税报道',
                         key: 'gdsreport',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '服务人员',
                         key: 'server_realname',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '市场',
                         key: 'followby_realname',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '剩余时长',
                         key: 'balance_count',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '开始税期',
                         key: 'begin_period',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '结束税期',
                         key: 'end_period',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '单价',
-                        key: 'unitprice',
+                        key: 'unit_price',
                         minWidth: 120
                     },
-                    // {
-                    //     title: '收资料',
-                    //     key: 'zl',
-                    //     width: 120
-                    // },
-                    // {
-                    //     title: '做账',
-                    //     key: 'zz',
-                    //     width: 120
-                    // },
-                    // {
-                    //     title: '报税',
-                    //     key: 'bs',
-                    //     width: 120
-                    // },
                     {
                         title: '警戒值',
                         key: 'accounter_security_line',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '累计外勤',
@@ -238,11 +183,11 @@
                     {
                         title: '备注',
                         key: 'workordermemo',
-                        width: 120,
+                        width: 200,
                         render:(h,params) => {
                             if(params.row.workordermemo == ''||params.row.workordermemo == null){
                                 return ''
-                            }else if(params.row.workordermemo.length>5){
+                            }else if(params.row.workordermemo.length>10){
                                 return h('Poptip',{
                                     props:{
                                         trigger:'hover',
@@ -250,7 +195,7 @@
                                     }
                                 },[
 
-                                    h('span',params.row.workordermemo.slice(0,5)+'...'),
+                                    h('span',params.row.workordermemo.slice(0,10)+'...'),
                                     h('Icon', {
                                         props: {
                                             type: 'arrow-down-b',
@@ -283,9 +228,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            // Bus.$emit('openCompanyDetail',params.row.company_id)
                                             this.$store.commit("open_gobal_company_detail_modal", params.row.company_id)
-                                            
                                         }
                                     }
                                 }, '[查看公司]'),
@@ -321,10 +264,8 @@
                     {field:'balance_count',title:'剩余时长'},
                     {field:'begin_period',title:'开始期间'},
                     {field:'end_period',title:'结束期间'},
-                    {field:'unitprice',title:'单价'},
-                    // {field:'serverrealname',title:'服务人员'},
-                    // {field:'period',title:'服务周期'}
-                    ]
+                    {field:'unit_price',title:'单价'},
+                ]
                 let _self = this
                 let url = `api/order/cycle/service/record/list`
                 let config = {
@@ -360,78 +301,42 @@
                 this.getData()
             },
             show(e){
-                // console.log(e)
                 if(e.key=='Enter'){
                     this.Search()
                 }
             },
-            getData() {
+            async getData() {
                 let _self = this
-                let url = '/order/cycle/service/record/list?sortField=updatedate&service_type=dljz&page=' + _self.page + '&pageSize=' + _self.pageSize + '&service_status=notStarted&followby_realname='+_self.SearchValidate.followby_realname + '&CompanyName=' + _self.SearchValidate.CompanyName +'&server_realname=' +_self.SearchValidate.server_realname + '&departname='+ _self.SearchValidate.departname  + '&begin_end_period=' + _self.SearchValidate.begin_end_period + "&end_end_period=" + _self.SearchValidate.end_end_period
 
-                function doSuccess(res) {
-                    let _data = res.data.data
-                    let _ids = []
-                    _self.pageTotal = _data.total
-                    _self.data = []
-
-                    for (let i = 0; i < _data.rows.length; i++) {
-                        _ids.push(_data.rows[i].month_service_id)
-                        let _gdsreport = ''
-                        
-                        if (_data.rows[i].gdsreport == 'ybd') {
-                            _gdsreport = '已报道'
-                        } else if (_data.rows[i].gdsreport == 'wbd') {
-                            _gdsreport = '未报道'
-                        } else if (_data.rows[i].gdsreport == 'bybd') {
-                            _gdsreport = '不用报道'
-                        }
-                        
-                        _self.data.push({
-                            gdsreport: _gdsreport,                            
-                            id: _data.rows[i].id,
-                            month_service_id: _data.rows[i].month_service_id,
-                            company_id: _data.rows[i].company_id,
-                            service_depart_id: _data.rows[i].service_depart_id,
-                            service_status: _data.rows[i].service_status,
-                            CompanyName: _data.rows[i].CompanyName,
-                            begin_period:_data.rows[i].begin_period,
-                            end_period:_data.rows[i].end_period,
-                            server_realname:_data.rows[i].server_realname,
-                            followby_realname:_data.rows[i].followby_realname,
-                            balance_count:_data.rows[i].balance_count,
-                            workordermemo:_data.rows[i].workordermemo,
-                            product:_data.rows[i].product,
-                            batchBookId:_data.rows[i].batchBookId,
-                            customername: _data.rows[i].customername,
-                            accounter_security_line: _data.rows[i].accounter_security_line,
-                            zl: '',
-                            zz: '',
-                            bs: '',
-                            cycle_work_order_id:_data.rows[i].cycle_work_order_id,
-                            dljz_legwork: _data.rows[i].dljz_legwork
-                            
-                        })
+                this.loading = true
+                let config = {
+                    params: {
+                        service_status: "notStarted",
+                        sortField: "updatedate",
+                        service_type: "dljz",
+                        page: this.page,
+                        pageSize: this.pageSize,
+                        followby_realname: this.SearchValidate.followby_realname,
+                        CompanyName: this.SearchValidate.CompanyName,
+                        server_realname: this.SearchValidate.server_realname,
+                        departname: this.SearchValidate.departname,
+                        begin_end_period: this.SearchValidate.begin_end_period,
+                        end_end_period: this.SearchValidate.end_end_period,
                     }
-
-                    // let _url = '/order/cycle/month/service/item/details?monthServiceIds=' + _ids.join()
-
-                    // function doSuccess2(res2) {
-                    //     let _obj = res2.data.data
-
-                    //     for (let i = 0; i < _self.data.length; i++) {
-                    //         if (_self.data[i].month_service_id != null) {
-                    //             _self.data[i].zl = res2.data.data[_self.data[i].month_service_id][0].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][0].confirm_date.substr(0,10):''
-                    //             _self.data[i].zz = res2.data.data[_self.data[i].month_service_id][1].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][1].confirm_date.substr(0,10):''
-                    //             _self.data[i].bs = res2.data.data[_self.data[i].month_service_id][2].confirm_date!=null?res2.data.data[_self.data[i].month_service_id][2].confirm_date.substr(0,10):''
-                    //         }
-                    //     }
-                    // }
-
-                    // _self.GetData(_url, doSuccess2)
                 }
 
-                this.GetData(url, doSuccess)
+                try {
+                    let { total, rows} = await accountApi.getOrderCycleServiceRecordList(config)
+                    this.pageTotal = total
+                    this.data = rows.map((item)=>{
+                        item.gdsreport = this.gdsreportMap.get(item.gdsreport)
+                        return item
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
+
+                this.loading = false
             },
 
             pageChange(a) {
@@ -450,165 +355,53 @@
             fpkj() {
                  let _self = this
 
-                if (_self.id.id == '') {
+                if (this.currentRow) {
                     this.$Message.warning('请选择要变更会计的项目')
                 } else {
-                    Bus.$emit('fenpei', _self.id)
+                    Bus.$emit('fenpei', _self.currentRow)
                 }
             },
-
-            // 查看变更日志
-            ckbgrz() {
-                Bus.$emit('rizhi',true)
-            },
-
-            gsxq() {
-                Bus.$emit('detail',true)
-            },
-
-            gszx() {
-                Bus.$emit('zhuxiao',true)
-            },
-
-            ddxq() {
-                Bus.$emit('orderdetail',true)
-            },
-
-            ksfw() {
+            stop_service() {
                 let _self = this
 
-                if (_self.id.id == '') {
-                    this.$Message.warning('请选择要开始服务的项目')
-                } else {
+                if (_self.currentRow) {
                     this.$Modal.confirm({
                     title: '提示信息',
                     content: '<p>您确定开始服务吗</p>',
-                    onOk: () => {
-                        let url = '/order/cycle/service/record/update'
-                        let _data = {
-                            id: _self.id.id,
+                    onOk: async () => {
+                        let config = {
+                            id: _self.currentRow.id,
                             serviceStatus: 'inservice'
                         }
 
-                        function doSuccess() {
-                            _self.$Message.success('成功开始服务')
-                            _self.page = 1
-                            _self.getData()
+                        try {
+                            let {status, data} = accountApi.cycleServiceRecordUpdate(config)
+                            if(status){
+                                this.page = 1,
+                                _self.getData()
+                            }
+                        } catch (error) {
+                            console.log(error)
                         }
-
-                        _self.PostData(url, _data, doSuccess)
                     },
                     onCancel: () => {}
                 });
+                }else{
+                    this.$Message.warning('请选择要开始服务的项目')
                 }
-            },
-
-            tzfw() {
-                this.$Modal.confirm({
-                    title: '提示信息',
-                    content: '<p>您确定停止服务吗</p>',
-                    onOk: () => {},
-                    onCancel: () => {},
-                });
-            },
-            
-            scbd() {
-                let _self = this
-
-                if (_self.id.id == '' || _self.id.id == undefined) {
-                    this.$Message.warning('请选择要查看的项目')
-                } else {
-                    Bus.$emit('shic', _self.id.id)
-                }
-            },
-
-            cpbg() {
-                Bus.$emit('biangeng',true)
             },
 
             selectrow(a) {
                 let _self = this
-                // let url = '/order/cycle/month/service/item/list?monthServiceId=' + a.month_service_id
-                _self.id = a
-                _self.zl = false
-                _self.zz = false
-                _self.bs = false
-
-                function doSuccess(res) {
-                    let _data = res.data.data
-
-                    for (let i = 0; i < _data.length; i++) {
-                        if (_data[i].item_status == 'serviceing') {
-                            if (_data[i].serviceitemname == '资料完成') {
-                                _self.zl = true
-                                _self.zlid = _data[i].id
-                            } else if (_data[i].serviceitemname == '做账完成') {
-                                _self.zz = true
-                                _self.zzid = _data[i].id
-                            } else if (_data[i].serviceitemname == '报税完成') {
-                                _self.bs = true
-                                _self.bsid = _data[i].id
-                            }
-                        }
-                    }
-                }
-
-                // this.GetData(url, doSuccess)
+                _self.currentRow = a
             },
-
-            zlwc() {
-                let _self = this
-                let url = '/order/cycle/month/service/item/finish'
-                let _data = {
-                    monthServiceItemId: _self.zlid
-                }
-
-                function doSuccess(res) {
-                    _self.$Message.success('提交成功')
-                    _self.page = 1
-                    _self.getData()
-                }
-
-                this.PostData(url, _data, doSuccess)
-            },
-
-            zzwc() {
-                let _self = this
-                let url = '/order/cycle/month/service/item/finish'
-                let _data = {
-                    monthServiceItemId: _self.zzid
-                }
-
-                function doSuccess(res) {
-                    _self.$Message.success('提交成功')
-                    _self.page = 1
-                    _self.getData()
-                }
-
-                this.PostData(url, _data, doSuccess)
-            },
-
-            bswc() {
-                let _self = this
-                let url = '/order/cycle/month/service/item/finish'
-                let _data = {
-                    monthServiceItemId: _self.bsid
-                }
-
-                function doSuccess(res) {
-                    _self.$Message.success('提交成功')
-                    _self.page = 1
-                    _self.getData()
-                }
-
-                this.PostData(url, _data, doSuccess)
-            }
         },
         mounted() {
-            this.getData()
+            
         },
         created () {
             let _self = this
+            this.getData()
             Bus.$on('UPDATE_ALL_ACCOUNT_PAGE',(e)=>{
                 _self.getData()
             })

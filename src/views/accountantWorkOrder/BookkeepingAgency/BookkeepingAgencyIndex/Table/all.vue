@@ -5,7 +5,7 @@
                     <Panel name="1" >
                         <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
                         筛选
-                        <div slot="content" @keydown="show">
+                        <div slot="content" @keydown.enter="Search">
                             <Form ref="SearchValidate" :model="SearchValidate" :label-width="80" style="margin-top: 15px">
                                 <Row :gutter="8" style="height:56px">
                                     <Col span="8">
@@ -67,22 +67,11 @@
             </Row>
         <Row>
             <ButtonGroup>
-                <!-- <Button type="primary" icon="information-circled" @click="scbd">时长变动日志</Button> -->
                 <Button type="primary" icon="ios-color-wand-outline" @click="ksfw" v-permission="['bookkeepingAgency.stop']">开始服务</Button>
                 <Button type="primary" icon="information-circled" @click="fpkj">变更会计</Button>
-                <!-- <Button type="primary" icon="ios-color-wand-outline" @click="zlwc" v-if="zl">资料完成</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="zzwc" v-if="zz">做账完成</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="bswc" v-if="bs">报税完成</Button> -->
                 <Button type="primary" icon="ios-color-wand-outline" @click="openFieldByCompanyId">外勤详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
             </ButtonGroup>
-            <!-- <Poptip
-                        style="float: right"
-                        placement="bottom-end"
-                        width="400">
-                    <Button type="text" icon="funnel">筛选</Button>
-                    
-                </Poptip> -->
         </Row>
         <Row style="margin-top: 10px;">
             <Table
@@ -109,6 +98,7 @@
 
 <script>
     import Bus from '../../../../../components/bus'
+    import * as accountApi from '../../api'
 
     export default {
         data() {
@@ -136,7 +126,7 @@
                 zzid: '',
                 bsid: '',
                 id: {},
-                pageTotal: new Number(),
+                pageTotal: 0,
                 task_message:{
                     companyName:'1111111111'
                 },
@@ -194,7 +184,7 @@
                     },
                     {
                         title: '单价',
-                        key: 'unitprice',
+                        key: 'unit_price',
                         minWidth: 120,
                     },
                     {
@@ -202,21 +192,6 @@
                         key: "has_account",
                         minWidth: 120
                     },
-                    // {
-                    //     title: '收资料',
-                    //     key: 'zl',
-                    //     width: 120
-                    // },
-                    // {
-                    //     title: '做账',
-                    //     key: 'zz',
-                    //     width: 120
-                    // },
-                    // {
-                    //     title: '报税',
-                    //     key: 'bs',
-                    //     width: 100
-                    // },
                     {
                         title: '警戒值',
                         key: 'accounter_security_line',
@@ -280,7 +255,6 @@
                                     },
                                     on: {
                                         click: () => {
-                                            // Bus.$emit('detail', params)
                                             this.$store.commit("open_gobal_company_detail_modal", params.row.company_id)
                                             
                                         }
@@ -293,7 +267,6 @@
                                     },
                                     on: {
                                         click: () => {
-                                            // console.log(params.row.batchBookId)
                                             if(params.row.batchBookId != null){
                                                 Bus.$emit('open_yichang_detail',params.row.batchBookId)
                                             }else{
@@ -319,7 +292,7 @@
                     {field:'balance_count',title:'剩余时长'},
                     {field:'begin_period',title:'开始期间'},
                     {field:'end_period',title:'结束期间'},
-                    {field:'unitprice',title:'单价'},
+                    {field:'unit_price',title:'单价'},
                     // {field:'serverrealname',title:'服务人员'},
                     // {field:'period',title:'服务周期'}
                     ]
@@ -358,7 +331,6 @@
                 this.getData()
             },
             show(e){
-                // console.log(e)
                 if(e.key=='Enter'){
                     this.Search()
                 }
@@ -460,7 +432,6 @@
                     _self.loading = false
                 }
 
-                // this.GetData(url, doSuccess)
                 this.$Get(url,config, doSuccess)
             },
 

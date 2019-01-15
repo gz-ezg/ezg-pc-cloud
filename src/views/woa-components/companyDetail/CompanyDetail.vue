@@ -1240,6 +1240,7 @@
                 this.addDetailContent.followUpType = ""
                 this.addDetailContent.content = ""
                 this.addcontentdetail = false
+                this.getRole()
             },
             add_workorder_followup(){
                 let url =  `api/customer/addCustomerContentNote`

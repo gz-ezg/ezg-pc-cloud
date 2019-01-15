@@ -66,13 +66,16 @@ Vue.use(iviewArea)
 axios.interceptors.response.use(
     (response) => {
         if(response.data.msgCode != 40000 && response.config.url != "api/legwork/apiLoginByWechatCode"){
-            let url = 'api/system/saveFontErrMsg'
-            let config = {
-                name: "cloud",
-                page: response.config.url,
-                err: JSON.stringify(response)
+            if(process.env.NODE_ENV != "development"){
+                let url = 'api/system/saveFontErrMsg'
+                let config = {
+                    name: "cloud",
+                    page: response.config.url,
+                    err: JSON.stringify(response)
+                }
+                axios.post(url, config).then(function(res){}).catch((err)=>{})
             }
-            axios.post(url, config).then(function(res){}).catch((err)=>{})
+            
         }
         if(response.data.msgCode == "50003" && Cookies.get('user')!=""){
             console.log(response)
@@ -436,8 +439,7 @@ Vue.prototype.PostData = function (url, data, doSuccess, otherConditions){
         url: '/api' + url,
         data: data,
         headers: {'Content-Type': 'application/json'},
-    })
-        .then(function (response) {
+    }).then(function (response) {
             if (response.data.msgCode == '40000') {
                 doSuccess(response)
             } else if (response.data.msgCode == '50003') {

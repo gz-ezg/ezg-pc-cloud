@@ -69,13 +69,13 @@
         </Row>
         <Row>
             <ButtonGroup>
-                <Button v-permission="['orderL.add']" type="primary" icon="plus" @click="open_add" name="order_add">录入</Button>
-                <Button v-permission="['orderL.edit']" type="primary" icon="edit" @click="open_edit" name="order_edit">编辑</Button>
+                <!-- <Button v-permission="['orderL.add']" type="primary" icon="plus" @click="open_add" name="order_add">录入</Button>
+                <Button v-permission="['orderL.edit']" type="primary" icon="edit" @click="open_edit" name="order_edit">编辑</Button> -->
                 <Button v-permission="['orderL.detail']" type="primary" icon="information-circled" @click="order_show" name="order_show">查看</Button>
-                <Button v-permission="['orderL.flowChart']" type="primary" icon="ios-crop" @click="open_flowChart">查看流程图</Button>
+                <!-- <Button v-permission="['orderL.flowChart']" type="primary" icon="ios-crop" @click="open_flowChart">查看流程图</Button>
                 <Button v-permission="['orderL.resubmit']" type="primary" icon="refresh" @click="reapply_process" name="order_re_submit">重新提交</Button>
                 <Button v-permission="['orderL.amend']" type="primary" icon="edit" @click="xiugai_open" name="order_amend">修改</Button>
-                <Button v-permission="['orderL.delOrder']" type="primary" icon="trash-b" @click="del_order" name="order_amend">删除</Button>
+                <Button v-permission="['orderL.delOrder']" type="primary" icon="trash-b" @click="del_order" name="order_amend">删除</Button> -->
                 <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="get_data">刷新</Button>
                 <!--  ↓ ↓ 该功能暂定，代码勿删  -->
                 <!--<Button type="primary" icon="ios-color-filter-outline" @click="qihuaOpen()">企划(修改)</Button>-->
@@ -107,7 +107,7 @@
                 style="margin-top: 10px"></Page>
         </Row>
         </Card>
-        <Modal
+        <!-- <Modal
             v-model="flowImgOpen"
             title="查看流程图"
             width="80%">
@@ -116,39 +116,22 @@
                 <img :src='flowChartImg' width="100%"/>
             </center>
             <div slot="footer"></div>
-        </Modal>
+        </Modal> -->
         <show-order :payDirs="payDirs"></show-order>
-        <create-order :payDirs="payDirs"></create-order>
-        <amend-order :payDirs="payDirs"></amend-order>
-        <edit-order :payDirs="payDirs"></edit-order>
-        <show-contarct></show-contarct>
-        <product-select></product-select>
-        <!-- <invoice></invoice> -->
+
     </div>
 </template>
 
 <script>
 //  查看订单详情
-import showOrder from './components/orderOp/showOrder'
-import createOrder from './components/orderOp/createOrder'
-import amendOrder from './components/orderOp/amendOrder'
-import editOrder from './components/orderOp/editOrderDetail'
-import showContarct from './show_contarct'
-import productSelect from './components/productSelect'
-// import invoice from './components//invoice/index'
-
+import showOrder from './detail'
 import { DateFormat } from '../../../libs/utils.js'
+import * as refundApi from './api.js'
 
 export default {
-    name: "orderList_index",
+    name: "refundOrderList_index",
     components:{
         showOrder,
-        createOrder,
-        amendOrder,
-        editOrder,
-        showContarct,
-        productSelect,
-        // invoice
     },
     data(){
         return {
@@ -185,37 +168,6 @@ export default {
                 {
                     title: '公司名称',
                     key: 'companyname',
-                    // render: (h, params) => {
-                    //     if (params.row.companyname == '' || params.row.companyname == null) {
-                    //         return ''
-                    //     } else {
-                    //         return h('Poptip', {
-                    //             props: {
-                    //                 trigger: 'hover',
-                    //                 title: '公司名称',
-                    //                 placement: 'bottom'
-                    //             }
-                    //         }, [
-                    //             h('span', this.data[params.index].companyname[0] + ''),
-                    //             h('Icon', {
-                    //                 props: {
-                    //                     type: 'arrow-down-b'
-                    //                 }
-                    //             }),
-                    //             h('div', {
-                    //                 slot: 'content'
-                    //             }, [
-                    //                 h('ul', this.data[params.index].companyname.map(item => [
-                    //                     h('li', {
-                    //                         style: {
-                    //                             padding: '4px'
-                    //                         }
-                    //                     }, '公司名：' + item),
-                    //                 ]))
-                    //             ])
-                    //         ])
-                    //     }
-                    // },
                     minWidth: 300,                                              
                 },
                 {
@@ -352,124 +304,7 @@ export default {
                         }
                     }
                 },
-                {
-                    title: '退款',
-                    key: 'action',
-                    minWidth: 75,
-                    render: (h, params)=>{
-                        let _self = this
-                        if(params.index != this.pageSize){
-                            return h('Button', {
-                                        props: {
-                                            type: 'error',
-                                            size: 'small',
-                                        },
-                                        directives: [
-                                            {
-                                                name: "permission",
-                                                value: "orderL.cancelOrder"
-                                            }
-                                        ],
-                                    },[
-                                    h('Poptip', {
-                                        props: {
-                                            transfer: true,
-                                            confirm: true,
-                                            title: '您确定要退款此订单吗！',
-                                        },
-                                        on: {
-                                            'on-ok': ()=>{
-                                                console.log(params.row)
-                                                let url = `api/order/refund`
-
-                                                let config = {
-                                                    id: params.row.id
-                                                }
-
-                                                function success(res){
-                                                    // _self.$Message.success(res.data.msg)
-                                                    _self.get_data()
-                                                }
-
-                                                function fail(err){
-
-                                                }
-
-                                                this.$Post(url, config, success, fail)
-                                            },
-                                        }
-                                    }, '退款')
-                                ])
-                        }
-                    }
-                }
             ],
-            //  以下两项操作只开放给管理员
-            amdinOpertionCol: {
-                title: '订单操作',
-                    key: 'action',
-                    minWidth: 180,
-                    render: (h, params)=>{
-                        let _self =  this
-                        if(params.index != this.pageSize){
-                            return h('div',[
-                                h("Button",{
-                                    props: {
-                                        type: 'warning',
-                                        size: 'small',
-                                    },
-                                    // style:{
-                                    //         marginLeft: "10px"
-                                    // },
-                                    on: {
-                                        click: () => {
-                                            _self.$ButtonCollect("order_rebuild_orderflow")
-                                            let url = `api/order/resetOrderProcess`
-                                            let config = {
-                                                params:{
-                                                    orderId: params.row.id
-                                                }
-                                            }
-
-                                            function success(res){
-                                                _self.$Message.success(res.data.msg)
-                                                _self.get_data()
-                                            }
-
-                                            _self.$Get(url, config, success)
-                                        }
-                                    }
-                                },"重置流程"),
-                                h("Button",{
-                                    props: {
-                                        type: 'error',
-                                        size: 'small',
-                                    },
-                                    style:{
-                                            marginLeft: "10px"
-                                    },
-                                    on: {
-                                        click: () => {
-                                            _self.$ButtonCollect("order_rebuild_worderorder")
-                                            let url = `api/order/orderApprovalFinish`
-                                            let config = {
-                                                params:{
-                                                    orderId: params.row.id
-                                                }
-                                            }
-
-                                            function success(res){
-                                                _self.$Message.success(res.data.msg)
-                                            }
-
-                                            _self.$Get(url, config, success)
-                                        }
-                                    }
-                                },"生成工单"),
-                            ])
-                        }
-                    }
-            },
             data: [],
             //  数据字典
             payDirs: [],
@@ -512,6 +347,7 @@ export default {
                 bcreatedate:DateFormat(_self.formValidateSearch.date[0]),
                 ecreatedate:DateFormat(_self.formValidateSearch.date[1]),
                 export: 'Y',
+                deleteflag: 5,
                 exportField: encodeURI(JSON.stringify(field))
             }
             let toExcel = this.$MergeURL(url, config)
@@ -539,10 +375,9 @@ export default {
             this.get_data()
         },
         //  获取列表
-        get_data(){
+        async get_data(){
             let _self = this
-            let url = `api/order/list`
-            _self.loading = true
+            this.loading = true
             let config = {
                 params: {
                     sortField:_self.sortField,
@@ -558,31 +393,36 @@ export default {
                     payDir:_self.formValidateSearch.payDir,
                     sumField:'paynumber,realnumber,neednumber',
                     bcreatedate:DateFormat(_self.formValidateSearch.date[0]),
-                    ecreatedate:DateFormat(_self.formValidateSearch.date[1])
+                    ecreatedate:DateFormat(_self.formValidateSearch.date[1]),
+                    deleteflag:  5
                 }
             }
 
-            function success(res){
-                _self.data = res.data.data.rows
-                _self.total = res.data.data.total
-                for(let i = 0; i < _self.data.length; i++){
-                    _self.data[i].base_paydir = _self.payDirs_map.get(_self.data[i].base_paydir)
-                    _self.data[i].customersource = _self.cluesources_map.get(_self.data[i].customersource)
-                    _self.data[i].contract_flag = _self.order_contract_flag_map.get(_self.data[i].contract_flag)
-                    if(_self.data[i].base_createdate){
-                        _self.data[i].base_createdate = _self.data[i].base_createdate.slice(0,10)
+            try {
+                let { rows, total, sum} = await refundApi.orderList(config)
+                this.total = total
+                this.data = rows.map((item)=>{
+                    item.base_paydir = this.payDirs_map.get(item.base_paydir)
+                    item.customersource = this.cluesources_map.get(item.customersource)
+                    item.contract_flag = this.order_contract_flag_map.get(item.contract_flag)
+                    if(item.base_createdate){
+                        item.base_createdate = item.base_createdate.slice(0,10)
                     }
-                }
-                _self.data.push({
-                    base_paydir: '合计',
-                    paynumber: res.data.data.sum.paynumber,
-                    realnumber: res.data.data.sum.realnumber,
-                    neednumber: res.data.data.sum.neednumber,
+
+                    return item
                 })
-                _self.loading = false
+
+                this.data.push({
+                    base_paydir: '合计',
+                    paynumber: sum.paynumber,
+                    realnumber: sum.realnumber,
+                    neednumber: sum.neednumber,
+                })
+            } catch (error) {
+                console.log(error)
             }
 
-            this.$Get(url, config, success)
+            this.loading = false
         },
         pageChange(e){
             this.page = e
@@ -606,28 +446,25 @@ export default {
                 this.selectRow = ""
             }
         },
-        get_data_center(){
+        async get_data_center(){
             let _self = this
-            return new Promise((resolve,reject) => {
-                let params = "payDirs,cluesources,order_contract_flag"
+            let params = "payDirs,cluesources,order_contract_flag"
 
-                function success(res){
-                    _self.payDirs = res.data.data.payDirs
-                    _self.cluesources = res.data.data.cluesources
-                    _self.order_contract_flag = res.data.data.order_contract_flag
-                    _self.payDirs_map = _self.$array2map(_self.payDirs)
-                    _self.cluesources_map = _self.$array2map(_self.cluesources)
-                    _self.order_contract_flag_map = _self.$array2map(_self.order_contract_flag)
-                    resolve()
-                }
-
-                this.$GetDataCenter(params, success)
-                
-            })
+            try {
+                let { payDirs,cluesources,order_contract_flag } = await refundApi.getDictionary(params)
+                this.payDirs = payDirs
+                this.cluesources = cluesources
+                this.order_contract_flag = order_contract_flag
+                this.payDirs_map = this.$array2map(this.payDirs)
+                this.cluesources_map = this.$array2map(this.cluesources)
+                this.order_contract_flag_map = this.$array2map(this.order_contract_flag)
+            } catch (error) {
+                console.log(error)
+            }
         },
         //  【双击查看订单】
         open_order_detail(e){
-            this.$bus.emit("OPEN_ORDERLIST_DETAIL", e.id)
+            this.$bus.emit("OPEN_REFUNDED_DETAIL", e.id)
         },
 
         //  【查看订单】
@@ -640,131 +477,24 @@ export default {
         },
 
         //  【查看流程图】
-        open_flowChart(){
-            let _self = this
-            if(this.selectRow){
-                this.imgLoading = true
-                this.flowImgOpen = true
-                this.flowChartImg = '/api/dataCenter/activiti/getResourceInputStreamObj?bussinessKey=' + this.selectRow.id
-                setTimeout(()=>{
-                    _self.imgLoading = false
-                }, 1000)
-            }else{
-                this.$Message.warning("请选择一行进行操作！")
-            }
-        },
-
-        //  【重新提交】
-        reapply_process(){
-            let _self = this
-            if(this.selectRow){
-                console.log(this.selectRow)
-                if (_self.selectRow.CurrentProcess) {
-                    _self.$Modal.confirm({
-                        loading: true,
-                        title: '重新提交审批',
-                        content: '<p>是否重新提交审批</p>',
-                        onOk: () => {
-                            let url = 'api/activiti/reApplyProcessByOrderId'
-                            let config = {
-                                params: {
-                                    orderId: _self.selectRow.id,
-                                    auditFlag: 1
-                                }
-                            }
-                            function success(res) {
-                                _self.$Modal.remove();
-                                _self.$Message.success('重新提交成功');
-                                setTimeout(()=>{
-                                    _self.get_data()
-                                }, 1000)
-                            }
-                            
-                            function fail(err){
-                                _self.$Modal.remove();
-                                _self.$Message.error("提交失败！")
-                                setTimeout(()=>{
-                                    _self.get_data()
-                                }, 1000)
-                            }
-
-                            _self.$Get(url, config, success, fail)
-                        },
-                    });
-                }else{
-                    _self.$Message.warning('该订单状态不允许重新提交');
-                }
-            }else{
-                this.$Message.warning("请选择一行进行操作！")
-            }
-        },
-        //  【作废】
-        del_order(){
-            let _self = this
-            if(this.selectRow){
-                _self.$ButtonCollect("order_rebuild_orderflow")
-                let url = `api/order/del`
-                _self.$ButtonCollect("order_del")
-                let config = {
-                    id: _self.selectRow.id
-                }
-
-                function success(res){
-                    // _self.$Message.success(res.data.msg)
-                    setTimeout(()=>{
-                        _self.get_data()
-                    }, 500)
-                }
-                function fail(err){
-
-                }
-                _self.$Post(url, config, success, fail)
-            }else{
-                this.$Message.warning("请选择一行进行操作！")
-            }
-        },
-        //  【修改订单】
-        xiugai_open(){
-            if(this.selectRow){
-                if(this.selectRow.CurrentProcess != 'Finished'){
-                    this.$Message.warning("未完结订单不予许进行修改！")
-                }else{
-                    this.$bus.emit("OPEN_ORDERLIST_AMEND", this.selectRow.id)
-                }
-            }else{
-                this.$Message.warning("请选择一行进行操作！")
-            }
-        },
-        //  【编辑订单】
-        open_edit(){
-            if(this.selectRow){
-                if(this.selectRow.CurrentProcess != 'Ready' && this.selectRow.CurrentProcess != 'Returned' && this.selectRow.CurrentProcess != 'ReturnedToReady'){
-                    this.$Message.warning("当前订单状态不允许编辑！")
-                }else{
-                    this.$bus.emit("OPEN_ORDERLIST_EDIT", this.selectRow.id)
-                }
-            }else{
-                this.$Message.warning("请选择一行进行操作！")
-            }
-        },
-        //  【新增订单】
-        open_add(){
-            this.$bus.emit("OPEN_ORDERLIST_ADD", true)
-        },
-        //  【撤回】
-        order_cancelOrder(){
-
-        }
-
+        // open_flowChart(){
+        //     let _self = this
+        //     if(this.selectRow){
+        //         this.imgLoading = true
+        //         this.flowImgOpen = true
+        //         this.flowChartImg = '/api/dataCenter/activiti/getResourceInputStreamObj?bussinessKey=' + this.selectRow.id
+        //         setTimeout(()=>{
+        //             _self.imgLoading = false
+        //         }, 1000)
+        //     }else{
+        //         this.$Message.warning("请选择一行进行操作！")
+        //     }
+        // }
     },
-    created() {
+    async created() {
         this.loading = true
-        this.get_data_center().then(
-            this.get_data()
-        )
-        if(localStorage.getItem('id')==10059){
-            this.header.push(this.amdinOpertionCol)
-        }
+        await this.get_data_center()
+        await this.get_data()
         this.$bus.on("UPDATE_ORDER_LIST", (e)=>{
             this.get_data()
         })

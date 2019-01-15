@@ -1,9 +1,11 @@
 <template>
     <div>
         <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="open_company_create">新增</Button>
-        <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="ios-crop" @click="open_company_change">公司变更</Button>
+        <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="shift_company" v-permission="['company.shift']">转移</Button>
         <Table
                 :loading="loading"
+                highlight-row
+                @on-current-change="select_row"
                 border
                 highlight-row
                 size="small"
@@ -11,6 +13,7 @@
                 :data="data"
                 @on-current-change="select_row"
                 style="margin-top: 15px"
+                
         ></Table>
         <!-- <Page
             size="small"
@@ -24,7 +27,7 @@
         <update-company v-if="close" @update="get_data" :taxtype="taxtype" :companyarea="companyarea_Casr" :customer="customer" :importance="importance" :cluesources="cluesources"></update-company>
         <!-- <amend-company></amend-company> -->
         <change-log></change-log>
-        <change-company v-if="close" :companyData='companyData'></change-company>
+        <shift-company v-if="openShiftCompany" @close="close_shift_company" :company="selectCompany"></shift-company>
     </div>
 </template>
 
@@ -33,7 +36,7 @@ import createCompany from "./create"
 import updateCompany from "./update"
 import amendCompany from "./amend"
 import changeLog from "./changeLog"
-import changeCompany from "./changeCompany"
+import shiftCompany from './shift'
 
 export default {
     components: {
@@ -41,7 +44,7 @@ export default {
         updateCompany,
         amendCompany,
         changeLog,
-        changeCompany
+        shiftCompany
     },
     props: {
         customer:{
@@ -183,7 +186,9 @@ export default {
             ],
             data: [],
             companyarea_Casr: [],
-            taxtype: []
+            taxtype: [],
+            openShiftCompany: false,
+            selectCompany: ""
         }
     },
     methods: {
@@ -200,6 +205,9 @@ export default {
             }
 
             this.$Get(url, config ,success)
+        },
+        select_row(e){
+            this.selectCompany = e
         },
         get_data_center(){
             let _self = this
@@ -219,18 +227,18 @@ export default {
         open_company_create(){
             this.$bus.emit("OPEN_COMPANY_CREATE",true)
         },
-        open_company_change(){
-            if(this.selectRow){
-                this.$bus.emit("OPEN_COMPANY_CHANGE",this.selectRow)
+        shift_company(){
+            if(this.selectCompany){
+                this.openShiftCompany = true
             }else{
-                this.$Message.warning("请选择需要查看的企业信息！")
+                this.$Message.warning("请选择需要变更的公司！")
             }
         },
-        select_row(e){
-            console.log(e)
-            this.selectRow = e
-            this.companyData = this.selectRow
-        },
+        close_shift_company(){
+            this.openShiftCompany = false
+            this.selectCompany = ""
+            this.get_data(this.customer.ID)
+        }
     },
     created(){
         let _self = this

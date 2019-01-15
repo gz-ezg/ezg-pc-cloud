@@ -196,7 +196,6 @@ export default {
     methods:{
         getData(){
             let _self = this
-            // let url = `api/order/workOrderDetail?workOrderId=${_self.current_row.row.id}`
 
             let url = `api/order/workOrderDetail`
 
@@ -207,7 +206,7 @@ export default {
             }
 
             function success(res){
-                _self.task_message = res.data.data.taskInfo[0]
+                _self.task_message = res.data.data.taskInfo.length?res.data.data.taskInfo[0]:{}
                 _self.process = res.data.data.process
                 _self.correlation = res.data.data.correlation
                 _self.loading = false

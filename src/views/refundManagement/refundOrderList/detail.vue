@@ -73,8 +73,8 @@
                         <FormItem label="使用余额" prop="usebalance">
                             <div style="display:inline-block">
                                 <Input size="small" v-model="orderDetail.usebalance" style="width:40%" number readonly/>
-                                <Button type="info" size="small" @click="get_balance('create', orderDetail.customerid)" :disabled="checkBalance">查询</Button>
-                                <span style="line-height:24px;height:24px;display:inline-block;margin-left:10px">可用余额：</span><span style="line-height:24px;height:24px;display:inline-block">{{allUseBalance}}</span>
+                                <!-- <Button type="info" size="small" @click="get_balance('create', orderDetail.customerid)" :disabled="checkBalance">查询</Button> -->
+                                <!-- <span style="line-height:24px;height:24px;display:inline-block;margin-left:10px">可用余额：</span><span style="line-height:24px;height:24px;display:inline-block">{{allUseBalance}}</span> -->
                             </div>
                         </FormItem>
                     </Col>
@@ -82,7 +82,7 @@
                 <Row :gutter="16">
                     <FormItem>
                         <Button type="primary" icon="plus" @click="show_contarct('edit')">查看合同</Button>
-                        <Button type="primary" icon="plus" @click="openServiceItem = true" v-if="showAccountHomeItem">查看会计到家服务项</Button>
+                        <!-- <Button type="primary" icon="plus" @click="openServiceItem = true" v-if="showAccountHomeItem">查看会计到家服务项</Button> -->
                         
                         <!-- <Button type="primary" icon="plus" @click="kuaiji()" v-show="kjdj">查看会计到家服务项</Button> -->
                     </FormItem>
@@ -96,21 +96,16 @@
                 <Button @click="openShowOrderDetail = false">关闭</Button>
             </div>
         </Modal>
-        <service-item @close="close_item" v-if="openServiceItem" :id="orderDetail.companyid" :readonly="false"></service-item>
     </div>
 </template>
 
 
 <script>
-import serviceItem from '../accountHomeTree'
 import commonSetting from './comonSetting.js'
-import * as orderApi from '../../api'
+import * as orderApi from './api'
 
 export default {
     mixins: [commonSetting],
-    components: {
-        serviceItem
-    },
     data(){
         return {
             orderId: "",
@@ -180,11 +175,6 @@ export default {
                     key: "memo",
                     minWidth: 300,
                     render: (h, params) => {
-                        // return h("div",{
-                        //     domProps:{
-                        //         innerHTML: "<div>"+params.row.memo+"</div>"
-                        //     }
-                        // })
                         let reg = new RegExp("</br>", "g")
                         let temp = params.row.memo.replace(reg ,"\n")
                         //  先转换为textarea能够处理的格式，上传时可能需要处理空格转换为换行符
@@ -205,65 +195,9 @@ export default {
                     }
                 }
             ],
-            dangerOperation:{
-                title: "退款",
-                minWidth: 80,
-                align: 'center',
-                render: (h, params) => {
-                    return h('Button', {
-                        props: {
-                            type: 'error',
-                            size: 'small'
-                        },
-                        style: {
-                            'marginLeft': '5px'
-                        }
-                    },[
-                        h('Poptip', {
-                            props: {
-                                transfer: true,
-                                confirm: true,
-                                title: '您确定要退款此订单项吗！',
-                            },
-                            on: {
-                                'on-ok': ()=>{
-                                    // console.log(params.row.itemid)
-                                    if(params.row.deleteflag != 5){
-                                        this.cancel_order(this.orderId, params.row.itemid)
-                                    }else{
-                                        this.$message.warning("对不起！该订单项已经退款！请确认之后操作!")
-                                    }
-                                    
-                                },
-                            }
-                        }, '退款')
-                    ])
-                }
-            },
         }
     },
     methods: {
-        open_service_item(){
-            this.openServiceItem = true
-        },
-        close_item(){
-            this.openServiceItem = false
-        },
-        async cancel_order(orderId, orderItemId){
-            let config = {
-                itemId: orderItemId
-            }
-
-            try {
-                let { status, data} = await orderApi.orderItemRefund(config)
-                // if( status ){
-                this.get_data(orderId)
-                this.$bus.emit("UPDATE_ORDER_LIST")
-                // }
-            } catch (error) {
-                console.log(error)
-            }
-        },
         row_class_name(row){
             if(row.deleteflag == 5){
                 return 'demo-table-refund-row'
@@ -272,12 +206,8 @@ export default {
     },
     created() {
         let _self = this
-        if(localStorage.getItem('id')==10059){
-            this.orderDetailListHeaderShow.unshift(this.dangerOperation)
-        }
-        this.$bus.off("OPEN_ORDERLIST_DETAIL", true)
-        this.$bus.on("OPEN_ORDERLIST_DETAIL", (e)=>{
-            this.checkBalance = false
+        this.$bus.off("OPEN_REFUNDED_DETAIL", true)
+        this.$bus.on("OPEN_REFUNDED_DETAIL", (e)=>{
             this.get_data(e)
             this.orderId = e
             this.openShowOrderDetail = true

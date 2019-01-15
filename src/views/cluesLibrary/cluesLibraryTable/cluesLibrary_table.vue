@@ -212,6 +212,7 @@
                 v-model="modal2"
                 title="新增线索"
                 class-name="vertical-center-modal"
+                mask-closable
                 ok-text="保存"
                 :styles="{top: '10%'}"
                 :loading="loading"
@@ -225,7 +226,7 @@
                         <Radio label="1">新客户</Radio>
                     </RadioGroup>
                 </FormItem>
-                <FormItem label="公司名称" prop="companyname">
+                <FormItem label="公司地区" prop="companyname">
                     <Select v-model="formValidate.affiliationArea" size="small">
                         <Option v-for="(item, index) in affiliation_area" :value="item.typecode" :key="index">{{item.typename}}</Option>
                     </Select>

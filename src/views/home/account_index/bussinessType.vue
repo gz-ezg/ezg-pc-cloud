@@ -52,7 +52,7 @@ export default {
             //  数据别名
             labelMap: {
                 'period': '月份',
-                'lsb': '零申报',
+                // 'lsb': '零申报',
                 'xgm': '小规模',
                 'xgmgx': '小规模高新',
                 'ybnsr': '一般纳税人'
@@ -65,13 +65,13 @@ export default {
                 {
                     title: "月份",
                     key: "period",
-                    width: 100
+                    minWidth: 100
                 },
-                {
-                    title: "零申报",
-                    key: "lsb",
-                    width: 90
-                },
+                // {
+                //     title: "零申报",
+                //     key: "lsb",
+                //     width: 90
+                // },
                 {
                     title: "小规模",
                     key: "xgm",
@@ -105,7 +105,7 @@ export default {
             ],
             tableData:[],
             chartData:{
-                columns:['period','lsb','xgm','xgmgx','ybnsr'],
+                columns:['period','xgm','xgmgx','ybnsr'],
                 rows:[
                 ]
             },  
@@ -127,8 +127,16 @@ export default {
 
             function success(res){
                 // console.log(res.data.data)
-                _self.chartData.rows = res.data.data
-                _self.tableData = res.data.data
+                // res.data.data.xgm = res.data.data.xgm + res.data.data.lsb
+                let { data } = res.data
+                let temp = data.map((item)=>{
+                    item.xgm = item.xgm + item.lsb
+                    return item
+                })
+                // _self.chartData.rows = res.data.data
+                // _self.tableData = res.data.data
+                _self.chartData.rows = temp
+                _self.tableData = temp
             }
 
             this.$Get(url, config, success)

@@ -35,7 +35,6 @@
 <script>
 import search from './search'
 import detail from './detail'
-import * as api from './api';
 export default {
     name: "customerAccount_index",
     components: {
@@ -105,7 +104,7 @@ export default {
     },
     methods: {
         search(e){
-            // console.log(e)
+            console.log(e)
             this.searchForm = e
             if(this.searchForm.hasOwnProperty("createdate")){
                 this.searchForm["bcreatedate"] = this.searchForm.createdate[0]
@@ -114,11 +113,10 @@ export default {
             }
             this.get_data()
         },
-        async get_data(){
+        get_data(){
             let _self = this
-            
             _self.loading = true
-            
+            let url = `api/customer/account/list`
             let config = {
                 params: {
                     page: _self.page,
@@ -126,21 +124,24 @@ export default {
                 }
             }
 
-            // function success(res){
-            //     return res
-            // }
+            Object.assign(config.params, this.searchForm)
+            for(let x in config.params){
+                if(config.params[x]==undefined){
+                    config.params[x] = ""
+                }
+            }
+            console.log(config.params)
 
-            try {
-                let { total, rows } = await api.getCustomerAccountList(config)
+            function success(res){
+                let {total, rows} = res.data.data
                 _self.total = total
-                _self.data = rows.map((item) => {
+                _self.data = rows.map((item)=>{
                     return item
                 })
-            } catch (error) {
-                console.log(error)
-                // _self.$Message.error(error)
+                _self.loading = false
             }
-            _self.loading = false
+
+            this.$Get(url, config, success)
         },
         page_change(e){
             this.page = e
@@ -151,51 +152,28 @@ export default {
             this.page = 1
             this.get_data()
         },
-        async get_data_center(){
+        get_data_center(){
             let _self = this
             let params = "account_change_type,account_change_item_type"
-            try {
-                let { account_change_type,account_change_item_type } = await api.getDictionary(params)
 
+            function success(res){
+                let {account_change_type, account_change_item_type} = res.data.data
                 _self.accountChangeType = _self.$array2map(account_change_type)
                 _self.accountChangeItemType = _self.$array2map(account_change_item_type)
-            }catch(error){
-                // console.log(error)
-                // _self.$Message.error("页面异常！")
+                // console.log(account_change_type, account_change_item_type)
             }
+
+            this.$GetDataCenter(params,success)
         }
     },
-    async created(){
-        await this.get_data()
-        await this.get_data_center()
+    created(){
+        this.get_data()
+        this.get_data_center()
     }
 
 }
 </script>
 
 <style>
-<<<<<<< HEAD
-
-</style>
-
-// table:[
-//     {
-//         tableDetail:[
-//             {
-//                 one
-//             },
-//             {
-//                 two
-//             }
-//         ],
-//         id:,
-
-//     },
-//     {
-
-//     }
-// ]
-=======
     
 </style>
->>>>>>> dev

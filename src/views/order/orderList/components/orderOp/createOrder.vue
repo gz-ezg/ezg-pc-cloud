@@ -32,14 +32,13 @@
                     </FormItem>
                     </Col>
                     <Col span="8">
-                    <FormItem label="国地税报道" prop="gdsreport">
-                        <Select transfer v-model="orderDetail.gdsreport" size="small" >
-                            <Option value="ybd">已报道</Option>
-                            <Option value="wbd">未报道</Option>
-                            <Option value="bybd">不用报道</Option>
-                        </Select>
-                    </FormItem>
-                    
+                        <FormItem label="国地税报道" prop="gdsreport">
+                            <Select transfer v-model="orderDetail.gdsreport" size="small" >
+                                <Option value="ybd">已报道</Option>
+                                <Option value="wbd">未报道</Option>
+                                <Option value="bybd">不用报道</Option>
+                            </Select>
+                        </FormItem>
                     </Col>
                     <Col span="8">
                     <FormItem label="缴费渠道" prop="paydir">
@@ -51,7 +50,7 @@
                 </Row>
                 <Row :gutter="16">
                     <Col span="8">
-                        <FormItem label="实付金额" prop="realnumber">
+                        <FormItem label="已付款" prop="realnumber">
                             <Input size="small" v-model="orderDetail.realnumber" number />
                         </FormItem>
                     </Col>
@@ -68,8 +67,8 @@
                     <Col span="8">
                         <FormItem label="使用余额" prop="usebalance">
                             <div style="display:inline-block">
-                                <Input size="small" v-model="orderDetail.usebalance" style="width:50%" number />
-                                <Button type="info" size="small" @click="get_balance('create', orderDetail.customerid)">查询</Button>
+                                <Input size="small" v-model="orderDetail.usebalance" style="width:40%" number />
+                                <Button type="info" size="small" @click="get_balance('create', orderDetail.customerid)" :disabled="checkBalance">查询</Button>
                                 <span style="line-height:24px;height:24px;display:inline-block;margin-left:10px">可用余额：</span><span style="line-height:24px;height:24px;display:inline-block">{{allUseBalance}}</span>
                             </div>
                         </FormItem>
@@ -143,6 +142,7 @@ import serviceItem from '../accountHomeTree'
 import commonSetting from './comonSetting.js'
 import companySelect from '../companySelect'
 import { DateFormat } from '../../../../../libs/utils.js'
+import * as orderApi from '../../api'
 
 export default {
     mixins: [commonSetting],
@@ -188,7 +188,7 @@ export default {
             // this.file.splice(e, 1);
             this.show_file.splice(e, 1);
         },
-        upload_img(e){
+        async upload_img(e){
             let _self = this
             let formdata = new FormData()
                 
@@ -197,16 +197,22 @@ export default {
             for(let i = 0; i < _self.show_file.length; i++){
                 formdata.append("files", _self.show_file[i])
             }
-                
-            function success(res){
-                _self.show_file = []
+            
+            try {
+                let { status, data } = await orderApi.orderContractUpload(formdata)
+                this.show_file = []
+            } catch (error) {
+                console.log(error)
             }
+            // function success(res){
+            //     _self.show_file = []
+            // }
 
-            function fail(err){
+            // function fail(err){
 
-            }
+            // }
                 
-            this.$Post(url, formdata, success, fail)
+            // this.$Post(url, formdata, success, fail)
         },
         //  ======== 合同文件上传end ========
         //  ======== 打开产品列表 ========
@@ -229,9 +235,9 @@ export default {
                 }
             })
         },
-        create_order(){
+        async create_order(){
             let _self = this
-            let url = `api/order/create`
+            // let url = `api/order/create`
 
             let config = {
                 companyId: _self.orderDetail.companyid,
@@ -245,24 +251,45 @@ export default {
                 orderitems: JSON.stringify(_self.orderItem)
             }
 
-            function success(res){
-                if(_self.show_file.length != 0){
-                    _self.upload_img(res.data.data)
-                }else{
-                    _self.$Message.warning("订单创建成功！请及时上传合同！")
+            try {
+                let { status, data } = await orderApi.orderCreate(config)
+                if(status){
+                    if(this.show_file.length != 0){
+                        this.upload_img(data.data)
+                    }else{
+                        _self.$Message.warning("订单创建成功！请及时上传合同！")
+                    }
+
+                    setTimeout(()=>{
+                        _self.loading = false
+                        _self.$bus.emit("UPDATE_ORDER_LIST", true)
+                        _self.openCreateOrderDetail = false
+                    }, 200)
                 }
-                setTimeout(()=>{
-                    _self.loading = false
-                    _self.$bus.emit("UPDATE_ORDER_LIST", true)
-                    _self.openCreateOrderDetail = false
-                }, 200)
+            } catch (error) {
+                console.log(error)
             }
 
-            function fail(err){
-                _self.loading = false
-            }
+            this.loading = false
 
-            this.$Post(url, config, success, fail)
+            // function success(res){
+            //     if(_self.show_file.length != 0){
+            //         _self.upload_img(res.data.data)
+            //     }else{
+            //         _self.$Message.warning("订单创建成功！请及时上传合同！")
+            //     }
+            //     setTimeout(()=>{
+            //         _self.loading = false
+            //         _self.$bus.emit("UPDATE_ORDER_LIST", true)
+            //         _self.openCreateOrderDetail = false
+            //     }, 200)
+            // }
+
+            // function fail(err){
+            //     _self.loading = false
+            // }
+
+            // this.$Post(url, config, success, fail)
         },
         close_item(){
             this.openServiceItem = false

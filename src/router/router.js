@@ -160,64 +160,58 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    {
-        path: '/test',
-        icon: 'alert-circled',
-        name: 'test',
-        title: 'Test',
-        component: Main,
-        children: [
-            // {
-            //     path: 'test',
-            //     title: '测试页面',
-            //     name: '富文本编辑器测试',
-            //     component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/main.vue')
-            //     // component: () => import(/* webpackChunkName: "test" */ '@/views/woa-components/filePreview/index.vue')
-            // },
-            // {
-            //     path: 'test2',
-            //     title: '日程测试',
-            //     name: 'test2_index',
-            //     component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/test2.vue')
-            // },
-            // {
-            //     path: 'test3',
-            //     title: '滑动验证码',
-            //     name: 'test3_index',
-            //     component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/test3.vue')
-            // },
-            {
-                path: 'test4',
-                title: 'canvas个人页制作',
-                name: 'test4_index',
-                component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/test4.vue')
-            },
-            // {
-            //     path: 'test5',
-            //     title: 'html2canvas',
-            //     name: 'test05_index',
-            //     component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/test5.vue')
-            // }
-            // {
-            //     path: 'test6',
-            //     title: 'iviewTest',
-            //     name: 'test6_index',
-            //     component: () => import('@/views/test/components/test6.vue')
-            // }
-            {
-                path: 'cancelOrder',
-                title: '作废订单',
-                name: 'cancelOrder_index',
-                component: () => import('@/views/test/components/cancelOrder.vue')
-            },
-            {
-                path: 'commercialTaskRefund',
-                title: '退款工单',
-                name: 'commercialTaskReund_index',
-                component: () => import('@/views/test/components/commercialRefund/commercialTaskRefund.vue')
-            }
-        ]
-    },
+    // {
+    //     path: '/test',
+    //     icon: 'alert-circled',
+    //     name: 'test',
+    //     title: 'Test',
+    //     component: Main,
+    //     children: [
+    //         // {
+    //         //     path: 'test',
+    //         //     title: '测试页面',
+    //         //     name: '富文本编辑器测试',
+    //         //     component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/main.vue')
+    //         //     // component: () => import(/* webpackChunkName: "test" */ '@/views/woa-components/filePreview/index.vue')
+    //         // },
+    //         // {
+    //         //     path: 'test2',
+    //         //     title: '日程测试',
+    //         //     name: 'test2_index',
+    //         //     component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/test2.vue')
+    //         // },
+    //         // {
+    //         //     path: 'test3',
+    //         //     title: '滑动验证码',
+    //         //     name: 'test3_index',
+    //         //     component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/test3.vue')
+    //         // },
+    //         {
+    //             path: 'test4',
+    //             title: 'canvas个人页制作',
+    //             name: 'test4_index',
+    //             component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/test4.vue')
+    //         },
+    //         // {
+    //         //     path: 'test5',
+    //         //     title: 'html2canvas',
+    //         //     name: 'test05_index',
+    //         //     component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/test5.vue')
+    //         // }
+    //         {
+    //             path: 'test6',
+    //             title: 'iviewTest',
+    //             name: 'test6_index',
+    //             component: () => import('@/views/test/components/test6.vue')
+    //         },
+    //         {
+    //             path: 'test7',
+    //             title: 'axios',
+    //             name: 'test07_index',
+    //             component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/apiTest/test7.vue')
+    //         }
+    //     ]
+    // },
     {
         access: 6001,
         meta: 6001,
@@ -244,8 +238,8 @@ export const appRouter = [
                 component: () => import( /* webpackChunkName: "marketingManagement_index" */ '@/views/customerManagement/marketingManagement2')
             },
             {
-                access: 6002,
-                meta: 6002,
+                access: 11617,
+                meta: 11617,
                 path: 'customerAccount',
                 title: '账户管理',
                 name: 'customerAccount_index',
@@ -584,6 +578,33 @@ export const appRouter = [
             //     title: '订单变更日志',
             //     name: 'orderLog_index',
             //     component: () => import(/* webpackChunkName: "orderLog_index" */ '@/views/order/orderLog/index.vue')
+        ]
+    },
+    {
+        access: 11614,
+        meta: 11614,
+        path: '/refundmanagement',
+        icon: 'social-windows',
+        title: '退款管理',
+        name: 'refundManagement',
+        component: Main,
+        children: [
+            {
+                access: 11615,
+                meta: 11615,
+                path: "refundOrderList",
+                title: '退款订单',
+                name: "refundOrderList_index",
+                component: () => import( /* webpackChunkName: "refundOrderList_index" */ '@/views/refundManagement/refundOrderList/index.vue')
+            },
+            {
+                access: 11616,
+                meta: 11616,
+                path: "refundWorkOrderList",
+                title: '退款工单',
+                name: "refundWorkOrderList_index",
+                component: () => import( /* webpackChunkName: "refundWorkOrderList_index" */ '@/views/refundManagement/refundWorkOrderList/index.vue')
+            }
         ]
     },
     {

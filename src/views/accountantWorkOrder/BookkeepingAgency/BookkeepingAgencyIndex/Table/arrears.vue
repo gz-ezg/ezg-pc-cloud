@@ -5,7 +5,7 @@
                     <Panel name="1" >
                         <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
                         筛选
-                        <div slot="content" @keydown="show">
+                        <div slot="content" @keydown.enter="Search">
                             <Form ref="SearchValidate" :model="SearchValidate" :label-width="80" style="margin-top: 15px">
                                 <Row :gutter="8" style="height:56px">
                                     <Col span="8">
@@ -67,45 +67,6 @@
                 <Button type="primary" icon="ios-color-wand-outline" @click="bswc" v-if="bs">报税完成</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
             </ButtonGroup>
-            <!-- <Poptip
-                        style="float: right"
-                        placement="bottom-end"
-                        width="400">
-                    <Button type="text" icon="funnel">筛选</Button>
-                    <div slot="content" @keydown="show">
-                        <Form ref="SearchValidate" :model="SearchValidate" :label-width="120" style="margin-top: 15px">
-                            <Row :gutter="16" style="height:56px">
-                                <Col span="22">
-                                <FormItem label="企业名称：" prop="CompanyName">
-                                    <Input v-model="SearchValidate.CompanyName" size="small"></Input>
-                                </FormItem>
-                                </Col>
-                            </Row>
-                            <Row :gutter="16" style="height:56px">
-                                <Col span="22">
-                                <FormItem label="服务人员：" prop="server_realname">
-                                    <Input v-model="SearchValidate.server_realname" size="small"></Input>
-                                </FormItem>
-                                </Col>
-                            </Row>
-                            <Row :gutter="16" style="height:56px">
-                                <Col span="22">
-                                <FormItem label="跟进人：" prop="followby_realname">
-                                    <Input v-model="SearchValidate.followby_realname" size="small"></Input>
-                                </FormItem>
-                                </Col>
-                            </Row>
-                            <center>
-                                <FormItem style="margin-top:10px">
-                                    <Button type="primary" @click="Search">搜索</Button>
-                                    <Button type="ghost" @click="handleReset" style="margin-left: 8px">
-                                        重置
-                                    </Button>
-                                </FormItem>
-                            </center>
-                        </Form>
-                    </div>
-                </Poptip> -->
         </Row>
         <Row style="margin-top: 10px;">
             <Table
@@ -132,7 +93,8 @@
 
 <script>
     import Bus from '../../../../../components/bus'
-
+    import * as accountApi from '../../api'
+    
     export default {
         data() {
             return {
@@ -204,7 +166,7 @@
                     },
                     {
                         title: '单价',
-                        key: 'unitprice',
+                        key: 'unit_price',
                         minWidth: 120
                     },
                     {
@@ -319,7 +281,7 @@
                     {field:'balance_count',title:'剩余时长'},
                     {field:'begin_period',title:'开始期间'},
                     {field:'end_period',title:'结束期间'},
-                    {field:'unitprice',title:'单价'},
+                    {field:'unit_price',title:'单价'},
                     // {field:'serverrealname',title:'服务人员'},
                     // {field:'period',title:'服务周期'}
                     ]
