@@ -1,7 +1,7 @@
 <template>
     <Card style="min-width:800px">
         <Row style="margin-bottom:10px;">
-            <search @search="search"></search>
+            <!-- <search @search="search"></search> -->
           </Row>
           <Row style="margin-top: 10px;">
             <Table

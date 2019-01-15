@@ -1,40 +1,7 @@
 <template>
     <Card>
         <Row style="margin-bottom:10px">
-            <Collapse v-model="search_model">
-                <Panel name="1">
-                    <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
-                    筛选
-                    <div  slot="content" @keydown.enter="search">
-                        <Form ref="formInline" :model="formInline" :label-width="100">
-                            <Row :gutter="16">
-                                <Col span="8">
-                                    <FormItem prop="companyName" label="公司名称：">
-                                        <Input size="small"  type="text" v-model="formInline.companyname" placeholder="">
-                                        </Input>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem prop="servicename" label="服务人员名称：">
-                                        <Input size="small"  type="text" v-model="formInline.servicename" placeholder="">
-                                        </Input>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem prop="product" label="产品：">
-                                        <Input size="small"  type="text" v-model="formInline.product" placeholder="">
-                                        </Input>
-                                    </FormItem>
-                                </Col>
-                            </Row>
-                            <FormItem>
-                                <Button type="primary" @click="search">搜索</Button>
-                                <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
-                            </FormItem>
-                        </Form>
-                    </div>
-                </Panel>
-            </Collapse>
+            <search-model :data="searchData" @search="search"></search-model>
         </Row>
         <Row>
             <ButtonGroup style="float:left">
@@ -80,22 +47,40 @@
 
 <script>
 import * as workOrderApi from './api.js'
+import searchModel from './search'
 
 export default {
     name: "refundWorkOrderList_index",
+    components: {
+        searchModel
+    },
     data() {
             return {
-                managestatus:[],
+                //  渲染搜索模块专用
+                searchData: [
+                    {
+                        label: "公司名称：",
+                        key: "companyName",
+                        type: "input"
+                    },
+                    {
+                        label: "服务人员名称：",
+                        key: "servicename",
+                        type: "input"
+                    },
+                    {
+                        label: "产品名称：",
+                        key: "product",
+                        type: "input"
+                    }
+                ],
                 order:'desc',
                 sortField:'updatedate',
-                search_model:"",
-                //  触发搜索
-                isSearh:false,
                 //  筛选数据
                 formInline:{
-                    companyname:'',
-                    servicename:'',
-                    product:''
+                    // companyName:'',
+                    // servicename:'',
+                    // product:''
                 },
                 //  加载中
                 loading:false,
@@ -104,15 +89,11 @@ export default {
                 //  流程图相关,1.弹出框2.流程图地址
                 flowChart1:false,
                 flowChartImg:'',
-                //  暂停/重启
-                pause:false,
-                //  终止订单
-                endlife:false,
                 //  表格相关data
                 total: 0,
-                page:'1',
-                pageSize:'10',
-                data:[],
+                page: 1,
+                pageSize: 10,
+                data: [],
                 header: [
                     {
                         title: '归属公司',
@@ -160,7 +141,6 @@ export default {
                         width: 200,
                         sortable: true,                        
                         render:(h, params) => {
-                            // console.log(params)
                             if(params.row.product == ''||params.row.product == null){
                                 return ''
                             }else if(params.row.product.length>10){
@@ -366,16 +346,16 @@ export default {
                 let _self = this
                 let url = `api/order/workOrderList`
                 let config = {
-                        workOrderStatus:'30',
-                        page: '1',
-                        pageSize: '1000000',                     
-                        companyName:_self.formInline.companyname,
-                        serviceName:_self.formInline.servicename,
-                        product:_self.formInline.product,
-                        deleteflag: 5,
-                        export: 'Y',
-                        exportField: encodeURI(JSON.stringify(field))
+                    page: '1',
+                    pageSize: '1000000',                     
+                    // companyName:_self.formInline.companyName,
+                    // serviceName:_self.formInline.servicename,
+                    // product:_self.formInline.product,
+                    deleteflag: 5,
+                    export: 'Y',
+                    exportField: encodeURI(JSON.stringify(field))
                 }
+                Object.assign(config, this.formInline)
                 let toExcel = this.$MergeURL(url, config)
                 window.open(toExcel)
             },
@@ -387,12 +367,13 @@ export default {
                     order:this.order,
                     page:this.page,
                     pageSize:this.pageSize,
-                    companyName:this.formInline.companyname,
-                    serviceName:this.formInline.servicename,
-                    product:this.formInline.product,
+                    // companyName:this.formInline.companyName,
+                    // serviceName:this.formInline.servicename,
+                    // product:this.formInline.product,
                     deleteflag: 5,
                 }
             }
+            Object.assign(config.params, this.formInline)
             try {
                 let { total, rows } = await workOrderApi.getWordOrderList(config)
                 this.total = total
@@ -422,17 +403,21 @@ export default {
             this.pageSize = e
             this.get_data()
         }, 
-        search(){
+        search(e){
+            // console.log(e)
+            //  待解决的问题，如何同时将参数赋值给搜索和导出excel
+            Object.assign(this.formInline, e)
+            // console.log(this.formInline)
             this.page = 1
             this.get_data()
         },
-        reset(){
-            this.page = 1
-            this.formInline.companyname = ""
-            this.formInline.servicename = ""
-            this.formInline.product = ""
-            this.get_data()
-        },
+        // reset(){
+        //     this.page = 1
+        //     this.formInline.companyname = ""
+        //     this.formInline.servicename = ""
+        //     this.formInline.product = ""
+        //     this.get_data()
+        // },
         //  保存当前选中行
         save_current_row(e){
             this.current_row = e
@@ -461,7 +446,6 @@ export default {
     created(){
         this.get_data()
     }
-
 }
 </script>
 

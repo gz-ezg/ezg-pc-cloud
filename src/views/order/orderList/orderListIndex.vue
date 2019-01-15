@@ -329,7 +329,8 @@ export default {
                     minWidth: 120,
                     render: (h, params) => {
                         let _self = this
-                        if(params.index != this.pageSize){
+                        // if(params.index != this.pageSize){
+                        if(params.index != this.data.length-1){
                             return h('div', [
                                 h('Button', {
                                     props: {
@@ -379,7 +380,7 @@ export default {
                                         },
                                         on: {
                                             'on-ok': ()=>{
-                                                console.log(params.row)
+                                                // console.log(params.row)
                                                 let url = `api/order/refund`
 
                                                 let config = {
@@ -389,6 +390,7 @@ export default {
                                                 function success(res){
                                                     // _self.$Message.success(res.data.msg)
                                                     _self.get_data()
+                                                    _self.$bus.emit("UPDATE_ORDER_LIST")
                                                 }
 
                                                 function fail(err){
