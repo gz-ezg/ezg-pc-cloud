@@ -198,11 +198,23 @@ export const appRouter = [
             //     name: 'test05_index',
             //     component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/test5.vue')
             // }
+            // {
+            //     path: 'test6',
+            //     title: 'iviewTest',
+            //     name: 'test6_index',
+            //     component: () => import('@/views/test/components/test6.vue')
+            // }
             {
-                path: 'test6',
-                title: 'iviewTest',
-                name: 'test6_index',
-                component: () => import('@/views/test/components/test6.vue')
+                path: 'cancelOrder',
+                title: '作废订单',
+                name: 'cancelOrder_index',
+                component: () => import('@/views/test/components/cancelOrder.vue')
+            },
+            {
+                path: 'commercialTaskRefund',
+                title: '退款工单',
+                name: 'commercialTaskReund_index',
+                component: () => import('@/views/test/components/commercialRefund/commercialTaskRefund.vue')
             }
         ]
     },
