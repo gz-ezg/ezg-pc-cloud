@@ -72,9 +72,6 @@
 <script>
 
 export default {
-    // components:{
-    //     Search
-    // },
     data() {
             return {
                 managestatus:[],
@@ -302,7 +299,7 @@ export default {
                     companyName:_self.formInline.companyname,
                     serviceName:_self.formInline.servicename,
                     product:_self.formInline.product,
-                    serviceDept:"'BUSSINESS'"
+                    deleteflag: 5
                 }
             }
                 
@@ -346,7 +343,7 @@ export default {
             this.formInline.product = ""
             this.getData()
         },
-        //  保存当前选中行
+        
         save_current_row(e){
             this.current_row = e
         },
