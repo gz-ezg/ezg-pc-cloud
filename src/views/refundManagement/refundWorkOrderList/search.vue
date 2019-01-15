@@ -43,62 +43,9 @@ export default {
         data:{
             type: [Array],
             default: ()=>{
-                return [
-                    // {
-                    //     label: "客户名称",
-                    //     key: "name",
-                    //     type: "input"
-                    // },
-                    // {
-                    //     label: "客户类型",
-                    //     key: "type",
-                    //     type: "select",
-                    //     data: [
-                    //         {
-                    //             typename: "123",
-                    //             typecode: "1"
-                    //         },
-                    //         {
-                    //             typename: "1234",
-                    //             typecode: "2"
-                    //         },
-                    //         {
-                    //             typename: "123456",
-                    //             typecode: "3"
-                    //         },
-                    //         {
-                    //             typename: "12344444",
-                    //             typecode: "4"
-                    //         }
-                    //     ]
-                    // },
-                    // {
-                    //     label: "创建时间",
-                    //     key: "createdate",
-                    //     type: "datePicker"
-                    // },
-                    // {
-                    //     label: "创建时间",
-                    //     key: "createdate",
-                    //     type: "datePicker"
-                    // },
-                    // {
-                    //     label: "创建时间",
-                    //     key: "createdate",
-                    //     type: "datePicker"
-                    // }
-                ]
+                return []
             }
         },
-        // formData: {
-        //     type: [String, Object],
-        //     default: ()=>{
-        //         return {
-        //             name:"",
-        //             type: ""
-        //         }
-        //     }
-        // },
     },
     data(){
         return {
@@ -108,26 +55,13 @@ export default {
     },
     methods: {
         search(){
-            console.log(Array.isArray(this.form["createdate"]))
-            for(let x in this.form){
-                if(Array.isArray(this.form[x])){
-                    console.log(this.form[x])
-                }
-            }
             this.$emit("search", this.form)
         },
         handle_reset(){
             this.$refs["form"].resetFields();
-            for(let x in this.form){
-                if(Array.isArray(this.form[x])){
-                    console.log(this.form[x])
-                }
-            }
             this.$emit("search", this.form)
         },
         date_change(date, key){
-            // console.log(date)
-            // console.log(key)
             this.form[key] = date
         }
     },
@@ -143,7 +77,6 @@ export default {
             }
             Object.assign(data, temp)
         }
-        // this.form = this.formData
         this.form = data
     }
 }

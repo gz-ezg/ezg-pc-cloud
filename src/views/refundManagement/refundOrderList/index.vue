@@ -2,7 +2,7 @@
     <div>
         <Card style="min-width:800px">
             <Row style="margin-bottom:10px">
-                <Collapse v-model="search_model">
+                <!-- <Collapse v-model="search_model">
                     <Panel name="1" >
                         <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
                             筛选
@@ -65,21 +65,13 @@
                         </Form>
                     </div>
                 </Panel>
-            </Collapse>
+            </Collapse> -->
+            <search-model :data="searchData" @search="search"></search-model>
         </Row>
         <Row>
             <ButtonGroup>
-                <!-- <Button v-permission="['orderL.add']" type="primary" icon="plus" @click="open_add" name="order_add">录入</Button>
-                <Button v-permission="['orderL.edit']" type="primary" icon="edit" @click="open_edit" name="order_edit">编辑</Button> -->
                 <Button v-permission="['orderL.detail']" type="primary" icon="information-circled" @click="order_show" name="order_show">查看</Button>
-                <!-- <Button v-permission="['orderL.flowChart']" type="primary" icon="ios-crop" @click="open_flowChart">查看流程图</Button>
-                <Button v-permission="['orderL.resubmit']" type="primary" icon="refresh" @click="reapply_process" name="order_re_submit">重新提交</Button>
-                <Button v-permission="['orderL.amend']" type="primary" icon="edit" @click="xiugai_open" name="order_amend">修改</Button>
-                <Button v-permission="['orderL.delOrder']" type="primary" icon="trash-b" @click="del_order" name="order_amend">删除</Button> -->
                 <Button v-permission="['orderL.amend']" type="primary" icon="ios-color-filter-outline" @click="get_data">刷新</Button>
-                <!--  ↓ ↓ 该功能暂定，代码勿删  -->
-                <!--<Button type="primary" icon="ios-color-filter-outline" @click="qihuaOpen()">企划(修改)</Button>-->
-                <!--<Button v-permission="['orderL.invalid']" type="primary" icon="ios-color-filter-outline" @click="deleteOrder = true">订单作废</Button>-->
                 <Button v-permission="['orderL.export']" type="primary" icon="ios-color-filter-outline" @click="downloadExcel">导出Excel</Button>
             </ButtonGroup>
         </Row>
@@ -118,7 +110,6 @@
             <div slot="footer"></div>
         </Modal> -->
         <show-order :payDirs="payDirs"></show-order>
-
     </div>
 </template>
 
@@ -127,14 +118,60 @@
 import showOrder from './detail'
 import { DateFormat } from '../../../libs/utils.js'
 import * as refundApi from './api.js'
+import searchModel from './search'
 
 export default {
     name: "refundOrderList_index",
     components:{
         showOrder,
+        searchModel
     },
     data(){
         return {
+            //  搜索条件
+            searchData: [
+                {
+                    label: "订单号码：",
+                    key: "ordercode",
+                    type: "input"
+                },
+                {
+                    label: "公司名称：",
+                    key: "companyname",
+                    type: "input"
+                },
+                {
+                    label: "客户名称：",
+                    key: "customername",
+                    type: "input"
+                },
+                {
+                    label: "客户电话：",
+                    key: "customertel",
+                    type: "input"
+                },
+                {
+                    label: "客户类型：",
+                    key: "payDir",
+                    type: "select",
+                    data: []
+                },
+                {
+                    label: "创建时间",
+                    key: "createdate",
+                    type: "datePicker"
+                },
+                {
+                    label: "创建人：",
+                    key: "crealname",
+                    type: "input"
+                },
+                {
+                    label: "跟进人：",
+                    key: "frealname",
+                    type: "input"
+                }
+            ],
             //  流程图相关
             imgLoading: true,
             flowImgOpen: false,
@@ -281,7 +318,7 @@ export default {
                     minWidth: 120,
                     render: (h, params) => {
                         let _self = this
-                        if(params.index != this.pageSize){
+                        if(params.index != this.data.length-1){
                             return h('div', [
                                 h('Button', {
                                     props: {
@@ -337,32 +374,36 @@ export default {
             let config = {
                 page: '1',
                 pageSize: '1000000',
-                ordercode: _self.formValidateSearch.ordercode,
-                companyname:_self.formValidateSearch.companyname,
-                customername:_self.formValidateSearch.customername,
-                customertel:    _self.formValidateSearch.customertel,
-                crealname:    _self.formValidateSearch.crealname,
-                frealname:    _self.formValidateSearch.frealname,
-                payDir:    _self.formValidateSearch.payDir,
+                // ordercode: _self.formValidateSearch.ordercode,
+                // companyname:_self.formValidateSearch.companyname,
+                // customername:_self.formValidateSearch.customername,
+                // customertel:    _self.formValidateSearch.customertel,
+                // crealname:    _self.formValidateSearch.crealname,
+                // frealname:    _self.formValidateSearch.frealname,
+                // payDir:    _self.formValidateSearch.payDir,
                 bcreatedate:DateFormat(_self.formValidateSearch.date[0]),
                 ecreatedate:DateFormat(_self.formValidateSearch.date[1]),
                 export: 'Y',
                 deleteflag: 5,
                 exportField: encodeURI(JSON.stringify(field))
             }
+            Object.assign(config, this.formValidateSearch)
             let toExcel = this.$MergeURL(url, config)
             window.open(toExcel)
         },
         //  搜索相关
-        Search(){
+        search(e){
+            // console.log(e)
+            delete e.createdate
+            Object.assign(this.formValidateSearch, e)
             this.page = 1
             this.get_data()
         },
-        handleReset(){
-            this.$refs["formValidateSearch"].resetFields()
-            this.formValidateSearch.date = []
-            this.get_data()
-        },
+        // handleReset(){
+        //     this.$refs["formValidateSearch"].resetFields()
+        //     this.formValidateSearch.date = []
+        //     this.get_data()
+        // },
         //  自定义排序
         sort(e){
             this.sortField = e.key
@@ -384,19 +425,21 @@ export default {
                     order:_self.order,
                     page:_self.page,
                     pageSize:_self.pageSize,
-                    ordercode:_self.formValidateSearch.ordercode,
-                    companyname:_self.formValidateSearch.companyname,
-                    customername:_self.formValidateSearch.customername,
-                    customertel:_self.formValidateSearch.customertel,
-                    crealname:_self.formValidateSearch.crealname,
-                    frealname:_self.formValidateSearch.frealname,
-                    payDir:_self.formValidateSearch.payDir,
+                    // ordercode:_self.formValidateSearch.ordercode,
+                    // companyname:_self.formValidateSearch.companyname,
+                    // customername:_self.formValidateSearch.customername,
+                    // customertel:_self.formValidateSearch.customertel,
+                    // crealname:_self.formValidateSearch.crealname,
+                    // frealname:_self.formValidateSearch.frealname,
+                    // payDir:_self.formValidateSearch.payDir,
                     sumField:'paynumber,realnumber,neednumber',
                     bcreatedate:DateFormat(_self.formValidateSearch.date[0]),
                     ecreatedate:DateFormat(_self.formValidateSearch.date[1]),
                     deleteflag:  5
                 }
             }
+
+            Object.assign(config.params, this.formValidateSearch)
 
             try {
                 let { rows, total, sum} = await refundApi.orderList(config)
@@ -453,6 +496,8 @@ export default {
             try {
                 let { payDirs,cluesources,order_contract_flag } = await refundApi.getDictionary(params)
                 this.payDirs = payDirs
+                //  只能这样赋值给动态数组
+                this.searchData[4].data = payDirs
                 this.cluesources = cluesources
                 this.order_contract_flag = order_contract_flag
                 this.payDirs_map = this.$array2map(this.payDirs)
