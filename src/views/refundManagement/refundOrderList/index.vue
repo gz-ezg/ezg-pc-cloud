@@ -118,12 +118,7 @@
             <div slot="footer"></div>
         </Modal> -->
         <show-order :payDirs="payDirs"></show-order>
-        <!-- <create-order :payDirs="payDirs"></create-order>
-        <amend-order :payDirs="payDirs"></amend-order>
-        <edit-order :payDirs="payDirs"></edit-order>
-        <show-contarct></show-contarct>
-        <product-select></product-select> -->
-        <!-- <invoice></invoice> -->
+
     </div>
 </template>
 
@@ -131,17 +126,12 @@
 //  查看订单详情
 import showOrder from './detail'
 import { DateFormat } from '../../../libs/utils.js'
+import * as refundApi from './api.js'
 
 export default {
     name: "refundOrderList_index",
     components:{
         showOrder,
-        // createOrder,
-        // amendOrder,
-        // editOrder,
-        // showContarct,
-        // productSelect,
-        // invoice
     },
     data(){
         return {
@@ -385,10 +375,9 @@ export default {
             this.get_data()
         },
         //  获取列表
-        get_data(){
+        async get_data(){
             let _self = this
-            let url = `api/order/list`
-            _self.loading = true
+            this.loading = true
             let config = {
                 params: {
                     sortField:_self.sortField,
@@ -409,27 +398,31 @@ export default {
                 }
             }
 
-            function success(res){
-                _self.data = res.data.data.rows
-                _self.total = res.data.data.total
-                for(let i = 0; i < _self.data.length; i++){
-                    _self.data[i].base_paydir = _self.payDirs_map.get(_self.data[i].base_paydir)
-                    _self.data[i].customersource = _self.cluesources_map.get(_self.data[i].customersource)
-                    _self.data[i].contract_flag = _self.order_contract_flag_map.get(_self.data[i].contract_flag)
-                    if(_self.data[i].base_createdate){
-                        _self.data[i].base_createdate = _self.data[i].base_createdate.slice(0,10)
+            try {
+                let { rows, total, sum} = await refundApi.orderList(config)
+                this.total = total
+                this.data = rows.map((item)=>{
+                    item.base_paydir = this.payDirs_map.get(item.base_paydir)
+                    item.customersource = this.cluesources_map.get(item.customersource)
+                    item.contract_flag = this.order_contract_flag_map.get(item.contract_flag)
+                    if(item.base_createdate){
+                        item.base_createdate = item.base_createdate.slice(0,10)
                     }
-                }
-                _self.data.push({
-                    base_paydir: '合计',
-                    paynumber: res.data.data.sum.paynumber,
-                    realnumber: res.data.data.sum.realnumber,
-                    neednumber: res.data.data.sum.neednumber,
+
+                    return item
                 })
-                _self.loading = false
+
+                this.data.push({
+                    base_paydir: '合计',
+                    paynumber: sum.paynumber,
+                    realnumber: sum.realnumber,
+                    neednumber: sum.neednumber,
+                })
+            } catch (error) {
+                console.log(error)
             }
 
-            this.$Get(url, config, success)
+            this.loading = false
         },
         pageChange(e){
             this.page = e
@@ -453,24 +446,21 @@ export default {
                 this.selectRow = ""
             }
         },
-        get_data_center(){
+        async get_data_center(){
             let _self = this
-            return new Promise((resolve,reject) => {
-                let params = "payDirs,cluesources,order_contract_flag"
+            let params = "payDirs,cluesources,order_contract_flag"
 
-                function success(res){
-                    _self.payDirs = res.data.data.payDirs
-                    _self.cluesources = res.data.data.cluesources
-                    _self.order_contract_flag = res.data.data.order_contract_flag
-                    _self.payDirs_map = _self.$array2map(_self.payDirs)
-                    _self.cluesources_map = _self.$array2map(_self.cluesources)
-                    _self.order_contract_flag_map = _self.$array2map(_self.order_contract_flag)
-                    resolve()
-                }
-
-                this.$GetDataCenter(params, success)
-                
-            })
+            try {
+                let { payDirs,cluesources,order_contract_flag } = await refundApi.getDictionary(params)
+                this.payDirs = payDirs
+                this.cluesources = cluesources
+                this.order_contract_flag = order_contract_flag
+                this.payDirs_map = this.$array2map(this.payDirs)
+                this.cluesources_map = this.$array2map(this.cluesources)
+                this.order_contract_flag_map = this.$array2map(this.order_contract_flag)
+            } catch (error) {
+                console.log(error)
+            }
         },
         //  【双击查看订单】
         open_order_detail(e){
@@ -499,119 +489,12 @@ export default {
         //     }else{
         //         this.$Message.warning("请选择一行进行操作！")
         //     }
-        // },
-
-        //  【重新提交】
-        // reapply_process(){
-        //     let _self = this
-        //     if(this.selectRow){
-        //         console.log(this.selectRow)
-        //         if (_self.selectRow.CurrentProcess) {
-        //             _self.$Modal.confirm({
-        //                 loading: true,
-        //                 title: '重新提交审批',
-        //                 content: '<p>是否重新提交审批</p>',
-        //                 onOk: () => {
-        //                     let url = 'api/activiti/reApplyProcessByOrderId'
-        //                     let config = {
-        //                         params: {
-        //                             orderId: _self.selectRow.id,
-        //                             auditFlag: 1
-        //                         }
-        //                     }
-        //                     function success(res) {
-        //                         _self.$Modal.remove();
-        //                         _self.$Message.success('重新提交成功');
-        //                         setTimeout(()=>{
-        //                             _self.get_data()
-        //                         }, 1000)
-        //                     }
-                            
-        //                     function fail(err){
-        //                         _self.$Modal.remove();
-        //                         _self.$Message.error("提交失败！")
-        //                         setTimeout(()=>{
-        //                             _self.get_data()
-        //                         }, 1000)
-        //                     }
-
-        //                     _self.$Get(url, config, success, fail)
-        //                 },
-        //             });
-        //         }else{
-        //             _self.$Message.warning('该订单状态不允许重新提交');
-        //         }
-        //     }else{
-        //         this.$Message.warning("请选择一行进行操作！")
-        //     }
-        // },
-        //  【作废】
-        // del_order(){
-        //     let _self = this
-        //     if(this.selectRow){
-        //         _self.$ButtonCollect("order_rebuild_orderflow")
-        //         let url = `api/order/del`
-        //         _self.$ButtonCollect("order_del")
-        //         let config = {
-        //             id: _self.selectRow.id
-        //         }
-
-        //         function success(res){
-        //             // _self.$Message.success(res.data.msg)
-        //             setTimeout(()=>{
-        //                 _self.get_data()
-        //             }, 500)
-        //         }
-        //         function fail(err){
-
-        //         }
-        //         _self.$Post(url, config, success, fail)
-        //     }else{
-        //         this.$Message.warning("请选择一行进行操作！")
-        //     }
-        // },
-        //  【修改订单】
-        // xiugai_open(){
-        //     if(this.selectRow){
-        //         if(this.selectRow.CurrentProcess != 'Finished'){
-        //             this.$Message.warning("未完结订单不予许进行修改！")
-        //         }else{
-        //             this.$bus.emit("OPEN_ORDERLIST_AMEND", this.selectRow.id)
-        //         }
-        //     }else{
-        //         this.$Message.warning("请选择一行进行操作！")
-        //     }
-        // },
-        //  【编辑订单】
-        // open_edit(){
-        //     if(this.selectRow){
-        //         if(this.selectRow.CurrentProcess != 'Ready' && this.selectRow.CurrentProcess != 'Returned' && this.selectRow.CurrentProcess != 'ReturnedToReady'){
-        //             this.$Message.warning("当前订单状态不允许编辑！")
-        //         }else{
-        //             this.$bus.emit("OPEN_ORDERLIST_EDIT", this.selectRow.id)
-        //         }
-        //     }else{
-        //         this.$Message.warning("请选择一行进行操作！")
-        //     }
-        // },
-        //  【新增订单】
-        // open_add(){
-        //     this.$bus.emit("OPEN_ORDERLIST_ADD", true)
-        // },
-        //  【撤回】
-        // order_cancelOrder(){
-
         // }
-
     },
-    created() {
+    async created() {
         this.loading = true
-        this.get_data_center().then(
-            this.get_data()
-        )
-        // if(localStorage.getItem('id')==10059){
-        //     this.header.push(this.amdinOpertionCol)
-        // }
+        await this.get_data_center()
+        await this.get_data()
         this.$bus.on("UPDATE_ORDER_LIST", (e)=>{
             this.get_data()
         })

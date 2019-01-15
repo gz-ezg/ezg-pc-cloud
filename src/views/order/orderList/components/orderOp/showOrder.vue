@@ -88,7 +88,7 @@
                     </FormItem>
                 </Row>
                 <Row style="margin-top:10px">
-                    <Table :columns="orderDetailListHeaderShow" :data="orderItem" :loading="loading" border size="small" id="show-order-item">
+                    <Table :columns="orderDetailListHeaderShow" :data="orderItem" :loading="loading" border size="small" id="show-order-item" :row-class-name="row_class_name">
                     </Table>
                 </Row>
             </Form>
@@ -263,6 +263,11 @@ export default {
             } catch (error) {
                 console.log(error)
             }
+        },
+        row_class_name(row){
+            if(row.deleteflag == 5){
+                return 'demo-table-refund-row'
+            }
         }
     },
     created() {
@@ -286,5 +291,9 @@ export default {
     border: 0px;
     overflow-y: hidden;
     background-color: rgba(0, 0, 0, 0);
+}
+
+.demo-table-refund-row{
+    color: red
 }
 </style>

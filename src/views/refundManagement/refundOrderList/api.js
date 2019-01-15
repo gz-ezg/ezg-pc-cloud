@@ -13,15 +13,25 @@ function orderDetail(id, config, success, fail) {
     })
 }
 
-function getDictionary(params){
-    return new Promise((resolve, reject)=>{
+function getDictionary(params) {
+    return new Promise((resolve, reject) => {
         resolve(AjaxDic(params))
-    }).catch((err)=>{
+    }).catch((err) => {
+        return err
+    })
+}
+
+function orderList(config, success, fail) {
+    let url = 'order/list'
+    return new Promise((resolve, reject) => {
+        resolve(AjaxGet(url, config, success, fail))
+    }).catch((err) => {
         return err
     })
 }
 
 export {
     orderDetail,
-    getDictionary
+    getDictionary,
+    orderList
 }

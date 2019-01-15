@@ -88,7 +88,7 @@
                     </FormItem>
                 </Row>
                 <Row style="margin-top:10px">
-                    <Table :columns="orderDetailListHeaderShow" :data="orderItem" :loading="loading" border size="small" id="show-order-item">
+                    <Table :columns="orderDetailListHeaderShow" :data="orderItem" :loading="loading" border size="small" id="show-order-item" :row-class-name="row_class_name">
                     </Table>
                 </Row>
             </Form>
@@ -175,11 +175,6 @@ export default {
                     key: "memo",
                     minWidth: 300,
                     render: (h, params) => {
-                        // return h("div",{
-                        //     domProps:{
-                        //         innerHTML: "<div>"+params.row.memo+"</div>"
-                        //     }
-                        // })
                         let reg = new RegExp("</br>", "g")
                         let temp = params.row.memo.replace(reg ,"\n")
                         //  先转换为textarea能够处理的格式，上传时可能需要处理空格转换为换行符
@@ -203,21 +198,16 @@ export default {
         }
     },
     methods: {
-        open_service_item(){
-            this.openServiceItem = true
-        },
-        close_item(){
-            this.openServiceItem = false
+        row_class_name(row){
+            if(row.deleteflag == 5){
+                return 'demo-table-refund-row'
+            }
         }
     },
     created() {
         let _self = this
-        // if(localStorage.getItem('id')==10059){
-        //     this.orderDetailListHeaderShow.unshift(this.dangerOperation)
-        // }
         this.$bus.off("OPEN_REFUNDED_DETAIL", true)
         this.$bus.on("OPEN_REFUNDED_DETAIL", (e)=>{
-            this.checkBalance = false
             this.get_data(e)
             this.orderId = e
             this.openShowOrderDetail = true
@@ -231,5 +221,9 @@ export default {
     border: 0px;
     overflow-y: hidden;
     background-color: rgba(0, 0, 0, 0);
+}
+
+.demo-table-refund-row{
+    color: red
 }
 </style>

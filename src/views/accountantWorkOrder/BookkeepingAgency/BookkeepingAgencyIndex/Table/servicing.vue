@@ -324,7 +324,8 @@
                                             display: "inline-block"
                                         },
                                         on: {
-                                            click: function(){
+                                            click: ()=>{
+                                                console.log("123")
                                                 _self.update_unit_price(params.index)
                                             }
                                         }

@@ -88,6 +88,7 @@
                     border
                     size="small"
                     :columns="orderItemHeader"
+                    :row-class-name="row_class_name"
                     :data="orderItem"></Table>
             </Row>
             <div slot="footer">
@@ -168,5 +169,8 @@ export default {
 }
 #orderItem .ivu-select-selection{
     border: 0px solid #dddee1
+}
+.demo-table-refund-row{
+    color: red
 }
 </style>
