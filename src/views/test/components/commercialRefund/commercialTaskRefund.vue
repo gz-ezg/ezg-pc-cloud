@@ -24,12 +24,6 @@
                                         </Input>
                                     </FormItem>
                                 </Col>
-                                <Col span="8">
-                                    <FormItem prop="product" label="产品：">
-                                        <Input size="small"  type="text" v-model="formInline.product" placeholder="">
-                                        </Input>
-                                    </FormItem>
-                                </Col>
                             </Row>
                             <FormItem>
                                 <Button type="primary" @click="search">搜索</Button>
@@ -43,8 +37,8 @@
         <Row>
             <ButtonGroup style="float:left">
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>              -->
+                <Button type="primary" icon="information-circled" @click="company">查看公司</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
             </ButtonGroup>
         </Row>
         <Row style="margin-top: 10px;">
@@ -57,9 +51,8 @@
                 @on-current-change="save_current_row"
                 :loading="Sloading"
                 @on-row-dblclick="showdetail"
-                @on-sort-change="sort"  
+                @on-sort-change="sort"       
                 @on-selection-change="get_all_selection"
-                            
                 ></Table>
             <Page
                 placement="top"
@@ -72,20 +65,21 @@
                 @on-page-size-change="pageSizeChange"
                 style="margin-top: 10px"></Page>
         </Row>
+
     </Card>
 </template>
 
 <script>
+
 export default {
     // components:{
     //     Search
     // },
-    props:['paydir'],
     data() {
             return {
                 managestatus:[],
-                sortField:'updatedate',
                 order:'desc',
+                sortField:'updatedate',
                 search_model:"",
                 //  触发搜索
                 isSearh:false,
@@ -99,25 +93,18 @@ export default {
                 Sloading:false,
                 //  当前选中行
                 current_row:'',
-                //  流程图相关,1.弹出框2.流程图地址
-                flowChart1:false,
-                flowChartImg:'',
-                //  暂停/重启
-                pause:false,
-                //  终止订单
-                endlife:false,
+                
                 //  表格相关data
                 pageTotal:new Number(),
                 page:'1',
                 pageSize:'10',
-                data:[
-                ],
+                data:[],
                 header: [
                     {
                         title: '归属公司',
                         key: 'companyname',
                         width: 220,
-                        sortable: true,                                                
+                        sortable: true,                        
                         render:(h, params) => {
                             // console.log(params)
                             if(params.row.companyname == ''||params.row.companyname == null){
@@ -149,16 +136,21 @@ export default {
                         }
                     },
                     {
+                        title: '提示',
+                        key: 'baseorderid',
+                        width: 120                      
+                    },
+                    {
                         title: '服务部门',
                         key: 'departname',
-                        width: 140,
-                        sortable: true,                                                
+                        width: 120,
+                        sortable: true                        
                     },
                     {
                         title: '产品全称',
                         key: 'product',
                         width: 200,
-                        sortable: true,                                                                        
+                        sortable: true,                        
                         render:(h, params) => {
                             // console.log(params)
                             if(params.row.product == ''||params.row.product == null){
@@ -197,201 +189,44 @@ export default {
                     {
                         title: '目前进度',
                         key: 'CurrentProcess',
-                        width: 140,
-                        sortable: true,                        
-                        
+                        width: 120,
+                        sortable: true                        
                     },
                     {
                         title: '下个进度',
                         key: 'nextprocess',
-                        width: 140,
-                        sortable: true,                                               
-                    },
-                    {
-                        title: '计划完成时间',
-                        key: 'person_plan_finish_date',
-                        width: 140,
+                        width: 120,
+                        sortable: true                        
                     },
                     {
                         title: '服务开始时间',
                         key: 'ServiceStart',
                         width: 140,
-                        sortable: true,                                                
+                        sortable: true                        
                     },
-                    // {
-                    //     title: '创建时间',
-                    //     key: 'CreateDate',
-                    //     width: 140,
-                    //     sortable: true,                                                
-                    // },
-                    // {
-                    //     title: '预计完成时间',
-                    //     key: 'baseorderid',
-                    //     width: 120
-                    // },
-                    // {
-                    //     title: '实际完成时间',
-                    //     key: 'UpdateDate',
-                    //     width: 140,
-                    //     sortable: true,                                                
-                    // },
+                    {
+                        title: '创建时间',
+                        key: 'CreateDate',
+                        width: 140,
+                        sortable: true                        
+                    },
+                    {
+                        title: '实际完成时间',
+                        key: 'UpdateDate',
+                        sortable: true,                        
+                        width: 140
+                    },
                     {
                         title: '服务人员',
                         key: 'servername',
                         width: 120,
-                        sortable: true,                                                
-                    },
-                    {
-                        title: '逾期原因',
-                        key: 'overdue_cause',
-                        width: 200,
-                        render:(h, params) => {
-                            if(params.row.overdue_cause == ''|| params.row.overdue_cause == null){
-                                return ''
-                            }else if(params.row.overdue_cause.length>10){
-                                return h('Poptip',{
-                                    props:{
-                                        trigger:'hover',
-                                        placement:'bottom',
-                                        wordWrap:"true",
-                                        width:"200px"
-                                    }
-                                },[
-                                    h('span',params.row.overdue_cause.slice(0,10)+'...'),
-                                    h('Icon', {
-                                        props: {
-                                            type: 'arrow-down-b',
-                                        }
-                                    }),
-                                    h('div',{
-                                        slot:'content',
-                                        style:{
-                                            width:"200px",
-                                            whiteSpace: "normal"
-                                        }
-                                    },[
-                                        h('span',params.row.overdue_cause)
-                                    ])
-                                ])
-                            }else{
-                                return h('span',params.row.overdue_cause)
-                            }
-                        }
+                        sortable: true                        
                     },
                     {
                         title: '跟进人',
                         key: 'followname',
                         width: 120,
-                        sortable: true,                                                
-                    },
-                                        {
-                        title: '备注',
-                        key: 'memo',
-                        width: 150,
-                        render:(h, params) => {
-                            // console.log(params)
-                            if(params.row.memo == ''||params.row.memo == null){
-                                return ''
-                            }else if(params.row.memo.length>10){
-                                return h('Poptip',{
-                                    props:{
-                                        trigger:'hover',
-                                        placement:'bottom'
-                                    }
-                                },[
-
-                                    h('span',params.row.memo.slice(0,10)+'...'),
-                                    h('Icon', {
-                                        props: {
-                                            type: 'arrow-down-b',
-                                        }
-                                    }),
-                                    h('div',{
-                                        slot:'content',
-                                        style:{
-                                            width:"200px",
-                                            whiteSpace: "normal"
-                                        }
-                                    },[
-                                        h('span',params.row.memo)
-                                    ])
-                                ])
-                            }else{
-                                return h('span',params.row.memo)
-                            }
-                        }
-                    },
-                    {
-                        title: '操作',
-                        key: 'action',
-                        fixed: 'right',
-                        width: 180,
-                        align: 'center',
-                        render: (h, params) => {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.flowChart(params)
-                                        }
-                                    }
-                                }, '[流程图]'),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    directives: [
-                                        {
-                                            name: "permission",
-                                            value: "commercialStop"
-                                        }
-                                    ],
-                                    on: {
-                                        click: () => {
-                                            var _self = this
-                                            //  暂停
-                                            if(params.row.resumeFlag == null || params.row.resumeFlag == 3){
-                                                let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=3`
-                                                this.$http.get(url).then(function(res){
-                                                    if(res.data.msgCode == 40000){
-                                                        _self.$Message.success(res.data.msg)
-                                                    }else{
-                                                        _self.$Message.error(res.data.msg)
-                                                    }
-                                                    _self.getData()
-                                                })
-                                            }else if(params.row.resumeFlag == 2){
-                                                let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=2`
-                                                this.$http.get(url).then(function(res){
-                                                    if(res.data.msgCode == 40000){
-                                                        _self.$Message.success(res.data.msg)
-                                                    }else{
-                                                        _self.$Message.error(res.data.msg)
-                                                    }
-                                                    _self.getData()
-                                                })
-                                            }else{}
-                                        }
-                                    }
-                                }, '[暂停/解锁]'),
-                                // h('Button', {
-                                //     props: {
-                                //         type: 'text',
-                                //         size: 'small'
-                                //     },
-                                //     on: {
-                                //         click: () => {
-                                //             this.endlife = true
-                                //         }
-                                //     }
-                                // }, '[退款终止]'),
-                            ]);
-                        }
+                        sortable: true      
                     }
                 ],
                 tempArray:[]
@@ -403,7 +238,7 @@ export default {
             this.tempArray = e
         },
         sort(e){
-                // console.log(e)
+                console.log(e)
                 if(e.key == ""){
                     this.sortField = 'updatedate'   
                 }else{
@@ -426,9 +261,8 @@ export default {
             },
         downloadExcel(){
                 let field = [
-                    // {field:'workOrderStatus',title:'工单状态',format:'workOrderStatus'},
                     {field:'companyname',title:'公司名称'},
-                    {field:'baseorderid',title:'提示'},
+                    // {field:'baseorderid',title:'提示'},
                     {field:'departname',title:'服务部门'},
                     {field:'product',title:'产品全称'},
                     {field:'CurrentProcess',title:'目前进度'},
@@ -442,7 +276,7 @@ export default {
                 let _self = this
                 let url = `api/order/workOrderList`
                 let config = {
-                        workOrderStatus:'20',
+                        workOrderStatus:'30',
                         page: '1',
                         pageSize: '1000000',                     
                         companyName:_self.formInline.companyname,
@@ -458,11 +292,11 @@ export default {
         getData(){
             var _self = this
             _self.Sloading = true
-            var url = 'api/order/workOrderList?workOrderStatus=20'
+            var url = 'api/order/workOrderList?workOrderStatus=30&'
             var config = {
                 params:{
                     sortField:_self.sortField,
-                    order: _self.order,
+                    order:_self.order,
                     page:_self.page,
                     pageSize:_self.pageSize,
                     companyName:_self.formInline.companyname,
@@ -488,8 +322,6 @@ export default {
                         _self.data[i].UpdateDate = _self.data[i].UpdateDate.slice(0,10)
                     }
                 }
-        // console.log(_self.paydir.get('zht'))
-                
                 _self.Sloading = false
             })
         },
@@ -516,7 +348,6 @@ export default {
         },
         //  保存当前选中行
         save_current_row(e){
-            // console.log(e)
             this.current_row = e
         },
         showdetail(){
@@ -526,10 +357,8 @@ export default {
                 this.$Message.warning('请选择一行查看详情！')
             }
         },
-        
         company(){
             if(this.current_row != ''){
-                
                 this.$store.commit("open_gobal_company_detail_modal", this.current_row.company_id)
             }else{
                 this.$Message.warning('请选择一行查看！')
@@ -539,7 +368,7 @@ export default {
     created(){
         var _self = this
         this.getData()
-}
+    }
 
 }
 </script>
