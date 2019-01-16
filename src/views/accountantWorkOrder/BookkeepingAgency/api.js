@@ -80,6 +80,24 @@ function orderCycleMonthServiceList(config, success, fail){
     })
 }
 
+function orderETaxSynchronizeCycleMonthServiceItemFinish(config, success, fail){
+    let url = 'order/cycle/eTaxSynchronizeCycleMonthServiceItemFinish'
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxPost(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+
+function orderSpiderETaxDeclare(config, success, fail){
+    let url = 'order/cycle/spideETaxDeclare/company'
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxPost(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+
 export{
     workOrderCycleUnitPriceUpdate,
     getDictionary,
@@ -89,5 +107,7 @@ export{
     cycleServiceRecordUpdate,
     getOrderCycleMonthServiceList,
     getOrderCycleServiceRecordList,
-    orderCycleMonthServiceList
+    orderCycleMonthServiceList,
+    orderETaxSynchronizeCycleMonthServiceItemFinish,
+    orderSpiderETaxDeclare
 }
