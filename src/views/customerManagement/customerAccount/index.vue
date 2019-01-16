@@ -174,28 +174,5 @@ export default {
 </script>
 
 <style>
-<<<<<<< HEAD
-
-</style>
-
-// table:[
-//     {
-//         tableDetail:[
-//             {
-//                 one
-//             },
-//             {
-//                 two
-//             }
-//         ],
-//         id:,
-
-//     },
-//     {
-
-//     }
-// ]
-=======
     
 </style>
->>>>>>> dev

@@ -3,17 +3,14 @@
         <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="open_company_create">新增</Button>
         <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="shift_company" v-permission="['company.shift']">转移</Button>
         <Table
-                :loading="loading"
+            :loading="loading"
                 highlight-row
                 @on-current-change="select_row"
                 border
-                highlight-row
                 size="small"
                 :columns="header"
                 :data="data"
-                @on-current-change="select_row"
                 style="margin-top: 15px"
-                
         ></Table>
         <!-- <Page
             size="small"
