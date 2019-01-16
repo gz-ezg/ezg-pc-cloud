@@ -64,6 +64,8 @@
                 <Button type="primary" icon="ios-color-wand-outline" @click="openFollow">服务详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="openFieldByCompanyId">外勤详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="open_change_log">变更日志</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="update_service">同步月服务记录</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="update_etax_info">更新税务信息</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
             </ButtonGroup>
         </Row>
@@ -823,7 +825,62 @@
                 } catch (error) {
                     console.log(error)
                 }
+            },
+            //  更新电子税务局信息
+            async update_etax_info(){
+                if (!this.current_row) {
+                    this.$Message.warning('请选择要查看的企业！')
+                } else {
+                    // let config = {
+                    //     companyId: this.current_row.company_id,
+                    //     yearAndMonth: this.time
+                    // }
+
+                    try {
+                        let config = new FormData()
+                        let now = new Date()
+                        let currentYear = now.getFullYear()
+                        let currentTime = currentYear + (now.getMonth()<9?"0"+(now.getMonth()+1):now.getMonth()+1)
+                        config.append("companyId", this.current_row.company_id)
+                        config.append("yearAndMonth", currentTime)
+
+                        let { status, data} = await accountApi.orderSpiderETaxDeclare(config)
+                        if(status){
+                            this.getData()
+                        }
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            },
+            //  更新服务动态
+            async update_service(){
+                if (!this.current_row) {
+                    this.$Message.warning('请选择要查看的企业！')
+                } else {
+                    // let config = {
+                    //     companyId: this.current_row.company_id,
+                    //     yearAndMonth: this.time
+                    // }
+
+                    try {
+                        let config = new FormData()
+                        let now = new Date()
+                        let currentYear = now.getFullYear()
+                        let currentTime = currentYear + (now.getMonth()<9?"0"+(now.getMonth()+1):now.getMonth()+1)
+                        config.append("companyId", this.current_row.company_id)
+                        config.append("yearAndMonth", currentTime)
+
+                        let { status, data} = await accountApi.orderETaxSynchronizeCycleMonthServiceItemFinish(config)
+                        if(status){
+                            this.getData()
+                        }
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
             }
+
         },
         async created () {
             let _self = this

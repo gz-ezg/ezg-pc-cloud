@@ -55,6 +55,11 @@
                                         <Input v-model="formValidateSearch.frealname" size="small"></Input>
                                     </FormItem>
                                 </Col>
+                                <Col span="8">
+                                    <FormItem label="缴费时间：" prop="paytime">
+                                        <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.paytime" style="width:100%" size="small"></DatePicker>
+                                    </FormItem>
+                                </Col>
                             </Row>
                             <center>
                                 <FormItem>
@@ -81,6 +86,7 @@
                 <!--<Button type="primary" icon="ios-color-filter-outline" @click="qihuaOpen()">企划(修改)</Button>-->
                 <!--<Button v-permission="['orderL.invalid']" type="primary" icon="ios-color-filter-outline" @click="deleteOrder = true">订单作废</Button>-->
                 <Button v-permission="['orderL.export']" type="primary" icon="ios-color-filter-outline" @click="downloadExcel">导出Excel</Button>
+                <Button v-permission="['orderL.export']" type="primary" icon="ios-color-filter-outline" @click="account_downloadExcel">结算导出</Button>
             </ButtonGroup>
         </Row>
         <Row style="margin-top: 10px;">
@@ -168,7 +174,8 @@ export default {
                 payDir: "",
                 date: [],
                 crealname: "",
-                frealname: ""
+                frealname: "",
+                paytime: []
             },
             total: 0,
             page: 1,
@@ -483,6 +490,43 @@ export default {
         }
     },
     methods: {
+        //  财务结算
+        account_downloadExcel(){
+            let field = [
+                {field:'payTime',title:'到账时间'},
+                {field:'affiliation_area',title:'地区',format:"affiliation_area"},
+                {field:'departname',title:'部门'},
+                {field:'frealname',title:'业务员'},
+                {field:'name',title:'联系人'},
+                {field:'',title:'是否交回'},
+                {field:'',title:'360搜索'},
+                {field:'companyname',title:'企业名称'},
+                {field:'tel',title:'联系电话'},
+                {field:'realnumber',title:'客户小计'},
+                {field:'base_paydir',title:'入款账户', format:'payDirs'},
+            ]
+            let _self = this
+            let url = `api/order/list`
+            let config = {
+                page: '1',
+                pageSize: '1000000',
+                ordercode: _self.formValidateSearch.ordercode,
+                companyname:_self.formValidateSearch.companyname,
+                customername:_self.formValidateSearch.customername,
+                customertel:    _self.formValidateSearch.customertel,
+                crealname:    _self.formValidateSearch.crealname,
+                frealname:    _self.formValidateSearch.frealname,
+                payDir:    _self.formValidateSearch.payDir,
+                bcreatedate:DateFormat(_self.formValidateSearch.date[0]),
+                ecreatedate:DateFormat(_self.formValidateSearch.date[1]),
+                bpaytime: DateFormat(_self.formValidateSearch.paytime[0]),
+                epaytime: DateFormat(_self.formValidateSearch.paytime[1]),
+                export: 'Y',
+                exportField: encodeURI(JSON.stringify(field))
+            }
+            let toExcel = this.$MergeURL(url, config)
+            window.open(toExcel)
+        },
         //  下载文件
         downloadExcel(){
             let field = [
@@ -513,6 +557,8 @@ export default {
                 payDir:    _self.formValidateSearch.payDir,
                 bcreatedate:DateFormat(_self.formValidateSearch.date[0]),
                 ecreatedate:DateFormat(_self.formValidateSearch.date[1]),
+                bpaytime: DateFormat(_self.formValidateSearch.paytime[0]),
+                epaytime: DateFormat(_self.formValidateSearch.paytime[1]),
                 export: 'Y',
                 exportField: encodeURI(JSON.stringify(field))
             }
@@ -558,6 +604,8 @@ export default {
                     crealname:_self.formValidateSearch.crealname,
                     frealname:_self.formValidateSearch.frealname,
                     payDir:_self.formValidateSearch.payDir,
+                    bpaytime: DateFormat(_self.formValidateSearch.paytime[0]),
+                    epaytime: DateFormat(_self.formValidateSearch.paytime[1]),
                     sumField:'paynumber,realnumber,neednumber',
                     bcreatedate:DateFormat(_self.formValidateSearch.date[0]),
                     ecreatedate:DateFormat(_self.formValidateSearch.date[1])
