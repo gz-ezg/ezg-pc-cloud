@@ -1,5 +1,4 @@
 <template>
-<!-- 编辑这里是单独写个接口请求详细内容还是直接从table拿，需要研究一下 -->
     <div>
         <Modal
             title="编辑用户"
@@ -21,20 +20,6 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <!-- <Row>
-                    <Col span="12">
-                        <FormItem label="密码：" prop="password">
-                            <Input  size="small"  type="password" style="margin-right:5px" v-model="formdata.password">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="重复密码：" prop="password2">
-                            <Input  size="small" type="password" style="margin-right:5px" v-model="formdata.password2">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row> -->
                 <Row>
                     <Col span="12">
                         <FormItem label="手机号码：" prop="mobilePhone">
@@ -80,6 +65,21 @@
                 </Row>
                 <Row>
                     <Col span="12">
+                        <FormItem label="职位：" prop="post">
+                            <Cascader :data="companyPost" v-model="formdata.post"></Cascader>
+                        </FormItem>
+                    </Col>
+                    <Col span="12">
+                        <FormItem label="是否接单：" prop="orderReceiving">
+                            <Select v-model="formdata.orderReceiving" style="margin-right:5px" size="small">
+                                <Option value="Y">是</Option>
+                                <Option value="N">否</Option>
+                            </Select>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span="12">
                         <FormItem label="组织机构：" prop="departName">
                             <Input  size="small"  style="margin-right:5px" v-model="formdata.departName" @on-focus="openOrganize">
                             </Input>
@@ -95,13 +95,14 @@
                 
             </Form>
             <div slot="footer">
-                <Button type="primary" @click="submit" :loading="update_loading">修改</Button>
+                <Button type="primary" @click="submit" :loading="updateLoading">修改</Button>
             </div>
         </Modal>
     </div>
 </template>
 
 <script>
+import * as userApi from '../api/user.js'
 export default {
     data(){
         let _self = this
@@ -129,17 +130,6 @@ export default {
                 }             
             }
         };
-        // const validatePassword = (rule, value, callback) => {
-        //     if (value == '') {
-        //         callback(new Error(' '));
-        //     } else {
-        //         if (_self.formdata.password == _self.formdata.password2) {
-        //             callback();
-        //         } else {
-        //             callback(new Error('格式错误！'));
-        //         }             
-        //     }
-        // };
         const validatePassword2 = (rule, value, callback) => {
             if (value == '') {
                 callback(new Error(' '));
@@ -154,7 +144,6 @@ export default {
         const validateTel = (rule, value, callback) => {
             let re = /^1\d{10}$/
             if (value == '') {
-                // callback(new Error(' '));
                 callback()
             } else {
                 if (re.test(value)) {
@@ -167,7 +156,6 @@ export default {
         const validateEmail= (rule, value, callback) => {
             let re = /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/
             if (value == '') {
-                // callback(new Error(' '));
                 callback();
             } else {
                 if (re.test(value)) {
@@ -178,15 +166,14 @@ export default {
             }
         };
         return{
+            companyPost: [],
             area_visable: [],
-            update_loading: false,
+            updateLoading: false,
             open_edit_user: false,
             formdata:{
                 id:"",
                 username: "",
                 realname: "",
-                // password: "",
-                // password2: "",
                 orgIds: "",
                 roleIds: "",
                 mobilePhone: "",
@@ -196,7 +183,9 @@ export default {
                 userAliasId: "",
                 visable: [],
                 officephone: "",
-                aliasName: ""
+                aliasName: "",
+                orderReceiving: '',
+                post: []
             },
             formdataRule:{
                 username:[
@@ -207,11 +196,6 @@ export default {
                     { message:"格式错误！",required: true, trigger: 'change' },
                     { message:"格式错误！",validator: validateRealname, trigger: 'blur' }
                 ],
-                // password:{ message:"请输入密码！", required: true,  trigger: 'blur' },
-                // password2:[
-                //     { message:"格式错误！",required: true, trigger: 'blur' },                    
-                //     { message:"两次密码输入不一致！", validator:validatePassword2,  trigger: 'blur' }
-                // ],
                 mobilePhone:[
                     // { message:"格式错误！",required: true, trigger: 'blur' },
                     { message:"格式错误！", validator:validateTel,  trigger: 'change' },
@@ -226,9 +210,6 @@ export default {
                 orgName:[
                     { message:"格式错误！",required: true, trigger: 'change' },
                 ],
-                // userAliasId:[
-                //     { message:"格式错误！",type: 'number', trigger: 'change' },
-                // ]
                 officephone: [
                     { message:"格式错误！", validator:validateTel,  trigger: 'change' },
                 ]
@@ -239,50 +220,50 @@ export default {
         //  提交事件
         submit(){
             let _self = this
-            _self.update_loading = true
-            this.$refs['formdata'].validate((valid) => {
-                console.log(valid)
-                if (valid) {
-                    _self.update_new_user()
-                } else {
-                    this.$Message.error('请补全信息！');
-                    _self.update_loading = false
-                }
-            })
+            _self.updateLoading = true
+            try {
+                this.$refs['formdata'].validate((valid) => {
+                    if (valid) {
+                        _self.update_new_user()
+                    } else {
+                        this.$Message.error('请补全信息！');
+                        _self.updateLoading = false
+                    }
+                })
+            } catch (error) {
+                this.updateLoading = false
+                console.log(error)
+            }
         },
 
         //  提交修改用户
-        update_new_user(){
-            let _self = this
-            let url = `api/user/updateUser`
+        async update_new_user(){
             let config = {
-                id: _self.formdata.id,
-                username: _self.formdata.username,
-                realname: _self.formdata.realname,
-                // password: _self.formdata.password,
-                orgIds: _self.formdata.orgIds,
-                roleIds: _self.formdata.roleIds,
-                mobilephone: _self.formdata.mobilePhone,
-                email: _self.formdata.email,
-                userAliasId: _self.formdata.userAliasId,
-                visable: _self.formdata.visable.join(","),
-                aliasName: _self.formdata.aliasName,
-                officephone: _self.formdata.officephone
+                id: this.formdata.id,
+                username: this.formdata.username,
+                realname: this.formdata.realname,
+                orgIds: this.formdata.orgIds,
+                roleIds: this.formdata.roleIds,
+                mobilephone: this.formdata.mobilePhone,
+                email: this.formdata.email,
+                userAliasId: this.formdata.userAliasId,
+                visable: this.formdata.visable.join(","),
+                aliasName: this.formdata.aliasName,
+                officephone: this.formdata.officephone,
+                orderReceiving: this.formdata.orderReceiving,
+                post: this.formdata.post.join("-")
+            }
+            try {
+                let {status, data} = await userApi.postUpdateUser(config)
+                if(status){
+                    this.open_edit_user = false
+                    this.$bus.emit('UPDATE_USER_TABLE',true)
+                }
+            } catch (error) {
+                console.log(error)
             }
 
-            function success(res){
-                _self.update_loading = false
-                _self.open_edit_user = false
-                _self.$bus.emit('UPDATE_USER_TABLE',true)
-                console.log(res)
-            }
-
-            function fail(err){
-                _self.update_loading = false
-                console.log(err)
-            }
-
-            this.$Post(url, config, success, fail)
+            this.updateLoading = false
         },
 
         //  组织结构弹出框
@@ -299,56 +280,52 @@ export default {
         },
 
         //  获取角色信息
-        get_role_detail(e){
-            let _self = this
-            let url = `api/user/detail`
+        async get_role_detail(e){
+            this.$refs["formdata"].resetFields();
             let config = {
                 userId:e.id
             }
-            
-            _self.$refs["formdata"].resetFields();
-            function success(res){
-                // console.log(res)
-                _self.formdata.username = res.data.data.userName
-                _self.formdata.realname = res.data.data.realName
-                _self.formdata.id = res.data.data.userId
-                _self.formdata.roleName = res.data.data.userKey
-                _self.formdata.email = res.data.data.email
-                _self.formdata.mobilePhone = res.data.data.mobilePhone
-                _self.formdata.roleIds = res.data.data.roleId
-                _self.formdata.orgIds = res.data.data.orgId
-                _self.formdata.departName = res.data.data.departName
-                _self.formdata.userAliasId = res.data.data.userAliasId
-                _self.formdata.aliasName = res.data.data.aliasName
-                _self.formdata.officephone = res.data.data.officephone
 
-                if(res.data.data.visable){
-                    _self.formdata.visable = res.data.data.visable.split(",")
+            let { status, data} = await userApi.getUserDetail(config)
+                this.formdata.username = data.data.userName
+                this.formdata.realname = data.data.realName
+                this.formdata.id = data.data.userId
+                this.formdata.roleName = data.data.userKey
+                this.formdata.email = data.data.email
+                this.formdata.mobilePhone = data.data.mobilePhone
+                this.formdata.roleIds = data.data.roleId
+                this.formdata.orgIds = data.data.orgId
+                this.formdata.departName = data.data.departName
+                this.formdata.userAliasId = data.data.userAliasId
+                this.formdata.aliasName = data.data.aliasName
+                this.formdata.officephone = data.data.officephone
+                this.formdata.orderReceiving = data.data.order_receiving
+                this.formdata.post = []
+                if(data.data.post){
+                    this.formdata.post[0] = parseInt(data.data.post.split("-")[0])
+                    this.formdata.post[1] = parseInt(data.data.post.split("-")[1])
+                    if(isNaN(this.formdata.post[1])){
+                        this.formdata.post[1] = ''
+                    }
                 }
-            }
+                if(data.data.visable){
+                    this.formdata.visable = data.data.visable.split(",")
+                }
 
-            function fail(err){
-                console.log(err)
-            }
-
-            this.$Post(url, config, success, fail)
+                console.log(this.formdata)
         },
-        get_data_center(){
+        async get_data_center(){
             let _self = this
-            let params = "area_visable"
-
-            function success(res){
-                _self.area_visable = res.data.data.area_visable
-            }
-
-            this.$GetDataCenter(params, success)
+            let params = "area_visable,company_post"
+            let { area_visable,company_post } = await userApi.getDictionary(params)
+            this.area_visable = area_visable
+            this.companyPost = this.$changeCars(company_post)
         }
     },
     mounted(){
         let _self = this
         _self.get_data_center()
         this.$bus.on("UPDATE_USER",(e) => {
-            // console.log(e)
             _self.get_role_detail(e)
             _self.open_edit_user = true
         })

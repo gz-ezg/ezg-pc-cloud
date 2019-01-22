@@ -88,14 +88,6 @@
         </Col>
       </Row>
       <Row>
-        <!-- <Button
-          type="error"
-          icon="bag"
-          size="large"
-          style="margin-top: 20px"
-          @click="edit_product_price"
-          :disabled="disabled"
-        >修改产品价格</Button> -->
         <Button
           type="error"
           icon="bag"
@@ -103,20 +95,33 @@
           style="margin-top: 20px"
           @click="open_flow_img"
         >查看流程图</Button>
+        <Button
+          type="error"
+          icon="bag"
+          size="large"
+          style="margin-top: 20px"
+          @click="openUpdateLink = true"
+        >修改流程图</Button>
       </Row>
     </Card>
+    <update-link v-if="openUpdateLink" :skuId="SKU" :product="product" @update="openUpdateLink= false"></update-link>
   </div>
 </template>
 
 <script>
+import updateLink from './updateLink'
 export default {
   props: {
     product: {
       type: [Object, String]
     }
   },
+  components: {
+    updateLink
+  },
   data() {
     return {
+      openUpdateLink: false,
       changeArea: false,
       sideLoading: false,
       productPrice: 0,
@@ -351,7 +356,10 @@ export default {
         return "disabled-row";
       }
     },
+    //  修改流程图
+    // update_flow_img(){
 
+    // },
     edit_product_price() {
       let _self = this;
       this.$router.push({
