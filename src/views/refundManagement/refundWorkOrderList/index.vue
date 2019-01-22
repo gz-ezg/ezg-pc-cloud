@@ -47,7 +47,8 @@
 
 <script>
 import * as workOrderApi from './api.js'
-import searchModel from './search'
+// import searchModel from './search'
+import searchModel from '../../woa-components/searchModel/index'
 
 export default {
     name: "refundWorkOrderList_index",
@@ -78,9 +79,6 @@ export default {
                 sortField:'updatedate',
                 //  筛选数据
                 formInline:{
-                    // companyName:'',
-                    // servicename:'',
-                    // product:''
                 },
                 //  加载中
                 loading:false,

@@ -2,70 +2,6 @@
     <div>
         <Card style="min-width:800px">
             <Row style="margin-bottom:10px">
-                <!-- <Collapse v-model="search_model">
-                    <Panel name="1" >
-                        <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
-                            筛选
-                        <div slot="content" @keydown.enter="Search">
-                            <Form ref="formValidateSearch" :model="formValidateSearch" :label-width="100">
-                                <Row :gutter="16">
-                                    <Col span="8">
-                                        <FormItem label="订单号码：" prop="ordercode">
-                                            <Input v-model="formValidateSearch.ordercode" size="small"></Input>
-                                        </FormItem>
-                                    </Col>
-                                <Col span="8">
-                                    <FormItem label="公司名称：" prop="companyname">
-                                        <Input v-model="formValidateSearch.companyname" size="small"></Input>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem label="客户名称：" prop="customername">
-                                        <Input v-model="formValidateSearch.customername" size="small"></Input>
-                                    </FormItem>
-                                </Col>
-                            </Row>
-                            <Row :gutter="16">
-                                <Col span="8">
-                                    <FormItem label="客户电话：" prop="customertel">
-                                        <Input v-model="formValidateSearch.customertel" size="small"></Input>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem label="缴费渠道：" prop="customername">
-                                        <Select transfer v-model="formValidateSearch.payDir" size="small">
-                                            <Option v-for="(item, index) in payDirs" :key=index :value="item.typecode">{{item.typename}}</Option>                            
-                                        </Select>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem label="创建时间：" prop="date">
-                                        <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:100%" size="small"></DatePicker>
-                                    </FormItem>
-                                </Col>
-                            </Row>
-                            <Row :gutter="16">
-                                <Col span="8">
-                                    <FormItem label="创建人：" prop="crealname">
-                                        <Input v-model="formValidateSearch.crealname" size="small"></Input>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem label="跟进人：" prop="frealname">
-                                        <Input v-model="formValidateSearch.frealname" size="small"></Input>
-                                    </FormItem>
-                                </Col>
-                            </Row>
-                            <center>
-                                <FormItem>
-                                    <Button type="primary" @click="Search">搜索</Button>
-                                    <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
-                                </FormItem>
-                            </center>
-                        </Form>
-                    </div>
-                </Panel>
-            </Collapse> -->
             <search-model :data="searchData" @search="search"></search-model>
         </Row>
         <Row>
@@ -118,7 +54,7 @@
 import showOrder from './detail'
 import { DateFormat } from '../../../libs/utils.js'
 import * as refundApi from './api.js'
-import searchModel from './search'
+import searchModel from '../../woa-components/searchModel/index'
 
 export default {
     name: "refundOrderList_index",
