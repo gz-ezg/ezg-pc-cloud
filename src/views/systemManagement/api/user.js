@@ -1,5 +1,14 @@
 import {AjaxGet, AjaxDic, AjaxPost} from '../../../api/index'
 
+function getUserList(config, success, fail){
+    let url = 'user/list'
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxGet(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+
 function getUserDetail(config, success, fail){
     let url = 'user/detail'
     return new Promise((resolve, reject)=>{
@@ -29,5 +38,6 @@ function postUpdateUser(config, success, fail){
 export {
     getUserDetail,
     getDictionary,
-    postUpdateUser
+    postUpdateUser,
+    getUserList
 }
