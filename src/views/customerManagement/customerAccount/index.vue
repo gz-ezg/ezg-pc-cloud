@@ -29,18 +29,27 @@
                 v-if="openDetail"
                 :id="currentId" 
             ></detail>
+            <integral-detail
+                :accountChangeType="accountChangeType"
+                @close="openIntegralDetail=false"
+                v-if="openIntegralDetail"
+                :id="currentId" 
+            >
+            </integral-detail>
     </Card>
 </template>
 
 <script>
 import search from './search'
 import detail from './detail'
+import integralDetail from './integralDetail'
 import * as api from './api';
 export default {
     name: "customerAccount_index",
     components: {
         detail,
-        search
+        search,
+        integralDetail
     },
     data(){
         return {
@@ -66,30 +75,58 @@ export default {
                 {
                     title: "账户余额",
                     key: "account_amount",
-                    minWidth: 180
+                    minWidth: 120
                 },
                 {
                     title: "冻结余额",
                     key: "lock_amount",
-                    minWidth: 180
+                    minWidth: 120
+                },
+                {
+                    title: "消费积分",
+                    key: "integral_amount",
+                    minWidth: 120
+                },
+                {
+                    title: "冻结积分",
+                    key: "lock_integral",
+                    minWidth: 120
                 },
                 {
                     title: "操作",
-                    width: 120,
+                    width: 200,
                     render: (h, params) => {
-                        return h('Button',{
-                            props: {
-                                type: "info",
-                                size: "small"
-                            },
-                            on: {
-                                click: ()=>{
-                                    this.currentId = params.row.id
-                                    this.openDetail = true
-                                    // console.log(params.row.id)
+                        return h('div', [
+                            h('Button',{
+                                props: {
+                                    type: "info",
+                                    size: "small"
+                                },
+                                on: {
+                                    click: ()=>{
+                                        this.currentId = params.row.id
+                                        this.openDetail = true
+                                        // console.log(params.row.id)
+                                    }
                                 }
-                            }
-                        }, "流水")
+                            }, "余额流水"),
+                            h('Button',{
+                                style: {
+                                    marginLeft: "5px"
+                                },
+                                props: {
+                                    type: "info",
+                                    size: "small"
+                                },
+                                on: {
+                                    click: ()=>{
+                                        this.currentId = params.row.id
+                                        this.openIntegralDetail = true
+                                        // console.log(params.row.id)
+                                    }
+                                }
+                            }, "积分流水")
+                        ])
                     }
                 }
             ],
@@ -100,7 +137,8 @@ export default {
             accountChangeType: new Map(),
             accountChangeItemType: new Map(),
             currentId: "",
-            searchForm: ""
+            searchForm: "",
+            openIntegralDetail: false
         }
     },
     methods: {
