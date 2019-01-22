@@ -38,7 +38,7 @@
                         <p slot="title">
                             {{ cardTitle }}
                         </p>
-                        <div slot="extra" @click="isOpen=false;frist_span=24">
+                        <div slot="extra" @click="isOpen=false;frist_span=24;buttonData=[];rulesData=[]">
                             <Icon type="close"></Icon>
                         </div>
                         <Row>
@@ -53,10 +53,10 @@
                                     <Button type="ghost" v-if="isRM == false" @click="permissions(userId)">重置</Button>
                                     <Button type="ghost" v-if="isRM == true" @click="permissionsRM(userId)">重置</Button>
                                     <Tree
-                                            :data="roleTree"
-                                            ref="tree"
-                                            show-checkbox
-                                            @on-select-change="roleTreeChange"></Tree>
+                                        :data="roleTree"
+                                        ref="tree"
+                                        show-checkbox
+                                        @on-select-change="roleTreeChange"></Tree>
                                 </Card>
                             </Col>
                             <Col span="8">
@@ -109,6 +109,7 @@ import LockModal from './lock_user'
 import DeleteModal from './delete_user'
 import EditModal from './edit_user'
 import * as userApi from '../api/user.js'
+
     export default {
         components:{
             CreateUser,
@@ -248,9 +249,6 @@ import * as userApi from '../api/user.js'
             }
         },
         methods: {
-            keydown_search(e){
-                console.log(e)
-            },
             Search(e){
                 Object.assign(this.SearchValidate, e)
                 this.userPage = 1
@@ -288,138 +286,139 @@ import * as userApi from '../api/user.js'
             },
 
             // 点击【权限设置】 获取菜单列表数据
-            permissions(a) {
-                let _self = this
-                _self.frist_span = 12
-                let url = '/user/role/getUserMenusByUserId?userId=' + a
-                _self.userId = a
-                _self.isRM = false
-                _self.isOpen = true
-                _self.cardTitle = '权限设置'
-
-                function doSuccess(re) {
-                    _self.roleTree = []
-                    for (let i = 0; i < re.data.data.length; i++) {
-                        if (re.data.data[i].children != null) {
-                            re.data.data[i].checked = false
-                            for (let j = 0; j < re.data.data[i].children.length; j++) {
-                                re.data.data[i].children[j].title = re.data.data[i].children[j].text
-                            }
-                        }
-                        re.data.data[i].title = re.data.data[i].text
-                        _self.roleTree.push(re.data.data[i])
+            async permissions(id) {
+                this.frist_span = 12
+                this.userId = id
+                this.isRM = false
+                this.isOpen = true
+                this.cardTitle = '权限设置'
+                let config = {
+                    params: {
+                        userId: id
                     }
                 }
-
-                this.GetData(url, doSuccess)
+                try {
+                    let data = await userApi.getUserMenusByUserId(config)
+                
+                    this.roleTree = data.map((item)=>{
+                        if(item.children !=null){
+                            item.checked = false
+                            item.children.map((itemChild)=>{
+                                itemChild.title = itemChild.text
+                            })
+                        }
+                        item.title = item.text
+                        return item
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
             },
 
             // 点击【权限剔除】 获取菜单列表数据
-            permissionsRM(a) {
+            async permissionsRM(id) {
                 let _self = this
-                _self.frist_span = 12
-                let url = '/user/role/getUserRMMenusByUserId?userId=' + a
-                _self.userId = a
-                _self.cardTitle = '权限剔除'
-                _self.isRM = true
-                _self.isOpen = true
-
-                function doSuccess(re) {
-                    _self.roleTree = []
-                    for (let i = 0; i < re.data.data.length; i++) {
-                        re.data.data[i].checked = false
-                        if (re.data.data[i].children != null) {
-                            for (let j = 0; j < re.data.data[i].children.length; j++) {
-                                re.data.data[i].children[j].title = re.data.data[i].children[j].text
-                            }
-                        }
-                        re.data.data[i].title = re.data.data[i].text
-                        _self.roleTree.push(re.data.data[i])
+                this.frist_span = 12
+                this.userId = id
+                this.cardTitle = '权限剔除'
+                this.isRM = true
+                this.isOpen = true
+                let config = {
+                    params: {
+                        userId: id
                     }
                 }
+                try {
+                    let data = await userApi.getUserRMMenusByUserId(config)
+                
+                    this.roleTree = data.map((item)=>{
+                        if(item.children !=null){
+                            item.checked = false
+                            item.children.map((itemChild)=>{
+                                itemChild.title = itemChild.text
+                            })
+                        }
+                        item.title = item.text
+                        return item
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
 
-                this.GetData(url, doSuccess)
             },
 
             // 点击菜单  加载页面控件和数据规则
-            roleTreeChange(a) {
+            async roleTreeChange(menu) {
                 let _self = this
-                let url = ''
-                let url2 = ''
-
-                if (_self.isRM == false) {
-                    url = '/user/role/getUserButtonsByUserIdAndInterfaceId?userId=' + _self.userId + '&interfaceId=' + a[0].id
-                    url2 = '/user/role/getUserDataRulesByUserIdAndInterfaceId?userId=' + _self.userId + '&interfaceId=' + a[0].id
-                } else {
-                    url = '/user/role/getUserRMButtonsByUserIdAndInterfaceId?userId=' + _self.userId + '&interfaceId=' + a[0].id
-                    url2 = '/user/role/getUserRMDataRulesByUserIdAndInterfaceId?userId=' + _self.userId + '&interfaceId=' + a[0].id
-                }
-                _self.menuId = a[0].id
-                _self.buttonData = []
-                _self.rulesData = []
-                _self.setButton = []
-                _self.setRules = []
-
-                function doSuccess(re) {
-                    _self.buttonData = re.data.data
-
-                    for (let i = 0; i < _self.buttonData.length; i++) {
-                        if (_self.buttonData[i].checked == true) {
-                            _self.setButton.push(_self.buttonData[i].id)
-                        }
+                let config = {
+                    params: {
+                        userId: this.userId,
+                        interfaceId: menu[0].id
                     }
                 }
-
-                function doSuccess2(re) {
-                    _self.rulesData = re.data.data
-
-                    for (let i = 0; i < _self.rulesData.length; i++) {
-                        if (_self.rulesData[i].checked == true) {
-                            _self.setRules.push(_self.rulesData[i].id)
-                        }
-                    }
+                let buttonList = []
+                let dataList = []
+                if(this.isRM == false){
+                    [buttonList, dataList] = await Promise.all([
+                        userApi.getUserButtonsByUserIdAndInterfaceId(config),
+                        userApi.getUserDataRulesByUserIdAndInterfaceId(config)
+                    ]);
+                }else{
+                    [buttonList, dataList] = await Promise.all([
+                        userApi.getUserRMButtonsByUserIdAndInterfaceId(config),
+                        userApi.getUserRMDataRulesByUserIdAndInterfaceId(config)
+                    ]);
                 }
+                this.menuId = menu[0].id
+                this.buttonData = []
+                this.rulesData = []
+                this.setButton = []
+                this.setRules = []
 
-                this.GetData(url, doSuccess)
-                this.GetData(url2, doSuccess2)
+                this.buttonData = buttonList.map((item)=>{
+                    if(item.checked == true){
+                        this.setButton.push(item.id)
+                    }
+                    return item;
+                })
+
+                this.rulesData = dataList.map((item)=>{
+                    if(item.checked == true){
+                        this.setRules.push(item.id)
+                    }
+                    return item;
+                })
             },
 
             allSelect() {
-                let _self = this
-
-                for (let i = 0; i < _self.roleTree.length; i++) {
-                    _self.roleTree[i].checked = true
-                }
+                this.roleTree.map((item)=>{
+                    item.checked = true
+                })
             },
 
             // 页面控件配置
-            postButton() {
-                let _self = this
-                let url = ''
-                let _data = {
+            async postButton() {
+                let config = {
                     operationIds: _self.buttonSelectData.toString(),
                     interfaceId: _self.menuId,
                     userId: _self.userId,
                 }
-
+                
                 if (_self.isRM == false) {
-                    url = '/user/role/addInterfaceAndOperationToUser'
+                    let {status, data } = await userApi.addInterfaceAndOperationToUser(config)
                 } else {
-                    url = '/user/role/addInterfaceAndOperationToUserRM'
+                    let {status, data } = await userApi.addInterfaceAndOperationToUserRM(config)
                 }
-
-                function doSuccess(re) {
-                    _self.$Message.success('保存成功');
-                }
-
-                this.PostData(url, _data, doSuccess)
             },
 
             // 按钮选中事件
-            buttonSelect(re) {
-                let _self = this
-                _self.buttonSelectData = re
-                console.log(re)
+            buttonSelect(button) {
+                this.buttonSelectData = button
+            },
+
+            // 规则选中事件
+            RulesSelect(re) {
+                this.rulesSelectData = re
             },
 
             // 菜单和用户绑定
@@ -471,35 +470,21 @@ import * as userApi from '../api/user.js'
             },
 
             // 规则配置
-            postRules() {
-                let _self = this
-                let url = ''
-                let _data = {
-                    dataRuleIds: _self.rulesSelectData.toString(),
-                    interfaceId: _self.menuId,
-                    userId: _self.userId,
+            async postRules() {
+                let config = {
+                    dataRuleIds: this.rulesSelectData.toString(),
+                    interfaceId: this.menuId,
+                    userId: this.userId,
                 }
 
-                if (_self.isRM == false) {
-                    url = '/user/role/addInterfaceAndDataRuleToUser'
+                if (this.isRM == false) {
+                    let { status, data } = userApi.addInterfaceAndDataRuleToUser(config)
                 } else {
-                    url = '/user/role/addInterfaceAndDataRuleToUserRM'
+                    let { status, data } = userApi.addInterfaceAndDataRuleToUserRM(config)
                 }
-
-                function doSuccess(re) {
-                    _self.$Message.success('保存成功');
-                }
-
-                this.PostData(url, _data, doSuccess)
             },
             selectRow(e){
                 this.current_select_row = e
-            },
-
-            // 规则选中事件
-            RulesSelect(re) {
-                let _self = this
-                _self.rulesSelectData = re
             },
 
             //  新增用户
