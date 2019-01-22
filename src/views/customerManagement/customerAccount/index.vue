@@ -1,7 +1,7 @@
 <template>
     <Card style="min-width:800px">
         <Row style="margin-bottom:10px;">
-            <!-- <search @search="search"></search> -->
+            <search-model :data="searchData" @search="search"></search-model>
           </Row>
           <Row style="margin-top: 10px;">
             <Table
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import search from './search'
+import searchModel from '../../woa-components/searchModel/index'
 import detail from './detail'
 import integralDetail from './integralDetail'
 import * as api from './api';
@@ -48,14 +48,31 @@ export default {
     name: "customerAccount_index",
     components: {
         detail,
-        search,
-        integralDetail
+        integralDetail,
+        searchModel
     },
     data(){
         return {
             form: {},
             openDetail: false,
             data: [],
+            searchData: [
+                {
+                    label: "公司名称：",
+                    key: "companyName",
+                    type: "input"
+                },
+                {
+                    label: "客户名称：",
+                    key: "name",
+                    type: "input"
+                },
+                {
+                    label: "联系方式：",
+                    key: "tel",
+                    type: "input"
+                }
+            ],
             header: [
                 {
                     title: "序号",
@@ -138,18 +155,14 @@ export default {
             accountChangeItemType: new Map(),
             currentId: "",
             searchForm: "",
-            openIntegralDetail: false
+            openIntegralDetail: false,
+            formInline: {}
         }
     },
     methods: {
         search(e){
-            // console.log(e)
-            this.searchForm = e
-            if(this.searchForm.hasOwnProperty("createdate")){
-                this.searchForm["bcreatedate"] = this.searchForm.createdate[0]
-                this.searchForm["ecreatedate"] = this.searchForm.createdate[1]
-                delete this.searchForm.createdate
-            }
+            Object.assign(this.formInline, e)
+            this.page = 1
             this.get_data()
         },
         async get_data(){
@@ -164,9 +177,7 @@ export default {
                 }
             }
 
-            // function success(res){
-            //     return res
-            // }
+            Object.assign(config.params, this.formInline)
 
             try {
                 let { total, rows } = await api.getCustomerAccountList(config)
@@ -176,7 +187,6 @@ export default {
                 })
             } catch (error) {
                 console.log(error)
-                // _self.$Message.error(error)
             }
             _self.loading = false
         },
@@ -198,8 +208,7 @@ export default {
                 _self.accountChangeType = _self.$array2map(account_change_type)
                 _self.accountChangeItemType = _self.$array2map(account_change_item_type)
             }catch(error){
-                // console.log(error)
-                // _self.$Message.error("页面异常！")
+                console.log(error)
             }
         }
     },
