@@ -505,6 +505,20 @@ export const appRouter = [
                 name: 'productAttrList_index',
                 component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/productAttrList/index.vue')
             },
+            {
+                access: 11618,
+                path: 'productProcess',
+                title: '产品流程',
+                name: 'productProcess_index',
+                component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/productProcess/index.vue')
+            },
+            {
+                access: 11619,
+                path: 'flowChart',
+                title: '流程图',
+                name: 'flowChart_index',
+                component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/flowChart/index.vue')
+            }
             // {
             //     access: 6016,
             //     path: 'areaManagement',

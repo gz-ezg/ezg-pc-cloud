@@ -47,7 +47,6 @@
 
 <script>
 import * as workOrderApi from './api.js'
-// import searchModel from './search'
 import searchModel from '../../woa-components/searchModel/index'
 
 export default {

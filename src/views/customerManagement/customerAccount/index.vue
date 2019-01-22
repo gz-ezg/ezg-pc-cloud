@@ -1,7 +1,7 @@
 <template>
     <Card style="min-width:800px">
         <Row style="margin-bottom:10px;">
-            <!-- <search @search="search"></search> -->
+            <search-model :data="searchData" @search="search"></search-model>
           </Row>
           <Row style="margin-top: 10px;">
             <Table
@@ -29,24 +29,50 @@
                 v-if="openDetail"
                 :id="currentId" 
             ></detail>
+            <integral-detail
+                :accountChangeType="accountChangeType"
+                @close="openIntegralDetail=false"
+                v-if="openIntegralDetail"
+                :id="currentId" 
+            >
+            </integral-detail>
     </Card>
 </template>
 
 <script>
-import search from './search'
+import searchModel from '../../woa-components/searchModel/index'
 import detail from './detail'
+import integralDetail from './integralDetail'
 import * as api from './api';
 export default {
     name: "customerAccount_index",
     components: {
         detail,
-        search
+        integralDetail,
+        searchModel
     },
     data(){
         return {
             form: {},
             openDetail: false,
             data: [],
+            searchData: [
+                {
+                    label: "公司名称：",
+                    key: "companyName",
+                    type: "input"
+                },
+                {
+                    label: "客户名称：",
+                    key: "name",
+                    type: "input"
+                },
+                {
+                    label: "联系方式：",
+                    key: "tel",
+                    type: "input"
+                }
+            ],
             header: [
                 {
                     title: "序号",
@@ -66,30 +92,58 @@ export default {
                 {
                     title: "账户余额",
                     key: "account_amount",
-                    minWidth: 180
+                    minWidth: 120
                 },
                 {
                     title: "冻结余额",
                     key: "lock_amount",
-                    minWidth: 180
+                    minWidth: 120
+                },
+                {
+                    title: "消费积分",
+                    key: "integral_amount",
+                    minWidth: 120
+                },
+                {
+                    title: "冻结积分",
+                    key: "lock_integral",
+                    minWidth: 120
                 },
                 {
                     title: "操作",
-                    width: 120,
+                    width: 200,
                     render: (h, params) => {
-                        return h('Button',{
-                            props: {
-                                type: "info",
-                                size: "small"
-                            },
-                            on: {
-                                click: ()=>{
-                                    this.currentId = params.row.id
-                                    this.openDetail = true
-                                    // console.log(params.row.id)
+                        return h('div', [
+                            h('Button',{
+                                props: {
+                                    type: "info",
+                                    size: "small"
+                                },
+                                on: {
+                                    click: ()=>{
+                                        this.currentId = params.row.id
+                                        this.openDetail = true
+                                        // console.log(params.row.id)
+                                    }
                                 }
-                            }
-                        }, "流水")
+                            }, "余额流水"),
+                            h('Button',{
+                                style: {
+                                    marginLeft: "5px"
+                                },
+                                props: {
+                                    type: "info",
+                                    size: "small"
+                                },
+                                on: {
+                                    click: ()=>{
+                                        this.currentId = params.row.id
+                                        this.openIntegralDetail = true
+                                        // console.log(params.row.id)
+                                    }
+                                }
+                            }, "积分流水")
+                        ])
                     }
                 }
             ],
@@ -100,18 +154,15 @@ export default {
             accountChangeType: new Map(),
             accountChangeItemType: new Map(),
             currentId: "",
-            searchForm: ""
+            searchForm: "",
+            openIntegralDetail: false,
+            formInline: {}
         }
     },
     methods: {
         search(e){
-            // console.log(e)
-            this.searchForm = e
-            if(this.searchForm.hasOwnProperty("createdate")){
-                this.searchForm["bcreatedate"] = this.searchForm.createdate[0]
-                this.searchForm["ecreatedate"] = this.searchForm.createdate[1]
-                delete this.searchForm.createdate
-            }
+            Object.assign(this.formInline, e)
+            this.page = 1
             this.get_data()
         },
         async get_data(){
@@ -126,9 +177,7 @@ export default {
                 }
             }
 
-            // function success(res){
-            //     return res
-            // }
+            Object.assign(config.params, this.formInline)
 
             try {
                 let { total, rows } = await api.getCustomerAccountList(config)
@@ -138,7 +187,6 @@ export default {
                 })
             } catch (error) {
                 console.log(error)
-                // _self.$Message.error(error)
             }
             _self.loading = false
         },
@@ -160,8 +208,7 @@ export default {
                 _self.accountChangeType = _self.$array2map(account_change_type)
                 _self.accountChangeItemType = _self.$array2map(account_change_item_type)
             }catch(error){
-                // console.log(error)
-                // _self.$Message.error("页面异常！")
+                console.log(error)
             }
         }
     },

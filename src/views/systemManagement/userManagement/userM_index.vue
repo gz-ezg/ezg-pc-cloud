@@ -1,55 +1,9 @@
 <template>
     <div style="min-width:1000px">
-        <Row >
-            <div @keydown.enter="Search">
-                <Card>
-                    <Form ref="SearchValidate" :model="SearchValidate" :label-width="80" style="margin-top: 15px" >
-                    <Row :gutter="8">
-                        <Col span="8">
-                            <FormItem label="名字：" prop="realname">
-                                <Input v-model="SearchValidate.realname" size="small"></Input>
-                            </FormItem>
-                        </Col>
-                        <Col span="8">
-                            <FormItem label="电话：" prop="mobilephone">
-                                <Input v-model="SearchValidate.mobilephone" size="small"></Input>
-                            </FormItem>
-                        </Col>
-                        <Col span="8">
-                            <FormItem label="用户账户：" prop="username">
-                                <Input v-model="SearchValidate.username" size="small"></Input>
-                            </FormItem>
-                        </Col>
-                    </Row>
-                    <Row :gutter="8">
-                        <Col span="8">
-                            <FormItem label="角色ID：" prop="roleid">
-                                <Input v-model="SearchValidate.roleid" size="small"></Input>
-                            </FormItem>
-                        </Col>
-                        <Col span="8">
-                            <FormItem label="角色编码：" prop="rolecode">
-                                <Input v-model="SearchValidate.rolecode" size="small"></Input>
-                            </FormItem>
-                        </Col>
-                        <Col span="8">
-                            <FormItem label="角色名称：" prop="rolename">
-                                <Input v-model="SearchValidate.rolename" size="small"></Input>
-                            </FormItem>
-                        </Col>
-                    </Row>
-                    <center>
-                        <FormItem>
-                            <Button type="primary" @click="Search" >搜索</Button>
-                            <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
-                        </FormItem>
-                    </center>
-                </Form>
-            </Card>
-            </div>
-        </Row>
+        
         <Card>
-            <Row>
+            <search-model :data="searchData" @search="Search"></search-model>
+            <Row style="margin-top:10px">
                 <ButtonGroup>
                     <Button type="primary" icon="plus" @click="createdUser">新增用户</Button>
                     <Button type="primary" icon="plus" @click="updatePassword">修改密码</Button>
@@ -59,29 +13,27 @@
             </Row>
             <Row style="margin-top: 10px;">
                 <Col :span="frist_span">
-                    <Card>
-                        <Row style="margin-top: 10px;">
-                            <Table
-                                    highlight-row
-                                    size="small"
-                                    :loading="user_table_loading"
-                                    :columns="userColumns"
-                                    @on-current-change="selectRow"
-                                    :data="userData"></Table>
-                            <Page
-                                    size="small"
-                                    :total="userTotal"
-                                    show-total
-                                    show-sizer
-                                    show-elevator
-                                    :current.sync="userPage"
-                                    @on-change="pageChange"
-                                    @on-page-size-change="pageSizeChange"
-                                    style="margin-top: 10px"></Page>
-                        </Row>
-                    </Card>
+                    <Row style="margin-top: 10px;">
+                        <Table
+                            highlight-row
+                            size="small"
+                            :loading="userTableLoading"
+                            :columns="userColumns"
+                            @on-current-change="selectRow"
+                            :data="userData"></Table>
+                        <Page
+                            size="small"
+                            :total="userTotal"
+                            show-total
+                            show-sizer
+                            show-elevator
+                            :current.sync="userPage"
+                            @on-change="pageChange"
+                            @on-page-size-change="pageSizeChange"
+                            style="margin-top: 10px"></Page>
+                    </Row>
                 </Col>
-                <Col span="12">
+                <Col span="12" style="margin-top:10px">
                     <Card v-show="isOpen">
                         <p slot="title">
                             {{ cardTitle }}
@@ -149,13 +101,14 @@
 </template>
 
 <script>
+import searchModel from '../../woa-components/searchModel/index'
 import CreateUser from './create_user'
 import RoleModal from './role_modal'
 import OrganizeModal from './organize_modal'
 import LockModal from './lock_user'
 import DeleteModal from './delete_user'
 import EditModal from './edit_user'
-
+import * as userApi from '../api/user.js'
     export default {
         components:{
             CreateUser,
@@ -163,27 +116,53 @@ import EditModal from './edit_user'
             OrganizeModal,
             LockModal,
             DeleteModal,
-            EditModal
+            EditModal,
+            searchModel
         },
         data() {
             return{
-                user_table_loading:false,
+                searchData: [
+                    {
+                        label: "姓名：",
+                        key: 'realname',
+                        type: 'input'
+                    },
+                    {
+                        label: "电话：",
+                        key: 'mobilephone',
+                        type: 'input'
+                    },
+                    {
+                        label: "用户账户：",
+                        key: 'username',
+                        type: 'input'
+                    },
+                    {
+                        label: "角色ID：",
+                        key: 'roleid',
+                        type: 'input'
+                    },
+                    {
+                        label: "角色编码：",
+                        key: 'rolecode',
+                        type: 'input'
+                    },
+                    {
+                        label: "角色名称：",
+                        key: 'rolename',
+                        type: 'input'
+                    },
+                ],
+                userTableLoading:false,
                 current_select_row:"",
                 // 第一个列表的占位：
                 frist_span: "24",
-                SearchValidate:{
-                    realname:"",
-                    mobilephone:"",
-                    username:"",
-                    roleid:"",
-                    rolecode:"",
-                    rolename:""
-                },
+                SearchValidate:{},
                 userPage: 1,
                 userPageSize: 10,
                 isRM: false,
                 isOpen: false,
-                userTotal: new Number(),
+                userTotal: 0,
                 cardTitle: '',
                 userId: '',
                 menuId: '',
@@ -258,8 +237,6 @@ import EditModal from './edit_user'
                                     },
                                     on: {
                                         click: () => {
-                                            // this.permissions(params.row.id)
-                                            // console.log(params.row)
                                             this.updateUser(params.row)
                                         }
                                     }
@@ -274,76 +251,40 @@ import EditModal from './edit_user'
             keydown_search(e){
                 console.log(e)
             },
-            Search(){
+            Search(e){
+                Object.assign(this.SearchValidate, e)
                 this.userPage = 1
-                this.getUserTable()
-            },
-            handleReset(){
-                let _self = this
-                _self.SearchValidate.realname = ""
-                _self.SearchValidate.mobilephone = ""
-                _self.SearchValidate.username = ""
-                _self.SearchValidate.roleid = ""
-                _self.SearchValidate.rolecode = ""
-                _self.SearchValidate.rolecode = ""
-                _self.SearchValidate.rolename = ""
-                _self.userPage = 1
-                _self.getUserTable()
-
+                this.get_user_table()
             },
             // 获取用户数据
-            getUserTable() {
+            async get_user_table() {
                 let _self = this
-                let url = 'api/user/list'
-                _self.user_table_loading = true
+                this.userTableLoading = true
                 let config = {
                     params:{
-                        page: _self.userPage,
-                        pageSize: _self.userPageSize,
-                        realname: _self.SearchValidate.realname,
-                        mobilephone: _self.SearchValidate.mobilephone,
-                        username: _self.SearchValidate.username,
-                        roleid: _self.SearchValidate.roleid,
-                        rolecode: _self.SearchValidate.rolecode,
-                        rolename: _self.SearchValidate.rolename
-                        
+                        page: this.userPage,
+                        pageSize: this.userPageSize,
                     }
                 }
-                function doSuccess(re) {
-                    let _data = re.data.data
-                    _self.userTotal = _data.total
-                    _self.userData = []
+                Object.assign(config.params, this.SearchValidate)
 
-                    for (let i = 0; i < _data.rows.length; i++) {
-                        _self.userData.push({
-                            user_alias_id: _data.rows[i].user_alias_id,
-                            id: _data.rows[i].id,
-                            username: _data.rows[i].username,
-                            realname: _data.rows[i].realname,
-                            userkey: _data.rows[i].userkey,
-                            status: _data.rows[i].status,
-                            mobilephone: _data.rows[i].mobilephone,
-                            email: _data.rows[i].email,
-                            departname:_data.rows[i].departname
-                        })
-                                     
-                    }
-                    _self.user_table_loading = false
-                }
+                let {rows, total} = await userApi.getUserList(config)
 
-                this.$Get(url, config, doSuccess)
+                this.userTotal = total
+                this.userData = rows
+                this.userTableLoading = false
             },
 
-            pageChange(a) {
+            pageChange(page) {
                 let _self = this
-                _self.userPage = a
-                _self.getUserTable()
+                _self.userPage = page
+                _self.get_user_table()
             },
 
-            pageSizeChange(a) {
+            pageSizeChange(pageSize) {
                 let _self = this
-                _self.userPageSize = a
-                _self.getUserTable()
+                _self.userPageSize = pageSize
+                _self.get_user_table()
             },
 
             // 点击【权限设置】 获取菜单列表数据
@@ -597,15 +538,15 @@ import EditModal from './edit_user'
             },
 
             //  编辑用户
-            updateUser(e){
-                this.$bus.emit('UPDATE_USER',e)
+            updateUser(userObj){
+                this.$bus.emit('UPDATE_USER',userObj)
             }
         },
         created() {
-            this.getUserTable()
+            this.get_user_table()
             let _self = this
             this.$bus.on('UPDATE_USER_TABLE',(e) => {
-                _self.getUserTable()
+                _self.get_user_table()
             })
         }
     }
