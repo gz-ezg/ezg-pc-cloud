@@ -206,9 +206,9 @@ export const appRouter = [
     //         },
     //         {
     //             path: 'test7',
-    //             title: 'axios',
+    //             title: '异常工单审批表',
     //             name: 'test07_index',
-    //             component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/apiTest/test7.vue')
+    //             component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/abnormalWorkOrder.vue')
     //         }
     //     ]
     // },
@@ -571,6 +571,20 @@ export const appRouter = [
                 title: '发票管理',
                 name: "invoicelist_index",
                 component: () => import( /* webpackChunkName: "invoicelist_index" */ '@/views/order/invoiceManagement/index.vue')
+            },
+            {
+                access:6020,
+                path: 'abnormalOrderList',
+                title: '异常工单列表',
+                name: "abnormalOrderList_index",
+                component: () => import( /* webpackChunkName: "invoicelist_index" */ '@/views/order/abnormalOrderList/index.vue')
+            },
+            {
+                access:6020,
+                path: 'abnormalWorkOrder',
+                title: '异常工单审批表',
+                name: "abnormalWorkOrder_index",
+                component: () => import( /* webpackChunkName: "invoicelist_index" */ '@/views/order/abnormalWorkOrder/index.vue')
             },
             // {
             //     access:6020,

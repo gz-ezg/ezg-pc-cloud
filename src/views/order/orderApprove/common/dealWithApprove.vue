@@ -257,6 +257,7 @@ export default {
             }
 
             function success(res){
+                console.log(res.data.data)
                 _self.formValidateDetail = res.data.data
                 _self.orderItem = _self.formValidateDetail.items
                 for (let i = 0; i < _self.orderItem.length; i++) {
