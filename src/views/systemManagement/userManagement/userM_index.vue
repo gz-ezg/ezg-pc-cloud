@@ -422,51 +422,49 @@ import * as userApi from '../api/user.js'
             },
 
             // 菜单和用户绑定
-            getChecked() {
+            async getChecked() {
                 let _self = this
-                let _select = _self.$refs.tree.getCheckedNodes()
-                let _data = []
-                let url = ''
-                let _postdata = {}
+                let selectMenu = this.$refs.tree.getCheckedNodes()
+                let menuIdList = []
+                
 
-                if (_self.isRM == false) {
-                    url = '/user/role/addInterfaceToUser'
-                } else {
-                    url = '/user/role/addInterfaceToUserRM'
-                }
-
-                for (let i = 0; i < _select.length; i++) {
-                    for (let j = 0; j < _self.roleTree.length; j++) {
-                        if (_self.roleTree[j].children != null) {
-                            for (let k = 0; k < _self.roleTree[j].children.length; k++) {
-                                if (_self.roleTree[j].children[k].id == _select[i].id) {
+                //  此段代码待优化
+                for (let i = 0; i < selectMenu.length; i++) {
+                    for (let j = 0; j < this.roleTree.length; j++) {
+                        if (this.roleTree[j].children != null) {
+                            for (let k = 0; k < this.roleTree[j].children.length; k++) {
+                                if (this.roleTree[j].children[k].id == selectMenu[i].id) {
                                     let _count = 0
-                                    for (let p = 0; p < _select.length; p++) {
-                                        if (_self.roleTree[j].id == _select[p].id) {
+                                    for (let p = 0; p < selectMenu.length; p++) {
+                                        if (this.roleTree[j].id == selectMenu[p].id) {
                                             break
                                         } else {
                                             _count++
                                         }
                                     }
 
-                                    if (_count == _select.length) {
-                                        _select.push(_self.roleTree[j])
+                                    if (_count == selectMenu.length) {
+                                        selectMenu.push(_self.roleTree[j])
                                     }
                                 }
                             }
                         }
                     }
-                    _data.push(_select[i].id)
+                    menuIdList.push(selectMenu[i].id)
                 }
 
-                _postdata.userId = _self.userId
-                _postdata.interfaceIds = _data.toString()
-
-                function doSuccess(re) {
-                    _self.$Message.success('保存成功');
+                let config = {
+                    userId : this.userId,
+                    interfaceIds: menuIdList.join(",")
                 }
 
-                this.PostData(url, _postdata, doSuccess)
+                // if (this.isRM == false) {
+                //     let { status, data } = await userApi.addInterfaceToUser(config)
+                // } else {
+                //     let { status, data } = await userApi.addInterfaceToUserRM(config)
+                // }
+
+                let { status, data } = this.isRM == false ? await userApi.addInterfaceToUser(config):await userApi.addInterfaceToUserRM(config)
             },
 
             // 规则配置

@@ -46,7 +46,7 @@
                             </Row>
                             <Row :gutter="16" v-if="openFinish">
                                 <Col span="12">
-                                    <FormItem label="完成状态：" prop="finishFlag">
+                                    <FormItem label="完成状态" prop="finishFlag">
                                         <Select transfer v-model="addDetailContent.finishFlag" size="small">
                                             <Option value="Y" >完成</Option>
                                             <Option value="N" >未完成</Option>
@@ -829,7 +829,7 @@
         },
         data(){
             return {
-                openFinish: false,
+                openFinish: true,
                 etax_account_type: [],
                 isClue: false,
                 openCompanyDetail: true,
@@ -1374,7 +1374,7 @@
                     switch(temp){
                         case "kuaiji":
                             _self.addDetailContent.followUpType = "18"
-                            _self.openFinish = true
+                            // _self.openFinish = true
                             _self.addDetailContent.finishFlag = "N"
                             break;
                         case "shangshi":

@@ -207,7 +207,8 @@
                         :before-upload="handleUpload"
                         action="/api/customer/importHighSeasPoolMessage"
                       >
-                        <Button type="ghost" icon="ios-cloud-upload-outline" style="margin-top:40px">选择文件</Button>
+                        <Button type="ghost" icon="ios-cloud-upload-outline" style="margin-top:20px">选择文件</Button>
+                        <Button type="info" icon="ios-cloud-download-outline" style="margin-top:20px;" @click="open">导入模板</Button>
                       </Upload>
                     </center>
                 </Col>
@@ -238,15 +239,7 @@ export default {
     name: "publicPool_index",
     mixins: [commonVue],
     components:{
-        // createCustomer,
-        // tagSelect,
-        // changeMarker,
-        // changeLog,
         clueLog,
-        // field,
-        // dymaic,
-        // Qcode,
-        // delCustomer,
         editCustomer
     },
     data(){
@@ -456,6 +449,9 @@ export default {
         }
     },
     methods: {
+        open(){
+            window.open("/api/assets/upload/commonImg/public_pool_template.xlsx")
+        },
         //  下载
         download_excel() {
             let field = [
@@ -695,7 +691,7 @@ export default {
             formdata.append("file", file)
 
             function success(res){
-                _self.getTableData()
+                _self.get_data()
                 _self.openImportCustomer = false
                 return false
             }
