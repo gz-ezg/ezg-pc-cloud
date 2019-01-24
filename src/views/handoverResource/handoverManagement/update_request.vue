@@ -266,6 +266,7 @@ export default {
         },
         pageChange(e){
             this.page = e
+            this.get_file_data()
         },
         get_file_data(){
             let _self = this
@@ -275,7 +276,7 @@ export default {
                 params: {
                     page: _self.page,
                     pageSize: 10,
-                    companyname: _self.searchCompanyName
+                    // companyname: ""
                 }
             }
 
