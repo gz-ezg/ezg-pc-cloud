@@ -577,6 +577,7 @@ export default {
         },
         //  自定义排序
         sort(e){
+            console.log(e)
             this.sortField = e.key
             if(e.order=='normal'){
                 this.order = 'desc'
