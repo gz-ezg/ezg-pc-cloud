@@ -1139,6 +1139,15 @@ export const appRouter = [
                 name: 'admin_sql_deal',
                 component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/sql_admin/main.vue')
             },
+            {
+                //  未配置，暂时使用
+                access: 6034,
+                meta: 6034,
+                path: 'wechatTemplate',
+                title: '信息模板',
+                name: 'wechatTemplate_index',
+                component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/wechatTemplate/index.vue')
+            },
             // {
             //     access: 6032,
             //     path: 'smsRuleManagement',
@@ -1178,7 +1187,8 @@ export const appRouter = [
                 title: '属性管理',
                 name: 'attributeManagement',
                 component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/attributeManagement/attributeManagement_index.vue')
-            }
+            },
+
         ]
     },
     //  是否对内容迁移待定

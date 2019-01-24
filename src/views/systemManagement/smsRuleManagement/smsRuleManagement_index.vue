@@ -229,6 +229,7 @@
 
 <script>
 export default {
+  name: "smsRuleManagement_index",
   data() {
     return {
       groupDataCenter: true,

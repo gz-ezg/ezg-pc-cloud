@@ -65,7 +65,7 @@ Vue.use(iviewArea)
 //  axios 拦截器
 axios.interceptors.response.use(
     (response) => {
-        if(response.data.msgCode != 40000 && response.config.url != "api/legwork/apiLoginByWechatCode"){
+        if(response.data.msgCode == 50000 && response.config.url != "api/legwork/apiLoginByWechatCode"){
             if(process.env.NODE_ENV != "development"){
                 let url = 'api/system/saveFontErrMsg'
                 let config = {
