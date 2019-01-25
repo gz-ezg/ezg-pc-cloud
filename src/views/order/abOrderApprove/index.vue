@@ -10,6 +10,9 @@
                 </TabPane>
             </Tabs>
         </div>
+        <ab-order-detail></ab-order-detail>
+        <aduit-log></aduit-log>
+        <deal-ab-approve></deal-ab-approve>
     </div>
 </template>
 
@@ -17,10 +20,18 @@
 import unApproveAbList from './unApproveAbList'
 import ApproveAbList from './ApproveAbList'
 
+import dealAbApprove from './common/dealAbApprove'
+import abOrderDetail from './common/abOrderDetail'
+import aduitLog from './common/aduitLog'
+
 export default {
+    name: 'abOrderApprove_index',
     components:{
         unApproveAbList,
-        ApproveAbList
+        ApproveAbList,
+        abOrderDetail,
+        aduitLog,
+        dealAbApprove
     },
     data() {
         return {

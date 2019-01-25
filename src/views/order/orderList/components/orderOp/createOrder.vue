@@ -62,6 +62,14 @@
                             </Select>
                         </FormItem>
                     </Col>
+                    <Col span="8">
+                        <FormItem label="异常工单号">
+                            <div style="display:inline-block">
+                                <Input size="small" v-model="orderDetail.realnumber" readonly style="width:60%"/>
+                                <Button type="info" size="small">添加</Button>
+                            </div>
+                        </FormItem>
+                    </Col>
                 </Row>
                 <Row :gutter="16">
                     <Col span="8">

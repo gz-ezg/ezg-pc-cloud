@@ -62,6 +62,14 @@
                         </Select>
                     </FormItem>
                     </Col>
+                    <Col span="8">
+                        <FormItem label="异常工单号">
+                            <div style="display:inline-block">
+                                <Input size="small"  readonly style="width:60%"/>
+                                <Button type="info" size="small">查看</Button>
+                            </div>
+                        </FormItem>
+                    </Col>
                     <!-- <Col span="8" v-if="orderDetail.isornotkp=='Y'">
                         <FormItem>
                             <Button @click="open_isornotkp('show')" type="info" size="small">开票信息</Button>
