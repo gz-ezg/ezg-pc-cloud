@@ -107,7 +107,7 @@ export default {
                                     props: {
                                         transfer: true,
                                         confirm: true,
-                                        title: '您确定要退款此订单吗！',
+                                        title: '您确定要删除此记录！',
                                     },
                                     on: {
                                         'on-ok': async ()=>{

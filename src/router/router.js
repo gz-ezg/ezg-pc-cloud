@@ -1141,15 +1141,16 @@ export const appRouter = [
             },
             {
                 //  未配置，暂时使用
-                access: 6034,
-                meta: 6034,
+                access: 11620,
+                meta: 11620,
                 path: 'wechatTemplate',
                 title: '信息模板',
                 name: 'wechatTemplate_index',
                 component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/wechatTemplate/index.vue')
             },
             {
-                access: 6032,
+                access: 11621,
+                meta: 11621,
                 path: 'smsRuleManagement',
                 title: '短信规则',
                 name: 'smsRuleManagement_index',

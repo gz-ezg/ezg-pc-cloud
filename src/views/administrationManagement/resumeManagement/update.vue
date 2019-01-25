@@ -1,128 +1,129 @@
 <template>
     <div>
         <Modal
-            v-model="openUpdateTemplate"
-            width="50%"
-            title="修改简历"
+            title="简历编辑"
+            :value="true"
+            width="800"
+            @on-cancel="close"
         >
-            <Form 
-                ref="resumeTemplate"
-                :model="resumeTemplate"
-                :label-width="120"
-                :rules="create_rule"
-            >
-                
-                <FormItem label="姓名" prop="name">
-                    <Input v-model="resumeTemplate.name" placeholder=""></Input>
-                </FormItem>
-                <FormItem label="年龄" prop="age" >
-                    <Input v-model="resumeTemplate.age" placeholder=""></Input>
-                </FormItem>
-                <FormItem prop="sex" label="性别">
-                    <RadioGroup v-model="resumeTemplate.sex">
-                        <Radio label="0">男</Radio>
-                        <Radio label="1">女</Radio>
-                    </RadioGroup>
-                </FormItem>
-                <FormItem label="岗位" prop="post">
-                    <Input v-model="resumeTemplate.post" placeholder=""></Input>
-                </FormItem>
-                <FormItem label="电话" prop="tel">
-                    <Input v-model="resumeTemplate.tel" placeholder="" number></Input>
-                </FormItem>
-                <FormItem label="城市" prop="city">
-                    <Input v-model="resumeTemplate.city" placeholder=""></Input>
-                </FormItem>
-                <FormItem label="备注" prop="memo">
-                    <Input v-model="resumeTemplate.memo" placeholder="" type="textarea" :rows=5></Input>
-                </FormItem>
-            </Form>
+            <!-- <Row :gutter="20">
+                <Col span="24"> -->
+                    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120">
+                        <FormItem label="姓名：" prop="name">
+                            <Input v-model="formValidate.name" placeholder=""></Input>
+                        </FormItem>
+                        <FormItem label="电话：" prop="tel">
+                            <Input v-model="formValidate.tel" placeholder=""></Input>
+                        </FormItem>
+                        <FormItem label="邮箱：" prop="email">
+                            <Input v-model="formValidate.email" placeholder=""></Input>
+                        </FormItem>
+                        <FormItem label="性别：" prop="sex">
+                            <Select transfer v-model="formValidate.sex">
+                                <Option v-for="(item, index) in sextype" :value="item.typecode" :key="index">{{ item.typename }}</Option>
+                            </Select>
+                        </FormItem>
+                        <FormItem label="年龄：" prop="age">
+                            <Input v-model="formValidate.age" placeholder="" ></Input>
+                        </FormItem>
+                        <FormItem label="城市：" prop="city">
+                            <Select transfer v-model="formValidate.city" >
+                                <Option v-for="(item, index) in applyArea" :value="item.typecode" :key="index">{{ item.typename }}</Option>
+                            </Select>
+                        </FormItem>
+                        <FormItem label="岗位：" prop="post">
+                            <Select transfer v-model="formValidate.post" >
+                                <Option v-for="(item, index) in applyPosition" :value="item.typecode" :key="index">{{ item.typename }}</Option>
+                            </Select>
+                        </FormItem>
+                        <FormItem label="备注" prop="memo">
+                            <Input v-model="formValidate.memo" placeholder="" type="textarea"  :rows=5></Input>
+                        </FormItem>
+                    </Form>
+                <!-- </Col>
+            </Row> -->
             <div slot="footer">
-                <Button type="primary" @click="update_templ" :loading="loading">修改</Button>
+                <Button type="primary" @click="update" :loading="loading">编辑</Button>
+                <Button type="ghost" @click="close">关闭</Button>
             </div>
         </Modal>
     </div>
 </template>
 
 <script>
+import { resumeUpdate } from './resume.js'
 export default {
-    data(){
-        return{
-            openUpdateTemplate: false,
-            loading: false,
-            resumeTemplate: {
-                id: "",
-                name: "",
-                age: "",
-                sex: "",
-                post: "",
-                memo: "",
-                tel: "",
-                city: ""
-            },
-            create_rule:{
-                name:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
-                post:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
-                sex:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
-                tel:[{ required: true, message: '必选项！', trigger: 'change', type:'number' }]
-            },
+    props: {
+        applyPosition: {
+            type: [String, Array]
+        },
+        applyArea: {
+            type: [String, Array]
+        },
+        sextype: {
+            type: [String, Array]
+        },
+        detail: {
+            type: [String, Object]
         }
     },
-    methods:{
-        valid_create(){
-            let _self = this
-            this.$refs["resumeTemplate"].validate((valid) => {
+    data(){
+        return {
+            formValidate: {
+                sex: 0,
+                city: "gz"
+            },
+            ruleValidate: {
+                // name:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
+                // post:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
+                // sex:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
+                // tel:[{ required: true, message: '必选项！', trigger: 'change', type:'number' }]
+            },
+            loading: false,
+            file: []
+        }
+    },
+    methods: {
+        fileRemove(e) {
+            this.file.splice(this.file.indexOf(e), 1);
+        },
+        handleUpload(file) {
+            this.file.push(file)
+            return false;
+        },
+        update(){
+            this.$refs["formValidate"].validate((valid) => {
                 if (valid) {
-                    _self.update_templ()
-                } else {
+                    this.submit()
                 }
             })
         },
-        update_templ(){
-            let _self = this
-            _self.loading = true
-            let url = `api/system/resource/resume/update`
-
-            let config = {
-                name: _self.resumeTemplate.name,
-                age: _self.resumeTemplate.age,
-                sex: _self.resumeTemplate.sex,
-                post: _self.resumeTemplate.post,
-                memo: _self.resumeTemplate.memo,
-                tel: _self.resumeTemplate.tel,
-                city:_self.resumeTemplate.city,
-                id:_self.resumeTemplate.id
+        async submit(){
+            this.loading = true
+            let formdata = new FormData()
+            // for(let x in this.formValidate){
+            //     formdata.append(x, this.formValidate[x])
+            // }
+            // if(this.file[0] == null){
+            //     this.$Message.error("请选择文件")
+            //     this.loading = false
+            //     return;
+            // }
+            // formdata.append('file',this.file[0]);
+            let {status, data} = await resumeUpdate(this.formValidate)
+            this.loading = false
+            if(status){
+                this.close(true)
             }
             
-            function success(res){
-                _self.loading = false
-                _self.$refs['resumeTemplate'].resetFields()
-                _self.openUpdateTemplate = false
-                _self.$bus.emit("UPDATE_RESUME_LIST",true)
-            }
-
-            function fail(err){
-                _self.loading = false
-            }
-
-            this.$Post(url, config, success, fail)
-        }
+        },
+        close(e){
+            this.$emit("close", e)
+        },
     },
-    created() {
-        let _self = this
-        this.$bus.on("OPEN_EDIT_RESUME_TEMPLATE",(e)=>{
-            // console.log(e)
-            _self.resumeTemplate.id = e.id;
-            _self.resumeTemplate.name = e.name;
-            _self.resumeTemplate.age = e.age;
-            _self.resumeTemplate.sex = e.sex.toString();
-            _self.resumeTemplate.post = e.post;
-            _self.resumeTemplate.memo = e.memo;
-            _self.resumeTemplate.tel = parseInt(e.tel);
-            _self.resumeTemplate.city = e.city;
-            _self.openUpdateTemplate = true
-        })
-    },
+    created(){
+        this.formValidate = this.detail
+        this.formValidate.sex = this.detail.sex.toString()
+    }
 }
 </script>
-
