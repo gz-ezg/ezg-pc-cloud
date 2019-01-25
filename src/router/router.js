@@ -1148,13 +1148,13 @@ export const appRouter = [
                 name: 'wechatTemplate_index',
                 component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/wechatTemplate/index.vue')
             },
-            // {
-            //     access: 6032,
-            //     path: 'smsRuleManagement',
-            //     title: '短信规则管理',
-            //     name: 'smsRuleManagement_index',
-            //     component: () => import(/* webpackChunkName: "systemManagement" */ '@/views/systemManagement/smsRuleManagement/smsRuleManagement_index.vue')
-            // },
+            {
+                access: 6032,
+                path: 'smsRuleManagement',
+                title: '短信规则',
+                name: 'smsRuleManagement_index',
+                component: () => import(/* webpackChunkName: "systemManagement" */ '@/views/systemManagement/smsRuleManagement/index.vue')
+            },
             {
                 access: 6085,
                 meta: 6085,

@@ -33,8 +33,8 @@
                 <FormItem label="wechatcompanyappid" prop="wechatcompanyappid">
                     <Input v-model="formValidate.wechatcompanyappid" placeholder="输入wechatcompanyappid"></Input>
                 </FormItem>
-                <FormItem label="msgruleid" prop="msgruleid">
-                    <Input v-model="formValidate.msgruleid" placeholder="输入msgruleid"></Input>
+                <FormItem label="短信规则ID" prop="msgruleid">
+                    <Input v-model="formValidate.msgruleid" placeholder="输入短信规则ID"></Input>
                 </FormItem>
             </Form>
             <div slot="footer">
