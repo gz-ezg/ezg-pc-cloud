@@ -29,23 +29,26 @@
                 @on-page-size-change="page_size_change"
                 style="margin-top: 10px"></Page>
         </Row>
-        <create :applyPosition="applyPosition" :applyArea="applyArea" :sextype="sextype" v-if="openCreate" @close="close"></create>
+        <create :unusualType="unusualType" v-if="openCreate" @close="close"></create>
         </Card>
-        <update :applyPosition="applyPosition" :applyArea="applyArea" :sextype="sextype" v-if="openUpdate" @close="close" :detail="currentRow"></update>
+        <update :unusualType="unusualType" v-if="openUpdate" @close="close" :detail="currentRow"></update>
+        <detail :unusualType="unusualType" v-if="openDetail" @close="close" :detail="currentRow"></detail>
     </div>
 </template>
 
 <script>
-import { getResumeList, getDictionary, resumeDel } from './resume.js'
+import { unusualWorkOrderList, getDictionary, unusualWorkOrderDel } from './api.js'
 import create from './create'
 import update from './update'
+import detail from './detail'
 import searchModel from '../../woa-components/searchModel/index'
 export default {
-    name: "wechatTemplate_index",
+    name: "errorWorkOrder_index",
     components:{
         searchModel,
         create,
-        update
+        update,
+        detail
     },
     data(){
         return {
@@ -57,72 +60,76 @@ export default {
             data: [],
             header: [
                 {
-                    title: "姓名",
+                    title: "工单号",
+                    key: "unusual_code",
+                    width: 150
+                },
+                {
+                    title: "公司名称",
+                    key: "companyname",
+                    minWidth: 250
+                },
+                {
+                    title: "客户名称",
                     key: "name",
-                    minWidth: 100
-                },
-                {
-                    title: "电话",
-                    key: "tel",
-                    minWidth: 150
-                },
-                {
-                    title: "邮箱",
-                    key: "email",
                     minWidth: 120
                 },
                 {
-                    title: "性别",
-                    key: "sexname",
-                    minWidth: 80,
-                    render: (h, params) => {
-                        let sexname = ""
-                        if(params.row.sex == 0){
-                            sexname = "男"
-                        }else{
-                            sexname = "女"
-                        }
-                        return h('div', sexname)
-                    }
+                    title: "联系方式",
+                    key: "tel",
+                    minWidth: 150,
                 },
                 {
-                    title: "年龄",
-                    key: "age",
-                    minWidth: 90,
+                    title: "产品内容",
+                    key: 'product_content',
+                    minWidth: 150
                 },
                 {
-                    title: "城市",
-                    key: "cityName",
-                    minWidth: 80
+                    title: "异常类型",
+                    key: "unusual_type_name",
+                    minWidth: 120
                 },
                 {
-                    title: "岗位",
-                    key: "postName",
-                    minWidth:120
+                    title: "当前状态",
+                    key: "current_process_name",
+                    minWidth: 120
+                },
+                {
+                    title: "创建人",
+                    key: "realname",
+                    minWidth: 120
                 },
                 {
                     title: "创建时间",
-                    key: "createdate",
-                    minWidth:120,
-                    render: (h, params) => {
-                        let temp = params.row.createdate
-                        if(temp){
-                            temp = temp.slice(0,10)
-                        }
-                        return h('div',{},temp)
-                    }
+                    key: "create_date",
+                    minWidth: 120
                 },
                 {
                     title: "备注",
-                    key: "memo",
+                    key: "apply_memo",
                     minWidth: 150
                 },
                 {
                     title:"下载",
-                    width: 180,
+                    width: 200,
                     align: 'center',
                     render: (h, params) => {
                         return h('div', [
+                            h('Button', {
+                                props: {
+                                    type: 'success',
+                                    size: 'small'
+                                },
+                                style: {
+                                    marginRight: '5px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.currentRow = params.row
+                                        this.openDetail = true
+                                    }
+                                }
+                            }, '查看'),
                             h('Button', {
                                 props: {
                                     type: "info",
@@ -133,28 +140,11 @@ export default {
                                 },
                                 on: {
                                     click: ()=>{
-                                        // console.log(params.row)
                                         this.currentRow = params.row
                                         this.openUpdate = true
                                     }
                                 }
                             },'编辑'),
-                            h('Button', {
-                                props: {
-                                    type: 'success',
-                                    size: 'small'
-                                },
-                                style: {
-                                    marginLeft: '5px'
-                                },
-                                on: {
-                                    click: () => {
-                                            // console.log(params)
-                                        let url = `api/system/resource/download?id=` + params.row.id
-                                        window.open(url)
-                                    }
-                                }
-                            }, '下载'),
                             h('Button', {
                                 props: {
                                     type: 'warning',
@@ -173,12 +163,15 @@ export default {
                                     on: {
                                         'on-ok': async ()=>{
                                             let config = {
-                                                id: params.row.id,
+                                                params: {
+                                                    applyId: params.row.applyId,
+                                                }
                                             }
-                                            let { status, data } = await resumeDel(config)
-                                            if(status){
-                                                this.get_data()
+                                            let data = await unusualWorkOrderDel(config)
+                                            if(data.deleteFlag){
+                                                this.$Message.success("删除成功！")
                                             }
+                                            this.get_data()
                                         },
                                     }
                                 }, '删除')
@@ -187,55 +180,13 @@ export default {
                     }
                 }
             ],
-            searchData: [
-                {
-                    label: "姓名：",
-                    key: "name",
-                    type: "input"
-                },
-                {
-                    label: "年龄：",
-                    key: "age",
-                    type: "input"
-                },
-                {
-                    label: "性别：",
-                    key: "sex",
-                    type: "select",
-                    data: []
-                },
-                {
-                    label: "电话：",
-                    key: "tel",
-                    type: "input",
-                },
-                {
-                    label: "岗位：",
-                    key: "post",
-                    type: "select",
-                    data: []
-                },
-                {
-                    label: "城市：",
-                    key: "city",
-                    type: "select",
-                    data: []
-                },
-                {
-                    label: "创建时间",
-                    key: "createdate",
-                    type: "datePicker"
-                }
-            ],
+            searchData: [],
             searchForm: {},
-            applyPosition: [],
-            applyPositionMap: new Map(),
-            applyArea: [],
-            applyAreaMap: new Map(),
-            sextype: [],
-            sextypeMap: new Map(),
+            unusualType: [],
+            unusualTypeMap: new Map(),
             openCreate: false,
-            openUpdate: false
+            openUpdate: false,
+            openDetail: false
         }
     },
     methods: {
@@ -252,11 +203,13 @@ export default {
             Object.assign(config.params, this.searchForm)
 
             try {
-                let { total, rows } = await getResumeList(config)
+                let { total, rows } = await unusualWorkOrderList(config)
                 this.total = total
                 this.data = rows.map((item)=>{
-                    item.cityName = this.applyAreaMap.get(item.city)
-                    item.postName = this.applyPositionMap.get(item.post)
+                    item.unusual_type_name = this.unusualTypeMap.get(item.unusual_type)
+                    if(item.create_date){
+                        item.create_date = item.create_date.slice(0, 10)
+                    }
                     return item
                 })
             } catch (error) {
@@ -279,21 +232,15 @@ export default {
             this.get_data()
         },
         async get_data_center(){
-            let params = "applyPosition,applyArea,sextype"
-            let { applyPosition,applyArea,sextype } = await getDictionary(params)
-            this.applyPosition = applyPosition
-            this.applyArea = applyArea
-            this.sextype = sextype
-            this.applyPositionMap = this.$array2map(applyPosition)
-            this.applyAreaMap = this.$array2map(applyArea)
-            this.sextypeMap = this.$array2map(sextype)
-            this.searchData[2].data = sextype
-            this.searchData[4].data = applyPosition
-            this.searchData[5].data = applyArea
+            let params = "unusualType"
+            let { unusualType } = await getDictionary(params)
+            this.unusualType = unusualType
+            this.unusualTypeMap = this.$array2map(unusualType)
         },
         close(e){
             this.openUpdate = false
             this.openCreate = false
+            this.openDetail = false
             if(e){
                 this.get_data()
             }

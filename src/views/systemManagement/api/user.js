@@ -35,9 +35,130 @@ function postUpdateUser(config, success, fail){
     })
 }
 
+//  权限设置
+function getUserMenusByUserId(config, success, fail){
+    let url = 'user/role/getUserMenusByUserId?'
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxGet(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+
+function getUserButtonsByUserIdAndInterfaceId(config, success, fail){
+    let url = 'user/role/getUserButtonsByUserIdAndInterfaceId'
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxGet(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+
+function getUserDataRulesByUserIdAndInterfaceId(config, success, fail){
+    let url = 'user/role/getUserDataRulesByUserIdAndInterfaceId'
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxGet(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+
+function addInterfaceAndOperationToUser(config, success, fail){
+    let url = 'user/role/addInterfaceAndOperationToUser'
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxPost(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+
+function addInterfaceToUser(config, success, fail){
+    let url = 'user/role/addInterfaceToUser'
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxPost(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+
+function addInterfaceAndDataRuleToUser(config, success, fail){
+    let url = 'user/role/addInterfaceAndDataRuleToUser'
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxPost(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+//  权限剔除
+function getUserRMMenusByUserId(config, success, fail){
+    let url = 'user/role/getUserRMMenusByUserId?'
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxGet(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+
+function getUserRMButtonsByUserIdAndInterfaceId(config, success, fail){
+    let url = 'user/role/getUserRMButtonsByUserIdAndInterfaceId'
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxGet(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+
+function getUserRMDataRulesByUserIdAndInterfaceId(config, success, fail){
+    let url = 'user/role/getUserRMDataRulesByUserIdAndInterfaceId'
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxGet(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+
+function addInterfaceAndOperationToUserRM(config, success, fail){
+    let url = 'user/role/addInterfaceAndOperationToUserRM'
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxPost(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+
+function addInterfaceToUserRM(config, success, fail){
+    let url = 'user/role/addInterfaceToUserRM'
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxPost(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+
+function addInterfaceAndDataRuleToUserRM(config, success, fail){
+    let url = 'user/role/addInterfaceAndDataRuleToUserRM'
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxPost(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+
 export {
     getUserDetail,
     getDictionary,
     postUpdateUser,
-    getUserList
+    getUserList,
+    getUserMenusByUserId,
+    getUserRMMenusByUserId,
+    getUserButtonsByUserIdAndInterfaceId,
+    getUserDataRulesByUserIdAndInterfaceId,
+    getUserRMButtonsByUserIdAndInterfaceId,
+    getUserRMDataRulesByUserIdAndInterfaceId,
+    addInterfaceAndOperationToUser,
+    addInterfaceAndOperationToUserRM,
+    addInterfaceToUser,
+    addInterfaceToUserRM,
+    addInterfaceAndDataRuleToUser,
+    addInterfaceAndDataRuleToUserRM
 }

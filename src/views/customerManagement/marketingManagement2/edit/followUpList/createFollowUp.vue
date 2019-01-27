@@ -101,7 +101,7 @@ export default {
     },
     data(){
         return {
-            openFinish: false,
+            openFinish: true,
             openFollowCreate: false,
             formValidate: {
                 companyId: "",
@@ -164,7 +164,7 @@ export default {
                 switch(temp){
                     case "kuaiji":
                         _self.formValidate.followUpType = "18"
-                        _self.openFinish = true
+                        // _self.openFinish = true
                         _self.formValidate.finishFlag = 'N'
                         break;
                     case "shangshi":
@@ -179,7 +179,7 @@ export default {
                 }
             }else{
                 _self.followupshow = true
-                _self.openFinish = true
+                // _self.openFinish = false
             }
         },
         get_data_center(){

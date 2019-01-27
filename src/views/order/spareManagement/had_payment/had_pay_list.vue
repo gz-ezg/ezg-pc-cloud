@@ -155,7 +155,7 @@ export default {
                 let field = [
                     {field:'ordercode',title:'订单号码'},
                     {field:'product',title:'产品名称'},
-                    {field:'companyname',title:'公司名称'},
+                    {field:'companyName',title:'公司名称'},
                     {field:'totalamount',title:'余款总额'},
                     {field:'paynumber',title:'已补余款'},
                     {field:'unpaidamount',title:'剩余余款'},

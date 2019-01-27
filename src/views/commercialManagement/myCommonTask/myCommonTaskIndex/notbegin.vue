@@ -46,7 +46,7 @@
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button> -->
                 <Button type="primary" icon="ios-color-wand-outline" @click="open_set_time">设置计划完成时间</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="over_due_reason">逾期原因</Button>
-
+                <Button type="primary" icon="ios-color-wand-outline" @click="reset_wordorder_process" v-if="isAdmin">重新工单流程</Button>
                 <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
@@ -153,6 +153,7 @@ export default {
     props:['paydir'],
     data() {
             return {
+                isAdmin: false,
                 managestatus:[],
                 sortField:'updatedate',
                 order:'desc',
@@ -662,6 +663,30 @@ export default {
             // console.log(e)
             this.current_row = e
         },
+        //  重置流程图！
+        reset_wordorder_process(){
+            console.log(this.current_row)
+            let _self = this
+            if(this.current_row != ''){
+                let url = `api/order/resetWorkOrderProcess`
+                let _self = this
+
+                let config = {
+                    params:{
+                        workOrderId: _self.current_row.id
+                    }
+                }
+
+                function success(res){
+                    console.log(res)
+                    _self.$Message.success(res.data.msg)
+                }
+
+                this.$Get(url, config, success)
+            }else{
+                this.$Message.warning('请选择一行进行流转！')
+            }
+        },
         showdetail(){
             if(this.current_row != ''){
                 // Bus.$emit('myCommonTask',this.current_row)
@@ -719,6 +744,11 @@ export default {
         Bus.$on('flowsuccess',(e)=>{
             _self.getData()
         })
+        if(localStorage.getItem('id')==10228 || localStorage.getItem('id')==10059){
+            _self.isAdmin = true
+        }else{
+            _self.isAdmin = false
+        }
         // console.log(_self.paydir)
 }
 

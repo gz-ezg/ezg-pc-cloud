@@ -65,7 +65,7 @@ Vue.use(iviewArea)
 //  axios 拦截器
 axios.interceptors.response.use(
     (response) => {
-        if(response.data.msgCode != 40000 && response.config.url != "api/legwork/apiLoginByWechatCode"){
+        if(response.data.msgCode == 50000 && response.config.url != "api/legwork/apiLoginByWechatCode"){
             if(process.env.NODE_ENV != "development"){
                 let url = 'api/system/saveFontErrMsg'
                 let config = {
@@ -98,10 +98,13 @@ axios.interceptors.response.use(
         }
         if(response.data.msgCode == '60000'){
             iView.Message.warning('对不起，您没有权限访问该页面！')
-            iView.Message.destroy()
-            router.push({
-                name:'home_index'
-            })
+            // iView.Message.destroy()
+            setTimeout(()=>{
+                router.push({
+                    name:'home_index'
+                })
+            }, 500)
+            // return false
         }
         return response;
     },

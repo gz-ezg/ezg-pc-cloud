@@ -1,158 +1,136 @@
 <template>
     <div>
         <Modal
-            v-model="openCreateTemplate"
-            width="40%"
-            title="创建简历"
+            title="简历录入"
+            :value="true"
+            width="800"
+            @on-cancel="close"
         >
-            <Form 
-                ref="resumeTemplate"
-                :model="resumeTemplate"
-                :rules="create_rule"
-                :label-width="120"
-            >
-                <FormItem label="姓名" prop="name">
-                    <Input v-model="resumeTemplate.name" placeholder=""></Input>
-                </FormItem>
-                <FormItem label="年龄" prop="age" >
-                    <Input v-model="resumeTemplate.age" placeholder=""></Input>
-                </FormItem>
-                <FormItem prop="sex" label="性别">
-                    <RadioGroup v-model="resumeTemplate.sex">
-                        <Radio label="0">男</Radio>
-                        <Radio label="1">女</Radio>
-                    </RadioGroup>
-                </FormItem>
-                <FormItem label="岗位" prop="post">
-                    <Input v-model="resumeTemplate.post" placeholder=""></Input>
-                </FormItem>
-                <FormItem label="电话" prop="tel">
-                    <Input v-model="resumeTemplate.tel" placeholder="" number></Input>
-                </FormItem>
-                <FormItem label="城市" prop="city">
-                    <Input v-model="resumeTemplate.city" placeholder=""></Input>
-                </FormItem>
-                <FormItem label="备注" prop="memo">
-                    <Input v-model="resumeTemplate.memo" placeholder="" type="textarea"  :rows=5></Input>
-                </FormItem>
-                 <Row>
-                <center v-if="isshow">
-                    <Upload
-                        ref="upload"
-                        :before-upload="handleUpload"
-                        action=""
-                        >
-                        <Button type="ghost" icon="ios-cloud-upload-outline">选择文件</Button>
-                    </Upload>
-                    <div v-for="(item,index) in file" :key=index>{{ item.name }}
-                        <Button type="text" @click="fileRemove(item)">移除</Button>
-                    </div>
-                </center>
-            </Row>
-            </Form>
+            <!-- <Row :gutter="20">
+                <Col span="24"> -->
+                    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120">
+                        <FormItem label="姓名：" prop="name">
+                            <Input v-model="formValidate.name" placeholder=""></Input>
+                        </FormItem>
+                        <FormItem label="电话：" prop="tel">
+                            <Input v-model="formValidate.tel" placeholder=""></Input>
+                        </FormItem>
+                        <FormItem label="邮箱：" prop="email">
+                            <Input v-model="formValidate.email" placeholder=""></Input>
+                        </FormItem>
+                        <FormItem label="性别：" prop="sex">
+                            <Select transfer v-model="formValidate.sex">
+                                <Option v-for="(item, index) in sextype" :value="item.typecode" :key="index">{{ item.typename }}</Option>
+                            </Select>
+                        </FormItem>
+                        <FormItem label="年龄：" prop="age">
+                            <Input v-model="formValidate.age" placeholder="" ></Input>
+                        </FormItem>
+                        <FormItem label="城市：" prop="city">
+                            <Select transfer v-model="formValidate.city" >
+                                <Option v-for="(item, index) in applyArea" :value="item.typecode" :key="index">{{ item.typename }}</Option>
+                            </Select>
+                        </FormItem>
+                        <FormItem label="岗位：" prop="post">
+                            <Select transfer v-model="formValidate.post" >
+                                <Option v-for="(item, index) in applyPosition" :value="item.typecode" :key="index">{{ item.typename }}</Option>
+                            </Select>
+                        </FormItem>
+                        <FormItem label="备注" prop="memo">
+                            <Input v-model="formValidate.memo" placeholder="" type="textarea"  :rows=5></Input>
+                        </FormItem>
+                        <center>
+                            <Upload
+                                ref="upload"
+                                :before-upload="handleUpload"
+                                action=""
+                                >
+                                <Button type="ghost" icon="ios-cloud-upload-outline">选择文件</Button>
+                            </Upload>
+                            <div v-for="(item,index) in file" :key=index>{{ item.name }}
+                                <Button type="text" @click="fileRemove(item)">移除</Button>
+                            </div>
+                        </center>
+                    </Form>
+                <!-- </Col>
+            </Row> -->
             <div slot="footer">
-                <Button type="primary" @click="valid_create" :loading="loading">新增</Button>
+                <Button type="primary" @click="create" :loading="loading">新增</Button>
+                <Button type="ghost" @click="close">关闭</Button>
             </div>
         </Modal>
     </div>
 </template>
 
 <script>
+import { resumeCreate } from './resume.js'
 export default {
-    data(){
-        return{
-            isshow:true,
-            openCreateTemplate: false,
-            loading: false,
-            file:[],
-            resumeTemplate: {
-                name: "",
-                age: "",
-                sex: "0",
-                post: "",
-                memo: "",
-                tel: "",
-                city: "广州"
-            },
-            create_rule:{
-                name:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
-                post:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
-                sex:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
-                tel:[{ required: true, message: '必选项！', trigger: 'change', type:'number' }]
-            },
+    props: {
+        applyPosition: {
+            type: [String, Array]
+        },
+        applyArea: {
+            type: [String, Array]
+        },
+        sextype: {
+            type: [String, Array]
         }
     },
-    methods:{
-        cancel(){
-            this.file = []
-            // this.refs["resumeTemplate"].resetFields()
-        },
+    data(){
+        return {
+            formValidate: {
+                sex: 0,
+                city: "gz"
+            },
+            ruleValidate: {
+                // name:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
+                // post:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
+                // sex:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
+                // tel:[{ required: true, message: '必选项！', trigger: 'change', type:'number' }]
+            },
+            loading: false,
+            file: []
+        }
+    },
+    methods: {
         fileRemove(e) {
             this.file.splice(this.file.indexOf(e), 1);
         },
-         handleUpload(file) {
+        handleUpload(file) {
             this.file.push(file)
             return false;
         },
-        valid_create(){
-            let _self = this
-            this.$refs["resumeTemplate"].validate((valid) => {
+        create(){
+            this.$refs["formValidate"].validate((valid) => {
                 if (valid) {
-                    _self.create_templ()
-                } else {
+                    this.submit()
                 }
             })
         },
-        create_templ(){
-            let _self = this
-            _self.loading = true
-            let url = `api/zuul/system/resource/resume/create`
-            var formdata = new FormData()
-            if(_self.file[0] == null){
-                   _self.$Message.error("请选择文件")
-                   _self.loading = false
+        async submit(){
+            this.loading = true
+            let formdata = new FormData()
+            for(let x in this.formValidate){
+                formdata.append(x, this.formValidate[x])
+            }
+            if(this.file[0] == null){
+                this.$Message.error("请选择文件")
+                this.loading = false
                 return;
             }
-              
-            formdata.append('name', _self.resumeTemplate.name);
-            formdata.append('age',_self.resumeTemplate.age);
-            formdata.append('sex',_self.resumeTemplate.sex);
-            formdata.append('post', _self.resumeTemplate.post);
-            formdata.append('city', _self.resumeTemplate.city);
-            formdata.append('memo', _self.resumeTemplate.memo);
-            formdata.append('tel', _self.resumeTemplate.tel);
-            formdata.append('file',_self.file[0]);
-         
-            this.$http.post(url, formdata).then(function(res){
-                // console.log(res)
-                if(res.data.msgCode == "40000"){
-                    _self.$Message.success(res.data.msg)
-                    _self.cancel()
-                    _self.loading = false                    
-                    _self.$emit('update',true)
-                    _self.loading = false
-                    _self.$refs['resumeTemplate'].resetFields()
-                    _self.openCreateTemplate = false
-                    _self.$emit("update",true)
-                    _self.$bus.emit("UPDATE_RESUME_LIST",true)
-                }else{
-                    _self.$Message.error(res.data.msg)
-                    _self.loading = false                    
-                }
-            }).catch(function(err){
-                _self.$Message.error(err)
-                 _self.loading = false                    
-            })
-
-
-        }
+            formdata.append('file',this.file[0]);
+            let {status, data} = await resumeCreate(formdata)
+            this.loading = false
+            if(status){
+                this.close(true)
+            }
+        },
+        close(e){
+            this.$emit("close", e)
+        },
     },
-    created() {
-        let _self = this
-        this.$bus.on("OPEN_CREATE_RESUME_TEMPLATE",(e)=>{
-            _self.openCreateTemplate = true
-        })
-    },
+    created(){
+
+    }
 }
 </script>
-

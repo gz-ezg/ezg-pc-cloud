@@ -562,6 +562,24 @@ export const appRouter = [
                 component: () => import( /* webpackChunkName: "orderApprove_index" */ '@/views/order/orderApprove/index.vue')
             },
             // {
+            //     access: 6019,
+            //     meta: 6019,
+            //     path: 'errorWorkOrder',
+            //     title: '异常工单',
+            //     name: 'errorWorkOrder_index',
+            //     component: () => import( /* webpackChunkName: "errorWorkOrder_index" */ '@/views/order/errorWorkOrder/index.vue')
+                
+            // },
+            // {
+            //     access: 6019,
+            //     meta: 6019,
+            //     path: 'errorWorkOrderApprove',
+            //     title: '异常审批',
+            //     name: 'errorWorkOrderApprove_index',
+            //     component: () => import( /* webpackChunkName: "errorWorkOrder_index" */ '@/views/order/errorWorkOrderApprove/index.vue')
+                
+            // },
+            // {
             //     //   easyUI版
             //     access: 6019,
             //     meta: 6019,
@@ -1160,13 +1178,23 @@ export const appRouter = [
                 name: 'admin_sql_deal',
                 component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/sql_admin/main.vue')
             },
-            // {
-            //     access: 6032,
-            //     path: 'smsRuleManagement',
-            //     title: '短信规则管理',
-            //     name: 'smsRuleManagement_index',
-            //     component: () => import(/* webpackChunkName: "systemManagement" */ '@/views/systemManagement/smsRuleManagement/smsRuleManagement_index.vue')
-            // },
+            {
+                //  未配置，暂时使用
+                access: 11620,
+                meta: 11620,
+                path: 'wechatTemplate',
+                title: '信息模板',
+                name: 'wechatTemplate_index',
+                component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/wechatTemplate/index.vue')
+            },
+            {
+                access: 11621,
+                meta: 11621,
+                path: 'smsRuleManagement',
+                title: '短信规则',
+                name: 'smsRuleManagement_index',
+                component: () => import(/* webpackChunkName: "systemManagement" */ '@/views/systemManagement/smsRuleManagement/index.vue')
+            },
             {
                 access: 6085,
                 meta: 6085,
@@ -1199,7 +1227,8 @@ export const appRouter = [
                 title: '属性管理',
                 name: 'attributeManagement',
                 component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/attributeManagement/attributeManagement_index.vue')
-            }
+            },
+
         ]
     },
     //  是否对内容迁移待定
