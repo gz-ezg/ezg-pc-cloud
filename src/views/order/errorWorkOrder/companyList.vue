@@ -29,7 +29,7 @@
                     :current.sync="page"
                     show-total
                     show-elevator
-                    @on-change="pageChange"
+                    @on-change="page_change"
                     style="margin-top: 10px"></Page>
             <div slot="footer"></div>
         </Modal>
@@ -69,48 +69,37 @@ export default {
     },
     methods: {
         async get_data(){
-            let _self = this
-            let url = `api/customer/company/list`
-            _self.loading = true
+            this.loading = true
             let config = {
                 params: {
-                    page: _self.page,
+                    page: this.page,
                     pageSize: 10,
-                    companyname: _self.searchCompany
+                    companyname: this.searchCompany
                 }
             }
 
-            function success(res){
-                _self.data = res.data.data.rows
-                _self.total = res.data.data.total
-                for(let i = 0; i < _self.data.length; i++){
-                    _self.data[i].gdsStatus = _self.gds_map.get(_self.data[i].gdsreport)
-                }
-                _self.loading = false
+            try {
+                let { total, rows} = await getCompanyList(config)
+                this.data = rows
+                this.total = total
+            } catch (error) {
+                console.log(error)
             }
-
-            this.$Get(url, config, success)
+            this.loading = false
         },
-        pageChange(e){
+        page_change(e){
             this.page = e
             this.get_data()
         },
         row_select(e){
-            // console.log(e)
             this.$emit("company-change", e)
-            this.openSelectCompany = false
         },
         close(){
-
+            this.$emit("close")
         }
     },
     created() {
-        let _self = this
-        this.$bus.off("ORDER_OPEN_SELECT_COMPANY", true)
-        this.$bus.on("ORDER_OPEN_SELECT_COMPANY", (e)=>{
-            _self.get_data()
-            _self.openSelectCompany = true
-        })
+        this.get_data()
     },
 }
 </script>

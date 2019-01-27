@@ -561,15 +561,24 @@ export const appRouter = [
                 name: 'orderApprove_index',
                 component: () => import( /* webpackChunkName: "orderApprove_index" */ '@/views/order/orderApprove/index.vue')
             },
-            {
-                access: 6019,
-                meta: 6019,
-                path: 'errorWorkOrder',
-                title: '异常工单',
-                name: 'errorWorkOrder_index',
-                component: () => import( /* webpackChunkName: "errorWorkOrder_index" */ '@/views/order/errorWorkOrder/index.vue')
+            // {
+            //     access: 6019,
+            //     meta: 6019,
+            //     path: 'errorWorkOrder',
+            //     title: '异常工单',
+            //     name: 'errorWorkOrder_index',
+            //     component: () => import( /* webpackChunkName: "errorWorkOrder_index" */ '@/views/order/errorWorkOrder/index.vue')
                 
-            },
+            // },
+            // {
+            //     access: 6019,
+            //     meta: 6019,
+            //     path: 'errorWorkOrderApprove',
+            //     title: '异常审批',
+            //     name: 'errorWorkOrderApprove_index',
+            //     component: () => import( /* webpackChunkName: "errorWorkOrder_index" */ '@/views/order/errorWorkOrderApprove/index.vue')
+                
+            // },
             // {
             //     //   easyUI版
             //     access: 6019,

@@ -29,9 +29,10 @@
                 @on-page-size-change="page_size_change"
                 style="margin-top: 10px"></Page>
         </Row>
-        <create :applyPosition="applyPosition" :applyArea="applyArea" :sextype="sextype" v-if="openCreate" @close="close"></create>
+        <create :unusualType="unusualType" v-if="openCreate" @close="close"></create>
         </Card>
-        <update :applyPosition="applyPosition" :applyArea="applyArea" :sextype="sextype" v-if="openUpdate" @close="close" :detail="currentRow"></update>
+        <update :unusualType="unusualType" v-if="openUpdate" @close="close" :detail="currentRow"></update>
+        <detail :unusualType="unusualType" v-if="openDetail" @close="close" :detail="currentRow"></detail>
     </div>
 </template>
 
@@ -39,13 +40,15 @@
 import { unusualWorkOrderList, getDictionary, unusualWorkOrderDel } from './api.js'
 import create from './create'
 import update from './update'
+import detail from './detail'
 import searchModel from '../../woa-components/searchModel/index'
 export default {
     name: "errorWorkOrder_index",
     components:{
         searchModel,
         create,
-        update
+        update,
+        detail
     },
     data(){
         return {
@@ -83,7 +86,7 @@ export default {
                 },
                 {
                     title: "异常类型",
-                    key: "unusual_type",
+                    key: "unusual_type_name",
                     minWidth: 120
                 },
                 {
@@ -108,10 +111,25 @@ export default {
                 },
                 {
                     title:"下载",
-                    width: 180,
+                    width: 200,
                     align: 'center',
                     render: (h, params) => {
                         return h('div', [
+                            h('Button', {
+                                props: {
+                                    type: 'success',
+                                    size: 'small'
+                                },
+                                style: {
+                                    marginRight: '5px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.currentRow = params.row
+                                        this.openDetail = true
+                                    }
+                                }
+                            }, '查看'),
                             h('Button', {
                                 props: {
                                     type: "info",
@@ -122,26 +140,11 @@ export default {
                                 },
                                 on: {
                                     click: ()=>{
-                                        // console.log(params.row)
                                         this.currentRow = params.row
                                         this.openUpdate = true
                                     }
                                 }
                             },'编辑'),
-                            h('Button', {
-                                props: {
-                                    type: 'success',
-                                    size: 'small'
-                                },
-                                style: {
-                                    marginLeft: '5px'
-                                },
-                                on: {
-                                    click: () => {
-
-                                    }
-                                }
-                            }, '查看'),
                             h('Button', {
                                 props: {
                                     type: 'warning',
@@ -182,7 +185,8 @@ export default {
             unusualType: [],
             unusualTypeMap: new Map(),
             openCreate: false,
-            openUpdate: false
+            openUpdate: false,
+            openDetail: false
         }
     },
     methods: {
@@ -202,7 +206,7 @@ export default {
                 let { total, rows } = await unusualWorkOrderList(config)
                 this.total = total
                 this.data = rows.map((item)=>{
-                    item.unusual_type = this.unusualTypeMap.get(item.unusual_type)
+                    item.unusual_type_name = this.unusualTypeMap.get(item.unusual_type)
                     if(item.create_date){
                         item.create_date = item.create_date.slice(0, 10)
                     }
@@ -236,6 +240,7 @@ export default {
         close(e){
             this.openUpdate = false
             this.openCreate = false
+            this.openDetail = false
             if(e){
                 this.get_data()
             }
