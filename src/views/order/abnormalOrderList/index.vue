@@ -3,7 +3,7 @@
         <Card style="min-width:800px">
             <Row>
                 <ButtonGroup>
-                    <Button type="primary" icon="plus" @click="open_add">新增</Button>
+                    <Button type="primary" icon="plus" @click="openAdd=true">新增</Button>
                     <Button type="primary" icon="edit" @click="open_edit">编辑</Button>
                     <Button type="primary" icon="information-circled" @click="abOrder_show">查看</Button>
                     <Button type="primary" icon="trash-b" @click="del_abOrder">删除</Button>
@@ -35,7 +35,7 @@
             </Row>
         </Card>
 
-        <add-ab-order></add-ab-order>
+        <add-ab-order v-if="openAdd" @close="close"></add-ab-order>
         <show-ab-order></show-ab-order>
         <edit-ab-order></edit-ab-order>
     </div>
@@ -172,7 +172,8 @@ export default {
                     key: 'realname',
                     minWidth: 100
                 }
-            ]
+            ],
+            openAdd: false
         }
     },
     methods:{
@@ -237,10 +238,11 @@ export default {
             }
         },
 
-        //新增异常工单
-        open_add(){
-            this.$bus.emit('OPEN_ABORDERLIST_ADD',true)
-            this.selectRow = ''
+        close(e){
+            this.openAdd = false
+            if(e){
+                this.get_data()
+            }
         },
 
         //编辑异常工单

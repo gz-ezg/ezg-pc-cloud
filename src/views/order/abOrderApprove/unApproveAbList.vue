@@ -175,7 +175,7 @@ export default {
                                         this.open_approve_log(params)
                                     }
                                 }
-                            }, '审批记录')
+                            }, '查看详情')
                         ]);
                     }
                 }
@@ -287,9 +287,9 @@ export default {
             }
         },
 
-        //查看审批记录
+        //查看详情
         open_approve_log(e){
-            this.$bus.emit("ORDER_AB_APPROVELIST_LOG", e)
+            this.$bus.emit("OPEN_AB_ORDER_DETAIL", e.row)
         }
     },
     created() {

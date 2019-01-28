@@ -2,7 +2,7 @@
     <div>
         <Modal
             v-model="openAbApproveDeal"
-            title="查看"
+            title="办理审批"
             width="100%"
         >
             <Form ref="formValidateDetail" :model="formValidateDetail" :label-width="100">

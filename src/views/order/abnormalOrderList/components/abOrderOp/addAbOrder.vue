@@ -2,10 +2,9 @@
    <div>
        <Modal
             title="新增异常工单"
-            v-model="openAddAbOrderDetail"
+            :value="true"
             width="100"
-            :mask-closable="false"
-            @on-cancel="cancel"
+            @on-cancel="close"
        >
             <Form ref="abnormalOrderDetail" :model="abnormalOrderDetail" :rules="ruleInline" :label-width="100">
                 <Row :gutter="16">
@@ -55,7 +54,7 @@
             </Form>
             <div slot="footer">
                 <Button type="primary" @click="create('abnormalOrderDetail')" >创建</Button>
-                <Button type="ghost" @click="openAddAbOrderDetail = false">关闭</Button>
+                <Button type="ghost" @click="close">关闭</Button>
             </div> 
        </Modal>
           
@@ -97,10 +96,10 @@ export default {
                     { required: true, message: '请选择！', trigger: 'change' }
                 ],
                 productContent: [
-                    { required: true, message: '请选择！', trigger: 'change' }
+                    { required: true, message: '不能为空！', trigger: 'change' }
                 ],
                 reason: [
-                    { required: true, message: '请选择！', trigger: 'change' }
+                    { required: true, message: '不能为空！', trigger: 'change' }
                 ],
             }
         }
@@ -154,15 +153,12 @@ export default {
             this.$Post(url,config,success,fail)
         },
         //关闭新增弹窗
-        cancel(){
-            this.abnormalOrderDetail = []
-        }
+        close(e){
+            this.$emit("close", e)
+        },
     },
     created() {
-        this.$bus.off('OPEN_ABORDERLIST_ADD',true)
-        this.$bus.on('OPEN_ABORDERLIST_ADD',(e) =>{
-            this.openAddAbOrderDetail = true
-        })
+        
     }
 }
 </script>

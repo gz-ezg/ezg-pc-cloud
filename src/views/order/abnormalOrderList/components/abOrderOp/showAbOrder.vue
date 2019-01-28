@@ -91,12 +91,12 @@ export default {
             }
 
             function success(res){
-                console.log(res)
+                console.log(res.data.data)
                 _self.abnormalOrderDetail.applyId = e.applyId
-                _self.abnormalOrderDetail.companyId = res.data.data.companyId
-                _self.abnormalOrderDetail.productContent = res.data.data.productContent
-                _self.abnormalOrderDetail.reason = res.data.data.applyMemo
-                _self.abnormalOrderDetail.type = res.data.data.unusualType
+                _self.abnormalOrderDetail.companyId = res.data.data.company_id
+                _self.abnormalOrderDetail.productContent = res.data.data.product_content
+                _self.abnormalOrderDetail.reason = res.data.data.apply_memo
+                _self.abnormalOrderDetail.type = res.data.data.unusual_type
                 _self.abnormalOrderDetail.companyName = e.companyname
                 _self.abnormalOrderDetail.linkname = e.name
                 _self.abnormalOrderDetail.linkTel = e.tel

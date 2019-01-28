@@ -66,7 +66,7 @@
                         <FormItem label="异常工单号">
                             <div style="display:inline-block">
                                 <Input size="small" v-model="orderDetail.realnumber" readonly style="width:60%"/>
-                                <Button type="info" size="small">添加</Button>
+                                <Button type="info" size="small" @click="open_abOrder">添加</Button>
                             </div>
                         </FormItem>
                     </Col>
@@ -141,6 +141,7 @@
         </Modal>
         <company-select @company-change="setting_company"></company-select>
         <service-item @close="close_item" v-if="openServiceItem" :id="orderDetail.companyid"></service-item>
+        <ab-order-select :id="orderDetail.companyid"></ab-order-select>
     </div>
     </div>
 </template>
@@ -149,6 +150,7 @@
 import serviceItem from '../accountHomeTree'
 import commonSetting from './comonSetting.js'
 import companySelect from '../companySelect'
+import abOrderSelect from '../abOrderSelect'
 import { DateFormat } from '../../../../../libs/utils.js'
 import * as orderApi from '../../api'
 
@@ -156,7 +158,8 @@ export default {
     mixins: [commonSetting],
     components: {
         companySelect,
-        serviceItem
+        serviceItem,
+        abOrderSelect
     },
     data(){
         return {
@@ -167,6 +170,11 @@ export default {
         }
     },
     methods: {
+        //打开对应的异常工单列表
+        open_abOrder(){
+            this.$bus.emit("SELECT_ABORDER", true)
+        },
+
         //  打开会计到家服务项
         open_service_item(){
             if(this.orderDetail.companyid){
