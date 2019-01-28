@@ -65,8 +65,8 @@
                     <Col span="8">
                         <FormItem label="异常工单号">
                             <div style="display:inline-block">
-                                <Input size="small" v-model="orderDetail.realnumber" readonly style="width:60%"/>
-                                <Button type="info" size="small" @click="open_abOrder">添加</Button>
+                                <Input size="small" v-model="applyId" readonly style="width:60%"/>
+                                <Button type="info" size="small" @click="open_abOrder">选择</Button>
                             </div>
                         </FormItem>
                     </Col>
@@ -141,7 +141,7 @@
         </Modal>
         <company-select @company-change="setting_company"></company-select>
         <service-item @close="close_item" v-if="openServiceItem" :id="orderDetail.companyid"></service-item>
-        <ab-order-select :id="orderDetail.companyid"></ab-order-select>
+        <ab-order-select @aborder-change="setting_aborder" :id="orderDetail.companyid"></ab-order-select>
     </div>
     </div>
 </template>
@@ -166,13 +166,20 @@ export default {
             openServiceItem: false,
             show_file: [],
             openCreateOrderDetail: false,
-            loading: false
+            loading: false,
+            orderId: '',
+            applyId: ''
         }
     },
     methods: {
         //打开对应的异常工单列表
         open_abOrder(){
             this.$bus.emit("SELECT_ABORDER", true)
+        },
+        //  选择对应异常工单后回调
+        setting_aborder(e){
+            console.log(e)
+            this.applyId = e.id
         },
 
         //  打开会计到家服务项
@@ -246,6 +253,7 @@ export default {
             this.$refs["orderDetail"].validate((valid) => {
                 if(valid && this.check_date()){
                     _self.create_order()
+                    _self.relate()
                 }else{
                     this.loading = false
                 }
@@ -269,6 +277,8 @@ export default {
 
             try {
                 let { status, data } = await orderApi.orderCreate(config)
+                console.log(data.data)
+                this.orderId = data.data
                 if(status){
                     if(this.show_file.length != 0){
                         this.upload_img(data.data)
@@ -309,6 +319,24 @@ export default {
         },
         close_item(){
             this.openServiceItem = false
+        },
+        //关联异常工单
+        relate(){
+            let _self = this 
+            let url = `api/order/unusual/workorder/linkUnusualWorkOrder`
+            let config = {
+                applyId: this.applyId,
+                orderId: this.orderId
+            }
+            function success(res){
+                console.log(res)
+            }
+            function fail(){
+
+            }
+            this.$Post(url,config,success,fail)
+            this.orderId = ''
+            this.applyId = ''
         }
     },
     created(){

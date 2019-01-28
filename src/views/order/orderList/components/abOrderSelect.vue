@@ -126,7 +126,7 @@ export default {
         },
         row_select(e){
             // console.log(e)
-            this.$emit("company-change", e)
+            this.$emit("aborder-change", e)
             this.openSelectAbOrder = false
         }
     },
