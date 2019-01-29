@@ -123,6 +123,7 @@ export default {
             this.$refs[name].validate((valid) => {
                 if (valid) {
                     _self.add_ab_order()
+                    _self.close()
                 } else {
                     _self.$Message.error('请先补全相关信息!');
                 }

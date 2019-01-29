@@ -52,6 +52,11 @@
                             <Input size="small" v-model="formValidateDetail.realnumber" readonly/>
                         </FormItem>
                     </Col>
+                    <Col span="8">
+                        <FormItem label="异常工单">
+                            <Button type="info" size="small" @click="open_relateOrder">点击查看</Button>
+                        </FormItem>
+                    </Col>
                 </Row>
                 <Row :gutter="16">
                     <Col span="8">
@@ -114,11 +119,17 @@
                 <Button type="primary" @click="accoutError = false">确认</Button>
             </div>
         </Modal>
+        <relate-order :id="orderId"></relate-order>
     </div>
 </template>
 
 <script>
+import relateOrder from "./relateOrder"
+
 export default {
+    components:{
+        relateOrder
+    },
     props: ['payDirs'],
     data(){
         return {
@@ -218,7 +229,8 @@ export default {
                         })
                     }
                 }
-            ]
+            ],
+            orderId:''
         }
     },
     methods:{
@@ -315,12 +327,18 @@ export default {
         // },
         kuaiji(){
 
+        },
+        //打开对应的异常工单
+        open_relateOrder(){
+            this.$bus.emit("RELATE_ORDER",true)
         }
     },
     created() {
         let _self = this
         // this.get_data_center()
         this.$bus.on("ORDER_APPROVE_DEALWITH", (e)=>{
+            _self.orderId = e
+            console.log(e)
             _self.check_order(e)
             _self.openApproveDealWith = true
         })

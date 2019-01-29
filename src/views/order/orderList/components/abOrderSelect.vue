@@ -72,13 +72,7 @@ export default {
             total: 0,
             page: 1,
             pageSize: 10,
-            loading: false,
-            gds_map: new Map([
-                ["wbd", '未报道'],
-                ["ybd", '已报道'],
-                ["bybd", '不用报道'],
-            ])
-
+            loading: false
         }
     },
     methods: {

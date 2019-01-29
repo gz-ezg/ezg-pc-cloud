@@ -5,6 +5,7 @@
             v-model="openCreateOrderDetail"
             width="100"
             :mask-closable="false"
+            @on-cancel="closeCreateDetail"
             @on-visible-change="modal_status_change"
         >
             <Form ref="orderDetail" :model="orderDetail" :label-width="100" :rules="orderDetailRule">
@@ -65,7 +66,7 @@
                     <Col span="8">
                         <FormItem label="异常工单号">
                             <div style="display:inline-block">
-                                <Input size="small" v-model="applyId" readonly style="width:60%"/>
+                                <Input size="small" v-model="applyId" @on-focus="open_abOrder" readonly style="width:60%"/>
                                 <Button type="info" size="small" @click="open_abOrder">选择</Button>
                             </div>
                         </FormItem>
@@ -136,7 +137,7 @@
             </Row>
             <div slot="footer">
                 <Button type="primary" @click="create" :loading="loading">创建</Button>
-                <Button type="ghost" @click="openCreateOrderDetail = false">关闭</Button>
+                <Button type="ghost" @click="closeCreateDetail">关闭</Button>
             </div>
         </Modal>
         <company-select @company-change="setting_company"></company-select>
@@ -253,7 +254,7 @@ export default {
             this.$refs["orderDetail"].validate((valid) => {
                 if(valid && this.check_date()){
                     _self.create_order()
-                    _self.relate()
+                    
                 }else{
                     this.loading = false
                 }
@@ -283,6 +284,9 @@ export default {
                     if(this.show_file.length != 0){
                         this.upload_img(data.data)
                     }else{
+                        console.log(this.applyId)
+                        console.log(this.orderId)
+                        _self.relate()
                         _self.$Message.warning("订单创建成功！请及时上传合同！")
                     }
 
@@ -336,6 +340,10 @@ export default {
             }
             this.$Post(url,config,success,fail)
             this.orderId = ''
+            this.applyId = ''
+        },
+        closeCreateDetail(){
+            this.openCreateOrderDetail = false
             this.applyId = ''
         }
     },

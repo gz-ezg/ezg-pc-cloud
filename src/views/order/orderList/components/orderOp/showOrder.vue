@@ -63,10 +63,9 @@
                     </FormItem>
                     </Col>
                     <Col span="8">
-                        <FormItem label="异常工单号">
+                        <FormItem label="异常工单">
                             <div style="display:inline-block">
-                                <Input size="small"  readonly style="width:60%"/>
-                                <Button type="info" size="small">查看</Button>
+                                <Button type="info" size="small" @click="open_relateOrder">查看</Button>
                             </div>
                         </FormItem>
                     </Col>
@@ -105,11 +104,13 @@
             </div>
         </Modal>
         <service-item @close="close_item" v-if="openServiceItem" :id="orderDetail.companyid" :readonly="false"></service-item>
+        <relate-order :id="orderId"></relate-order>
     </div>
 </template>
 
 
 <script>
+import relateOrder from '../relateOrder'
 import serviceItem from '../accountHomeTree'
 import commonSetting from './comonSetting.js'
 import * as orderApi from '../../api'
@@ -117,7 +118,8 @@ import * as orderApi from '../../api'
 export default {
     mixins: [commonSetting],
     components: {
-        serviceItem
+        serviceItem,
+        relateOrder
     },
     data(){
         return {
@@ -251,6 +253,10 @@ export default {
         }
     },
     methods: {
+        //打开对应的异常工单
+        open_relateOrder(){
+            this.$bus.emit("RELATE_ABORDER",true)
+        },
         open_service_item(){
             this.openServiceItem = true
         },

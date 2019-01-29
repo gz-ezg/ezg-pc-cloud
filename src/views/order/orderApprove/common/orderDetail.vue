@@ -52,6 +52,11 @@
                             </Select>
                         </FormItem>
                     </Col>
+                    <Col span="8">
+                        <FormItem label="异常工单">
+                            <Button type="info" size="small" @click="open_relateOrder">点击查看</Button>
+                        </FormItem>
+                    </Col>
                 </Row>
                 <Table 
                     id="show-order-item"
@@ -63,11 +68,17 @@
             </Form>
             <div slot="footer"></div>
         </Modal>
+        <relate-order-two :id="orderId"></relate-order-two>
     </div>
 </template>
 
 <script>
+import relateOrderTwo from "./relateOrderTwo"
+
 export default {
+    components:{
+        relateOrderTwo
+    },
     props: ['payDirs'],
     data(){
         return{
@@ -170,7 +181,8 @@ export default {
                         ])
                     }
                 }
-            ]
+            ],
+            orderId: ''
         }
     },
     methods: {
@@ -195,10 +207,15 @@ export default {
 
             this.$Get(url, config, success)
         },
+        //打开对应的异常工单
+        open_relateOrder(){
+            this.$bus.emit("RELATE_ORDER_TWO",true)
+        }
     },
     created() {
         let _self = this
         this.$bus.on("OPEN_ORDER_DETAIL",(e)=>{
+            this.orderId = e
             _self.get_data(e)
             _self.openOrderDetail = true
         })

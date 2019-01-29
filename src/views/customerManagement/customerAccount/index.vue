@@ -3,6 +3,12 @@
         <Row style="margin-bottom:10px;">
             <search-model :data="searchData" @search="search"></search-model>
           </Row>
+          <Row>
+            <ButtonGroup>
+                <Button type="primary" icon="edit" @click="open_account_update">余额调整</Button>
+                <Button type="success" icon="edit">积分调整</Button>
+            </ButtonGroup>
+          </Row>
           <Row style="margin-top: 10px;">
             <Table
                     highlight-row
@@ -10,6 +16,7 @@
                     :columns="header"
                     :data="data"
                     :loading = "loading"
+                    @on-row-click="select_row"
             ></Table>
             <Page
                     size="small"
@@ -36,6 +43,12 @@
                 :id="currentId" 
             >
             </integral-detail>
+            <account-update
+                @close="openAccountUpdate=false"
+                v-if="openAccountUpdate"
+                :selectRow="selectRow"
+            >
+            </account-update>
     </Card>
 </template>
 
@@ -43,13 +56,15 @@
 import searchModel from '../../woa-components/searchModel/index'
 import detail from './detail'
 import integralDetail from './integralDetail'
+import accountUpdate from './accountUpdate'
 import * as api from './api';
 export default {
     name: "customerAccount_index",
     components: {
         detail,
         integralDetail,
-        searchModel
+        searchModel,
+        accountUpdate
     },
     data(){
         return {
@@ -156,7 +171,9 @@ export default {
             currentId: "",
             searchForm: "",
             openIntegralDetail: false,
-            formInline: {}
+            formInline: {},
+            selectRow: "",
+            openAccountUpdate: false
         }
     },
     methods: {
@@ -209,6 +226,19 @@ export default {
                 _self.accountChangeItemType = _self.$array2map(account_change_item_type)
             }catch(error){
                 console.log(error)
+            }
+        },
+        //选择某行
+        select_row(e){
+            console.log(e)
+            this.selectRow = e
+        },
+        //余额调整
+        open_account_update(){
+            if(this.selectRow){
+               this.openAccountUpdate = true
+            }else {
+                this.$Message.warning("请选择一行再操作！")
             }
         }
     },
