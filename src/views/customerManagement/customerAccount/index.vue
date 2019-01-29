@@ -6,7 +6,7 @@
           <Row>
             <ButtonGroup>
                 <Button type="primary" icon="edit" @click="open_account_update">余额调整</Button>
-                <Button type="success" icon="edit">积分调整</Button>
+                <Button type="success" icon="edit" @click="open_integral_update">积分调整</Button>
             </ButtonGroup>
           </Row>
           <Row style="margin-top: 10px;">
@@ -47,8 +47,16 @@
                 @close="openAccountUpdate=false"
                 v-if="openAccountUpdate"
                 :selectRow="selectRow"
+                @update_account="update_account"
             >
             </account-update>
+            <integral-update
+                @close="openIntegralUpdate=false"
+                v-if="openIntegralUpdate"
+                :selectRow="selectRow"
+                @update_integral="update_integral"
+            >
+            </integral-update>
     </Card>
 </template>
 
@@ -57,6 +65,7 @@ import searchModel from '../../woa-components/searchModel/index'
 import detail from './detail'
 import integralDetail from './integralDetail'
 import accountUpdate from './accountUpdate'
+import integralUpdate from './integralUpdate'
 import * as api from './api';
 export default {
     name: "customerAccount_index",
@@ -64,7 +73,8 @@ export default {
         detail,
         integralDetail,
         searchModel,
-        accountUpdate
+        accountUpdate,
+        integralUpdate
     },
     data(){
         return {
@@ -173,7 +183,8 @@ export default {
             openIntegralDetail: false,
             formInline: {},
             selectRow: "",
-            openAccountUpdate: false
+            openAccountUpdate: false,
+            openIntegralUpdate: false
         }
     },
     methods: {
@@ -216,6 +227,12 @@ export default {
             this.page = 1
             this.get_data()
         },
+        update_account(){
+            this.get_data()
+        },
+        update_integral(){
+            this.get_data()
+        },
         async get_data_center(){
             let _self = this
             let params = "account_change_type,account_change_item_type"
@@ -240,6 +257,13 @@ export default {
             }else {
                 this.$Message.warning("请选择一行再操作！")
             }
+        },
+        open_integral_update(){
+            if(this.selectRow){
+                this.openIntegralUpdate = true
+             }else {
+                 this.$Message.warning("请选择一行再操作！")
+             }
         }
     },
     async created(){

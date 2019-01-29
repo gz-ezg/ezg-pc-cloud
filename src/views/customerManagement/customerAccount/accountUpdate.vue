@@ -26,9 +26,8 @@
                         </FormItem>
                     </Col>
                     <Col span="10">
-                        <FormItem label="现修改为" prop="now_account">
-                            <Input size="small" v-model="now_account" @on-keyup="amount(now_account)" />
-                            
+                        <FormItem label="现增加" prop="now_account">
+                            <Input size="small" v-model="now_account" />
                         </FormItem>
                     </Col>
                 </Row>
@@ -78,6 +77,8 @@
                 }
                 function success(res){
                     console.log(res)
+                    _self.close()
+                    _self.$emit('update_account')
                 }
                 function fail(){
 
