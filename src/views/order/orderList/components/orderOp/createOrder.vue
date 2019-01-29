@@ -286,7 +286,9 @@ export default {
                     }else{
                         console.log(this.applyId)
                         console.log(this.orderId)
-                        _self.relate()
+                        if(this.applyId){
+                            _self.relate()
+                        }
                         _self.$Message.warning("订单创建成功！请及时上传合同！")
                     }
 
