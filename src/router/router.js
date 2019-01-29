@@ -605,14 +605,16 @@ export const appRouter = [
                 component: () => import( /* webpackChunkName: "invoicelist_index" */ '@/views/order/invoiceManagement/index.vue')
             },
             {
-                access:6020,
+                access:11622,
+                meta: 11622,
                 path: 'abnormalOrderList',
                 title: '异常工单列表',
                 name: "abnormalOrderList_index",
                 component: () => import( /* webpackChunkName: "invoicelist_index" */ '@/views/order/abnormalOrderList/index.vue')
             },
             {
-                access:6020,
+                access:11623,
+                meta: 11623,
                 path: 'abOrderApprove',
                 title: '异常工单审批',
                 name: "abOrderApprove_index",

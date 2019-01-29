@@ -27,8 +27,7 @@
                     </Col>
                     <Col span="10">
                         <FormItem label="现增加" prop="now_integral">
-                            
-                            <InputNumber :max="1000" :min="1" v-model="now_integral"></InputNumber>
+                            <Input size="small" v-model="now_integral" />
                         </FormItem>
                     </Col>
                 </Row>
