@@ -1,6 +1,36 @@
 <template>
     <div>
         <Card style="min-width:800px">
+            <Row style="margin-bottom:10px">
+                    <Collapse>
+                        <Panel name="1" >
+                            <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
+                                筛选
+                            <div slot="content" @keydown.enter="Search">
+                                <Form ref="formValidateSearch" :model="formValidateSearch" :label-width="100">
+                                    <Row :gutter="16">
+                                        <Col span="8">
+                                            <FormItem label="企业名称：" prop="companyname">
+                                                <Input v-model="formValidateSearch.companyname" size="small"></Input>
+                                            </FormItem>
+                                        </Col>
+                                        <Col span="8">
+                                            <FormItem label="电话号码：" prop="tel">
+                                                <Input v-model="formValidateSearch.tel" size="small"></Input>
+                                            </FormItem>
+                                        </Col>
+                                     </Row>
+                                    <center>
+                                        <FormItem>
+                                            <Button type="primary" @click="Search" >搜索</Button>
+                                            <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
+                                        </FormItem>
+                                    </center>
+                                </Form>
+                            </div>
+                        </Panel>
+                    </Collapse>
+            </Row>
             <Row>
                 <ButtonGroup>
                     <Button type="primary" icon="plus" @click="openAdd=true">新增</Button>
@@ -19,6 +49,7 @@
                     :data="data"
                     @on-row-click="select_row"
                     @on-row-dblclick="open_abOrder_detail"
+                    @on-sort-change="sort"
                 >
                 </Table>
                 <Page
@@ -58,10 +89,16 @@ export default {
     },
     data() {
         return {
+            //筛选相关
+            formValidateSearch:{
+                companyname: "",
+                tel: ""
+            },
             //数据字典
             unusualType:[],
             unusualType_map: new Map(),
             //异常工单列表
+            sortField:"create_date",
             selectRow:'',
             data:[],
             page:1,
@@ -165,7 +202,8 @@ export default {
                 {
                     title: '创建时间',
                     key: 'create_date',
-                    minWidth: 120                                                               
+                    minWidth: 120,
+                    sortable: "custom"                                                               
                 },
                 {
                     title: '创建人',
@@ -202,7 +240,10 @@ export default {
             let config = {
                 params: {
                     page: _self.page,
-                    pageSize: _self.pageSize
+                    pageSize: _self.pageSize,
+                    companyName: _self.formValidateSearch.companyname,
+                    tel: _self.formValidateSearch.tel,
+                    sortField: _self.sortField
                 }
             }
 
@@ -218,6 +259,16 @@ export default {
             }
 
             this.$Get(url,config,success)
+        },
+        //  搜索相关
+        Search(){
+            this.page = 1
+            this.get_data()
+        },
+        handleReset(){
+            this.$refs["formValidateSearch"].resetFields()
+            this.formValidateSearch.date = []
+            this.get_data()
         },
         //更改页码
         pageChange(e){
@@ -299,6 +350,16 @@ export default {
             }else {
                 this.$Message.warning("请选择一行进行操作！")
             }
+        },
+
+        //排序
+        sort(e){
+            if(e.order =='desc'){
+                this.sortField = ""
+            }else{
+                this.sortField = "create_date"
+            }
+            this.get_data()
         }
 
     },

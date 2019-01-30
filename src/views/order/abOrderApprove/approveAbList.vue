@@ -1,6 +1,36 @@
 <template>
     <div>
         <Card>
+            <Row style="margin-bottom:10px">
+                    <Collapse>
+                        <Panel name="1" >
+                            <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
+                                筛选
+                            <div slot="content" @keydown.enter="Search">
+                                <Form ref="formValidateSearch" :model="formValidateSearch" :label-width="100">
+                                    <Row :gutter="16">
+                                        <Col span="8">
+                                            <FormItem label="企业名称：" prop="companyname">
+                                                <Input v-model="formValidateSearch.companyname" size="small"></Input>
+                                            </FormItem>
+                                        </Col>
+                                        <Col span="8">
+                                            <FormItem label="电话号码：" prop="tel">
+                                                <Input v-model="formValidateSearch.tel" size="small"></Input>
+                                            </FormItem>
+                                        </Col>
+                                     </Row>
+                                    <center>
+                                        <FormItem>
+                                            <Button type="primary" @click="Search" >搜索</Button>
+                                            <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
+                                        </FormItem>
+                                    </center>
+                                </Form>
+                            </div>
+                        </Panel>
+                    </Collapse>
+            </Row>
             <ButtonGroup>
                 <Button type="primary" icon="ios-color-filter-outline" @click="download_excel">导出Excel</Button>
                 <Button type="primary" icon="ios-color-filter-outline" @click="refresh">刷新</Button>                            
@@ -13,7 +43,8 @@
                     :data="data" 
                     size="small"
                     @on-row-click="select_row" 
-                    @on-row-dblclick="to_do_work_flow" 
+                    @on-row-dblclick="to_do_work_flow"
+                    @on-sort-change="sort" 
                     :loading="tableLoading">
                 </Table>
                 <Page
@@ -38,10 +69,16 @@ import { DateFormat } from '../../../libs/utils.js'
 export default {
     data() {
         return {
+            //筛选相关
+            formValidateSearch:{
+                companyname: "",
+                tel: ""
+            },
             //数据字典
             unusualType:[],
             unusualType_map: new Map(),
             //  当前选中的行
+            sortField:"create_date",
             selectRow: "",
             tableLoading: false,
             total: 0,
@@ -150,7 +187,8 @@ export default {
                 {
                     title: '创建时间',
                     key: 'create_date',
-                    minWidth: 120                                                               
+                    minWidth: 120,
+                    sortable: "custom"                                                            
                 },
                 {
                     title: '操作',
@@ -218,7 +256,10 @@ export default {
                 params: {
                     isAudit: 'Y',
                     page: _self.page,
-                    pageSize: _self.pageSize
+                    pageSize: _self.pageSize,
+                    companyName: _self.formValidateSearch.companyname,
+                    tel: _self.formValidateSearch.tel,
+                    sortField: _self.sortField
                 }
             }
 
@@ -233,6 +274,25 @@ export default {
             }
 
             this.$Get(url,config,success)
+        },
+        //  搜索相关
+        Search(){
+            this.page = 1
+            this.get_table_data()
+        },
+        handleReset(){
+            this.$refs["formValidateSearch"].resetFields()
+            this.formValidateSearch.date = []
+            this.get_table_data()
+        },
+        //排序
+        sort(e){
+            if(e.order =='desc'){
+                this.sortField = ""
+            }else{
+                this.sortField = "create_date"
+            }
+            this.get_table_data()
         },
 
         //导出excel

@@ -39,6 +39,9 @@ export default {
     },
     data(){
         return {
+            //数据字典
+            unusualType:[],
+            unusualType_map: new Map(),
             openSelectAbOrder: false,
             searchCompany: "",
             header: [
@@ -64,7 +67,7 @@ export default {
                 },
                 {
                     title: '创建时间',
-                    key: 'gdsStatus',
+                    key: 'create_date',
                     minWidth:130
                 },
             ],
@@ -76,6 +79,22 @@ export default {
         }
     },
     methods: {
+        //获取数据字典
+        get_data_center(){
+            let _self = this
+            return new Promise((resolve,reject) => {
+                let params = "unusualType"
+
+                function success(res){
+                    _self.unusualType = res.data.data.unusualType
+                    _self.unusualType_map = _self.$array2map(_self.unusualType)
+                    resolve()
+                }
+
+                this.$GetDataCenter(params, success)
+                
+            }) 
+        },
         get_data(){
             let _self = this
             let url = `api/order/unusual/workorder/findUnusualWorkOrderNotBindOrderByCompanyId`
@@ -85,7 +104,8 @@ export default {
                 }
             }
             function success(res){
-                console.log(res)
+                res.data.data[0].unusual_type =_self.unusualType_map.get(res.data.data[0].unusual_type)
+                console.log(res.data.data[0].unusual_type)
                 _self.data = res.data.data
                 _self.total = res.data.data.length
             }
@@ -119,7 +139,6 @@ export default {
             this.get_data()
         },
         row_select(e){
-            // console.log(e)
             this.$emit("aborder-change", e)
             this.openSelectAbOrder = false
         }
@@ -128,7 +147,9 @@ export default {
         let _self = this
         this.$bus.off("SELECT_ABORDER", true)
         this.$bus.on("SELECT_ABORDER", (e)=>{
-            _self.get_data()
+            _self.get_data_center().then(
+                _self.get_data()
+            )
             _self.openSelectAbOrder = true
         })
     },

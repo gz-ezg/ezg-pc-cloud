@@ -66,7 +66,7 @@
                     <Col span="8">
                         <FormItem label="异常工单号">
                             <div style="display:inline-block">
-                                <Input size="small" v-model="applyId" @on-focus="open_abOrder" readonly style="width:60%"/>
+                                <Input size="small" v-model="orderCode" @on-focus="open_abOrder" readonly style="width:60%"/>
                                 <Button type="info" size="small" @click="open_abOrder">选择</Button>
                             </div>
                         </FormItem>
@@ -169,7 +169,8 @@ export default {
             openCreateOrderDetail: false,
             loading: false,
             orderId: '',
-            applyId: ''
+            applyId: '',
+            orderCode: ''
         }
     },
     methods: {
@@ -181,6 +182,7 @@ export default {
         setting_aborder(e){
             console.log(e)
             this.applyId = e.id
+            this.orderCode = e.unusual_code
         },
 
         //  打开会计到家服务项
@@ -343,10 +345,12 @@ export default {
             this.$Post(url,config,success,fail)
             this.orderId = ''
             this.applyId = ''
+            this.orderCode = ''
         },
         closeCreateDetail(){
             this.openCreateOrderDetail = false
             this.applyId = ''
+            this.orderCode = ''
         }
     },
     created(){
