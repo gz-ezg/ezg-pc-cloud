@@ -122,6 +122,8 @@ export default {
         },
     },
     created(){
+        console.log(this.sextype)
+        console.log(this.detail.sex)
         this.formValidate = this.detail
         this.formValidate.sex = this.detail.sex.toString()
     }

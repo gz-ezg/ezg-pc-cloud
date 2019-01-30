@@ -49,8 +49,8 @@
                         </FormItem>
                         <FormItem label="是否同意审批" prop="agree">
                             <RadioGroup v-model="banlishenpi.agree">
-                                <Radio label="1">同意</Radio>
-                                <Radio label="0">驳回</Radio>
+                                <Radio label="Agree">同意</Radio>
+                                <Radio label="Reject">驳回</Radio>
                             </RadioGroup>
                         </FormItem>
                     </Form>

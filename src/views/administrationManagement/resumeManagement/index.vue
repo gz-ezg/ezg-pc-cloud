@@ -77,10 +77,12 @@ export default {
                     minWidth: 80,
                     render: (h, params) => {
                         let sexname = ""
-                        if(params.row.sex == 0){
+                        if(params.row.sex == 1){
                             sexname = "男"
-                        }else{
+                        }else if(params.row.sex == 2){
                             sexname = "女"
+                        }else {
+                            sexname = "未填写"
                         }
                         return h('div', sexname)
                     }
