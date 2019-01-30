@@ -69,6 +69,7 @@
         <add-ab-order v-if="openAdd" @close="close"></add-ab-order>
         <show-ab-order></show-ab-order>
         <edit-ab-order></edit-ab-order>
+        <aduit-log></aduit-log>
     </div>
 </template>
 
@@ -77,6 +78,7 @@
 import addAbOrder from './components/abOrderOp/addAbOrder'
 import showAbOrder from './components/abOrderOp/showAbOrder'
 import editAbOrder from './components/abOrderOp/editAbOrder'
+import aduitLog from './components/aduitLog'
 
 import { DateFormat } from '../../../libs/utils.js'
 
@@ -85,7 +87,8 @@ export default {
     components:{
         addAbOrder,
         showAbOrder,
-        editAbOrder
+        editAbOrder,
+        aduitLog
     },
     data() {
         return {
@@ -209,6 +212,28 @@ export default {
                     title: '创建人',
                     key: 'realname',
                     minWidth: 100
+                },
+                {
+                    title: '操作',
+                    key: 'action',
+                    fixed: 'right',
+                    minWidth: 100,
+                    render: (h,params) =>{
+                        return h('div',[
+                            h('Button',{
+                                props:{
+                                    type: 'warning',
+                                    size: 'small'
+                                },
+                                on:{
+                                    click: () => {
+                                        console.log(params)
+                                        this.open_approve_log(params)
+                                    }
+                                }
+                            },'审批记录')
+                        ]);
+                    }
                 }
             ],
             openAdd: false
@@ -294,6 +319,10 @@ export default {
             if(e){
                 this.get_data()
             }
+        },
+        //打开审批记录
+        open_approve_log(e){
+            this.$bus.emit("AB_APPROVELIST_LOG",e)
         },
 
         //编辑异常工单

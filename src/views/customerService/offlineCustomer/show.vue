@@ -71,6 +71,7 @@
                                 <Option value="gszr">公司转让</Option>
                                 <Option value="qysj">企业升级</Option>
                                 <Option value="kjb">会计部</Option>
+                                <Option value="scb">市场部</Option>
                                 <Option value="hth">换同行</Option>
                                 <Option value="zx">注销</Option>
                                 <Option value="qt">其他</Option>
