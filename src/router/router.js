@@ -610,7 +610,7 @@ export const appRouter = [
                 path: 'abnormalOrderList',
                 title: '异常工单列表',
                 name: "abnormalOrderList_index",
-                component: () => import( /* webpackChunkName: "invoicelist_index" */ '@/views/order/abnormalOrderList/index.vue')
+                component: () => import( /* webpackChunkName: "abnormalOrderList_index" */ '@/views/order/abnormalOrderList/index.vue')
             },
             {
                 access:11623,
@@ -618,7 +618,7 @@ export const appRouter = [
                 path: 'abOrderApprove',
                 title: '异常工单审批',
                 name: "abOrderApprove_index",
-                component: () => import( /* webpackChunkName: "invoicelist_index" */ '@/views/order/abOrderApprove/index.vue')
+                component: () => import( /* webpackChunkName: "abOrderApprove_index" */ '@/views/order/abOrderApprove/index.vue')
             }
             // {
             //     access:6020,

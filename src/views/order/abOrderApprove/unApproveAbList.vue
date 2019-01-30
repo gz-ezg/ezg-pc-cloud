@@ -109,7 +109,7 @@ export default {
                     minWidth: 120
                 },
                 {
-                    title: "审批是由",
+                    title: "审批事由",
                     key: "apply_memo",
                     minWidth: 180,
                     render:(h,params) =>{
@@ -237,7 +237,7 @@ export default {
                 {field:'product_content',title:'产品内容'},
                 {field:'unusual_type',title:'异常类型',format:'unusualType'},
                 {field:'tel',title:'客户电话'},
-                {field:'apply_memo',title:'审批是由'},
+                {field:'apply_memo',title:'审批事由'},
                 {field:'current_process_name',title:'流程状态'},
                 {field:'realname',title:'创建人'},
                 {field:'create_date',title:'创建时间'}

@@ -132,7 +132,7 @@ export default {
                     minWidth: 120
                 },
                 {
-                    title: "审批是由",
+                    title: "审批事由",
                     key: "apply_memo",
                     minWidth: 180,
                     render:(h,params) =>{
