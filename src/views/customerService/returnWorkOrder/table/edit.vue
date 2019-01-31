@@ -67,6 +67,25 @@
                         </Col>
                     </Row>
                     <Row :gutter="16">
+                        <Col span="12">
+                            <FormItem prop="reply_time" label="答复时间:">
+                                <Rate v-model="data.reply_time"></Rate>
+                            </FormItem>
+                        </Col>
+                        <Col span="12">
+                            <FormItem prop="professional_level" label="专业程度:">
+                                <Rate v-model="data.professional_level"></Rate>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row :gutter="16">
+                        <Col span="12">
+                            <FormItem prop="service_attitude" label="服务态度:">
+                                <Rate v-model="data.service_attitude"></Rate>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row :gutter="16">
                         <Col span="24">
                             <FormItem prop="depart" label="责任部门：">
                                 <CheckboxGroup v-model="data.depart">
@@ -176,6 +195,9 @@ export default {
                 calltype :_self.data.calltype,
                 callbackstatus:_self.data.callbackstatus,
                 reason:_self.data.reason,
+                replyTime:_self.data.reply_time,
+                professionalLevel:_self.data.professional_level,
+                serviceAttitude:_self.data.service_attitude
             }
 
             function success(res){

@@ -69,19 +69,19 @@
                     <Row :gutter="16">
                         <Col span="12">
                             <FormItem prop="reply_time" label="答复时间:">
-                                <Rate allow-half v-model="data.reply_time"></Rate>
+                                <Rate v-model="data.reply_time"></Rate>
                             </FormItem>
                         </Col>
                         <Col span="12">
                             <FormItem prop="professional_level" label="专业程度:">
-                                <Rate allow-half v-model="data.professional_level"></Rate>
+                                <Rate v-model="data.professional_level"></Rate>
                             </FormItem>
                         </Col>
                     </Row>
                     <Row :gutter="16">
                         <Col span="12">
                             <FormItem prop="service_attitude" label="服务态度:">
-                                <Rate allow-half v-model="data.service_attitude"></Rate>
+                                <Rate v-model="data.service_attitude"></Rate>
                             </FormItem>
                         </Col>
                     </Row>
@@ -195,6 +195,9 @@ export default {
                 calltype :_self.data.calltype,
                 callbackstatus:_self.data.callbackstatus,
                 reason:_self.data.reason,
+                replyTime:_self.data.reply_time,
+                professionalLevel:_self.data.professional_level,
+                serviceAttitude:_self.data.service_attitude
             }
 
             function success(res){
@@ -215,6 +218,12 @@ export default {
     },
     created () {
         let _self = this
+        // if(_self.data.professional_level == null){
+        //     _self.data.professional_level = 0
+        // }
+        // if(_self.data.service_attitude == null){
+        //     _self.data.service_attitude = 0
+        // }
         // _self.data.serviceranks = parseInt(_self.data.serviceranks)
         console.log(Array.isArray(_self.data.depart))
         if(Array.isArray(_self.data.depart) == false){
