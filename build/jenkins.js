@@ -3,7 +3,7 @@ require('./check-versions')()
 process.env.NODE_ENV = 'production'
 
 const webpack = require('webpack');
-const config = require('./webpack.prod.conf');
+const config = require('./webpack.jenkins.conf');
 // const ora = require('ora')
 const rm = require('rimraf')
 const path = require('path')
