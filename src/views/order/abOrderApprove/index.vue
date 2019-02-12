@@ -18,7 +18,7 @@
 
 <script>
 import unApproveAbList from './unApproveAbList'
-import ApproveAbList from './ApproveAbList'
+import ApproveAbList from './approveAbList'
 
 import dealAbApprove from './common/dealAbApprove'
 import abOrderDetail from './common/abOrderDetail'
