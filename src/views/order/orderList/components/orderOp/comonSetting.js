@@ -113,6 +113,10 @@ export default {
                     minWidth: 150,
                     render: (h, parmas) => {
                         let _self = this
+                        let isTrue = false
+                        if(this.orderItem[parmas.index].skuid =='1051'||this.orderItem[parmas.index].skuid =='1052'||this.orderItem[parmas.index].skuid =='1053'||this.orderItem[parmas.index].skuid =='1054'){
+                            isTrue = true
+                        }
                         return h('div',[
                             h('Input',{
                                 domProps: {
@@ -122,20 +126,25 @@ export default {
                                     autosize: true,
                                     type: "text",
                                     size: "small",
+                                    readonly: isTrue
                                     // number: true
                                 },
                                 on: {
                                     //  失去焦点触发
                                     "on-blur": function(event){
-                                        _self.orderItem[parmas.index].productnumber = event.target.value
-                                        _self.orderItem[parmas.index].paynumber = _self.orderItem[parmas.index].productnumber * _self.orderItem[parmas.index].oaprice
-                                        _self.computer_paynumber()
+                                        if(!isTrue){
+                                            _self.orderItem[parmas.index].productnumber = event.target.value
+                                            _self.orderItem[parmas.index].paynumber = _self.orderItem[parmas.index].productnumber * _self.orderItem[parmas.index].oaprice
+                                            _self.computer_paynumber()
+                                        }
                                     },
                                     //  敲回车触发
                                     "on-enter": function(event){
-                                        _self.orderItem[parmas.index].productnumber = event.target.value
-                                        _self.orderItem[parmas.index].paynumber = _self.orderItem[parmas.index].productnumber * _self.orderItem[parmas.index].oaprice
-                                        _self.computer_paynumber()
+                                        if(!isTrue){
+                                            _self.orderItem[parmas.index].productnumber = event.target.value
+                                            _self.orderItem[parmas.index].paynumber = _self.orderItem[parmas.index].productnumber * _self.orderItem[parmas.index].oaprice
+                                            _self.computer_paynumber()
+                                        }
                                     }
                                 },
                                 style: {
@@ -151,6 +160,14 @@ export default {
                     minWidth: 100,
                     render: (h, parmas) => {
                         let _self = this
+                        let isTrue = false
+                        let iscycle = false
+                        if(this.orderItem[parmas.index].skuid =='1051'||this.orderItem[parmas.index].skuid =='1052'||this.orderItem[parmas.index].skuid =='1053'||this.orderItem[parmas.index].skuid =='1054'){
+                            isTrue = true
+                        }
+                        if(this.orderItem[parmas.index].iscycle =='Y'){
+                            iscycle = true
+                        }
                         return h('div',[
                             h('Input',{
                                 domProps: {
@@ -160,18 +177,26 @@ export default {
                                     autosize: true,
                                     type: "text",
                                     size: "small",
+                                    readonly: isTrue
                                     // number: true
                                 },
                                 on: {
                                     //  失去焦点触发
                                     "on-blur": function(event){
-                                        //  此处需要写一个公共的函数，计算总价
                                         _self.orderItem[parmas.index].paynumber = event.target.value
+                                        if(iscycle){
+                                            //iscycle为Y时，单独处理价格
+                                            _self.iscycleY(_self.orderItem[parmas.index])
+                                        }
+                                        //  此处需要写一个公共的函数，计算总价
                                         _self.computer_paynumber()
                                     },
                                     //  敲回车触发
                                     "on-enter": function(event){
                                         _self.orderItem[parmas.index].paynumber = event.target.value
+                                        if(iscycle){
+                                            _self.iscycleY(_self.orderItem[parmas.index])
+                                        }
                                         _self.computer_paynumber()
                                     }
                                 },
@@ -188,6 +213,15 @@ export default {
                     minWidth: 100,
                     render: (h, parmas) => {
                         let _self = this
+                        let isTrue = false
+                        let iscycle = false
+                        if(this.orderItem[parmas.index].skuid =='1051'||this.orderItem[parmas.index].skuid =='1052'||this.orderItem[parmas.index].skuid =='1053'||this.orderItem[parmas.index].skuid =='1054'){
+                            isTrue = true
+                        }
+                        if(this.orderItem[parmas.index].iscycle =='Y'){
+                            iscycle = true
+                        }
+                        console.log(this.orderItem[parmas.index])
                         return h('div',[
                             h('Input',{
                                 domProps: {
@@ -203,10 +237,22 @@ export default {
                                     //  失去焦点触发
                                     "on-blur": function(event){
                                         _self.orderItem[parmas.index].givethenumber = event.target.value
+                                        if(iscycle){
+                                            _self.priceCycleY(_self.orderItem[parmas.index])
+                                        }
+                                        if(isTrue){
+                                            _self.price2000(_self.orderItem[parmas.index])
+                                        }
                                     },
                                     //  敲回车触发
                                     "on-enter": function(event){
                                         _self.orderItem[parmas.index].givethenumber = event.target.value
+                                        if(iscycle){
+                                            _self.priceCycleY(_self.orderItem[parmas.index])
+                                        }
+                                        if(isTrue){
+                                            _self.price2000(_self.orderItem[parmas.index])
+                                        }
                                     }
                                 },
                                 style: {
@@ -386,6 +432,25 @@ export default {
             }
             this.orderDetail.paynumber = parseInt(temp)
             this.orderDetail.realnumber = parseInt(temp)
+        },
+        //小规模特定2000单价计算
+        price2000(target){
+            let month = parseInt(target.givethenumber) + parseInt(target.productnumber)
+            console.log(month)
+            target.unitprice=parseInt(target.oaprice/month)
+        },
+        priceCycleY(target){
+            let month = parseInt(target.givethenumber) + parseInt(target.productnumber)
+            console.log(month)
+            target.unitprice=parseInt(target.paynumber/month)
+        },
+        //当iscycleY为Y时改变价格
+        iscycleY(target){
+            if(target.productnumber ==1){
+                let month = parseInt(target.givethenumber) + parseInt(target.productnumber)
+                target.unitprice = parseInt(target.paynumber/month)
+                target.oaprice = target.unitprice
+            }
         },
         //  关闭弹窗时调用
         modal_status_change(e){

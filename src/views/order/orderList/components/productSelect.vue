@@ -296,6 +296,7 @@ export default {
             }
 
             function success(res){
+                console.log(res)
                 _self.producSku = res.data.data
                 let temp = _self.producSku[0].linkPropertys.split(",")
                 if(temp.length == 1){
@@ -328,6 +329,7 @@ export default {
                         let flag = _self.find_array(arr, total)
                         if(flag){
                             _self.SKU = _self.producSku[i].id
+                            console.log(_self.SKU)
                             resolve()
                         }
                     }
@@ -407,7 +409,11 @@ export default {
 
             function success(res){
                 _self.detail = res.data.data[0]
-                // console.log(_self.detail)
+                if(_self.detail.skuid =='1051' || _self.detail.skuid =='1052' ||_self.detail.skuid =='1053' ||_self.detail.skuid =='1054'){
+                    _self.detail.productnumber = '12'
+                    _self.detail.unitprice = parseInt(_self.detail.unitprice/12)
+                }
+                console.log(_self.detail)
                 if(res.data.data[0].iscycle == "Y"){
                     let url2 = "api/order/cycle/service/record/budget/period"
                     let config2 = {

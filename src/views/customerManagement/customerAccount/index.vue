@@ -3,6 +3,12 @@
         <Row style="margin-bottom:10px;">
             <search-model :data="searchData" @search="search"></search-model>
           </Row>
+          <Row>
+            <ButtonGroup>
+                <Button type="primary" icon="edit" @click="open_account_update">余额调整</Button>
+                <Button type="success" icon="edit" @click="open_integral_update">积分调整</Button>
+            </ButtonGroup>
+          </Row>
           <Row style="margin-top: 10px;">
             <Table
                     highlight-row
@@ -10,6 +16,7 @@
                     :columns="header"
                     :data="data"
                     :loading = "loading"
+                    @on-row-click="select_row"
             ></Table>
             <Page
                     size="small"
@@ -36,6 +43,20 @@
                 :id="currentId" 
             >
             </integral-detail>
+            <account-update
+                @close="openAccountUpdate=false"
+                v-if="openAccountUpdate"
+                :selectRow="selectRow"
+                @update_account="update_account"
+            >
+            </account-update>
+            <integral-update
+                @close="openIntegralUpdate=false"
+                v-if="openIntegralUpdate"
+                :selectRow="selectRow"
+                @update_integral="update_integral"
+            >
+            </integral-update>
     </Card>
 </template>
 
@@ -43,13 +64,17 @@
 import searchModel from '../../woa-components/searchModel/index'
 import detail from './detail'
 import integralDetail from './integralDetail'
+import accountUpdate from './accountUpdate'
+import integralUpdate from './integralUpdate'
 import * as api from './api';
 export default {
     name: "customerAccount_index",
     components: {
         detail,
         integralDetail,
-        searchModel
+        searchModel,
+        accountUpdate,
+        integralUpdate
     },
     data(){
         return {
@@ -156,7 +181,10 @@ export default {
             currentId: "",
             searchForm: "",
             openIntegralDetail: false,
-            formInline: {}
+            formInline: {},
+            selectRow: "",
+            openAccountUpdate: false,
+            openIntegralUpdate: false
         }
     },
     methods: {
@@ -199,6 +227,12 @@ export default {
             this.page = 1
             this.get_data()
         },
+        update_account(){
+            this.get_data()
+        },
+        update_integral(){
+            this.get_data()
+        },
         async get_data_center(){
             let _self = this
             let params = "account_change_type,account_change_item_type"
@@ -210,6 +244,26 @@ export default {
             }catch(error){
                 console.log(error)
             }
+        },
+        //选择某行
+        select_row(e){
+            console.log(e)
+            this.selectRow = e
+        },
+        //余额调整
+        open_account_update(){
+            if(this.selectRow){
+               this.openAccountUpdate = true
+            }else {
+                this.$Message.warning("请选择一行再操作！")
+            }
+        },
+        open_integral_update(){
+            if(this.selectRow){
+                this.openIntegralUpdate = true
+             }else {
+                 this.$Message.warning("请选择一行再操作！")
+             }
         }
     },
     async created(){

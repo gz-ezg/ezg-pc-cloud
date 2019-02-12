@@ -577,6 +577,7 @@ export default {
         },
         //  自定义排序
         sort(e){
+            console.log(e)
             this.sortField = e.key
             if(e.order=='normal'){
                 this.order = 'desc'
@@ -650,6 +651,7 @@ export default {
             }
         },
         select_row(e){
+            console.log(e)
             if(e.id){
                 this.selectRow = e
             }else{
@@ -709,7 +711,7 @@ export default {
             let _self = this
             if(this.selectRow){
                 console.log(this.selectRow)
-                if (_self.selectRow.CurrentProcess) {
+                if (_self.selectRow.CurrentProcess == "Returned") {
                     _self.$Modal.confirm({
                         loading: true,
                         title: '重新提交审批',
