@@ -87,7 +87,7 @@ export default {
             pageSize: 10,
             header: [
                 {
-                    title: '订单号码',
+                    title: '异常工单号',
                     key: 'unusual_code',
                     minWidth: 140
                 },
