@@ -9,10 +9,11 @@
     "jen": "node build/jenkins.js",
     "dev": "npm run dev-test",
     "dev-test": "webpack-dev-server --inline --progress --config build/webpack.dev-test.conf.js --env test",
+    "dev-local": "webpack-dev-server --inline --progress --config build/webpack.dev-local.conf.js",
     "dev-224": "webpack-dev-server --inline --progress --config build/webpack.dev-224.conf.js",
     "dev-222": "webpack-dev-server --inline --progress --config build/webpack.dev-222.conf.js",
     "dev-cloud": "webpack-dev-server --inline --progress --config build/webpack.dev-cloud.conf.js",
-    "dev:dll": "webpack-dev-server --progress --config build/webpack.dll.conf.js"
+    "dev:dll": "webpack --progress --config build/webpack.dll.conf.js"
   },
   "keywords": [],
   "author": "roderickt1an@gmail.com",
@@ -87,7 +88,7 @@
     "tinymce": "^4.7.4",
     "v-charts": "^1.17.6",
     "vue": "^2.5.21",
-    "vue-full-calendar": "^2.6.1",
+    "vue-full-calendar": "^2.7.0",
     "vue-router": "^3.0.2",
     "vuejs-datepicker": "^1.5.3",
     "vuex": "^3.0.1"

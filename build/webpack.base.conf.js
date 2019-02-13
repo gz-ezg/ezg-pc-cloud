@@ -20,6 +20,8 @@ module.exports = {
         publicPath: "/"
     },
     module: {
+        // 不去解析jquery的依赖关系
+        noParse: /jquery/,
         rules: [{
                 test: /\.vue$/,
                 use: [{
@@ -61,7 +63,7 @@ module.exports = {
                         loader: 'url-loader',
                         options: {
                             limit:10000,
-                            //  开启此项，可以减小main.css体积，但需要手动将文件挪至css文件夹中
+                            //  开启此项，可以减小main.css体积，但需要手动将文件挪至css文件夹中(作废)
                             name:"fonts/[name].[ext]",
                         //     outputPath: "css/"
                         }
@@ -71,6 +73,8 @@ module.exports = {
         ]
     },
     plugins: [
+        //  处理moment本地化策略
+        new webpack.IgnorePlugin(/\.\/local/, /moment/),
         new VueLoaderPlugin(),
         new HappyPack({
             id: 'happybabel',
@@ -113,6 +117,18 @@ module.exports = {
                 ]
             }
         }),
+        // new webpack.DllReferencePlugin({
+        //     context: __dirname,
+        //     manifest: path.resolve(__dirname, "../dll", "vue-manifest.json"),
+        // }),
+        // new webpack.DllReferencePlugin({
+        //     context: __dirname,
+        //     manifest: path.resolve(__dirname, "../dll", "vchart-manifest.json"),
+        // }),
+        // new webpack.DllReferencePlugin({
+        //     context: __dirname,
+        //     manifest: path.resolve(__dirname, "../dll", "iview-manifest.json"),
+        // }),
         new webpack.optimize.SplitChunksPlugin(),
         new CopyWebpackPlugin(
             [
