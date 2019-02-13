@@ -286,7 +286,7 @@ export default {
     },
     created() {
         let _self = this
-        if(localStorage.getItem('id')==10059){
+        if(localStorage.getItem('id')==10059 || localStorage.getItem("id") == 10182){
             this.orderDetailListHeaderShow.unshift(this.dangerOperation)
         }
         this.$bus.off("OPEN_ORDERLIST_DETAIL", true)
