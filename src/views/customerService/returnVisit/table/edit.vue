@@ -84,6 +84,11 @@
                                 <Rate v-model="data.service_attitude"></Rate>
                             </FormItem>
                         </Col>
+                        <Col span="12">
+                            <FormItem prop="service_attitude" label="其他:">
+                                <Rate v-model="data.service_attitude"></Rate>
+                            </FormItem>
+                        </Col>
                     </Row>
                     <Row :gutter="16">
                         <Col span="24">
