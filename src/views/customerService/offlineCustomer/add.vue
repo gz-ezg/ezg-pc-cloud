@@ -60,9 +60,16 @@
                 </Row>
                 <Row :gutter="16">
                     <Col span="1" style="visibility:hidden">1</Col>
+                    <!--
                     <Col span="10">
                         <FormItem prop="callbackdate" label="回访时间">
                             <DatePicker type="date" v-model="task_message.callbackdate" style="width: 100%" size="small" ></DatePicker>
+                        </FormItem>
+                    </Col>
+                    -->
+                    <Col span="10">
+                        <FormItem prop="" label="客户上线时间">
+                            <Input size="small" readonly />
                         </FormItem>
                     </Col>
                     <Col span="10">
@@ -84,6 +91,33 @@
                     <Col span="10">
                         <FormItem prop="taxperiod" label="下线税期">
                             <Input size="small" v-model="task_message.taxperiod" type="text" placeholder="格式：2018-06"  />
+                        </FormItem>
+                    </Col>
+                    <Col span="10">
+                        <FormItem prop="" label="是否需退款">
+                            <RadioGroup v-model="phone">
+                                <Radio label="apple">
+                                    <span>是</span>
+                                </Radio>
+                                <Radio label="android">
+                                    <span>否</span>
+                                </Radio>
+                            </RadioGroup>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="16">
+                    <Col span="1" style="visibility:hidden">1</Col>
+                    <Col span="10">
+                        <FormItem prop="" label="是否有欠费">
+                            <RadioGroup v-model="phone">
+                                <Radio label="apple">
+                                    <span>是</span>
+                                </Radio>
+                                <Radio label="android">
+                                    <span>否</span>
+                                </Radio>
+                            </RadioGroup>
                         </FormItem>
                     </Col>
                 </Row>

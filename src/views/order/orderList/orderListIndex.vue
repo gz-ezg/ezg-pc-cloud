@@ -628,7 +628,6 @@ export default {
             }
 
             function success(res){
-                console.log(res.data.data)
                 _self.data = res.data.data.rows
                 _self.total = res.data.data.total
                 for(let i = 0; i < _self.data.length; i++){

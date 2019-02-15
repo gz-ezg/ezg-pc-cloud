@@ -167,6 +167,12 @@ export default {
                     sorttable: "custom"
                 },
                 {
+                    title: '当前审批',
+                    key: 'process_type',
+                    minWidth: 120,
+                    sorttable: "custom"
+                },
+                {
                     title: "异常类型",
                     key: "unusual_type",
                     minWidth: 120

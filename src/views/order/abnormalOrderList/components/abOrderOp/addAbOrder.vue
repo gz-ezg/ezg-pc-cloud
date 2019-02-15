@@ -32,6 +32,7 @@
                                 <Radio label="Discount">产品折扣</Radio>
                                 <Radio label="Gift">赠送</Radio>
                                 <Radio label="Cancel">注销</Radio>
+                                <Radio label="Project">项目</Radio>
                                 <Radio label="Other">其他</Radio>
                             </RadioGroup>
                         </FormItem>
