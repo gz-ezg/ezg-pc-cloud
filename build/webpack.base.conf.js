@@ -8,6 +8,7 @@ const os = require('os');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -96,39 +97,39 @@ module.exports = {
             }
         }),
         new webpack.HotModuleReplacementPlugin(),
-        new AutoDllPlugin({
-            inject: true, // will inject the DLL bundle to index.html
-            debug: true,
-            filename: '[name]_[hash].js',
-            path: './dll',
-            entry: {
-                vue: [
-                    'vue/dist/vue.runtime.common', 
-                    'vue-router/dist/vue-router.common', 
-                    'vuex/dist/vuex.common'
-                ],
-                iview: ['iview','iview-area'],
-                vchart: [
-                    'v-charts/lib/line.common',
-                    'v-charts/lib/bar.common',
-                    'v-charts/lib/histogram.common',
-                    'v-charts/lib/pie.common',
-                    'v-charts/lib/funnel.common',
-                ]
-            }
+        // new AutoDllPlugin({
+        //     inject: true, // will inject the DLL bundle to index.html
+        //     debug: true,
+        //     filename: '[name]_[hash].js',
+        //     path: './dll',
+        //     entry: {
+        //         vue: [
+        //             'vue/dist/vue.runtime.common', 
+        //             'vue-router/dist/vue-router.common', 
+        //             'vuex/dist/vuex.common'
+        //         ],
+        //         iview: ['iview','iview-area'],
+        //         vchart: [
+        //             'v-charts/lib/line.common',
+        //             'v-charts/lib/bar.common',
+        //             'v-charts/lib/histogram.common',
+        //             'v-charts/lib/pie.common',
+        //             'v-charts/lib/funnel.common',
+        //         ]
+        //     }
+        // }),
+        new webpack.DllReferencePlugin({
+            context: __dirname,
+            manifest: path.resolve(__dirname, "../public/dll", "vue-manifest.json"),
         }),
-        // new webpack.DllReferencePlugin({
-        //     context: __dirname,
-        //     manifest: path.resolve(__dirname, "../dll", "vue-manifest.json"),
-        // }),
-        // new webpack.DllReferencePlugin({
-        //     context: __dirname,
-        //     manifest: path.resolve(__dirname, "../dll", "vchart-manifest.json"),
-        // }),
-        // new webpack.DllReferencePlugin({
-        //     context: __dirname,
-        //     manifest: path.resolve(__dirname, "../dll", "iview-manifest.json"),
-        // }),
+        new webpack.DllReferencePlugin({
+            context: __dirname,
+            manifest: path.resolve(__dirname, "../public/dll", "vchart-manifest.json"),
+        }),
+        new webpack.DllReferencePlugin({
+            context: __dirname,
+            manifest: path.resolve(__dirname, "../public/dll", "iview-manifest.json"),
+        }),
         new webpack.optimize.SplitChunksPlugin(),
         new CopyWebpackPlugin(
             [
@@ -143,13 +144,37 @@ module.exports = {
                 {
                     from:'WW_verify_z793ZwW9R5YytI0x.txt',
                     to: path.resolve(__dirname, '../dist/')
-                }
+                },
+                // {
+                //     from: 'public/dll',
+                //     to: path.resolve(__dirname, '../dist/dll/')
+                // }
             ], {
                 ignore: [
                     'text-editor.vue'
                 ]
             }
-        )
+        ),
+        new AddAssetHtmlPlugin([
+            {
+                // 要添加到编译中的文件的绝对路径，以及生成的HTML文件。支持globby字符串
+                filepath: require.resolve(path.resolve(__dirname, '../public/dll/_dll_iview.js')),
+                // 文件输出目录
+                outputPath: 'dll',
+                // 脚本或链接标记的公共路径
+                publicPath: 'dll'
+            },
+            {
+                filepath: require.resolve(path.resolve(__dirname, '../public/dll/_dll_vchart.js')),
+                outputPath: 'dll',
+                publicPath: 'dll'
+            },
+            {
+                filepath: require.resolve(path.resolve(__dirname, '../public/dll/_dll_vue.js')),
+                outputPath: 'dll',
+                publicPath: 'dll'
+            }
+        ])
     ],
     resolve: {
         mainFields: ['main'],

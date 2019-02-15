@@ -1,5 +1,7 @@
 let path = require("path");
 let webpack = require("webpack");
+let CleanWebpaclPlugin = require('clean-webpack-plugin');
+let FirendlyErrorePlugin = require('friendly-errors-webpack-plugin');
 
 module.exports = {
   mode: "development",
@@ -19,17 +21,21 @@ module.exports = {
     ]
   },
   output: {
-    filename: "_dll_[name]_[hash:6].js", // 产生的文件名
-    path: path.resolve(__dirname, "../dll"),
-    library: "_dll_[name]_[hash:6]"
+    filename: "_dll_[name].js", // 产生的文件名
+    path: path.resolve(__dirname, "../public/dll"),
+    library: "_dll_[name]"
   },
   plugins: [
     // name要等于library里的name
+    new CleanWebpaclPlugin(['dll'], {
+      root: path.resolve(__dirname, '../public')
+    }),
     new webpack.DllPlugin({
-      name: "_dll_[name]_[hash:6]",
-      path: path.resolve(__dirname, "../dll", "[name]-manifest.json"),
+      name: "_dll_[name]",
+      path: path.resolve(__dirname, "../public/dll", "[name]-manifest.json"),
       context: __dirname
     }),
+    new FirendlyErrorePlugin(),
     // new AssetsPlugin({
     //     filename: 'bundle-config.json',
     //     path: './'

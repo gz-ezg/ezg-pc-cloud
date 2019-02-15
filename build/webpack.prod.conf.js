@@ -83,5 +83,6 @@ const webpackConfig = merge(baseConfig, {
 
 const smp = new SpeedMeasurePlugin();
 //  使用该方法会导致dll文件无法注入index中
+//  该方法会是add-assert-html-webpack-plgin报错，目测插件兼容性错误
 // module.exports = smp.wrap(webpackConfig);
 module.exports = webpackConfig
