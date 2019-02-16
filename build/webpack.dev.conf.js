@@ -1,8 +1,12 @@
 const merge = require('webpack-merge');
 const path = require('path');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-const config = require("./config")
 const baseConfig = require('./webpack.base.conf');
+const config = require('../config/config')
+
+console.log(process.argv[6].split("=")[1])
+
+const env = process.argv[6].split("=")[1]
 
 module.exports = merge(baseConfig, {
   mode: 'development',
@@ -32,17 +36,9 @@ module.exports = merge(baseConfig, {
     contentBase: path.resolve(__dirname, '../dist'),
     open: false,
     disableHostCheck: true,
-    port: 8089,
+    port: config[env].port,
     inline: false,
-    proxy: {
-      '/api': {
-        target: 'http://192.168.0.220:9000',
-        pathRewrite: {
-          '^/api': ''
-        },
-        changeOrigin: true
-      }
-    },
+    proxy: config[env].proxyTable,
     overlay: {
       errors: true,
     },
@@ -51,7 +47,7 @@ module.exports = merge(baseConfig, {
   plugins: [
     new FriendlyErrorsPlugin({
       compilationSuccessInfo: {
-          messages: ['Now Proxy in 220(test); You application is running here http://localhost:8089'],
+          messages: [config[env].message],
       },
       clearConsole: true
     })
