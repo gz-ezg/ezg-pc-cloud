@@ -16,6 +16,7 @@ import Cookies from 'js-cookie';
 // import VCharts from 'v-charts';
 //  引入自定义主题文件
 // import './my-theme/index.less';
+// 最低可以兼容IE11,启用此行并将babelrc配置修改即可
 // import "@babel/polyfill";
 // import echarts from 'echarts';
 

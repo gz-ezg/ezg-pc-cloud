@@ -14,6 +14,8 @@
                 //  自动引入polyfill库，向下兼容
                 //  由于iview内部不兼容IE11以下，故此功能无需开启
                 // "useBuiltIns": "usage",
+                //  强制引入所有babel/polyfill,兼容IE11
+                // "useBuiltIns": "entry"
                 // "debug": true
             }
         ]
