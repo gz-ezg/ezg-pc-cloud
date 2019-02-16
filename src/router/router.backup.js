@@ -1,5 +1,5 @@
 /* eslint-disable */
-import Main from '@/layouts/Main.vue';
+import Main from '@/views/Main.vue';
 import Router from 'vue-router'
 // import 版路由
 // test作为测试页面接口，不部署到生产阶段，路径test也只适用于开发阶段
@@ -11,7 +11,7 @@ export const loginRouter = {
     meta: {
         // title: 'Login - 登录'
     },
-    component: () => import( /* webpackChunkName: "Login" */ '@/layouts/login.vue')
+    component: () => import( /* webpackChunkName: "Login" */ '@/views/login.vue')
 };
 
 export const page404 = {
@@ -20,7 +20,7 @@ export const page404 = {
     meta: {
         // title: '404-页面不存在'
     },
-    component: () => import( /* webpackChunkName: "commonIndex" */ '@/layouts/404.vue')
+    component: () => import( /* webpackChunkName: "commonIndex" */ '@/views/error-page/404.vue')
 };
 
 export const page403 = {
@@ -29,7 +29,7 @@ export const page403 = {
         // title: '403-权限不足'
     },
     name: 'error-403',
-    component: () => import( /* webpackChunkName: "commonIndex" */ '@/layouts/403.vue')
+    component: () => import( /* webpackChunkName: "commonIndex" */ '@/views/error-page/403.vue')
 };
 
 export const page500 = {
@@ -38,7 +38,7 @@ export const page500 = {
         // title: '500-服务端错误'
     },
     name: 'error-500',
-    component: () => import( /* webpackChunkName: "commonIndex" */ '@/layouts/500.vue')
+    component: () => import( /* webpackChunkName: "commonIndex" */ '@/views/error-page/500.vue')
 };
 
 //  暂时不需要使用的页面
