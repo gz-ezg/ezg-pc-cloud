@@ -22,3 +22,6 @@
     7.部分CommonsChunkPlugin 迁移至dll，部分CommonsChunkPlugin升级至SplitChunksPlugin（此为破坏性升级）
     8.noParse jquery 对jq包不做解析
     9.ExtractTextWebpackPlugin 替换为 MiniCssExtractPlugin
+    10.文件目录优化
+    11.uglify-es 压缩js
+    12.prerender-spa-plugin 插件，优化首屏体验
