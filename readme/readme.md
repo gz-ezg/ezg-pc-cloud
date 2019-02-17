@@ -68,3 +68,6 @@ npm install -g cnpm --registry=https://registry.npm.taobao.org
 2. 安装prerender-spa-plugin
 cnpm install prerender-spa-plugin
 备注：此配置在packjson中不进行显式引入
+
+linux下： const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
+存在兼容性问题，目测
