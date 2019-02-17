@@ -59,3 +59,12 @@
 项目调试：npm run dev(dev-xxx xxx值参见packjson配置)
 
 打包项目：npm run build
+
+首页采用了 prerender-spa-plugin 进行seo优化同时首页加载速度提升
+但是由于墙的问题，需要自行安装 chrome 开源版
+以下推荐安装方式
+1. 安装cnpm
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+2. 安装prerender-spa-plugin
+cnpm install prerender-spa-plugin
+备注：此配置在packjson中不进行显式引入

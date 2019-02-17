@@ -6,7 +6,9 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const progressBarWebpackPlugin  = require("progress-bar-webpack-plugin")
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
-// const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
+const PrerenderSPAPlugin = require('prerender-spa-plugin')
+const Renderer = PrerenderSPAPlugin.PuppeteerRenderer
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 
 
 const env = require('../config/prod.env')
@@ -38,24 +40,24 @@ const webpackConfig = merge(baseConfig, {
     ]
   },
   optimization: {
-    //  存在部分es6代码，无法执行压缩
-    // minimizer: [
-    //     new ParallelUglifyPlugin({ // 多进程压缩
-    //         cacheDir: '.cache/',
-    //         uglifyJS: {
-    //             output: {
-    //                 comments: false,
-    //                 beautify: false
-    //             },
-    //             compress: {
-    //                 warnings: false,
-    //                 drop_console: true,
-    //                 collapse_vars: true,
-    //                 reduce_vars: true
-    //             }
-    //         }
-    //     }),
-    // ]
+    //  存在部分es6代码，无法执行压缩，可以选择另外一个压缩工具
+    minimizer: [
+        new ParallelUglifyPlugin({ // 多进程压缩
+            cacheDir: '.cache/',
+            uglifyES: {
+                output: {
+                    comments: false,
+                    beautify: false
+                },
+                compress: {
+                    warnings: false,
+                    drop_console: true,
+                    collapse_vars: true,
+                    reduce_vars: true
+                }
+            }
+        }),
+    ]
   },
   plugins: [
     new CleanWebpackPlugin(['dist/'], {
@@ -73,8 +75,20 @@ const webpackConfig = merge(baseConfig, {
     //  打包分析
     // new BundleAnalyzerPlugin(),
     //  进度条
-    new progressBarWebpackPlugin()
-  ],
+    new progressBarWebpackPlugin(),
+    new PrerenderSPAPlugin({
+      staticDir: path.join(__dirname, '../dist'),
+      routes: [ '/' ],
+      renderer: new Renderer({
+        inject: {
+            foo: 'bar'
+        },
+        headless: false,
+        // 在 main.js 中 document.dispatchEvent(new Event('render-event'))，两者的事件名称要对应上。
+        renderAfterDocumentEvent: 'render-event'
+    })
+    })
+  ]
   //  不提示超过240kb
   // performance: {
     // hints: false

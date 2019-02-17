@@ -176,12 +176,12 @@
                     localStorage.setItem("access_array",JSON.stringify(re.data.data.interfaces))
                     Cookies.set('operations', (re.data.data.operations).join());
                     //  确保菜单重新生成，防止菜单组件被缓存 ====>
-                    window.location.reload();
+                    // window.location.reload();
                     setTimeout(() => {
                         _self.$router.push({
                             name: 'home_index'
                         });
-                    }, 300)
+                    }, 0)
                 }
 
                 this.$Get(url, config, success)
@@ -369,7 +369,6 @@
         },
         created(){
             let _self = this
-
         }
     };
 </script>

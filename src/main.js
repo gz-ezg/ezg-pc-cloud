@@ -61,6 +61,7 @@ Vue.use(iviewArea)
 //     }
 //   })
 
+axios.defaults.baseURL = "/"
 //  axios 拦截器
 axios.interceptors.response.use(
     (response) => {
@@ -528,6 +529,7 @@ new Vue({
         currentPageName: ''
     },
     mounted () {
+        document.dispatchEvent(new Event('render-event'))
         this.currentPageName = this.$route.name;
         // 显示打开的页面的列表
         this.$store.commit('setOpenedList');
