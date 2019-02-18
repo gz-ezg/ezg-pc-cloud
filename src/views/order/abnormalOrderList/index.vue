@@ -279,13 +279,13 @@ export default {
             }
 
             function success(res){
+                console.log(res.data.data.rows)
                 _self.data = res.data.data.rows
                 for(let i =0; i<_self.data.length; i++){
                     _self.data[i].create_date = DateFormat(_self.data[i].create_date)
                     _self.data[i].unusual_type = _self.unusualType_map.get(_self.data[i].unusual_type)
                 }
                 _self.total = res.data.data.total
-                console.log(res.data.data.rows)
                 _self.loading = false
             }
 
@@ -377,6 +377,7 @@ export default {
                     setTimeout(()=>{
                         _self.$Message.success("删除成功！")
                         _self.get_data()
+                        _self.selectRow = ''
                     }, 500)
                 }
 

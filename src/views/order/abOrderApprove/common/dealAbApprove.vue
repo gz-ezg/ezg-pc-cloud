@@ -29,6 +29,11 @@
                         <Input size="small" v-model="formValidateDetail.unusual_type" readonly/>
                         </FormItem>
                     </Col>
+                    <Col span="8">
+                        <FormItem label="销售人员" prop="realname">
+                        <Input size="small" v-model="formValidateDetail.realname" readonly/>
+                        </FormItem>
+                    </Col>
                 </Row>
                 <Row>
                     <FormItem label="产品内容" prop="product_content">

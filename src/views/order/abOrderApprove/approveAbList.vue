@@ -43,7 +43,6 @@
                     :data="data" 
                     size="small"
                     @on-row-click="select_row" 
-                    @on-row-dblclick="to_do_work_flow"
                     @on-sort-change="sort" 
                     :loading="tableLoading">
                 </Table>
