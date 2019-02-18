@@ -2,8 +2,10 @@
 require('./check-versions')()
 process.env.NODE_ENV = 'production'
 
-if(process.argv.slice(2)[0].split('=')[1] == "build"){
-  process.env.OWN_SPACE = "build"
+if(process.argv.slice(2)[0].split('=')[1] == "build:hash"){
+  process.env.OWN_SPACE = "build:hash"
+}else if(process.argv.slice(2)[0].split('=')[1] == "build:history"){
+  process.env.OWN_SPACE = "build:history"
 }else{
   process.env.OWN_SPACE = "jenkins"
 }

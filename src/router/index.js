@@ -12,7 +12,7 @@ Vue.use(VueRouter);
 // 路由配置
 const RouterConfig = {
     // mode: 'history',
-    mode: process.env.NODE_ENV == 'development'? "hash":"history",
+    // mode: process.env.OWN_SPACE != "build:history"?"hash":"history",
     routes: routers
 };
 

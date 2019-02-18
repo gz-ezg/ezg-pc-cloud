@@ -6,8 +6,6 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const progressBarWebpackPlugin  = require("progress-bar-webpack-plugin")
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
-const PrerenderSPAPlugin = require('prerender-spa-plugin')
-const Renderer = PrerenderSPAPlugin.PuppeteerRenderer
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 
 
@@ -75,7 +73,19 @@ const webpackConfig = merge(baseConfig, {
     //  打包分析
     // new BundleAnalyzerPlugin(),
     //  进度条
-    new progressBarWebpackPlugin(),
+    new progressBarWebpackPlugin()
+  ]
+  //  不提示超过240kb
+  // performance: {
+    // hints: false
+  // }
+});
+
+//  首页预渲染，但是无法使用history模式，node环境的问题感觉
+if(process.env.OWN_SPACE == "build:history"){
+  const PrerenderSPAPlugin = require('prerender-spa-plugin')
+  const Renderer = PrerenderSPAPlugin.PuppeteerRenderer
+  webpackConfig.plugins.push(
     new PrerenderSPAPlugin({
       staticDir: path.join(__dirname, '../dist'),
       routes: [ '/' ],
@@ -88,14 +98,10 @@ const webpackConfig = merge(baseConfig, {
         renderAfterDocumentEvent: 'render-event'
     })
     })
-  ]
-  //  不提示超过240kb
-  // performance: {
-    // hints: false
-  // }
-});
+  )
+}
 
-if(process.env.OWN_SPACE === "build"){
+if(process.env.OWN_SPACE != "jenkins"){
   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
   webpackConfig.plugins.push(
     new BundleAnalyzerPlugin()

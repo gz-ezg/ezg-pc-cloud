@@ -5,7 +5,9 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node build/build.js --env=build",
+    "build": "npm run build:hash",
+    "build:hash": "node build/build.js --env=build:hash",
+    "build:history": "node build/build.js --env=build:history",
     "jen": "node build/build.js --env=jenkins",
     "dev": "npm run dev:test",
     "dev:test": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --env=dev-test",
