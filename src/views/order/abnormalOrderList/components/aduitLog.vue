@@ -30,22 +30,22 @@ export default {
             header: [
                 {
                     title: '审批情况',
-                    key: 'record',
+                    key: 'audit_status',
                     minWidth: 100,
                 },
                 {
                     title: '审批备注',
-                    key: 'recordDesc',
+                    key: 'audit_memo',
                     minWidth: 200,
                 },
                 {
                     title: '审批时间',
-                    key: 'createDate',
+                    key: 'audit_date',
                     minWidth: 150
                 },
                 {
                     title: '创建人',
-                    key: 'auditName',
+                    key: 'audit_user',
                     minWidth: 120
                 },
                 ],
@@ -54,7 +54,27 @@ export default {
     },
     methods: {
         get_data(e){
-            console.log(e)
+            // console.log(e.row.applyId)
+            let _self = this
+            let url = `api/order/unusual/workorder/getAuditList`
+            let config = {
+                params: {
+                    applyId: e.row.applyId
+                }
+            }
+            function success(res){
+                console.log(res.data.data)
+                _self.data = res.data.data
+                for(let i=0;i<res.data.data.length;i++){
+                    if(_self.data[i].audit_status == 'Agree'){
+                        _self.data[i].audit_status = '同意'
+                    } else{
+                        _self.data[i].audit_status = '驳回'
+                    }
+                }
+            }
+            this.$Get(url,config,success)
+            
             // let b
             // let a = e.row._info.split('_&_')
             // for(let i =0;i<a.length;i++){

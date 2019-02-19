@@ -19,6 +19,30 @@
                                                 <Input v-model="formValidateSearch.tel" size="small"></Input>
                                             </FormItem>
                                         </Col>
+                                        <Col span="8">
+                                            <FormItem label="审批流程：" prop="tel">
+                                                <Input  size="small"></Input>
+                                            </FormItem>
+                                        </Col>
+                                     </Row>
+                                     <Row :gutter="16">
+                                        <Col span="8">
+                                            <FormItem label="创建人：" prop="tel">
+                                                <Input v-model="formValidateSearch.crealname" size="small"></Input>
+                                            </FormItem>
+                                        </Col>
+                                        <Col span="8">
+                                            <FormItem label="异常类型：" prop="unType">
+                                                <Select transfer v-model="formValidateSearch.unType" size="small">
+                                                    <Option v-for="(item, index) in unusualType" :key=index :value="item.typecode">{{item.typename}}</Option>                            
+                                                </Select>
+                                            </FormItem>
+                                        </Col>
+                                        <Col span="8">
+                                            <FormItem label="创建时间" prop="date">
+                                                <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:100%" size="small"></DatePicker>
+                                            </FormItem>
+                                        </Col>
                                      </Row>
                                     <center>
                                         <FormItem>
@@ -75,7 +99,10 @@ export default {
             //筛选相关
             formValidateSearch:{
                 companyname: "",
-                tel: ""
+                tel: "",
+                crealname: "",
+                unType: "",
+                date: []
             },
             //数据字典
             unusualType:[],
@@ -250,7 +277,11 @@ export default {
                     pageSize: _self.pageSize,
                     companyName: _self.formValidateSearch.companyname,
                     tel: _self.formValidateSearch.tel,
-                    sortField: _self.sortField
+                    sortField: _self.sortField,
+                    bcreatedate: DateFormat(_self.formValidateSearch.date[0]),
+                    ecreatedate: DateFormat(_self.formValidateSearch.date[1]),
+                    createName: _self.formValidateSearch.crealname,
+                    unusualType: _self.formValidateSearch.unType
                 }
             }
 
@@ -276,6 +307,7 @@ export default {
         handleReset(){
             this.$refs["formValidateSearch"].resetFields()
             this.formValidateSearch.date = []
+            this.formValidateSearch.crealname = ""
             this.get_table_data()
         },
 

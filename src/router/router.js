@@ -468,14 +468,14 @@ export const appRouter = [
                 component: () => import( /* webpackChunkName: "complaintcenter" */ '@/views/customerService/offlineCustomer/table/offline_index.vue')
             },
             //测试，记得修改access和meta的值
-            {
-                path: 'offlineCustomerApproval',
-                access: 6062,
-                meta: 6062,
-                title: '下线客户审批',
-                name: 'offlineCustomerApproval_index',
-                component: () => import( /* webpackChunkName: "complaintcenter" */ '@/views/customerService/offlineCustomerApproval/index.vue')
-            },
+            // {
+            //     path: 'offlineCustomerApproval',
+            //     access: 6062,
+            //     meta: 6062,
+            //     title: '下线客户审批',
+            //     name: 'offlineCustomerApproval_index',
+            //     component: () => import( /* webpackChunkName: "complaintcenter" */ '@/views/customerService/offlineCustomerApproval/index.vue')
+            // },
             {
                 access: 11613,
                 path: 'customerRate',

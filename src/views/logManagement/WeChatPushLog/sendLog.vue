@@ -282,6 +282,7 @@ export default {
                 {field: 'first', title: "短信内容"},
                 {field: 'keyword', title: "关键词"},
                 {field: 'remark', title: "链接标题"},
+                {field: 'companyname', title: "公司名称"},
 
             ]
             let _self = this

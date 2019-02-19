@@ -41,7 +41,7 @@
                     </FormItem>
                 </Row>
                 <Row>
-                    <FormItem label="审批是由" prop="apply_memo">
+                    <FormItem label="审批事由" prop="apply_memo">
                         <Input size="small" type="textarea" :rows="4" v-model="formValidateDetail.apply_memo" readonly/>
                     </FormItem>
                 </Row>
@@ -75,7 +75,7 @@ export default {
             openAbApproveDeal: false,
             formValidateDetail: {},
             banlishenpi: {
-                agree: "1",
+                agree: "Agree",
                 desc: ""
             },
             submitLoading: false
@@ -98,7 +98,7 @@ export default {
             }
 
             function success(res){
-                _self.banlishenpi.agree = '1'
+                _self.banlishenpi.agree = 'Agree'
                 _self.banlishenpi.desc = ''
                 _self.submitLoading = false
                 _self.openAbApproveDeal = false
