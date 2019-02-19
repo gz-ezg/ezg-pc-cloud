@@ -94,7 +94,7 @@ export default {
             let config = {
                 applyId: _self.formValidateDetail.applyId,
                 auditStatus: _self.banlishenpi.agree,
-                memo: _self.banlishenpi.desc
+                audit_memo: _self.banlishenpi.desc
             }
 
             function success(res){
