@@ -233,7 +233,7 @@ export default {
                                 },
                                 on:{
                                     click: () => {
-                                        console.log(params)
+                                        console.log(params.row.applyId)
                                         this.open_approve_log(params)
                                     }
                                 }

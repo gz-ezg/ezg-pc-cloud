@@ -95,13 +95,9 @@
                     </Col>
                     <Col span="10">
                         <FormItem prop="" label="是否需退款">
-                            <RadioGroup v-model="phone">
-                                <Radio label="apple">
-                                    <span>是</span>
-                                </Radio>
-                                <Radio label="android">
-                                    <span>否</span>
-                                </Radio>
+                            <RadioGroup v-model="hasReturned">
+                                <Radio label="Y"><span>是</span></Radio>
+                                <Radio label="N"><span>否</span></Radio>
                             </RadioGroup>
                         </FormItem>
                     </Col>
@@ -110,11 +106,11 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
                         <FormItem prop="" label="是否有欠费">
-                            <RadioGroup v-model="phone">
-                                <Radio label="apple">
+                            <RadioGroup v-model="hasArrears">
+                                <Radio label="Y">
                                     <span>是</span>
                                 </Radio>
-                                <Radio label="android">
+                                <Radio label="N">
                                     <span>否</span>
                                 </Radio>
                             </RadioGroup>
@@ -254,6 +250,8 @@
                 searchProduct:"",
                 searchFollow:"",
                 isOpenAdd:false,
+                hasReturned:'',
+                hasArrears:'',
                 task_message: {
                     companyid:"",
                     taxperiod:"",
@@ -553,7 +551,8 @@
                     this.$refs['task_message'].validate((valid) => {
                         // console.log(valid)
                         if (valid) {
-                            _self.postData()
+                            // _self.postData()
+                            _self.test()
                         } else {
                             this.$Message.error('请填写必选项！');
                         }
@@ -624,6 +623,64 @@
                 // this.PostData(url, _data, doSuccess)
                 this.$Post(url, _data, doSuccess, fail)
             },
+            //测试
+            test() {
+                let _self = this
+                let url = 'api/customer/createCustomerEnd'
+                let _data = {
+                    companyid: _self.task_message.companyid,
+                    productid: _self.task_message.productid,
+                    servicer: _self.task_message.servicer,
+                    marketer: _self.task_message.marketer,
+                    enddate: DateFormat(_self.task_message.enddate),
+                    callbackdate: DateFormat(_self.task_message.callbackdate),
+                    servicebegindate: DateFormat(_self.task_message.servicebegindate),
+                    reasonformarketer: _self.task_message.reasonformarketer,
+                    reasonforcallback: _self.task_message.reasonforcallback,
+                    endreason: _self.task_message.endreason,
+                    taxperiod: _self.task_message.taxperiod,
+                    followbusiness: _self.task_message.followbusiness,
+                    hasReturned: _self.hasReturned,
+                    hasArrears: _self.hasArrears
+                }
+
+                
+
+                function doSuccess(res) {
+                    console.log(res)
+                    // _self.$Message.success(res.data.msg)
+                    Bus.$emit('updateofflinecustomer',true)
+                    if(res.data.data.cycleid){
+                        let url = `/api/order/cycle/service/record/update`
+
+                        let config = {
+                            id: res.data.data.cycleid,
+                            serviceStatus: "stop",
+                            downlinePeriod: _self.task_message.taxperiod
+                        }
+
+                        function success(res){
+                            _self.add = false
+                        }
+
+                        function fail(err){
+
+                        }
+
+                        _self.$Post(url, config, success, fail)
+                    }else{
+                        _self.isOpenAdd = false
+                    }
+                    _self.cancel()
+                }
+
+                function fail(err){
+                    console.log(err)
+                }
+
+                // this.PostData(url, _data, doSuccess)
+                this.$Post(url, _data, doSuccess, fail)
+            }
         }
     }
 </script>

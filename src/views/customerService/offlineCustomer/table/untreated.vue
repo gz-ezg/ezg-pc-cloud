@@ -299,6 +299,7 @@
                 let url = '/customer/customerEndList?sortField=id&page=' + _self.page + '&status=N&pageSize=' + _self.pageSize + '&companyname=' + _self.NformInline.companyname + '&customername=' + _self.NformInline.name + '&customertel=' + _self.NformInline.tel + '&productname=' + _self.NformInline.product + '&marketer=' + _self.NformInline.marketername + '&servicer=' + _self.NformInline.servicename 
                 _self.row = {}
                 function doSuccess(res) {
+                    console.log(res.data.data)
                     let _data = res.data.data
 
                     _self.pageTotal = _data.total
