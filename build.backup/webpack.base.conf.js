@@ -12,14 +12,13 @@ const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 module.exports = {
     entry: {
-        main: path.resolve(__dirname, '../src/main.js'),
+        // main: ['babel-polyfill', path.resolve(__dirname, '../src/main.js')]
+        main: path.resolve(__dirname, '../src/main.js')
     },
     output: {
         path: path.resolve(__dirname, '../dist'),
         filename: 'js/[name].[hash].js',
         publicPath: "/"
-        //  静态文件才用cdn时需配置cdn地址，同时需做跨域设置
-        // publicPath: "http://cloud.roderickt1an.cn/"
     },
     module: {
         // 不去解析jquery的依赖关系
@@ -98,7 +97,6 @@ module.exports = {
             }
         }),
         new webpack.HotModuleReplacementPlugin(),
-        // 自动化引入dll
         // new AutoDllPlugin({
         //     inject: true, // will inject the DLL bundle to index.html
         //     debug: true,
@@ -120,7 +118,6 @@ module.exports = {
         //         ]
         //     }
         // }),
-        //  手动引入dll
         new webpack.DllReferencePlugin({
             context: __dirname,
             manifest: path.resolve(__dirname, "../public/dll", "vue-manifest.json"),
@@ -133,30 +130,6 @@ module.exports = {
             context: __dirname,
             manifest: path.resolve(__dirname, "../public/dll", "iview-manifest.json"),
         }),
-        new AddAssetHtmlPlugin([
-            {
-                // 要添加到编译中的文件的绝对路径，以及生成的HTML文件。支持globby字符串
-                filepath: require.resolve(path.resolve(__dirname, '../public/dll/_dll_iview.js')),
-                // 文件输出目录
-                outputPath: 'dll',
-                // 脚本或链接标记的公共路径，cdn位置
-                publicPath: "/dll"
-                // publicPath: 'http://cloud.roderickt1an.cn/dll'
-            },
-            {
-                filepath: require.resolve(path.resolve(__dirname, '../public/dll/_dll_vchart.js')),
-                outputPath: 'dll',
-                publicPath: "/dll"
-                // publicPath: 'http://cloud.roderickt1an.cn/dll'
-            },
-            {
-                filepath: require.resolve(path.resolve(__dirname, '../public/dll/_dll_vue.js')),
-                outputPath: 'dll',
-                publicPath: "/dll"
-                // publicPath: 'http://cloud.roderickt1an.cn/dll'
-            }
-        ]),
-        //  手动引入dll结束
         new webpack.optimize.SplitChunksPlugin(),
         new CopyWebpackPlugin(
             [
@@ -171,21 +144,44 @@ module.exports = {
                 {
                     from:'WW_verify_z793ZwW9R5YytI0x.txt',
                     to: path.resolve(__dirname, '../dist/')
-                }
+                },
+                // {
+                //     from: 'public/dll',
+                //     to: path.resolve(__dirname, '../dist/dll/')
+                // }
             ], {
                 ignore: [
                     'text-editor.vue'
                 ]
             }
-        )
+        ),
+        new AddAssetHtmlPlugin([
+            {
+                // 要添加到编译中的文件的绝对路径，以及生成的HTML文件。支持globby字符串
+                filepath: require.resolve(path.resolve(__dirname, '../public/dll/_dll_iview.js')),
+                // 文件输出目录
+                outputPath: 'dll',
+                // 脚本或链接标记的公共路径
+                publicPath: 'dll'
+            },
+            {
+                filepath: require.resolve(path.resolve(__dirname, '../public/dll/_dll_vchart.js')),
+                outputPath: 'dll',
+                publicPath: 'dll'
+            },
+            {
+                filepath: require.resolve(path.resolve(__dirname, '../public/dll/_dll_vue.js')),
+                outputPath: 'dll',
+                publicPath: 'dll'
+            }
+        ])
     ],
     resolve: {
         mainFields: ['main'],
         extensions: ['*', '.js', '.json', '.vue'],
         alias: {
-            'vue$': 'vue/dist/vue.esm.js',
-            '@views': path.resolve(__dirname, '../src/views'),
-            '@': path.resolve(__dirname, '../src')
+            // 'vue$': 'vue/dist/vue.esm.js',
+            '@': path.resolve(__dirname, '../src'),
         }
     }
 };

@@ -12,13 +12,20 @@ Vue.use(VueRouter);
 // 路由配置
 const RouterConfig = {
     // mode: 'history',
+    // mode: process.env.OWN_SPACE != "build:history"?"hash":"history",
     routes: routers
 };
 
 export const router = new VueRouter(RouterConfig);
 
 router.beforeEach((to, from, next) => {
-    iView.LoadingBar.start();
+    //  prerender时，此处需要删除配置
+    if(to.name == "/" || to.name == "login" || to.name == "home_index"){
+
+    }else{
+        iView.LoadingBar.start();
+    }
+    
     Util.title(to.meta.title);
     // console.log("======= to =======")
     // console.log(to)
@@ -62,6 +69,7 @@ router.beforeEach((to, from, next) => {
         }
     }
 
+    // 百度统计引入
     // setTimeout(()=>{
     //     let _hmt = _hmt || [];
     //     (function() {
@@ -78,6 +86,10 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to) => {
     Util.openNewPage(router.app, to.name, to.params, to.query);
-    iView.LoadingBar.finish();
+    if(to.name == "/" || to.name == "login"){
+
+    }else{
+        iView.LoadingBar.finish();
+    }
     window.scrollTo(0, 0);
 });
