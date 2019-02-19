@@ -95,6 +95,15 @@
                                     </FormItem>
                                 </Col>
                             </Row>
+                            <Row :gutter="16">
+                                <Col span="24">
+                                    <FormItem label="通知用户" prop="customerTags" style="margin-bottom:10px">
+                                        <Select v-model="test" filterable multiple @on-change='t' >
+                                            <Option v-for="item in user" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                        </Select>
+                                    </FormItem>
+                                </Col>
+                            </Row>
                         </Form>
                         <Row>
                             <Col :push="3"><Button type="primary" @click="upload" :loading="followUp_loading">新增跟进</Button></Col>
@@ -829,6 +838,11 @@
         },
         data(){
             return {
+                //通知用户相关
+                test: [],
+                userData: [],
+                user: [],
+                notify_ids:'',
                 openFinish: true,
                 etax_account_type: [],
                 isClue: false,
@@ -1125,6 +1139,37 @@
         }
         },
         methods: {
+            //通知客户相关
+            t(e){
+                console.log(e)
+                this.notify_ids = ''
+                for(let i =0;i<e.length;i++){
+                    this.notify_ids += e[i] + ','
+                }
+                this.notify_ids = this.notify_ids.substring(0,this.notify_ids.length-1)
+                console.log(this.notify_ids)
+            },
+            getUserData(){
+                let _self = this
+                let url = `api/user/list`
+                let config = {
+                    params: {
+                        page: 1,
+                        pageSize: 1000
+                    }
+                }
+                function success(res){
+                    console.log(res.data.data.rows)
+                    _self.userData = res.data.data.rows
+                    for(let i=0;i<res.data.data.rows.length;i++){
+                        _self.user.push({
+                            'value': _self.userData[i].id,
+                            'label': _self.userData[i].realname
+                        })
+                    }
+                }
+                this.$Get(url,config,success)
+            },
             update_customer_flag(row, status){
                 console.log(row)
                 let _self = this
@@ -1252,7 +1297,8 @@
                     followUpType: _self.addDetailContent.followUpType,
                     attIds:_self.attIds,
                     finishFlag: _self.addDetailContent.finishFlag,
-                    notifyDate: (DateFormat(_self.addDetailContent.followupdate) + ' ' + _self.addDetailContent.followuptime)
+                    notifyDate: (DateFormat(_self.addDetailContent.followupdate) + ' ' + _self.addDetailContent.followuptime),
+                    notify_ids: _self.notify_ids
                 }
                 function success(res){
                     if(_self.isClue){
@@ -1392,6 +1438,9 @@
                 }
             }
 
+        },
+        created(){
+            this.getUserData()
         },
         mounted(){
             var _self = this

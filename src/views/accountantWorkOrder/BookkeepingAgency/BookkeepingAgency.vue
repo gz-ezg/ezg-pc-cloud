@@ -13,6 +13,9 @@
             <TabPane label="已终止" name="name4">
                 <stop></stop>
             </TabPane>
+            <TabPane label="异常" name="name6">
+                <exception></exception>
+            </TabPane>
             <TabPane label="全部" name="name5">
                 <all></all>
             </TabPane>
@@ -49,6 +52,7 @@
     import Arrears from './BookkeepingAgencyIndex/Table/arrears'
     import Stop from './BookkeepingAgencyIndex/Table/stop'
     import Detailx from '../detail.vue'
+    import Exception from './BookkeepingAgencyIndex/Table/exception'
 
     
     export default {
@@ -57,6 +61,7 @@
             Detailx,
             Stop,
             Arrears,
+            Exception,
             All,
             Notbegin,
             Servicing,

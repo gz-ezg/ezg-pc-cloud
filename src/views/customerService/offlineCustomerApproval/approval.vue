@@ -1,8 +1,8 @@
 <template>
     <div>
         <Modal
-            v-model="isOpenShow"
-            title="查看"
+            v-model="isOpenApproval"
+            title="办理审批"
             width="800"
         >
             <Form ref="task_message" :model="task_message" :label-width="120">
@@ -112,7 +112,26 @@
                     </Col>
                 </Row>
             </Form>
+            <!-- model等参数还没写 -->
+            <Tabs>
+                <TabPane label="任务处理" icon="clipboard">
+                    <Col span="22">
+                        <Form ref="banlishenpi" :model="banlishenpi" :label-width="120" style="margin-top: 5px">
+                            <FormItem label="审批备注" prop="desc">
+                                <Input  type="textarea" :autosize="{minRows: 2,maxRows: 5}"></Input>
+                            </FormItem>
+                            <FormItem label="是否同意审批" prop="agree">
+                                <RadioGroup >
+                                    <Radio label="Agree">同意</Radio>
+                                    <Radio label="Reject">驳回</Radio>
+                                </RadioGroup>
+                            </FormItem>
+                        </Form>
+                    </Col>
+                </TabPane>
+            </Tabs>
             <div slot="footer">
+                <Button type="primary" @click="submit" >提交</Button>
             </div>
         </Modal>
     </div>
@@ -122,7 +141,7 @@
     export default {
         data() {
             return {
-                isOpenShow:false,
+                isOpenApproval:false,
                 task_message: {
                     companyid:"",
                     taxperiod:"",
@@ -143,11 +162,16 @@
                 }
             }
         },
+        methods:{
+            submit(){
+                this.$Message.info('已点击提交按钮')
+            }
+        },
         created() {
             let _self = this
-            this.$bus.on('OPEN_OFFLINE_SHOW', (e)=>{
+            this.$bus.on('OPEN_OFFLINE_APPROVAL', (e)=>{
                 _self.$refs["task_message"].resetFields();
-                _self.isOpenShow = true                    
+                _self.isOpenApproval = true                    
                 _self.task_message.company = e.CompanyName
                 if(e.product == null||e.product == ""){
                     _self.task_message.product = "."

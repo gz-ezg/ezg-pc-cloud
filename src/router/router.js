@@ -467,6 +467,15 @@ export const appRouter = [
                 name: 'offlineCustomer_index',
                 component: () => import( /* webpackChunkName: "complaintcenter" */ '@/views/customerService/offlineCustomer/table/offline_index.vue')
             },
+            //测试，记得修改access和meta的值
+            // {
+            //     path: 'offlineCustomerApproval',
+            //     access: 6062,
+            //     meta: 6062,
+            //     title: '下线客户审批',
+            //     name: 'offlineCustomerApproval_index',
+            //     component: () => import( /* webpackChunkName: "complaintcenter" */ '@/views/customerService/offlineCustomerApproval/index.vue')
+            // },
             {
                 access: 11613,
                 path: 'customerRate',
@@ -610,7 +619,7 @@ export const appRouter = [
                 path: 'abnormalOrderList',
                 title: '异常工单列表',
                 name: "abnormalOrderList_index",
-                component: () => import( /* webpackChunkName: "invoicelist_index" */ '@/views/order/abnormalOrderList/index.vue')
+                component: () => import( /* webpackChunkName: "abnormalOrderList_index" */ '@/views/order/abnormalOrderList/index.vue')
             },
             {
                 access:11623,
@@ -618,7 +627,7 @@ export const appRouter = [
                 path: 'abOrderApprove',
                 title: '异常工单审批',
                 name: "abOrderApprove_index",
-                component: () => import( /* webpackChunkName: "invoicelist_index" */ '@/views/order/abOrderApprove/index.vue')
+                component: () => import( /* webpackChunkName: "abOrderApprove_index" */ '@/views/order/abOrderApprove/index.vue')
             }
             // {
             //     access:6020,
