@@ -238,6 +238,7 @@
                 _self.isExamine = false
             },
             search(){
+                console.log('123')
                 this.page = 1
                 this.getData()
             },
@@ -303,9 +304,20 @@
 
             getData() {
                 let _self = this
-                let url = '/customer/customerEndList?sortField=id&page=' + _self.page + '&status=N&pageSize=' + _self.pageSize + '&companyname=' + _self.NformInline.companyname + '&customername=' + _self.NformInline.name + '&customertel=' + _self.NformInline.tel + '&productname=' + _self.NformInline.product + '&marketer=' + _self.NformInline.marketername + '&servicer=' + _self.NformInline.servicename 
+                let url = 'api/customer/auditList'
+                let config = {
+                    params: {
+                        page: _self.page,
+                        pageSize: _self.pageSize,
+                        isAudit: "N",
+                        createName: "",
+                        bcreatedate: "",
+                        ecreatedate: ""
+                    }
+                }
                 _self.row = {}
                 function doSuccess(res) {
+                    console.log(res.data.data)
                     let _data = res.data.data
 
                     _self.pageTotal = _data.total
@@ -332,8 +344,8 @@
                         }
                     }
                 }
-
-                this.GetData(url, doSuccess)
+                this.$Get(url, config, doSuccess)
+                // this.GetData(url, doSuccess)
             },
 
             pageChange(a) {
@@ -362,7 +374,9 @@
             Bus.$on('updateofflinecustomer',(e)=>{
                 _self.getData()
             })
-            
+            _self.$bus.on('UPDATE_DATA',(e)=>{
+                _self.getData()
+            })
         }
     }
 </script>

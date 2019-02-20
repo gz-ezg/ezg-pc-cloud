@@ -60,10 +60,7 @@
             </Row>
         <Row>
             <ButtonGroup>
-                <Button type="primary" icon="ios-color-wand-outline" @click="add" v-permission="['offlineCustomer-add']">录入</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="edit" v-permission="['offlineCustomer-edit']"> 编辑</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="check">查看</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="downExcel">导出Excel</Button>                                
+                <Button type="primary" icon="ios-color-wand-outline" @click="openDetail">查看详情</Button>
             </ButtonGroup>
         </Row>
 
@@ -92,7 +89,7 @@
 </template>
 
 <script>
-    import Bus from '../../../../components/bus'
+    import Bus from '../../../components/bus'
 
     export default {
         components: {
@@ -120,58 +117,52 @@
                     {
                         title: '公司名称',
                         key: 'CompanyName',
-                        width: 300
+                        minWidth: 300
                     },
                     {
                         title: '客户名称',
                         key: 'name',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '客户手机',
                         key: 'TEL',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '产品名称',
                         key: 'product',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '回访时间',
                         key: 'callbackdate',
-                        width: 160
+                        minWidth: 160
                     },
                     {
                         title: '服务人员',
                         key: 'servicer',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '市场人员',
                         key: 'marketer',
-                        width: 120
+                        minWidth: 120
                     },
                     {
                         title: '结束时间',
                         key: 'enddate',
-                        width: 160
+                        minWidth: 160
                     },
                     {
                         title: '服务开始时间',
                         key: 'servicebegindate',
-                        width: 160
-                    },
-                    {
-                        title: '流程状态',
-                        key: 'process_type',
-                        width: 120
+                        minWidth: 160
                     },
                     {
                         title: '操作',
                         key: 'action',
-                        fixed: 'right',
-                        width: 200,
+                        width: 300,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
@@ -201,6 +192,21 @@
                                         }
                                     }
                                 }, '[查看企业]'),
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            // Bus.$emit('openCompanyDetail',params.row.companyid)
+                                            // this.$store.commit("open_gobal_company_detail_modal", params.row.companyid)
+                                            // Bus.$emit('detail', params)
+                                            console.log(params.row.applyId)
+                                            this.$bus.emit('OPEN_ADUIT_LOG',params.row.applyId)
+                                        }
+                                    }
+                                }, '[审批记录]'),
                             ]);
                         }
                     }
@@ -247,6 +253,7 @@
                 _self.isExamine = false
             },
             search(){
+                console.log('123')
                 this.page = 1
                 this.getData()
             },
@@ -277,6 +284,16 @@
                 _self.$bus.emit("OPEN_OFFLINE_ADD",true)
             },
 
+            //查看详情
+            openDetail(){
+                let _self = this
+                if(_self.row.id == null){
+                    _self.$Message.warning('请选择一行查看')
+                } else {
+                    _self.$bus.emit('OPEN_DETAIL', _self.row)
+                }
+            },
+
             edit() {
                 let _self = this
 
@@ -301,7 +318,17 @@
 
             getData() {
                 let _self = this
-                let url = '/customer/customerEndList?sortField=id&page=' + _self.page + '&status=N&pageSize=' + _self.pageSize + '&companyname=' + _self.NformInline.companyname + '&customername=' + _self.NformInline.name + '&customertel=' + _self.NformInline.tel + '&productname=' + _self.NformInline.product + '&marketer=' + _self.NformInline.marketername + '&servicer=' + _self.NformInline.servicename 
+                let url = 'api/customer/auditList'
+                let config = {
+                    params: {
+                        page: _self.page,
+                        pageSize: _self.pageSize,
+                        isAudit: "Y",
+                        createName: "",
+                        bcreatedate: "",
+                        ecreatedate: ""
+                    }
+                }
                 _self.row = {}
                 function doSuccess(res) {
                     console.log(res.data.data)
@@ -331,8 +358,8 @@
                         }
                     }
                 }
-
-                this.GetData(url, doSuccess)
+                this.$Get(url, config, doSuccess)
+                // this.GetData(url, doSuccess)
             },
 
             pageChange(a) {
@@ -361,7 +388,9 @@
             Bus.$on('updateofflinecustomer',(e)=>{
                 _self.getData()
             })
-            
+            _self.$bus.on('UPDATE_DATA',(e)=>{
+                _self.getData()
+            })
         }
     }
 </script>

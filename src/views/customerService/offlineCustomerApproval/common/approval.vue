@@ -61,8 +61,8 @@
                 <Row :gutter="16">
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
-                        <FormItem prop="callbackdate" label="回访时间">
-                            <DatePicker type="date" v-model="task_message.callbackdate" style="width: 100%" size="small" readonly></DatePicker>
+                        <FormItem prop="taxperiod" label="下线税期">
+                            <DatePicker type="month" v-model="task_message.taxperiod" style="width: 100%" size="small" readonly></DatePicker>
                         </FormItem>
                     </Col>
                     <Col span="10">
@@ -82,8 +82,19 @@
                 <Row :gutter="16">
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
-                        <FormItem prop="taxperiod" label="下线税期">
-                            <Input size="small" v-model="task_message.taxperiod" type="text" placeholder="格式：2018-06" readonly />
+                        <FormItem prop="" label="是否需退款">
+                            <RadioGroup v-model="task_message.has_returned">
+                                <Radio label="Y" disabled>是</Radio>
+                                <Radio label="N" disabled>否</Radio>
+                            </RadioGroup>
+                        </FormItem>
+                    </Col>
+                    <Col span="10">
+                        <FormItem prop="" label="是否有欠费">
+                            <RadioGroup v-model="task_message.has_arrears">
+                                <Radio label="Y" disabled>是</Radio>
+                                <Radio label="N" disabled>否</Radio>
+                            </RadioGroup>
                         </FormItem>
                     </Col>
                 </Row>
@@ -118,10 +129,10 @@
                     <Col span="22">
                         <Form ref="banlishenpi" :model="banlishenpi" :label-width="120" style="margin-top: 5px">
                             <FormItem label="审批备注" prop="desc">
-                                <Input  type="textarea" :autosize="{minRows: 2,maxRows: 5}"></Input>
+                                <Input v-model="banlishenpi.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}"></Input>
                             </FormItem>
                             <FormItem label="是否同意审批" prop="agree">
-                                <RadioGroup >
+                                <RadioGroup v-model="banlishenpi.agree">
                                     <Radio label="Agree">同意</Radio>
                                     <Radio label="Reject">驳回</Radio>
                                 </RadioGroup>
@@ -141,6 +152,10 @@
     export default {
         data() {
             return {
+                banlishenpi: {
+                    agree: "Agree",
+                    desc: ""
+                },
                 isOpenApproval:false,
                 task_message: {
                     companyid:"",
@@ -158,13 +173,32 @@
                     reasonformarketer:"",
                     reasonforcallback:"",
                     tel:"",
-                    followbusiness: ""
+                    followbusiness: "",
+                    has_returned: "",
+                    has_arrears: "",
+                    applyId: ""
                 }
             }
         },
         methods:{
             submit(){
-                this.$Message.info('已点击提交按钮')
+                let _self = this
+                let url = `api/customer/audit`
+                let config = {
+                    applyId: _self.task_message.applyId,
+                    auditStatus: _self.banlishenpi.agree,
+                    memo: _self.banlishenpi.desc
+                }
+                function success(res){
+                    _self.banlishenpi.desc = ''
+                    _self.isOpenApproval = false
+                    _self.$bus.emit('UPDATE_DATA',true)
+                    console.log(res)
+                }
+                function fail(){
+
+                }
+                this.$Post(url,config,success,fail)
             }
         },
         created() {
@@ -190,6 +224,9 @@
                 _self.task_message.taxperiod = e.taxperiod                                     
                 _self.task_message.tel = e.TEL
                 _self.task_message.followbusiness = e.followbusiness
+                _self.task_message.has_returned = e.has_returned
+                _self.task_message.has_arrears = e.has_arrears
+                _self.task_message.applyId = e.applyId
             })
         }
     }

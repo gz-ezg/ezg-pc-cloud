@@ -189,7 +189,7 @@ export default {
                 },
                 {
                     title: '流程状态',
-                    key: 'current_process_name',
+                    key: 'process_type',
                     minWidth: 120,
                     sorttable: "custom"
                 },
