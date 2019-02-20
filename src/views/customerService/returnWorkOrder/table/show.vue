@@ -84,6 +84,11 @@
                                 <Rate disabled v-model="data.service_attitude"></Rate>
                             </FormItem>
                         </Col>
+                        <Col span="12">
+                            <FormItem prop="other" label="其他:">
+                                <Rate disabled v-model="data.other"></Rate>
+                            </FormItem>
+                        </Col>
                     </Row>
                     <Row :gutter="16">
                         <Col span="24">
