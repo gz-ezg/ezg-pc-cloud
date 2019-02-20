@@ -85,8 +85,8 @@
                             </FormItem>
                         </Col>
                         <Col span="12">
-                            <FormItem prop="service_attitude" label="其他:">
-                                <Rate disabled v-model="data.service_attitude"></Rate>
+                            <FormItem prop="other" label="其他:">
+                                <Rate disabled v-model="data.other"></Rate>
                             </FormItem>
                         </Col>
                     </Row>

@@ -1,8 +1,8 @@
 <template>
     <div>
         <Modal
-            v-model="isOpenShow"
-            title="查看"
+            v-model="isOpenDetail"
+            title="查看详情"
             width="800"
         >
             <Form ref="task_message" :model="task_message" :label-width="120">
@@ -123,7 +123,9 @@
                     </Col>
                 </Row>
             </Form>
+            
             <div slot="footer">
+                
             </div>
         </Modal>
     </div>
@@ -133,7 +135,11 @@
     export default {
         data() {
             return {
-                isOpenShow:false,
+                banlishenpi: {
+                    agree: "Agree",
+                    desc: ""
+                },
+                isOpenDetail:false,
                 task_message: {
                     companyid:"",
                     taxperiod:"",
@@ -151,16 +157,38 @@
                     reasonforcallback:"",
                     tel:"",
                     followbusiness: "",
+                    has_returned: "",
                     has_arrears: "",
-                    has_returned: ""
+                    applyId: ""
                 }
+            }
+        },
+        methods:{
+            submit(){
+                let _self = this
+                let url = `api/customer/audit`
+                let config = {
+                    applyId: _self.task_message.applyId,
+                    auditStatus: _self.banlishenpi.agree,
+                    memo: _self.banlishenpi.desc
+                }
+                function success(res){
+                    _self.banlishenpi.desc = ''
+                    _self.isOpenDetail = false
+                    _self.$bus.emit('UPDATE_DATA',true)
+                    console.log(res)
+                }
+                function fail(){
+
+                }
+                this.$Post(url,config,success,fail)
             }
         },
         created() {
             let _self = this
-            this.$bus.on('OPEN_OFFLINE_SHOW', (e)=>{
+            _self.$bus.on('OPEN_DETAIL', (e)=>{
                 _self.$refs["task_message"].resetFields();
-                _self.isOpenShow = true                    
+                _self.isOpenDetail = true                    
                 _self.task_message.company = e.CompanyName
                 if(e.product == null||e.product == ""){
                     _self.task_message.product = "."
@@ -181,6 +209,7 @@
                 _self.task_message.followbusiness = e.followbusiness
                 _self.task_message.has_returned = e.has_returned
                 _self.task_message.has_arrears = e.has_arrears
+                _self.task_message.applyId = e.applyId
             })
         }
     }

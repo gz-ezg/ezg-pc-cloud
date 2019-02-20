@@ -226,6 +226,11 @@
                         width: 160
                     },
                     {
+                        title: '流程状态',
+                        key: 'process_type',
+                        width: 120
+                    },
+                    {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',

@@ -68,8 +68,8 @@
                     </Col>
                     -->
                     <Col span="10">
-                        <FormItem prop="" label="客户上线时间">
-                            <Input size="small" readonly />
+                        <FormItem prop="taxperiod" label="下线税期">
+                            <DatePicker type="month" v-model="task_message.taxperiod" style="width: 100%" size="small" ></DatePicker>
                         </FormItem>
                     </Col>
                     <Col span="10">
@@ -89,30 +89,18 @@
                 <Row :gutter="16">
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
-                        <FormItem prop="taxperiod" label="下线税期">
-                            <Input size="small" v-model="task_message.taxperiod" type="text" placeholder="格式：2018-06"  />
-                        </FormItem>
-                    </Col>
-                    <Col span="10">
                         <FormItem prop="" label="是否需退款">
-                            <RadioGroup v-model="hasReturned">
-                                <Radio label="Y"><span>是</span></Radio>
-                                <Radio label="N"><span>否</span></Radio>
+                            <RadioGroup v-model="task_message.has_returned">
+                                <Radio label="Y">是</Radio>
+                                <Radio label="N">否</Radio>
                             </RadioGroup>
                         </FormItem>
                     </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
                         <FormItem prop="" label="是否有欠费">
-                            <RadioGroup v-model="hasArrears">
-                                <Radio label="Y">
-                                    <span>是</span>
-                                </Radio>
-                                <Radio label="N">
-                                    <span>否</span>
-                                </Radio>
+                            <RadioGroup v-model="task_message.has_arrears">
+                                <Radio label="Y">是</Radio>
+                                <Radio label="N">否</Radio>
                             </RadioGroup>
                         </FormItem>
                     </Col>
@@ -250,8 +238,6 @@
                 searchProduct:"",
                 searchFollow:"",
                 isOpenAdd:false,
-                hasReturned:'',
-                hasArrears:'',
                 task_message: {
                     companyid:"",
                     taxperiod:"",
@@ -268,10 +254,12 @@
                     reasonformarketer:"",
                     reasonforcallback:"",
                     tel:"",
-                    followbusiness: ""
+                    followbusiness: "",
+                    has_returned: "",
+                    has_arrears: ""
                 },
                 task_message_rule:{
-                    taxperiod:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
+                    taxperiod:[{ required: true, message: '必选项！', trigger: 'change', type:'date' }],
                     company:[{ required: true, message: '必选项！', trigger: 'change', type:'string' },],
                     product:[{ required: true, message: '必选项！', trigger: 'change', type:'string' },],
                     enddate:[{ required: true, message: '必选项！', trigger: 'change', type:'date' },],
@@ -638,10 +626,10 @@
                     reasonformarketer: _self.task_message.reasonformarketer,
                     reasonforcallback: _self.task_message.reasonforcallback,
                     endreason: _self.task_message.endreason,
-                    taxperiod: _self.task_message.taxperiod,
+                    taxperiod: DateFormat(_self.task_message.taxperiod),
                     followbusiness: _self.task_message.followbusiness,
-                    hasReturned: _self.hasReturned,
-                    hasArrears: _self.hasArrears
+                    hasReturned: _self.task_message.has_returned,
+                    hasArrears: _self.task_message.has_arrears
                 }
 
                 

@@ -64,6 +64,7 @@
                     </Col>
                     <Col span="8">
                         <FormItem label="异常工单">
+                            <span v-if="this.unusualCode">{{this.unusualCode}}</span>
                             <div style="display:inline-block">
                                 <Button type="info" size="small" @click="open_relateOrder">查看</Button>
                             </div>
@@ -123,6 +124,7 @@ export default {
     },
     data(){
         return {
+            unusualCode: "",
             orderId: "",
             openServiceItem: false,
             openShowOrderDetail: false,
@@ -253,6 +255,23 @@ export default {
         }
     },
     methods: {
+        //
+        get_ab_worker_id(){
+            let _self = this
+            let url = `api/order/unusual/workorder/findUnusualWorkOrderByOrderId`
+            let config ={
+                params:{
+                    orderId: this.orderId
+                }
+            }
+            function success(res){
+                console.log(res.data.data)
+                if(res.data.data){
+                    _self.unusualCode = res.data.data.unusualCode
+                }
+            }
+            this.$Get(url,config,success)
+        },
         //打开对应的异常工单
         open_relateOrder(){
             this.$bus.emit("RELATE_ABORDER",true)
@@ -295,6 +314,8 @@ export default {
             this.get_data(e)
             this.orderId = e
             this.openShowOrderDetail = true
+            this.unusualCode = ""
+            this.get_ab_worker_id()
         })
     },
 }

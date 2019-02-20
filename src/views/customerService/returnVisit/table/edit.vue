@@ -85,8 +85,8 @@
                             </FormItem>
                         </Col>
                         <Col span="12">
-                            <FormItem prop="service_attitude" label="其他:">
-                                <Rate v-model="data.service_attitude"></Rate>
+                            <FormItem prop="other" label="其他:">
+                                <Rate v-model="data.other"></Rate>
                             </FormItem>
                         </Col>
                     </Row>
@@ -202,7 +202,8 @@ export default {
                 reason:_self.data.reason,
                 replyTime:_self.data.reply_time,
                 professionalLevel:_self.data.professional_level,
-                serviceAttitude:_self.data.service_attitude
+                serviceAttitude:_self.data.service_attitude,
+                other:_self.data.other
             }
 
             function success(res){

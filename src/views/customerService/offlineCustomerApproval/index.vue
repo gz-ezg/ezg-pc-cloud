@@ -5,22 +5,30 @@
                 <Untreated></Untreated>
             </TabPane>
             <TabPane label="查看已审批" name="name2">
-                
+                <Processed></Processed>
             </TabPane>
         </Tabs>
         <Approval></Approval>
+        <Detail></Detail>
+        <Aduit-log></Aduit-log>
     </div>
 </template>
 
 <script>
+    import Processed from './processed'
     import Untreated from './untreated'
-    import Approval from './approval'
+    import Approval from './common/approval'
+    import Detail from './common/detail'
+    import AduitLog from './common/aduitLog'
 
     export default {
         name:'offlineCustomerApproval_index',
         components:{
+            Processed,
             Untreated,
-            Approval
+            Approval,
+            Detail,
+            AduitLog
         },
         data() {
             return {
