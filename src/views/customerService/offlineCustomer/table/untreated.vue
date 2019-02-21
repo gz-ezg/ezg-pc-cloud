@@ -279,9 +279,11 @@
 
             edit() {
                 let _self = this
-
-                if (_self.row.id == null) {
+                console.log(_self.row)
+                if (_self.row.id == null ) {
                     _self.$Message.warning('请选择要查看的项目')
+                } else if(_self.row.current_process != 'kf'){
+                    _self.$Message.warning('当前流程状态不允许此操作')
                 } else {
                     _self.row.type  = 'edit'
                     // Bus.$emit('add', _self.row)

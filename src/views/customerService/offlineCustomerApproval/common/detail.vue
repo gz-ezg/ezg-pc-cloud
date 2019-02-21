@@ -164,25 +164,7 @@
             }
         },
         methods:{
-            submit(){
-                let _self = this
-                let url = `api/customer/audit`
-                let config = {
-                    applyId: _self.task_message.applyId,
-                    auditStatus: _self.banlishenpi.agree,
-                    memo: _self.banlishenpi.desc
-                }
-                function success(res){
-                    _self.banlishenpi.desc = ''
-                    _self.isOpenDetail = false
-                    _self.$bus.emit('UPDATE_DATA',true)
-                    console.log(res)
-                }
-                function fail(){
-
-                }
-                this.$Post(url,config,success,fail)
-            }
+            
         },
         created() {
             let _self = this

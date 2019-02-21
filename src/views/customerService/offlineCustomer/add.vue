@@ -36,7 +36,7 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
                         <FormItem prop="servicername" label="服务人员">
-                            <Input size="small" v-model="task_message.servicername" @on-focus="getUser" />
+                            <Input size="small" v-model="task_message.servicername" readonly/>
                         </FormItem>
                     </Col>
                     <Col span="10">
@@ -49,7 +49,7 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
                         <FormItem prop="servicebegindate" label="服务开始时间">
-                            <DatePicker type="month" v-model="task_message.servicebegindate" style="width:100%" size="small"></DatePicker>
+                            <DatePicker type="date" v-model="task_message.servicebegindate" style="width:100%" size="small" readonly></DatePicker>
                         </FormItem>
                     </Col>
                     <Col span="10">
@@ -393,7 +393,7 @@
                 let _self = this
                 _self.selectCompany = true
                 let url = ''
-                url = 'api/customer/company/list'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+                url = 'api/customer/company/list'     
                 let config = {
                     params:{
                         page: _self.page3,
@@ -477,6 +477,7 @@
                 _self.task_message.companyid = a.cpid
                 _self.task_message.marketername = a.followby
                 _self.task_message.marketer = a.followbyid
+                _self.get_server_data()
             },
 
             rowSelect33(a) {
@@ -485,6 +486,7 @@
                 _self.selectProduct = false
                 _self.task_message.product = a.product
                 _self.task_message.productid = a.id
+                _self.get_server_data()
             },
 
             getUser() {
@@ -540,7 +542,11 @@
                         // console.log(valid)
                         if (valid) {
                             // _self.postData()
-                            _self.test()
+                            if(_self.task_message.servicer){
+                                _self.test()
+                            } else {
+                                this.$Message.error('服务人员为空，不允许录入！');
+                            }
                         } else {
                             this.$Message.error('请填写必选项！');
                         }
@@ -555,6 +561,33 @@
                 //         }
                 //     })
                 // }
+            },
+            //根据公司id和产品id获取服务人员和服务开始时间
+            get_server_data() {
+                let _self = this
+                let url = `api/order/cycle/company/getCycleMonthInfoBycompanyId`
+                if(_self.task_message.companyid && _self.task_message.productid){
+                    let config = {
+                        params: {
+                            companyId: _self.task_message.companyid,
+                            productId: _self.task_message.productid
+                        }
+                    }
+                    function success(res) {
+                        console.log(_self.task_message.companyid +'and'+ _self.task_message.productid)
+                        console.log(res.data.data[0])
+                        if(res.data.data[0]){
+                            _self.task_message.servicer = res.data.data[0].serviceId
+                            _self.task_message.servicername = res.data.data[0].server_name
+                            _self.task_message.servicebegindate = DateFormat(res.data.data[0].service_begin_time)
+                        } else {
+                            _self.task_message.servicer = ""
+                            _self.task_message.servicername = ""
+                            _self.task_message.servicebegindate = ""
+                        }
+                    }
+                    this.$Get(url,config,success)
+                }
             },
             postData() {
                 let _self = this
@@ -573,8 +606,6 @@
                     taxperiod: _self.task_message.taxperiod,
                     followbusiness: _self.task_message.followbusiness
                 }
-
-                
 
                 function doSuccess(res) {
                     
@@ -632,8 +663,6 @@
                     hasArrears: _self.task_message.has_arrears
                 }
 
-                
-
                 function doSuccess(res) {
                     console.log(res)
                     // _self.$Message.success(res.data.msg)
@@ -666,7 +695,6 @@
                     console.log(err)
                 }
 
-                // this.PostData(url, _data, doSuccess)
                 this.$Post(url, _data, doSuccess, fail)
             }
         }

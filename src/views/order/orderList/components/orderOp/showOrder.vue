@@ -255,7 +255,7 @@ export default {
         }
     },
     methods: {
-        //
+        //获取异常工单号
         get_ab_worker_id(){
             let _self = this
             let url = `api/order/unusual/workorder/findUnusualWorkOrderByOrderId`
@@ -266,6 +266,7 @@ export default {
             }
             function success(res){
                 console.log(res.data.data)
+                _self.unusualCode = ""
                 if(res.data.data){
                     _self.unusualCode = res.data.data.unusualCode
                 }
@@ -314,7 +315,6 @@ export default {
             this.get_data(e)
             this.orderId = e
             this.openShowOrderDetail = true
-            this.unusualCode = ""
             this.get_ab_worker_id()
         })
     },

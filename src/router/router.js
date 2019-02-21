@@ -469,8 +469,8 @@ export const appRouter = [
             //测试，记得修改access和meta的值
             {
                 path: 'offlineCustomerApproval',
-                access: 6062,
-                meta: 6062,
+                access: 11625,
+                meta: 11625,
                 title: '下线客户审批',
                 name: 'offlineCustomerApproval_index',
                 component: () => import( /* webpackChunkName: "complaintcenter" */ '@/views/customerService/offlineCustomerApproval/index.vue')
