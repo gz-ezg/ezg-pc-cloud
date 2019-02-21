@@ -171,7 +171,7 @@
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        width: 200,
+                        width: 300,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
@@ -201,6 +201,18 @@
                                         }
                                     }
                                 }, '[查看企业]'),
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            // console.log(params.row.id)
+                                            this.$bus.emit('OPEN_LOG',params.row.applyId)
+                                        }
+                                    }
+                                }, '[审批记录]'),
                             ]);
                         }
                     }
