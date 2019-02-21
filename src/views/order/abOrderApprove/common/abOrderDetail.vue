@@ -41,7 +41,7 @@
                     </FormItem>
                 </Row>
                 <Row>
-                    <FormItem label="审批是由" prop="apply_memo">
+                    <FormItem label="审批事由" prop="apply_memo">
                         <Input size="small" type="textarea" :rows="4" v-model="formValidateDetail.apply_memo" readonly/>
                     </FormItem>
                 </Row>
