@@ -489,9 +489,9 @@
                 <TabPane label="税种管理" name="name7">
                     <Row>
                         <Button type="primary" style="margin-bottom:20px" @click="editTax" v-if="isEditTax">编辑</Button>
-                        <Button type="primary" style="margin-bottom:20px" @click="submitTax" v-if="!isEditTax" :loading="submit_ing">提交</Button>                        
+                        <Button type="primary" style="margin-bottom:20px" @click="submitTax('taxManagement')" v-if="!isEditTax" :loading="submit_ing">提交</Button>                        
                     </Row>
-                    <Form ref="taxManagement" :model="taxManagement" :label-width="120">
+                    <Form ref="taxManagement" :model="taxManagement" :rules="ruleTaxManagement" :label-width="120">
                         <Row :gutter="16">
                             <Col span="1" style="visibility:hidden">1</Col>
                             <Col span="11">
@@ -528,7 +528,7 @@
                                 </FormItem>
                             </Col>
                         </Row>
-                        <Row :gutter="16">
+                        <Row :gutter="16" style="margin-bottom:16px">
                             <Col span="1" style="visibility:hidden">1</Col>
                             <Col span="11">
                                 <FormItem prop="nationalnum" label="电子税务局账号：" style="margin-bottom:5px">
@@ -543,7 +543,7 @@
                                 </FormItem>
                             </Col>
                         </Row>
-                        <Row :gutter="16">
+                        <Row :gutter="16" style="margin-bottom:16px">
                             <Col span="1" style="visibility:hidden">1</Col>
                             <Col span="11">
                                 <FormItem prop="accounttype" label="账号类型：" style="margin-bottom:5px">
@@ -946,6 +946,20 @@
                     validflag: "",
                     accounttype: ""
                 },
+                ruleTaxManagement:{
+                    nationalnum: [
+                        { required: true, message: '必填项！', trigger: 'blur' }
+                    ],
+                    nationalpsw: [
+                        { required: true, message: '必填项！', trigger: 'blur' }
+                    ],
+                    accounttype: [
+                        { required: true, message: '必填项！', trigger: 'change' }
+                    ],
+                    validflag: [
+                        { required: true, message: '必填项！', trigger: 'change' }
+                    ]
+                },
                 dynamic:[],
                 workOrder:[],
                 workOrderHeader: [
@@ -1228,44 +1242,52 @@
             editTax(){
                 this.isEditTax = !this.isEditTax
             },
-            submitTax(){
-                let _self = this
-                this.submit_ing = true
-                let url = `api/customer/company/saveCompanyTaxManagement`
+            submitTax(name){
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        let _self = this
+                        this.submit_ing = true
+                        let url = `api/customer/company/saveCompanyTaxManagement`
 
-                // console.log(_self.taxManagement.nationalnum.replace(/\s+/g,""))
-                let config = {
-                    companyid:_self.companyId,
-                    companytype:_self.taxManagement.companytype,
-                    nationaltax:_self.taxManagement.nationaltax,
-                    Localtax:_self.taxManagement.Localtax,
-                    nationalnum:_self.taxManagement.nationalnum.replace(/\s+/g,""),
-                    nationalpsw:_self.taxManagement.nationalpsw.replace(/\s+/g,""),
-                    Localnum:_self.taxManagement.Localnum,
-                    Localpsw:_self.taxManagement.Localpsw,
-                    addedvaluetax:_self.taxManagement.addedvaluetax,
-                    Incometax:_self.taxManagement.Incometax,
-                    supertax:_self.taxManagement.supertax,
-                    boxtax:_self.taxManagement.boxtax,
-                    Stamptax:_self.taxManagement.Stamptax,
-                    socialsecurity:_self.taxManagement.socialsecurity,
-                    Providentfund:_self.taxManagement.Providentfund,
-                    taxdisk:_self.taxManagement.taxdisk,
-                    Providentfundpsw: _self.taxManagement.Providentfundpsw,
-                    Providentfundnum: _self.taxManagement.Providentfundnum,
-                    socialsecuritypsw: _self.taxManagement.socialsecuritypsw,
-                    accounttype: _self.taxManagement.accounttype,
-                    validflag: _self.taxManagement.validflag
-                }
-                function success(res){
-                    _self.isEditTax = true  
-                    _self.submit_ing = false                    
-                }
-                function fail(res){
-                    _self.submit_ing = false                    
-                }
+                        // console.log(_self.taxManagement.nationalnum.replace(/\s+/g,""))
+                        let config = {
+                            companyid:_self.companyId,
+                            companytype:_self.taxManagement.companytype,
+                            nationaltax:_self.taxManagement.nationaltax,
+                            Localtax:_self.taxManagement.Localtax,
+                            nationalnum:_self.taxManagement.nationalnum.replace(/\s+/g,""),
+                            nationalpsw:_self.taxManagement.nationalpsw.replace(/\s+/g,""),
+                            Localnum:_self.taxManagement.Localnum,
+                            Localpsw:_self.taxManagement.Localpsw,
+                            addedvaluetax:_self.taxManagement.addedvaluetax,
+                            Incometax:_self.taxManagement.Incometax,
+                            supertax:_self.taxManagement.supertax,
+                            boxtax:_self.taxManagement.boxtax,
+                            Stamptax:_self.taxManagement.Stamptax,
+                            socialsecurity:_self.taxManagement.socialsecurity,
+                            Providentfund:_self.taxManagement.Providentfund,
+                            taxdisk:_self.taxManagement.taxdisk,
+                            Providentfundpsw: _self.taxManagement.Providentfundpsw,
+                            Providentfundnum: _self.taxManagement.Providentfundnum,
+                            socialsecuritypsw: _self.taxManagement.socialsecuritypsw,
+                            accounttype: _self.taxManagement.accounttype,
+                            validflag: _self.taxManagement.validflag
+                        }
+                        function success(res){
+                            _self.isEditTax = true  
+                            _self.submit_ing = false                    
+                        }
+                        function fail(res){
+                            _self.submit_ing = false                    
+                        }
 
-                this.$Post(url,config,success,fail)
+                        this.$Post(url,config,success,fail)
+                    } else {
+                        this.$Message.error('请填写必选项!');
+                    }
+                })
+
+                
 
             },
             openContent(e){

@@ -100,7 +100,10 @@
                         </Col>
                     </Row>
                     <Row style="margin-top:40px">
+                        <!--
                         <Button @click="before_update_task" type="primary" style="margin-left:40px" :disabled="openSubmit" :loading="loading">修改</Button>
+                        -->
+                        <Button @click="before_update_task" type="primary" style="margin-left:40px" :loading="loading">修改</Button>
                     </Row>
                 </Row>
                 <Row style="margin-top:20px">
@@ -231,7 +234,9 @@ export default {
 
             function success(res){
                 _self.data = res.data.data
-                // console.log(res.data.data.taskData[0])
+                console.log(res.data.data.taskData[0])
+                console.log(Date.parse(res.data.data.taskData[0].expect_start_date))
+                
                 if(res.data.data.taskData[0]){
                     _self.get_last_follow_up_content(res.data.data.taskData[0].company_id)
                 }else{
