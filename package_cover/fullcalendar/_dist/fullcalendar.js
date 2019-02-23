@@ -4356,6 +4356,7 @@ var EventRenderer = /** @class */ (function () {
     // Renders and assigns an `el` property for each foreground event segment.
     // Only returns segments that successfully rendered.
     EventRenderer.prototype.renderFgSegEls = function (segs, disableResizing) {
+        console.log(segs)
         var _this = this;
         if (disableResizing === void 0) { disableResizing = false; }
         var hasEventRenderHandlers = this.view.hasPublicHandlers('eventRender');
@@ -7230,6 +7231,8 @@ var DayGrid = /** @class */ (function (_super) {
         var view = this.view;
         var theme = view.calendar.theme;
         var title = this.getCellDate(row, col).format(this.opt('dayPopoverFormat'));
+        console.log(this.getCellDate(row, col))
+        console.log(title)
         var content = $('<div class="fc-header ' + theme.getClass('popoverHeader') + '">' +
             '<span class="fc-close ' + theme.getIconClass('close') + '"></span>' +
             '<span class="fc-title">' +
@@ -9108,6 +9111,7 @@ var DateComponent = /** @class */ (function (_super) {
     /* Converting componentFootprint/eventFootprint -> segs
     ------------------------------------------------------------------------------------------------------------------*/
     DateComponent.prototype.eventFootprintsToSegs = function (eventFootprints) {
+        console.log(eventFootprints)
         var segs = [];
         var i;
         for (i = 0; i < eventFootprints.length; i++) {
@@ -13818,6 +13822,7 @@ var TimeGridEventRenderer = /** @class */ (function (_super) {
         var fullTimeText; // more verbose time text. for the print stylesheet
         var startTimeText; // just the start time text
         classes.unshift('fc-time-grid-event', 'fc-v-event');
+        console.log(eventDef)
         // if the event appears to span more than one day...
         if (view.isMultiDayRange(componentFootprint.unzonedRange)) {
             // Don't display time text on segments that run entirely through a day.
@@ -13837,6 +13842,7 @@ var TimeGridEventRenderer = /** @class */ (function (_super) {
             fullTimeText = this.getTimeText(seg.footprint, 'LT');
             startTimeText = this.getTimeText(seg.footprint, null, false); // displayEnd=false
         }
+        //  每日日程生成dom
         return '<a class="' + classes.join(' ') + '"' +
             (eventDef.url ?
                 ' href="' + util_1.htmlEscape(eventDef.url) + '"' :
@@ -13856,8 +13862,9 @@ var TimeGridEventRenderer = /** @class */ (function (_super) {
                 '') +
             (eventDef.title ?
                 '<div class="fc-title">' +
-                    util_1.htmlEscape(eventDef.title) +
-                    '</div>' :
+                    util_1.htmlEscape(eventDef.title)
+                     +
+                    '</div><div>'+ util_1.htmlEscape(eventDef.miscProps.realname) + '</div><div>五山</div>' :
                 '') +
             '</div>' +
             '<div class="fc-bg"/>' +
@@ -14478,6 +14485,7 @@ var DayGridEventRenderer = /** @class */ (function (_super) {
     DayGridEventRenderer.prototype.fgSegHtml = function (seg, disableResizing) {
         var view = this.view;
         var eventDef = seg.footprint.eventDef;
+        console.log(eventDef)
         var isAllDay = seg.footprint.componentFootprint.isAllDay;
         var isDraggable = view.isEventDefDraggable(eventDef);
         var isResizableFromStart = !disableResizing && isAllDay &&
@@ -14499,8 +14507,9 @@ var DayGridEventRenderer = /** @class */ (function (_super) {
         }
         titleHtml =
             '<span class="fc-title">' +
-                (util_1.htmlEscape(eventDef.title || '') || '&nbsp;') + // we always want one line of height
-                '</span>';
+                (util_1.htmlEscape(eventDef.title || '') || '&nbsp;') +
+                // (util_1.htmlEscape(eventDef.miscProps.realname || '') || '&nbsp') + // we always want one line of height
+                '</span><div>'+ (util_1.htmlEscape(eventDef.miscProps.realname || '') || '&nbsp') +'</div><div>五山</div>';
         return '<a class="' + classes.join(' ') + '"' +
             (eventDef.url ?
                 ' href="' + util_1.htmlEscape(eventDef.url) + '"' :
