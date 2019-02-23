@@ -1,18 +1,42 @@
+'use strict'
+require('./check-versions')()
+process.env.NODE_ENV = 'production'
+
 const webpack = require('webpack');
 const config = require('./webpack.jenkins.conf');
+// const ora = require('ora')
+const rm = require('rimraf')
+const path = require('path')
+const chalk = require('chalk')
 
-webpack(config, (err, stats) => {
-    if (err || stats.hasErrors()) {
-        // 在这里处理错误
-        console.error(err);
-        return;
+// const spinner = ora('building for production...')
+// spinner.start()
+
+rm(path.join(path.resolve(__dirname, '../dist')), err => {
+  if (err) throw err
+  webpack(config, (err, stats) => {
+    // spinner.stop()
+    if (err) throw err
+    process.stdout.write(stats.toString({
+      colors: true,
+      modules: false,
+      children: false, // If you are using ts-loader, setting this to true will make TypeScript errors show up during build.
+      chunks: false,
+      chunkGroups: false,
+      chunkModules: false,
+      //  不显示载入的资源
+      assets: false
+    }) + '\n\n')
+
+    if (stats.hasErrors()) {
+      console.log(chalk.red('  Build failed with errors.\n'))
+      process.exit(1)
     }
-    // 处理完成
-    console.log(stats.toString({
-        chunks: true,  // 使构建过程更静默无输出
-        colors: true,    // 在控制台展示颜色
-        builtAt: true,
-        version: true,
-        timings: true
-    }));
-});
+
+    console.log(chalk.cyan('  Build complete.\n'))
+    console.log(chalk.yellow(
+      '  Tip: built files are meant to be served over an HTTP server.\n' +
+      '  Opening index.html over file:// won\'t work.\n'
+    ))
+  })
+})
