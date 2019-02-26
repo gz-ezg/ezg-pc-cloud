@@ -36,7 +36,7 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
                         <FormItem prop="servicername" label="服务人员">
-                            <Input size="small" v-model="task_message.servicername" @on-focus="getUser"/>
+                            <Input size="small" v-model="task_message.servicername" readonly/>
                         </FormItem>
                     </Col>
                     <Col span="10">
@@ -49,7 +49,7 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
                         <FormItem prop="servicebegindate" label="服务开始时间">
-                            <DatePicker type="date" v-model="task_message.servicebegindate" style="width:100%" size="small" ></DatePicker>
+                            <DatePicker type="date" v-model="task_message.servicebegindate" style="width:100%" size="small" readonly></DatePicker>
                         </FormItem>
                     </Col>
                     <Col span="10">
@@ -345,6 +345,33 @@
             })
         },
         methods: {
+            //根据公司id和产品id获取服务人员和服务开始时间
+            get_server_data() {
+                let _self = this
+                let url = `api/order/cycle/company/getCycleMonthInfoBycompanyId`
+                if(_self.task_message.companyid && _self.task_message.productid){
+                    let config = {
+                        params: {
+                            companyId: _self.task_message.companyid,
+                            productId: _self.task_message.productid
+                        }
+                    }
+                    function success(res) {
+                        console.log(_self.task_message.companyid +'and'+ _self.task_message.productid)
+                        console.log(res.data.data[0])
+                        if(res.data.data[0]){
+                            _self.task_message.servicer = res.data.data[0].serviceId
+                            _self.task_message.servicername = res.data.data[0].server_name
+                            _self.task_message.servicebegindate = DateFormat(res.data.data[0].service_begin_time)
+                        } else {
+                            _self.task_message.servicer = ""
+                            _self.task_message.servicername = ""
+                            _self.task_message.servicebegindate = ""
+                        }
+                    }
+                    _self.$Get(url,config,success)
+                }
+            },
             cancel(){
                     let _self = this
                     _self.isshow = false
@@ -479,6 +506,7 @@
                 _self.task_message.companyid = a.cpid
                 _self.task_message.marketername = a.followby
                 _self.task_message.marketer = a.followbyid
+                _self.get_server_data()
             },
 
             rowSelect33(a) {
@@ -487,6 +515,7 @@
                 _self.selectProduct = false
                 _self.task_message.product = a.product
                 _self.task_message.productid = a.id
+                _self.get_server_data()
             },
 
             getUser() {

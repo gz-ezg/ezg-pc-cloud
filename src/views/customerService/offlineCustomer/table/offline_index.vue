@@ -13,6 +13,7 @@
         <Add></Add>
         <update></update>
         <show></show>
+        <Log></Log>
     </div>
 </template>
 
@@ -24,6 +25,7 @@
     import Add from '../add'
     import update from '../update.vue'
     import show from '../show.vue'
+    import Log from '../log'
     import Bus from '../../../../components/bus.js'
 
     export default {
@@ -35,7 +37,8 @@
             // companyDetail,
             Add,
             show,
-            update
+            update,
+            Log
         },
         data(){
             return{

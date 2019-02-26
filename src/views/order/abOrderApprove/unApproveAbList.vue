@@ -205,7 +205,7 @@ export default {
                 },
                 {
                     title: '流程状态',
-                    key: 'current_process_name',
+                    key: 'process_type',
                     minWidth: 120,
                     sorttable: "custom"
                 },
@@ -332,7 +332,7 @@ export default {
                 {field:'unusual_type',title:'异常类型',format:'unusualType'},
                 {field:'tel',title:'客户电话'},
                 {field:'apply_memo',title:'审批事由'},
-                {field:'current_process_name',title:'流程状态'},
+                {field:'process_type',title:'流程状态'},
                 {field:'realname',title:'创建人'},
                 {field:'create_date',title:'创建时间'}
             ]

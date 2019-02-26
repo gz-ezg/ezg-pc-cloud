@@ -171,7 +171,7 @@
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        width: 200,
+                        width: 300,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
@@ -201,6 +201,18 @@
                                         }
                                     }
                                 }, '[查看企业]'),
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            // console.log(params.row.id)
+                                            this.$bus.emit('OPEN_LOG',params.row.id)
+                                        }
+                                    }
+                                }, '[审批记录]'),
                             ]);
                         }
                     }
@@ -279,9 +291,11 @@
 
             edit() {
                 let _self = this
-
-                if (_self.row.id == null) {
+                console.log(_self.row)
+                if (_self.row.id == null ) {
                     _self.$Message.warning('请选择要查看的项目')
+                } else if(_self.row.current_process != 'kf'){
+                    _self.$Message.warning('当前流程状态不允许此操作')
                 } else {
                     _self.row.type  = 'edit'
                     // Bus.$emit('add', _self.row)
