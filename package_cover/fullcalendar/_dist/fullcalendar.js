@@ -13864,8 +13864,36 @@ var TimeGridEventRenderer = /** @class */ (function (_super) {
                 '<div class="fc-title">' +
                     util_1.htmlEscape(eventDef.title)
                      +
-                    '</div><div>'+ util_1.htmlEscape(eventDef.miscProps.realname) + '</div><div>五山</div>' :
+                    '</div>' :
                 '') +
+            //     '</span><div>'+ (util_1.htmlEscape(eventDef.miscProps.realname || '') || '&nbsp') + 
+            // '</div><div>'+ (util_1.htmlEscape(eventDef.miscProps.CompanyName || '') || '&nbsp') + 
+            // '</div><div>'+ (util_1.htmlEscape(eventDef.miscProps.Area || '') || '&nbsp') + 
+            // '</div><div>'+ (util_1.htmlEscape(eventDef.miscProps.depart || '') || '&nbsp') + '</div>'
+            (eventDef.miscProps.realname ?
+                '<div class="fc-title">' +
+                    util_1.htmlEscape(eventDef.miscProps.realname)
+                     +
+                    '</div>' :
+                '') +
+            (eventDef.miscProps.CompanyName ?
+                '<div class="fc-title">' +
+                    util_1.htmlEscape(eventDef.miscProps.CompanyName)
+                     +
+                    '</div>' :
+                '') +
+            (eventDef.miscProps.Area ?
+                '<div class="fc-title">' +
+                    util_1.htmlEscape(eventDef.miscProps.Area) + '&nbsp;&nbsp;&nbsp;&nbsp;' + util_1.htmlEscape(eventDef.miscProps.depart)
+                     +
+                    '</div>' :
+                '') +
+            // (eventDef.miscProps.depart ?
+            //     '<div class="fc-title">' +
+            //         util_1.htmlEscape(eventDef.miscProps.depart)
+            //          +
+            //         '</div>' :
+            //     '') +
             '</div>' +
             '<div class="fc-bg"/>' +
             /* TODO: write CSS for this
@@ -14505,11 +14533,18 @@ var DayGridEventRenderer = /** @class */ (function (_super) {
                 timeHtml = '<span class="fc-time">' + util_1.htmlEscape(timeText) + '</span>';
             }
         }
-        titleHtml =
+        if(eventDef.miscProps.business){
+            titleHtml =
             '<span class="fc-title">' +
-                (util_1.htmlEscape(eventDef.title || '') || '&nbsp;') +
-                // (util_1.htmlEscape(eventDef.miscProps.realname || '') || '&nbsp') + // we always want one line of height
-                '</span><div>'+ (util_1.htmlEscape(eventDef.miscProps.realname || '') || '&nbsp') +'</div><div>五山</div>';
+            (util_1.htmlEscape(eventDef.title || '') || '&nbsp;') +
+            '</span><div>'+ (util_1.htmlEscape(eventDef.miscProps.realname || '') || '&nbsp') + 
+            '</div><div>'+ (util_1.htmlEscape(eventDef.miscProps.CompanyName || '') || '&nbsp') + 
+            '</div><div>'+ (util_1.htmlEscape(eventDef.miscProps.Area || '') || '&nbsp') + 
+            '</div><div>'+ (util_1.htmlEscape(eventDef.miscProps.depart || '') || '&nbsp') + '</div>'
+        }else{
+            titleHtml = '<span class="fc-title">' + (util_1.htmlEscape(eventDef.title || '') || '&nbsp;') + '</span>';
+        }
+        
         return '<a class="' + classes.join(' ') + '"' +
             (eventDef.url ?
                 ' href="' + util_1.htmlEscape(eventDef.url) + '"' :

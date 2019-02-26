@@ -233,6 +233,15 @@ export default {
                 for(let i = 0;i<_self.events_temp.length;i++){
                     _self.events_temp[i].start = _self.events_temp[i].plan_date
                     _self.events_temp[i].title = _self.events_temp[i].task_name
+                    //  请一一对应！！！！！
+                    //  title => 任务名称
+                    //  realname => 真实姓名
+                    //  CompanyName => 公司名称
+                    //  Area => 地区
+                    //  depart => 具体地点
+                    _self.events_temp[i].Area = "天河区"
+                    _self.events_temp[i].depart = "五山税局"
+                    _self.events_temp[i].CompanyName = "广州测试公司"
                     if(_self.events_temp[i].task_stage == "tesExecuting"){
                         _self.events_temp[i].color = "blue"
                     }
