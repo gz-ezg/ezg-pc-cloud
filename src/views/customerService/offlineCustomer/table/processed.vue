@@ -271,7 +271,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.$bus.emit('OPEN_LOG',params.row.applyId)
+                                            this.$bus.emit('OPEN_LOG',params.row.id)
                                         }
                                     }
                                 }, '[审批记录]'),

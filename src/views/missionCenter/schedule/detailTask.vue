@@ -240,9 +240,31 @@ export default {
         }
     },
     methods:{
+        //更改任务状态
+        changeTaskStage(){
+            let _self = this
+            let url = `api/task/updateTaskStage`
+            let fromdata = new FormData()
+            fromdata.append("taskId", _self.id)
+            fromdata.append("taskStage", _self.data.taskData[0].task_stage)
+            fromdata.append("changeReason", _self.task_memo)
+
+            let config = {
+                taskId: _self.data.taskData[0].id,
+                taskStage: _self.data.taskData[0].task_stage
+            }
+            function success(res){
+                _self.update_content()
+                _self.task_memo = ""
+            }
+            function fail(err){
+                console.log(err)
+            }
+
+            this.$Post(url, fromdata, success, fail)
+        },
         getTaskStage(e){
             this.newTaskStage = e
-            console.log(this.newTaskStage)
         },
         //更改提醒时间
         changeRemindTime(){
@@ -254,6 +276,7 @@ export default {
             }
             function success(res){
                 console.log(res)
+                _self.get_detail(_self.id)
             }
             function fail(){
 
@@ -262,6 +285,7 @@ export default {
         },
         newTime(e){
             console.log(FULLDateFormat(e))
+            console.log(e)
             this.newRemindTime = e
         },
         //更改任务级别
@@ -274,6 +298,7 @@ export default {
             }
             function success(res){
                 console.log(res)
+                _self.get_detail(_self.id)
             }
             function fail(){
 
@@ -296,7 +321,7 @@ export default {
 
             function success(res){
                 _self.data = res.data.data
-                console.log(res.data.data.taskData[0])
+                console.log(res.data.data)
                 _self.oldTaskLevel = res.data.data.taskData[0].task_level
                 _self.oldRemindTime = res.data.data.taskData[0].expect_start_date
                 _self.oldTaskStage = res.data.data.taskData[0].task_stage
@@ -377,7 +402,26 @@ export default {
                 })
             }else{
                 console.log(_self.newTaskLevel)
-                this.update_task()
+                // this.update_task()
+                this.test()
+            }
+        },
+        test(){
+            var _self = this
+            var timer
+            if(_self.newTaskStage && _self.newTaskStage != _self.oldTaskStage){
+                console.log(0)
+                _self.changeTaskStage()
+            }
+            if(_self.newRemindTime && _self.newRemindTime != _self.oldRemindTime){
+                console.log(1)
+                _self.changeRemindTime()
+            }
+            if(_self.newTaskLevel && _self.newTaskLevel != _self.oldTaskLevel){
+                timer = setTimeout(function(){
+                    console.log(2)
+                    _self.changTaskLevel()
+                },1000)
             }
         },
         update_task(){
@@ -507,6 +551,7 @@ export default {
         this.$bus.on("OPEN_SEHEDULE_DETAIL",(e)=>{
             _self.get_data_center()
             _self.id = e.id
+            console.log(_self.id)
             _self.get_detail(e.id)
             _self.detail = e
             _self.openTaskDetail = true
