@@ -254,8 +254,9 @@ export default {
                 taskStage: _self.data.taskData[0].task_stage
             }
             function success(res){
-                _self.update_content()
+                // _self.update_content()
                 _self.task_memo = ""
+                _self.get_detail(_self.id)
             }
             function fail(err){
                 console.log(err)
