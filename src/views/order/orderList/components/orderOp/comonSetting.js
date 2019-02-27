@@ -1,12 +1,18 @@
 import * as orderApi from '../../api'
+import productAttr from './productAttr'
+
 export default {
     props: {
         payDirs: {
             type: Array
         }
     },
+    components: {
+        productAttr
+    },
     data: function () {
         return {
+            currentRow: {},
             checkBalance: false,
             showAccountHomeItem: false,
             loading: false,
@@ -74,6 +80,7 @@ export default {
                                     }
                                     this.orderItem.splice(params.index, 1)
                                     this.computer_paynumber()
+                                    this.currentRow = {}
                                 }
                             }
                         }, 'x')
@@ -113,10 +120,10 @@ export default {
                     minWidth: 150,
                     render: (h, parmas) => {
                         let _self = this
-                        let isTrue = false
-                        if(this.orderItem[parmas.index].skuid =='1051'||this.orderItem[parmas.index].skuid =='1052'||this.orderItem[parmas.index].skuid =='1053'||this.orderItem[parmas.index].skuid =='1054'){
-                            isTrue = true
-                        }
+                        // let isTrue = false
+                        // if(this.orderItem[parmas.index].skuid =='1051'||this.orderItem[parmas.index].skuid =='1052'||this.orderItem[parmas.index].skuid =='1053'||this.orderItem[parmas.index].skuid =='1054'){
+                        //     isTrue = true
+                        // }
                         return h('div',[
                             h('Input',{
                                 domProps: {
@@ -126,25 +133,25 @@ export default {
                                     autosize: true,
                                     type: "text",
                                     size: "small",
-                                    readonly: isTrue
+                                    readonly: [1051,1052,1053,1054].includes(parseInt(parmas.row.skuid))
                                     // number: true
                                 },
                                 on: {
                                     //  失去焦点触发
                                     "on-blur": function(event){
-                                        if(!isTrue){
+                                        // if(!isTrue){
                                             _self.orderItem[parmas.index].productnumber = event.target.value
                                             _self.orderItem[parmas.index].paynumber = _self.orderItem[parmas.index].productnumber * _self.orderItem[parmas.index].oaprice
                                             _self.computer_paynumber()
-                                        }
+                                        // }
                                     },
                                     //  敲回车触发
                                     "on-enter": function(event){
-                                        if(!isTrue){
+                                        // if(!isTrue){
                                             _self.orderItem[parmas.index].productnumber = event.target.value
                                             _self.orderItem[parmas.index].paynumber = _self.orderItem[parmas.index].productnumber * _self.orderItem[parmas.index].oaprice
                                             _self.computer_paynumber()
-                                        }
+                                        // }
                                     }
                                 },
                                 style: {
@@ -160,14 +167,14 @@ export default {
                     minWidth: 100,
                     render: (h, parmas) => {
                         let _self = this
-                        let isTrue = false
+                        // let isTrue = false
                         let iscycle = false
-                        if(this.orderItem[parmas.index].skuid =='1051'||this.orderItem[parmas.index].skuid =='1052'||this.orderItem[parmas.index].skuid =='1053'||this.orderItem[parmas.index].skuid =='1054'){
-                            isTrue = true
-                        }
-                        if(this.orderItem[parmas.index].iscycle =='Y'){
-                            iscycle = true
-                        }
+                        // if(this.orderItem[parmas.index].skuid =='1051'||this.orderItem[parmas.index].skuid =='1052'||this.orderItem[parmas.index].skuid =='1053'||this.orderItem[parmas.index].skuid =='1054'){
+                        //     isTrue = true
+                        // }
+                        // if(this.orderItem[parmas.index].iscycle =='Y'){
+                        //     iscycle = true
+                        // }
                         return h('div',[
                             h('Input',{
                                 domProps: {
@@ -177,26 +184,26 @@ export default {
                                     autosize: true,
                                     type: "text",
                                     size: "small",
-                                    readonly: isTrue
+                                    readonly: [1051,1052,1053,1054].includes(parseInt(parmas.row.skuid))
                                     // number: true
                                 },
                                 on: {
                                     //  失去焦点触发
                                     "on-blur": function(event){
                                         _self.orderItem[parmas.index].paynumber = event.target.value
-                                        if(iscycle){
+                                        // if(iscycle){
                                             //iscycle为Y时，单独处理价格
-                                            _self.iscycleY(_self.orderItem[parmas.index])
-                                        }
+                                        _self.iscycleY(_self.orderItem[parmas.index], parmas.index)
+                                        // }
                                         //  此处需要写一个公共的函数，计算总价
                                         _self.computer_paynumber()
                                     },
                                     //  敲回车触发
                                     "on-enter": function(event){
                                         _self.orderItem[parmas.index].paynumber = event.target.value
-                                        if(iscycle){
-                                            _self.iscycleY(_self.orderItem[parmas.index])
-                                        }
+                                        // if(iscycle){
+                                        _self.iscycleY(_self.orderItem[parmas.index], parmas.index)
+                                        // }
                                         _self.computer_paynumber()
                                     }
                                 },
@@ -204,129 +211,6 @@ export default {
                                     width: "100%"
                                 }
                             })
-                        ])
-                    }
-                },
-                {
-                    title: "赠送数量",
-                    key: "givethenumber",
-                    minWidth: 100,
-                    render: (h, parmas) => {
-                        let _self = this
-                        let isTrue = false
-                        let iscycle = false
-                        if(this.orderItem[parmas.index].skuid =='1051'||this.orderItem[parmas.index].skuid =='1052'||this.orderItem[parmas.index].skuid =='1053'||this.orderItem[parmas.index].skuid =='1054'){
-                            isTrue = true
-                        }
-                        if(this.orderItem[parmas.index].iscycle =='Y'){
-                            iscycle = true
-                        }
-                        console.log(this.orderItem[parmas.index])
-                        return h('div',[
-                            h('Input',{
-                                domProps: {
-                                },
-                                props:{
-                                    value: this.orderItem[parmas.index].givethenumber,
-                                    autosize: true,
-                                    type: "text",
-                                    size: "small",
-                                    // number: true
-                                },
-                                on: {
-                                    //  失去焦点触发
-                                    "on-blur": function(event){
-                                        _self.orderItem[parmas.index].givethenumber = event.target.value
-                                        if(iscycle){
-                                            _self.priceCycleY(_self.orderItem[parmas.index])
-                                        }
-                                        if(isTrue){
-                                            _self.price2000(_self.orderItem[parmas.index])
-                                        }
-                                    },
-                                    //  敲回车触发
-                                    "on-enter": function(event){
-                                        _self.orderItem[parmas.index].givethenumber = event.target.value
-                                        if(iscycle){
-                                            _self.priceCycleY(_self.orderItem[parmas.index])
-                                        }
-                                        if(isTrue){
-                                            _self.price2000(_self.orderItem[parmas.index])
-                                        }
-                                    }
-                                },
-                                style: {
-                                    width: "100%"
-                                }
-                            })
-                        ])
-                    }
-                },
-                {
-                    title: "服务开始税期",
-                    key: "servicestartdate",
-                    minWidth: 140,
-                    render: (h, parmas) => {
-                        let _self = this
-                        return h('div',[
-                            h('DatePicker',{
-                                props:{
-                                    value: this.orderItem[parmas.index].servicestartdate,
-                                    type: "month",
-                                    transfer: false,
-                                    size: "small",
-                                    // disabled: !this.orderItem[parmas.index].hasOwnProperty("servicestartdate"),
-                                    // readonly: !this.orderItem[parmas.index].hasOwnProperty("servicestartdate")
-                                    disabled: this.orderItem[parmas.index].iscycle == 'N',
-                                    readonly: this.orderItem[parmas.index].iscycle == 'N',
-                                },
-                                on: {
-                                    "on-change": function(event){
-                                        let temp = event.split("-").join("")
-                                        _self.orderItem[parmas.index].servicestartdate = temp
-                                        // Object.assign(parmas,{value: event})
-                                    }
-                                },
-                                style: {
-                                    width: "100%"
-                                }
-                            })
-                        ])
-                    }
-                },
-                {
-                    title: "服务部门",
-                    key: "departname",
-                    minWidth: 140,
-                    render: (h, parmas) => {
-                        let _self = this
-                        return h('div',[
-                            h('Select',{
-                                props:{
-                                    value: this.orderItem[parmas.index].departid.toString(),
-                                    transfer: false,
-                                    size: "small",
-                                    labelInValue: true
-                                },
-                                on: {
-                                    "on-change": function(event){
-                                        console.log(event)
-                                        _self.orderItem[parmas.index].departname = event.label
-                                        _self.orderItem[parmas.index].departid = event.value
-                                        
-                                    }
-                                },
-                                style: {
-                                    width: "100%"
-                                }
-                            },  JSON.parse(_self.orderItem[parmas.index].servicedeparts).map(item => [
-                                h('Option',{
-                                    props:{
-                                        value: item.type,
-                                        label: item.text,
-                                    }
-                                })
-                            ]))
                         ])
                     }
                 },
@@ -336,39 +220,204 @@ export default {
                     minWidth: 90
                 },
                 {
-                    title: "备注",
-                    key: "memo",
-                    minWidth: 300,
-                    render: (h, parmas) => {
-                        let _self = this
-                        let reg = new RegExp("</br>", "g")
-                        this.orderItem[parmas.index].memo = this.orderItem[parmas.index].memo.replace(reg ,"\n")
-                        //  先转换为textarea能够处理的格式，上传时可能需要处理空格转换为换行符
-                        return h('div',[
-                            h('Input',{
-                                props:{
-                                    value: this.orderItem[parmas.index].memo,
-                                    autosize: true,
-                                    type: "textarea",
-                                    size: "small"
-                                },
-                                on: {
-                                    "on-blur": function(event){
-                                        // console.log(event)
-                                        _self.orderItem[parmas.index].memo = event.target.value
-                                    },
-                                    // "on-enter":function(event){
-                                    //     console.log(event)
-                                    //     _self.orderItem[parmas.index].memo = event.target.value
-                                    // },
-                                },
-                                style: {
-                                    width: "100%"
+                    title: "详情",
+                    minWidth: 120,
+                    render: (h, params) => {
+                        return h('Button', {
+                            props: {
+                                size: 'small',
+                                type: 'info'
+                            },
+                            on: {
+                                click: () => {
+                                    console.log(params)
+                                    this.currentRow = params;
                                 }
-                            })
-                        ])
+                            }
+                        }, '选项')
                     }
                 }
+                // {
+                //     title: "赠送数量",
+                //     key: "givethenumber",
+                //     minWidth: 100,
+                //     render: (h, parmas) => {
+                //         let _self = this
+                //         let isTrue = false
+                //         let iscycle = false
+                //         if(this.orderItem[parmas.index].skuid =='1051'||this.orderItem[parmas.index].skuid =='1052'||this.orderItem[parmas.index].skuid =='1053'||this.orderItem[parmas.index].skuid =='1054'){
+                //             isTrue = true
+                //         }
+                //         if(this.orderItem[parmas.index].iscycle =='Y'){
+                //             iscycle = true
+                //         }
+                //         console.log(this.orderItem[parmas.index])
+                //         return h('div',[
+                //             h('Input',{
+                //                 domProps: {
+                //                 },
+                //                 props:{
+                //                     value: this.orderItem[parmas.index].givethenumber,
+                //                     autosize: true,
+                //                     type: "text",
+                //                     size: "small",
+                //                     // number: true
+                //                 },
+                //                 on: {
+                //                     //  失去焦点触发
+                //                     "on-blur": function(event){
+                //                         _self.orderItem[parmas.index].givethenumber = event.target.value
+                //                         if(iscycle){
+                //                             _self.priceCycleY(_self.orderItem[parmas.index])
+                //                         }
+                //                         if(isTrue){
+                //                             _self.price2000(_self.orderItem[parmas.index])
+                //                         }
+                //                     },
+                //                     //  敲回车触发
+                //                     "on-enter": function(event){
+                //                         _self.orderItem[parmas.index].givethenumber = event.target.value
+                //                         if(iscycle){
+                //                             _self.priceCycleY(_self.orderItem[parmas.index])
+                //                         }
+                //                         if(isTrue){
+                //                             _self.price2000(_self.orderItem[parmas.index])
+                //                         }
+                //                     }
+                //                 },
+                //                 style: {
+                //                     width: "100%"
+                //                 }
+                //             })
+                //         ])
+                //     }
+                // },
+                // {
+                //     title: "服务开始税期",
+                //     key: "servicestartdate",
+                //     minWidth: 140,
+                //     render: (h, parmas) => {
+                //         let _self = this
+                //         return h('div',[
+                //             h('DatePicker',{
+                //                 props:{
+                //                     value: this.orderItem[parmas.index].servicestartdate,
+                //                     type: "month",
+                //                     transfer: false,
+                //                     size: "small",
+                //                     // disabled: !this.orderItem[parmas.index].hasOwnProperty("servicestartdate"),
+                //                     // readonly: !this.orderItem[parmas.index].hasOwnProperty("servicestartdate")
+                //                     disabled: this.orderItem[parmas.index].iscycle == 'N',
+                //                     readonly: this.orderItem[parmas.index].iscycle == 'N',
+                //                 },
+                //                 on: {
+                //                     "on-change": function(event){
+                //                         let temp = event.split("-").join("")
+                //                         _self.orderItem[parmas.index].servicestartdate = temp
+                //                         // Object.assign(parmas,{value: event})
+                //                     }
+                //                 },
+                //                 style: {
+                //                     width: "100%"
+                //                 }
+                //             })
+                //         ])
+                //     }
+                // },
+                // {
+                //     title: "服务部门",
+                //     key: "departname",
+                //     minWidth: 140,
+                //     render: (h, parmas) => {
+                //         let _self = this
+                //         return h('div',[
+                //             h('Select',{
+                //                 props:{
+                //                     value: this.orderItem[parmas.index].departid.toString(),
+                //                     transfer: false,
+                //                     size: "small",
+                //                     labelInValue: true
+                //                 },
+                //                 on: {
+                //                     "on-change": function(event){
+                //                         console.log(event)
+                //                         _self.orderItem[parmas.index].departname = event.label
+                //                         _self.orderItem[parmas.index].departid = event.value
+                                        
+                //                     }
+                //                 },
+                //                 style: {
+                //                     width: "100%"
+                //                 }
+                //             },  JSON.parse(_self.orderItem[parmas.index].servicedeparts).map(item => [
+                //                 h('Option',{
+                //                     props:{
+                //                         value: item.type,
+                //                         label: item.text,
+                //                     }
+                //                 })
+                //             ]))
+                //         ])
+                //     }
+                // },
+                // {
+                //     title: "单价/月",
+                //     key: "unitprice",
+                //     minWidth: 90
+                // },
+                // {
+                //     title: "业务内容",
+                //     key: "workorder",
+                //     type: 'expand',
+                //     minWidth: 90,
+                //     render: (h, params) => {
+                //         console.log(params.row)
+                //         return h(productAttr,{
+                //             props:{
+                //                 row: params
+                //             },
+                //             on: {
+                //                 'change': (e)=>{
+                //                     console.log(e)
+                //                 }
+                //             }
+                //         })
+                //     }
+                // },
+                // {
+                //     title: "备注",
+                //     key: "memo",
+                //     minWidth: 300,
+                //     render: (h, parmas) => {
+                //         let _self = this
+                //         let reg = new RegExp("</br>", "g")
+                //         this.orderItem[parmas.index].memo = this.orderItem[parmas.index].memo.replace(reg ,"\n")
+                //         //  先转换为textarea能够处理的格式，上传时可能需要处理空格转换为换行符
+                //         return h('div',[
+                //             h('Input',{
+                //                 props:{
+                //                     value: this.orderItem[parmas.index].memo,
+                //                     autosize: true,
+                //                     type: "textarea",
+                //                     size: "small"
+                //                 },
+                //                 on: {
+                //                     "on-blur": function(event){
+                //                         // console.log(event)
+                //                         _self.orderItem[parmas.index].memo = event.target.value
+                //                     },
+                //                     // "on-enter":function(event){
+                //                     //     console.log(event)
+                //                     //     _self.orderItem[parmas.index].memo = event.target.value
+                //                     // },
+                //                 },
+                //                 style: {
+                //                     width: "100%"
+                //                 }
+                //             })
+                //         ])
+                //     }
+                // }
             ]
             
         }
@@ -377,25 +426,6 @@ export default {
         //  取订单详情
         async get_data(e){
             let _self = this
-            // let url = `api/order/detail/` + e
-            // _self.showAccountHomeItem = false
-            // _self.loading = true
-            // let config = {}
-
-            // function success(res){
-            //     _self.orderDetail = res.data.data
-            //     _self.orderItem = res.data.data.items
-            //     for(let i = 0; i<_self.orderItem.length;i++){
-            //         if(_self.orderItem[i].product == "会计到家"){
-            //             _self.showAccountHomeItem = true
-            //             break
-            //         }
-            //     }
-            //     _self.loading = false
-            // }
-
-            // this.$Get(url, config, success)
-
             this.showAccountHomeItem = false
             this.loading = true
             // let config = {}
@@ -433,23 +463,31 @@ export default {
             this.orderDetail.paynumber = parseInt(temp)
             this.orderDetail.realnumber = parseInt(temp)
         },
+        //  一下代码移动至productAttr
         //小规模特定2000单价计算
-        price2000(target){
-            let month = parseInt(target.givethenumber) + parseInt(target.productnumber)
-            console.log(month)
-            target.unitprice=parseInt(target.oaprice/month)
-        },
-        priceCycleY(target){
-            let month = parseInt(target.givethenumber) + parseInt(target.productnumber)
-            console.log(month)
-            target.unitprice=parseInt(target.paynumber/month)
-        },
+        // price2000(target){
+        //     let month = parseInt(target.givethenumber) + parseInt(target.productnumber)
+        //     console.log(month)
+        //     target.unitprice=parseInt(target.oaprice/month)
+        // },
+        // priceCycleY(target){
+        //     let month = parseInt(target.givethenumber) + parseInt(target.productnumber)
+        //     console.log(month)
+        //     target.unitprice=parseInt(target.paynumber/month)
+        // },
         //当iscycleY为Y时改变价格
-        iscycleY(target){
-            if(target.productnumber ==1){
+        iscycleY(target, index){
+            if(target.iscycle === 'Y' && target.productnumber == 1){
                 let month = parseInt(target.givethenumber) + parseInt(target.productnumber)
                 target.unitprice = parseInt(target.paynumber/month)
                 target.oaprice = target.unitprice
+            }
+            //  推送新的价格至组件
+            if(this.currentRow.row.skuid == target.skuid){
+                this.currentRow = {
+                    index: index,
+                    row: target
+                }
             }
         },
         //  关闭弹窗时调用
@@ -528,27 +566,9 @@ export default {
             } catch (error) {
                 console.log(error)
             }
-            // let url = 'api/customer/account/detail'
-            // let config = {
-            //     params: {
-            //         customerId: id
-            //     }                
-            // }
-
-            // function success(res){
-            //     // console.log(res.data.data)
-            //     let temp = res.data.data
-            //     if(type == "create"){
-            //         _self.allUseBalance = (temp.accountAmount - temp.lockAmount).toFixed(2)
-            //     }else if(type == "update"){
-            //         _self.allUseBalance = (temp.accountAmount - temp.lockAmount + _self.orderDetail.usebalance).toFixed(2)
-            //     }else{
-            //         return false
-            //     }
-                
-            // }
-            // this.$Get(url, config, success)
-
+        },
+        change_item(e){
+            console.log(e)
         }
     },
     created(){
