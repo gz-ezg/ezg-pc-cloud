@@ -61,6 +61,7 @@
         <Row>
             <ButtonGroup>
                 <Button type="primary" icon="ios-color-wand-outline" @click="openApproval">办理审批</Button>
+                <Button type="primary" icon="ios-color-filter-outline" @click="getData">刷新</Button>
             </ButtonGroup>
         </Row>
 
@@ -69,6 +70,7 @@
                     ref="selection"
                     highlight-row
                     size="small"
+                    :loading="loading"
                     @on-row-click="selectrow"
                     :columns="header"
                     :data="data"></Table>
@@ -104,6 +106,7 @@
                     marketername:"",
                     servicename:""
                 },
+                loading: false,
                 search_model:"",
                 isExamine: false,
                 modal: false,
@@ -316,6 +319,7 @@
                     }
                 }
                 _self.row = {}
+                _self.loading = true
                 function doSuccess(res) {
                     console.log(res.data.data)
                     let _data = res.data.data
@@ -343,6 +347,7 @@
                             _self.data[i].servicebegindate = _self.data[i].servicebegindate.slice(0,10)
                         }
                     }
+                    _self.loading = false
                 }
                 this.$Get(url, config, doSuccess)
                 // this.GetData(url, doSuccess)

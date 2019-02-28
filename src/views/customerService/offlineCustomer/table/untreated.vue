@@ -64,7 +64,8 @@
                 <Button type="primary" icon="ios-color-wand-outline" @click="edit" v-permission="['offlineCustomer-edit']"> 编辑</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="check">查看</Button>
                 <Button type="primary" icon="trash-b" @click="del">删除</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="downExcel">导出Excel</Button>                                
+                <Button type="primary" icon="ios-color-wand-outline" @click="downExcel">导出Excel</Button>
+                <Button type="primary" icon="ios-color-filter-outline" @click="getData">刷新</Button>                                
             </ButtonGroup>
         </Row>
 
@@ -73,9 +74,11 @@
                     ref="selection"
                     highlight-row
                     size="small"
+                    :loading="loading"
                     @on-row-click="selectrow"
                     :columns="header"
-                    :data="data"></Table>
+                    :data="data">
+                    </Table>
             <Page
                     size="small"
                     :total="pageTotal"
@@ -108,6 +111,7 @@
                     marketername:"",
                     servicename:""
                 },
+                loading: false,
                 search_model:"",
                 isExamine: false,
                 modal: false,
@@ -339,6 +343,7 @@
                 let _self = this
                 let url = '/customer/customerEndList?sortField=id&page=' + _self.page + '&status=N&pageSize=' + _self.pageSize + '&companyname=' + _self.NformInline.companyname + '&customername=' + _self.NformInline.name + '&customertel=' + _self.NformInline.tel + '&productname=' + _self.NformInline.product + '&marketer=' + _self.NformInline.marketername + '&servicer=' + _self.NformInline.servicename 
                 _self.row = {}
+                _self.loading = true
                 function doSuccess(res) {
                     console.log(res.data.data)
                     let _data = res.data.data
@@ -366,6 +371,7 @@
                             _self.data[i].servicebegindate = _self.data[i].servicebegindate.slice(0,10)
                         }
                     }
+                    _self.loading = false
                 }
 
                 this.GetData(url, doSuccess)

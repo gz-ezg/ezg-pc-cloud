@@ -64,7 +64,8 @@
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="edit">编辑</Button> -->
                 <Button type="primary" icon="ios-color-wand-outline" @click="check">查看</Button>
                 <Button type="primary" icon="trash-b" @click="del">删除</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="downExcel">导出Excel</Button>                
+                <Button type="primary" icon="ios-color-wand-outline" @click="downExcel">导出Excel</Button>
+                <Button type="primary" icon="ios-color-filter-outline" @click="getData">刷新</Button>                
             </ButtonGroup>
         </Row>
 
@@ -73,6 +74,7 @@
                     ref="selection"
                     highlight-row
                     size="small"
+                    :loading="loading"
                     @on-row-click="selectrow"
                     :columns="header"
                     :data="data"></Table>
@@ -171,6 +173,7 @@
                     marketername:"",
                     servicename:""
                 },
+                loading: false,
                 search_model:"",
                 isExamine: false,
                 modal: false,
@@ -378,6 +381,7 @@
                 let _self = this
                 let url = '/customer/customerEndList?sortField=id&page=' + _self.page + '&pageSize=' + _self.pageSize + '&status=Y&companyname=' + _self.YformInline.companyname + '&customername=' + _self.YformInline.name + '&customertel=' + _self.YformInline.tel + '&productname=' + _self.YformInline.product + '&marketer=' + _self.YformInline.marketername + '&servicer=' + _self.YformInline.servicename 
                 _self.row = {}
+                _self.loading = true
                 function doSuccess(res) {
                     let _data = res.data.data
 
@@ -404,6 +408,7 @@
                             _self.data[i].servicebegindate = _self.data[i].servicebegindate.slice(0,10)
                         }
                     }
+                    _self.loading = false
                 }
 
                 this.GetData(url, doSuccess)
