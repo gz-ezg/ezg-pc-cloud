@@ -13,6 +13,7 @@
         >
             <div slot="fc-header-left">
                 <Button type="primary">新增日程</Button>
+                <Button type="primary" @click="drawerStatus=true">打开抽屉</Button>
             </div>
             <template slot="fc-event-card" slot-scope="p">
                 <div :class="p.event.cssClass">{{ p.event.title }}</div>
@@ -60,10 +61,18 @@
                 <Button @click="right_click_date(p.time)" type="primary">新增日程</Button>
             </template>
         </full-calendar>
+        <drawer
+            title="弹出层"
+            :width="400"
+            @close="close"
+            v-if="drawerStatus"
+        ></drawer>
     </div>
 </template>
 <script>
 import fullCalendar from '../../woa-components/full-calendar/index'
+import Drawer from '../../woa-components/drawer/index'
+
 let demoEvents = [
     {
         title: 'Sunny 725-727',
@@ -117,7 +126,8 @@ let demoEvents = [
 export default {
     data() {
         return {
-            fcEvents: demoEvents
+            fcEvents: demoEvents,
+            drawerStatus: true
         }
     },
     methods: {
@@ -143,10 +153,14 @@ export default {
         },
         'right_click_date'(time){
             console.log(time)
+        },
+        close(){
+            this.drawerStatus = false
         }
     },
     components: {
-        'full-calendar': fullCalendar
+        'full-calendar': fullCalendar,
+        Drawer
     }
 }
 </script>
