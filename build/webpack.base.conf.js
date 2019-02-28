@@ -76,7 +76,7 @@ module.exports = {
     },
     plugins: [
         //  处理moment本地化策略
-        new webpack.IgnorePlugin(/\.\/local/, /moment/),
+        // new webpack.IgnorePlugin(/\.\/local/, /moment/),
         new VueLoaderPlugin(),
         new HappyPack({
             id: 'happybabel',

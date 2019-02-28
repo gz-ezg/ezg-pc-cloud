@@ -159,13 +159,13 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    // {
-    //     path: '/test',
-    //     icon: 'alert-circled',
-    //     name: 'test',
-    //     title: 'Test',
-    //     component: Main,
-    //     children: [
+    {
+        path: '/test',
+        icon: 'alert-circled',
+        name: 'test',
+        title: 'Test',
+        component: Main,
+        children: [
     //         // {
     //         //     path: 'test',
     //         //     title: '测试页面',
@@ -173,12 +173,12 @@ export const appRouter = [
     //         //     component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/main.vue')
     //         //     // component: () => import(/* webpackChunkName: "test" */ '@/views/woa-components/filePreview/index.vue')
     //         // },
-    //         // {
-    //         //     path: 'test2',
-    //         //     title: '日程测试',
-    //         //     name: 'test2_index',
-    //         //     component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/test2.vue')
-    //         // },
+            {
+                path: 'test2',
+                title: '日程测试',
+                name: 'test2_index',
+                component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/test8.vue')
+            },
     //         // {
     //         //     path: 'test3',
     //         //     title: '滑动验证码',
@@ -209,8 +209,8 @@ export const appRouter = [
     //             name: 'test07_index',
     //             component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/abnormalWorkOrder.vue')
     //         }
-    //     ]
-    // },
+        ]
+    },
     {
         access: 6001,
         meta: 6001,

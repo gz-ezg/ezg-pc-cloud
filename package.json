@@ -89,6 +89,7 @@
     "iview": "^2.14.3",
     "iview-area": "^1.5.17",
     "js-cookie": "^2.2.0",
+    "moment": "^2.24.0",
     "qrcodejs2": "^0.0.2",
     "rasterizehtml": "^1.2.4",
     "simplemde": "^1.11.2",
