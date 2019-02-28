@@ -63,6 +63,7 @@
                 <Button type="primary" icon="ios-color-wand-outline" @click="add" v-permission="['offlineCustomer-add']">录入</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="edit" v-permission="['offlineCustomer-edit']"> 编辑</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="check">查看</Button>
+                <Button type="primary" icon="trash-b" @click="del">删除</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downExcel">导出Excel</Button>                                
             </ButtonGroup>
         </Row>
@@ -310,6 +311,27 @@
                     _self.$Message.warning('请选择要查看的项目')
                 } else {
                     _self.$bus.emit('OPEN_OFFLINE_SHOW', _self.row)
+                }
+            },
+            //删除下线数据
+            del() {
+                let _self = this
+                if(_self.row.id == null){
+                    _self.$Message.warning('请先选择一行！')
+                } else {
+                    let url = `api/customer/delete`
+                    let config = {
+                        params: {
+                            applyId: _self.row.id
+                        }
+                    }
+                    function success(res){
+                        // console.log(res)
+                        _self.$Message.success('删除成功')
+                        _self.getData()
+                    }
+                    
+                    _self.$Get(url,config,success)
                 }
             },
 

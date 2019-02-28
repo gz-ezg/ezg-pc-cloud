@@ -404,7 +404,7 @@
 
                 function doSuccess(response) {
                     let _res = response.data.data
-
+                    console.log(_res)
                     _self.data4 = []
                     _self.pageTotal3 = _res.total
                     for (let i = 0; i < _res.rows.length; i++) {

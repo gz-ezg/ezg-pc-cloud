@@ -736,6 +736,14 @@ export const appRouter = [
             //         require(['@/views/commercialManagement/rule.vue'], resolve);
             //     }
             // }
+            {
+                access: 6038,
+                meta: 6038,
+                path: 'schedule',
+                title: '商事排程表',
+                name: 'newSchedule',
+                component: () => import( /* webpackChunkName: "newSchedule" */ '@/views/commercialManagement/newSchedule/index.vue')
+            }
         ]
     },
     {
