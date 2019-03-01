@@ -159,13 +159,13 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    // {
-    //     path: '/test',
-    //     icon: 'alert-circled',
-    //     name: 'test',
-    //     title: 'Test',
-    //     component: Main,
-    //     children: [
+    {
+        path: '/test',
+        icon: 'alert-circled',
+        name: 'test',
+        title: 'Test',
+        component: Main,
+        children: [
     //         // {
     //         //     path: 'test',
     //         //     title: '测试页面',
@@ -197,20 +197,20 @@ export const appRouter = [
     //         //     name: 'test05_index',
     //         //     component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/test5.vue')
     //         // }
-    //         {
-    //             path: 'test6',
-    //             title: 'iviewTest',
-    //             name: 'test6_index',
-    //             component: () => import('@/views/test/components/test6.vue')
-    //         },
+            {
+                path: 'test6',
+                title: 'iviewTest',
+                name: 'test6_index',
+                component: () => import('@/views/test/components/test6.vue')
+            },
     //         {
     //             path: 'test7',
     //             title: '异常工单审批表',
     //             name: 'test07_index',
     //             component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/abnormalWorkOrder.vue')
     //         }
-    //     ]
-    // },
+        ]
+    },
     {
         access: 6001,
         meta: 6001,
