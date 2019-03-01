@@ -61,7 +61,7 @@ export default {
                     minWidth:150
                 },
                 {
-                    title: '审批是由',
+                    title: '审批事由',
                     key: 'apply_memo',
                     minWidth:100
                 },

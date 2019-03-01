@@ -10,6 +10,7 @@
                             :config="config"
                             :defaultView="defaultView"
                             :editable="false"
+                            @dayClick="dayClick"
                         >
                         </full-calendar>
                     </div>
@@ -65,6 +66,16 @@ export default {
             events: [],
             defaultView: "agendaDay"
         }
+    },
+    methods:{
+        //  左键点击触发
+        dayClick(date, jsEvent, view){
+            console.log(date)
+            let _self = this
+            this.date = date._d
+            // let dateTemp = DateFormat(date)
+            // this.get_onedate_data(dateTemp)
+        },
     }
 }
 </script>

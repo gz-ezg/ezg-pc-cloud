@@ -58,7 +58,7 @@ export default {
                 },
                 {
                     title: '流程状态',
-                    key: 'process_type',
+                    key: 'processType',
                     minWidth:100
                 },
                 {
@@ -117,7 +117,7 @@ export default {
                     createDate: DateFormat(res.data.data.create_date),
                     updateDate: DateFormat(res.data.data.update_date),
                     id: res.data.data.id,
-                    process_type: res.data.data.process_type,
+                    processType: res.data.data.process_type,
                     productContent: res.data.data.product_content,
                     unusualCode: res.data.data.unusual_code,
                     unusualType: _self.unusualType_map.get(res.data.data.unusual_type)
