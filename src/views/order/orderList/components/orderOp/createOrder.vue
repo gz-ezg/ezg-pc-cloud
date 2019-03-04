@@ -7,6 +7,7 @@
             :mask-closable="false"
             @on-cancel="closeCreateDetail"
             @on-visible-change="modal_status_change"
+            id="order-modal"
         >
             <Form ref="orderDetail" :model="orderDetail" :label-width="100" :rules="orderDetailRule">
                 <Row :gutter="16">
@@ -106,7 +107,7 @@
                                     :before-upload="handleUpload"
                                     action=""
                                     >
-                                <Button type="ghost" icon="ios-cloud-upload-outline">选择文件</Button>
+                                <Button type="ghost" icon="ios-cloud-upload-outline" size="small">选择文件</Button>
                             </Upload>
                             <span v-for="(item,index) in show_file" :key=index>{{ item.name }}
                                 <Button type="text" @click="fileRemove(index)">移除</Button>
@@ -124,17 +125,23 @@
                     </Col>
                 </Row>
             </Form>
-            <Row v-if="orderItem.length">
-                <Table
-                    id="orderItem"
-                    style="margin-top:10px"
-                    ref="selection"
-                    highlight-row
-                    border
-                    size="small"
-                    :columns="orderItemHeader"
-                    :data="orderItem"></Table>
+            <Row v-if="orderItem.length" :gutter="20">
+                <Col span="16">
+                    <Table
+                        id="orderItem"
+                        style="margin-top:10px"
+                        ref="selection"
+                        highlight-row
+                        border
+                        size="small"
+                        :columns="orderItemHeader"
+                        :data="orderItem"></Table>
+                </Col>
+                <Col span="8">
+                    <product-attr :item="currentRow" @change="change_item"></product-attr>
+                </Col>
             </Row>
+            
             <div slot="footer">
                 <Button type="primary" @click="create" :loading="loading">创建</Button>
                 <Button type="ghost" @click="closeCreateDetail">关闭</Button>
@@ -154,16 +161,19 @@ import companySelect from '../companySelect'
 import abOrderSelect from '../abOrderSelect'
 import { DateFormat } from '../../../../../libs/utils.js'
 import * as orderApi from '../../api'
+import productAttr from './productAttr'
 
 export default {
     mixins: [commonSetting],
     components: {
         companySelect,
         serviceItem,
-        abOrderSelect
+        abOrderSelect,
+        productAttr
     },
     data(){
         return {
+            formItem: {},
             openServiceItem: false,
             show_file: [],
             openCreateOrderDetail: false,
@@ -362,3 +372,10 @@ export default {
     }
 }
 </script>
+
+<style>
+#order-modal .ivu-form-item {
+    margin-bottom: 5px!important;
+}
+</style>
+

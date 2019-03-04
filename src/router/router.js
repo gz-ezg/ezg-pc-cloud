@@ -197,12 +197,12 @@ export const appRouter = [
     //         //     name: 'test05_index',
     //         //     component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/test5.vue')
     //         // }
-    //         {
-    //             path: 'test6',
-    //             title: 'iviewTest',
-    //             name: 'test6_index',
-    //             component: () => import('@/views/test/components/test6.vue')
-    //         },
+            {
+                path: 'test6',
+                title: 'iviewTest',
+                name: 'test6_index',
+                component: () => import('@/views/test/components/test6.vue')
+            },
     //         {
     //             path: 'test7',
     //             title: '异常工单审批表',
