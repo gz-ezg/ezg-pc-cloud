@@ -4,8 +4,20 @@
             :closable="true"
             @event-click="eventClick"
             @icon-close="iconClose"
+            :row="1"
         >
-            <!-- <div slot="eventBox" slot-scope="x">{{x.event.bg}}</div> -->
+            <!-- <div slot="eventBox" slot-scope="x" :style="{'background-color':x.event.bg}" style="white-space:nowrap!important;text-overflow: ellipsis;overflow: hidden;outline: 0 !important">
+                <p>{{x.event.start}}</p>
+                <p>{{x.event.end}}</p>
+                <p>{{x.event.value}}</p>
+                <p>{{x.event.bg}}</p>
+            </div> -->
+            <div slot="hover-box" slot-scope="x">
+                <p>{{x.event.start}}</p>
+                <p>{{x.event.end}}</p>
+                <p>{{x.event.value}}</p>
+                <p>{{x.event.bg}}</p>
+            </div>
         </gantt-chart>
     </div>
 </template>

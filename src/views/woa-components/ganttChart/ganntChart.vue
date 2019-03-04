@@ -1,20 +1,23 @@
 <template>
     <div>
         <Card>
-            <div id="container">
+            <div id="container" ref="ganntChart">
                 <div class="carNum">
-                    <div style="background:#ccc;height:30px;line-height:30px">服务人员</div>
-                    <div style="line-height:30px;background:#ccc;" v-for="(x, index) in event" :key="index">{{x.carNum}}</div>
+                    <div style="background:#ccc;height: 30px;line-height:30px">服务人员</div>
+                    <div style=";background:#ccc;" :style="{'line-height':height}" v-for="(x, index) in event" :key="index">{{x.carNum}}</div>
                 </div>
                 <div id="hour">
-                    <div>
-                        <div v-for="x in 23" :key="x" v-if="x>7&&x<21">{{x}}:00</div>
+                    <div style="height: 30px;line-height:30px">
+                        <div v-for="x in 23" :key="x" v-if="x>7&&x<21" style="height: 30px;line-height:30px">{{x}}:00</div>
                     </div>
                     <template v-for="(x, index) in event">
-                        <div :key="index" style="line-height:30px;border-left:1px solid #ddd">
+                        <div :key="index" :style="{height: height,'line-height':height}">
                             <div v-for="(x2, index2) in x.innerData" 
                                 :key="index2" 
                                 @click.stop="eventClick(x2, $event)"
+                                @mouseenter="eventEnter(x2, $event)"
+                                @mouseleave="eventLeave(x2, $event)"
+                                style="border-left:1px solid #ddd;height:30px;line-height:30px"
                                 :style="{
                                     width:x2.width,
                                     'background-color': x2.bg,
@@ -24,6 +27,15 @@
                     </template>
                 </div>
             </div>
+            <Card
+                v-if="hoverBox"
+                class="hover-box"
+                :style="{top: hoverStyle.top + 'px', left: hoverStyle.left + 'px'}"
+                >
+                <slot name="hover-box" :event="currentEvent">
+                    {{currentEvent.value}}
+                </slot>
+            </Card>
         </Card>
     </div>
 </template>
@@ -34,6 +46,15 @@ export default {
         closable: {
             type: Boolean,
             default: false
+        },
+        row: {
+            type: Number,
+            default: 1
+        }
+    },
+    computed:{
+        height(){
+            return this.row * 30 + 'px'
         }
     },
     data() {
@@ -87,7 +108,10 @@ export default {
         ]
         return {
             data: demoData,
-            event: []
+            event: [],
+            hoverBox: false,
+            hoverStyle: {},
+            currentEvent: {}
         }
     },
     methods: {
@@ -131,7 +155,7 @@ export default {
                 })
                 res.push(tempObj)
             })
-            console.log(res)
+            // console.log(res)
             this.event = res
         },
         eventClick(event, jsEvent){
@@ -140,6 +164,22 @@ export default {
         },
         iconClose(event){
             this.$emit('icon-close', event)
+        },
+        eventEnter(event, jsEvent){
+            this.hoverBox = true
+            jsEvent.stopPropagation();
+            let inner = jsEvent.target.getBoundingClientRect()
+            let outer = this.$refs.ganntChart.getBoundingClientRect()
+            this.hoverStyle = {
+                left: inner.left - outer.left,
+                top: inner.top - outer.top + inner.height * this.row + inner.height * 0.5
+            }
+            this.currentEvent = event
+            this.$emit('event-enter', event)
+        },
+        eventLeave(){
+            this.hoverBox = false
+            this.$emit('event-leave', event)
         }
     },
     created() {
@@ -169,7 +209,7 @@ export default {
 }
 #hour>div{
   width: 1290px;
-  height: 30px;
+  /* height: 30px; */
   /* border-left: 1px solid #ddd; */
   background: #ccc;
   text-align: center;
@@ -177,13 +217,14 @@ export default {
 }
 #hour>div>div {
   width: 90px;
-  height: 30px;
-  line-height: 30px;
+  /* height: 30px; */
+  /* line-height: 30px; */
   float: left;
   border-left: 1px solid #ddd;
   background: #ccc;
   text-align: center;
   box-sizing: border-box;
+  font-size: 12px;
 }
 .gantt-item {
   width: 1250px;
@@ -207,5 +248,11 @@ export default {
   height: calc(100vh - 0px);
   position: absolute;
   top: 0px;
+}
+.hover-box{
+    width:400px;
+    position:absolute;
+    z-index:9999;
+    /* border: 1px solid red; */
 }
 </style>
