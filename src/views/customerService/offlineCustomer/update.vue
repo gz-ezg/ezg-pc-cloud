@@ -782,7 +782,7 @@
                     reasonformarketer: _self.task_message.reasonformarketer,
                     reasonforcallback: _self.task_message.reasonforcallback,
                     endreason: _self.task_message.endreason,
-                    taxperiod: DateFormat(_self.task_message.taxperiod),
+                    taxperiod: DateFormat(_self.task_message.taxperiod).substring(0,DateFormat(_self.task_message.taxperiod).length-3),
                     followbusiness: _self.task_message.followbusiness,
                     hasReturned: _self.task_message.has_returned,
                     hasArrears: _self.task_message.has_arrears
