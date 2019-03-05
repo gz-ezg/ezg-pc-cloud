@@ -48,6 +48,13 @@
                                             </FormItem>
                                         </Col>
                                     </Row>
+                                    <Row :gutter="16">
+                                        <Col span="8">
+                                            <FormItem label="创建时间：" prop="date">
+                                                <DatePicker transfer type="daterange" placement="bottom-end" v-model="YformInline.date" style="width:100%" size="small"></DatePicker>
+                                            </FormItem>
+                                        </Col>
+                                    </Row>
                                     <FormItem>
                                         <Button type="primary" @click="search">搜索</Button>
                                         <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
@@ -152,6 +159,7 @@
 
 <script>
     import Bus from '../../../../components/bus'
+    import { DateFormat } from '../../../../libs/utils.js'
 
     export default {
         components: {
@@ -171,7 +179,8 @@
                     tel:"",
                     product:"",
                     marketername:"",
-                    servicename:""
+                    servicename:"",
+                    date: []
                 },
                 loading: false,
                 search_model:"",
@@ -202,12 +211,12 @@
                     {
                         title: '产品名称',
                         key: 'product',
-                        width: 120
+                        width: 150
                     },
                     {
-                        title: '回访时间',
-                        key: 'callbackdate',
-                        width: 160
+                        title: '创建时间',
+                        key: 'createdate',
+                        width: 130
                     },
                     {
                         title: '服务人员',
@@ -293,7 +302,7 @@
                     // {field:'baseorderid',title:'提示'},
                     {field:'product',title:'产品名称'},
                     {field:'enddate',title:'下线时间'},
-                    {field:'callbackdate',title:'回访时间'},
+                    {field:'createdate',title:'创建时间'},
                     {field:'servicebegindate',title:'服务开始时间'},
                     {field:'servicer',title:'服务人员'},                                                                   
                     {field:'marketer',title:'市场人员'},                                                                     
@@ -336,6 +345,7 @@
                 this.YformInline.product = ""
                 this.YformInline.marketername = ""
                 this.YformInline.servicename = ""
+                this.YformInline.date = []
                 this.getData()
             },
             customerDetail(a) {
@@ -379,7 +389,24 @@
 
             getData() {
                 let _self = this
-                let url = '/customer/customerEndList?sortField=id&page=' + _self.page + '&pageSize=' + _self.pageSize + '&status=Y&companyname=' + _self.YformInline.companyname + '&customername=' + _self.YformInline.name + '&customertel=' + _self.YformInline.tel + '&productname=' + _self.YformInline.product + '&marketer=' + _self.YformInline.marketername + '&servicer=' + _self.YformInline.servicename 
+                // let url = '/customer/customerEndList?sortField=id&page=' + _self.page + '&pageSize=' + _self.pageSize + '&status=Y&companyname=' + _self.YformInline.companyname + '&customername=' + _self.YformInline.name + '&customertel=' + _self.YformInline.tel + '&productname=' + _self.YformInline.product + '&marketer=' + _self.YformInline.marketername + '&servicer=' + _self.YformInline.servicename 
+                let url = `api/customer/customerEndList`
+                let config = {
+                    params: {
+                        sortField: 'id',
+                        page: _self.page,
+                        pageSize: _self.pageSize,
+                        status: 'Y',
+                        companyname: _self.YformInline.companyname,
+                        customername: _self.YformInline.name,
+                        customertel: _self.YformInline.tel,
+                        productname: _self.YformInline.product,
+                        marketer: _self.YformInline.marketername,
+                        servicer: _self.YformInline.servicename,
+                        bcreatedate: DateFormat(_self.YformInline.date[0]),
+                        ecreatedate: DateFormat(_self.YformInline.date[1])
+                    }
+                }
                 _self.row = {}
                 _self.loading = true
                 function doSuccess(res) {
@@ -396,10 +423,10 @@
                             _self.data[i].enddate = _self.data[i].enddate.slice(0,10)
                         }
 
-                        if(_self.data[i].callbackdate == null ||_self.data[i].callbackdate == ""){
+                        if(_self.data[i].createdate == null ||_self.data[i].createdate == ""){
 
                         }else{
-                            _self.data[i].callbackdate = _self.data[i].callbackdate.slice(0,10)
+                            _self.data[i].createdate = _self.data[i].createdate.slice(0,10)
                         }
 
                         if(_self.data[i].servicebegindate == null ||_self.data[i].servicebegindate == ""){
@@ -411,7 +438,8 @@
                     _self.loading = false
                 }
 
-                this.GetData(url, doSuccess)
+                // this.GetData(url, doSuccess)
+                this.$Get(url,config,doSuccess)
             },
 
             pageChange(a) {
