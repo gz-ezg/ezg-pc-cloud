@@ -125,7 +125,7 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="20">
                         <FormItem prop="reasonforcallback" label="客户实际下线原因">
-                            <Input size="small" v-model="task_message.reasonforcallback" type="textarea" :autosize="{minRows: 2,maxRows: 5}" />
+                            <Input size="small" v-model="task_message.reasonforcallback" type="textarea" :autosize="{minRows: 2,maxRows: 5}"  readonly/>
                         </FormItem>
                     </Col>
                 </Row>
@@ -358,7 +358,7 @@
                     _self.task_message.customer = ""
                     _self.task_message.id = ""
                     _self.task_message.servicebegindate = ""
-                    _self.task_message.enddate = ""
+                    _self.task_message.enddate = new Date()
                     _self.task_message.callbackdate = ""
                     _self.task_message.endreason = ""
                     _self.task_message.reasonformarketer = ""
