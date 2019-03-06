@@ -709,15 +709,15 @@ export const appRouter = [
             //         require(['@/views/commercialManagement/statistical/statistical_index.vue'], resolve);
             //     }
             // },
-            // {
-            //     access: 6037,
-            //     path: 'schedule',
-            //     title: '排程表',
-            //     name: 'schedule',
-            //     component: resolve => {
-            //         require(['@/views/commercialManagement/schedule/schedule2.vue'], resolve);
-            //     }
-            // },
+            {
+                access: 6037,
+                path: 'schedule',
+                title: '排程表',
+                name: 'schedule',
+                component: resolve => {
+                    require(['@/views/commercialManagement/schedule/index.vue'], resolve);
+                }
+            },
             {
                 access: 6038,
                 meta: 6038,
@@ -736,14 +736,14 @@ export const appRouter = [
             //         require(['@/views/commercialManagement/rule.vue'], resolve);
             //     }
             // }
-            {
-                access: 6038,
-                meta: 6038,
-                path: 'schedule',
-                title: '商事排程表',
-                name: 'newSchedule',
-                component: () => import( /* webpackChunkName: "newSchedule" */ '@/views/commercialManagement/newSchedule/index.vue')
-            }
+            // {
+            //     access: 6038,
+            //     meta: 6038,
+            //     path: 'schedule',
+            //     title: '商事排程表',
+            //     name: 'newSchedule',
+            //     component: () => import( /* webpackChunkName: "newSchedule" */ '@/views/commercialManagement/newSchedule/index.vue')
+            // }
         ]
     },
     {

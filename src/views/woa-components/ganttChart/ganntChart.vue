@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Card>
+        <Card style="overflow-x:scroll">
             <div id="container" ref="ganntChart">
                 <div class="carNum">
                     <div style="background:#ccc;height: 30px;line-height:30px">服务人员</div>
@@ -10,19 +10,29 @@
                     <div style="height: 30px;line-height:30px">
                         <div v-for="x in 23" :key="x" v-if="x>7&&x<21" style="height: 30px;line-height:30px">{{x}}:00</div>
                     </div>
-                    <template v-for="(x, index) in event">
+                    <center v-if="loading" style="margin-left:50%;">
+                        <Spin  size="large"></Spin>
+                    </center>
+                    <template v-for="(x, index) in event" v-if="!loading">
                         <div :key="index" :style="{height: height,'line-height':height}">
                             <div v-for="(x2, index2) in x.innerData" 
                                 :key="index2" 
                                 @click.stop="eventClick(x2, $event)"
                                 @mouseenter="eventEnter(x2, $event)"
                                 @mouseleave="eventLeave(x2, $event)"
-                                style="border-left:1px solid #ddd;height:30px;line-height:30px"
+                                style="border-left:1px solid #ddd;height:30px;line-height:30px;"
                                 :style="{
                                     width:x2.width,
                                     'background-color': x2.bg,
                                     'margin-left': x2.leftOffset,
-                                }"><slot name="eventBox" :event="x2">{{x2.value}}<Icon type="ios-close-outline" style="padding-left:5px" @click.stop="iconClose(x2)" v-if="closable"></Icon></slot></div>
+                                    'white-space': row == 1?'nowrap':'',
+                                    'overflow-x': row == 1?'hidden':'',
+                                    'text-overflow': row == 1?'ellipsis':''
+                                }">
+                                <slot name="eventBox" :event="x2">
+                                    <Icon type="ios-close-outline" style="padding-right:5px" @click.stop="iconClose(x2)" v-if="closable"></Icon>
+                                    {{x2.value}}
+                                </slot></div>
                         </div>
                     </template>
                 </div>
@@ -50,6 +60,16 @@ export default {
         row: {
             type: Number,
             default: 1
+        },
+        data: {
+            type: Array,
+            default: ()=>{
+                return []
+            }
+        },
+        loading: {
+            type: Boolean,
+            default: false
         }
     },
     computed:{
@@ -92,22 +112,22 @@ export default {
                         bg: '#fff'
                     },
                     {
-                        start: '2019/1/21 11:00',
-                        end: '2019/1/21 14:00',
-                        value: '天河科技园',
-                        bg: '#fff'
-                    },
-                    {
                         start: '2019/1/21 19:00',
                         end: '2019/1/22 20:35',
                         value: '客户',
                         bg: '#fff'
                     },
+                    {
+                        start: '2019/1/21 11:00',
+                        end: '2019/1/21 14:00',
+                        value: '天河科技园',
+                        bg: '#fff'
+                    }
                 ]
             }
         ]
         return {
-            data: demoData,
+            // data: demoData,
             event: [],
             hoverBox: false,
             hoverStyle: {},
@@ -116,6 +136,7 @@ export default {
     },
     methods: {
         events() {
+            this.event = []
             let res = []
             this.data.forEach((item)=>{
                 let tempObj = {}
@@ -183,11 +204,15 @@ export default {
         }
     },
     created() {
-        this.events()
     },
     mounted() {
-
+        // this.events()
     },
+    watch: {
+        data: function(){
+            this.events()
+        }
+    }
 }
 </script>
 

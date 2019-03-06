@@ -19,6 +19,14 @@
                 <p>{{x.event.bg}}</p>
             </div>
         </gantt-chart>
+
+        <!-- <div style="max-height:48px;overflow-y:scroll">
+            <p>123</p>
+            <p>123</p>
+            <p>123</p>
+            <p>123</p>
+            <p>123</p>
+        </div> -->
     </div>
 </template>
 

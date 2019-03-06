@@ -4,7 +4,9 @@
             <div class="bg" @click="close" v-show="visible" v-if="mask"></div>
         </transition>
         <transition name="slide-fade">
-            <Card class="content" :title="title" :style="mainStyles" v-show="visible">1234</Card>
+            <Card class="content" :title="title" :style="mainStyles" v-show="visible">
+                <slot></slot>
+            </Card>
         </transition>
     </div>
 </template>
