@@ -37,6 +37,11 @@ export default {
                     minWidth:100
                 },
                 {
+                    title: '公司名称',
+                    key: 'companyName',
+                    minWidth:150
+                },
+                {
                     title: '产品内容',
                     key: 'productContent',
                     minWidth:150
@@ -47,13 +52,13 @@ export default {
                     minWidth:80
                 },
                 {
-                    title: '审批是由',
+                    title: '审批事由',
                     key: 'applyMemo',
                     minWidth:200
                 },
                 {
                     title: '流程状态',
-                    key: 'currentProcessName',
+                    key: 'processType',
                     minWidth:100
                 },
                 {
@@ -105,16 +110,17 @@ export default {
                     return
                 }
                 _self.data.push({
-                    applyMemo: res.data.data.applyMemo,
-                    companyId: res.data.data.companyId,
+                    applyMemo: res.data.data.apply_memo,
+                    companyName: res.data.data.companyName,
+                    companyId: res.data.data.company_id,
                     createBy: res.data.data.createBy,
-                    createDate: DateFormat(res.data.data.createDate),
-                    updateDate: DateFormat(res.data.data.updateDate),
+                    createDate: DateFormat(res.data.data.create_date),
+                    updateDate: DateFormat(res.data.data.update_date),
                     id: res.data.data.id,
-                    currentProcessName: res.data.data.currentProcessName,
-                    productContent: res.data.data.productContent,
-                    unusualCode: res.data.data.unusualCode,
-                    unusualType: _self.unusualType_map.get(res.data.data.unusualType)
+                    processType: res.data.data.process_type,
+                    productContent: res.data.data.product_content,
+                    unusualCode: res.data.data.unusual_code,
+                    unusualType: _self.unusualType_map.get(res.data.data.unusual_type)
                 })
             }
             this.$Get(url,config,success)

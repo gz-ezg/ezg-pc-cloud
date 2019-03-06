@@ -55,7 +55,7 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
                         <FormItem prop="companyName" label="是否处理">
-                            <Select transfer v-model="task_message.companyName" transfer>
+                            <Select transfer v-model="task_message.companyName">
                                 <Option value="beijing">已处理</Option>
                                 <Option value="shanghai">等待处理</Option>
                                 <Option value="shenzhen">未处理</Option>

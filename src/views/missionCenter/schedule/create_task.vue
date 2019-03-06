@@ -176,7 +176,7 @@ export default {
             // _self.get_data_center()
             // _self.get_detail(e)
             // _self.detail = e
-            console.log(e._d)
+            // console.log(e._d)
             _self.data.taskData[0].plan_date = e._d
             _self.data.taskData[0].expect_start_date = e._d
             _self.openTaskDetail = true

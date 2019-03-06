@@ -1,6 +1,60 @@
 <template>
     <div>
         <Card>
+            <Row style="margin-bottom:10px">
+                    <Collapse>
+                        <Panel name="1" >
+                            <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
+                                筛选
+                            <div slot="content" @keydown.enter="Search">
+                                <Form ref="formValidateSearch" :model="formValidateSearch" :label-width="100">
+                                    <Row :gutter="16">
+                                        <Col span="8">
+                                            <FormItem label="企业名称：" prop="companyname">
+                                                <Input v-model="formValidateSearch.companyname" size="small"></Input>
+                                            </FormItem>
+                                        </Col>
+                                        <Col span="8">
+                                            <FormItem label="电话号码：" prop="tel">
+                                                <Input v-model="formValidateSearch.tel" size="small"></Input>
+                                            </FormItem>
+                                        </Col>
+                                        <Col span="8">
+                                            <FormItem label="审批流程：" prop="tel">
+                                                <Input  size="small"></Input>
+                                            </FormItem>
+                                        </Col>
+                                     </Row>
+                                     <Row :gutter="16">
+                                        <Col span="8">
+                                            <FormItem label="创建人：" prop="tel">
+                                                <Input v-model="formValidateSearch.crealname" size="small"></Input>
+                                            </FormItem>
+                                        </Col>
+                                        <Col span="8">
+                                            <FormItem label="异常类型：" prop="unType">
+                                                <Select transfer v-model="formValidateSearch.unType" size="small">
+                                                    <Option v-for="(item, index) in unusualType" :key=index :value="item.typecode">{{item.typename}}</Option>                            
+                                                </Select>
+                                            </FormItem>
+                                        </Col>
+                                        <Col span="8">
+                                            <FormItem label="创建时间" prop="date">
+                                                <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:100%" size="small"></DatePicker>
+                                            </FormItem>
+                                        </Col>
+                                     </Row>
+                                    <center>
+                                        <FormItem>
+                                            <Button type="primary" @click="Search" >搜索</Button>
+                                            <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
+                                        </FormItem>
+                                    </center>
+                                </Form>
+                            </div>
+                        </Panel>
+                    </Collapse>
+            </Row>
             <ButtonGroup>
                 <Button type="primary" icon="ios-color-filter-outline" @click="download_excel">导出Excel</Button>
                 <Button type="primary" icon="ios-color-filter-outline" @click="refresh">刷新</Button>                            
@@ -13,7 +67,7 @@
                     :data="data" 
                     size="small"
                     @on-row-click="select_row" 
-                    @on-row-dblclick="to_do_work_flow" 
+                    @on-sort-change="sort" 
                     :loading="tableLoading">
                 </Table>
                 <Page
@@ -38,10 +92,19 @@ import { DateFormat } from '../../../libs/utils.js'
 export default {
     data() {
         return {
+            //筛选相关
+            formValidateSearch:{
+                companyname: "",
+                tel: "",
+                crealname: "",
+                unType: "",
+                date: []
+            },
             //数据字典
             unusualType:[],
             unusualType_map: new Map(),
             //  当前选中的行
+            sortField:"create_date",
             selectRow: "",
             tableLoading: false,
             total: 0,
@@ -50,7 +113,7 @@ export default {
             pageSize: 10,
             header: [
                 {
-                    title: '订单号码',
+                    title: '异常工单号',
                     key: 'unusual_code',
                     minWidth: 140
                 },
@@ -106,7 +169,7 @@ export default {
                     minWidth: 120
                 },
                 {
-                    title: "审批是由",
+                    title: "审批事由",
                     key: "apply_memo",
                     minWidth: 180,
                     render:(h,params) =>{
@@ -138,7 +201,7 @@ export default {
                 },
                 {
                     title: '流程状态',
-                    key: 'current_process_name',
+                    key: 'process_type',
                     minWidth: 120,
                     sorttable: "custom"
                 },
@@ -150,7 +213,8 @@ export default {
                 {
                     title: '创建时间',
                     key: 'create_date',
-                    minWidth: 120                                                               
+                    minWidth: 120,
+                    sortable: "custom"                                                            
                 },
                 {
                     title: '操作',
@@ -218,7 +282,14 @@ export default {
                 params: {
                     isAudit: 'Y',
                     page: _self.page,
-                    pageSize: _self.pageSize
+                    pageSize: _self.pageSize,
+                    companyName: _self.formValidateSearch.companyname,
+                    tel: _self.formValidateSearch.tel,
+                    sortField: _self.sortField,
+                    bcreatedate: DateFormat(_self.formValidateSearch.date[0]),
+                    ecreatedate: DateFormat(_self.formValidateSearch.date[1]),
+                    createName: _self.formValidateSearch.crealname,
+                    unusualType: _self.formValidateSearch.unType
                 }
             }
 
@@ -234,6 +305,26 @@ export default {
 
             this.$Get(url,config,success)
         },
+        //  搜索相关
+        Search(){
+            this.page = 1
+            this.get_table_data()
+        },
+        handleReset(){
+            this.$refs["formValidateSearch"].resetFields()
+            this.formValidateSearch.date = []
+            this.formValidateSearch.crealname = ""
+            this.get_table_data()
+        },
+        //排序
+        sort(e){
+            if(e.order =='desc'){
+                this.sortField = ""
+            }else{
+                this.sortField = "create_date"
+            }
+            this.get_table_data()
+        },
 
         //导出excel
         download_excel(){
@@ -245,8 +336,8 @@ export default {
                 {field:'product_content',title:'产品内容'},
                 {field:'unusual_type',title:'异常类型',format:'unusualType'},
                 {field:'tel',title:'客户电话'},
-                {field:'apply_memo',title:'审批是由'},
-                {field:'current_process_name',title:'流程状态'},
+                {field:'apply_memo',title:'审批事由'},
+                {field:'process_type',title:'流程状态'},
                 {field:'realname',title:'创建人'},
                 {field:'create_date',title:'创建时间'}
             ]

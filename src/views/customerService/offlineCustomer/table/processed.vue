@@ -48,6 +48,13 @@
                                             </FormItem>
                                         </Col>
                                     </Row>
+                                    <Row :gutter="16">
+                                        <Col span="8">
+                                            <FormItem label="创建时间：" prop="date">
+                                                <DatePicker transfer type="daterange" placement="bottom-end" v-model="YformInline.date" style="width:100%" size="small"></DatePicker>
+                                            </FormItem>
+                                        </Col>
+                                    </Row>
                                     <FormItem>
                                         <Button type="primary" @click="search">搜索</Button>
                                         <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
@@ -63,7 +70,9 @@
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="add">录入</Button> -->
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="edit">编辑</Button> -->
                 <Button type="primary" icon="ios-color-wand-outline" @click="check">查看</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="downExcel">导出Excel</Button>                
+                <Button type="primary" icon="trash-b" @click="del">删除</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="downExcel">导出Excel</Button>
+                <Button type="primary" icon="ios-color-filter-outline" @click="getData">刷新</Button>                
             </ButtonGroup>
         </Row>
 
@@ -72,6 +81,7 @@
                     ref="selection"
                     highlight-row
                     size="small"
+                    :loading="loading"
                     @on-row-click="selectrow"
                     :columns="header"
                     :data="data"></Table>
@@ -149,6 +159,7 @@
 
 <script>
     import Bus from '../../../../components/bus'
+    import { DateFormat } from '../../../../libs/utils.js'
 
     export default {
         components: {
@@ -168,8 +179,10 @@
                     tel:"",
                     product:"",
                     marketername:"",
-                    servicename:""
+                    servicename:"",
+                    date: []
                 },
+                loading: false,
                 search_model:"",
                 isExamine: false,
                 modal: false,
@@ -198,12 +211,12 @@
                     {
                         title: '产品名称',
                         key: 'product',
-                        width: 120
+                        width: 150
                     },
                     {
-                        title: '回访时间',
-                        key: 'callbackdate',
-                        width: 160
+                        title: '创建时间',
+                        key: 'createdate',
+                        width: 130
                     },
                     {
                         title: '服务人员',
@@ -226,10 +239,15 @@
                         width: 160
                     },
                     {
+                        title: '流程状态',
+                        key: 'process_type',
+                        width: 120
+                    },
+                    {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        width: 200,
+                        width: 300,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
@@ -259,6 +277,17 @@
                                         }
                                     }
                                 }, '[查看企业]'),
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.$bus.emit('OPEN_LOG',params.row.id)
+                                        }
+                                    }
+                                }, '[审批记录]'),
                             ]);
                         }
                     }
@@ -273,7 +302,7 @@
                     // {field:'baseorderid',title:'提示'},
                     {field:'product',title:'产品名称'},
                     {field:'enddate',title:'下线时间'},
-                    {field:'callbackdate',title:'回访时间'},
+                    {field:'createdate',title:'创建时间'},
                     {field:'servicebegindate',title:'服务开始时间'},
                     {field:'servicer',title:'服务人员'},                                                                   
                     {field:'marketer',title:'市场人员'},                                                                     
@@ -316,6 +345,7 @@
                 this.YformInline.product = ""
                 this.YformInline.marketername = ""
                 this.YformInline.servicename = ""
+                this.YformInline.date = []
                 this.getData()
             },
             customerDetail(a) {
@@ -336,10 +366,49 @@
                 }
             },
 
+            //删除下线数据
+            del() {
+                let _self = this
+                if(_self.row.id == null){
+                    _self.$Message.warning('请先选择一行！')
+                } else {
+                    let url = `api/customer/delete`
+                    let config = {
+                        params: {
+                            applyId: _self.row.id
+                        }
+                    }
+                    function success(res){
+                        _self.$Message.success('删除成功')
+                        _self.getData()
+                    }
+                    
+                    _self.$Get(url,config,success)
+                }
+            },
+
             getData() {
                 let _self = this
-                let url = '/customer/customerEndList?sortField=id&page=' + _self.page + '&pageSize=' + _self.pageSize + '&status=Y&companyname=' + _self.YformInline.companyname + '&customername=' + _self.YformInline.name + '&customertel=' + _self.YformInline.tel + '&productname=' + _self.YformInline.product + '&marketer=' + _self.YformInline.marketername + '&servicer=' + _self.YformInline.servicename 
+                // let url = '/customer/customerEndList?sortField=id&page=' + _self.page + '&pageSize=' + _self.pageSize + '&status=Y&companyname=' + _self.YformInline.companyname + '&customername=' + _self.YformInline.name + '&customertel=' + _self.YformInline.tel + '&productname=' + _self.YformInline.product + '&marketer=' + _self.YformInline.marketername + '&servicer=' + _self.YformInline.servicename 
+                let url = `api/customer/customerEndList`
+                let config = {
+                    params: {
+                        sortField: 'id',
+                        page: _self.page,
+                        pageSize: _self.pageSize,
+                        status: 'Y',
+                        companyname: _self.YformInline.companyname,
+                        customername: _self.YformInline.name,
+                        customertel: _self.YformInline.tel,
+                        productname: _self.YformInline.product,
+                        marketer: _self.YformInline.marketername,
+                        servicer: _self.YformInline.servicename,
+                        bcreatedate: DateFormat(_self.YformInline.date[0]),
+                        ecreatedate: DateFormat(_self.YformInline.date[1])
+                    }
+                }
                 _self.row = {}
+                _self.loading = true
                 function doSuccess(res) {
                     let _data = res.data.data
 
@@ -354,10 +423,10 @@
                             _self.data[i].enddate = _self.data[i].enddate.slice(0,10)
                         }
 
-                        if(_self.data[i].callbackdate == null ||_self.data[i].callbackdate == ""){
+                        if(_self.data[i].createdate == null ||_self.data[i].createdate == ""){
 
                         }else{
-                            _self.data[i].callbackdate = _self.data[i].callbackdate.slice(0,10)
+                            _self.data[i].createdate = _self.data[i].createdate.slice(0,10)
                         }
 
                         if(_self.data[i].servicebegindate == null ||_self.data[i].servicebegindate == ""){
@@ -366,9 +435,11 @@
                             _self.data[i].servicebegindate = _self.data[i].servicebegindate.slice(0,10)
                         }
                     }
+                    _self.loading = false
                 }
 
-                this.GetData(url, doSuccess)
+                // this.GetData(url, doSuccess)
+                this.$Get(url,config,doSuccess)
             },
 
             pageChange(a) {

@@ -61,6 +61,13 @@
                                     </FormItem>
                                 </Col>
                             </Row>
+                            <Row :gutter="16">
+                                <Col span="8">
+                                    <FormItem label="客户创建时间：" prop="customerCreateTime">
+                                        <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.customerCreateTime" style="width:100%" size="small"></DatePicker>
+                                    </FormItem>
+                                </Col>
+                            </Row>
                             <center>
                                 <FormItem>
                                     <Button type="primary" @click="Search">搜索</Button>
@@ -175,7 +182,8 @@ export default {
                 date: [],
                 crealname: "",
                 frealname: "",
-                paytime: []
+                paytime: [],
+                customerCreateTime: []
             },
             total: 0,
             page: 1,
@@ -311,6 +319,11 @@ export default {
                 {
                     title: '客户来源',
                     key: 'customersource',
+                    minWidth: 120
+                },
+                {
+                    title: '客户创建时间',
+                    key: 'customer_createDate',
                     minWidth: 120
                 },
                 {
@@ -577,7 +590,6 @@ export default {
         },
         //  自定义排序
         sort(e){
-            console.log(e)
             this.sortField = e.key
             if(e.order=='normal'){
                 this.order = 'desc'
@@ -609,14 +621,18 @@ export default {
                     epaytime: DateFormat(_self.formValidateSearch.paytime[1]),
                     sumField:'paynumber,realnumber,neednumber',
                     bcreatedate:DateFormat(_self.formValidateSearch.date[0]),
-                    ecreatedate:DateFormat(_self.formValidateSearch.date[1])
+                    ecreatedate:DateFormat(_self.formValidateSearch.date[1]),
+                    customer_bcreatedate:DateFormat(_self.formValidateSearch.customerCreateTime[0]),
+                    customer_ecreatedate:DateFormat(_self.formValidateSearch.customerCreateTime[1])
                 }
             }
 
             function success(res){
+                console.log(res.data.data.rows)
                 _self.data = res.data.data.rows
                 _self.total = res.data.data.total
                 for(let i = 0; i < _self.data.length; i++){
+                    _self.data[i].customer_createDate = DateFormat(_self.data[i].customer_createDate)
                     _self.data[i].base_paydir = _self.payDirs_map.get(_self.data[i].base_paydir)
                     _self.data[i].customersource = _self.cluesources_map.get(_self.data[i].customersource)
                     _self.data[i].contract_flag = _self.order_contract_flag_map.get(_self.data[i].contract_flag)

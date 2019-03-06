@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Row style="margin-bottom:10px"><center><h2>亿帐柜报价工具</h2></center></Row>
+        <Row style="margin-bottom:10px"><center><h2>亿账柜报价工具</h2></center></Row>
         <Row>
                 <Form ref="searchData" :model="searchData" :label-width="140">
                     <Row :gutter="10">

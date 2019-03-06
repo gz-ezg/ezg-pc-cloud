@@ -244,7 +244,7 @@
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        width: 200,
+                        width: 250,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
@@ -275,6 +275,22 @@
                                         }
                                     }
                                 }, '[查看异常]'),
+                                h('Button',{
+                                    props: {
+                                        type: 'warning',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click:() => {
+                                            console.log(params.row)
+                                            if(params.row.service_status == '异常'){
+                                                this.$Message.warning('当前服务状态已为异常')
+                                            } else{
+                                                this.setException(params.row.id)
+                                            }
+                                        }
+                                    }
+                                },'列为异常')
                             ]);
                         }
                     }
@@ -282,6 +298,27 @@
             }
         },
         methods: {
+            //列为异常
+            setException(id){
+                let _self = this
+                let url = `api/order/cycle/service/record/update`
+                let config = {
+                    id: id,
+                    serviceStatus: 'exception'
+                }
+
+                function success(res){
+                    console.log('列为异常成功')
+                    _self.getData()
+                    Bus.$emit('UPDATE_EXCEPTION',true)
+                }
+                function fail(){
+
+                }
+
+                this.$Post(url,config,success,fail)
+            },
+
             downloadExcel(){
                 let field = [
                     {field:'service_status',title:'服务状态',format:'cservicest'},
@@ -383,6 +420,8 @@
                             status = '暂停'
                         } else if (_data.rows[i].service_status == 'abolish') {
                             status = '作废'
+                        } else if (_data.rows[i].service_status == 'exception') {
+                            status = '异常'
                         }
 
                         for(let j = 0;j<_self.managestatus.length;j++){
