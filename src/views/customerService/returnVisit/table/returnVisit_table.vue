@@ -57,6 +57,7 @@
                 this.$GetDataCenter(params, finish)
             },
             open_edit(e){
+                console.log(e)
                 this.data = e
                 this.openEdit = true
             },

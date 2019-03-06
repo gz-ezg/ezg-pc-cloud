@@ -29,6 +29,11 @@
                         <Input size="small" v-model="formValidateDetail.unusual_type" readonly/>
                         </FormItem>
                     </Col>
+                    <Col span="8">
+                        <FormItem label="销售人员" prop="realname">
+                        <Input size="small" v-model="formValidateDetail.realname" readonly/>
+                        </FormItem>
+                    </Col>
                 </Row>
                 <Row>
                     <FormItem label="产品内容" prop="product_content">
@@ -36,7 +41,7 @@
                     </FormItem>
                 </Row>
                 <Row>
-                    <FormItem label="审批是由" prop="apply_memo">
+                    <FormItem label="审批事由" prop="apply_memo">
                         <Input size="small" type="textarea" :rows="4" v-model="formValidateDetail.apply_memo" readonly/>
                     </FormItem>
                 </Row>
@@ -49,8 +54,8 @@
                         </FormItem>
                         <FormItem label="是否同意审批" prop="agree">
                             <RadioGroup v-model="banlishenpi.agree">
-                                <Radio label="1">同意</Radio>
-                                <Radio label="0">驳回</Radio>
+                                <Radio label="Agree">同意</Radio>
+                                <Radio label="Reject">驳回</Radio>
                             </RadioGroup>
                         </FormItem>
                     </Form>
@@ -70,7 +75,7 @@ export default {
             openAbApproveDeal: false,
             formValidateDetail: {},
             banlishenpi: {
-                agree: "1",
+                agree: "Agree",
                 desc: ""
             },
             submitLoading: false
@@ -93,7 +98,7 @@ export default {
             }
 
             function success(res){
-                _self.banlishenpi.agree = '1'
+                _self.banlishenpi.agree = 'Agree'
                 _self.banlishenpi.desc = ''
                 _self.submitLoading = false
                 _self.openAbApproveDeal = false

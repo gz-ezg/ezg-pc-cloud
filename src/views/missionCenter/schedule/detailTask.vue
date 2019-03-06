@@ -10,7 +10,7 @@
             <div style="min-height:90vh;width:400px">
                 <Row>
                     <Col span="16">
-                        <Input type="text" v-model="data.taskData[0].task_name" style="width:100%" readonly/>
+                        <Input type="text" v-model="data.taskData[0].task_name" style="width:100%" />
                     </Col>
                     <!-- <Col span="6" push="2">
                         <Button type="error" @click="delete_task">删除任务</Button>
@@ -40,7 +40,7 @@
                             <span style="line-height:24px">任务级别</span>
                         </Col>
                         <Col span="20">
-                            <Select v-model="data.taskData[0].task_level" size="small" style="width:180px" disabled>
+                            <Select v-model="data.taskData[0].task_level" size="small" style="width:180px" @on-change="getNewLevel">
                                 <Option v-for="item in taskLevel" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
                             </Select>
                         </Col>
@@ -58,7 +58,7 @@
                             <span style="line-height:24px">开始时间</span>
                         </Col>
                         <Col span="20">
-                            <DatePicker v-model="data.taskData[0].expect_start_date" size="small" style="width:180px" type="datetime" readonly>
+                            <DatePicker v-model="data.taskData[0].plan_date" size="small" style="width:180px" type="datetime" @on-change="getPlanTime">
                             </DatePicker>
                         </Col>
                     </Row>
@@ -67,7 +67,7 @@
                             <span style="line-height:24px">提醒时间</span>
                         </Col>
                         <Col span="20">
-                            <DatePicker v-model="data.taskData[0].plan_date" size="small" style="width:180px" type="datetime" readonly>
+                            <DatePicker v-model="data.taskData[0].expect_start_date" size="small" style="width:180px" type="datetime" @on-change="getRemindTime">
                             </DatePicker>
                         </Col>
                     </Row>
@@ -76,7 +76,7 @@
                             <span style="line-height:24px">任务详情</span>
                         </Col>
                         <Col span="20">
-                            <Input v-model="data.taskData[0].task_content" size="small" style="width:180px" type="textarea" :row="5" readonly autosize>
+                            <Input v-model="data.taskData[0].task_content" size="small" style="width:180px" type="textarea" :row="5" autosize>
                             </Input>
                         </Col>
                     </Row>
@@ -85,7 +85,7 @@
                             <span style="line-height:24px">任务状态</span>
                         </Col>
                         <Col span="20">
-                            <Select v-model="data.taskData[0].task_stage" size="small" style="width:180px">
+                            <Select v-model="data.taskData[0].task_stage" size="small" style="width:180px" @on-change="getTaskStage">
                                 <Option v-for="item in taskStage" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
                             </Select>
                         </Col>
@@ -101,6 +101,7 @@
                     </Row>
                     <Row style="margin-top:40px">
                         <Button @click="before_update_task" type="primary" style="margin-left:40px" :disabled="openSubmit" :loading="loading">修改</Button>
+                        <Button @click="delete_task" type="error" style="margin-left:50px">删除任务</Button>
                     </Row>
                 </Row>
                 <Row style="margin-top:20px">
@@ -164,6 +165,7 @@
 
 <script>
 import followUpList from '../common/createFollowUp'
+import { FULLDateFormat } from '../../../libs/utils.js'
 
 export default {
     components:{
@@ -206,19 +208,147 @@ export default {
                     followTypeName: "",
                     serviceContent: ""
                 }
-            ]
+            ],
+            newTaskLevel: "",
+            oldTaskLevel: "",
+            oldRemindTime: "",
+            newRemindTime: "",
+            oldTaskStage: "",
+            newTaskStage: "",
+            oldTaskName: "",
+            oldTaskContent: "",
+            newPlanTime: "",
+            oldPlanTime: ""
         }
     },
     computed:{
+
         openSubmit(){
-            if(!this.task_memo){
-                return true
-            }else{
+            if(this.newTaskLevel && this.newTaskLevel != this.oldTaskLevel){
                 return false
+            } else if(this.newRemindTime && this.newRemindTime != this.oldRemindTime){
+                return false
+            }  else if(this.newTaskStage && this.newTaskStage != this.oldTaskStage){
+                return false
+            } else if(this.data.taskData[0].task_name != this.oldTaskName || this.data.taskData[0].task_content != this.oldTaskContent){
+                return false
+            } else if(this.newPlanTime && this.newPlanTime != this.oldPlanTime){
+                return false
+            } else {
+                return true
             }
         }
     },
     methods:{
+        //更改任务名称或详情
+        changeTaskName(){
+            let _self = this
+            let url = `api/task/updateTaskName`
+            let config = {
+                taskId: _self.id,
+                taskName: _self.data.taskData[0].task_name,
+                taskContent: _self.data.taskData[0].task_content
+            }
+            function success(res){
+                _self.get_detail(_self.id)
+            }
+            function fail(){
+
+            }
+            this.$Post(url,config,success,fail)
+        },
+        //更改任务状态
+        changeTaskStage(){
+            let _self = this
+            let url = `api/task/updateTaskStage`
+            // let fromdata = new FormData()
+            // fromdata.append("taskId", _self.id)
+            // fromdata.append("taskStage", _self.data.taskData[0].task_stage)
+            // fromdata.append("changeReason", _self.task_memo)
+
+            let config = {
+                taskId: _self.data.taskData[0].id,
+                taskStage: _self.data.taskData[0].task_stage,
+                changeReason: _self.task_memo
+            }
+            function success(res){
+                // _self.update_content()
+                console.log(res)
+                _self.task_memo = ""
+                _self.get_detail(_self.id)
+            }
+            function fail(err){
+                console.log(err)
+            }
+
+            this.$Post(url, config, success, fail)
+        },
+        getTaskStage(e){
+            console.log(e)
+            this.newTaskStage = e
+        },
+        //更改计划时间
+        changePlanTime(){
+            let _self = this
+            let url = `api/task/updateTaskPlanDate`
+            let config = {
+                taskId: _self.id,
+                planDate: FULLDateFormat(_self.newPlanTime)
+            }
+            function success(res){
+                _self.get_detail(_self.id)
+            }
+            function fail(){
+
+            }
+            this.$Post(url,config,success,fail)
+        },
+        getPlanTime(e){
+            this.newPlanTime = e
+        },
+        //更改提醒时间
+        changeRemindTime(){
+            let _self = this
+            let url = `api/task/updateTaskRemindDate`
+            let config = {
+                taskId: _self.id,
+                taskRemindDate: FULLDateFormat(_self.newRemindTime)
+            }
+            function success(res){
+                console.log(res)
+                _self.get_detail(_self.id)
+            }
+            function fail(){
+
+            }
+            this.$Post(url,config,success,fail)
+        },
+        getRemindTime(e){
+            console.log(FULLDateFormat(e))
+            console.log(e)
+            this.newRemindTime = e
+        },
+        //更改任务级别
+        changTaskLevel(){
+            let _self = this
+            let url = `api/task/updateTaskImportantLevel`
+            let config = {
+                taskId: _self.id,
+                taskImportantLevel: _self.newTaskLevel
+            }
+            function success(res){
+                console.log(res)
+                _self.get_detail(_self.id)
+            }
+            function fail(){
+
+            }
+            this.$Post(url,config,success,fail)
+        },
+        getNewLevel(e){
+            console.log(e)
+            this.newTaskLevel = e
+        },
         get_detail(e){
             let _self = this
             let url = 'api/task/findTaskDetail'
@@ -231,7 +361,15 @@ export default {
 
             function success(res){
                 _self.data = res.data.data
-                // console.log(res.data.data.taskData[0])
+                console.log(res.data.data)
+                _self.oldTaskLevel = res.data.data.taskData[0].task_level
+                _self.oldRemindTime = res.data.data.taskData[0].expect_start_date
+                _self.oldTaskStage = res.data.data.taskData[0].task_stage
+                _self.oldTaskName = res.data.data.taskData[0].task_name
+                _self.oldTaskContent = res.data.data.taskData[0].task_content
+                _self.oldPlanTime = res.data.data.taskData[0].plan_date
+                // console.log(Date.parse(res.data.data.taskData[0].expect_start_date))
+                
                 if(res.data.data.taskData[0]){
                     _self.get_last_follow_up_content(res.data.data.taskData[0].company_id)
                 }else{
@@ -263,12 +401,15 @@ export default {
             let url = `api/task/deleteTask`
             let config = {
                 params: {
-                    taskId: _self.data.taskData.id
+                    taskId: _self.id
                 }
             }
 
             function success(res){
+                console.log(res)
+                _self.$Message.success("删除任务成功")
                 _self.openTaskDetail = false
+                _self.$bus.emit("UPDATE_TASK_LIST",true)
             }
 
             this.$Get(url, config, success)
@@ -306,8 +447,35 @@ export default {
                     custId: _self.data.taskData[0].custId,
                 })
             }else{
-                this.update_task()
+                console.log(_self.newTaskLevel)
+                // this.update_task()
+                this.test()
             }
+        },
+        test(){
+            var _self = this
+            var timer
+            if(this.data.taskData[0].task_name != this.oldTaskName || this.data.taskData[0].task_content != this.oldTaskContent){
+                _self.changeTaskName()
+            }
+            if(_self.newTaskStage && _self.newTaskStage != _self.oldTaskStage){
+                console.log(0)
+                _self.changeTaskStage()
+            }
+            if(_self.newPlanTime && _self.newPlanTime != _self.oldPlanTime){
+                _self.changePlanTime()
+            }
+            if(_self.newRemindTime && _self.newRemindTime != _self.oldRemindTime){
+                console.log(1)
+                _self.changeRemindTime()
+            }
+            if(_self.newTaskLevel && _self.newTaskLevel != _self.oldTaskLevel){
+                timer = setTimeout(function(){
+                    console.log(2)
+                    _self.changTaskLevel()
+                },1000)
+            }
+            _self.$bus.emit("UPDATE_TASK_LIST",true)
         },
         update_task(){
             //  编辑任务，有点混乱，待理清
@@ -327,6 +495,18 @@ export default {
             function success(res){
                 _self.update_content()
                 _self.task_memo = ""
+                var timer
+                if(_self.newRemindTime && _self.newRemindTime != _self.oldRemindTime){
+                    console.log(1)
+                    _self.changeRemindTime()
+                }
+                if(_self.newTaskLevel && _self.newTaskLevel != _self.oldTaskLevel){
+                    timer = setTimeout(function(){
+                        console.log(2)
+                        _self.changTaskLevel()
+                    },1000)
+                    // setTimeout(_self.changTaskLevel(),5000)
+                }
             }
 
             function fail(err){
@@ -424,6 +604,7 @@ export default {
         this.$bus.on("OPEN_SEHEDULE_DETAIL",(e)=>{
             _self.get_data_center()
             _self.id = e.id
+            console.log(_self.id)
             _self.get_detail(e.id)
             _self.detail = e
             _self.openTaskDetail = true

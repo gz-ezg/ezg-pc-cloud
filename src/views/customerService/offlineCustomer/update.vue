@@ -13,10 +13,15 @@
                             <Input size="small" v-model="task_message.company" @on-focus="getCompany"/>
                         </FormItem>
                     </Col>
-                    <Col span="10">
-                        <FormItem prop="product" label="产品名称">
-                            <Input size="small" v-model="task_message.product" @on-focus="getProduct"/>
+                    <Col span="8">
+                        <FormItem prop="productid" label="产品名称">
+                            <Select size="small" v-model="task_message.productid"  @on-change="changeProduct">
+                                <Option v-for="item in productList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                            </Select>
                         </FormItem>
+                    </Col>
+                    <Col span="2">
+                        <p style="padding-top:8px">共 <span style="color:red">{{defaultData.length}}</span> 种</p>
                     </Col>
                 </Row>
                 <Row :gutter="16">
@@ -28,7 +33,7 @@
                     </Col>
                     <Col span="10">
                         <FormItem prop="tel" label="客户手机">
-                            <Input size="small" v-model="task_message.tel"/>
+                            <Input size="small" v-model="task_message.tel" @on-focus="getCompany" />
                         </FormItem>
                     </Col>
                 </Row>
@@ -36,12 +41,12 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
                         <FormItem prop="servicername" label="服务人员">
-                            <Input size="small" v-model="task_message.servicername" @on-focus="getUser"/>
+                            <Input size="small" v-model="task_message.servicername" readonly/>
                         </FormItem>
                     </Col>
                     <Col span="10">
                         <FormItem prop="marketername" label="市场人员">
-                            <Input size="small" v-model="task_message.marketername"/>
+                            <Input size="small" v-model="task_message.marketername" readonly />
                         </FormItem>
                     </Col>
                 </Row>
@@ -49,7 +54,7 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
                         <FormItem prop="servicebegindate" label="服务开始时间">
-                            <DatePicker type="date" v-model="task_message.servicebegindate" style="width:100%" size="small" ></DatePicker>
+                            <DatePicker type="date" v-model="task_message.servicebegindate" style="width:100%" size="small" readonly></DatePicker>
                         </FormItem>
                     </Col>
                     <Col span="10">
@@ -61,8 +66,8 @@
                 <Row :gutter="16">
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
-                        <FormItem prop="callbackdate" label="回访时间">
-                            <DatePicker type="date" v-model="task_message.callbackdate" style="width: 100%" size="small" ></DatePicker>
+                        <FormItem prop="taxperiod" label="下线税期">
+                            <DatePicker type="month" v-model="task_message.taxperiod" style="width: 100%" size="small" ></DatePicker>
                         </FormItem>
                     </Col>
                     <Col span="10">
@@ -81,8 +86,19 @@
                 <Row :gutter="16">
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
-                        <FormItem prop="taxperiod" label="下线税期">
-                            <Input size="small" v-model="task_message.taxperiod" type="text" placeholder="格式：2018-06" />
+                        <FormItem prop="" label="是否需退款">
+                            <RadioGroup v-model="task_message.has_returned">
+                                <Radio label="Y">是</Radio>
+                                <Radio label="N">否</Radio>
+                            </RadioGroup>
+                        </FormItem>
+                    </Col>
+                    <Col span="10">
+                        <FormItem prop="" label="是否有欠费">
+                            <RadioGroup v-model="task_message.has_arrears">
+                                <Radio label="Y">是</Radio>
+                                <Radio label="N">否</Radio>
+                            </RadioGroup>
                         </FormItem>
                     </Col>
                 </Row>
@@ -113,7 +129,7 @@
                 
             </Form>
             <div slot="footer">
-                <Button type="primary" @click="submit" >修改</Button>
+                <Button type="primary" @click="submit" :disabled="openSubmit">修改</Button>
                 <Button type="ghost" @click="close" >关闭</Button>
             </div>
         </Modal>
@@ -216,6 +232,8 @@
     export default {
         data() {
             return {
+                defaultData: [],
+                productList: [],
                 searchCompany:"",
                 searchProduct:"",
                 searchFollow:"",
@@ -236,12 +254,14 @@
                     reasonformarketer:"",
                     reasonforcallback:"",
                     tel:"",
-                    followbusiness: ""
+                    followbusiness: "",
+                    has_returned: "",
+                    has_arrears: ""
                 },
                 task_message_rule:{
-                    taxperiod:[{ required: true, message: '必选项！', trigger: 'change', type:'string' }],
+                    taxperiod:[{ required: true, message: '必选项！', trigger: 'change', type:'date' }],
                     company:[{ required: true, message: '必选项！', trigger: 'change', type:'string' },],
-                    product:[{ required: true, message: '必选项！', trigger: 'change', type:'string' },],
+                    productid:[{ required: true, message: '必选项！', trigger: 'change', type:'number' },],
                     enddate:[{ required: true, message: '必选项！', trigger: 'change', type:'date' },],
                     reasonformarketer:[{ required: true, message: '必选项！', trigger: 'blur' },]                    
                 },
@@ -329,9 +349,153 @@
                     _self.task_message.tel = e.TEL
                     _self.task_message.taxperiod = e.taxperiod
                     _self.task_message.followbusiness = e.followbusiness
+                    _self.task_message.has_returned = e.has_returned
+                    _self.task_message.has_arrears = e.has_arrears
+                    // console.log(e)
+                    _self.task_message.companyid = e.company_id
+                    _self.first_data(e)
             })
         },
+        computed:{
+            openSubmit() {
+                if(this.defaultData.length != 0){
+                    return false
+                } else {
+                    return true
+                }
+            }
+        },
         methods: {
+            //选择产品改变相关数据
+            changeProduct(e){
+                console.log(e)
+                let _self = this
+                if(!_self.defaultData){
+                    _self.task_message.product_id = ""
+                    return
+                }
+                for(let i=0;i<_self.defaultData.length;i++){
+                    if(e == _self.defaultData[i].product_id){
+                        _self.task_message.productid = _self.defaultData[i].product_id
+                        _self.task_message.servicer = _self.defaultData[i].serviceId
+                        _self.task_message.servicername = _self.defaultData[i].server_name
+                        _self.task_message.servicebegindate = DateFormat(_self.defaultData[i].service_begin_time)
+                    }
+                }
+            },
+            //根据公司id获取相关数据
+            get_default_data(){
+                let _self = this
+                let url = `api/order/cycle/company/getCycleMonthInfoBycompanyId`
+                let config = {
+                    params: {
+                        companyId: _self.task_message.companyid
+                    }
+                }
+                _self.productList = []
+                
+                function success(res) {
+                    console.log(res.data.data)
+                    _self.defaultData = res.data.data
+                    if(res.data.data.length){
+                        for(let i =0;i<res.data.data.length;i++){
+                            _self.productList.push({
+                                'value': res.data.data[i].product_id,
+                                'label': res.data.data[i].product_name
+                            })
+                        }
+                        _self.task_message.productid = res.data.data[0].product_id
+                        _self.task_message.servicer = res.data.data[0].serviceId
+                        _self.task_message.servicername = res.data.data[0].server_name
+                        _self.task_message.servicebegindate = DateFormat(res.data.data[0].service_begin_time)
+                    } else {
+                        _self.task_message.productid = ""
+                        _self.task_message.servicer = ""
+                        _self.task_message.servicername = ""
+                        _self.task_message.servicebegindate = ""
+                    }
+
+                    for(let i =0;i<_self.defaultData.length;i++){
+                        console.log(2)
+                        if(e.product == _self.defaultData[i].product_name){
+                            _self.task_message.productid = _self.defaultData[i].product_id
+                            console.log(_self.defaultData[i].product_id)
+                        }
+                    }
+
+                }
+                this.$Get(url,config,success)
+            },
+
+            //打开编辑获取数据
+            first_data(e){
+                let _self = this
+                let url = `api/order/cycle/company/getCycleMonthInfoBycompanyId`
+                let config = {
+                    params: {
+                        companyId: _self.task_message.companyid
+                    }
+                }
+                _self.productList = []
+                
+                function success(res) {
+                    console.log(res.data.data)
+                    _self.defaultData = res.data.data
+                    if(res.data.data.length){
+                        for(let i =0;i<res.data.data.length;i++){
+                            _self.productList.push({
+                                'value': res.data.data[i].product_id,
+                                'label': res.data.data[i].product_name
+                            })
+                        }
+                        _self.task_message.productid = res.data.data[0].product_id
+                        _self.task_message.servicer = res.data.data[0].serviceId
+                        _self.task_message.servicername = res.data.data[0].server_name
+                        _self.task_message.servicebegindate = DateFormat(res.data.data[0].service_begin_time)
+                    } else {
+                        _self.task_message.productid = ""
+                        _self.task_message.servicer = ""
+                        _self.task_message.servicername = ""
+                        _self.task_message.servicebegindate = ""
+                    }
+
+                    for(let i =0;i<_self.defaultData.length;i++){
+                        if(e.product == _self.defaultData[i].product_name){
+                            _self.task_message.productid = _self.defaultData[i].product_id
+                        }
+                    }
+
+                }
+                this.$Get(url,config,success)
+            },
+
+            //根据公司id和产品id获取服务人员和服务开始时间
+            get_server_data() {
+                let _self = this
+                let url = `api/order/cycle/company/getCycleMonthInfoBycompanyId`
+                if(_self.task_message.companyid && _self.task_message.productid){
+                    let config = {
+                        params: {
+                            companyId: _self.task_message.companyid,
+                            productId: _self.task_message.productid
+                        }
+                    }
+                    function success(res) {
+                        console.log(_self.task_message.companyid +'and'+ _self.task_message.productid)
+                        console.log(res.data.data[0])
+                        if(res.data.data[0]){
+                            _self.task_message.servicer = res.data.data[0].serviceId
+                            _self.task_message.servicername = res.data.data[0].server_name
+                            _self.task_message.servicebegindate = DateFormat(res.data.data[0].service_begin_time)
+                        } else {
+                            _self.task_message.servicer = ""
+                            _self.task_message.servicername = ""
+                            _self.task_message.servicebegindate = ""
+                        }
+                    }
+                    _self.$Get(url,config,success)
+                }
+            },
             cancel(){
                     let _self = this
                     _self.isshow = false
@@ -466,6 +630,7 @@
                 _self.task_message.companyid = a.cpid
                 _self.task_message.marketername = a.followby
                 _self.task_message.marketer = a.followbyid
+                _self.get_default_data()
             },
 
             rowSelect33(a) {
@@ -474,6 +639,7 @@
                 _self.selectProduct = false
                 _self.task_message.product = a.product
                 _self.task_message.productid = a.id
+                _self.get_server_data()
             },
 
             getUser() {
@@ -616,8 +782,10 @@
                     reasonformarketer: _self.task_message.reasonformarketer,
                     reasonforcallback: _self.task_message.reasonforcallback,
                     endreason: _self.task_message.endreason,
-                    taxperiod: _self.task_message.taxperiod,
-                    followbusiness: _self.task_message.followbusiness
+                    taxperiod: DateFormat(_self.task_message.taxperiod).substring(0,DateFormat(_self.task_message.taxperiod).length-3),
+                    followbusiness: _self.task_message.followbusiness,
+                    hasReturned: _self.task_message.has_returned,
+                    hasArrears: _self.task_message.has_arrears
                 }
 
                 function doSuccess(res) {

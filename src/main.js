@@ -13,11 +13,10 @@ import VueI18n from 'vue-i18n';
 import util from '@/libs/util'; 
 import axios from 'axios';
 import Cookies from 'js-cookie';
-// import VCharts from 'v-charts';
 //  引入自定义主题文件
 // import './my-theme/index.less';
+// 最低可以兼容IE11,启用此行并将babelrc配置修改即可
 // import "@babel/polyfill";
-// import echarts from 'echarts';
 
 import iviewArea from 'iview-area';
 if(process.env.NODE_ENV == 'development'){
@@ -62,6 +61,7 @@ Vue.use(iviewArea)
 //     }
 //   })
 
+axios.defaults.baseURL = "/"
 //  axios 拦截器
 axios.interceptors.response.use(
     (response) => {
@@ -480,73 +480,6 @@ Vue.prototype.PostFiles = function (url, data, doSuccess, otherConditions){
         })
 }
 
-// Vue.prototype.matchingFields = function (a){
-
-//     let _self = this
-
-//     _self.searchTypegroup('customerType')
-
-//     let _customerTypeArr = JSON.parse(localStorage.getItem('customerType'))
-
-//     // 级联下拉框-客户状态
-//     let mapdata = new Map()  //用作临时转换
-//     let subIdToParentMap = new Map()
-//     let sourceData = _customerTypeArr  //结果集
-//     let finalArrayData = new Array()   //vue要求的数据格式
-
-//     for (let i = 0; i < sourceData.length; i++) {
-//         let _sub = new Object()
-
-//         _sub.value = sourceData[i].subid.toString()
-//         _sub.label = sourceData[i].subtypename
-
-//         subIdToParentMap.set(_sub.value, sourceData[i].id)
-
-//         let _value = mapdata.get(sourceData[i].id)
-
-//         if (_value) {
-//             let _valueArray = _value.children
-
-//             _valueArray.push(_sub)
-
-//             let _valueObject = new Object()
-
-//             _valueObject.value = _value.value.toString()
-//             _valueObject.label = _value.label
-//             _valueObject.children = _valueArray
-
-//             mapdata.set(sourceData[i].id, _valueObject)
-//         } else {
-//             let _child = new Array()
-
-//             _child.push(_sub)
-
-//             let _main = new Object()
-
-//             _main.value = sourceData[i].id.toString()
-//             _main.label = sourceData[i].typename
-//             _main.children = _child
-
-//             mapdata.set(sourceData[i].id, _main)
-//         }
-//     }
-
-//     mapdata.forEach((value, key) => {
-//         finalArrayData.push(value)
-//     });
-
-//     for (let i = 0; i < finalArrayData.length; i++) {
-
-//         for (let j = 0; j < finalArrayData[i].children.length; j++) {
-
-//             if ((finalArrayData[i].children[j].value) == (a)) {
-
-//             }
-//         }
-//     }
-// }
-
-
 //  路由跳转之前检查是否有权限访问该页面
 router.beforeEach((to, from, next)=>{
     // console.log()
@@ -596,6 +529,7 @@ new Vue({
         currentPageName: ''
     },
     mounted () {
+        document.dispatchEvent(new Event('render-event'))
         this.currentPageName = this.$route.name;
         // 显示打开的页面的列表
         this.$store.commit('setOpenedList');

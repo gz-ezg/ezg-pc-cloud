@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { DateFormat } from '../../../../libs/utils.js'
+
 export default {
     data(){
         return {
@@ -27,8 +29,13 @@ export default {
             opencheckMemo: false,
             header: [
                 {
-                    title: '审批备注',
+                    title: '审批情况',
                     key: 'record',
+                    minWidth: 100,
+                },
+                {
+                    title: '审批备注',
+                    key: 'recordDesc',
                     minWidth: 200,
                 },
                 {
@@ -62,7 +69,7 @@ export default {
                 this.data.push({
                     'auditName':b[0],
                     'record':b[1],
-                    'createDate':b[2],
+                    'createDate':DateFormat(b[2]),
                     'recordDesc':b[3]
                 })
             }
@@ -76,6 +83,7 @@ export default {
         let _self = this
         this.$bus.off("ORDER_AB_APPROVELIST_LOG", true)
         this.$bus.on("ORDER_AB_APPROVELIST_LOG", (e)=>{
+            console.log(e)
             _self.get_data(e)
             _self.opencheckMemo = true
         })

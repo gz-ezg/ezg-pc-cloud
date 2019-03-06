@@ -61,8 +61,8 @@
                 <Row :gutter="16">
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
-                        <FormItem prop="callbackdate" label="回访时间">
-                            <DatePicker type="date" v-model="task_message.callbackdate" style="width: 100%" size="small" readonly></DatePicker>
+                        <FormItem prop="taxperiod" label="下线税期">
+                            <DatePicker type="month" v-model="task_message.taxperiod" style="width: 100%" size="small" readonly></DatePicker>
                         </FormItem>
                     </Col>
                     <Col span="10">
@@ -71,6 +71,7 @@
                                 <Option value="gszr">公司转让</Option>
                                 <Option value="qysj">企业升级</Option>
                                 <Option value="kjb">会计部</Option>
+                                <Option value="scb">市场部</Option>
                                 <Option value="hth">换同行</Option>
                                 <Option value="zx">注销</Option>
                                 <Option value="qt">其他</Option>
@@ -81,8 +82,19 @@
                 <Row :gutter="16">
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
-                        <FormItem prop="taxperiod" label="下线税期">
-                            <Input size="small" v-model="task_message.taxperiod" type="text" placeholder="格式：2018-06" readonly />
+                        <FormItem prop="" label="是否需退款">
+                            <RadioGroup v-model="task_message.has_returned">
+                                <Radio label="Y" disabled>是</Radio>
+                                <Radio label="N" disabled>否</Radio>
+                            </RadioGroup>
+                        </FormItem>
+                    </Col>
+                    <Col span="10">
+                        <FormItem prop="" label="是否有欠费">
+                            <RadioGroup v-model="task_message.has_arrears">
+                                <Radio label="Y" disabled>是</Radio>
+                                <Radio label="N" disabled>否</Radio>
+                            </RadioGroup>
                         </FormItem>
                     </Col>
                 </Row>
@@ -106,7 +118,7 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="20">
                         <FormItem prop="followbusiness" label="跟进中的业务">
-                            <Input size="small" v-model="task_message.followbusiness" type="textarea" :autosize="{minRows: 2,maxRows: 5}"/>
+                            <Input size="small" v-model="task_message.followbusiness" type="textarea" :autosize="{minRows: 2,maxRows: 5}" readonly/>
                         </FormItem>
                     </Col>
                 </Row>
@@ -138,7 +150,9 @@
                     reasonformarketer:"",
                     reasonforcallback:"",
                     tel:"",
-                    followbusiness: ""
+                    followbusiness: "",
+                    has_arrears: "",
+                    has_returned: ""
                 }
             }
         },
@@ -165,6 +179,8 @@
                 _self.task_message.taxperiod = e.taxperiod                                     
                 _self.task_message.tel = e.TEL
                 _self.task_message.followbusiness = e.followbusiness
+                _self.task_message.has_returned = e.has_returned
+                _self.task_message.has_arrears = e.has_arrears
             })
         }
     }

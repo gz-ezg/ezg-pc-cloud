@@ -1,6 +1,5 @@
 /* eslint-disable */
-import Main from '@/views/Main.vue';
-import Router from 'vue-router'
+import Main from '@/layouts/Main.vue';
 // import 版路由
 // test作为测试页面接口，不部署到生产阶段，路径test也只适用于开发阶段
 // import Test from '@/views/test/App.vue'
@@ -11,7 +10,7 @@ export const loginRouter = {
     meta: {
         // title: 'Login - 登录'
     },
-    component: () => import( /* webpackChunkName: "Login" */ '@/views/login.vue')
+    component: () => import( /* webpackChunkName: "Login" */ '@/layouts/login.vue')
 };
 
 export const page404 = {
@@ -20,7 +19,7 @@ export const page404 = {
     meta: {
         // title: '404-页面不存在'
     },
-    component: () => import( /* webpackChunkName: "commonIndex" */ '@/views/error-page/404.vue')
+    component: () => import( /* webpackChunkName: "commonIndex" */ '@/layouts/404.vue')
 };
 
 export const page403 = {
@@ -29,7 +28,7 @@ export const page403 = {
         // title: '403-权限不足'
     },
     name: 'error-403',
-    component: () => import( /* webpackChunkName: "commonIndex" */ '@/views/error-page/403.vue')
+    component: () => import( /* webpackChunkName: "commonIndex" */ '@/layouts/403.vue')
 };
 
 export const page500 = {
@@ -38,7 +37,7 @@ export const page500 = {
         // title: '500-服务端错误'
     },
     name: 'error-500',
-    component: () => import( /* webpackChunkName: "commonIndex" */ '@/views/error-page/500.vue')
+    component: () => import( /* webpackChunkName: "commonIndex" */ '@/layouts/500.vue')
 };
 
 //  暂时不需要使用的页面
@@ -467,6 +466,15 @@ export const appRouter = [
                 name: 'offlineCustomer_index',
                 component: () => import( /* webpackChunkName: "complaintcenter" */ '@/views/customerService/offlineCustomer/table/offline_index.vue')
             },
+            //测试，记得修改access和meta的值
+            {
+                path: 'offlineCustomerApproval',
+                access: 11625,
+                meta: 11625,
+                title: '下线客户审批',
+                name: 'offlineCustomerApproval_index',
+                component: () => import( /* webpackChunkName: "complaintcenter" */ '@/views/customerService/offlineCustomerApproval/index.vue')
+            },
             {
                 access: 11613,
                 path: 'customerRate',
@@ -610,7 +618,7 @@ export const appRouter = [
                 path: 'abnormalOrderList',
                 title: '异常工单列表',
                 name: "abnormalOrderList_index",
-                component: () => import( /* webpackChunkName: "invoicelist_index" */ '@/views/order/abnormalOrderList/index.vue')
+                component: () => import( /* webpackChunkName: "abnormalOrderList_index" */ '@/views/order/abnormalOrderList/index.vue')
             },
             {
                 access:11623,
@@ -618,7 +626,7 @@ export const appRouter = [
                 path: 'abOrderApprove',
                 title: '异常工单审批',
                 name: "abOrderApprove_index",
-                component: () => import( /* webpackChunkName: "invoicelist_index" */ '@/views/order/abOrderApprove/index.vue')
+                component: () => import( /* webpackChunkName: "abOrderApprove_index" */ '@/views/order/abOrderApprove/index.vue')
             }
             // {
             //     access:6020,
@@ -728,6 +736,14 @@ export const appRouter = [
             //         require(['@/views/commercialManagement/rule.vue'], resolve);
             //     }
             // }
+            {
+                access: 6038,
+                meta: 6038,
+                path: 'schedule',
+                title: '商事排程表',
+                name: 'newSchedule',
+                component: () => import( /* webpackChunkName: "newSchedule" */ '@/views/commercialManagement/newSchedule/index.vue')
+            }
         ]
     },
     {

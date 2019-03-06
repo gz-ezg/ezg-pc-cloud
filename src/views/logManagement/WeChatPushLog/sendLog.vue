@@ -57,6 +57,12 @@
                                                     </Select>  
                                                 </FormItem>
                                             </Col>
+                                            <Col span="8">
+                                                <FormItem prop="companyname" label="公司名称：">
+                                                  <Input size="small" type="text" v-model="searchModel.companyname" placeholder="">
+                                                  </Input> 
+                                                </FormItem>
+                                            </Col>
                                         </Row>
                                         <FormItem>
                                              <Button type="primary" @click="search">查询</Button>
@@ -189,7 +195,8 @@ export default {
         mobile: "",
         isSuccess: "",
         templateName: "",
-        realname: ""
+        realname: "",
+        companyname: ""
       },
       fatherDataHeader: [
         {
@@ -232,6 +239,11 @@ export default {
           key: "resultMsg",
           minWidth: 130,
         },
+        {
+          title: "公司名称",
+          key: "companyname",
+          minWidth: 130,
+        },
         // {
         //   title: "详情",
         //   key: "id",
@@ -270,6 +282,7 @@ export default {
                 {field: 'first', title: "短信内容"},
                 {field: 'keyword', title: "关键词"},
                 {field: 'remark', title: "链接标题"},
+                {field: 'companyname', title: "公司名称"},
 
             ]
             let _self = this
@@ -304,11 +317,13 @@ export default {
           ecreatedate: DateFormat(_self.searchModel.date[1]),
           isSuccess: _self.searchModel.isSuccess,
           templateName: _self.searchModel.templateName,
-          realname: _self.searchModel.realname
+          realname: _self.searchModel.realname,
+          companyname: _self.searchModel.companyname
         }
       };
       function doSuccess(res) {
-          _self.loading = false
+        console.log(res)
+        _self.loading = false
         _self.fatherData = res.data.data.rows;
         _self.pageTotal = res.data.data.total;
       }
