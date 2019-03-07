@@ -9,3 +9,4 @@ build/env.js
 dist/
 .svn
 .sentryclirc
+.cache
