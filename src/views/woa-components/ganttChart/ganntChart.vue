@@ -2,9 +2,9 @@
     <div>
         <Card style="overflow-x:scroll">
             <div id="container" ref="ganntChart">
-                <div class="carNum">
+                <div class="realname">
                     <div style="background:#ccc;height: 30px;line-height:30px">服务人员</div>
-                    <div style=";background:#ccc;" :style="{'line-height':height}" v-for="(x, index) in event" :key="index">{{x.carNum}}</div>
+                    <div style=";background:#ccc;" :style="{'line-height':height}" v-for="(x, index) in event" :key="index">{{x.realname}}</div>
                 </div>
                 <div id="hour">
                     <div style="height: 30px;line-height:30px">
@@ -31,7 +31,7 @@
                                 }">
                                 <slot name="eventBox" :event="x2">
                                     <Icon type="ios-close-outline" style="padding-right:5px" @click.stop="iconClose(x2)" v-if="closable"></Icon>
-                                    {{x2.value}}
+                                    {{x2.title}}
                                 </slot></div>
                         </div>
                     </template>
@@ -43,7 +43,7 @@
                 :style="{top: hoverStyle.top + 'px', left: hoverStyle.left + 'px'}"
                 >
                 <slot name="hover-box" :event="currentEvent">
-                    {{currentEvent.value}}
+                    {{currentEvent.title}}
                 </slot>
             </Card>
         </Card>
@@ -80,47 +80,47 @@ export default {
     data() {
         let demoData = [
             {
-                carNum: '陈志超',
+                realname: '陈志超',
                 innerData: [
                     {
                         start: '2019/1/21 8:23',
                         end: '2019/1/21 9:45',
-                        value: '五山税务所',
+                        title: '五山税务所',
                         bg: '#fff'
                     },
                     {
                         start: '2019/1/21 12:23',
                         end: '2019/1/21 16:45',
-                        value: '工商银行博展分行',
+                        title: '工商银行博展分行',
                         bg: '#fff'
                     },
                     {
                         start: '2019/1/21 20:00',
                         end: '2019/1/21 21:35',
-                        value: '航天信息',
+                        title: '航天信息',
                         bg: '#fff'
                     }
                 ]
             },
             {
-                carNum: '测财商',
+                realname: '测财商',
                 innerData: [
                     {
                         start: '2019/1/21 9:00',
                         end: '2019/1/21 10:00',
-                        value: '农业银行',
+                        title: '农业银行',
                         bg: '#fff'
                     },
                     {
                         start: '2019/1/21 19:00',
                         end: '2019/1/22 20:35',
-                        value: '客户',
+                        title: '客户',
                         bg: '#fff'
                     },
                     {
                         start: '2019/1/21 11:00',
                         end: '2019/1/21 14:00',
-                        value: '天河科技园',
+                        title: '天河科技园',
                         bg: '#fff'
                     }
                 ]
@@ -140,15 +140,13 @@ export default {
             let res = []
             this.data.forEach((item)=>{
                 let tempObj = {}
-                tempObj['carNum'] = item.carNum
+                tempObj['realname'] = item.realname
                 tempObj['innerData'] = []
                 item.innerData.forEach((item2)=>{
                     let _left = tempObj.innerData[tempObj.innerData.length-1] ? tempObj.innerData[tempObj.innerData.length-1].allWidth + 0.5 : 0
                     let temp = {}
-                    temp['start'] = item2.start
-                    temp['end'] = item2.end
-                    temp['value'] = item2.value
-                    temp['bg'] = item2.bg
+                    // 复制对象
+                    temp = JSON.parse(JSON.stringify(item2))
                     let startTime = new Date(item2.start)
                     let endTime = new Date(item2.end)
                     let startH = startTime.getHours()
@@ -176,7 +174,6 @@ export default {
                 })
                 res.push(tempObj)
             })
-            // console.log(res)
             this.event = res
         },
         eventClick(event, jsEvent){
@@ -200,7 +197,7 @@ export default {
         },
         eventLeave(){
             this.hoverBox = false
-            this.$emit('event-leave', event)
+            // this.$emit('event-leave')
         }
     },
     created() {
@@ -223,7 +220,7 @@ export default {
   height: calc(100vh - 0px);
   width: 1310px;
 }
-.carNum {
+.realname {
   float: left;
   width: 120px;
   text-align: center;

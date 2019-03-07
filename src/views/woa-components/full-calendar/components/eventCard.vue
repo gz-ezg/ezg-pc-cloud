@@ -5,7 +5,9 @@
        @mouseleave="$emit('mouseleave', event, $event)"
        >
         <slot :event="event" v-if="showTitle">
-            Def: {{ event.title }}
+            <!-- <div>
+                {{ event.title }}
+            </div> -->
         </slot>
     </p>
 </template>
@@ -29,7 +31,7 @@
                     cssClasses.push('is-start');
                 }
 
-                if (this.end.isSame(this.date, 'day')) {
+                if (this.end || this.end.isSame(this.date, 'day')) {
                     cssClasses.push('is-end');
                 }
 

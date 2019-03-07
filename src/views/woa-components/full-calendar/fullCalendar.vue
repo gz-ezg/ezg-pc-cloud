@@ -63,7 +63,7 @@
                   @mouseleave="eventLeave"
                 >
                   <template slot-scope="p">
-                    <slot name="fc-event-card" :event="p.event"></slot>
+                    <slot name="fc-event-card" :event="p.event">{{p.event.title}}</slot>
                   </template>
                 </event-card>
                 <p
@@ -115,7 +115,6 @@
           :style="{top: hoverStyle.top + 'px', left: hoverStyle.left + 'px'}"
           @click="rightClick=false"
         >
-          <!-- <button>新增日程</button> -->
           <slot name="right-click" :time="rightCurrentTime"></slot>
         </div>
       </div>
@@ -218,19 +217,18 @@ export default {
 
         calendar.push(week);
       }
-
       return calendar
     },
     //  过滤当日事件
     slotEvents(date) {
       let cellIndexArr = [];
       let thisDayEvents = this.events.filter(day => {
-        let st = moment(day.start);
+
+        let st = moment(day.start.slice(0, 10));
         let ed = moment(day.end ? day.end : st);
 
         return date.isBetween(st, ed, null, '[]');
       });
-
       thisDayEvents.sort((a, b) => {
         if (!a.cellIndex) return 1;
         if (!b.cellIndex) return -1;
@@ -275,7 +273,7 @@ export default {
     //  日期点击
     dayClick(day, jsEvent) {
       this.rightClick = false
-      this.$emit('dayClick', day, jsEvent)
+      this.$emit('dayClick', day._d, jsEvent)
     },
     //  日期右键点击
     dayRightClick(day, jsEvent) {
@@ -285,7 +283,7 @@ export default {
       }
       this.rightClick = true
       this.rightCurrentTime = day
-      this.$emit('dayRightClick', day, jsEvent)
+      this.$emit('dayRightClick', day._d, jsEvent)
     },
     //  事件点击
     eventClick(event, jsEvent) {

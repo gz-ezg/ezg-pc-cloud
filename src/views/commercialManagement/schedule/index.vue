@@ -11,12 +11,12 @@
             :loading="loading"
         >
             <div slot="eventBox" slot-scope="x" :style="{'background-color':x.event.bg}" style="white-space:nowrap!important;text-overflow: ellipsis;overflow: hidden;outline: 0 !important">
-                <p style="white-space:nowrap;overflow-x: hidden;text-overflow: ellipsis">{{x.event.value}}</p>
+                <p style="white-space:nowrap;overflow-x: hidden;text-overflow: ellipsis">{{x.event.title}}</p>
                 <p style="white-space:nowrap;overflow-x: hidden;text-overflow: ellipsis">{{x.event.bg}}</p>
             </div>
             <div slot="hover-box" slot-scope="x">
                 <p><span style="width:80px;display:inline-block">开始时间:</span>{{x.event.start}}</p>
-                <p><span style="width:80px;display:inline-block">事件名称:</span>{{x.event.value}}</p>
+                <p><span style="width:80px;display:inline-block">事件名称:</span>{{x.event.title}}</p>
                 <p><span style="width:80px;display:inline-block">地点:</span>{{x.event.bg}}</p>
             </div>
         </gannt-chart>
@@ -76,7 +76,7 @@ export default {
                             let eventItem = {
                                 start: rows[i].plan_date,
                                 end: '',
-                                value: rows[i].task_content,
+                                title: rows[i].task_content,
                                 bg: '#fff'
                             }
                             this.list[j].innerData.push(eventItem)
@@ -87,14 +87,14 @@ export default {
                     }
                     if (this.list.length == flag) {
                         let temp = {
-                            carNum: rows[i].executor_name,
+                            realname: rows[i].executor_name,
                             userId: rows[i].executor_id,
                             innerData: []
                         }
                         let eventItem = {
                             start: rows[i].plan_date,
                             end: '',
-                            value: rows[i].task_content,
+                            title: rows[i].task_content,
                             bg: '#fff'
                         }
                         temp.innerData.push(eventItem)

@@ -17,8 +17,6 @@
             </div>
             <template slot="fc-event-card" slot-scope="p">
                 <div :class="p.event.cssClass">{{ p.event.title }}</div>
-                <div :class="p.event.cssClass">{{ p.event.start }}</div>
-                <div :class="p.event.cssClass">{{ p.event.end }}</div>
             </template>
             <template slot="hover-box" slot-scope="p">
                 <!-- <p>{{p.event}}</p> -->
@@ -61,12 +59,12 @@
                 <Button @click="right_click_date(p.time)" type="primary">新增日程</Button>
             </template>
         </full-calendar>
-        <drawer
+        <!-- <drawer
             title="弹出层"
             :width="400"
             @close="close"
             v-if="drawerStatus"
-        ></drawer>
+        ></drawer> -->
     </div>
 </template>
 <script>
@@ -76,25 +74,25 @@ import Drawer from '../../woa-components/drawer/index'
 let demoEvents = [
     {
         title: 'Sunny 725-727',
-        start: '2019-02-01',
-        end: '2019-02-01',
+        start: '2019-02-01 08:00:00',
+        // end: '2019-02-01 23:00:00',
         cssClass: 'family'
     },
     {
         title: 'Lunfel 726-727',
         start: '2019-02-26',
-        end: '2019-02-26',
+        // end: '2019-02-26',
         cssClass: ['home', 'work']
     },
     {
         title: 'Lunfel 2/27-2/28',
         start: '2019-02-27',
-        end: '2019-02-27'
+        // end: '2019-02-27'
     },
     {
         title: 'Lunfel 2/27-2/28',
         start: '2019-02-28',
-        end: '2019-02-28'
+        // end: '2019-02-28'
     },
     {
         title: 'Lunfel 2/27-2/28',
