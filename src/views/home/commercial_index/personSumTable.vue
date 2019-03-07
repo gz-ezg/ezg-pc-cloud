@@ -7,15 +7,6 @@
             :loading="table_loading"
         >
         </Table>
-        <!-- <Page
-            size="small"
-            :total="pageTotal"
-            show-total
-            show-sizer
-            show-elevator
-            :current.sync = "page"
-            @on-change="pageChange"
-            style="margin-top: 10px"></Page> -->
     </div>
 </template>
 
