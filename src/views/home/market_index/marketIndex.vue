@@ -92,30 +92,6 @@
                 </div>
             </Col>            
         </Row>
-        <!-- <Row :gutter="10" class="margin-top-10">
-            <Col span="12" :style="{marginBottom: '10px'}">
-                <Card style="height:500px">
-                    <p slot="title" class="card-title">
-                        <Icon type="android-map"></Icon>
-                        客户来源分析
-                    </p>
-                    <div class="data-source-row">
-                        <classic></classic>
-                    </div>
-                </Card>
-            </Col>
-            <Col span="12" :style="{marginBottom: '10px'}">
-                <Card style="height:500px">
-                    <p slot="title" class="card-title">
-                        <Icon type="android-map"></Icon>
-                        渠道价值分析
-                    </p>
-                    <div class="data-source-row">
-                        <attitude></attitude>
-                    </div>
-                </Card>
-            </Col>
-        </Row> -->
         <Row style="margin-top:1px">
             <Col span="16" :style="{marginBottom: '10px'}">
                 <Card style="height:650px">
@@ -161,13 +137,6 @@
                         </Col>
                     </Row>
                 </div>
-                <!-- <div @click="openCal">
-                    <Row>
-                        <Col span="24">
-                            <Icon type="edit" size="28"></Icon><p style="font-size:10px" >测评</p>
-                        </Col>
-                    </Row>
-                </div> -->
                 <div @click="open_pay_code">
                     <Row>
                         <Col span="24">
