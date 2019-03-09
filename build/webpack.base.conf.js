@@ -26,7 +26,8 @@ module.exports = {
         noParse: /jquery/,
         rules: [{
                 test: /\.vue$/,
-                use: [{
+                use: [
+                    'thread-loader', {
                         loader: 'vue-loader',
                         options: {
 
@@ -42,7 +43,7 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                use: 'babel-loader',
+                use: ['thread-loader','babel-loader'],
                 exclude: /node_modules/
             },
             {
@@ -184,6 +185,7 @@ module.exports = {
         extensions: ['*', '.js', '.json', '.vue'],
         alias: {
             'vue$': 'vue/dist/vue.esm.js',
+            'moment$': 'moment',
             '@views': path.resolve(__dirname, '../src/views'),
             '@': path.resolve(__dirname, '../src'),
         }
