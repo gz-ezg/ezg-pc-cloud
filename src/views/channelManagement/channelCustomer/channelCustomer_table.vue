@@ -6,63 +6,7 @@
                     <Card style="min-width:800px">
                     <Row style="margin-bottom:10px;">
                             <Collapse v-model="search_model">
-                                    <Panel name="1" >
-                                        <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
-                                        筛选
-                                    
-                                    <div slot="content" @keydown.enter="SearchCustomer">
-                                        <Form ref="SearchValidateCustomer" :model="SearchValidateCustomer" :label-width="80" style="margin-top: 15px">
-                                            <Row :gutter="16" style="height:56px">
-                                                <Col span="8">
-                                                <FormItem label="客户名称：" prop="customer_name">
-                                                    <Input v-model="SearchValidateCustomer.customer_name" size="small"></Input>
-                                                </FormItem>
-                                                </Col>
-                                                <Col span="8">
-                                                <FormItem label="联系方式：" prop="customer_mobile_phone">
-                                                    <Input v-model="SearchValidateCustomer.customer_mobile_phone" size="small"></Input>
-                                                </FormItem>
-                                                </Col>
-                                            </Row>
-                                                    <center>
-                                                        <FormItem style="margin-top:5px">
-                                                            <Button type="primary" @click="SearchCustomer">搜索</Button>
-                                                            <Button type="ghost" @click="handleReset('SearchValidateCustomer')" style="margin-left: 8px">
-                                                                重置
-                                                            </Button>
-                                                        </FormItem>
-                                                    </center>
-                                        </Form>
-                                    </div>
-                                </Panel>
-                            </Collapse>
-                        </Row>
-                    <Row style="margin-top: 10px;">
-                        <Table
-                                highlight-row
-                                size="small"
-                                :columns="customerColumns"
-                                :data="customerData"
-                                @on-current-change="selectRow"
-                                @on-row-dblclick="examine"
-                                :loading="customerLoading"                                            
-                                ></Table>
-                        <Page
-                                size="small"
-                                :total="customerTotal"
-                                show-total
-                                show-elevator
-                                :current.sync = "customerPage"
-                                @on-change="pageChangeCustomer"
-                                style="margin-top: 10px;margin-bottom:10px"></Page>
-                        </Row>
-                        </Card>
-                </TabPane>
-                <TabPane label="已领取" name="name2">
-                    <Card style="min-width:800px">
-                    <Row style="margin-bottom:10px;">
-                            <Collapse v-model="search_model">
-                                    <Panel name="1" >
+                                    <Panel name="0" >
                                         <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
                                         筛选
                                     
@@ -144,7 +88,63 @@
                                 style="margin-top: 10px;margin-bottom:10px"></Page>
                         </Row>
                         </Card>
-                </TabPane> 
+                </TabPane>
+                <TabPane label="已领取" name="name2">
+                    <Card style="min-width:800px">
+                    <Row style="margin-bottom:10px;">
+                            <Collapse v-model="search_model">
+                                    <Panel name="1" >
+                                        <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
+                                        筛选
+                                    
+                                    <div slot="content" @keydown.enter="SearchCustomer">
+                                        <Form ref="SearchValidateCustomer" :model="SearchValidateCustomer" :label-width="80" style="margin-top: 15px">
+                                            <Row :gutter="16" style="height:56px">
+                                                <Col span="8">
+                                                <FormItem label="客户名称：" prop="customer_name">
+                                                    <Input v-model="SearchValidateCustomer.customer_name" size="small"></Input>
+                                                </FormItem>
+                                                </Col>
+                                                <Col span="8">
+                                                <FormItem label="联系方式：" prop="customer_mobile_phone">
+                                                    <Input v-model="SearchValidateCustomer.customer_mobile_phone" size="small"></Input>
+                                                </FormItem>
+                                                </Col>
+                                            </Row>
+                                                    <center>
+                                                        <FormItem style="margin-top:5px">
+                                                            <Button type="primary" @click="SearchCustomer">搜索</Button>
+                                                            <Button type="ghost" @click="handleReset('SearchValidateCustomer')" style="margin-left: 8px">
+                                                                重置
+                                                            </Button>
+                                                        </FormItem>
+                                                    </center>
+                                        </Form>
+                                    </div>
+                                </Panel>
+                            </Collapse>
+                        </Row>
+                    <Row style="margin-top: 10px;">
+                        <Table
+                                highlight-row
+                                size="small"
+                                :columns="customerColumns"
+                                :data="customerData"
+                                @on-current-change="selectRow"
+                                @on-row-dblclick="examine"
+                                :loading="customerLoading"                                            
+                                ></Table>
+                        <Page
+                                size="small"
+                                :total="customerTotal"
+                                show-total
+                                show-elevator
+                                :current.sync = "customerPage"
+                                @on-change="pageChangeCustomer"
+                                style="margin-top: 10px;margin-bottom:10px"></Page>
+                        </Row>
+                        </Card>
+                </TabPane>
             </Tabs>
         
             <!-- <Row> -->
