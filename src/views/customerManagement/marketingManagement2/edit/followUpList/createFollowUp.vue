@@ -47,6 +47,15 @@
                 <FormItem label="跟进记录" prop="content" style="margin-bottom:20px">
                     <Input size="small" type="textarea" v-model="formValidate.content"/>
                 </FormItem>
+                <Row :gutter="16">
+                    <Col span="24">
+                        <FormItem label="通知用户" prop="customerTags" style="margin-bottom:10px">
+                            <Select v-model="test" filterable multiple @on-change='t' >
+                                <Option v-for="item in user" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                            </Select>
+                        </FormItem>
+                    </Col>
+                </Row>
                 <FormItem label="通知时间" prop="date" style="margin-top:20px;margin-bottom:20px">
                     <Row>
                         <Col span="11">
@@ -101,7 +110,7 @@ export default {
     },
     data(){
         return {
-            openFinish: false,
+            openFinish: true,
             openFollowCreate: false,
             formValidate: {
                 companyId: "",
@@ -125,10 +134,44 @@ export default {
             fileArray: [],
             market_status: [],
             companynameArray: [],
-            isClue: false
+            isClue: false,
+            test: [],
+            userData: [],
+            user: [],
+            notify_ids:''
         }
     },
     methods: {
+        t(e){
+            console.log(e)
+            this.notify_ids = ''
+            for(let i =0;i<e.length;i++){
+                this.notify_ids += e[i] + ','
+            }
+            this.notify_ids = this.notify_ids.substring(0,this.notify_ids.length-1)
+            console.log(this.notify_ids)
+        },
+        getUserData(){
+            let _self = this
+            let url = `api/user/list`
+            let config = {
+                params: {
+                    page: 1,
+                    pageSize: 1000
+                }
+            }
+            function success(res){
+                // console.log(res.data.data.rows)
+                _self.userData = res.data.data.rows
+                for(let i=0;i<res.data.data.rows.length;i++){
+                    _self.user.push({
+                        'value': _self.userData[i].id,
+                        'label': _self.userData[i].realname
+                    })
+                }
+            }
+            this.$Get(url,config,success)
+        },
         handleUpload(file) {
             // this.showFile.push(file)
             var _self = this
@@ -164,7 +207,7 @@ export default {
                 switch(temp){
                     case "kuaiji":
                         _self.formValidate.followUpType = "18"
-                        _self.openFinish = true
+                        // _self.openFinish = true
                         _self.formValidate.finishFlag = 'N'
                         break;
                     case "shangshi":
@@ -179,7 +222,7 @@ export default {
                 }
             }else{
                 _self.followupshow = true
-                _self.openFinish = true
+                // _self.openFinish = false
             }
         },
         get_data_center(){
@@ -252,11 +295,13 @@ export default {
                 attIds: _self.formValidate.attIds,
                 customerId: _self.formValidate.customerId,
                 finishFlag: _self.formValidate.finishFlag,
-                notifyDate: (DateFormat(_self.formValidate.followupdate) + ' ' + _self.formValidate.followuptime)
+                notifyDate: (DateFormat(_self.formValidate.followupdate) + ' ' + _self.formValidate.followuptime),
                 // notifyDate: "2018-10-24 13:00"
+                notify_ids: _self.notify_ids
             }
 
             function success(res){
+                console.log(res)
                 if(_self.isClue){
                     _self.CreateClue()
                 }else{
@@ -300,6 +345,9 @@ export default {
 
             this.$Post(url, config, success, fail)
         }
+    },
+    created(){
+        this.getUserData()
     },
     mounted(){
         let _self = this

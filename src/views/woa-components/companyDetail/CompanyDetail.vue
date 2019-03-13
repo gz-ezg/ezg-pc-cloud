@@ -46,7 +46,7 @@
                             </Row>
                             <Row :gutter="16" v-if="openFinish">
                                 <Col span="12">
-                                    <FormItem label="完成状态：" prop="finishFlag">
+                                    <FormItem label="完成状态" prop="finishFlag">
                                         <Select transfer v-model="addDetailContent.finishFlag" size="small">
                                             <Option value="Y" >完成</Option>
                                             <Option value="N" >未完成</Option>
@@ -92,6 +92,15 @@
                                             <Button type="text" @click="fileRemove(item)">移除</Button>
                                         </div>
                                         
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row :gutter="16">
+                                <Col span="24">
+                                    <FormItem label="通知用户" prop="customerTags" style="margin-bottom:10px">
+                                        <Select v-model="test" filterable multiple @on-change='t' >
+                                            <Option v-for="item in user" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                        </Select>
                                     </FormItem>
                                 </Col>
                             </Row>
@@ -480,9 +489,9 @@
                 <TabPane label="税种管理" name="name7">
                     <Row>
                         <Button type="primary" style="margin-bottom:20px" @click="editTax" v-if="isEditTax">编辑</Button>
-                        <Button type="primary" style="margin-bottom:20px" @click="submitTax" v-if="!isEditTax" :loading="submit_ing">提交</Button>                        
+                        <Button type="primary" style="margin-bottom:20px" @click="submitTax('taxManagement')" v-if="!isEditTax" :loading="submit_ing">提交</Button>                        
                     </Row>
-                    <Form ref="taxManagement" :model="taxManagement" :label-width="120">
+                    <Form ref="taxManagement" :model="taxManagement" :rules="ruleTaxManagement" :label-width="120">
                         <Row :gutter="16">
                             <Col span="1" style="visibility:hidden">1</Col>
                             <Col span="11">
@@ -519,7 +528,7 @@
                                 </FormItem>
                             </Col>
                         </Row>
-                        <Row :gutter="16">
+                        <Row :gutter="16" style="margin-bottom:16px">
                             <Col span="1" style="visibility:hidden">1</Col>
                             <Col span="11">
                                 <FormItem prop="nationalnum" label="电子税务局账号：" style="margin-bottom:5px">
@@ -534,7 +543,7 @@
                                 </FormItem>
                             </Col>
                         </Row>
-                        <Row :gutter="16">
+                        <Row :gutter="16" style="margin-bottom:16px">
                             <Col span="1" style="visibility:hidden">1</Col>
                             <Col span="11">
                                 <FormItem prop="accounttype" label="账号类型：" style="margin-bottom:5px">
@@ -829,7 +838,12 @@
         },
         data(){
             return {
-                openFinish: false,
+                //通知用户相关
+                test: [],
+                userData: [],
+                user: [],
+                notify_ids:'',
+                openFinish: true,
                 etax_account_type: [],
                 isClue: false,
                 openCompanyDetail: true,
@@ -931,6 +945,20 @@
                     Providentfundpsw:"",
                     validflag: "",
                     accounttype: ""
+                },
+                ruleTaxManagement:{
+                    nationalnum: [
+                        { required: true, message: '必填项！', trigger: 'blur' }
+                    ],
+                    nationalpsw: [
+                        { required: true, message: '必填项！', trigger: 'blur' }
+                    ],
+                    accounttype: [
+                        { required: true, message: '必填项！', trigger: 'change' }
+                    ],
+                    validflag: [
+                        { required: true, message: '必填项！', trigger: 'change' }
+                    ]
                 },
                 dynamic:[],
                 workOrder:[],
@@ -1125,6 +1153,37 @@
         }
         },
         methods: {
+            //通知客户相关
+            t(e){
+                console.log(e)
+                this.notify_ids = ''
+                for(let i =0;i<e.length;i++){
+                    this.notify_ids += e[i] + ','
+                }
+                this.notify_ids = this.notify_ids.substring(0,this.notify_ids.length-1)
+                console.log(this.notify_ids)
+            },
+            getUserData(){
+                let _self = this
+                let url = `api/user/list`
+                let config = {
+                    params: {
+                        page: 1,
+                        pageSize: 1000
+                    }
+                }
+                function success(res){
+                    console.log(res.data.data.rows)
+                    _self.userData = res.data.data.rows
+                    for(let i=0;i<res.data.data.rows.length;i++){
+                        _self.user.push({
+                            'value': _self.userData[i].id,
+                            'label': _self.userData[i].realname
+                        })
+                    }
+                }
+                this.$Get(url,config,success)
+            },
             update_customer_flag(row, status){
                 console.log(row)
                 let _self = this
@@ -1183,44 +1242,52 @@
             editTax(){
                 this.isEditTax = !this.isEditTax
             },
-            submitTax(){
-                let _self = this
-                this.submit_ing = true
-                let url = `api/customer/company/saveCompanyTaxManagement`
+            submitTax(name){
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        let _self = this
+                        this.submit_ing = true
+                        let url = `api/customer/company/saveCompanyTaxManagement`
 
-                // console.log(_self.taxManagement.nationalnum.replace(/\s+/g,""))
-                let config = {
-                    companyid:_self.companyId,
-                    companytype:_self.taxManagement.companytype,
-                    nationaltax:_self.taxManagement.nationaltax,
-                    Localtax:_self.taxManagement.Localtax,
-                    nationalnum:_self.taxManagement.nationalnum.replace(/\s+/g,""),
-                    nationalpsw:_self.taxManagement.nationalpsw.replace(/\s+/g,""),
-                    Localnum:_self.taxManagement.Localnum,
-                    Localpsw:_self.taxManagement.Localpsw,
-                    addedvaluetax:_self.taxManagement.addedvaluetax,
-                    Incometax:_self.taxManagement.Incometax,
-                    supertax:_self.taxManagement.supertax,
-                    boxtax:_self.taxManagement.boxtax,
-                    Stamptax:_self.taxManagement.Stamptax,
-                    socialsecurity:_self.taxManagement.socialsecurity,
-                    Providentfund:_self.taxManagement.Providentfund,
-                    taxdisk:_self.taxManagement.taxdisk,
-                    Providentfundpsw: _self.taxManagement.Providentfundpsw,
-                    Providentfundnum: _self.taxManagement.Providentfundnum,
-                    socialsecuritypsw: _self.taxManagement.socialsecuritypsw,
-                    accounttype: _self.taxManagement.accounttype,
-                    validflag: _self.taxManagement.validflag
-                }
-                function success(res){
-                    _self.isEditTax = true  
-                    _self.submit_ing = false                    
-                }
-                function fail(res){
-                    _self.submit_ing = false                    
-                }
+                        // console.log(_self.taxManagement.nationalnum.replace(/\s+/g,""))
+                        let config = {
+                            companyid:_self.companyId,
+                            companytype:_self.taxManagement.companytype,
+                            nationaltax:_self.taxManagement.nationaltax,
+                            Localtax:_self.taxManagement.Localtax,
+                            nationalnum:_self.taxManagement.nationalnum.replace(/\s+/g,""),
+                            nationalpsw:_self.taxManagement.nationalpsw.replace(/\s+/g,""),
+                            Localnum:_self.taxManagement.Localnum,
+                            Localpsw:_self.taxManagement.Localpsw,
+                            addedvaluetax:_self.taxManagement.addedvaluetax,
+                            Incometax:_self.taxManagement.Incometax,
+                            supertax:_self.taxManagement.supertax,
+                            boxtax:_self.taxManagement.boxtax,
+                            Stamptax:_self.taxManagement.Stamptax,
+                            socialsecurity:_self.taxManagement.socialsecurity,
+                            Providentfund:_self.taxManagement.Providentfund,
+                            taxdisk:_self.taxManagement.taxdisk,
+                            Providentfundpsw: _self.taxManagement.Providentfundpsw,
+                            Providentfundnum: _self.taxManagement.Providentfundnum,
+                            socialsecuritypsw: _self.taxManagement.socialsecuritypsw,
+                            accounttype: _self.taxManagement.accounttype,
+                            validflag: _self.taxManagement.validflag
+                        }
+                        function success(res){
+                            _self.isEditTax = true  
+                            _self.submit_ing = false                    
+                        }
+                        function fail(res){
+                            _self.submit_ing = false                    
+                        }
 
-                this.$Post(url,config,success,fail)
+                        this.$Post(url,config,success,fail)
+                    } else {
+                        this.$Message.error('请填写必选项!');
+                    }
+                })
+
+                
 
             },
             openContent(e){
@@ -1252,7 +1319,8 @@
                     followUpType: _self.addDetailContent.followUpType,
                     attIds:_self.attIds,
                     finishFlag: _self.addDetailContent.finishFlag,
-                    notifyDate: (DateFormat(_self.addDetailContent.followupdate) + ' ' + _self.addDetailContent.followuptime)
+                    notifyDate: (DateFormat(_self.addDetailContent.followupdate) + ' ' + _self.addDetailContent.followuptime),
+                    notify_ids: _self.notify_ids
                 }
                 function success(res){
                     if(_self.isClue){
@@ -1374,7 +1442,7 @@
                     switch(temp){
                         case "kuaiji":
                             _self.addDetailContent.followUpType = "18"
-                            _self.openFinish = true
+                            // _self.openFinish = true
                             _self.addDetailContent.finishFlag = "N"
                             break;
                         case "shangshi":
@@ -1392,6 +1460,9 @@
                 }
             }
 
+        },
+        created(){
+            this.getUserData()
         },
         mounted(){
             var _self = this

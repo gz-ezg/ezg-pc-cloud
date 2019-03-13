@@ -1,7 +1,13 @@
 <template>
     <Card style="min-width:800px">
         <Row style="margin-bottom:10px;">
-            <!-- <search @search="search"></search> -->
+            <search-model :data="searchData" @search="search"></search-model>
+          </Row>
+          <Row>
+            <ButtonGroup>
+                <Button type="primary" icon="edit" @click="open_account_update">余额调整</Button>
+                <Button type="success" icon="edit" @click="open_integral_update">积分调整</Button>
+            </ButtonGroup>
           </Row>
           <Row style="margin-top: 10px;">
             <Table
@@ -10,6 +16,7 @@
                     :columns="header"
                     :data="data"
                     :loading = "loading"
+                    @on-row-click="select_row"
             ></Table>
             <Page
                     size="small"
@@ -29,24 +36,68 @@
                 v-if="openDetail"
                 :id="currentId" 
             ></detail>
+            <integral-detail
+                :accountChangeType="accountChangeType"
+                @close="openIntegralDetail=false"
+                v-if="openIntegralDetail"
+                :id="currentId" 
+            >
+            </integral-detail>
+            <account-update
+                @close="openAccountUpdate=false"
+                v-if="openAccountUpdate"
+                :selectRow="selectRow"
+                @update_account="update_account"
+            >
+            </account-update>
+            <integral-update
+                @close="openIntegralUpdate=false"
+                v-if="openIntegralUpdate"
+                :selectRow="selectRow"
+                @update_integral="update_integral"
+            >
+            </integral-update>
     </Card>
 </template>
 
 <script>
-import search from './search'
+import searchModel from '../../woa-components/searchModel/index'
 import detail from './detail'
+import integralDetail from './integralDetail'
+import accountUpdate from './accountUpdate'
+import integralUpdate from './integralUpdate'
 import * as api from './api';
 export default {
     name: "customerAccount_index",
     components: {
         detail,
-        search
+        integralDetail,
+        searchModel,
+        accountUpdate,
+        integralUpdate
     },
     data(){
         return {
             form: {},
             openDetail: false,
             data: [],
+            searchData: [
+                {
+                    label: "公司名称：",
+                    key: "companyName",
+                    type: "input"
+                },
+                {
+                    label: "客户名称：",
+                    key: "name",
+                    type: "input"
+                },
+                {
+                    label: "联系方式：",
+                    key: "tel",
+                    type: "input"
+                }
+            ],
             header: [
                 {
                     title: "序号",
@@ -66,30 +117,58 @@ export default {
                 {
                     title: "账户余额",
                     key: "account_amount",
-                    minWidth: 180
+                    minWidth: 120
                 },
                 {
                     title: "冻结余额",
                     key: "lock_amount",
-                    minWidth: 180
+                    minWidth: 120
+                },
+                {
+                    title: "消费积分",
+                    key: "integral_amount",
+                    minWidth: 120
+                },
+                {
+                    title: "冻结积分",
+                    key: "lock_integral",
+                    minWidth: 120
                 },
                 {
                     title: "操作",
-                    width: 120,
+                    width: 200,
                     render: (h, params) => {
-                        return h('Button',{
-                            props: {
-                                type: "info",
-                                size: "small"
-                            },
-                            on: {
-                                click: ()=>{
-                                    this.currentId = params.row.id
-                                    this.openDetail = true
-                                    // console.log(params.row.id)
+                        return h('div', [
+                            h('Button',{
+                                props: {
+                                    type: "info",
+                                    size: "small"
+                                },
+                                on: {
+                                    click: ()=>{
+                                        this.currentId = params.row.id
+                                        this.openDetail = true
+                                        // console.log(params.row.id)
+                                    }
                                 }
-                            }
-                        }, "流水")
+                            }, "余额流水"),
+                            h('Button',{
+                                style: {
+                                    marginLeft: "5px"
+                                },
+                                props: {
+                                    type: "info",
+                                    size: "small"
+                                },
+                                on: {
+                                    click: ()=>{
+                                        this.currentId = params.row.id
+                                        this.openIntegralDetail = true
+                                        // console.log(params.row.id)
+                                    }
+                                }
+                            }, "积分流水")
+                        ])
                     }
                 }
             ],
@@ -100,18 +179,18 @@ export default {
             accountChangeType: new Map(),
             accountChangeItemType: new Map(),
             currentId: "",
-            searchForm: ""
+            searchForm: "",
+            openIntegralDetail: false,
+            formInline: {},
+            selectRow: "",
+            openAccountUpdate: false,
+            openIntegralUpdate: false
         }
     },
     methods: {
         search(e){
-            // console.log(e)
-            this.searchForm = e
-            if(this.searchForm.hasOwnProperty("createdate")){
-                this.searchForm["bcreatedate"] = this.searchForm.createdate[0]
-                this.searchForm["ecreatedate"] = this.searchForm.createdate[1]
-                delete this.searchForm.createdate
-            }
+            Object.assign(this.formInline, e)
+            this.page = 1
             this.get_data()
         },
         async get_data(){
@@ -126,9 +205,7 @@ export default {
                 }
             }
 
-            // function success(res){
-            //     return res
-            // }
+            Object.assign(config.params, this.formInline)
 
             try {
                 let { total, rows } = await api.getCustomerAccountList(config)
@@ -138,7 +215,6 @@ export default {
                 })
             } catch (error) {
                 console.log(error)
-                // _self.$Message.error(error)
             }
             _self.loading = false
         },
@@ -151,6 +227,12 @@ export default {
             this.page = 1
             this.get_data()
         },
+        update_account(){
+            this.get_data()
+        },
+        update_integral(){
+            this.get_data()
+        },
         async get_data_center(){
             let _self = this
             let params = "account_change_type,account_change_item_type"
@@ -160,9 +242,28 @@ export default {
                 _self.accountChangeType = _self.$array2map(account_change_type)
                 _self.accountChangeItemType = _self.$array2map(account_change_item_type)
             }catch(error){
-                // console.log(error)
-                // _self.$Message.error("页面异常！")
+                console.log(error)
             }
+        },
+        //选择某行
+        select_row(e){
+            console.log(e)
+            this.selectRow = e
+        },
+        //余额调整
+        open_account_update(){
+            if(this.selectRow){
+               this.openAccountUpdate = true
+            }else {
+                this.$Message.warning("请选择一行再操作！")
+            }
+        },
+        open_integral_update(){
+            if(this.selectRow){
+                this.openIntegralUpdate = true
+             }else {
+                 this.$Message.warning("请选择一行再操作！")
+             }
         }
     },
     async created(){

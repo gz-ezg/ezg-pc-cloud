@@ -1,131 +1,61 @@
 <template>
-   <div>
-    <Card>
-        <Row style="margin-bottom:10px">
-            <Collapse v-model="search_model">
-                <Panel name="1">
-                    <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
-                    筛选
-                        <!-- <div slot="content">
-                            111111
-                        </div> -->
-                    <!-- <Search slot="content"></Search> -->
-                    <div  slot="content" @keydown.enter="search">
-                        <Form ref="seacrhFormInline" :model="seacrhFormInline" :label-width="100">
-                            <Row :gutter="16">
-                                <Col span="8">
-                                    <FormItem prop="name" label="姓名：">
-                                        <Input type="text" size="small" v-model="seacrhFormInline.name" placeholder=""/>
-                                       
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem prop="tel" label="电话：">
-                                        <Input type="text" size="small" v-model="seacrhFormInline.tel" placeholder=""/>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem prop="post" label="岗位：">
-                                        <Input type="text" size="small" v-model="seacrhFormInline.post" placeholder=""/>
-                                    </FormItem>
-                                </Col>
-                            </Row>
-                            <Row :gutter="16">
-                                <Col span="8">
-                                    <FormItem prop="sex" label="性别：">
-                                        <Select type="text" size="small" v-model="seacrhFormInline.sex" placeholder="">
-                                            <Option value="0">男</Option>
-                                            <Option value="1">女</Option>
-                                        </Select>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem prop="createdate" label="创建时间：">
-                                        <DatePicker type="daterange" size="small" v-model="seacrhFormInline.createdate" placeholder="" style="width:100%"/>
-                                    </FormItem>
-                                </Col>
-                            </Row>
-                            <FormItem>
-                                <Button type="primary" @click="search">搜索</Button>
-                                <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
-                            </FormItem>
-                        </Form>
-                    </div>
-                </Panel>
-            </Collapse>
-     </Row>
-     <Row>
-        <ButtonGroup style="float:left">
-            <Button type="primary" icon="information-circled" @click="create_template">新增</Button>
-            <Button type="primary" icon="information-circled" @click="update_template">修改</Button>
-            <Button type="primary" icon="information-circled" @click="del_template">删除</Button>
-        </ButtonGroup>
-     </Row>
-     <Row style="margin-top: 10px;">
+    <div>
+        <Card style="min-width:800px">
+            <Row style="margin-bottom:10px">
+                <search-model :data="searchData" @search="search"></search-model>
+            </Row>
+        <Row>
+            <ButtonGroup>
+                <Button type="primary" icon="information-circled" @click="openCreate=true">新增</Button>
+            </ButtonGroup>
+        </Row>
+        <Row style="margin-top: 10px;">
             <Table
-                ref="selection"
+                :loading="loading"
                 highlight-row
                 size="small"
-                @on-current-change="save_current_row"
-                :loading="loading"
+                border
+                @on-row-click="select_row"
                 :columns="header"
-                :data="data"
-            >
-            </Table>
+                :data="data"></Table>
             <Page
-                placement="top"
                 size="small"
                 :total="total"
                 show-total
+                show-sizer
                 show-elevator
-                @on-change="pageChange"
+                :current.sync="page"
+                @on-change="page_change"
+                @on-page-size-change="page_size_change"
                 style="margin-top: 10px"></Page>
         </Row>
-    </Card>
-    <create-template @update="get_data"></create-template>
-    <update-template @update="get_data"></update-template>
-  </div>
+        <create :applyPosition="applyPosition" :applyArea="applyArea" :sextype="sextype" v-if="openCreate" @close="close"></create>
+        </Card>
+        <update :applyPosition="applyPosition" :applyArea="applyArea" :sextype="sextype" v-if="openUpdate" @close="close" :detail="currentRow"></update>
+    </div>
 </template>
 
 <script>
-import createTemplate from './create'
-import updateTemplate from './update'
-
-import { DateFormat }from '../../../libs/utils.js'
-
+import { getResumeList, getDictionary, resumeDel } from './resume.js'
+import create from './create'
+import update from './update'
+import searchModel from '../../woa-components/searchModel/index'
 export default {
+    name: "wechatTemplate_index",
     components:{
-        createTemplate,
-        updateTemplate
+        searchModel,
+        create,
+        update
     },
-    name: "resumelist_index",
     data(){
-        return{
-            //  选中的列
-            selectRow: [],
-            logoutLoading: false,
-            logoutReason: "",
-            openLogout: false,
-            selectRow:{},
-            current_row:'',
-            search_model:"",
-            loading: false,
-            openDetail:false,
-            seacrhFormInline: {
-                name: "",
-                // age: "",
-                sex: "",
-                // city: "",
-                tel:"",
-                createdate: [],
-                post: ""
-            },
+        return {
+            currentRow: {},
+            loading: true,
             page: 1,
             pageSize: 10,
             total: 0,
             data: [],
             header: [
-                
                 {
                     title: "姓名",
                     key: "name",
@@ -137,32 +67,39 @@ export default {
                     minWidth: 150
                 },
                 {
+                    title: "邮箱",
+                    key: "email",
+                    minWidth: 120
+                },
+                {
                     title: "性别",
-                    key: "sex",
-                    minWidth: 50,
+                    key: "sexname",
+                    minWidth: 80,
                     render: (h, params) => {
                         let sexname = ""
-                        if(params.row.sex == 0){
+                        if(params.row.sex == 1){
                             sexname = "男"
-                        }else{
+                        }else if(params.row.sex == 2){
                             sexname = "女"
+                        }else {
+                            sexname = "未填写"
                         }
-                        return h('div',{},sexname)
+                        return h('div', sexname)
                     }
                 },
                 {
                     title: "年龄",
                     key: "age",
-                    minWidth: 80,
+                    minWidth: 90,
                 },
                 {
                     title: "城市",
-                    key: "city",
+                    key: "cityName",
                     minWidth: 80
                 },
                 {
                     title: "岗位",
-                    key: "post",
+                    key: "postName",
                     minWidth:120
                 },
                 {
@@ -183,136 +120,190 @@ export default {
                     minWidth: 150
                 },
                 {
-                    title:"操作",
-                    width: 100,
+                    title:"下载",
+                    width: 180,
                     align: 'center',
                     render: (h, params) => {
                         return h('div', [
-                           h('Button', {
+                            h('Button', {
+                                props: {
+                                    type: "info",
+                                    size: "small"
+                                },
+                                style: {
+                                    margin: "auto"
+                                },
+                                on: {
+                                    click: ()=>{
+                                        // console.log(params.row)
+                                        this.currentRow = params.row
+                                        this.openUpdate = true
+                                    }
+                                }
+                            },'编辑'),
+                            h('Button', {
+                                props: {
+                                    type: 'success',
+                                    size: 'small'
+                                },
+                                style: {
+                                    marginLeft: '5px'
+                                },
+                                on: {
+                                    click: () => {
+                                            // console.log(params)
+                                        let url = `api/system/resource/download?id=` + params.row.id
+                                        window.open(url)
+                                    }
+                                }
+                            }, '下载'),
+                            h('Button', {
+                                props: {
+                                    type: 'warning',
+                                    size: 'small'
+                                },
+                                style: {
+                                    marginLeft: '5px'
+                                }
+                            }, [
+                                h('Poptip', {
                                     props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    style: {
-                                        marginRight: '5px'
+                                        transfer: true,
+                                        confirm: true,
+                                        title: '您确定要删除此记录？',
                                     },
                                     on: {
-                                        click: () => {
-                                            // console.log(params)
-                                            let url = `api/system/resource/download?id=` + params.row.id
-                                            window.open(url)
-                                        }
+                                        'on-ok': async ()=>{
+                                            let config = {
+                                                id: params.row.id,
+                                            }
+                                            let { status, data } = await resumeDel(config)
+                                            if(status){
+                                                this.get_data()
+                                            }
+                                        },
                                     }
-                                }, '下载')
+                                }, '删除')
+                            ])
                         ])
                     }
                 }
-            ]
+            ],
+            searchData: [
+                {
+                    label: "姓名：",
+                    key: "name",
+                    type: "input"
+                },
+                {
+                    label: "年龄：",
+                    key: "age",
+                    type: "input"
+                },
+                {
+                    label: "性别：",
+                    key: "sex",
+                    type: "select",
+                    data: []
+                },
+                {
+                    label: "电话：",
+                    key: "tel",
+                    type: "input",
+                },
+                {
+                    label: "岗位：",
+                    key: "post",
+                    type: "select",
+                    data: []
+                },
+                {
+                    label: "城市：",
+                    key: "city",
+                    type: "select",
+                    data: []
+                },
+                {
+                    label: "创建时间",
+                    key: "createdate",
+                    type: "datePicker"
+                }
+            ],
+            searchForm: {},
+            applyPosition: [],
+            applyPositionMap: new Map(),
+            applyArea: [],
+            applyAreaMap: new Map(),
+            sextype: [],
+            sextypeMap: new Map(),
+            openCreate: false,
+            openUpdate: false
         }
     },
-    methods:{
-        save_current_row(e){
-            this.current_row = e
-        },
-         create_template(){
-            this.$bus.emit("OPEN_CREATE_RESUME_TEMPLATE",true)
-        },
-        upload_file(params){
-
-        },
-        update_template(e){
-          
-             if(this.current_row != ""){
-               this.$bus.emit("OPEN_EDIT_RESUME_TEMPLATE",this.current_row)
-            }else{
-                this.$Message.warning('请选择一行进行编辑！')
-            }    
-        },
-        del_template(){
-            if(this.current_row != ""){
-                let _self = this
-                _self.loading = true
-                
-                let url = `api/system/resource/resume/del`
-
-                let config = {
-                    id:this.current_row.id
-                }
-                
-                function success(res){
-                    _self.loading = false
-                    _self.get_data();
-                
-                }
-
-                function fail(err){
-                    _self.loading = false
-                }
-
-                this.$Post(url, config, success, fail)
-            }else{
-                this.$Message.warning('请选择一行进行删除！')
-            }
-        },
-        get_data(){
+    methods: {
+        async get_data(){
             let _self = this
-            let url = "api/system/resource/resume/list"
-
-            _self.loading = true
-
+            this.loading = true
             let config = {
-                params:{
-                    page: _self.page,
-                    pageSize: _self.pageSize,
-                    sortField: "id",
-                    post: this.seacrhFormInline.post,
-                    name: this.seacrhFormInline.name,
-                    // age: this.seacrhFormInline.age,
-                    sex: this.seacrhFormInline.sex,
-                    // city: this.seacrhFormInline.city,
-                    tel:this.seacrhFormInline.tel,
-                    bcreatedate: DateFormat(this.seacrhFormInline.createdate[0]),
-                    ecreatedate: DateFormat(this.seacrhFormInline.createdate[1]) 
+                params: {
+                    page: this.page,
+                    pageSize: this.pageSize
                 }
-                
             }
 
-            function success(res){
-                _self.total = res.data.data.total
-                _self.data = res.data.data.rows
-               
-                _self.loading = false
-            }
+            Object.assign(config.params, this.searchForm)
 
-            this.$Get(url, config, success);
-            this.current_row = '';
+            try {
+                let { total, rows } = await getResumeList(config)
+                this.total = total
+                this.data = rows.map((item)=>{
+                    item.cityName = this.applyAreaMap.get(item.city)
+                    item.postName = this.applyPositionMap.get(item.post)
+                    return item
+                })
+            } catch (error) {
+                console.log(error)
+            }
+            this.loading = false
         },
-        pageChange(e){
+        search(item){
+            delete item.createdate
+            this.page = 1
+            Object.assign(this.searchForm, item)
+            this.get_data()
+        },
+        page_size_change(e){
+            this.pageSize = e
+            this.get_data()
+        },
+        page_change(e){
             this.page = e
             this.get_data()
         },
-         search(){
-            this.page = 1
-            this.get_data()
-             
+        async get_data_center(){
+            let params = "applyPosition,applyArea,sextype"
+            let { applyPosition,applyArea,sextype } = await getDictionary(params)
+            this.applyPosition = applyPosition
+            this.applyArea = applyArea
+            this.sextype = sextype
+            this.applyPositionMap = this.$array2map(applyPosition)
+            this.applyAreaMap = this.$array2map(applyArea)
+            this.sextypeMap = this.$array2map(sextype)
+            this.searchData[2].data = sextype
+            this.searchData[4].data = applyPosition
+            this.searchData[5].data = applyArea
         },
-        reset(){
-            // this.seacrhFormInline.name = ""
-            // this.seacrhFormInline.age = ""
-            // this.seacrhFormInline.sex = ""
-            // this.seacrhFormInline.city = ""
-            // this.seacrhFormInline.createdate = []
-            this.$refs["seacrhFormInline"].resetFields()
-            this.get_data()
-        },
-    } ,
-    created(){
-        this.get_data()
-        let _self = this
-
-        this.$bus.on("UPDATE_RESUME_LIST",(e) => {
-            _self.get_data()
-        })
+        close(e){
+            this.openUpdate = false
+            this.openCreate = false
+            if(e){
+                this.get_data()
+            }
+        }
+    },
+    async created(){
+        await this.get_data_center()
+        await this.get_data()
     }
 }
 </script>

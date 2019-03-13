@@ -1,137 +1,115 @@
 <template>
-    <div>
-    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-        <FormItem label="Name" prop="name">
-            <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
-        </FormItem>
-        <FormItem label="E-mail" prop="mail">
-            <Input v-model="formValidate.mail" placeholder="Enter your e-mail"></Input>
-        </FormItem>
-        <FormItem label="City" prop="city">
-            <Select v-model="formValidate.city" placeholder="Select your city">
-                <Option value="beijing">New York</Option>
-                <Option value="shanghai">London</Option>
-                <Option value="shenzhen">Sydney</Option>
-            </Select>
-        </FormItem>
-        <FormItem label="Date">
-            <Row>
-                <Col span="11">
-                    <FormItem prop="date">
-                        <DatePicker type="date" placeholder="Select date" v-model="formValidate.date"></DatePicker>
-                    </FormItem>
-                </Col>
-                <Col span="2" style="text-align: center">-</Col>
-                <Col span="11">
-                    <FormItem prop="time">
-                        <TimePicker type="time" placeholder="Select time" v-model="formValidate.time"></TimePicker>
-                    </FormItem>
-                </Col>
-            </Row>
-        </FormItem>
-        <FormItem label="Gender" prop="gender">
-            <RadioGroup v-model="formValidate.gender">
-                <Radio label="male">Male</Radio>
-                <Radio label="female">Female</Radio>
-            </RadioGroup>
-        </FormItem>
-        <FormItem label="Hobby" prop="interest">
-            <CheckboxGroup v-model="formValidate.interest">
-                <Checkbox label="Eat"></Checkbox>
-                <Checkbox label="Sleep"></Checkbox>
-                <Checkbox label="Run"></Checkbox>
-                <Checkbox label="Movie"></Checkbox>
-            </CheckboxGroup>
-        </FormItem>
-        <FormItem label="Desc" prop="desc">
-            <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></Input>
-        </FormItem>
-        <FormItem label="手机号码" prop="tel">
-            <Input v-model="formValidate.tel" placeholder="Enter your telphone"></Input>
-        </FormItem>
-        <FormItem>
-            <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
-            <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">Reset</Button>
-        </FormItem>
-    </Form>
-    <Button type="primary" @click="modal1 = true">点击</Button>
-    <Modal
-        v-model="modal1"
-        title="Common Modal dialog box title"
-    >
-    </Modal>
-    </div>
+    <Table :columns="columns10" :data="data9" highlight-row
+        @on-current-change='test'
+    ></Table>
 </template>
 <script>
+    import expandRow from './t.vue';
     export default {
+        components: { expandRow },
         data () {
-            const validatePhone = (rule, value, callback) => {
-                if (!value) {
-                    return callback(new Error('手机号不能为空'));
-                } else if (!/^1[34578]\d{9}$/.test(value)) {
-                    callback('手机号格式不正确');
-                } else {
-                    callback();
-                }   
-            };
             return {
-                formValidate: {
-                    name: '',
-                    mail: '',
-                    city: '',
-                    gender: '',
-                    interest: [],
-                    date: '',
-                    time: '',
-                    desc: '',
-                    tel: ''
-                },
-                ruleValidate: {
-                    name: [
-                        { required: true, message: 'The name cannot be empty', trigger: 'blur' }
-                    ],
-                    mail: [
-                        { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' },
-                        { type: 'email', message: 'Incorrect email format', trigger: 'blur' }
-                    ],
-                    city: [
-                        { required: true, message: 'Please select the city', trigger: 'change' }
-                    ],
-                    gender: [
-                        { required: true, message: 'Please select gender', trigger: 'change' }
-                    ],
-                    interest: [
-                        { required: true, type: 'array', min: 1, message: 'Choose at least one hobby', trigger: 'change' },
-                        { type: 'array', max: 2, message: 'Choose two hobbies at best', trigger: 'change' }
-                    ],
-                    date: [
-                        { required: true, type: 'date', message: 'Please select the date', trigger: 'change' }
-                    ],
-                    time: [
-                        { required: true, type: 'string', message: 'Please select time', trigger: 'change' }
-                    ],
-                    desc: [
-                        { required: true, message: 'Please enter a personal introduction', trigger: 'blur' },
-                        { type: 'string', min: 20, message: 'Introduce no less than 20 words', trigger: 'blur' }
-                    ],
-                    tel: [
-                        { required: true, validator: validatePhone,trigger:'blur'}
-                    ]
-                }
+                columns10: [
+                    {
+                        type: 'expand',
+                        width: 50,
+                        render: (h, params) => {
+                            console.log(params)
+                            return h(expandRow, {
+                                props: {
+                                    row: params.row
+                                }
+                            })
+                        }
+                    },
+                    {
+                        title: 'Name',
+                        key: 'name'
+                    },
+                    {
+                        title: 'Age',
+                        key: 'age'
+                    },
+                    {
+                        title: 'Address',
+                        key: 'address'
+                    }
+                ],
+                data9: [
+                    {
+                        name: 'John Brown',
+                        age: 18,
+                        address: 'New York No. 1 Lake Park',
+                        detail:[
+                            {
+                                job: 'Data engineer',
+                                interest: 'badminton',
+                                birthday: '1991-05-14',
+                                book: 'Steve Jobs',
+                                movie: 'The Prestige',
+                                music: 'I Cry'
+                            }
+                        ]
+                    },
+                    {
+                        name: 'Jim Green',
+                        age: 25,
+                        address: 'London No. 1 Lake Park',
+                        detail:[
+                            {
+                                job: 'Data Scientist',
+                                interest: 'volleyball',
+                                birthday: '1989-03-18',
+                                book: 'My Struggle',
+                                movie: 'Roman Holiday',
+                                music: 'My Heart Will Go On'
+                            }
+                        ]
+                    },
+                    {
+                        name: 'Joe Black',
+                        age: 30,
+                        address: 'Sydney No. 1 Lake Park',
+                        detail:[
+                            {
+                                job: 'Data Product Manager',
+                                interest: 'tennis',
+                                birthday: '1992-01-31',
+                                book: 'Win',
+                                movie: 'Jobs',
+                                music: 'Don’t Cry'
+                            }
+                        ]
+                    },
+                    {
+                        name: 'Jon Snow',
+                        age: 26,
+                        address: 'Ottawa No. 2 Lake Park',
+                        detail:[
+                            {
+                                job: 'Data Analyst',
+                                interest: 'snooker',
+                                birthday: '1988-7-25',
+                                book: 'A Dream in Red Mansions',
+                                movie: 'A Chinese Ghost Story',
+                                music: 'actor'
+                            },
+                            {
+                                job: 'TTT',
+                                interest: 'twst',
+                                birthday: '191511',
+                                book: 'A Disdvog s',
+                                movie: 'A wekmnkbhsdn',
+                                music: 'listen'
+                            }
+                        ]
+                    }
+                ]
             }
         },
         methods: {
-            handleSubmit (name) {
-                this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        this.$Message.success('Success!');
-                    } else {
-                        this.$Message.error('Fail!');
-                    }
-                })
-            },
-            handleReset (name) {
-                this.$refs[name].resetFields();
+            test(){
+                console.log(this.data9)
             }
         }
     }

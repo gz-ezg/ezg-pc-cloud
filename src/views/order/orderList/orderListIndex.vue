@@ -55,6 +55,18 @@
                                         <Input v-model="formValidateSearch.frealname" size="small"></Input>
                                     </FormItem>
                                 </Col>
+                                <Col span="8">
+                                    <FormItem label="缴费时间：" prop="paytime">
+                                        <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.paytime" style="width:100%" size="small"></DatePicker>
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row :gutter="16">
+                                <Col span="8">
+                                    <FormItem label="客户创建时间：" prop="customerCreateTime">
+                                        <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.customerCreateTime" style="width:100%" size="small"></DatePicker>
+                                    </FormItem>
+                                </Col>
                             </Row>
                             <center>
                                 <FormItem>
@@ -81,6 +93,7 @@
                 <!--<Button type="primary" icon="ios-color-filter-outline" @click="qihuaOpen()">企划(修改)</Button>-->
                 <!--<Button v-permission="['orderL.invalid']" type="primary" icon="ios-color-filter-outline" @click="deleteOrder = true">订单作废</Button>-->
                 <Button v-permission="['orderL.export']" type="primary" icon="ios-color-filter-outline" @click="downloadExcel">导出Excel</Button>
+                <Button v-permission="['orderL.export']" type="primary" icon="ios-color-filter-outline" @click="account_downloadExcel">结算导出</Button>
             </ButtonGroup>
         </Row>
         <Row style="margin-top: 10px;">
@@ -168,7 +181,9 @@ export default {
                 payDir: "",
                 date: [],
                 crealname: "",
-                frealname: ""
+                frealname: "",
+                paytime: [],
+                customerCreateTime: []
             },
             total: 0,
             page: 1,
@@ -304,6 +319,11 @@ export default {
                 {
                     title: '客户来源',
                     key: 'customersource',
+                    minWidth: 120
+                },
+                {
+                    title: '客户创建时间',
+                    key: 'customer_createDate',
                     minWidth: 120
                 },
                 {
@@ -483,6 +503,43 @@ export default {
         }
     },
     methods: {
+        //  财务结算
+        account_downloadExcel(){
+            let field = [
+                {field:'payTime',title:'到账时间'},
+                {field:'affiliation_area',title:'地区',format:"affiliation_area"},
+                {field:'departname',title:'部门'},
+                {field:'frealname',title:'业务员'},
+                {field:'name',title:'联系人'},
+                {field:'',title:'是否交回'},
+                {field:'',title:'360搜索'},
+                {field:'companyname',title:'企业名称'},
+                {field:'tel',title:'联系电话'},
+                {field:'realnumber',title:'客户小计'},
+                {field:'base_paydir',title:'入款账户', format:'payDirs'},
+            ]
+            let _self = this
+            let url = `api/order/list`
+            let config = {
+                page: '1',
+                pageSize: '1000000',
+                ordercode: _self.formValidateSearch.ordercode,
+                companyname:_self.formValidateSearch.companyname,
+                customername:_self.formValidateSearch.customername,
+                customertel:    _self.formValidateSearch.customertel,
+                crealname:    _self.formValidateSearch.crealname,
+                frealname:    _self.formValidateSearch.frealname,
+                payDir:    _self.formValidateSearch.payDir,
+                bcreatedate:DateFormat(_self.formValidateSearch.date[0]),
+                ecreatedate:DateFormat(_self.formValidateSearch.date[1]),
+                bpaytime: DateFormat(_self.formValidateSearch.paytime[0]),
+                epaytime: DateFormat(_self.formValidateSearch.paytime[1]),
+                export: 'Y',
+                exportField: encodeURI(JSON.stringify(field))
+            }
+            let toExcel = this.$MergeURL(url, config)
+            window.open(toExcel)
+        },
         //  下载文件
         downloadExcel(){
             let field = [
@@ -513,6 +570,8 @@ export default {
                 payDir:    _self.formValidateSearch.payDir,
                 bcreatedate:DateFormat(_self.formValidateSearch.date[0]),
                 ecreatedate:DateFormat(_self.formValidateSearch.date[1]),
+                bpaytime: DateFormat(_self.formValidateSearch.paytime[0]),
+                epaytime: DateFormat(_self.formValidateSearch.paytime[1]),
                 export: 'Y',
                 exportField: encodeURI(JSON.stringify(field))
             }
@@ -558,16 +617,22 @@ export default {
                     crealname:_self.formValidateSearch.crealname,
                     frealname:_self.formValidateSearch.frealname,
                     payDir:_self.formValidateSearch.payDir,
+                    bpaytime: DateFormat(_self.formValidateSearch.paytime[0]),
+                    epaytime: DateFormat(_self.formValidateSearch.paytime[1]),
                     sumField:'paynumber,realnumber,neednumber',
                     bcreatedate:DateFormat(_self.formValidateSearch.date[0]),
-                    ecreatedate:DateFormat(_self.formValidateSearch.date[1])
+                    ecreatedate:DateFormat(_self.formValidateSearch.date[1]),
+                    customer_bcreatedate:DateFormat(_self.formValidateSearch.customerCreateTime[0]),
+                    customer_ecreatedate:DateFormat(_self.formValidateSearch.customerCreateTime[1])
                 }
             }
 
             function success(res){
+                console.log(res.data.data.rows)
                 _self.data = res.data.data.rows
                 _self.total = res.data.data.total
                 for(let i = 0; i < _self.data.length; i++){
+                    _self.data[i].customer_createDate = DateFormat(_self.data[i].customer_createDate)
                     _self.data[i].base_paydir = _self.payDirs_map.get(_self.data[i].base_paydir)
                     _self.data[i].customersource = _self.cluesources_map.get(_self.data[i].customersource)
                     _self.data[i].contract_flag = _self.order_contract_flag_map.get(_self.data[i].contract_flag)
@@ -602,6 +667,7 @@ export default {
             }
         },
         select_row(e){
+            console.log(e)
             if(e.id){
                 this.selectRow = e
             }else{
@@ -661,7 +727,7 @@ export default {
             let _self = this
             if(this.selectRow){
                 console.log(this.selectRow)
-                if (_self.selectRow.CurrentProcess) {
+                if (_self.selectRow.CurrentProcess == "Returned") {
                     _self.$Modal.confirm({
                         loading: true,
                         title: '重新提交审批',

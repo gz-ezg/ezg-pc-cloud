@@ -5,6 +5,7 @@
             v-model="openCreateOrderDetail"
             width="100"
             :mask-closable="false"
+            @on-cancel="closeCreateDetail"
             @on-visible-change="modal_status_change"
         >
             <Form ref="orderDetail" :model="orderDetail" :label-width="100" :rules="orderDetailRule">
@@ -60,6 +61,14 @@
                                 <Option value="Y">是</Option>
                                 <Option value="N">否</Option>
                             </Select>
+                        </FormItem>
+                    </Col>
+                    <Col span="8">
+                        <FormItem label="异常工单号">
+                            <div style="display:inline-block">
+                                <Input size="small" v-model="orderCode" @on-focus="open_abOrder" readonly style="width:60%"/>
+                                <Button type="info" size="small" @click="open_abOrder">选择</Button>
+                            </div>
                         </FormItem>
                     </Col>
                 </Row>
@@ -128,11 +137,12 @@
             </Row>
             <div slot="footer">
                 <Button type="primary" @click="create" :loading="loading">创建</Button>
-                <Button type="ghost" @click="openCreateOrderDetail = false">关闭</Button>
+                <Button type="ghost" @click="closeCreateDetail">关闭</Button>
             </div>
         </Modal>
         <company-select @company-change="setting_company"></company-select>
         <service-item @close="close_item" v-if="openServiceItem" :id="orderDetail.companyid"></service-item>
+        <ab-order-select @aborder-change="setting_aborder" :id="orderDetail.companyid"></ab-order-select>
     </div>
     </div>
 </template>
@@ -141,6 +151,7 @@
 import serviceItem from '../accountHomeTree'
 import commonSetting from './comonSetting.js'
 import companySelect from '../companySelect'
+import abOrderSelect from '../abOrderSelect'
 import { DateFormat } from '../../../../../libs/utils.js'
 import * as orderApi from '../../api'
 
@@ -148,17 +159,32 @@ export default {
     mixins: [commonSetting],
     components: {
         companySelect,
-        serviceItem
+        serviceItem,
+        abOrderSelect
     },
     data(){
         return {
             openServiceItem: false,
             show_file: [],
             openCreateOrderDetail: false,
-            loading: false
+            loading: false,
+            orderId: '',
+            applyId: '',
+            orderCode: ''
         }
     },
     methods: {
+        //打开对应的异常工单列表
+        open_abOrder(){
+            this.$bus.emit("SELECT_ABORDER", true)
+        },
+        //  选择对应异常工单后回调
+        setting_aborder(e){
+            console.log(e)
+            this.applyId = e.id
+            this.orderCode = e.unusual_code
+        },
+
         //  打开会计到家服务项
         open_service_item(){
             if(this.orderDetail.companyid){
@@ -230,6 +256,7 @@ export default {
             this.$refs["orderDetail"].validate((valid) => {
                 if(valid && this.check_date()){
                     _self.create_order()
+                    
                 }else{
                     this.loading = false
                 }
@@ -253,10 +280,17 @@ export default {
 
             try {
                 let { status, data } = await orderApi.orderCreate(config)
+                console.log(data.data)
+                this.orderId = data.data
                 if(status){
                     if(this.show_file.length != 0){
                         this.upload_img(data.data)
                     }else{
+                        console.log(this.applyId)
+                        console.log(this.orderId)
+                        if(this.applyId){
+                            _self.relate()
+                        }
                         _self.$Message.warning("订单创建成功！请及时上传合同！")
                     }
 
@@ -293,6 +327,30 @@ export default {
         },
         close_item(){
             this.openServiceItem = false
+        },
+        //关联异常工单
+        relate(){
+            let _self = this 
+            let url = `api/order/unusual/workorder/linkUnusualWorkOrder`
+            let config = {
+                applyId: this.applyId,
+                orderId: this.orderId
+            }
+            function success(res){
+                console.log(res)
+            }
+            function fail(){
+
+            }
+            this.$Post(url,config,success,fail)
+            this.orderId = ''
+            this.applyId = ''
+            this.orderCode = ''
+        },
+        closeCreateDetail(){
+            this.openCreateOrderDetail = false
+            this.applyId = ''
+            this.orderCode = ''
         }
     },
     created(){

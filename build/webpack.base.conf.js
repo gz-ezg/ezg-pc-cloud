@@ -8,18 +8,22 @@ const os = require('os');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 module.exports = {
     entry: {
-        // main: ['babel-polyfill', path.resolve(__dirname, '../src/main.js')]
-        main: path.resolve(__dirname, '../src/main.js')
+        main: path.resolve(__dirname, '../src/main.js'),
     },
     output: {
         path: path.resolve(__dirname, '../dist'),
         filename: 'js/[name].[hash].js',
         publicPath: "/"
+        //  静态文件才用cdn时需配置cdn地址，同时需做跨域设置
+        // publicPath: "http://cloud.roderickt1an.cn/"
     },
     module: {
+        // 不去解析jquery的依赖关系
+        noParse: /jquery/,
         rules: [{
                 test: /\.vue$/,
                 use: [{
@@ -61,7 +65,7 @@ module.exports = {
                         loader: 'url-loader',
                         options: {
                             limit:10000,
-                            //  开启此项，可以减小main.css体积，但需要手动将文件挪至css文件夹中
+                            //  开启此项，可以减小main.css体积，但需要手动将文件挪至css文件夹中(作废)
                             name:"fonts/[name].[ext]",
                         //     outputPath: "css/"
                         }
@@ -71,6 +75,8 @@ module.exports = {
         ]
     },
     plugins: [
+        //  处理moment本地化策略
+        new webpack.IgnorePlugin(/\.\/local/, /moment/),
         new VueLoaderPlugin(),
         new HappyPack({
             id: 'happybabel',
@@ -92,27 +98,65 @@ module.exports = {
             }
         }),
         new webpack.HotModuleReplacementPlugin(),
-        new AutoDllPlugin({
-            inject: true, // will inject the DLL bundle to index.html
-            debug: true,
-            filename: '[name]_[hash].js',
-            path: './dll',
-            entry: {
-                vue: [
-                    'vue/dist/vue.runtime.common', 
-                    'vue-router/dist/vue-router.common', 
-                    'vuex/dist/vuex.common'
-                ],
-                iview: ['iview','iview-area'],
-                vchart: [
-                    'v-charts/lib/line.common',
-                    'v-charts/lib/bar.common',
-                    'v-charts/lib/histogram.common',
-                    'v-charts/lib/pie.common',
-                    'v-charts/lib/funnel.common',
-                ]
-            }
+        // 自动化引入dll
+        // new AutoDllPlugin({
+        //     inject: true, // will inject the DLL bundle to index.html
+        //     debug: true,
+        //     filename: '[name]_[hash].js',
+        //     path: './dll',
+        //     entry: {
+        //         vue: [
+        //             'vue/dist/vue.runtime.common', 
+        //             'vue-router/dist/vue-router.common', 
+        //             'vuex/dist/vuex.common'
+        //         ],
+        //         iview: ['iview','iview-area'],
+        //         vchart: [
+        //             'v-charts/lib/line.common',
+        //             'v-charts/lib/bar.common',
+        //             'v-charts/lib/histogram.common',
+        //             'v-charts/lib/pie.common',
+        //             'v-charts/lib/funnel.common',
+        //         ]
+        //     }
+        // }),
+        //  手动引入dll
+        new webpack.DllReferencePlugin({
+            context: __dirname,
+            manifest: path.resolve(__dirname, "../public/dll", "vue-manifest.json"),
         }),
+        new webpack.DllReferencePlugin({
+            context: __dirname,
+            manifest: path.resolve(__dirname, "../public/dll", "vchart-manifest.json"),
+        }),
+        new webpack.DllReferencePlugin({
+            context: __dirname,
+            manifest: path.resolve(__dirname, "../public/dll", "iview-manifest.json"),
+        }),
+        new AddAssetHtmlPlugin([
+            {
+                // 要添加到编译中的文件的绝对路径，以及生成的HTML文件。支持globby字符串
+                filepath: require.resolve(path.resolve(__dirname, '../public/dll/_dll_iview.js')),
+                // 文件输出目录
+                outputPath: 'dll',
+                // 脚本或链接标记的公共路径，cdn位置
+                publicPath: "/dll"
+                // publicPath: 'http://cloud.roderickt1an.cn/dll'
+            },
+            {
+                filepath: require.resolve(path.resolve(__dirname, '../public/dll/_dll_vchart.js')),
+                outputPath: 'dll',
+                publicPath: "/dll"
+                // publicPath: 'http://cloud.roderickt1an.cn/dll'
+            },
+            {
+                filepath: require.resolve(path.resolve(__dirname, '../public/dll/_dll_vue.js')),
+                outputPath: 'dll',
+                publicPath: "/dll"
+                // publicPath: 'http://cloud.roderickt1an.cn/dll'
+            }
+        ]),
+        //  手动引入dll结束
         new webpack.optimize.SplitChunksPlugin(),
         new CopyWebpackPlugin(
             [
@@ -139,7 +183,8 @@ module.exports = {
         mainFields: ['main'],
         extensions: ['*', '.js', '.json', '.vue'],
         alias: {
-            // 'vue$': 'vue/dist/vue.esm.js',
+            'vue$': 'vue/dist/vue.esm.js',
+            '@views': path.resolve(__dirname, '../src/views'),
             '@': path.resolve(__dirname, '../src'),
         }
     }

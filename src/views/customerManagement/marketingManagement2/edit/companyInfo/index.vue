@@ -3,7 +3,7 @@
         <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="open_company_create">新增</Button>
         <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="shift_company" v-permission="['company.shift']">转移</Button>
         <Table
-                :loading="loading"
+            :loading="loading"
                 highlight-row
                 @on-current-change="select_row"
                 border
@@ -11,7 +11,6 @@
                 :columns="header"
                 :data="data"
                 style="margin-top: 15px"
-                
         ></Table>
         <!-- <Page
             size="small"
@@ -57,6 +56,8 @@ export default {
     },
     data(){
         return {
+            selectRow:"",
+            companyData:[],
             loading: false,
             close: false,
             header: [
@@ -195,6 +196,7 @@ export default {
             let config = {}
 
             function success(res){
+                console.log(res.data.data)
                 _self.data = res.data.data
                 _self.loading = false
             }
@@ -236,8 +238,16 @@ export default {
         }
     },
     created(){
+        let _self = this
         this.get_data_center()
         this.get_data(this.customer.ID)
+
+        //更新表格内容
+        this.$bus.off("UPDATE_CUSTOMER", true)
+        this.$bus.on("UPDATE_CUSTOMER", (e)=>{
+            _self.get_data(this.customer.ID)
+            _self.selectRow = ''
+        })
     }
 }
 </script>

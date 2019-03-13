@@ -1,5 +1,5 @@
 <template>
-    <div id="main" class="app-main">
+    <div id="app" class="app-main">
         <router-view></router-view>
     </div>
 </template>
@@ -28,8 +28,6 @@
 </script>
 
 <style>
-    /* @import './libs/easyUI/easyui.css';
-    @import './libs/easyUI/icon.css'; */
 html,body{
     width: 100%;
     height: 100%;

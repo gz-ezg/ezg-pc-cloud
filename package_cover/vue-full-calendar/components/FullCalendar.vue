@@ -81,7 +81,7 @@
                     selectable: this.selectable,
                     selectHelper: this.selectHelper,
                     //  调整宽高比
-                    aspectRatio: 1.2,
+                    aspectRatio: 0.6,
                     timeFormat: 'HH:mm',
                     events: this.events,
                     eventSources: this.eventSources,

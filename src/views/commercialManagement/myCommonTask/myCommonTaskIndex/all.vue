@@ -583,7 +583,8 @@ export default {
                     departname: _self.formInline.departname,
                     customerName: _self.formInline.customerName,
                     tel: _self.formInline.tel,
-                    serviceDept:"'BUSSINESS'"
+                    serviceDept:"'BUSSINESS'",
+                    // workOrderStatus:'20'
                 }
             }
                 

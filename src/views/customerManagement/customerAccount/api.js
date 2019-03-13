@@ -35,4 +35,13 @@ function getAccountRecordItem(config, success, fail){
     })
 }
 
-export { getCustomerAccountList, getDictionary, getAccountRecordList, getAccountRecordItem }
+function getCustomerIntegralList(config, success, fail){
+    let url = `customer/integral/list`
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxGet(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+
+export { getCustomerAccountList, getDictionary, getAccountRecordList, getAccountRecordItem, getCustomerIntegralList }
