@@ -80,6 +80,7 @@ export default {
                 workStatusId: 30,
                 workOrderStatus:[],
                 workOrderStatus_map:new Map(),
+				current_row:'',
                 header: [
                     {
                         title: '归属公司',
@@ -277,9 +278,15 @@ export default {
             }
         },
     methods:{
+		//  保存当前选中行
+		save_current_row(e){
+		    this.current_row = e
+		},
 		stopWorkOrder(){
 			if(this.current_row != ''){
 			    // Bus.$emit('myCommonTask',this.current_row)
+				console.log("this.current_row")
+				console.log(this.current_row)
 			    this.$store.commit("open_gobal_stop_work_order", this.current_row.id)
 			}else{
 			    this.$Message.warning('请选择一行查看暂停/解锁！')
