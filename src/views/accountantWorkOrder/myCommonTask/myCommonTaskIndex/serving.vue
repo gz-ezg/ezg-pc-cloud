@@ -43,6 +43,8 @@
                 <Button type="primary" icon="information-circled" @click="company">查看公司</Button>
                 
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
+				<Button type="primary" icon="ios-color-wand-outline" @click="stopWorkOrder">暂停/解锁</Button>
+				<Button type="primary" icon="ios-color-wand-outline" @click="openStopWorkOrderList">查看暂停/解锁日志</Button>
             </ButtonGroup>
 
         </Row>
@@ -559,7 +561,23 @@ export default {
             }else{
                 this.$Message.warning('请选择一行查看！')
             }
-        }
+        },
+		stopWorkOrder(){
+			if(this.current_row != ''){
+			    // Bus.$emit('myCommonTask',this.current_row)
+			    this.$store.commit("open_gobal_stop_work_order", this.current_row.id)
+			}else{
+			    this.$Message.warning('请选择一行查看暂停/解锁！')
+			}
+		},
+		openStopWorkOrderList(){
+			if(this.current_row != ''){
+			    // Bus.$emit('myCommonTask',this.current_row)
+			    this.$store.commit("open_gobal_stop_work_order_list", this.current_row.id)
+			}else{
+			    this.$Message.warning('请选择一行查看暂停/解锁日志！')
+			}
+		}
     },
     created(){
         var _self = this

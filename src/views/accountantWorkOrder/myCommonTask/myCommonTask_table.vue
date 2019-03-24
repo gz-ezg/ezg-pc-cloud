@@ -14,6 +14,8 @@
                 <all :managestatus="managestatus"></all>
             </TabPane>
         </Tabs>
+		<stop-work-order v-if="gobalWorkorderStopWorkOrder"></stop-work-order>
+		<work-order-log v-if="gobalWorkorderStopWorkOrderList"></work-order-log>
     </div>
 </template>
 
@@ -59,5 +61,13 @@ import Notbegin from './myCommonTaskIndex/notbegin'
         created() {
             this.getGlobalDataCenter()  
         },
+		computed:{
+			gobalWorkorderStopWorkOrder(){
+				return this.$store.state.gobal.gobalWorkorderStopWorkOrder
+			},
+			gobalWorkorderStopWorkOrderList(){
+				return this.$store.state.gobal.gobalWorkorderStopWorkOrderList
+			}
+		}
     }
 </script>

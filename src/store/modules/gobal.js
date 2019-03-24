@@ -6,6 +6,8 @@ const gobal = {
         },
         gobalworkOrderId: "",
         gobalWorkorderDetailShow: false,
+		gobalWorkorderStopWorkOrder: false,
+		gobalWorkorderStopWorkOrderList:false,
         gobalCompanyId: "",
         gobalCompanyDetailShow: false,
         gobalWorkorderDetail: {
@@ -52,7 +54,21 @@ const gobal = {
         close_gobal_set_finish_time_modal(state){
             console.log("123")
             state.gobalSetFinishTime = false
-        }
+        },
+		open_gobal_stop_work_order(state,workOrderID){
+			state.gobalWorkorderStopWorkOrder = true
+			state.gobalworkOrderId = workOrderID
+		},
+		close_gobal_stop_work_order(state){
+			state.gobalWorkorderStopWorkOrder = false
+		},
+		open_gobal_stop_work_order_list(state,workOrderID){
+			state.gobalWorkorderStopWorkOrderList = true
+			state.gobalworkOrderId = workOrderID
+		},
+		close_gobal_stop_work_order_list(state){
+			state.gobalWorkorderStopWorkOrderList = false
+		}
     }
 };
 

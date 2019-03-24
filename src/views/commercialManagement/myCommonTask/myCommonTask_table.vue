@@ -22,6 +22,8 @@
 
         <!-- <company-detail></company-detail> -->
         <!-- <flow></flow> -->
+		<stop-work-order v-if="gobalWorkorderStopWorkOrder"></stop-work-order>
+		<work-order-log v-if="gobalWorkorderStopWorkOrderList"></work-order-log>
     </div>
 </template>
 
@@ -37,6 +39,8 @@ import All from './myCommonTaskIndex/all'
 import Finished from './myCommonTaskIndex/finished'
 import Notbegin from './myCommonTaskIndex/notbegin'
 import Stop from "./myCommonTaskIndex/stop";
+import StopWorkOrder from "./StopWorkOrder";
+import workOrderLog from "./workOrderLog";
     export default {
         name:'commercialTaskManagement',
         components:{
@@ -48,7 +52,9 @@ import Stop from "./myCommonTaskIndex/stop";
             // CompanyDetail,
             Flow,
             overDueReason,
-            Stop
+            Stop,
+			StopWorkOrder,
+			workOrderLog
         },
         data(){
             return{
@@ -78,7 +84,15 @@ import Stop from "./myCommonTaskIndex/stop";
             if(temp == "10228"){
                 _self.openTab = "name4"
             }
-        }
+        },
+		computed:{
+			gobalWorkorderStopWorkOrder(){
+				return this.$store.state.gobal.gobalWorkorderStopWorkOrder
+			},
+			gobalWorkorderStopWorkOrderList(){
+				return this.$store.state.gobal.gobalWorkorderStopWorkOrderList
+			}
+		}
 
     }
 </script>

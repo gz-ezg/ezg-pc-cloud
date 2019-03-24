@@ -50,7 +50,7 @@ module.exports = merge(baseConfig, {
   plugins: [
     new FriendlyErrorsPlugin({
       compilationSuccessInfo: {
-          messages: ['[[[warning]]] Now Proxy in cloud(production); You application is running here http://localhost:10000; 请不要进行无关操作！'],
+          messages: ['[[[warning]]] Now Proxy in cloud(production); You application is running here http://localhost:10001; 请不要进行无关操作！'],
       },
       clearConsole: true
     })

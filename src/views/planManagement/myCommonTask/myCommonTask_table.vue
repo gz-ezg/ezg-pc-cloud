@@ -36,6 +36,8 @@
             </center>
             <div slot="footer"></div>
         </Modal>
+		<stop-work-order v-if="gobalWorkorderStopWorkOrder"></stop-work-order>
+		<work-order-log v-if="gobalWorkorderStopWorkOrderList"></work-order-log>
     </div>
 </template>
 
@@ -46,6 +48,8 @@ import all from './myCommonTaskIndex/tabpanes/all'
 import finished from './myCommonTaskIndex/tabpanes/finished'
 import serving from './myCommonTaskIndex/tabpanes/servicing'
 import notbegin from './myCommonTaskIndex/tabpanes/notbegin'
+import StopWorkOrder from "@/views/commercialManagement/myCommonTask/StopWorkOrder";
+import workOrderLog from "@/views/commercialManagement/myCommonTask/workOrderLog";
 
     export default {
         name:'plantaskmanagement',
@@ -81,6 +85,14 @@ import notbegin from './myCommonTaskIndex/tabpanes/notbegin'
                 _self.id = e
                 _self.openIncomeDetail = true
             })
-        }
+        },
+		computed:{
+			gobalWorkorderStopWorkOrder(){
+				return this.$store.state.gobal.gobalWorkorderStopWorkOrder
+			},
+			gobalWorkorderStopWorkOrderList(){
+				return this.$store.state.gobal.gobalWorkorderStopWorkOrderList
+			}
+		}
     }
 </script>

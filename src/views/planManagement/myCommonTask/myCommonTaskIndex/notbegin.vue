@@ -43,6 +43,7 @@
                 <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="finsih_workerorder" >一键完结</Button>
+				
 
                 <!-- <Button type="primary" icon="ios-color-wand-outline" @click="product_error">产品异常</Button> -->
                 <!-- <Button type="primary" icon="ios-color-wand-outline">批量已读</Button>

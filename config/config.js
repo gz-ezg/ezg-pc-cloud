@@ -48,7 +48,7 @@ module.exports = {
                 changeOrigin: true
             }
         },
-        port: 10000,
+        port: 10001,
         message: '[[[warning]]] Now Proxy in cloud(production); You application is running here http://localhost:10000; 请不要进行无关操作！'
     },
     "dev-local":{
