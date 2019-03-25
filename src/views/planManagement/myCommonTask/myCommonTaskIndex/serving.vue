@@ -584,6 +584,7 @@ export default {
         Bus.$on('flowsuccess',(e)=>{
             _self.getData()
         })
+		
     }
 
 }

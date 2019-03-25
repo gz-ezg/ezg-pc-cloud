@@ -8,6 +8,7 @@ const gobal = {
         gobalWorkorderDetailShow: false,
 		gobalWorkorderStopWorkOrder: false,
 		gobalWorkorderStopWorkOrderList:false,
+		gobalWorkOrderStatus:"",
         gobalCompanyId: "",
         gobalCompanyDetailShow: false,
         gobalWorkorderDetail: {
@@ -68,6 +69,12 @@ const gobal = {
 		},
 		close_gobal_stop_work_order_list(state){
 			state.gobalWorkorderStopWorkOrderList = false
+		},
+		get_gobal_work_order_status(state,gobalWorkOrderStatus){
+			state.gobalWorkOrderStatus = gobalWorkOrderStatus
+		},
+		remove_gobal_work_order_status(state){
+			state.gobalWorkOrderStatus
 		}
     }
 };

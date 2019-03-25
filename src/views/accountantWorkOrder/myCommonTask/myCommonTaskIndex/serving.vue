@@ -566,6 +566,7 @@ export default {
 			if(this.current_row != ''){
 			    // Bus.$emit('myCommonTask',this.current_row)
 			    this.$store.commit("open_gobal_stop_work_order", this.current_row.id)
+				this.$store.commit("get_gobal_work_order_status", this.current_row.workOrderStatus)
 			}else{
 			    this.$Message.warning('请选择一行查看暂停/解锁！')
 			}
@@ -574,6 +575,7 @@ export default {
 			if(this.current_row != ''){
 			    // Bus.$emit('myCommonTask',this.current_row)
 			    this.$store.commit("open_gobal_stop_work_order_list", this.current_row.id)
+				this.$store.commit("get_gobal_work_order_status", this.current_row.workOrderStatus)
 			}else{
 			    this.$Message.warning('请选择一行查看暂停/解锁日志！')
 			}
@@ -585,6 +587,9 @@ export default {
         Bus.$on('flowsuccess',(e)=>{
             _self.getData()
         })
+		this.$bus.on("reflash",(e)=>{
+			_self.getData()
+		})
     }
 
 }

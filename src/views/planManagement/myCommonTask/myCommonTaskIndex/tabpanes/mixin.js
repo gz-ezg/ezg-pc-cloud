@@ -212,6 +212,9 @@ export default {
         _self.$bus.on('FLOW_NEXT',(e)=>{
             _self.get_data()
         })
+		this.$bus.on("reflash",(e)=>{
+			_self.get_data()
+		})
     },
     mounted() {
         

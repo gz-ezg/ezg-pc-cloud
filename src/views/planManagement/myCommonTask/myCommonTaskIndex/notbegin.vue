@@ -595,6 +595,7 @@ export default {
             _self.getData()
         })
         // console.log(_self.paydir)
+		
 }
 
 }
