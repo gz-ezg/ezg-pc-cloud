@@ -452,46 +452,8 @@ export default {
                                             this.flowChart(params)
                                         }
                                     }
-                                }, '[流程图]'),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    directives: [
-                                        {
-                                            name: "permission",
-                                            value: "commercialStop"
-                                        }
-                                    ],
-                                    on: {
-                                        click: () => {
-                                            var _self = this
-                                            //  暂停
-                                            if(params.row.resumeFlag == null || params.row.resumeFlag == 3){
-                                                let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=3`
-                                                this.$http.get(url).then(function(res){
-                                                    if(res.data.msgCode == 40000){
-                                                        _self.$Message.success(res.data.msg)
-                                                    }else{
-                                                        _self.$Message.error(res.data.msg)
-                                                    }
-                                                    _self.getData()
-                                                })
-                                            }else if(params.row.resumeFlag == 2){
-                                                let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=2`
-                                                this.$http.get(url).then(function(res){
-                                                    if(res.data.msgCode == 40000){
-                                                        _self.$Message.success(res.data.msg)
-                                                    }else{
-                                                        _self.$Message.error(res.data.msg)
-                                                    }
-                                                    _self.getData()
-                                                })
-                                            }else{}
-                                        }
-                                    }
-                                }, '[暂停/解锁]'),
+                                }, '[流程图]')
+                                
                                 // h('Button', {
                                 //     props: {
                                 //         type: 'text',

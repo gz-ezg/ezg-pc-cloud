@@ -222,45 +222,7 @@ export default {
                                             this.open_flow_chart(params)
                                         }
                                     }
-                                }, '[流程图]'),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            var _self = this
-                                            //  暂停
-                                            let url = `api/order/serviceResume`
-                                            let config = ""
-                                            if(params.row.resumeFlag == null || params.row.resumeFlag == 3){
-                                                config = {
-                                                    params: {
-                                                        workOrderId: params.row.id,
-                                                        resumeFlag: 3
-                                                    }                                                
-                                                }
-                                            }else if(params.row.resumeFlag == 2){
-                                                let url = `api/order/serviceResume`
-                                                config = {
-                                                    params: {
-                                                        workOrderId: params.row.id,
-                                                        resumeFlag: 2
-                                                    }
-                                                }
-                                            }else{}
-                                            function success(res){
-                                                _self.$Message.success(res.data.msg)
-                                                _self.$bus.emit("FLOW_NEXT")
-                                            }
-
-                                            if(config){
-                                                this.$Get(url, config, success)
-                                            }
-                                        }
-                                    }
-                                }, '[暂停/解锁]'),
+                                }, '[流程图]')
                             ]);
                         }
                     }
