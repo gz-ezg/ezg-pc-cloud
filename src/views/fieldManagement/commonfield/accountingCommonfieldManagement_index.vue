@@ -323,7 +323,8 @@
 						page: _self.page,
 						pageSize: 10,
 						legwork_name:_self.formInline.legwork_name,
-						legwork_address:_self.formInline.legwork_address
+						legwork_address:_self.formInline.legwork_address,
+						type:_self.formInline.type,
 					}
 				}
 				function success(res){         
