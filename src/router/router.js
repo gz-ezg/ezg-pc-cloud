@@ -937,6 +937,13 @@ export const appRouter = [
             title: '外勤管理',
             name: "commonfieldmanagement_index",
             component: () => import( /* webpackChunkName: "commonfieldmanagement_index" */ '@/views/fieldManagement/commonfield/commonFieldIndex.vue')
+        },{
+            access: 6076,
+            meta: 6076,
+            path: 'accountingCommonfieldManagement',
+            title: '会计外勤类型管理',
+            name: "accountingCommonfieldManagement_index",
+            component: () => import( /* webpackChunkName: "commonfieldmanagement_index" */ '@/views/fieldManagement/commonfield/accountingCommonfieldManagement_index.vue')
         }]
     },
     {

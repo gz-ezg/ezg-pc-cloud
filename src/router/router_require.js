@@ -1096,7 +1096,7 @@ export const appRouter = [
                 component: resolve => {
                     require(['@/views/fieldManagement/commonfield/commonFieldIndex.vue'], resolve);
                 }
-            },
+            }
             // {
             //     access:6078,
             //     meta: 6078,
