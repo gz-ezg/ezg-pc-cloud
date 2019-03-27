@@ -10,7 +10,10 @@
             <TabPane label="已完结" name="name3">
                 <finished :managestatus="managestatus"></finished>
             </TabPane>
-            <TabPane label="全部" name="name4">
+			<TabPane label="暂停" name="name4">
+			    <stop :managestatus="managestatus"></stop>
+			</TabPane>
+            <TabPane label="全部" name="name5">
                 <all :managestatus="managestatus"></all>
             </TabPane>
         </Tabs>
@@ -26,6 +29,7 @@ import Serving from './myCommonTaskIndex/serving'
 import All from './myCommonTaskIndex/all'
 import Finished from './myCommonTaskIndex/finished'
 import Notbegin from './myCommonTaskIndex/notbegin'
+import Stop from './myCommonTaskIndex/stop'
 
     export default {
         name:'accounttaskmanagement_index',
@@ -35,6 +39,7 @@ import Notbegin from './myCommonTaskIndex/notbegin'
             Finished,
             Notbegin,
             Flow,
+			Stop
         },
         data(){
             return{

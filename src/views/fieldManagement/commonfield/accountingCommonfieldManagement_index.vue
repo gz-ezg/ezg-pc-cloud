@@ -261,7 +261,7 @@
 					_self.isAdd = false
 					_self.getData()
 					_self.addParams = {}
-					
+					_self.current_row = ''
 				}
 				function fail(err){
 					_self.$Message.error(res.data.msg)
@@ -290,7 +290,7 @@
 					_self.isEdit = false
 					_self.getData()
 					_self.editParams = {}
-					
+					_self.current_row = ''
 				}
 				function fail(err){
 					_self.$Message.error(res.data.msg)

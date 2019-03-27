@@ -22,7 +22,10 @@
             <TabPane label="已完结" name="name3">
                 <finished @open-flow-chart="open_flow_chart"></finished>
             </TabPane>
-            <TabPane label="全部" name="name4">
+			<TabPane label="暂停" name="name4">
+			    <stop @open-flow-chart="open_flow_chart"></stop>
+			</TabPane>
+            <TabPane label="全部" name="name5">
                 <all @open-flow-chart="open_flow_chart"></all>
             </TabPane>
         </Tabs>
@@ -48,6 +51,7 @@ import all from './myCommonTaskIndex/tabpanes/all'
 import finished from './myCommonTaskIndex/tabpanes/finished'
 import serving from './myCommonTaskIndex/tabpanes/servicing'
 import notbegin from './myCommonTaskIndex/tabpanes/notbegin'
+import stop from './myCommonTaskIndex/tabpanes/stop'
 import StopWorkOrder from "@/views/commercialManagement/myCommonTask/StopWorkOrder";
 import workOrderLog from "@/views/commercialManagement/myCommonTask/workOrderLog";
 
@@ -58,7 +62,8 @@ import workOrderLog from "@/views/commercialManagement/myCommonTask/workOrderLog
             all,
             finished,
             serving,
-            notbegin
+            notbegin,
+			stop
         },
         data(){
             return{

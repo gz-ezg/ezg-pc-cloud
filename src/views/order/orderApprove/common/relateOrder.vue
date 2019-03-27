@@ -33,37 +33,37 @@ export default {
             header: [
                 {
                     title: '订单号码',
-                    key: 'unusualCode',
+                    key: 'unusual_code',
                     minWidth:100
                 },
                 {
                     title: '产品内容',
-                    key: 'productContent',
+                    key: 'product_content',
                     minWidth:150
                 },
                 {
                     title: '异常类型',
-                    key: 'unusualType',
+                    key: 'unusual_type',
                     minWidth:80
                 },
                 {
                     title: '审批是由',
-                    key: 'applyMemo',
+                    key: 'apply_memo',
                     minWidth:200
                 },
                 {
                     title: '流程状态',
-                    key: 'currentProcessName',
+                    key: 'current_process_name',
                     minWidth:100
                 },
                 {
                     title: '创建时间',
-                    key: 'createDate',
+                    key: 'create_date',
                     minWidth:100
                 },
                 {
                     title: '更新时间',
-                    key: 'updateDate',
+                    key: 'update_date',
                     minWidth:100
                 }
             ],
@@ -96,7 +96,7 @@ export default {
             let url = `api/order/unusual/workorder/findUnusualWorkOrderByOrderId`
             let config ={
                 params:{
-                    orderId: this.id
+                    orderId: _self.id
                 }
             }
             function success(res){
@@ -105,16 +105,27 @@ export default {
                     return
                 }
                 _self.data.push({
-                    applyMemo: res.data.data.applyMemo,
-                    companyId: res.data.data.companyId,
-                    createBy: res.data.data.createBy,
-                    createDate: DateFormat(res.data.data.createDate),
-                    updateDate: DateFormat(res.data.data.updateDate),
-                    id: res.data.data.id,
-                    currentProcessName: res.data.data.currentProcessName,
-                    productContent: res.data.data.productContent,
-                    unusualCode: res.data.data.unusualCode,
-                    unusualType: _self.unusualType_map.get(res.data.data.unusualType)
+//                     applyMemo: res.data.data.applyMemo,
+//                     companyId: res.data.data.companyId,
+//                     createBy: res.data.data.createBy,
+//                     createDate: DateFormat(res.data.data.createDate),
+//                     updateDate: DateFormat(res.data.data.updateDate),
+//                     id: res.data.data.id,
+//                     currentProcessName: res.data.data.currentProcessName,
+//                     productContent: res.data.data.productContent,
+//                     unusualCode: res.data.data.unusualCode,
+//                     unusualType: _self.unusualType_map.get(res.data.data.unusualType)
+					
+					apply_memo: res.data.data.apply_memo,
+					company_id: res.data.data.company_id,
+					create_by: res.data.data.create_by,
+					create_date: DateFormat(res.data.data.create_date),
+					update_date: DateFormat(res.data.data.update_date),
+					id: res.data.data.id,
+					current_process_name: res.data.data.current_process_name,
+					product_content: res.data.data.product_content,
+					unusual_code: res.data.data.unusual_code,
+					unusual_type: _self.unusualType_map.get(res.data.data.unusual_type)
                 })
             }
             this.$Get(url,config,success)

@@ -54,6 +54,7 @@
                     </Col>
                     <Col span="8">
                         <FormItem label="异常工单">
+							<span v-if="this.unusualCode">{{this.unusualCode}}</span>
                             <Button type="info" size="small" @click="open_relateOrder">点击查看</Button>
                         </FormItem>
                     </Col>
@@ -133,6 +134,8 @@ export default {
     props: ['payDirs'],
     data(){
         return {
+			//异常工单号
+			unusualCode:"",
             //  账期异常提示
             accoutError: false,
             //  打开弹窗
@@ -234,6 +237,25 @@ export default {
         }
     },
     methods:{
+		//获取异常工单号
+		get_ab_worker_id(){
+		    let _self = this
+		    let url = `api/order/unusual/workorder/findUnusualWorkOrderByOrderId`
+		    let config ={
+		        params:{
+		            orderId: this.orderId
+		        }
+		    }
+		    function success(res){
+				console.log("res.data.data")
+		        console.log(res.data.data)
+		        _self.unusualCode = ""
+		        if(res.data.data){
+		            _self.unusualCode = res.data.data.unusual_code
+		        }
+		    }
+		    this.$Get(url,config,success)
+		},
         //  检查账期是否异常
         check_order(e){
             let _self = this
@@ -341,6 +363,7 @@ export default {
             console.log(e)
             _self.check_order(e)
             _self.openApproveDealWith = true
+			_self.get_ab_worker_id()
         })
     },
 }
