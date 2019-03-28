@@ -102,14 +102,24 @@
           style="margin-top: 20px"
           @click="openUpdateLink = true"
         >修改流程图</Button>
+				<Button
+				  type="error"
+				  icon="bag"
+				  size="large"
+				  style="margin-top: 20px"
+					v-if="iscycle==='Y'?true:false"
+				  @click="openCycleProperty = true"
+				>修改周期性属性</Button>
       </Row>
     </Card>
     <update-link v-if="openUpdateLink" :skuId="SKU" :product="product" @update="openUpdateLink= false"></update-link>
+		<update-cycle-property v-if="openCycleProperty" :skuId="SKU" @update="openCycleProperty= false"></update-cycle-property>
   </div>
 </template>
 
 <script>
 import updateLink from './updateLink'
+import updateCycleProperty from './updateCycleProperty'
 export default {
   props: {
     product: {
@@ -117,11 +127,13 @@ export default {
     }
   },
   components: {
-    updateLink
+    updateLink,
+		updateCycleProperty
   },
   data() {
     return {
       openUpdateLink: false,
+			openCycleProperty:false,
       changeArea: false,
       sideLoading: false,
       productPrice: 0,
@@ -133,7 +145,8 @@ export default {
       queryProperty: [],
       producSku: [],
       selectProperty: [],
-      newPrice: 0
+      newPrice: 0,
+			iscycle:""
     };
   },
   watch: {
@@ -159,6 +172,9 @@ export default {
       this.selectProperty = [];
       this.get_queryProperty();
       this.get_product_sku();
+			console.log("this.product")
+			console.log(this.product)
+			this.iscycle = this.product.iscycle
     },
     //  获取产品子属性
     get_queryProperty() {
