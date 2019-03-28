@@ -1036,6 +1036,14 @@ export const appRouter = [
                 name: 'menuMangement_index',
                 component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/menuManagement/index.vue')
             },
+			{
+				access: 11628,
+				meta: 11628,
+				path: 'serveMangement',
+				title: '服务管理',
+				name: 'serveMangement_index',
+				component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/serveManagement/index.vue')
+			},
             {
                 access: 6030,
                 meta: 6030,
