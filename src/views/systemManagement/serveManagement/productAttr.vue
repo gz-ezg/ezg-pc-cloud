@@ -26,8 +26,10 @@ export default{
 			let _self = this
 			let url = 'api/product/sku/list'
 			let config = {
-				productId:_self.productId,
-				userId:_self.userId
+				params:{
+					productId:_self.productId,
+					userId:_self.userId
+				}
 			}
 			function success(res){
 				console.log("res")
