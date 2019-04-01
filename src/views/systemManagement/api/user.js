@@ -9,6 +9,15 @@ function getUserList(config, success, fail){
     })
 }
 
+function getProList(config, success, fail){
+    let url = 'product/list'
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxGet(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+
 function getUserDetail(config, success, fail){
     let url = 'user/detail'
     return new Promise((resolve, reject)=>{
@@ -30,6 +39,24 @@ function postUpdateUser(config, success, fail){
     let url = 'user/updateUser'
     return new Promise((resolve, reject)=>{
         resolve(AjaxPost(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+
+function saveUserProduct(config, success, fail){
+    let url = 'user/product/save'
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxPost(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+
+function getPorductSKU(config, success, fail){
+    let url = 'product/sku/list'
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxGet(url, config, success, fail))
     }).catch((err)=>{
         return err
     })
@@ -146,6 +173,7 @@ function addInterfaceAndDataRuleToUserRM(config, success, fail){
 
 export {
     getUserDetail,
+	getProList,
     getDictionary,
     postUpdateUser,
     getUserList,
@@ -155,6 +183,8 @@ export {
     getUserDataRulesByUserIdAndInterfaceId,
     getUserRMButtonsByUserIdAndInterfaceId,
     getUserRMDataRulesByUserIdAndInterfaceId,
+	getPorductSKU,
+	saveUserProduct,
     addInterfaceAndOperationToUser,
     addInterfaceAndOperationToUserRM,
     addInterfaceToUser,

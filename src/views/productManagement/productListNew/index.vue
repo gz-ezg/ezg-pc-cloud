@@ -32,6 +32,7 @@
             <Row style="margin-top: 10px">
                 <ButtonGroup>
                     <Button @click="create" type="primary">新增产品</Button>
+					<Button @click="openEditSKU" type="primary">修改SKU权重</Button>
                 </ButtonGroup>
             </Row>
             <Row style="margin-top: 10px;">
@@ -59,19 +60,23 @@
                     <product-attr :product="selectRow" style="margin-left:5px"></product-attr>
                 </Col>
             </Row>
+			<editSKU v-if="editSKU_model"></editSKU>
         </Card>
     </div>
 </template>
 
 <script>
 import productAttr from './productAttr'
+import editSKU from './editSKU'
 export default {
     name: "productList_index",
     components:{
-        productAttr
+        productAttr,
+		editSKU
     },
     data(){
         return {
+			editSKU_model:false,
             search_model: "",
             loading: false,
             header: [
@@ -220,7 +225,16 @@ export default {
             this.$router.push({
                  path: '/productDetail?id='
             })
-        }
+        },
+		openEditSKU(){
+			let _self = this
+			if(this.selectRow){
+				this.editSKU_model = true
+				_self.$bus.emit("GET_PRODUCT_ID",123)
+			}else{
+				this.$Message.warning("请选择一行查看")
+			}
+		}
     },
     watch:{
 

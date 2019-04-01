@@ -29,7 +29,7 @@
 						</FormItem>
 					</Col>
 					<Col span="8">
-						<user-pro-list :userId="formInline.id"></user-pro-list>
+						<user-pro-list></user-pro-list>
 					</Col>
 					<Col span="8">
 						<product-attr style="margin-left:5px"></product-attr>
@@ -160,10 +160,31 @@ export default{
 			userTableLoading:false
 		}
 	},
+	computed:{
+		userId(){
+			return this.$store.state.serveManagement.userId
+		},
+		productId(){
+			return this.$store.state.serveManagement.productId
+		},
+		productSkuIds(){
+			return this.$store.state.serveManagement.productSkuIds
+		}
+	},
 	methods:{
 		selectRow(e){
+			let _self = this
 			this.showModal = true
 			this.formInline = e
+			// console.log(this.formInline.id)
+			
+// 			console.log(this.$store.state.serveManagement.userId)
+			this.$store.commit("serveManagement/addUserId",_self.formInline.id)
+			this.$bus.emit("OPEN_USERPROLIST",true)
+		},
+		close(){
+			this.showModal = false
+			this.$bus.emit("CLEAR_DATA",true)
 		},
 		page_change(e){
 		    this.page = e
@@ -184,23 +205,18 @@ export default{
 		    this.$refs["formValidate"].resetFields()
 		    this.get_data()
 		},
-		change_accout(){
-			let url = ``
+		async change_accout(){
 			let _self = this
 			let config = {
-				id:_self.formInline.id,
-				name:_self.formInline.name,
-				department:_self.formInline.department,
-				start:_self.formInline.start,
-				order_taking:_self.formInline.order_taking,
-				check_list:_self.formInline.check_list
+				userId:_self.userId,
+				productId:_self.productId,
+				productSkuIds:_self.productSkuIds
 			}
-			
-			function success(res){
-				console.log(res)
+
+			let res = await userApi.saveUserProduct(config)
+			if(res){
+				_self.get_data()
 			}
-			
-			this.$Post(url,config,success)
 		},
 		async get_data(){
 			let _self = this
@@ -264,6 +280,7 @@ export default{
 		}
 	},
 	created(){
+		let _self = this
 		this.get_data_center()//数据字典
 		this.get_data()//获取用户列表
 	}

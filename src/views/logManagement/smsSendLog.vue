@@ -82,7 +82,9 @@
                     <Row>
                         <ButtonGroup>
                             <Button type="primary" icon="search" @click="dataCheck">查看</Button> 
-                            <Button type="primary" icon="search" @click="downloadExcel">下载</Button>                 
+                            <Button type="primary" icon="search" @click="downloadExcel">下载</Button>
+							<Button type="primary" icon="search" @click="open_send_email" v-permission="['smsSendLogSendEmail.send']">发送短信</Button>
+							<Button type="primary" icon="search" @click="open_send_excelEmail" v-permission="['smsExcelSendLogSendEmail.send']">excel发送短信</Button>
                         </ButtonGroup>
                     </Row>
                     <Row style="margin-top: 10px;">
@@ -162,6 +164,48 @@
                     <Button size="small" type="ghost" style="margin-left:20px" @click="close">关闭</Button>
             </div>
         </Modal>
+		
+		<Modal
+			title="发送短信"
+			width="600"
+			v-model="send_email_model"
+			@on-cancel="close_send_email"
+		>
+			<Form ref="formEmail" :model="formEmail" :rules="ruleValidate">
+				<FormItem prop="phone">
+					<Input type="input" v-model="formEmail.phone"></Input>
+				</FormItem>
+				<FormItem prop="msg_content">
+					<Input type="textarea" v-model="formEmail.msg_content"></Input>
+				</FormItem>
+			</Form>
+			<div slot="footer">
+			    <Button type="primary" @click="send_email('formEmail')" :loading="send_email_loading">发送</Button>
+			    <Button type="ghost" @click="close_send_email">取消</Button>
+			</div>
+		</Modal>
+		
+		<Modal
+		    v-model="send_excel_email_model"
+		    title="发送excel短信"
+		    width="200"
+		>   
+		    <Row :gutter="20">
+		        <Col span="24">
+		            <center>
+		              <Upload
+		                ref="upload"
+		                :before-upload="handleUpload"
+		                action="/api/customer/importHighSeasPoolMessage"
+		              >
+		                <Button type="ghost" icon="ios-cloud-upload-outline" style="margin-top:20px">选择文件</Button>
+		                <Button type="info" icon="ios-cloud-download-outline" style="margin-top:20px;" @click="open">导入模板</Button>
+		              </Upload>
+		            </center>
+		        </Col>
+		    </Row>
+		    <div slot="footer"></div>
+		</Modal>
     </div>
 </template>
 
@@ -175,6 +219,17 @@ export default {
       loading: false,
       showwidth: 24,
       groupDataCenter: true,
+	  send_email_model:false,
+	  send_excel_email_model:false,
+	  formEmail:{
+		phone:"",
+		msg_content:""
+	  },
+	  ruleValidate:{
+		  phone:[{required: true, message: '请填写手机号', trigger: 'blur'}],
+		  msg_content:[{required: true, message: '请填写内容', trigger: 'blur'}]
+	  },
+	  send_email_loading:false,
       //  筛选相关
       search_model: "",
       searchModel: {
@@ -351,7 +406,52 @@ export default {
     },
     close() {
       this.open_father_data = false;
-    }
+    },
+	open_send_email(){
+		let _self = this;
+		if (_self.current_father_row == "" || _self.current_father_row == null) {
+		  _self.$Message.warning("请选择一行进行查看！");
+		} else {
+		  _self.send_email_model = true;
+		  _self.formEmail = _self.current_father_row;
+		}
+	},
+	close_send_email(){
+		this.send_email_model = false
+	},
+	send_email(name){
+		let _self = this
+		let url = 'api/system/message/sendMessage'
+		let params = {
+			phone:_self.formEmail.phone,
+			content:_self.formEmail.msg_content
+		}
+		function success(res){
+			_self.close_send_email()
+		}
+		
+		const formData = new FormData();
+		
+		Object.keys(params).forEach((key) => {
+			formData.append(key, params[key]);
+		});
+			// console.log(novel1)
+		
+		this.$refs[name].validate((valid)=>{
+			if(valid){
+				this.$Post(url,formData,success)
+			}
+		})
+	},
+	open_send_excelEmail(){
+		this.send_excel_email_model = true
+	},
+	close_send_excelEmail(){
+		this.send_excel_email_model = false
+	},
+	open(){
+	    window.open("/api/assets/upload/commonImg/public_pool_template.xlsx")
+	}
   },
   created() {
     let _self = this;

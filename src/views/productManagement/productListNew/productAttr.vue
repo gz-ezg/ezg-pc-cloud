@@ -172,8 +172,6 @@ export default {
       this.selectProperty = [];
       this.get_queryProperty();
       this.get_product_sku();
-			console.log("this.product")
-			console.log(this.product)
 			this.iscycle = this.product.iscycle
     },
     //  获取产品子属性

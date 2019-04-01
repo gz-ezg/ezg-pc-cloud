@@ -18,6 +18,10 @@
 					<InputNumber :min="1" v-model="formValidate.showPortionNum"></InputNumber>
 					<!-- <Input v-model="formValidate.showPortionNum" placeholder="Enter your name"></Input> -->
 				</FormItem>
+				<FormItem label="最大票据数" prop="maxBillNum">
+					<InputNumber :min="1" v-model="formValidate.maxBillNum"></InputNumber>
+					<!-- <Input v-model="formValidate.showPortionNum" placeholder="Enter your name"></Input> -->
+				</FormItem>
 			</Form>
 			<div slot="footer">
 				<Button type="primary" @click="submit('formValidate')" :loading="submitLoading">修改</Button>
@@ -41,7 +45,8 @@
 					typeACount: 1,
 					typeBCount: 1,
 					portionNum: 1,
-					showPortionNum: 1
+					showPortionNum: 1,
+					maxBillNum:1
 				},
 				ruleValidate: {
 					typeACount: [{
@@ -59,6 +64,10 @@
 					showPortionNum: [{
 						required: true,
 						message: '请填写产品默认展示份数'
+					}],
+					maxBillNum: [{
+						required: true,
+						message: '请填写最大票据数'
 					}]
 				},
 				submitLoading:false
@@ -76,7 +85,8 @@
 					typeACount: _self.formValidate.typeACount,
 					typeBCount: _self.formValidate.typeBCount,
 					portionNum: _self.formValidate.portionNum,
-					showPortionNum: _self.formValidate.showPortionNum
+					showPortionNum: _self.formValidate.showPortionNum,
+					maxBillNum: _self.formValidate.maxBillNum
 				}
 				this.submitLoading = true
 
@@ -85,8 +95,6 @@
 					console.log(res)
 					_self.close()
 				}
-				console.log("name")
-				console.log(name)
 				this.$refs[name].validate((vaild) => {
 					if (vaild) {
 						this.$Message.success('修改成功!');

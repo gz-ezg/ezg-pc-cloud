@@ -1,32 +1,21 @@
 <template>
 	<div>
 		<Table
-		    
+			height="400"
+		    :loading="loading"
 		    highlight-row 
 		    border
-		    size="small"
 		    :columns="pro_header"
-		    @on-current-change="pro_select_row"
+		    @on-current-change="select_row"
 		    :data="pro_data"></Table>
-		<Page
-		    size="small"
-		    :total="pro_total"
-		    show-total
-		    show-sizer
-		    show-elevator
-		    :current.sync="pro_page"
-		    @on-change="pro_page_change"
-		    @on-page-size-change="pro_page_size_change"
-		    style="margin-top: 10px"></Page>
 	</div>
 </template>
 
 <script>
+import * as userApi from '../api/user.js'
 export default{
-	props:["userId"],
 	data(){
 		return{
-			pro_row:"",
 			productList:[],
 			pro_header:[
 				{
@@ -35,46 +24,37 @@ export default{
 				}
 			],
 			pro_data:[],
-			pro_total:0,
-			pro_page_size:10,
-			pro_page:1,
+			loading:false
+		}
+	},
+	computed:{
+		userId(){
+			return this.$store.state.serveManagement.userId
 		}
 	},
 	methods:{
-		get_product_data(){
+		async get_product_data(){
 			let _self = this
-			let url = `api/product/list`
-			
+			_self.loading = true
 			let config = {
 			    params:{
-			        page: _self.pro_page,
-			        pageSize: _self.pro_page_size,
 					userId:_self.userId
 			    }
 			}
-			function success(res){
-				_self.pro_data = res.data.data.rows
-				_self.pro_total = res.data.data.total
-				console.log(res)
-			}
-			this.$Get(url, config, success)
+			let rows = await userApi.getProList(config)
+
+			_self.pro_data = rows
+			_self.loading = false
 		},
-		pro_page_change(e){
-		    this.pro_page = e
-		    this.get_product_data()
-		},
-		pro_page_size_change(e){
-		    this.pro_page = 1
-		    this.pro_page_size = e
-		    this.get_product_data()
-		},
-		pro_select_row(e){
-			this.pro_row = e
-			this.$bus.emit("PRO_CHANGE",{productId:this.pro_row.id,userId:this.userId})
+		select_row(e){
+			this.$store.commit("serveManagement/addProductId",e.id)
 		}
 	},
 	created(){
-		this.get_product_data()//获取产品列表
+		let _self = this
+		this.$bus.on("OPEN_USERPROLIST",(e)=>{
+			_self.get_product_data()
+		})
 	}
 }
 </script>
