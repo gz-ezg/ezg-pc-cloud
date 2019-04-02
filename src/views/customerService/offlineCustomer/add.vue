@@ -266,7 +266,8 @@
                     tel:"",
                     followbusiness: "",
                     has_returned: "",
-                    has_arrears: ""
+                    has_arrears: "",
+					cycleServiceRecordId:""
                 },
                 task_message_rule:{
                     taxperiod:[{ required: true, message: '必选项！', trigger: 'change', type:'date' }],
@@ -588,6 +589,7 @@
             },
             //选择产品改变相关数据
             changeProduct(e){
+				console.log("eeee")
                 console.log(e)
                 let _self = this
                 if(!_self.defaultData){
@@ -600,6 +602,7 @@
                         _self.task_message.servicer = _self.defaultData[i].serviceId
                         _self.task_message.servicername = _self.defaultData[i].server_name
                         _self.task_message.servicebegindate = DateFormat(_self.defaultData[i].service_begin_time)
+						_self.task_message.cycleServiceRecordId = _self.defaultData[i].cycleServiceRecordId
                     }
                 }
             },
@@ -615,7 +618,8 @@
                 _self.productList = []
                 
                 function success(res) {
-                    console.log(res.data.data)
+					console.log("res.data.data")
+                    console.log(res.data.data)//cycleServiceRecordId
                     _self.defaultData = res.data.data
                     if(res.data.data.length){
                         for(let i =0;i<res.data.data.length;i++){
@@ -628,11 +632,13 @@
                         _self.task_message.servicer = res.data.data[0].serviceId
                         _self.task_message.servicername = res.data.data[0].server_name
                         _self.task_message.servicebegindate = DateFormat(res.data.data[0].service_begin_time)
+						_self.task_message.cycleServiceRecordId = res.data.data[0].cycleServiceRecordId
                     } else {
                         _self.task_message.productid = ""
                         _self.task_message.servicer = ""
                         _self.task_message.servicername = ""
                         _self.task_message.servicebegindate = ""
+						_self.task_message.cycleServiceRecordId = ""
                     }
 
                 }
@@ -737,9 +743,12 @@
                     taxperiod: DateFormat(_self.task_message.taxperiod).substring(0,DateFormat(_self.task_message.taxperiod).length-3),
                     followbusiness: _self.task_message.followbusiness,
                     hasReturned: _self.task_message.has_returned,
-                    hasArrears: _self.task_message.has_arrears
+                    hasArrears: _self.task_message.has_arrears,
+					cycleServiceRecordId:_self.task_message.cycleServiceRecordId
                 }
-                console.log(_data.taxperiod)
+				console.log("_data")
+				console.log(_data)
+                
                 function doSuccess(res) {
                     console.log(res)
                     // _self.$Message.success(res.data.msg)

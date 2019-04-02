@@ -271,6 +271,14 @@ export default {
                 taskStage: _self.data.taskData[0].task_stage,
                 changeReason: _self.task_memo
             }
+			console.log("config")
+			console.log(config)
+			
+			const formData = new FormData();
+			  Object.keys(config).forEach((key) => {
+				formData.append(key, config[key]);
+			  });
+			
             function success(res){
                 // _self.update_content()
                 console.log(res)
@@ -281,7 +289,7 @@ export default {
                 console.log(err)
             }
 
-            this.$Post(url, config, success, fail)
+            this.$Post(url, formData, success, fail)
         },
         getTaskStage(e){
             console.log(e)
@@ -490,8 +498,9 @@ export default {
                 taskId: _self.data.taskData[0].id,
                 taskStage: _self.data.taskData[0].task_stage
             }
-
-            console.log(config)
+			
+			
+			
             function success(res){
                 _self.update_content()
                 _self.task_memo = ""

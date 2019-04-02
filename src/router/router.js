@@ -737,6 +737,14 @@ export const appRouter = [
                 name: 'BookkeepingAgency_index',
                 component: () => import( /* webpackChunkName: "BookkeepingAgency_index" */ '@/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgency.vue')
             },
+			{
+			    access: 11629,
+			    meta: 11629,
+			    path: 'expireCustomer',
+			    title: '到期客户管理',
+			    name: 'expireCustomer_index',
+			    component: () => import( /* webpackChunkName: "BookkeepingAgency_index" */ '@/views/accountantWorkOrder/expireCustomer/expireCustomer.vue')
+			},
             {
                 access: 6046,
                 meta: 6046,

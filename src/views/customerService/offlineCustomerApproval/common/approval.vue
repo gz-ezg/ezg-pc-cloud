@@ -142,7 +142,7 @@
                 </TabPane>
             </Tabs>
             <div slot="footer">
-                <Button type="primary" @click="submit" >提交</Button>
+                <Button type="primary" @click="submit" :loading="loading" >提交</Button>
             </div>
         </Modal>
     </div>
@@ -152,6 +152,7 @@
     export default {
         data() {
             return {
+				loading:false,
                 banlishenpi: {
                     agree: "Agree",
                     desc: ""
@@ -183,6 +184,7 @@
         methods:{
             submit(){
                 let _self = this
+				_self.loading = true
                 let url = `api/customer/audit`
                 let config = {
                     applyId: _self.task_message.applyId,
@@ -194,6 +196,7 @@
                     _self.isOpenApproval = false
                     _self.$bus.emit('UPDATE_DATA',true)
                     console.log(res)
+					_self.loading = false
                 }
                 function fail(){
 

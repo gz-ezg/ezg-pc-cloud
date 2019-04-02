@@ -74,9 +74,13 @@ export default {
         productAttr,
 		editSKU
     },
+	computed:{
+		editSKU_model(){
+			return this.$store.state.productListNew.editSKU_model
+		}
+	},
     data(){
         return {
-			editSKU_model:false,
             search_model: "",
             loading: false,
             header: [
@@ -229,8 +233,8 @@ export default {
 		openEditSKU(){
 			let _self = this
 			if(this.selectRow){
-				this.editSKU_model = true
-				_self.$bus.emit("GET_PRODUCT_ID",123)
+				this.$store.commit("productListNew/changeEditSKU_model")
+				this.$store.commit("productListNew/addProductId",_self.selectRow.id)
 			}else{
 				this.$Message.warning("请选择一行查看")
 			}

@@ -293,8 +293,8 @@ export default {
                 taskId: _self.data.taskData[0].id,
                 taskStage: _self.data.taskData[0].task_stage
             }
-
-            console.log(config)
+			
+            
             function success(res){
                 _self.update_content()
                 _self.task_memo = ""

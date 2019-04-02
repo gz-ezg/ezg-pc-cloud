@@ -167,16 +167,16 @@
 		
 		<Modal
 			title="发送短信"
-			width="600"
+			width="300"
 			v-model="send_email_model"
 			@on-cancel="close_send_email"
 		>
 			<Form ref="formEmail" :model="formEmail" :rules="ruleValidate">
 				<FormItem prop="phone">
-					<Input type="input" v-model="formEmail.phone"></Input>
+					<Input type="input" v-model="formEmail.phone" placeholder="请输入手机号"></Input>
 				</FormItem>
 				<FormItem prop="msg_content">
-					<Input type="textarea" v-model="formEmail.msg_content"></Input>
+					<Input type="textarea" :rows="6" v-model="formEmail.msg_content" placeholder="请输入短信内容"></Input>
 				</FormItem>
 			</Form>
 			<div slot="footer">
@@ -196,7 +196,7 @@
 		              <Upload
 		                ref="upload"
 		                :before-upload="handleUpload"
-		                action="/api/customer/importHighSeasPoolMessage"
+		                action="/api/system/message/sendMessageByExcel"
 		              >
 		                <Button type="ghost" icon="ios-cloud-upload-outline" style="margin-top:20px">选择文件</Button>
 		                <Button type="info" icon="ios-cloud-download-outline" style="margin-top:20px;" @click="open">导入模板</Button>
@@ -408,13 +408,7 @@ export default {
       this.open_father_data = false;
     },
 	open_send_email(){
-		let _self = this;
-		if (_self.current_father_row == "" || _self.current_father_row == null) {
-		  _self.$Message.warning("请选择一行进行查看！");
-		} else {
-		  _self.send_email_model = true;
-		  _self.formEmail = _self.current_father_row;
-		}
+		this.send_email_model = true;
 	},
 	close_send_email(){
 		this.send_email_model = false
@@ -428,6 +422,7 @@ export default {
 		}
 		function success(res){
 			_self.close_send_email()
+			_self.getData()
 		}
 		
 		const formData = new FormData();
@@ -450,7 +445,30 @@ export default {
 		this.send_excel_email_model = false
 	},
 	open(){
-	    window.open("/api/assets/upload/commonImg/public_pool_template.xlsx")
+	    // window.open("/api/assets/upload/commonImg/public_pool_template.xlsx")
+		window.open("http://upload.zgcfo.com/woafiles/sms_template.xlsx")
+		// http://upload.zgcfo.com/woafiles/sms_template.xlsx
+		this.getData()
+	},
+	handleUpload(file){
+	    let _self = this
+	    let formdata = new FormData()
+	    let url = 'api/system/message/sendMessageByExcel'
+	
+	    formdata.append("file", file)
+	
+	    function success(res){
+	        _self.getData()
+	        _self.close_send_excelEmail()
+	        return false
+	    }
+	
+	    function fail(err){
+	        return false
+	    }
+	
+	    this.$Post(url, formdata, success, fail)
+	    return false
 	}
   },
   created() {

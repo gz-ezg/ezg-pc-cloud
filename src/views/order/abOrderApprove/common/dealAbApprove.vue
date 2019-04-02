@@ -90,6 +90,7 @@ export default {
         //办理审批
         submit(){
             let _self = this
+			_self.submitLoading = true
             let url = `api/order/unusual/workorder/audit`
             let config = {
                 applyId: _self.formValidateDetail.applyId,

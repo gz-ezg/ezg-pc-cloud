@@ -144,8 +144,8 @@ export default {
             let _self = this 
             let url = `api/order/unusual/workorder/linkUnusualWorkOrder`
             let config = {
-                applyId: this.applyId,
-                orderId: this.orderId
+                applyId: _self.applyId,
+                orderId: _self.orderId
             }
             function success(res){
                 console.log(res)
@@ -153,10 +153,10 @@ export default {
             function fail(){
 
             }
-            this.$Post(url,config,success,fail)
-            this.orderId = ''
-            this.applyId = ''
-            this.orderCode = ''
+            _self.$Post(url,config,success,fail)
+            _self.orderId = ''
+            _self.applyId = ''
+            _self.orderCode = ''
         },
         //打开对应的异常工单列表
         open_abOrder(){
@@ -164,7 +164,6 @@ export default {
         },
         //  选择对应异常工单后回调
         setting_aborder(e){
-            console.log(e)
             this.applyId = e.id
             // this.orderCode = e.unusual_code
             this.unusualCode = e.unusual_code
@@ -183,6 +182,7 @@ export default {
                 _self.unusualCode = ""
                 if(res.data.data){
                     _self.unusualCode = res.data.data.unusual_code
+					_self.applyId = res.data.data.id
                 }
             }
             this.$Get(url,config,success)

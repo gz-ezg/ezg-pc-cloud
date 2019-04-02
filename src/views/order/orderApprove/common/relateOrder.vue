@@ -41,6 +41,11 @@ export default {
                     key: 'product_content',
                     minWidth:150
                 },
+				{
+				    title: '公司名称',
+				    key: 'companyName',
+				    minWidth:150
+				},
                 {
                     title: '异常类型',
                     key: 'unusual_type',
@@ -53,7 +58,7 @@ export default {
                 },
                 {
                     title: '流程状态',
-                    key: 'current_process_name',
+                    key: 'process_type',
                     minWidth:100
                 },
                 {
@@ -117,12 +122,13 @@ export default {
 //                     unusualType: _self.unusualType_map.get(res.data.data.unusualType)
 					
 					apply_memo: res.data.data.apply_memo,
+					companyName:res.data.data.companyName,
 					company_id: res.data.data.company_id,
 					create_by: res.data.data.create_by,
 					create_date: DateFormat(res.data.data.create_date),
 					update_date: DateFormat(res.data.data.update_date),
 					id: res.data.data.id,
-					current_process_name: res.data.data.current_process_name,
+					process_type: res.data.data.process_type,
 					product_content: res.data.data.product_content,
 					unusual_code: res.data.data.unusual_code,
 					unusual_type: _self.unusualType_map.get(res.data.data.unusual_type)

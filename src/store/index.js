@@ -5,6 +5,7 @@ import app from './modules/app';
 import user from './modules/user';
 import gobal from './modules/gobal';
 import serveManagement from './modules/serveManagement';
+import productListNew from './modules/productManagement/productListNew';
 
 Vue.use(Vuex);
 
@@ -22,7 +23,8 @@ const store = new Vuex.Store({
         app,
         user,
         gobal,
-		serveManagement
+		serveManagement,
+		productListNew
     }
 });
 

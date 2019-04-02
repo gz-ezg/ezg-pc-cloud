@@ -144,7 +144,6 @@ export default {
                     taskId: e
                 }
             }
-
             function success(res){
                 _self.data = res.data.data
             }
