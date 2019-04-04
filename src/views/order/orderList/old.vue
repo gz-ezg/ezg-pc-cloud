@@ -1340,6 +1340,8 @@
                 let url = '/order/queryItemDetail?productSkuIds=' + _self.SKU + '&areaId=' + _self.res1[2]
 
                 function doSuccess(response) {
+// 					console.log("response.data.data[0].product")
+// 					console.log(response.data.data[0].product)
                     // if(response.data.data[0].skuid == 1047 || response.data.data[0].skuid == 1048 || response.data.data[0].skuid == 1049 || response.data.data[0].skuid == 1050 ){
                     //     response.data.data[0].productnumber = 12
                     // }

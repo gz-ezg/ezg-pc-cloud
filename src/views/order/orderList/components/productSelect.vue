@@ -408,6 +408,12 @@ export default {
             }
 
             function success(res){
+// 				console.log("res")
+// 				console.log(res)
+				// _self.$bus.emit("ADD_PRODUCT_DETAIL_LIST",{product:res.data.data[0]})
+				_self.$store.commit("orderList/getProductListItem",res.data.data[0])
+				_self.$store.commit("orderList/addProductListItem")				
+								
                 _self.detail = res.data.data[0]
                 if(_self.detail.skuid =='1051' || _self.detail.skuid =='1052' ||_self.detail.skuid =='1053' ||_self.detail.skuid =='1054'){
                     _self.detail.productnumber = '12'
@@ -425,14 +431,16 @@ export default {
 
                     function success2(re){
                         _self.detail.servicestartdate = re.data.data
-                        _self.$bus.emit("ADD_PRODUCT",_self.detail)
+                        // _self.$bus.emit("ADD_PRODUCT",_self.detail)
                         _self.productListShow = false
+						
                     }
 
                     _self.$Get(url2, config2, success2)
                 }else{
-                    _self.$bus.emit("ADD_PRODUCT", _self.detail)
+                    // _self.$bus.emit("ADD_PRODUCT", _self.detail)
                     _self.productListShow = false
+					
                 }
             }
 
