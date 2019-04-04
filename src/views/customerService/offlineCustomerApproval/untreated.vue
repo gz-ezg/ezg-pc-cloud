@@ -304,7 +304,6 @@
                     _self.$bus.emit('OPEN_OFFLINE_SHOW', _self.row)
                 }
             },
-
             getData() {
                 let _self = this
                 let url = 'api/customer/auditList'
@@ -315,7 +314,13 @@
                         isAudit: "N",
                         createName: "",
                         bcreatedate: "",
-                        ecreatedate: ""
+                        ecreatedate: "",
+						companyname:_self.NformInline.companyname,
+						customername:_self.NformInline.name,
+						customertel:_self.NformInline.tel,
+						productname:_self.NformInline.product,
+						marketer:_self.NformInline.marketername,
+						servicer:_self.NformInline.servicename,
                     }
                 }
                 _self.row = {}

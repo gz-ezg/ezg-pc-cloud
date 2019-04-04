@@ -18,8 +18,8 @@
 					<InputNumber :min="1" v-model="formValidate.showPortionNum"></InputNumber>
 					<!-- <Input v-model="formValidate.showPortionNum" placeholder="Enter your name"></Input> -->
 				</FormItem>
-				<FormItem label="最大票据数" prop="maxBillNum">
-					<InputNumber :min="1" v-model="formValidate.maxBillNum"></InputNumber>
+				<FormItem label="最大票据数" prop="voucherMaxNum">
+					<InputNumber :min="0" v-model="formValidate.voucherMaxNum"></InputNumber>
 					<!-- <Input v-model="formValidate.showPortionNum" placeholder="Enter your name"></Input> -->
 				</FormItem>
 			</Form>
@@ -42,11 +42,11 @@
 			return {
 				formValidate: {
 					id: "",
-					typeACount: 1,
-					typeBCount: 1,
-					portionNum: 1,
-					showPortionNum: 1,
-					maxBillNum:1
+					typeACount: "",
+					typeBCount: "",
+					portionNum: "",
+					showPortionNum: "",
+					voucherMaxNum:""
 				},
 				ruleValidate: {
 					typeACount: [{
@@ -65,7 +65,7 @@
 						required: true,
 						message: '请填写产品默认展示份数'
 					}],
-					maxBillNum: [{
+					voucherMaxNum: [{
 						required: true,
 						message: '请填写最大票据数'
 					}]
@@ -86,7 +86,7 @@
 					typeBCount: _self.formValidate.typeBCount,
 					portionNum: _self.formValidate.portionNum,
 					showPortionNum: _self.formValidate.showPortionNum,
-					maxBillNum: _self.formValidate.maxBillNum
+					voucherMaxNum: _self.formValidate.voucherMaxNum
 				}
 				this.submitLoading = true
 
@@ -101,8 +101,27 @@
 						_self.$Post(url, config, success)
 					}
 					this.submitLoading = false
-				})
-				
+				})	
+			},
+			getList(){
+				let _self = this
+				let url = `api/product/sku/cycle/detail`
+				let config = {
+					params:{
+						skuId:_self.skuId
+					}
+				}
+				function success(res){
+					// _self.formValidate = res.data.data
+					let data = res.data.data
+		
+					if(data.voucherMaxNum === null){
+						data.voucherMaxNum = 0
+					}
+					_self.formValidate = data
+					
+				}
+				this.$Get(url,config,success)
 			}
 		},
 		mounted() {
@@ -114,6 +133,9 @@
 
 			this.formValidate.id = this.skuId
 
+		},
+		created(){
+			this.getList()
 		}
 	}
 </script>

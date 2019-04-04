@@ -6,6 +6,7 @@ import user from './modules/user';
 import gobal from './modules/gobal';
 import serveManagement from './modules/serveManagement';
 import productListNew from './modules/productManagement/productListNew';
+import expireCustomer from './modules/accountantWorkOrder/expireCustomer';
 
 Vue.use(Vuex);
 
@@ -24,7 +25,8 @@ const store = new Vuex.Store({
         user,
         gobal,
 		serveManagement,
-		productListNew
+		productListNew,
+		expireCustomer
     }
 });
 
