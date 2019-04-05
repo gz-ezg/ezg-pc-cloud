@@ -34,10 +34,12 @@
 									<Row>
 										<Col span="6">
 											<FormItem label="购买数量">
+												<!-- 手动处理修改数量后，业务逻辑 其他参照此-->
 												<InputNumber
-													@on-change=""
+													@on-blur="changeProductNumber(item.productnumber, index)"
 													:min="0" 
-													v-model="productList[index].productnumber" 
+													v-model="item.productnumber"
+													number
 													size="small" 
 													style="width:80px"></InputNumber>月
 											</FormItem>
@@ -68,7 +70,7 @@
 										</Col>
 										<Col span="6">
 											<FormItem label="服务部门">
-												<Select style="width:120px" size="small" @on-change="select(value,index)">
+												<Select style="width:120px" size="small" @on-change="select($event, index)" v-model="item.departid" label-in-value>
 													<Option
 														:value="departItem.type"
 														v-for="departItem of JSON.parse(item.servicedeparts)" 
@@ -78,8 +80,9 @@
 										</Col>
 										<Col span="6">
 											<FormItem label="服务人员">
-												<Select style="width:120px" size="small" v-model="productList[index].realname">
-													<Option :value="productList[index].realname">{{productList[index].realname}}</Option>
+												<!-- 如果需要手动添加服务人员名称而不只是id，请实例化selectService函数，否则无需处理 -->
+												<Select style="width:120px" size="small" v-model="item.userId" @on-change="selectService($event, index)" label-in-value>
+													<Option v-for="(item, index) in item.serviceList" :key="index" :value="item.userId">{{item.realname}}</Option>
 												</Select>
 											</FormItem>
 										</Col>
@@ -261,6 +264,8 @@
 
 <script>
 export default{
+	//	不要使用vuex，无法直接修改数值，如果要修改，会搞死人的，要写一堆的action
+	//	直接使用props传值，再watch productItem 属性即可
 	computed:{
 		productItem(){
 			return this.$store.state.orderList.productItem
@@ -278,40 +283,59 @@ export default{
 	data(){
 		return{
 			landTax:[{name:"是"},{name:"否"}],
-			serviceDepartId:""
+			// serviceDepartId:""
 		}
 	},
 	methods:{
-		select(value,index){
-// 			console.log("value")
-// 			console.log(value)
-			this.serviceDepartId = value
-			this.getRealName(index)
+		//	处理部门逻辑
+		select(item, index){
+			// 第一个参数为选项值{value： ,label: }
+			// 第二个值为序号
+			// console.log(index)
+			// console.log(item)
+			//	修改对应的值
+			this.productItem[index].departid = item.value
+			this.productItem[index].departName = item.label
+			this.getRealName(item.value, index)
 		},
 		removeItem(item){
 			this.$store.commit("orderList/removeProductListItem",item)
 		},
-		getRealName(index){
+		getRealName(departId, index){
 			let _self = this
 			let url = 'api/product/server/list'
 			let config = {
 				params:{
-					productSkuId:_self.pskuId,
-					serviceDepartId:_self.serviceDepartId,
-					companyId:_self.companyId,
+					productSkuId: _self.pskuId,
+					serviceDepartId: departId,
+					companyId: _self.companyId,
 				}
 			}
 			function success(res){
-// 				console.log("resres")
-// 				console.log(res)
-// 				console.log("res.data.data")
-// 				console.log(res.data.data[0].realname)
-				_self.productList[index].realname = res.data.data[0].realname
+				//	如果返回值长度为1，则直接赋值
+				if(res.data.data.length === 1) {
+					_self.productItem[index].serviceName = res.data.data[0].realname
+					_self.productItem[index].serviceId = res.data.data[0].userId
+				}else{
+				//	返回值长度超过1，赋值进入服务人员队列
+					_self.productItem[index].serviceList = res.data.data
+				}
+				
 				
 				// _self.realname = res.data.data[0].realname
 				// console.log(_self.realname)
 			}
 			this.$Get(url,config,success)
+		},
+		//	改变产品数量后自动执行该函数，可以在此函数处理其他值的相关逻辑
+		changeProductNumber(value, index) {
+			//	value指当前赋值，index产品序号
+			console.log(index)
+			console.log(value)
+		},
+		//	处理人员逻辑
+		selectService(item) {
+
 		}
 	},
 	created(){
