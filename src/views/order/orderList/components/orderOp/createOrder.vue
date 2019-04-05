@@ -126,7 +126,7 @@
 					        </Col>
 					    </Row>
 					</Form>
-					<!-- <Row v-if="orderItem.length">
+					<Row v-if="orderItem.length">
 					    <Table
 					        id="orderItem"
 					        style="margin-top:10px"
@@ -136,7 +136,7 @@
 					        size="small"
 					        :columns="orderItemHeader"
 					        :data="orderItem"></Table>
-					</Row> -->
+					</Row>
 				</Col>
 				<Col span="16">
 					<h3 style="margin-bottom: 10px;">
@@ -290,9 +290,11 @@ export default {
                 usebalance: _self.orderDetail.usebalance,
                 orderitems: JSON.stringify(_self.orderItem)
             }
-
+			console.log("config")
+			console.log(config)
             try {
                 let { status, data } = await orderApi.orderCreate(config)
+				console.log("data.data")
                 console.log(data.data)
                 this.orderId = data.data
                 if(status){

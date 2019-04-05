@@ -375,6 +375,7 @@ export default {
             }
 
             function success(res){
+				_self.$store.commit("orderList/getPskuId",res.data.data[0].pskuId)
                 _self.productPrice = res.data.data[0].oaprice
             }
 
@@ -408,7 +409,7 @@ export default {
             }
 
             function success(res){
-// 				console.log("res")
+// 				console.log("resres")
 // 				console.log(res)
 				// _self.$bus.emit("ADD_PRODUCT_DETAIL_LIST",{product:res.data.data[0]})
 				_self.$store.commit("orderList/getProductListItem",res.data.data[0])

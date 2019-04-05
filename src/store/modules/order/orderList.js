@@ -2,7 +2,9 @@ const orderList = {
 	namespaced: true,
     state: {
 		productItem:"",
-		productList:[]
+		productList:[],
+		companyId:"",
+		pskuId:""
     },
     mutations: {
 		getProductListItem(state,item){
@@ -13,6 +15,12 @@ const orderList = {
 		},
 		removeProductListItem(state,item){
 			state.productList.splice(item,1)
+		},
+		getCompanyId(state,item){
+			state.companyId = item
+		},
+		getPskuId(state,item){
+			state.pskuId = item
 		}
 	}
 };

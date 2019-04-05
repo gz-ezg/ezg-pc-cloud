@@ -2,7 +2,8 @@ module.exports = {
     "dev-test": {
         proxyTable: {
             '/api': {
-                target: 'http://192.168.0.220:9000',
+                // target: 'http://192.168.0.220:9000',
+				target:'http://qq364525897.e2.luyouxia.net:32232',
                 pathRewrite: {
                   '^/api': ''
                 },

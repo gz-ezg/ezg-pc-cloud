@@ -113,6 +113,7 @@ export default {
             // console.log(e)
             this.$emit("company-change", e)
             this.openSelectCompany = false
+			this.$store.commit("orderList/getCompanyId",e.id)
         }
     },
     created() {

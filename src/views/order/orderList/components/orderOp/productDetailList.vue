@@ -1,256 +1,6 @@
 <template>
 	<div class="test">
-		<!-- <Collapse v-model="value">
-			<Panel :name="index" v-for="(item,index) of productList" :key="index">
-				<div v-if="item.product === '小规模代理记账'">
-					<p>小规模代理记账</p>
-					<Form label-position="left" slot="content">
-						<Row>
-							<Col span="5">
-								<div>
-									<FormItem label="公司类型:" label-width="80">
-										<Input disabled placeholder="内资公司" size="small" style="width: 100px;"></Input>
-									</FormItem>
-									<FormItem label="小规模类型:" label-width="80">
-										<Input disabled placeholder="小规模特定2000" size="small" style="width: 100px;"></Input>
-									</FormItem>
-									<FormItem label="产品价格:" label-width="80">
-										<Input disabled placeholder="2000元" size="small" style="width: 100px;"></Input>
-									</FormItem>
-									<FormItem label="月单价:" label-width="80">
-										<Input disabled placeholder="166元" size="small" style="width: 100px;"></Input>
-									</FormItem>
-									<FormItem label="销售金额" label-width="80">
-										<Input placeholder="2000" size="small" style="width: 100px;"></Input>￥
-									</FormItem>
-								</div>
-							</Col>
-							<Col span="19">
-								<div>
-									<Row>
-										<Col span="6">
-											<FormItem label="购买数量" label-width="60">
-												<InputNumber :min="0" v-model="value1" size="small" style="width:80px"></InputNumber>月
-											</FormItem>
-										</Col>
-										<Col span="6">
-											<FormItem label="赠送数量" label-width="60">
-												<InputNumber :min="0" v-model="value1" size="small" style="width:80px"></InputNumber>月
-											</FormItem>
-										</Col>
-										<Col span="6">
-											<FormItem label="A类外勤" label-width="60">
-												<InputNumber :min="0" v-model="value1" size="small" style="width:80px"></InputNumber>次
-											</FormItem>
-										</Col>
-										<Col span="6">
-											<FormItem label="B类外勤" label-width="60">
-												<InputNumber :min="0" v-model="value1" size="small" style="width:80px"></InputNumber>次
-												
-											</FormItem>
-										</Col>
-									</Row>
-									
-									<Row>
-										<Col span="6">
-											<FormItem label="开始税期" label-width="60">
-												<DatePicker type="month" placeholder="选择月份" style="width:80px" size="small"></DatePicker>
-												
-											</FormItem>
-											
-										</Col>
-										<Col span="6">
-											<FormItem label="服务部门" label-width="60">
-												<Select style="width:80px" size="small">
-													<Option></Option>
-												</Select>
-											</FormItem>
-											
-										</Col>
-										<Col span="6">
-											<FormItem label="服务人员">
-												<Select style="width:80px" size="small">
-													<Option></Option>
-												</Select>
-												
-											</FormItem>
-											
-										</Col>
-										<Col span="6">
-											<FormItem label="国地税报到">
-												<Select style="width:80px" size="small">
-													<Option></Option>
-												</Select>
-												
-											</FormItem>
-											
-										</Col>
-									</Row>
-									<Row>
-										<Col>
-											<FormItem label="服务说明">
-												<Input type="textarea" size="small" :rows="4"></Input>
-											</FormItem>
-										</Col>
-									</Row>
-								</div>
-							</Col>
-						</Row>
-					</Form>
-				</div>
-				
-				<div v-if="item.product === '会计到家'">
-					<p>会计到家</p>
-					<Form label-position="left" slot="content">
-						<Row>
-							<Col span="5">
-								<div>
-									<FormItem label="公司类型:" label-width="80">
-										<Input disabled placeholder="内资公司" size="small" style="width: 100px;"></Input>
-									</FormItem>
-									<FormItem label="小规模类型:" label-width="80">
-										<Input disabled placeholder="小规模特定2000" size="small" style="width: 100px;"></Input>
-									</FormItem>
-									<FormItem label="产品价格:" label-width="80">
-										<Input disabled placeholder="2000元" size="small" style="width: 100px;"></Input>
-									</FormItem>
-									<FormItem label="月单价:" label-width="80">
-										<Input disabled placeholder="166元" size="small" style="width: 100px;"></Input>
-									</FormItem>
-									<FormItem label="销售金额" label-width="80">
-										<Input placeholder="2000" size="small" style="width: 100px;"></Input>￥
-									</FormItem>
-								</div>
-							</Col>
-							<Col span="19">
-								<div>
-									<Row>
-										<Col span="6">
-											<FormItem label="购买数量" label-width="60">
-												<InputNumber :min="0" v-model="value1" size="small" style="width:80px"></InputNumber>月
-											</FormItem>
-										</Col>
-										<Col span="6">
-											<FormItem label="赠送数量" label-width="60">
-												<InputNumber :min="0" v-model="value1" size="small" style="width:80px"></InputNumber>月
-											</FormItem>
-										</Col>
-										
-									</Row>
-									
-									<Row>
-										<Col span="6">
-											<FormItem label="开始税期" label-width="60">
-												<DatePicker type="month" placeholder="选择月份" style="width:80px" size="small"></DatePicker>
-												
-											</FormItem>
-											
-										</Col>
-										<Col span="6">
-											<FormItem label="服务部门" label-width="60">
-												<Select style="width:80px" size="small">
-													<Option></Option>
-												</Select>
-												
-											</FormItem>
-											
-										</Col>
-										<Col span="6">
-											<FormItem label="服务人员">
-												<Select style="width:80px" size="small">
-													<Option></Option>
-												</Select>
-												
-											</FormItem>
-											
-										</Col>
-										<Col span="6">
-											<FormItem label="国地税报到">
-												<Select style="width:80px" size="small">
-													<Option></Option>
-												</Select>
-												
-											</FormItem>
-											
-										</Col>
-									</Row>
-									<Row>
-										<Col>
-											<FormItem label="服务说明">
-												<Input type="textarea" size="small" :rows="4"></Input>
-											</FormItem>
-										</Col>
-									</Row>
-								</div>
-							</Col>
-						</Row>
-					</Form>
-				</div>
-				
-				<div v-if="item.product === '其他'">
-					<p>其他</p>
-					<Form label-position="left" slot="content">
-						<Row>
-							<Col span="5">
-								<div>
-									<FormItem label="软著工作日:" label-width="80">
-										<Input disabled placeholder="3(加急件)" size="small" style="width: 100px;"></Input>
-									</FormItem>
-									<FormItem label="软著代码:" label-width="80">
-										<Input disabled placeholder="需编写" size="small" style="width: 100px;"></Input>
-									</FormItem>
-									<FormItem label="产品价格:" label-width="80">
-										<Input disabled placeholder="8600元" size="small" style="width: 100px;"></Input>
-									</FormItem>
-									<FormItem label="销售金额" label-width="80">
-										<Input placeholder="2000" size="small" style="width: 100px;"></Input>￥
-									</FormItem>
-								</div>
-							</Col>
-							<Col span="19">
-								<div>
-									<Row>
-										<Col span="6">
-											<FormItem label="购买数量" label-width="60">
-												<InputNumber :min="0" v-model="value1" size="small" style="width:80px"></InputNumber>
-											</FormItem>
-										</Col>
-										<Col span="6">
-											<FormItem label="服务部门" label-width="60">
-												<Select style="width:80px" size="small">
-													<Option></Option>
-												</Select>
-												
-											</FormItem>
-											
-										</Col>
-										<Col span="6">
-											<FormItem label="服务人员">
-												<Select style="width:80px" size="small">
-													<Option></Option>
-												</Select>
-												
-											</FormItem>
-											
-										</Col>
-										
-									</Row>
-									
-									
-									<Row>
-										<Col>
-											<FormItem label="服务说明">
-												<Input type="textarea" size="small" :rows="4"></Input>
-											</FormItem>
-										</Col>
-									</Row>
-								</div>
-							</Col>
-						</Row>
-					</Form>
-				</div>
-			</Panel>
-		</Collapse> -->
+		
 		
 		<div v-for="(item,index) of productList" :key="index">
 			<div v-if="item.product === '小规模代理记账'">
@@ -270,11 +20,11 @@
 									</div>
 									<div>
 										月单价:
-										<span>{{item.unitprice}}</span>
+										<span>{{productList[index].unitprice}}</span>
 									</div>
 									<div>
 										<FormItem label="销售金额￥">
-											<InputNumber :min="0" :value="item.paynumber" size="small" style="width:80px"></InputNumber>
+											<InputNumber :min="0" :value="productList[index].paynumber" size="small" style="width:80px"></InputNumber>
 										</FormItem>
 									</div>
 								</div>
@@ -284,7 +34,12 @@
 									<Row>
 										<Col span="6">
 											<FormItem label="购买数量">
-												<InputNumber :min="0" v-model="item.productnumber" size="small" style="width:80px"></InputNumber>月
+												<InputNumber
+													@on-change=""
+													:min="0" 
+													v-model="productList[index].productnumber" 
+													size="small" 
+													style="width:80px"></InputNumber>月
 											</FormItem>
 										</Col>
 										<Col span="6">
@@ -307,14 +62,15 @@
 									<Row>
 										<Col span="6">
 											<FormItem label="开始税期">
-												<DatePicker type="month" placeholder="选择月份" style="width:100px" size="small"></DatePicker>
+												<DatePicker type="month" v-model="item.servicestartdate" placeholder="选择月份" style="width:100px" size="small"></DatePicker>
 												
 											</FormItem>
 										</Col>
 										<Col span="6">
 											<FormItem label="服务部门">
-												<Select style="width:120px" size="small">
-													<Option 
+												<Select style="width:120px" size="small" @on-change="select(value,index)">
+													<Option
+														:value="departItem.type"
 														v-for="departItem of JSON.parse(item.servicedeparts)" 
 														:key="departItem.departCode">{{departItem.text}}</Option>
 												</Select>
@@ -322,8 +78,8 @@
 										</Col>
 										<Col span="6">
 											<FormItem label="服务人员">
-												<Select style="width:120px" size="small">
-													<Option></Option>
+												<Select style="width:120px" size="small" v-model="productList[index].realname">
+													<Option :value="productList[index].realname">{{productList[index].realname}}</Option>
 												</Select>
 											</FormItem>
 										</Col>
@@ -511,34 +267,55 @@ export default{
 		},
 		productList(){
 			return this.$store.state.orderList.productList
+		},
+		companyId(){
+			return this.$store.state.orderList.companyId
+		},
+		pskuId(){
+			return this.$store.state.orderList.pskuId
 		}
 	},
 	data(){
 		return{
 			landTax:[{name:"是"},{name:"否"}],
+			serviceDepartId:""
 		}
 	},
 	methods:{
+		select(value,index){
+// 			console.log("value")
+// 			console.log(value)
+			this.serviceDepartId = value
+			this.getRealName(index)
+		},
 		removeItem(item){
 			this.$store.commit("orderList/removeProductListItem",item)
 		},
-		getDay(){
+		getRealName(index){
 			let _self = this
-			let url = 'api/order/cycle/service/record/budget/period'
+			let url = 'api/product/server/list'
 			let config = {
 				params:{
-					productId:_self.productList.productid,
-					companyId:,
+					productSkuId:_self.pskuId,
+					serviceDepartId:_self.serviceDepartId,
+					companyId:_self.companyId,
 				}
 			}
 			function success(res){
-				console.log(res)
+// 				console.log("resres")
+// 				console.log(res)
+// 				console.log("res.data.data")
+// 				console.log(res.data.data[0].realname)
+				_self.productList[index].realname = res.data.data[0].realname
+				
+				// _self.realname = res.data.data[0].realname
+				// console.log(_self.realname)
 			}
 			this.$Get(url,config,success)
 		}
 	},
 	created(){
-		this.getDay()
+		// this.getDay()
 	}
 }
 </script>
