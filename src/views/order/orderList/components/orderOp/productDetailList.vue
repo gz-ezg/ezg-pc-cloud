@@ -68,7 +68,12 @@
 										</Col>
 										<Col span="6">
 											<FormItem label="服务部门">
-												<Select style="width:120px" size="small" @on-change="select(value,index)">
+												<Select 
+													style="width:120px" 
+													size="small" 
+													@on-change="select" 
+													v-model="item.departid"
+													label-in-value>
 													<Option
 														:value="departItem.type"
 														v-for="departItem of JSON.parse(item.servicedeparts)" 
@@ -282,11 +287,11 @@ export default{
 		}
 	},
 	methods:{
-		select(value,index){
+		select(item){
 // 			console.log("value")
 // 			console.log(value)
-			this.serviceDepartId = value
-			this.getRealName(index)
+			this.serviceDepartId = item.value
+			this.getRealName(item.value)
 		},
 		removeItem(item){
 			this.$store.commit("orderList/removeProductListItem",item)
