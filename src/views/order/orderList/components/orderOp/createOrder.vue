@@ -183,7 +183,8 @@ export default {
             loading: false,
             orderId: '',
             applyId: '',
-            orderCode: ''
+            orderCode: '',
+			productItem:""
         }
     },
     methods: {
@@ -267,12 +268,13 @@ export default {
             let _self = this
             this.loading = true
             this.$refs["orderDetail"].validate((valid) => {
-                if(valid && this.check_date()){
-                    _self.create_order()
-                    
-                }else{
-                    this.loading = false
-                }
+				 _self.create_order()
+//                 if(valid && this.check_date()){
+//                     _self.create_order()
+//                     
+//                 }else{
+//                     this.loading = false
+//                 }
             })
         },
         async create_order(){
@@ -369,11 +371,18 @@ export default {
         }
     },
     created(){
+		let _self = this
         this.$bus.off("OPEN_ORDERLIST_ADD", true)
         this.$bus.on("OPEN_ORDERLIST_ADD", (e) => {
             this.orderItem = []
             this.openCreateOrderDetail = true
         })
+		this.$bus.on("SET_ORDER_DETAIL",(e)=>{
+			_self.orderDetail.paynumber = e.paynumber
+			_self.orderDetail.realnumber = e.realnumber
+		})
+		console.log("_self.orderDetail")
+		console.log(_self.orderDetail)
     }
 }
 </script>

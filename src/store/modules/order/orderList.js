@@ -9,6 +9,8 @@ const orderList = {
     mutations: {
 		getProductListItem(state,item){
 			state.productItem = item
+			console.log("state.productItem")
+			console.log(state.productItem)
 		},
 		addProductListItem(state){
 			state.productList.push(state.productItem)
