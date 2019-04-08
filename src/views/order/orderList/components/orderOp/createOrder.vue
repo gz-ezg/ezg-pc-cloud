@@ -31,15 +31,7 @@
 							</FormItem>
 							</Col>
 					        
-					        <!-- <Col span="8">
-					            <FormItem label="国地税报道" prop="gdsreport">
-					                <Select transfer v-model="orderDetail.gdsreport" size="small" >
-					                    <Option value="ybd">已报道</Option>
-					                    <Option value="wbd">未报道</Option>
-					                    <Option value="bybd">不用报道</Option>
-					                </Select>
-					            </FormItem>
-					        </Col> -->
+					        
 					        <Col span="10">
 					        <FormItem label="缴费渠道" prop="paydir">
 					            <Select transfer v-model="orderDetail.paydir" style="width:100%" size="small">
@@ -71,10 +63,19 @@
 							        </Select>
 							    </FormItem>
 							</Col>
+							<Col span="10">
+							    <FormItem label="国地税报道" prop="gdsreport">
+							        <Select transfer v-model="orderDetail.gdsreport" size="small" >
+							            <Option value="ybd">已报道</Option>
+							            <Option value="wbd">未报道</Option>
+							            <Option value="bybd">不用报道</Option>
+							        </Select>
+							    </FormItem>
+							</Col>
 						</Row>
 						
 						<Row :gutter="16">
-							<Col span="10">
+							<Col span="24">
 							    <FormItem label="异常工单号">
 							        <div style="display:inline-block">
 							            <Input size="small" v-model="orderCode" @on-focus="open_abOrder" readonly style="width:60%"/>
@@ -85,7 +86,7 @@
 						</Row>
 						
 					    <Row :gutter="16">
-					        <Col span="14">
+					        <Col span="24">
 					            <FormItem label="使用余额" prop="usebalance">
 					                <div style="display:inline-block">
 					                    <Input size="small" v-model="orderDetail.usebalance" style="width:40%" number />
@@ -97,7 +98,7 @@
 					    </Row>
 						
 					    <Row :gutter="16">
-					        <Col span="10">
+					        <Col span="24">
 					            <FormItem style="margin-bottom:10px">
 					                <!-- class="upload_before" -->
 					                <div slot="label">合同</div>
@@ -126,7 +127,7 @@
 					        </Col>
 					    </Row>
 					</Form>
-					<Row v-if="orderItem.length">
+					<!-- <Row v-if="orderItem.length">
 					    <Table
 					        id="orderItem"
 					        style="margin-top:10px"
@@ -136,14 +137,14 @@
 					        size="small"
 					        :columns="orderItemHeader"
 					        :data="orderItem"></Table>
-					</Row>
+					</Row> -->
 				</Col>
 				<Col span="16">
 					<h3 style="margin-bottom: 10px;">
 						产品详情
 					</h3>
 					
-					<product-detail-list></product-detail-list>
+					<product-detail-list :productList="orderItem"></product-detail-list>
 				</Col>
 			</Row>
             <div slot="footer">
@@ -184,7 +185,8 @@ export default {
             orderId: '',
             applyId: '',
             orderCode: '',
-			productItem:""
+			productItem:"",
+			orderItem:[]
         }
     },
     methods: {
@@ -378,11 +380,14 @@ export default {
             this.openCreateOrderDetail = true
         })
 		this.$bus.on("SET_ORDER_DETAIL",(e)=>{
+			_self.orderItem = e
+			console.log("_self.orderItem")
+			console.log(_self.orderItem)
+		})
+		this.$bus.on("SET_PAYNUMBER",(e)=>{
 			_self.orderDetail.paynumber = e.paynumber
 			_self.orderDetail.realnumber = e.realnumber
 		})
-		console.log("_self.orderDetail")
-		console.log(_self.orderDetail)
     }
 }
 </script>
