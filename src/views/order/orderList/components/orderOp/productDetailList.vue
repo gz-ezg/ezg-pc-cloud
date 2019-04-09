@@ -31,6 +31,7 @@
 												:value="item.paynumber" 
 												size="small" 
 												style="width:80px"
+												:disabled="isDisabled"
 												></Input>
 										</FormItem>
 									</div>
@@ -46,14 +47,15 @@
 													@on-change="changeProductNumber(item.productnumber, index)"
 													v-model="item.productnumber"
 													number
-													size="small" 
+													size="small"
+													:disabled="isDisabled"
 													style="width:80px"></Input>月
 											</FormItem>
 										</Col>
 										<Col span="6">
 											<FormItem label="赠送数量">
 												<Input
-													
+													:disabled="isDisabled"
 													v-model="item.givethenumber" 
 													value = "0" 
 													size="small" 
@@ -63,7 +65,7 @@
 										<Col span="6">
 											<FormItem label="A类外勤" prop="type_a_count">
 												<Input
-													
+													:disabled="isDisabled"
 													v-model="item.type_a_count" 
 													size="small" 
 													style="width:80px"></Input>次
@@ -72,7 +74,7 @@
 										<Col span="6">
 											<FormItem label="B类外勤" prop="type_b_count">
 												<Input
-													
+													:disabled="isDisabled"
 													v-model="item.type_b_count" 
 													size="small" 
 													style="width:80px"></Input>次
@@ -83,7 +85,7 @@
 										<Col span="6">
 											<FormItem label="开始税期" prop="servicestartdate">
 												<DatePicker
-													
+													:disabled="isDisabled"
 													type="month" 
 													v-model="item.servicestartdate" 
 													placeholder="选择月份" 
@@ -93,11 +95,12 @@
 										</Col>
 										<Col span="6">
 											<FormItem label="服务部门" prop="departid">
-												<Select 
+												<Select
+													:disabled="isDisabled"
 													style="width:120px" 
 													size="small" 
 													@on-change="select($event, index)" 
-													v-model="item.departid" 
+													v-model="item.departType" 
 													label-in-value>
 													<Option
 														:value="departItem.type"
@@ -106,10 +109,11 @@
 												</Select>
 											</FormItem>
 										</Col>
-										<Col span="6">
+										<!-- <Col span="6">
 											<FormItem label="服务人员" prop="serverUserId">
-												<!-- 如果需要手动添加服务人员名称而不只是id，请实例化selectService函数，否则无需处理 -->
-												<Select 
+												
+												<Select
+													:disabled="isDisabled"
 													style="width:120px" 
 													size="small" 
 													v-model="item.serverUserId"
@@ -121,13 +125,13 @@
 														:value="serverItem.userId">{{serverItem.realname+"("+serverItem.flag+")"}}</Option>
 												</Select>
 											</FormItem>
-										</Col>
+										</Col> -->
 									</Row>
 									<Row>
 										<Col>
 											<FormItem label="服务说明">
 												<Input
-													
+													:disabled="isDisabled"
 													v-model="productList[index].memo"
 													type="textarea" 
 													size="small" 
@@ -166,11 +170,13 @@
 									<div>
 										<FormItem label="销售金额￥" prop="paynumber">
 											<Input
+												:disabled="isDisabled"
+												@on-change="computer_paynumber(item.paynumber, index)"
 												v-model="item.paynumber"
 												:value="item.paynumber" 
 												size="small" 
 												style="width:80px"
-												@on-blur="computer_paynumber"></Input>
+												></Input>
 										</FormItem>
 									</div>
 								</div>
@@ -182,7 +188,8 @@
 											<FormItem label="购买数量" prop="productnumber">
 												<!-- 手动处理修改数量后，业务逻辑 其他参照此-->
 												<Input
-													@on-blur="changeProductNumber(item.productnumber, index)"
+													:disabled="isDisabled"
+													@on-change="changeProductNumber(item.productnumber, index)"
 													v-model="item.productnumber"
 													number
 													size="small" 
@@ -192,7 +199,7 @@
 										<Col span="6">
 											<FormItem label="赠送数量">
 												<Input
-													
+													:disabled="isDisabled"
 													v-model="item.givethenumber" 
 													value = "0" 
 													size="small" 
@@ -204,7 +211,7 @@
 										<Col span="6">
 											<FormItem label="开始税期" prop="servicestartdate">
 												<DatePicker
-													
+													:disabled="isDisabled"
 													type="month" 
 													v-model="item.servicestartdate" 
 													placeholder="选择月份" 
@@ -214,7 +221,8 @@
 										</Col>
 										<Col span="6">
 											<FormItem label="服务部门" prop="departid">
-												<Select 
+												<Select
+													:disabled="isDisabled"
 													style="width:120px" 
 													size="small" 
 													@on-change="select($event, index)" 
@@ -230,7 +238,8 @@
 										<Col span="6">
 											<FormItem label="服务人员" prop="serverUserId">
 												<!-- 如果需要手动添加服务人员名称而不只是id，请实例化selectService函数，否则无需处理 -->
-												<Select 
+												<Select
+													:disabled="isDisabled"
 													style="width:120px" 
 													size="small" 
 													v-model="item.serverUserId"
@@ -248,7 +257,7 @@
 										<Col>
 											<FormItem label="服务说明">
 												<Input
-													
+													:disabled="isDisabled"
 													v-model="productList[index].memo"
 													type="textarea" 
 													size="small" 
@@ -287,11 +296,13 @@
 									<div>
 										<FormItem label="销售金额￥" prop="paynumber">
 											<Input
+												:disabled="isDisabled"
+												@on-change="computer_paynumber(item.paynumber, index)"
 												v-model="item.paynumber"
 												:value="item.paynumber" 
 												size="small" 
 												style="width:80px"
-												@on-blur="computer_paynumber"></Input>
+												></Input>
 										</FormItem>
 									</div>
 								</div>
@@ -303,7 +314,8 @@
 											<FormItem label="购买数量" prop="productnumber">
 												<!-- 手动处理修改数量后，业务逻辑 其他参照此-->
 												<Input
-													@on-blur="changeProductNumber(item.productnumber, index)"
+													:disabled="isDisabled"
+													@on-change="changeProductNumber(item.productnumber, index)"
 													v-model="item.productnumber"
 													number
 													size="small" 
@@ -312,7 +324,8 @@
 										</Col>
 										<Col span="6">
 											<FormItem label="服务部门" prop="departid">
-												<Select 
+												<Select
+													:disabled="isDisabled"
 													style="width:120px" 
 													size="small" 
 													@on-change="select($event, index)" 
@@ -328,7 +341,8 @@
 										<Col span="6">
 											<FormItem label="服务人员" prop="serverUserId">
 												<!-- 如果需要手动添加服务人员名称而不只是id，请实例化selectService函数，否则无需处理 -->
-												<Select 
+												<Select
+													:disabled="isDisabled"
 													style="width:120px" 
 													size="small" 
 													v-model="item.serverUserId"
@@ -342,11 +356,12 @@
 											</FormItem>
 										</Col>
 									</Row>
+									
 									<Row>
 										<Col>
 											<FormItem label="服务说明">
 												<Input
-													
+													:disabled="isDisabled"
 													v-model="productList[index].memo"
 													type="textarea" 
 													size="small" 
@@ -361,26 +376,24 @@
 					</Form>
 				</Card>
 			</div>
+			
 		</div>
-		
-		
-		<!-- <Select v-model="cityList[0].value" style="width:200px">
-			<Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-		</Select> -->
+
 		
 	</div>
 </template>
 
 <script>
 export default{
-	props:["productList"],
+	props:["productList","isDisabled"],
 	watch:{
 		productList:{
 			handler(val){
 				this.$bus.emit("SET_ORDER_DETAIL",val)
 				this.computer_paynumber()
 			},
-			immediate: true
+			immediate: true,
+			deep:true
 		}
 	},
 	data(){
@@ -426,50 +439,51 @@ export default{
 			//	修改对应的值
 			let _self = this
 			
-			
 			this.productList[index].departid = item.value
 			this.productList[index].departName = item.label
 			
-			if(_self.productList.length === 1){
-				_self.getRealName(item.value, index)
-			}else{
-				for(let i=0;i<=_self.productList.length;i++){
-					let list = _self.productList[i]
-					let myself = _self.productList[index]
-					
-					if(list.serviceList && list.departid === myself.departid){
-						if(list.weight >= myself.weight){
-							myself.serviceList = list.serviceList
-						}else{
-							list.serviceList = myself.serviceList
-						}
-					}else{
-						_self.getRealName(item.value, index)
-					}
-				}
-				
-			}	
+// 			if(_self.productList.length === 1){
+// 				_self.getRealName(item.value, index)
+// 			}else{
+// 				
+// 				for(let i=0;i<_self.productList.length;i++){
+// 					let list = _self.productList[i]
+// 					let myself = _self.productList[index]
+// 					if(list.serviceList && list.departid === myself.departid){
+// 						if(list.weight >= myself.weight){
+// 							myself.serviceList = list.serviceList
+// 						}else{
+// 							_self.getRealName(item.value, index)
+// 							list.serviceList = myself.serviceList
+// 						}
+// 					}else{
+// 						_self.getRealName(item.value, index)
+// 					}
+// 				}
+// 				
+// 			}	
 		},
 		removeItem(index){
 			this.productList.splice(index,1)
 		},
-		getRealName(departId, index){
-			let _self = this
-			let url = 'api/product/server/list'
-			let config = {
-				params:{
-					productSkuId: _self.productList[index].skuid,
-					serviceDepartId: _self.productList[index].departid,
-					companyId: _self.companyId,
-				}
-			}
-			function success(res){
-				
-				_self.$set(_self.productList[index],'serviceList',res.data.data)
-				
-			}
-			this.$Get(url,config,success)
-		},
+// 		getRealName(departId, index){
+// 			let _self = this
+// 			let url = 'api/product/server/list'
+// 			let config = {
+// 				params:{
+// 					productSkuId: _self.productList[index].skuid,
+// 					serviceDepartId: _self.productList[index].departid,
+// 					companyId: _self.companyId,
+// 				}
+// 			}
+// 			function success(res){
+// 				_self.$set(_self.productList[index],'serviceList',res.data.data)
+// 				_self.productList[index].serverUserId = _self.productList[index].serviceList[0].userId
+// 				console.log("_self.productList[index].serviceList")
+// 				console.log(_self.productList[index].serviceList)
+// 			}
+// 			this.$Get(url,config,success)
+// 		},
 		//	改变产品数量后自动执行该函数，可以在此函数处理其他值的相关逻辑
 		changeProductNumber(value, index) {
 			//	value指当前赋值，index产品序号
@@ -501,18 +515,24 @@ export default{
 		this.$bus.on("ADD_PRODUCT_DETAIL_LIST",(e)=>{
 			e.givethenumber = 0
 			_self.productList.push(e)
+			
+			for(let i=0;i<_self.productList.length;i++){
+				_self.productList[i].departType = JSON.parse(_self.productList[i].servicedeparts).type
+			}
+			
+			console.log("JSON.parse(_self.productList[0].servicedeparts).type")
+			console.log(JSON.parse(_self.productList[0].servicedeparts).type)
+			
+			
 			console.log("_self.productList")
 			console.log(_self.productList)
+
 		})
 		this.$bus.on("OPEN_ORDER_PRODUCT_LIST",(e)=>{
 			_self.companyId = e
 		})
 	}
 }
-// givethenumber 赠送数量
-// plusdeduct
-// memo 备注
-// propertys
 </script>
 
 <style>
@@ -523,8 +543,3 @@ export default{
 	padding: 10px 2px;
 }
 </style>
-
-
-
-<!-- 周期性产品 名称不包含会计到家的就是代理记账 -->
-<!-- 服务人员 名字+(flag) 默认选第一个 -->

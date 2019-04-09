@@ -413,7 +413,9 @@ export default {
 // 				console.log(res)
 				// _self.$bus.emit("ADD_PRODUCT_DETAIL_LIST",{product:res.data.data[0]})
 // 				_self.$store.commit("orderList/getProductListItem",res.data.data[0])
-// 				_self.$store.commit("orderList/addProductListItem")				
+// 				_self.$store.commit("orderList/addProductListItem")
+				console.log("resres")
+				console.log(res)
 				_self.$bus.emit("ADD_PRODUCT_DETAIL_LIST",res.data.data[0])
 								
                 _self.detail = res.data.data[0]

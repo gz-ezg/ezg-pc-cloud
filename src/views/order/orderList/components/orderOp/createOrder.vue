@@ -126,6 +126,21 @@
 					            </FormItem>
 					        </Col>
 					    </Row>
+					
+						<Row :gutter="16">
+							<div v-for="(items,index) of departNumber">
+								<Col span="11">
+									<FormItem label="服务部门:">
+										{{orderItem[index].departName}}
+									</FormItem>
+								</Col>
+								<Col span="11">
+									<FormItem label="服务人员:">
+										
+									</FormItem>
+								</Col>
+							</div>
+						</Row>
 					</Form>
 					<!-- <Row v-if="orderItem.length">
 					    <Table
@@ -144,7 +159,7 @@
 						产品详情
 					</h3>
 					
-					<product-detail-list :productList="orderItem"></product-detail-list>
+					<product-detail-list v-if="openCreateOrderDetail" :productList="orderItem" :isDisabled="isDisabled"></product-detail-list>
 				</Col>
 			</Row>
             <div slot="footer">
@@ -176,8 +191,22 @@ export default {
         abOrderSelect,
 		productDetailList
     },
+	computed:{
+		departNumber(){
+			let arr = this.orderItem
+			let arr2 = []
+			for(let i=0;i<arr.length;i++){
+				arr2.push(arr[i].departid) 
+			}
+			let arr3 = new Set(arr2)
+			console.log("arr3")
+			console.log(arr3)
+			return [...arr3]
+		}
+	},
     data(){
         return {
+			isDisabled:false,
             openServiceItem: false,
             show_file: [],
             openCreateOrderDetail: false,
