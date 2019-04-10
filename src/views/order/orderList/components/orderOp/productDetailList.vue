@@ -44,6 +44,7 @@
 											<FormItem label="购买数量" prop="productnumber">
 												<!-- 手动处理修改数量后，业务逻辑 其他参照此-->
 												<InputNumber
+													:precision="0"
 													@on-change="changeProductNumber(item.productnumber, index)"
 													v-model="item.productnumber"
 													number
@@ -55,6 +56,7 @@
 										<Col span="6">
 											<FormItem label="赠送数量">
 												<InputNumber
+													:precision="0"
 													:disabled="isDisabled"
 													v-model="item.givethenumber" 
 													value = "0" 
@@ -65,6 +67,7 @@
 										<Col span="6">
 											<FormItem label="A类外勤" prop="type_a_count">
 												<InputNumber
+													:precision="0"
 													:disabled="isDisabled"
 													v-model="item.type_a_count" 
 													size="small" 
@@ -74,6 +77,7 @@
 										<Col span="6">
 											<FormItem label="B类外勤" prop="type_b_count">
 												<InputNumber
+													:precision="0"
 													:disabled="isDisabled"
 													v-model="item.type_b_count" 
 													size="small" 
@@ -171,6 +175,7 @@
 											<FormItem label="购买数量" prop="productnumber">
 												<!-- 手动处理修改数量后，业务逻辑 其他参照此-->
 												<InputNumber
+													:precision="0"
 													@on-change="changeProductNumber(item.productnumber, index)"
 													v-model="item.productnumber"
 													number
@@ -182,6 +187,7 @@
 										<Col span="6">
 											<FormItem label="赠送数量">
 												<InputNumber
+													:precision="0"
 													:disabled="isDisabled"
 													v-model="item.givethenumber" 
 													value = "0" 
@@ -280,6 +286,7 @@
 											<FormItem label="购买数量" prop="productnumber">
 												<!-- 手动处理修改数量后，业务逻辑 其他参照此-->
 												<InputNumber
+													:precision="0"
 													@on-change="changeProductNumber(item.productnumber, index)"
 													v-model="item.productnumber"
 													number
