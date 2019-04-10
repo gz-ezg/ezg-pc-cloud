@@ -225,7 +225,8 @@ export default {
                 params:{
                     page: 1,
                     pageSize: 1000,
-                    day: ""
+                    day: "",
+                    sortField: "plan_date"
                 }
             }
 
