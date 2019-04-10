@@ -50,7 +50,7 @@ export default {
                 ],
                 paydir: [
                     { required: true, message: '请补全！', trigger: 'change' }
-                ],
+                ]
                 // gdsreport: [
                 //     { required: true, message: '请补全！', trigger: 'change' }
                 // ],
@@ -402,6 +402,8 @@ export default {
 
             try {
                 let data  = await orderApi.orderDetail(e)
+				console.log("data")
+				console.log(data)
                 this.orderDetail = data
                 this.orderItem = data.items.map((item)=>{
                     if(item.product == "会计到家"){

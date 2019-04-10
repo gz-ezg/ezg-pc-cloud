@@ -128,15 +128,22 @@
 					    </Row>
 					
 						<Row :gutter="16">
-							<div v-for="(items,index) of departNumber">
+							<div v-for="(items,index) of getDepartJsonNumber">
 								<Col span="11">
 									<FormItem label="服务部门:">
-										{{orderItem[index].departName}}
+										{{orderItem[index].departname}}
 									</FormItem>
 								</Col>
 								<Col span="11">
 									<FormItem label="服务人员:">
-										
+										<Select
+											v-model="orderItem[index].current"
+											@on-change="optionSelect($event,index)">
+											<Option
+												v-for="item of orderItem[index].serviceList"
+												:key="item.userId"
+												:value="item.userId">{{item.realname}}</Option>
+										</Select>
 									</FormItem>
 								</Col>
 							</div>
@@ -192,16 +199,15 @@ export default {
 		productDetailList
     },
 	computed:{
-		departNumber(){
-			let arr = this.orderItem
+		getDepartJsonNumber(){
+			let _self = this
+			let arr = _self.orderItem
 			let arr2 = []
 			for(let i=0;i<arr.length;i++){
-				arr2.push(arr[i].departid) 
+				arr2.push(arr[i].departid)
 			}
-			let arr3 = new Set(arr2)
-			console.log("arr3")
-			console.log(arr3)
-			return [...arr3]
+			let arr3 = [...new Set(arr2)]
+			return arr3
 		}
 	},
     data(){
@@ -215,7 +221,8 @@ export default {
             applyId: '',
             orderCode: '',
 			productItem:"",
-			orderItem:[]
+			orderItem:[],
+			departJsonArray:[]
         }
     },
     methods: {
@@ -311,7 +318,14 @@ export default {
         async create_order(){
             let _self = this
             // let url = `api/order/create`
-
+			let order = JSON.parse(JSON.stringify(_self.orderItem)); 
+			
+			for(let i=0;i<order.length;i++){
+				order[i].servicedeparts = ""
+			}
+			console.log("order")
+			console.log(order)
+			
             let config = {
                 companyId: _self.orderDetail.companyid,
                 payDir: _self.orderDetail.paydir,
@@ -321,21 +335,20 @@ export default {
                 payTime: DateFormat(_self.orderDetail.payTime),
                 isornotkp: _self.orderDetail.isornotkp,
                 usebalance: _self.orderDetail.usebalance,
-                orderitems: JSON.stringify(_self.orderItem)
+                orderitems: JSON.stringify(order),
+				// departJson: [{departId:11570,serverId:10066}]
+				departJson:JSON.stringify(_self.departJsonArray)
             }
-			console.log("config")
-			console.log(config)
+			
             try {
                 let { status, data } = await orderApi.orderCreate(config)
-				console.log("data.data")
-                console.log(data.data)
+				
                 this.orderId = data.data
                 if(status){
                     if(this.show_file.length != 0){
                         this.upload_img(data.data)
                     }else{
-                        console.log(this.applyId)
-                        console.log(this.orderId)
+                        
                         if(this.applyId){
                             _self.relate()
                         }
@@ -399,7 +412,18 @@ export default {
             this.openCreateOrderDetail = false
             this.applyId = ''
             this.orderCode = ''
-        }
+        },
+		optionSelect(item,index){
+			let _self = this
+			
+			_self.departJsonArray = []
+			
+			for(let i=0;i<_self.orderItem.length;i++){
+				_self.departJsonArray.push({'departId':_self.orderItem[i].departid,'serverId':JSON.stringify(item)})
+			}
+// 			console.log("_self.departJsonArray")
+// 			console.log(_self.departJsonArray)
+		}
     },
     created(){
 		let _self = this
@@ -410,12 +434,20 @@ export default {
         })
 		this.$bus.on("SET_ORDER_DETAIL",(e)=>{
 			_self.orderItem = e
-			console.log("_self.orderItem")
-			console.log(_self.orderItem)
 		})
 		this.$bus.on("SET_PAYNUMBER",(e)=>{
 			_self.orderDetail.paynumber = e.paynumber
 			_self.orderDetail.realnumber = e.realnumber
+		})
+		this.$bus.on("DEFAULT_REALNAME",(e)=>{
+			_self.$set(_self.orderItem[e.index],"current",e.id)
+			
+			for(let i=0;i<_self.orderItem.length;i++){
+				// _self.$set(_self.orderItem[i],"current",e)
+				
+				_self.optionSelect(e)
+			}
+			
 		})
     }
 }

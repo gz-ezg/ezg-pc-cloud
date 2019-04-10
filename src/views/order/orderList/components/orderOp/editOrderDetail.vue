@@ -131,7 +131,7 @@
 					产品详情
 				</h3>
 				
-				<product-detail-list v-if="openEditOrderDetail" :productList="orderItem" :isDisabled="isDisabled"></product-detail-list>
+				<!-- <product-detail-list v-if="openEditOrderDetail" :productList="orderItem" :isDisabled="isDisabled"></product-detail-list> -->
 			</Col>
 		</Row>
             <Row>
@@ -161,14 +161,14 @@ import serviceItem from '../accountHomeTree'
 import commonSetting from './comonSetting.js'
 import { DateFormat } from '../../../../../libs/utils.js'
 import * as orderApi from '../../api'
-import productDetailList from './productDetailList'
+// import productDetailList from './productDetailList'
 
 export default {
     mixins: [commonSetting],
     components: {
         serviceItem,
         abOrderChange,
-		productDetailList
+		// productDetailList
     },
     data(){
         return {

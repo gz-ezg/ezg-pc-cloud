@@ -125,6 +125,25 @@
 				            </FormItem>
 				        </Col>
 				    </Row>
+				
+					<Row :gutter="16">
+						
+						<div v-for="item of orderDetail.departJson">
+							<Row>
+								<Col span="8">
+									<FormItem label="部门:">
+										{{item.departName}}
+									</FormItem>
+								</Col>
+								<Col span="8">
+									<FormItem label="人员:">
+										{{item.realname}}
+									</FormItem>
+								</Col>
+							</Row>
+						</div>
+						
+					</Row>
 				</Form>
 			</Col>
 			<Col span="16">
@@ -132,7 +151,7 @@
 					产品详情
 				</h3>
 				
-				<product-detail-list v-if="openShowOrderDetail" :productList="orderItem" :isDisabled="isDisabled"></product-detail-list>
+				<!-- <product-detail-list v-if="openShowOrderDetail" :productList="orderItem" :isDisabled="isDisabled"></product-detail-list> -->
 			</Col>
         </Row>    
 			<div slot="footer">
@@ -150,14 +169,14 @@ import relateOrder from '../relateOrder'
 import serviceItem from '../accountHomeTree'
 import commonSetting from './comonSetting.js'
 import * as orderApi from '../../api'
-import productDetailList from './productDetailList'
+// import productDetailList from './productDetailList'
 
 export default {
     mixins: [commonSetting],
     components: {
         serviceItem,
         relateOrder,
-		productDetailList
+		// productDetailList
     },
     data(){
         return {

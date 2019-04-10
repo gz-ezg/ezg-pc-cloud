@@ -1,5 +1,14 @@
 import { AjaxGet, AjaxDic, AjaxPost } from '../../../api/index'
 
+function getRealName(config, success, fail){
+  let url = 'product/server/list'
+  return new Promise((resolve, reject)=>{
+    resolve(AjaxGet(url, config, success, fail))
+  }).catch((err)=>{
+    return err
+  })
+}
+
 function orderFinishUpdate(config, success, fail){
   let url = 'order/finishedUpdate'
   return new Promise((resolve, reject)=>{
@@ -76,5 +85,6 @@ export {
   customerAccountDetail,
   orderItemRefund,
   orderContractUpload,
-  orderCreate
+  orderCreate,
+	getRealName
 }

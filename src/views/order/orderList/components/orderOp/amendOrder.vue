@@ -131,7 +131,7 @@
 					产品详情
 				</h3>
 				
-				<product-detail-list v-if="openamendOrderDetail" :productList="orderItem" :isDisabled="isDisabled"></product-detail-list>
+				<!-- <product-detail-list v-if="openamendOrderDetail" :productList="orderItem" :isDisabled="isDisabled"></product-detail-list> -->
 			</Col>
 		</Row>
             <Row>
@@ -158,7 +158,7 @@
 import commonSetting from './comonSetting.js'
 import { DateFormat } from '../../../../../libs/utils.js'
 import * as orderApi from '../../api.js'
-import productDetailList from './productDetailList'
+// import productDetailList from './productDetailList'
 export default {
     mixins: [commonSetting],
     data(){
@@ -169,7 +169,7 @@ export default {
         }
     },
 	components:{
-		productDetailList
+		// productDetailList
 	},
     methods:{
         xiugai(){
