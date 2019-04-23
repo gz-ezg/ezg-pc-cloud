@@ -19,6 +19,7 @@
                             size="small"
                             :loading="userTableLoading"
                             :columns="userColumns"
+                            :row-class-name="rowClassName"
                             @on-current-change="selectRow"
                             :data="userData"></Table>
                         <Page
@@ -197,6 +198,11 @@ import * as userApi from '../api/user.js'
                         minWidth: 150
                     },
                     {
+                        title: '用户状态',
+                        key: 'status',
+                        minWidth: 150
+                    },
+                    {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
@@ -262,6 +268,7 @@ import * as userApi from '../api/user.js'
                     params:{
                         page: this.userPage,
                         pageSize: this.userPageSize,
+                        status:"0,1" //加该参数表示需要显示锁定的用户
                     }
                 }
                 Object.assign(config.params, this.SearchValidate)
@@ -269,7 +276,11 @@ import * as userApi from '../api/user.js'
                 let {rows, total} = await userApi.getUserList(config)
 
                 this.userTotal = total
-                this.userData = rows
+                this.userData = [];
+                for(let i =0;i<rows.length;i++){
+                    rows[i].status = rows[i].status==1?"正常":"锁定"
+                     this.userData.push(rows[i])
+                }
                 this.userTableLoading = false
             },
 
@@ -523,6 +534,12 @@ import * as userApi from '../api/user.js'
             //  编辑用户
             updateUser(userObj){
                 this.$bus.emit('UPDATE_USER',userObj)
+            },
+            rowClassName(row, index) {
+                let _self = this
+                if (row.status == "锁定" && row.id != _self.selectRow.id) {
+                    return 'demo-table-lock-row';
+                }
             }
         },
         created() {
@@ -534,3 +551,9 @@ import * as userApi from '../api/user.js'
         }
     }
 </script>
+<style>
+.ivu-table .demo-table-lock-row td {
+    background-color: #FF3030;
+    color:#000;
+}
+</style>
