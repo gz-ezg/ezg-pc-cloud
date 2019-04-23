@@ -776,7 +776,15 @@ export const appRouter = [
                 title: '审账规则',
                 name: 'auditaccount_rule',
                 component: () => import( /* webpackChunkName: "auditaccount_rule" */ '@/views/accountantWorkOrder/auditaccountrule/auditaccount_rule.vue')
-            }
+            },
+        {
+            access: 11630,
+                meta: 11630,
+            path: 'cancelWorkOrder_index',
+            title: '注销工单',
+            name: 'cancelWorkOrder',
+            component: () => import( /* webpackChunkName: "auditaccount_rule" */ '@/views/accountantWorkOrder/cancelWorkOrder/cancelWorkOrder.vue')
+        }
 
         ]
     },

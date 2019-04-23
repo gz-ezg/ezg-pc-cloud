@@ -44,25 +44,39 @@
 				<Button type="ghost" @click="close">取消</Button>
 			</div>
 		</Modal>
-		
-		
+
+		<Card>
+			<Row style="margin-bottom:10px">
 		<Collapse v-model="search_model">
 			<Panel name="1" >
 				<Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
 				筛选
 				<div slot="content" @keydown.enter="search">
 					<Form ref="formValidate" :model="formValidate" :label-width="120" style="margin-top: 15px">
-						<Row :gutter="16" style="height:56px">
-						    <Col span="8">
+						<Row :gutter="20" style="height:56px">
+						    <Col span="5">
 								<FormItem label="用户名称：" prop="realname" style="width: 300px;">
 								<Input v-model="formValidate.realname" size="small"></Input>
 							</FormItem>
 							</Col>
-                            <Col span="8">
+                            <Col span="5">
                             <FormItem label="部门名称：" prop="departname" style="width: 300px;">
                                 <Input v-model="formValidate.departname" size="small"></Input>
                             </FormItem>
                             </Col>
+							<Col span="5">
+							<FormItem label="岗位：" prop="post" style="width: 300px;">
+									<Cascader trigger="hover" :data="company_post" v-model="formValidate.post" size="small" style="margin-top:5px;width:100%"></Cascader>
+							</FormItem>
+							</Col>
+							<Col span="5">
+							<FormItem label="是否接单：" prop="order_receiving" style="width: 300px;">
+								<Select transfer v-model="formValidate.order_receiving" size="small" @on-change="search" style="width:100%">
+									<Option value="Y">是</Option>
+									<Option value="N">否</Option>
+								</Select>
+							</FormItem>
+							</Col>
 						</Row>
 						<center>
 							<FormItem style="margin-top:10px">
@@ -74,7 +88,8 @@
 				</div>
 			</Panel>
 		</Collapse>
-		
+
+			</Row>
 		
 		<Table
 			:loading="userTableLoading"
@@ -92,9 +107,10 @@
 		    @on-change="page_change"
 		    @on-page-size-change="page_size_change"
 		    style="margin-top: 10px"></Page>
-	</div>
-</template>
 
+	</Card>
+	</div>
+	</template>
 <script>
 import * as userApi from '../api/user.js'
 import userProList from './userProList'
@@ -139,10 +155,6 @@ export default{
 				{
 					title:"是否接单",
 					key:"order_receiving"
-				},
-				{
-					title:"接单内容",
-					key:"order_content"
 				},
 				{
 					title:"操作",
@@ -213,13 +225,13 @@ export default{
 		    this.get_data()
 		},
 		search(e){
-			Object.assign(this.SearchValidate, e)
 		    this.page = 1
 		    this.get_data()
 		},
 		handleReset(){
 		    this.page = 1
 		    this.$refs["formValidate"].resetFields()
+			this.formValidate.post=[];
 		    this.get_data()
 		},
 		async change_accout(){
@@ -238,12 +250,22 @@ export default{
 		async get_data(){
 			let _self = this
 			this.userTableLoading = true
+			let post = "";
+			if(_self.formValidate.post){
+				if(_self.formValidate.post.length>1){
+					post = _self.formValidate.post[0]+"-"+_self.formValidate.post[1]
+				}else{
+					post = _self.formValidate.post[0]
+				}
+			}
 			let config = {
 				params:{
 				    page: _self.page,
 				    pageSize: _self.pageSize,
 					realname: _self.formValidate.realname,
 					departname: _self.formValidate.departname,
+					order_receiving: _self.formValidate.order_receiving,
+					post:post,
 // 					productCode: _self.formValidate.productCode
 				}
 			}
