@@ -51,6 +51,19 @@
                         </FormItem>
                     </Col>
                 </Row>
+                 <Row :gutter="16">
+                  <Col span="1" style="visibility:hidden">1</Col>
+                     <Col span="10">
+                        <FormItem prop="monthServerChangeFlag" label="本月是否服务">
+
+                                <RadioGroup  v-model='monthServerChangeFlag' v-on >
+                                            <Radio label="Y">是</Radio>
+                                            <Radio label="N">否</Radio>
+                                </RadioGroup>
+
+                        </FormItem>
+                      </Col>
+                  </Row>
             </Form>
             <div slot="footer">
                 <Button type="primary" @click="change_accout" :loading="button_loading">变更</Button>
@@ -72,7 +85,8 @@
                 jzAccid: '',
                 accMag: [],
                 jzAcc: [],
-                remark:""
+                remark:"",
+                monthServerChangeFlag:'N'
             }
         },
         methods: {
@@ -103,12 +117,13 @@
                 }else{
                     _self.button_loading = true
                     // let url = '/order/batchUpdateServicer'
-                    let url = 'api/order/work/order/share'
+                    let url = 'api/order/work/order/cycle/share'
                     let _data = {
                         workOrderIds: _self.task_message.cycle_work_order_id,
                         userId:_self.jzAccid,
                         managerId:_self.accMagid,
-                        remark: _self.remark
+                        remark: _self.remark,
+                        monthServerChangeFlag:_self.monthServerChangeFlag
                     }
 
                     if (_self.jzAccid != '' && _self.jzAccid != 0) {

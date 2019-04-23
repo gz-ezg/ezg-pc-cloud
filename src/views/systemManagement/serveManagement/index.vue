@@ -17,12 +17,14 @@
 							<Input type="text" v-model="formInline.departname" disabled></Input> 	
 						</FormItem>
 						
-						<FormItem label="星级:" style="width:300px">
-							<Cascader :data="company_post" v-model="formInline.post"></Cascader>
+						<FormItem prop="post" label="岗位:" style="width:300px">
+
+                             <Cascader trigger="hover" :data="company_post"  @on-change="userProChange" v-model="formInline.post_code"></Cascader>
+
 						</FormItem>
 						
-						<FormItem label="是否接单:">
-							<RadioGroup v-model="formInline.order_receiving">
+						<FormItem label="是否接单:" >
+							<RadioGroup v-model="formInline.order_receiving" v-on @on-change="userProChange">
 								<Radio label="是"></Radio>
 								<Radio label="否"></Radio>
 							</RadioGroup>  	
@@ -51,9 +53,16 @@
 				<div slot="content" @keydown.enter="search">
 					<Form ref="formValidate" :model="formValidate" :label-width="120" style="margin-top: 15px">
 						<Row :gutter="16" style="height:56px">
-							<FormItem label="用户名称：" prop="realname" style="width: 300px;">
+						    <Col span="8">
+								<FormItem label="用户名称：" prop="realname" style="width: 300px;">
 								<Input v-model="formValidate.realname" size="small"></Input>
 							</FormItem>
+							</Col>
+                            <Col span="8">
+                            <FormItem label="部门名称：" prop="departname" style="width: 300px;">
+                                <Input v-model="formValidate.departname" size="small"></Input>
+                            </FormItem>
+                            </Col>
 						</Row>
 						<center>
 							<FormItem style="margin-top:10px">
@@ -181,6 +190,14 @@ export default{
 // 			console.log(this.$store.state.serveManagement.userId)
 			this.$store.commit("serveManagement/addUserId",_self.formInline.id)
 			this.$bus.emit("OPEN_USERPROLIST",true)
+			//给表单设值
+			if(this.formInline.post){
+			   console.log(_self.formInline.post_code)
+			     _self.formInline.post_code[0] = parseInt(_self.formInline.post_code[0])
+			     _self.formInline.post_code[1] = parseInt(_self.formInline.post_code[1])
+			} else{
+			    this.formInline.post = []
+			}
 		},
 		close(){
 			this.showModal = false
@@ -225,7 +242,8 @@ export default{
 				params:{
 				    page: _self.page,
 				    pageSize: _self.pageSize,
-					realname: _self.formValidate.realname
+					realname: _self.formValidate.realname,
+					departname: _self.formValidate.departname,
 // 					productCode: _self.formValidate.productCode
 				}
 			}
@@ -251,8 +269,10 @@ export default{
 							})
 						}	
 					})
-					postName = postA + "/" + postB
-					rows[i].post = postName
+					postName = postA + "-" + postB
+					rows[i].post_code = rows[i].post.split("-");
+                    rows[i].post = postName
+
 				}
 			}
 			//是否接单
@@ -277,6 +297,41 @@ export default{
 		    let {company_post} = await userApi.getDictionary(params)
 			
 		    this.company_post = this.$changeCars(company_post)
+		},
+
+		//用户星级或者接单发生变化事件
+		userProChange(value, selectedOptions){
+		        let _self = this
+                console.log(value)
+                let order_receiving
+                let post
+                //如果是数组则表示星级选了
+                if((typeof value=='object')&&value.constructor==Array){
+                    if(value.length>1){
+                        post = value[0]+"-"+value[1];
+                    }else{
+                        post = value[0];
+                    }d
+                }else{//表示是否接单选了
+                    order_receiving =  value=="是"?"Y":"N"
+                }
+
+             //修改用户
+            let url = `api/user/update/detail`
+            let config = {
+                id: this.formInline.id,
+                post: post,
+                orderReceiving: order_receiving
+            }
+            function success(res){
+                //console.log(res)
+                _self.get_data()//获取用户列表
+            }
+            function fail(){
+
+            }
+            this.$Post(url,config,success,fail)
+
 		}
 	},
 	created(){

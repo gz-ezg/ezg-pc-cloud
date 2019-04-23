@@ -79,6 +79,7 @@
                             <!--<Button type="primary" icon="ios-color-wand-outline" @click="YYAddClues">运营新增</Button>-->
                             <!--<Button type="primary" icon="ios-color-wand-outline" @click="EditClues">编辑</Button>-->
                             <Button v-permission="['cluesLibraryM.n.delete']" type="primary" icon="ios-color-wand-outline" @click="DeleteClues">删除</Button>
+                             <Button type="primary" icon="ios-color-wand-outline" @click="clueSettelment">结算线索</Button>
                         </ButtonGroup>
                     </Row>
                     <Row style="margin-top: 10px;">
@@ -172,6 +173,7 @@
                     <Row>
                         <ButtonGroup>
                             <Button v-permission="['cluesLibraryM.y.delete']" type="primary" icon="ios-color-wand-outline" @click="DeleteClues">删除</Button>
+                              <Button type="primary" icon="ios-color-wand-outline" @click="clueSettelment">结算线索</Button>
                         </ButtonGroup>
                     </Row>
                     <Row style="margin-top: 10px;">
@@ -352,6 +354,9 @@
                 <FormItem label="创建时间" prop="createdate">
                     <Input v-model="formValidate2.createdate" disabled size="small">></Input>
                 </FormItem>
+                <FormItem label="结算状态" prop="settlement_status">
+                    <Input v-model="formValidate2.settlement_status" disabled size="small"></Input>
+                </FormItem>
                 <FormItem label="线索标签" prop="labels">
                     <Tag v-for="item in customerlabelGroup" :key="item" :name="item" :id="item.id">
                         {{ item.labelName }}
@@ -422,7 +427,7 @@
 </template>
 
 <script>
-import {DateFormat} from '../../../libs/utils'
+import {DateFormat,simpleCodeToText} from '../../../libs/utils'
 import flowVue from '../../woa-components/next/flow.vue';
 import publicCustomer from './publicCustomer'
 
@@ -623,6 +628,11 @@ import publicCustomer from './publicCustomer'
                         key: 'cluestype',
                         minWidth: 100,
                     },
+                     {
+                          title: '结算状态',
+                          key: 'settlement_status',
+                          minWidth: 100,
+                       },
                     // {
                     //     title: '线索说明',
                     //     key: 'memo',
@@ -730,6 +740,11 @@ import publicCustomer from './publicCustomer'
                         minWidth: 100,
                     },
                     {
+                      title: '结算状态',
+                      key: 'settlement_status',
+                      minWidth: 100,
+                   },
+                    {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
@@ -813,7 +828,8 @@ import publicCustomer from './publicCustomer'
                 cluetype: [],
                 clue_level: [],
                 clue_level_map:new Map(),
-                affiliation_area: []
+                affiliation_area: [],
+                settlement_status:[]
             }
         },
         methods: {
@@ -860,7 +876,7 @@ import publicCustomer from './publicCustomer'
                     _self.allUser = temp;
                 });
 
-                let params = "cluetype,clue_level,affiliation_area"
+                let params = "cluetype,clue_level,affiliation_area,settlement_status"
 
                 function finish(res){
                     var temp = res.data.data;
@@ -868,6 +884,7 @@ import publicCustomer from './publicCustomer'
                     _self.clue_level = temp.clue_level
                     _self.clue_level_map = _self.$array2map(_self.clue_level)
                     _self.affiliation_area = temp.affiliation_area
+                    _self.settlement_status = temp.settlement_status
                 }
 
                 this.$GetDataCenter(params, finish)
@@ -960,7 +977,8 @@ import publicCustomer from './publicCustomer'
                             clue_level: _self.clue_level_map.get(response.data.data.rows[i].clue_level),
                             saler_name: response.data.data.rows[i].saler_name,
                             customer_id: response.data.data.rows[i].customer_id,
-                            company_name: response.data.data.rows[i].company_name
+                            company_name: response.data.data.rows[i].company_name,
+                            settlement_status:simpleCodeToText(response.data.data.rows[i].settlement_status,_self.settlement_status)
                         })
                     }
                     _self.loadingN = false
@@ -993,9 +1011,10 @@ import publicCustomer from './publicCustomer'
                             clueType:_self.SearchValidate1.clueType,
                             rrealname:_self.SearchValidate1.rrealname,
                             un_clueType: "xtxs"
+
                         }
                     }
-                _self.tableData2 = []
+                _self.tableData2 = []o
 
                 function doSuccess(response) {
                     _self.pageTotal22 = response.data.data.total
@@ -1039,7 +1058,8 @@ import publicCustomer from './publicCustomer'
                             clue_level: _self.clue_level_map.get(response.data.data.rows[i].clue_level),
                             saler_name: response.data.data.rows[i].saler_name,
                             customer_id: response.data.data.rows[i].customer_id,
-                            company_name: response.data.data.rows[i].company_name
+                            company_name: response.data.data.rows[i].company_name,
+                            settlement_status:simpleCodeToText(response.data.data.rows[i].settlement_status,_self.settlement_status)
                         })
                     }
                     _self.loadingY = false
@@ -1178,7 +1198,35 @@ import publicCustomer from './publicCustomer'
                     });
                 }
             },
+            //把线索进行结算
+            clueSettelment(){
+                let _self = this
+                               if (_self.cluesid == '') {
+                                   _self.$Message.warning('请选择要结算的线索!')
+                               } else {
+                                   _self.$Modal.confirm({
+                                       title: '结算线索',
+                                       content: '确定要结算此线索吗',
+                                       okText: '确定',
+                                       cancelText: '取消',
+                                       onOk: () => {
+                                           let url = '/clue/crm/clue/updateSettlementStatus'
+                                           let _data = {
+                                               id: _self.cluesid,
+                                               status:'yjs' //默认只提供结算功能
+                                           }
 
+                                           function doSuccess(re) {
+                                               _self.$Message.success('结算成功!')
+                                               _self.getTableData()
+                                               _self.getTableData2()
+                                           }
+
+                                           _self.PostData(url, _data, doSuccess)
+                                       }
+                                   });
+                               }
+            },
             getLabelData() {
                 var _self = this
                 _self.data = []

@@ -379,6 +379,12 @@ export default {
                     title: "微信绑定",
                     key: "isbound",
                     minWidth: 90
+                },
+                {
+                    title: "客户标签",
+                    key: "labelname",
+                    minWidth: 90
+
                 }
             ],
             data: [],
@@ -426,7 +432,8 @@ export default {
                 { field: "updatedate", title: "更新时间" },
                 { field: "isbound", title: "微信绑定", format: "sf_yn" },
                 { field: "lastfollowdate", title: "市场最后跟进时间" },
-                { field: "importance", title:"客户重要性", format: "importance"}
+                { field: "importance", title:"客户重要性", format: "importance"},
+                { field: "labelname", title:"客户标签"}
             ];
             let _self = this;
             _self.$ButtonCollect("marketingManagement_index_edit_excel");
