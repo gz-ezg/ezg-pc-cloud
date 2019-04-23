@@ -83,3 +83,12 @@ export function DateFormatYearMonth(date){
     return [year, month].join('-');
     }
 }
+
+//简单的数据字典转换
+export function simpleCodeToText(codeValue,textList){
+    for (let i = 0; i < textList.length; i++) {
+        if (textList[i].typecode == codeValue && codeValue != "") {
+            return textList[i].typename;
+        }
+    }
+}
