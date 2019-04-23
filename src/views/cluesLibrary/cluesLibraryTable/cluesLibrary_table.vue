@@ -1014,7 +1014,7 @@ import publicCustomer from './publicCustomer'
 
                         }
                     }
-                _self.tableData2 = []o
+                _self.tableData2 = []
 
                 function doSuccess(response) {
                     _self.pageTotal22 = response.data.data.total
