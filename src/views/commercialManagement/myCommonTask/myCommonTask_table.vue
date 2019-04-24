@@ -39,7 +39,7 @@ import All from './myCommonTaskIndex/all'
 import Finished from './myCommonTaskIndex/finished'
 import Notbegin from './myCommonTaskIndex/notbegin'
 import Stop from "./myCommonTaskIndex/stop";
-import StopWorkOrder from "./StopWorkOrder";
+import StopWorkOrder from "./stopWorkOrder";
 import workOrderLog from "./workOrderLog";
     export default {
         name:'commercialTaskManagement',
