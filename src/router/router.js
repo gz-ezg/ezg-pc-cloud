@@ -142,6 +142,13 @@ export const otherRouter = {
             component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/productDetail/index.vue')
         },
         {
+            path: 'productAnalysis',
+            title: "产品数据分析",
+            access: 6013,
+            name: "productAnalysis",
+            component: ()=> import('@/views/productManagement/productAnalysis/index.vue')
+        },
+        {
             path: 'customerList',
             title: "客户列表",
             name: "customerList",

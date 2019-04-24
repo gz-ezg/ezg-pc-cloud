@@ -107,10 +107,28 @@ export default {
                 {
                     title: "操作",
                     key: "action",
-                    width: 220,
+                    width: 260,
+                    align:"center",
                     render: (h, params) => {
                         let _self = this
                         return h("div", [
+                            h("Button",{
+                                props:{
+                                    type: "warning",
+                                    size: "small",
+                                },
+                                style:{
+                                    marginRight: "5px"
+                                },
+                                on: {
+                                    "click": function(event){
+                                        _self.$router.push({
+                                            path: '/productAnalysis?id=' + params.row.id
+                                        })
+                                        event.stopPropagation()
+                                    }
+                                }
+                            }, "分析"),
                             h("Button",{
                                 props:{
                                     type: "primary",
