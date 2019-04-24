@@ -27,7 +27,7 @@
                 <Cascader trigger="hover" :data="customerTypes_Casr" v-model="formValidate.customerType"></Cascader>
             </FormItem>
             <FormItem label="客户来源" prop="customersource" style="margin-bottom:0px">
-                <Select transfer v-model="formValidate.customersource" size="small" >
+                <Select transfer v-model="formValidate.customersource" disabled size="small" >
                     <Option v-for="item in cluesources" :value="item.typecode" :key="item.id">{{ item.typename}}</Option>
                 </Select>
             </FormItem>
