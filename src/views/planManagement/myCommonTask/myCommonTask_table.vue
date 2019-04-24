@@ -52,7 +52,7 @@ import finished from './myCommonTaskIndex/tabpanes/finished'
 import serving from './myCommonTaskIndex/tabpanes/servicing'
 import notbegin from './myCommonTaskIndex/tabpanes/notbegin'
 import stop from './myCommonTaskIndex/tabpanes/stop'
-import StopWorkOrder from "@/views/commercialManagement/myCommonTask/StopWorkOrder";
+import StopWorkOrder from "@/views/commercialManagement/myCommonTask/stopWorkOrder";
 import workOrderLog from "@/views/commercialManagement/myCommonTask/workOrderLog";
 
     export default {
