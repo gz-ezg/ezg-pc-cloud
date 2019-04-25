@@ -48,6 +48,30 @@
                 </Card>
             </Col>
         </Row>
+        <Row :gutter="10" class="margin-top-10">
+            <Col span="12" :style="{marginBottom: '10px'}">
+                <Card style="height:1000px">
+                    <p slot="title" class="card-title" align="center">
+                        <Icon type="android-map"></Icon>
+                        产值总计
+                    </p>
+                    <div class="data-source-row">
+                        <total-output-value></total-output-value>
+                    </div>
+                </Card>
+            </Col>
+            <Col span="12" :style="{marginBottom: '10px'}">
+                <Card style="height:1000px">
+                    <p slot="title" class="card-title" align="center">
+                        <Icon type="android-map"></Icon>
+                        完成情况
+                    </p>
+                    <div class="data-source-row">
+                        <completion></completion>
+                    </div>
+                </Card>
+            </Col>
+        </Row>
         <common-module></common-module>
     </div>
 </template>
@@ -58,14 +82,17 @@ import offlineStatistical from './offlineStatistical'
 import workProgress from './progress'
 import workload from './workload'
 import commonModule from './common_module';
-
+import totalOutputValue from './totalOutputValue'
+import completion from './completion'
 export default {
     components:{
         bussinessType,
         offlineStatistical,
         workProgress,
         workload,
-        commonModule
+        commonModule,
+        totalOutputValue,
+        completion
     },
     data(){
         return {

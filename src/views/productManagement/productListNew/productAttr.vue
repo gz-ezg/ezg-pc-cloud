@@ -110,6 +110,13 @@
 					v-if="iscycle==='Y'?true:false"
 				  @click="openCycleProperty = true"
 				>修改周期性属性</Button>
+        <Button
+                type="warning"
+                icon="bag"
+                size="large"
+                style="margin-top: 20px"
+                @click="analysis"
+        >分析</Button>
       </Row>
     </Card>
     <update-link v-if="openUpdateLink" :skuId="SKU" :product="product" @update="openUpdateLink= false"></update-link>
@@ -158,6 +165,16 @@ export default {
     }
   },
   methods: {
+    analysis(event){
+      if (this.SKU) {
+      this.$router.push({
+        path: '/productAnalysis?skuid=' + this.SKU
+      })
+      } else {
+        this.$Message.error("请先选择要分析的选项！");
+      }
+      event.stopPropagation()
+    },
     //  生成产品详情
     select_product() {
       if (this.product.id == "14") {
