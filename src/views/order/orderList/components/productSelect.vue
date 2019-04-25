@@ -263,7 +263,7 @@ export default {
             function success(res){
                 _self.queryProperty = res.data.data
                 if(e == 100){
-                    console.log(_self.queryProperty)
+
                     let temp = []
                     for(let i = 0; i< _self.queryProperty.length; i++){
                         if(_self.queryProperty[i].propertyId == 95){
@@ -296,7 +296,7 @@ export default {
             }
 
             function success(res){
-                console.log(res)
+
                 _self.producSku = res.data.data
                 let temp = _self.producSku[0].linkPropertys.split(",")
                 if(temp.length == 1){
@@ -329,7 +329,7 @@ export default {
                         let flag = _self.find_array(arr, total)
                         if(flag){
                             _self.SKU = _self.producSku[i].id
-                            console.log(_self.SKU)
+
                             resolve()
                         }
                     }
@@ -414,8 +414,7 @@ export default {
 				// _self.$bus.emit("ADD_PRODUCT_DETAIL_LIST",{product:res.data.data[0]})
 // 				_self.$store.commit("orderList/getProductListItem",res.data.data[0])
 // 				_self.$store.commit("orderList/addProductListItem")
-				console.log("resres")
-				console.log(res)
+
 				_self.$bus.emit("ADD_PRODUCT_DETAIL_LIST",res.data.data[0])
 								
                 _self.detail = res.data.data[0]
@@ -423,7 +422,7 @@ export default {
                     _self.detail.productnumber = '12'
                     _self.detail.unitprice = parseInt(_self.detail.unitprice/12)
                 }
-                console.log(_self.detail)
+
                 if(res.data.data[0].iscycle == "Y"){
                     let url2 = "api/order/cycle/service/record/budget/period"
                     let config2 = {

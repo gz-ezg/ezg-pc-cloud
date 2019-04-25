@@ -128,21 +128,21 @@
 					    </Row>
 					
 						<Row :gutter="16">
-							<div v-for="(items,index) of getDepartJsonNumber">
+							<div v-for="(depart,index) of departServerObj"  >
 								<Col span="11">
 									<FormItem label="服务部门:">
-										{{orderItem[index].departname}}
+										{{depart.departName}}
 									</FormItem>
 								</Col>
 								<Col span="11">
 									<FormItem label="服务人员:">
 										<Select
-											v-model="orderItem[index].current"
-											@on-change="optionSelect($event,index)">
+											v-model="depart.serverId"
+											>
 											<Option
-												v-for="item of orderItem[index].serviceList"
+												v-for="item of depart.serverList"
 												:key="item.userId"
-												:value="item.userId">{{item.realname}}</Option>
+												:value="item.userId">{{item.realname +"【"+item.flag+"】"}}</Option>
 										</Select>
 									</FormItem>
 								</Col>
@@ -166,7 +166,7 @@
 						产品详情
 					</h3>
 					
-					<product-detail-list v-if="openCreateOrderDetail" :productList="orderItem" :isDisabled="isDisabled"></product-detail-list>
+					<product-detail-list v-if="openCreateOrderDetail" :productList="orderItem" :isDisabled="isDisabled" :pageFlag="pageFlag"></product-detail-list>
 				</Col>
 			</Row>
             <div slot="footer">
@@ -199,19 +199,11 @@ export default {
 		productDetailList
     },
 	computed:{
-		getDepartJsonNumber(){
-			let _self = this
-			let arr = _self.orderItem
-			let arr2 = []
-			for(let i=0;i<arr.length;i++){
-				arr2.push(arr[i].departid)
-			}
-			let arr3 = [...new Set(arr2)]
-			return arr3
-		}
+
 	},
     data(){
         return {
+			pageFlag:"createOrder",
 			isDisabled:false,
             openServiceItem: false,
             show_file: [],
@@ -222,7 +214,9 @@ export default {
             orderCode: '',
 			productItem:"",
 			orderItem:[],
-			departJsonArray:[]
+			departJsonArray:[],
+			departServerObj:[],
+			departChangeCountFlag:0
         }
     },
     methods: {
@@ -282,15 +276,7 @@ export default {
             } catch (error) {
                 console.log(error)
             }
-            // function success(res){
-            //     _self.show_file = []
-            // }
 
-            // function fail(err){
-
-            // }
-                
-            // this.$Post(url, formdata, success, fail)
         },
         //  ======== 合同文件上传end ========
         //  ======== 打开产品列表 ========
@@ -302,29 +288,30 @@ export default {
             }
         },
         create(){
-            // this.check_date()
+             if(!this.check_date()){
+				 return;
+			 }
             let _self = this
             this.loading = true
             this.$refs["orderDetail"].validate((valid) => {
 				 _self.create_order()
-//                 if(valid && this.check_date()){
-//                     _self.create_order()
-//                     
-//                 }else{
-//                     this.loading = false
-//                 }
+
             })
         },
         async create_order(){
             let _self = this
-            // let url = `api/order/create`
+
 			let order = JSON.parse(JSON.stringify(_self.orderItem)); 
 			
 			for(let i=0;i<order.length;i++){
 				order[i].servicedeparts = ""
 			}
-			console.log("order")
-			console.log(order)
+			let departParamObj = [];
+
+			for(let j = 0;j< _self.departServerObj.length;j++){
+				departParamObj.push({"departId":_self.departServerObj[j].departId,"serverId":_self.departServerObj[j].serverId})
+			}
+
 			
             let config = {
                 companyId: _self.orderDetail.companyid,
@@ -336,8 +323,7 @@ export default {
                 isornotkp: _self.orderDetail.isornotkp,
                 usebalance: _self.orderDetail.usebalance,
                 orderitems: JSON.stringify(order),
-				// departJson: [{departId:11570,serverId:10066}]
-				departJson:JSON.stringify(_self.departJsonArray)
+				departJson:JSON.stringify(departParamObj)
             }
 			
             try {
@@ -358,7 +344,7 @@ export default {
                     setTimeout(()=>{
                         _self.loading = false
                         _self.$bus.emit("UPDATE_ORDER_LIST", true)
-                        _self.openCreateOrderDetail = false
+                        _self.closeCreateDetail();
                     }, 200)
                 }
             } catch (error) {
@@ -367,24 +353,6 @@ export default {
 
             this.loading = false
 
-            // function success(res){
-            //     if(_self.show_file.length != 0){
-            //         _self.upload_img(res.data.data)
-            //     }else{
-            //         _self.$Message.warning("订单创建成功！请及时上传合同！")
-            //     }
-            //     setTimeout(()=>{
-            //         _self.loading = false
-            //         _self.$bus.emit("UPDATE_ORDER_LIST", true)
-            //         _self.openCreateOrderDetail = false
-            //     }, 200)
-            // }
-
-            // function fail(err){
-            //     _self.loading = false
-            // }
-
-            // this.$Post(url, config, success, fail)
         },
         close_item(){
             this.openServiceItem = false
@@ -412,18 +380,9 @@ export default {
             this.openCreateOrderDetail = false
             this.applyId = ''
             this.orderCode = ''
-        },
-		optionSelect(item,index){
-			let _self = this
-			
-			_self.departJsonArray = []
-			
-			for(let i=0;i<_self.orderItem.length;i++){
-				_self.departJsonArray.push({'departId':_self.orderItem[i].departid,'serverId':JSON.stringify(item)})
-			}
-// 			console.log("_self.departJsonArray")
-// 			console.log(_self.departJsonArray)
-		}
+			this.departServerObj = []
+        	this.departChangeCountFlag = 0;
+        }
     },
     created(){
 		let _self = this
@@ -448,6 +407,126 @@ export default {
 				_self.optionSelect(e)
 			}
 			
+		});
+		this.$bus.off("DEPART_CHANGE_"+this.pageFlag, true)
+	    this.$bus.on("DEPART_CHANGE_"+this.pageFlag,(e)=>{
+			_self.departChangeCountFlag+=1;
+			let countFlag = _self.departChangeCountFlag;
+			let newRows = [];
+		   let idObj = e;
+			for(let departId in idObj){
+				let row = idObj[departId];
+				for(let i =0;i<_self.departServerObj.length;i++){
+					if(_self.departServerObj[i].departId == row.departId){
+						row.oldProductSkuId = _self.departServerObj[i].productSkuId;
+						row.serverId = _self.departServerObj[i].serverId;
+						row.serverList =  _self.departServerObj[i].serverList;
+					}
+				}
+				newRows.push(row);
+			}
+
+
+			for(let j =0;j<newRows.length;j++){
+
+				if(newRows[j].productSkuId !=newRows[j].oldProductSkuId){
+
+					//表示需要重置服务人员
+
+					let url = `api/product/server/list`
+
+					let config = {
+						params: {
+							productSkuId:newRows[j].productSkuId,
+							serviceDepartId:newRows[j].departId,
+							companyId:_self.orderDetail.companyid
+						}
+					}
+
+					var oAjax = new XMLHttpRequest();
+
+
+					oAjax.open('GET', url+"?"+'productSkuId='+newRows[j].productSkuId+'&serviceDepartId='+newRows[j].departId+'&companyId='+_self.orderDetail.companyid, false);//false表示同步请求
+
+
+					oAjax.onreadystatechange = function() {
+						//6,通过状态确认完成
+						if (oAjax.readyState == 4 && oAjax.status == 200) {
+							//7,获取返回值，解析json格式字符串为对象
+							var data = JSON.parse(oAjax.responseText);
+								if(data.msgCode == 40000){
+									if(data.data.length == 0){
+										newRows[j].serverId = "";
+									}else{
+										let serverChangeFlag = true;
+										for(let k=0;k<data.data.length;k++){
+											if(data.data[k].userId == newRows[j].serverId  && newRows[j].serverId != null && newRows[j].serverId != ""){
+												serverChangeFlag = false;
+											}
+										}
+
+										if(serverChangeFlag){
+											newRows[j].serverId = data.data[0].userId;
+										}
+
+									}
+									newRows[j].serverList = data.data;
+								}else{
+									newRows[j].serverId = "";
+									newRows[j].serverList = [];
+								}
+						} else {
+							console.log(oAjax);
+							newRows[j].serverId = "";
+							newRows[j].serverList = [];
+						}
+					};
+					oAjax.send();
+
+				/*	function success(res){
+
+						if(res.data.data.length == 0){
+							newRows[j].serverId = "";
+
+
+						}else{
+							let serverChangeFlag = true;
+							for(let k=0;k<res.data.data.length;k++){
+								if(res.data.data[k].userId == newRows[j].serverId  && newRows[j].serverId != null && newRows[j].serverId != ""){
+									serverChangeFlag = false;
+								}
+							}
+
+							if(serverChangeFlag){
+								newRows[j].serverId = res.data.data[0].userId;
+							}
+
+						}
+						newRows[j].serverList = res.data.data;
+						requestFlag --;
+						console.log(requestFlag+"---rquestEnd");
+					}
+					function fail(){
+						_self.loading = false;
+						newRows[j].serverId = "";
+						newRows[j].serverList = [];
+						requestFlag --;
+						console.log(requestFlag+"---rquestEnd");
+					}
+					this.$Get(url, config, success,fail);*/
+
+				}
+
+			}
+
+			if(countFlag ==_self.departChangeCountFlag){
+				_self.departServerObj = [];
+				_self.departServerObj = newRows;
+			}
+
+			console.log(_self.departServerObj);
+
+
 		})
     }
 }

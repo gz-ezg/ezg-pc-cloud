@@ -20,7 +20,7 @@
 				            <Input size="small" v-model="orderDetail.name" @on-focus="open_company" readonly/>
 				        </FormItem>
 				        </Col>
-				       
+
 				    </Row>
 				    <Row :gutter="16">
 						 <Col span="10">
@@ -28,17 +28,17 @@
 						    <DatePicker size="small" type="date" style="width: 100%" v-model="orderDetail.payTime"></DatePicker>
 						</FormItem>
 						</Col>
-				        
-				        
+
+
 				        <Col span="10">
 				        <FormItem label="缴费渠道" prop="paydir">
 				            <Select transfer v-model="orderDetail.paydir" style="width:100%" size="small">
-				                <Option v-for="(item, index) in payDirs" :key=index :value="item.typecode">{{item.typename}}</Option>                            
+				                <Option v-for="(item, index) in payDirs" :key=index :value="item.typecode">{{item.typename}}</Option>
 				            </Select>
 				        </FormItem>
 				        </Col>
 				    </Row>
-					
+
 				    <Row :gutter="16">
 						<Col span="10">
 						<FormItem label="订单总价" prop="paynumber">
@@ -51,7 +51,7 @@
 				            </FormItem>
 				        </Col>
 				    </Row>
-					
+
 					<Row :gutter="16">
 						<Col span="10">
 						    <FormItem label="是否提供发票" prop="isornotkp">
@@ -71,7 +71,7 @@
 						    </FormItem>
 						</Col>
 					</Row>
-					
+
 					<Row :gutter="16">
 						<Col span="24">
 						    <FormItem label="异常工单号">
@@ -82,7 +82,7 @@
 						    </FormItem>
 						</Col>
 					</Row>
-					
+
 				    <Row :gutter="16">
 				        <Col span="24">
 				            <FormItem label="使用余额" prop="usebalance">
@@ -94,7 +94,7 @@
 				            </FormItem>
 				        </Col>
 				    </Row>
-					
+
 				    <Row :gutter="16">
 				        <Col span="24">
 				            <FormItem style="margin-bottom:10px">
@@ -114,7 +114,7 @@
 				            </FormItem>
 				        </Col>
 				    </Row>
-					
+
 				    <Row :gutter="16">
 				        <Col span="10">
 				            <FormItem label="新增产品" >
@@ -124,14 +124,35 @@
 				            </FormItem>
 				        </Col>
 				    </Row>
+                    <Row :gutter="16">
+                        <div v-for="(depart,index) of departServerObj"  >
+                            <Col span="11">
+                            <FormItem label="服务部门:">
+                                {{depart.departName}}
+                            </FormItem>
+                            </Col>
+                            <Col span="11">
+                            <FormItem label="服务人员:">
+                                <Select
+                                        v-model="depart.serverId"
+                                >
+                                    <Option
+                                            v-for="item of depart.serverList"
+                                            :key="item.userId"
+                                            :value="item.userId">{{item.realname +"【"+item.flag+"】"}}</Option>
+                                </Select>
+                            </FormItem>
+                            </Col>
+                        </div>
+                    </Row>
 				</Form>
 			</Col>
 			<Col span="16">
 				<h3 style="margin-bottom: 10px;">
 					产品详情
 				</h3>
-				
-				<!-- <product-detail-list v-if="openEditOrderDetail" :productList="orderItem" :isDisabled="isDisabled"></product-detail-list> -->
+
+				<product-detail-list v-if="openEditOrderDetail" :productList="orderItem" :isDisabled="isDisabled" :pageFlag="pageFlag"></product-detail-list>
 			</Col>
 		</Row>
             <Row>
@@ -161,15 +182,16 @@ import serviceItem from '../accountHomeTree'
 import commonSetting from './comonSetting.js'
 import { DateFormat } from '../../../../../libs/utils.js'
 import * as orderApi from '../../api'
-// import productDetailList from './productDetailList'
+ import productDetailList from './productDetailList'
 
 export default {
     mixins: [commonSetting],
     components: {
         serviceItem,
         abOrderChange,
-		// productDetailList
+        productDetailList
     },
+
     data(){
         return {
 			isDisabled:false,
@@ -178,13 +200,16 @@ export default {
             unusualCode: "",
             openEditOrderDetail: false,
             loading: false,
-            openServiceItem: false
+            openServiceItem: false,
+            pageFlag:"editOrder",
+            departServerObj:[],
+            departChangeCountFlag:0
         }
     },
     methods:{
         //关联异常工单
         relate(){
-            let _self = this 
+            let _self = this
             let url = `api/order/unusual/workorder/linkUnusualWorkOrder`
             let config = {
                 applyId: _self.applyId,
@@ -235,6 +260,7 @@ export default {
         },
         close_item(){
             this.openServiceItem = false
+            this.departServerObj = [];
         },
         edit(){
             let _self = this
@@ -244,6 +270,13 @@ export default {
                 if(valid){
                     // let url = `api/order/update`
                     // console.log(_self.orderDetail.payTime)
+                    let departParamObj = [];
+
+                    for(let j = 0;j< _self.departServerObj.length;j++){
+                        departParamObj.push({"departId":_self.departServerObj[j].departId,"serverId":_self.departServerObj[j].serverId})
+
+
+                   }
                     let config = {
                         id: _self.orderDetail.id,
                         payDir: _self.orderDetail.paydir,
@@ -254,20 +287,14 @@ export default {
                         orderPayNumber: _self.orderDetail.realnumber,
                         orderitems: JSON.stringify(_self.orderItem),
                         usebalance: _self.orderDetail.usebalance,
-                        serviceStartDate: ""
+                        serviceStartDate: "",
+                        departJson:JSON.stringify(departParamObj)
+
                     }
 
                     console.log(config)
 
-                    // function success(res){
-                    //     setTimeout(()=>{
-                    //         _self.loading = false
-                    //         _self.openEditOrderDetail = false
-                    //         _self.$bus.emit("UPDATE_ORDER_LIST", true)
-                    //     }, 500)
-                    //     // _self.$refs["orderDetail"].resetFields()
-                    //     // _self.orderItem = []
-                    // }
+
                     try {
                         let {status, data} = await orderApi.orderUpdate(config)
                         if(status){
@@ -276,6 +303,7 @@ export default {
                                 _self.loading = false
                                 _self.openEditOrderDetail = false
                                 _self.$bus.emit("UPDATE_ORDER_LIST", true)
+                                 this.departServerObj = []
                             }, 500)
                         }
                     } catch (error) {
@@ -306,20 +334,139 @@ export default {
         this.$bus.off("OPEN_ORDERLIST_EDIT", true)
         this.$bus.on("OPEN_ORDERLIST_EDIT", (e) => {
             this.checkBalance = false
-            this.get_data(e)
+            this.get_data(e,callback)
             this.orderId = e
             this.get_ab_worker_id()
             this.openEditOrderDetail = true
+            function callback(){
+                console.log(_self.orderDetail);
+                for(let i=0;i<_self.orderDetail.departJson.length;i++){
+                    let serverList = [];
+                     serverList.push({"userId":_self.orderDetail.departJson[i].serverId,"realname":_self.orderDetail.departJson[i].realname,"flag":"默认"})
+                    _self.departServerObj.push({"serverId":_self.orderDetail.departJson[i].serverId,"departId":_self.orderDetail.departJson[i].departId,"departName":_self.orderDetail.departJson[i].departName,"serverList":serverList})
+                }
+            }
         })
-// 		this.$bus.on("SET_ORDER_DETAIL",(e)=>{
-// 			_self.orderItem = e
-// 			console.log("_self.orderItem")
-// 			console.log(_self.orderItem)
-// 		})
-// 		this.$bus.on("SET_PAYNUMBER",(e)=>{
-// 			_self.orderDetail.paynumber = e.paynumber
-// 			_self.orderDetail.realnumber = e.realnumber
-// 		})
+        this.$bus.off("DEPART_CHANGE_"+this.pageFlag, true)
+        this.$bus.on("DEPART_CHANGE_"+this.pageFlag,(e)=>{
+            _self.departChangeCountFlag+=1;
+        let countFlag = _self.departChangeCountFlag;
+        let newRows = [];
+        let idObj = e;
+        for(let departId in idObj){
+            let row = idObj[departId];
+            for(let i =0;i<_self.departServerObj.length;i++){
+                if(_self.departServerObj[i].departId == row.departId){
+                    row.oldProductSkuId = _self.departServerObj[i].productSkuId;
+                    row.serverId = _self.departServerObj[i].serverId;
+                    row.serverList =  _self.departServerObj[i].serverList;
+                }
+            }
+            newRows.push(row);
+        }
+
+
+        for(let j =0;j<newRows.length;j++){
+
+            if(newRows[j].productSkuId !=newRows[j].oldProductSkuId){
+
+                //表示需要重置服务人员
+
+                let url = `api/product/server/list`
+
+                let config = {
+                    params: {
+                        productSkuId:newRows[j].productSkuId,
+                        serviceDepartId:newRows[j].departId,
+                        companyId:_self.orderDetail.companyid
+                    }
+                }
+
+                var oAjax = new XMLHttpRequest();
+
+
+                oAjax.open('GET', url+"?"+'productSkuId='+newRows[j].productSkuId+'&serviceDepartId='+newRows[j].departId+'&companyId='+_self.orderDetail.companyid, false);//false表示同步请求
+
+
+                oAjax.onreadystatechange = function() {
+                    //6,通过状态确认完成
+                    if (oAjax.readyState == 4 && oAjax.status == 200) {
+                        //7,获取返回值，解析json格式字符串为对象
+                        var data = JSON.parse(oAjax.responseText);
+                        if(data.msgCode == 40000){
+                            if(data.data.length == 0){
+                                newRows[j].serverId = "";
+                            }else{
+                                let serverChangeFlag = true;
+                                for(let k=0;k<data.data.length;k++){
+                                    if(data.data[k].userId == newRows[j].serverId  && newRows[j].serverId != null && newRows[j].serverId != ""){
+                                        serverChangeFlag = false;
+                                    }
+                                }
+
+                                if(serverChangeFlag){
+                                    newRows[j].serverId = data.data[0].userId;
+                                }
+
+                            }
+                            newRows[j].serverList = data.data;
+                        }else{
+                            newRows[j].serverId = "";
+                            newRows[j].serverList = [];
+                        }
+                    } else {
+                        console.log(oAjax);
+                        newRows[j].serverId = "";
+                        newRows[j].serverList = [];
+                    }
+                };
+                oAjax.send();
+
+                /*	function success(res){
+
+                 if(res.data.data.length == 0){
+                 newRows[j].serverId = "";
+
+
+                 }else{
+                 let serverChangeFlag = true;
+                 for(let k=0;k<res.data.data.length;k++){
+                 if(res.data.data[k].userId == newRows[j].serverId  && newRows[j].serverId != null && newRows[j].serverId != ""){
+                 serverChangeFlag = false;
+                 }
+                 }
+
+                 if(serverChangeFlag){
+                 newRows[j].serverId = res.data.data[0].userId;
+                 }
+
+                 }
+                 newRows[j].serverList = res.data.data;
+                 requestFlag --;
+                 console.log(requestFlag+"---rquestEnd");
+                 }
+                 function fail(){
+                 _self.loading = false;
+                 newRows[j].serverId = "";
+                 newRows[j].serverList = [];
+                 requestFlag --;
+                 console.log(requestFlag+"---rquestEnd");
+                 }
+                 this.$Get(url, config, success,fail);*/
+
+            }
+
+        }
+
+        if(countFlag ==_self.departChangeCountFlag){
+            _self.departServerObj = [];
+            _self.departServerObj = newRows;
+        }
+
+        console.log(_self.departServerObj);
+
+
+    })
     }
 }
 </script>

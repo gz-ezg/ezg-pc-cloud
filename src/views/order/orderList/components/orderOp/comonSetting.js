@@ -375,26 +375,9 @@ export default {
     },
     methods: {
         //  取订单详情
-        async get_data(e){
+        async get_data(e,callback){
             let _self = this
-            // let url = `api/order/detail/` + e
-            // _self.showAccountHomeItem = false
-            // _self.loading = true
-            // let config = {}
 
-            // function success(res){
-            //     _self.orderDetail = res.data.data
-            //     _self.orderItem = res.data.data.items
-            //     for(let i = 0; i<_self.orderItem.length;i++){
-            //         if(_self.orderItem[i].product == "会计到家"){
-            //             _self.showAccountHomeItem = true
-            //             break
-            //         }
-            //     }
-            //     _self.loading = false
-            // }
-
-            // this.$Get(url, config, success)
 
             this.showAccountHomeItem = false
             this.loading = true
@@ -414,6 +397,9 @@ export default {
                     }
                     return item
                 })
+                if(callback){
+                    callback();
+                }
             } catch (error) {
                 console.log(error)
             }

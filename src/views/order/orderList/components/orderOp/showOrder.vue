@@ -26,16 +26,15 @@
 				    <Row :gutter="16">
 						 <Col span="10">
 						<FormItem label="缴费时间"  prop="payTime">
-						    <DatePicker size="small" type="date" style="width: 100%" v-model="orderDetail.payTime"></DatePicker>
+						    <DatePicker size="small" type="date" style="width: 100%" v-model="orderDetail.payTime"  readonly></DatePicker>
 						</FormItem>
 						</Col>
 				        
 				        
 				        <Col span="10">
 				        <FormItem label="缴费渠道" prop="paydir">
-				            <Select transfer v-model="orderDetail.paydir" style="width:100%" size="small">
-				                <Option v-for="(item, index) in payDirs" :key=index :value="item.typecode">{{item.typename}}</Option>                            
-				            </Select>
+
+                            <Input size="small"   v-model="orderDetail.paydirText" readonly/>
 				        </FormItem>
 				        </Col>
 				    </Row>
@@ -48,7 +47,7 @@
 						</Col>
 				        <Col span="10">
 				            <FormItem label="已付款" prop="realnumber">
-				                <Input size="small" v-model="orderDetail.realnumber" number />
+				                <Input size="small" v-model="orderDetail.realnumber" number  readonly />
 				            </FormItem>
 				        </Col>
 				    </Row>
@@ -56,19 +55,13 @@
 					<Row :gutter="16">
 						<Col span="10">
 						    <FormItem label="是否提供发票" prop="isornotkp">
-						        <Select transfer v-model="orderDetail.isornotkp" size="small" style="width:100%" >
-						            <Option value="Y">是</Option>
-						            <Option value="N">否</Option>
-						        </Select>
+                                <Input size="small" v-model="orderDetail.isornotkpText"   readonly />
+
 						    </FormItem>
 						</Col>
 						<Col span="10">
 						    <FormItem label="国地税报道" prop="gdsreport">
-						        <Select transfer v-model="orderDetail.gdsreport" size="small" >
-						            <Option value="ybd">已报道</Option>
-						            <Option value="wbd">未报道</Option>
-						            <Option value="bybd">不用报道</Option>
-						        </Select>
+                                <Input size="small" v-model="orderDetail.gdsreportText"   readonly />
 						    </FormItem>
 						</Col>
 					</Row>
@@ -89,7 +82,7 @@
 				            <FormItem label="使用余额" prop="usebalance">
 				                <div style="display:inline-block">
 				                    <Input size="small" v-model="orderDetail.usebalance" style="width:40%" number />
-				                    <Button type="info" size="small" @click="get_balance('create', orderDetail.customerid)" :disabled="checkBalance">查询</Button>
+				                    <!--<Button type="info" size="small" @click="get_balance('create', orderDetail.customerid)" :disabled="checkBalance">查询</Button>-->
 				                    <span style="line-height:24px;height:24px;display:inline-block;margin-left:10px">可用余额：</span><span style="line-height:24px;height:24px;display:inline-block">{{allUseBalance}}</span>
 				                </div>
 				            </FormItem>
@@ -116,34 +109,34 @@
 				        </Col>
 				    </Row>
 					
-				    <Row :gutter="16">
+				    <!--<Row :gutter="16">
 				        <Col span="10">
 				            <FormItem label="新增产品" >
-				                <Button type="primary" icon="plus" @click="open_product_list">新增</Button>
-				                <!-- <Button type="primary" icon="plus" @click="removeRows()">删除</Button> -->
+				               &lt;!&ndash; <Button type="primary" icon="plus" @click="open_product_list">新增</Button>&ndash;&gt;
+				                &lt;!&ndash; <Button type="primary" icon="plus" @click="removeRows()">删除</Button> &ndash;&gt;
 				                <Button type="primary" icon="plus" @click="open_service_item" v-if="showAccountHomeItem">查看会计到家服务项</Button>
 				            </FormItem>
 				        </Col>
-				    </Row>
+				    </Row>-->
 				
 					<Row :gutter="16">
-						
-						<div v-for="item of orderDetail.departJson">
-							<Row>
-								<Col span="8">
-									<FormItem label="部门:">
-										{{item.departName}}
-									</FormItem>
-								</Col>
-								<Col span="8">
-									<FormItem label="人员:">
-										{{item.realname}}
-									</FormItem>
-								</Col>
-							</Row>
-						</div>
-						
-					</Row>
+
+                    <div v-for="item of orderDetail.departJson">
+                        <Row>
+                            <Col span="8">
+                            <FormItem label="部门:">
+                                {{item.departName}}
+                            </FormItem>
+                            </Col>
+                            <Col span="8">
+                            <FormItem label="人员:">
+                                {{item.realname}}
+                            </FormItem>
+                            </Col>
+                        </Row>
+                    </div>
+
+                </Row>
 				</Form>
 			</Col>
 			<Col span="16">
@@ -151,7 +144,7 @@
 					产品详情
 				</h3>
 				
-				<!-- <product-detail-list v-if="openShowOrderDetail" :productList="orderItem" :isDisabled="isDisabled"></product-detail-list> -->
+				 <product-detail-list v-if="openShowOrderDetail" :productList="orderItem" :pageFlag="pageFlag" :isDisabled="isDisabled"></product-detail-list>
 			</Col>
         </Row>    
 			<div slot="footer">
@@ -169,17 +162,40 @@ import relateOrder from '../relateOrder'
 import serviceItem from '../accountHomeTree'
 import commonSetting from './comonSetting.js'
 import * as orderApi from '../../api'
-// import productDetailList from './productDetailList'
+import productDetailList from './productDetailList'
+import {simpleCodeToText} from '../../../../../libs/utils.js'
 
 export default {
     mixins: [commonSetting],
+    inject:['simpleCodeToText'],
     components: {
         serviceItem,
         relateOrder,
-		// productDetailList
+		productDetailList
+    },
+    watch:{
+        orderDetail(val){
+            console.log(val);
+            this.orderDetail.paydirText =  this.pSimpleCodeToText(this.orderDetail.paydir,this.payDirs);
+            if(this.orderDetail.isornotkp == 'Y'){
+                this.orderDetail.isornotkpText = '是'
+            }else{
+                this.orderDetail.isornotkpText = '否'
+            }
+            if(this.orderDetail.gdsreport == 'ybd'){
+                this.orderDetail.gdsreportText = "已报道"
+            }else if(this.orderDetail.gdsreport == 'wbd'){
+                this.orderDetail.gdsreportText = "未报道"
+            }else if(this.orderDetail.gdsreport == 'bybd'){
+                this.orderDetail.gdsreportText = "不用报道"
+            }else{
+                this.orderDetail.gdsreportText = "未选择"
+            }
+        }
     },
     data(){
         return {
+            pageFlag:"showOrder",
 			isDisabled:true,
             unusualCode: "",
             orderId: "",
@@ -330,6 +346,9 @@ export default {
             }
             this.$Get(url,config,success)
         },
+        pSimpleCodeToText(code,textList){
+            return simpleCodeToText(code,textList)
+        },
         //打开对应的异常工单
         open_relateOrder(){
             this.$bus.emit("RELATE_ABORDER",true)
@@ -370,19 +389,12 @@ export default {
         this.$bus.on("OPEN_ORDERLIST_DETAIL", (e)=>{
             this.checkBalance = false
             this.get_data(e)
+            console.log(this.orderDetail);
             this.orderId = e
             this.openShowOrderDetail = true
             this.get_ab_worker_id()
         })
-// 		this.$bus.on("SET_ORDER_DETAIL",(e)=>{
-// 			_self.orderItem = e
-// 			console.log("_self.orderItem")
-// 			console.log(_self.orderItem)
-// 		})
-// 		this.$bus.on("SET_PAYNUMBER",(e)=>{
-// 			_self.orderDetail.paynumber = e.paynumber
-// 			_self.orderDetail.realnumber = e.realnumber
-// 		})
+
     },
 }
 </script>
