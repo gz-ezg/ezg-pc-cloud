@@ -466,7 +466,7 @@ export default {
 										}
 
 										if(serverChangeFlag){
-											newRows[j].serverId = data.data[0].userId;
+											newRows[j].serverId = parseInt(data.data[0].userId);
 										}
 
 									}

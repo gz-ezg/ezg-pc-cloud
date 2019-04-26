@@ -359,14 +359,8 @@ export default {
             this.openEditOrderDetail = true
             function callback(){
                 console.log(_self.orderDetail);
-                for(let i=0;i<_self.orderDetail.departJson.length;i++){
-                    let serverList = [];
-                    if(_self.orderDetail.departJson[i].serverId){
-                        serverList.push({"userId":_self.orderDetail.departJson[i].serverId,"realname":_self.orderDetail.departJson[i].realname,"flag":"默认"})
-                    }
+                _self.departServerObj =_self.orderDetail.departJson;
 
-                    _self.departServerObj.push({"serverId":_self.orderDetail.departJson[i].serverId,"departId":_self.orderDetail.departJson[i].departId,"departName":_self.orderDetail.departJson[i].departName,"serverList":serverList})
-                }
             }
         })
         this.$bus.off("DEPART_CHANGE_"+this.pageFlag, true)
@@ -427,7 +421,8 @@ export default {
                                 }
 
                                 if(serverChangeFlag){
-                                    newRows[j].serverId = data.data[0].userId;
+                                    console.log(data);
+                                    newRows[j].serverId = parseInt(data.data[0].userId);
                                 }
 
                             }
