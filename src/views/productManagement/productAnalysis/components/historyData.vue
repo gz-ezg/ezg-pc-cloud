@@ -235,14 +235,14 @@
                 this.$Get(url, config, success)
             },
             getAnalysisDataCount(to){
-                if (to.query.id) {
+                if (to.query.id || to.query.skuid) {
                     let _self = this
                     _self.tableLoading = true
                     let url = `api/product/analysis/productAnalysisCount`
 
                     let config = {
                         params: {
-                            skuid : _self.$route.query.id,
+                            skuId : _self.$route.query.skuid,
                             productId: _self.$route.query.id,
                             customersource:_self.customersource,
                             createBegin: DateFormat2(_self.dateRange[0]),

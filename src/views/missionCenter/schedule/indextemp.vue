@@ -84,33 +84,33 @@
         <div v-show="showFilter">
             <div class="filter">
                 <Form :label-width="80" style="margin:20px 20px 0 0">
-                    <FormItem label="客户" >
+                    <FormItem label="客户：" >
                         <Input placeholder="搜索相关的客户/人员">
-                            <Button slot="append" icon="ios-search"  style="background: #2d8cf0;color: #fff;border-radius: 0px;font-weight: 700"></Button>
+                            <Button @click="showAll" slot="append" icon="ios-search"  style="background: #2d8cf0;color: #fff;border-radius: 0px;font-weight: 700"></Button>
                         </Input>
                     </FormItem>
-                    <FormItem label="状态" >
-                        <Tag>全部</Tag>
-                        <Tag>已完成</Tag>
-                        <Tag>未完成</Tag>
-                        <Tag>已终止</Tag>
+                    <FormItem label="状态：" >
+                        <div class="d" @click="showAll">全部</div>
+                        <div class="d">已完成</div>
+                        <div class="d">未完成</div>
+                        <div class="d">已终止</div>
                     </FormItem>
-                    <FormItem label="类型" >
-                        <Tag>全部</Tag>
-                        <Tag>微信</Tag>
-                        <Tag>电话</Tag>
-                        <Tag>QQ</Tag>
-                        <Tag>拜访</Tag>
-                        <Tag>商事</Tag>
-                        <Tag>会计</Tag>
-                        <Tag>线索</Tag>
-                        <Tag>客服</Tag>
-                        <Tag>其他</Tag>
+                    <FormItem label="类型：" >
+                        <div class="d">全部</div>
+                        <div class="d">微信</div>
+                        <div class="d">电话</div>
+                        <div class="d">QQ</div>
+                        <div class="d">拜访</div>
+                        <div class="d">商事</div>
+                        <div class="d">会计</div>
+                        <div class="d">线索</div>
+                        <div class="d">客服</div>
+                        <div class="d">其他</div>
                     </FormItem>
-                    <FormItem label="包含任务" >
-                        <Tag>全部</Tag>
-                        <Tag>是</Tag>
-                        <Tag>否</Tag>
+                    <FormItem label="包含任务：" >
+                        <div class="d">全部</div>
+                        <div class="d">是</div>
+                        <div class="d">否</div>
                     </FormItem>
                 </Form>
             </div>
@@ -169,7 +169,6 @@ export default {
                     filter:{
                         text:"筛选",
                         click:function () {
-                            console.log("sss")
                             this.showFilter=!this.showFilter
                         }.bind(this)
                     }
@@ -195,6 +194,9 @@ export default {
 
     },
     methods:{
+        showAll(){
+            alert("123")
+        },
         eventSelected(event, jsEvent, view){
             //  点击展示事件详情
             this.$bus.emit("OPEN_SEHEDULE_DETAIL",event)
@@ -400,4 +402,25 @@ export default {
         width: 300px;
         z-index: 1;
     }
+    .d{
+        display: inline-block;
+        height: 22px;
+        line-height: 22px;
+        margin: 2px 4px 2px 0;
+        padding: 0 8px;
+        border: 1px solid #e9eaec;
+        border-radius: 3px;
+        background: #f7f7f7;
+        font-size: 12px;
+        vertical-align: middle;
+        opacity: 1;
+        overflow: hidden;
+        cursor: pointer;
+    }
+    .d:hover{
+        opacity: 0.8;
+        background:  #2d8cf0;
+        color: #fff;
+    }
+
 </style> 
