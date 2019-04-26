@@ -554,7 +554,8 @@ export default {
                 {field:'neednumber',title:'余款'},                    
                 {field:'base_createdate',title:'创建时间'},
                 {field:'crealname',title:'创建人'},
-                {field:'frealname',title:'跟进人'},                    
+                {field:'frealname',title:'跟进人'},
+                {field:'contract_flag',title:'合同',format:'order_contract_flag'},
             ]
             let _self = this
             let url = `api/order/list`

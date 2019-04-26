@@ -93,18 +93,7 @@
 				        <Col span="24">
 				            <FormItem style="margin-bottom:10px">
 				                <!-- class="upload_before" -->
-				                <div slot="label">合同</div>
-				                <Upload
-				                        ref="upload"
-				                        multiple
-				                        :before-upload="handleUpload"
-				                        action=""
-				                        >
-				                    <Button type="ghost" icon="ios-cloud-upload-outline">选择文件</Button>
-				                </Upload>
-				                <span v-for="(item,index) in show_file" :key=index>{{ item.name }}
-				                    <Button type="text" @click="fileRemove(index)">移除</Button>
-				                </span>
+                                <Button type="primary" icon="plus" @click="show_contarct('edit')">查看合同</Button>
 				            </FormItem>
 				        </Col>
 				    </Row>

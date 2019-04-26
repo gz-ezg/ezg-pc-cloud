@@ -96,10 +96,10 @@
 				        </Col>
 				    </Row>
 					
-				    <Row :gutter="16">
+				    <!--<Row :gutter="16">
 				        <Col span="24">
 				            <FormItem style="margin-bottom:10px">
-				                <!-- class="upload_before" -->
+				                &lt;!&ndash; class="upload_before" &ndash;&gt;
 				                <div slot="label">合同</div>
 				                <Upload
 				                        ref="upload"
@@ -114,7 +114,7 @@
 				                </span>
 				            </FormItem>
 				        </Col>
-				    </Row>
+				    </Row>-->
 					<Row :gutter="16">
 
 						<div v-for="item of orderDetail.departJson">
