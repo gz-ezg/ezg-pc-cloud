@@ -150,7 +150,7 @@ import showContarct from './show_contarct'
 import productSelect from './components/productSelect'
 // import invoice from './components//invoice/index'
 
-import { DateFormat } from '../../../libs/utils.js'
+import { DateFormat,simpleCodeToText } from '../../../libs/utils.js'
 
 export default {
     name: "orderList_index",

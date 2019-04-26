@@ -333,7 +333,7 @@ export default{
                         post = value[0]+"-"+value[1];
                     }else{
                         post = value[0];
-                    }d
+                    }
                 }else{//表示是否接单选了
                     order_receiving =  value=="是"?"Y":"N"
                 }

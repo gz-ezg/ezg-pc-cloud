@@ -25,6 +25,9 @@ export default {
     props: {
         id: {
             type: [String, Number]
+        },
+        pageFlag:{
+            type:[String]
         }
     },
     data(){
@@ -129,7 +132,7 @@ export default {
     created() {
         let _self = this
         this.$bus.off("RELATE_ABORDER", true)
-        this.$bus.on("RELATE_ABORDER", (e)=>{
+        this.$bus.on("RELATE_ABORDER_"+_self.pageFlag, (e)=>{
             _self.get_data_center().then(
                 _self.get_data()
             )

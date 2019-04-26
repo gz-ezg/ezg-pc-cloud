@@ -37,7 +37,7 @@
                     <Col span="8">
                         <FormItem label="缴费渠道" prop="payDir">
                             <Select transfer v-model="formValidateDetail.paydir" disabled size="small">
-                                <Option v-for="(item, index) in payDirs" :key=index :value="item.typecode">{{item.typename}}</Option>                            
+                                <Option v-for="(item, index) in payDirs" :key=index :value="item.typecode">{{item.typename}}</Option>
                             </Select>
                         </FormItem>
                     </Col>
@@ -58,11 +58,11 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Table 
+                <Table
                     id="show-order-item"
                     border
-                    :columns="orderItemHeader" 
-                    :data="orderItem" 
+                    :columns="orderItemHeader"
+                    :data="orderItem"
                     size="small">
                 </Table>
             </Form>
