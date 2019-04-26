@@ -63,7 +63,7 @@
 
 <style scoped>
     .proa{
-        width: 273px;
+        width: 363px;
         height: 50px;
         color: black;
         background: #fff;

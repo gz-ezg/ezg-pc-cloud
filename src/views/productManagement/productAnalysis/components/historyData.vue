@@ -122,8 +122,8 @@
                 page : 1,
                 pageSize : 10,
                 productId : 0,
-                deff :  1,
-                customersource : "",
+                deff :  null,
+                customersource : null,
                 allCustomersource:[],
                 customerCount : 0,
                 companycount : 0,
@@ -135,15 +135,18 @@
                 this.dateRange[0]=e[0]
                 this.dateRange[1]=e[1]
                 this.getAnalysisData(this.$route)
+                this.getAnalysisDataCount(this.$route)
             },
             date_change1(e){
                 console.log(e)
                 this.dateRange1[0]=e[0]
                 this.dateRange1[1]=e[1]
                 this.getAnalysisData(this.$route)
+                this.getAnalysisDataCount(this.$route)
             },
             customersourceChange(){
                 this.getAnalysisData(this.$route)
+                this.getAnalysisDataCount(this.$route)
             },
             pageChange(e){
                 this.page = e
@@ -241,6 +244,7 @@
                         params: {
                             skuid : _self.$route.query.id,
                             productId: _self.$route.query.id,
+                            customersource:_self.customersource,
                             createBegin: DateFormat2(_self.dateRange[0]),
                             createEnd: DateFormat2(_self.dateRange[1]),
                             deff: _self.deff,

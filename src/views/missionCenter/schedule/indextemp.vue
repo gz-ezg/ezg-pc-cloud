@@ -34,7 +34,8 @@
                     <full-calendar
                         ref="calendar"  
                         :events="events" 
-                        :config="config" 
+                        :config="config"
+                        :header="header"
                         @event-selected="eventSelected"
                         :defaultView="defaultView"  
                         :editable="false"
@@ -80,6 +81,40 @@
         </Card>
         <create-task></create-task>
         <task-detail></task-detail>
+        <div v-show="showFilter">
+            <div class="filter">
+                <Form :label-width="80" style="margin:20px 20px 0 0">
+                    <FormItem label="客户" >
+                        <Input placeholder="搜索相关的客户/人员">
+                            <Button slot="append" icon="ios-search"  style="background: #2d8cf0;color: #fff;border-radius: 0px;font-weight: 700"></Button>
+                        </Input>
+                    </FormItem>
+                    <FormItem label="状态" >
+                        <Tag>全部</Tag>
+                        <Tag>已完成</Tag>
+                        <Tag>未完成</Tag>
+                        <Tag>已终止</Tag>
+                    </FormItem>
+                    <FormItem label="类型" >
+                        <Tag>全部</Tag>
+                        <Tag>微信</Tag>
+                        <Tag>电话</Tag>
+                        <Tag>QQ</Tag>
+                        <Tag>拜访</Tag>
+                        <Tag>商事</Tag>
+                        <Tag>会计</Tag>
+                        <Tag>线索</Tag>
+                        <Tag>客服</Tag>
+                        <Tag>其他</Tag>
+                    </FormItem>
+                    <FormItem label="包含任务" >
+                        <Tag>全部</Tag>
+                        <Tag>是</Tag>
+                        <Tag>否</Tag>
+                    </FormItem>
+                </Form>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -94,16 +129,19 @@ import 'fullcalendar/dist/locale/zh-cn'
 import CreateTask from '../common/createTask'
 import TaskDetail from './detailTask'
 
+
 export default {
     name: "schedule_index",
     components:{
         FullCalendar,
         Datepicker,
         CreateTask,
-        TaskDetail
+        TaskDetail,
+
     },
     data(){
         return{
+            showFilter:false,
             rightTop:"",
             rightLeft: "",
             right_click_show: false,
@@ -116,11 +154,26 @@ export default {
             //  控制悬浮菜单展示
             click_show: false,
             zh: zh,
-            date: new Date(),   
+            date: new Date(),
+            header:{
+                left:   'prev,next today',
+                center: 'title',
+                right:  'filter,month,agendaWeek,agendaDay'
+            },
             config:{
                 locale: 'zh-cn',
                 //  周末不显示
-                // weekends: false,  
+                // weekends: false,
+                slotEventOverlap:false,
+                customButtons:{
+                    filter:{
+                        text:"筛选",
+                        click:function () {
+                            console.log("sss")
+                            this.showFilter=!this.showFilter
+                        }.bind(this)
+                    }
+                }
             },
             events:[
 
@@ -230,9 +283,11 @@ export default {
 
             function success(res){
                 _self.events_temp = res.data.data.rows
+                console.log(_self.events_temp)
                 for(let i = 0;i<_self.events_temp.length;i++){
                     _self.events_temp[i].start = _self.events_temp[i].plan_date
                     _self.events_temp[i].title = _self.events_temp[i].task_name
+
                     if(_self.events_temp[i].task_stage == "tesExecuting"){
                         _self.events_temp[i].color = "blue"
                     }
@@ -281,7 +336,6 @@ export default {
                 //     _self.events_temp[i].start = _self.events_temp[i].plan_date
                 //     _self.events_temp[i].title = _self.events_temp[i].task_name
                 // }
-
                 _self.oneData = res.data.data.rows
             }
 
@@ -314,9 +368,10 @@ export default {
         background: #fcf4cd;
     }
     .fc-event{
-        font-size:14px;
+        font-size:6px;
         border: 1px solid #2d8cf0;
-        color: #ffffff
+        color: #ffffff;
+
     }
     .fc-event, .fc-event-dot{
         background: #2d8cf0
@@ -334,5 +389,15 @@ export default {
         background-image: none;
         box-shadow: none;
         color: #ffffff
+    }
+    .filter{
+        background: white none;
+        border: 1px solid #CCC;
+        box-shadow: 1px 1px 3px #ccc;
+        position: absolute;
+        right: 160px;
+        top: 120px;
+        width: 300px;
+        z-index: 1;
     }
 </style> 
