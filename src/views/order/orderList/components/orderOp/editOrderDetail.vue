@@ -361,7 +361,10 @@ export default {
                 console.log(_self.orderDetail);
                 for(let i=0;i<_self.orderDetail.departJson.length;i++){
                     let serverList = [];
-                     serverList.push({"userId":_self.orderDetail.departJson[i].serverId,"realname":_self.orderDetail.departJson[i].realname,"flag":"默认"})
+                    if(_self.orderDetail.departJson[i].serverId){
+                        serverList.push({"userId":_self.orderDetail.departJson[i].serverId,"realname":_self.orderDetail.departJson[i].realname,"flag":"默认"})
+                    }
+
                     _self.departServerObj.push({"serverId":_self.orderDetail.departJson[i].serverId,"departId":_self.orderDetail.departJson[i].departId,"departName":_self.orderDetail.departJson[i].departName,"serverList":serverList})
                 }
             }
