@@ -4,10 +4,11 @@
 
         <div v-for="(item,index) of productList" :key="index">
 
-            <div>
+            <div >
                 <h6 style="display: flex; justify-content: space-between; padding: 0 5px; background: #DDDDDD;">
                     <span>{{item.product}}</span>
                     <Button v-if="pageFlag =='createOrder' || pageFlag =='editOrder'" size="small" @click="removeItem(index)">删除</Button>
+                    <Button style ="color: red"v-if="pageFlag =='showOrder' && (operatorId ==10059 || operatorId == 10182) && item.deleteflag !=5 && orderDetail.orderstatus == 'approval_finish'" size="small" @click="refundItem(index)">退款</Button>
                 </h6>
                 <Card>
                     <Form label-position="left" ref="formValidate" :rules="ruleValidate">
@@ -80,7 +81,7 @@
                                     <Col span="6">
                                     <FormItem label="服务部门" prop="departid">
 
-                                        <Select v-if="pageFlag =='createOrder' || pageFlag =='editOrder'"
+                                        <Select v-if="pageFlag =='createOrder' || pageFlag =='editOrder' "
                                                 :disabled="isDisabled"
                                                 style="width:120px"
                                                 size="small"
@@ -92,7 +93,7 @@
                                                     v-for="departItem of JSON.parse(item.servicedeparts)"
                                                     :key="departItem.departCode">{{departItem.text}}</Option>
                                         </Select>
-                                        <Input v-if="pageFlag =='showOrder'"
+                                        <Input v-if="pageFlag =='showOrder' || pageFlag =='amendOrder'"
                                                :disabled="isDisabled"
                                                v-model="item.departname"
                                                style="width:120px"
@@ -153,10 +154,12 @@
 <script>
     import * as orderApi from '../../api'
     export default{
-        props:["productList","isDisabled","pageFlag"],
+        props:["productList","isDisabled","orderDetail","pageFlag"],
+        inject:['cancel_order'],
         data(){
             return{
                 companyId:"",
+                operatorId:localStorage.getItem("id"),
                 ruleValidate:{
                     productnumber:[
                         {required: true,message: '请输入整数',trigger: 'blur',type:'integer'}
@@ -232,6 +235,19 @@
                 this.$bus.emit("DEPART_CHANGE_"+this.pageFlag,idObj);
 
 
+            },
+            refundItem(index){
+                let _self = this
+                this.$Modal.confirm({
+                            title: '您确定要对该订单项退款吗',
+                            content:_self.productList[index].propertys,
+                            onOk: () => {
+                            _self.$bus.$emit('CANCEL_ORDER',{"id":_self.orderDetail.id,"itemid":_self.productList[index].itemid});
+                  },
+                onCancel: () => {
+
+                }
+            });
             }
         },
         created(){

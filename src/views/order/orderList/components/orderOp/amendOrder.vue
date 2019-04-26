@@ -71,15 +71,16 @@
 						    </FormItem>
 						</Col>
 					</Row>
-					
+
 					<Row :gutter="16">
 						<Col span="24">
-						    <FormItem label="异常工单号">
-						        <div style="display:inline-block">
-						            <Input size="small" v-model="orderCode" @on-focus="open_abOrder" readonly style="width:60%"/>
-						            <Button type="info" size="small" @click="open_abOrder">选择</Button>
-						        </div>
-						    </FormItem>
+						<FormItem label="异常工单号">
+							<div style="display:inline-block">
+								<Input size="small" v-model="unusualCode"  readonly style="width:60%"/>
+
+								<Button type="info" size="small"  @click="open_relateOrder">查看</Button>
+							</div>
+						</FormItem>
 						</Col>
 					</Row>
 					
@@ -114,62 +115,66 @@
 				            </FormItem>
 				        </Col>
 				    </Row>
-					
-				    <Row :gutter="16">
-				        <Col span="10">
-				            <FormItem label="新增产品" >
-				                <Button type="primary" icon="plus" @click="open_product_list">新增</Button>
-				                <!-- <Button type="primary" icon="plus" @click="removeRows()">删除</Button> -->
-				                <Button type="primary" icon="plus" @click="open_service_item" v-if="showAccountHomeItem">查看会计到家服务项</Button>
-				            </FormItem>
-				        </Col>
-				    </Row>
+					<Row :gutter="16">
+
+						<div v-for="item of orderDetail.departJson">
+							<Row>
+								<Col span="8">
+								<FormItem label="部门:">
+									{{item.departName}}
+								</FormItem>
+								</Col>
+								<Col span="8">
+								<FormItem label="人员:">
+									{{item.realname}}
+								</FormItem>
+								</Col>
+							</Row>
+						</div>
+
+					</Row>
 				</Form>
 			</Col>
 			<Col span="16">
 				<h3 style="margin-bottom: 10px;">
 					产品详情
 				</h3>
-				
-				<!-- <product-detail-list v-if="openamendOrderDetail" :productList="orderItem" :isDisabled="isDisabled"></product-detail-list> -->
+				<product-detail-list v-if="openamendOrderDetail" :productList="orderItem" :isDisabled="isDisabled" :pageFlag="pageFlag"></product-detail-list>
 			</Col>
 		</Row>
             <Row>
-                <!-- <Table
-                    id="orderItem"
-                    style="margin-top:10px"
-                    ref="selection"
-                    highlight-row
-                    border
-                    size="small"
-                    :columns="orderItemHeader"
-                    :row-class-name="row_class_name"
-                    :data="orderItem"></Table> -->
+
             </Row>
             <div slot="footer">
                 <Button type="primary" @click="xiugai" :loading="loading">修改</Button>
                 <Button type="ghost" @click="openamendOrderDetail = false">关闭</Button>
             </div>
         </Modal>
+		<relate-order :id="orderDetail.id" :pageFlag="pageFlag"></relate-order>
     </div>
 </template>
 
 <script>
+	import relateOrder from '../relateOrder'
 import commonSetting from './comonSetting.js'
 import { DateFormat } from '../../../../../libs/utils.js'
 import * as orderApi from '../../api.js'
-// import productDetailList from './productDetailList'
+import productDetailList from './productDetailList'
 export default {
     mixins: [commonSetting],
     data(){
         return {
 			isDisabled:false,
             openamendOrderDetail: false,
-            loading: false
+            loading: false,
+			pageFlag:"amendOrder",
+			unusualCode: ""
         }
     },
 	components:{
-		// productDetailList
+		 productDetailList,
+		relateOrder
+
 	},
     methods:{
         xiugai(){
@@ -184,6 +189,7 @@ export default {
                         paytime: DateFormat(_self.orderDetail.payTime),
                         realnumber: _self.orderDetail.realnumber,
                         usebalance: _self.orderDetail.usebalance,
+						gdsreport:_self.orderDetail.gdsreport,
                         items: JSON.stringify(_self.orderItem)
                     }
 
@@ -208,7 +214,37 @@ export default {
                 }
                 _self.loading = false
             })
-        }
+        },
+
+		open_relateOrder(){
+			this.$bus.emit("RELATE_ABORDER_"+this.pageFlag);
+		},
+
+		//获取异常工单号
+		get_ab_worker_id(){
+			let _self = this
+			let url = `api/order/unusual/workorder/findUnusualWorkOrderByOrderId`
+			let config ={
+				params:{
+					orderId: this.orderDetail.id
+				}
+			}
+			function success(res){
+				console.log(res.data.data)
+				_self.unusualCode = ""
+				if(res.data.data){
+
+					if( res.data.data.unusual_code){
+						_self.unusualCode = res.data.data.unusual_code
+					}
+					if(  res.data.data.id){
+						_self.applyId = res.data.data.id
+					}
+
+				}
+			}
+			this.$Get(url,config,success)
+		}
     },
     created(){
         let _self = this
@@ -216,18 +252,18 @@ export default {
         this.$bus.off("OPEN_ORDERLIST_AMEND", true)
         this.$bus.on("OPEN_ORDERLIST_AMEND", (e) => {
             this.checkBalance = false
-            this.get_data(e)
+            this.get_data(e,callback);
+			function callback(){
+
+				_self.get_ab_worker_id()
+			}
             this.openamendOrderDetail = true
         })
-// 		this.$bus.on("SET_ORDER_DETAIL",(e)=>{
-// 			_self.orderItem = e
-// 			console.log("_self.orderItem")
-// 			console.log(_self.orderItem)
-// 		})
-// 		this.$bus.on("SET_PAYNUMBER",(e)=>{
-// 			_self.orderDetail.paynumber = e.paynumber
-// 			_self.orderDetail.realnumber = e.realnumber
-// 		})
+
+ 		this.$bus.on("SET_PAYNUMBER",(e)=>{
+ 			_self.orderDetail.paynumber = e.paynumber
+ 			_self.orderDetail.realnumber = e.realnumber
+		})
     }
 }
 </script>

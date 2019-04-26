@@ -5,80 +5,118 @@
             title="办理审批"
             width="100%"
             :styles="{height: '100%', top: '0px'}">
-            <Form ref="formValidateDetail" :model="formValidateDetail" :label-width="100">
-                <Row :gutter="16">
-                    <Col span="8">
+            <Row>
+                <Col span="8">
+                <Form ref="orderDetail" :model="orderDetail" :label-width="100" >
+                    <Row :gutter="16">
+                        <Col span="10">
                         <FormItem label="归属公司" prop="CompanyName">
-                            <Input size="small" v-model="formValidateDetail.CompanyName" readonly/>
+                            <Input size="small" v-model="orderDetail.CompanyName" readonly/>
                         </FormItem>
-                    </Col>
-                    <Col span="8">
+                        </Col>
+                        <Col span="10">
                         <FormItem label="归属客户" prop="name">
-                            <Input size="small" v-model="formValidateDetail.name" readonly/>
+                            <Input size="small" v-model="orderDetail.name" readonly/>
                         </FormItem>
-                    </Col>
-                    <Col span="8">
-                        <FormItem label="缴费时间" prop="payTime">
-                            <Input size="small" v-model="formValidateDetail.payTime" readonly/>
+                        </Col>
+
+                    </Row>
+                    <Row :gutter="16">
+                        <Col span="10">
+                        <FormItem label="缴费时间"  prop="payTime">
+                            <DatePicker size="small" type="date" style="width: 100%" v-model="orderDetail.payTime"  readonly></DatePicker>
                         </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="8">
+                        </Col>
+
+
+                        <Col span="10">
+                        <FormItem label="缴费渠道" prop="paydir">
+
+                            <Input size="small"   v-model="orderDetail.paydirText" readonly/>
+                        </FormItem>
+                        </Col>
+                    </Row>
+
+                    <Row :gutter="16">
+                        <Col span="10">
                         <FormItem label="订单总价" prop="paynumber">
-                            <Input size="small" v-model="formValidateDetail.paynumber" readonly/>
+                            <Input size="small" v-model="orderDetail.paynumber" number readonly/>
                         </FormItem>
-                    </Col>
-                    <Col span="8">
-                        <FormItem label="国地税报道" prop="GDSreport">
-                            <Select transfer v-model="formValidateDetail.gdsreport" disabled size="small">
-                                <Option value="ybd">已报道</Option>
-                                <Option value="wbd">未报道</Option>
-                                <Option value="bybd">不用报道</Option>
-                            </Select>
-                        </FormItem>
-                    </Col>
-                    <Col span="8">
-                        <FormItem label="缴费渠道" prop="payDir">
-                            <Select transfer v-model="formValidateDetail.paydir" disabled size="small">
-                                <Option v-for="(item, index) in payDirs" :key=index :value="item.typecode">{{item.typename}}</Option>                            
-                            </Select>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="8">
+                        </Col>
+                        <Col span="10">
                         <FormItem label="已付款" prop="realnumber">
-                            <Input size="small" v-model="formValidateDetail.realnumber" readonly/>
+                            <Input size="small" v-model="orderDetail.realnumber" number  readonly />
                         </FormItem>
-                    </Col>
-                    <Col span="8">
-                        <FormItem label="异常工单">
-							<span v-if="this.unusualCode">{{this.unusualCode}}</span>
-                            <Button type="info" size="small" @click="open_relateOrder">点击查看</Button>
+                        </Col>
+                    </Row>
+
+                    <Row :gutter="16">
+                        <Col span="10">
+                        <FormItem label="是否提供发票" prop="isornotkp">
+                            <Input size="small" v-model="orderDetail.isornotkpText"   readonly />
+
                         </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="8">
+                        </Col>
+                        <Col span="10">
+                        <FormItem label="国地税报道" prop="gdsreport">
+                            <Input size="small" v-model="orderDetail.gdsreportText"   readonly />
+                        </FormItem>
+                        </Col>
+                    </Row>
+
+                    <Row :gutter="16">
+                        <Col span="24">
+                        <FormItem label="异常工单号">
+                            <div style="display:inline-block">
+                                <Input size="small" v-model="unusualCode" readonly style="width:60%"/>
+                                <Button type="info" size="small" @click="open_relateOrder">查看</Button>
+                            </div>
+                        </FormItem>
+                        </Col>
+                    </Row>
+
+                    <Row :gutter="16">
+                        <Col span="24">
                         <FormItem label="使用余额" prop="usebalance">
-                            <Input size="small" v-model="formValidateDetail.usebalance" number readonly />
+                            <div style="display:inline-block">
+                                <Input size="small" v-model="orderDetail.usebalance" style="width:40%" readonly number />
+                                <!--<Button type="info" size="small" @click="get_balance('create', orderDetail.customerid)" :disabled="checkBalance">查询</Button>-->
+
+                            </div>
                         </FormItem>
-                    </Col>
-                </Row>
-                <!-- <Row :gutter="16">
-                    <FormItem>
-                        <Button type="primary" icon="plus" @click="kuaiji()" v-show="kjdj">查看会计到家服务项</Button>
-                    </FormItem>
-                </Row> -->
-                <!-- 订单项 -->
-                <Table 
-                    border
-                    :columns="orderItemHeader" 
-                    :data="orderItem" 
-                    size="small">
-                </Table>
-            </Form>
+                        </Col>
+                    </Row>
+
+
+                    <Row :gutter="16">
+
+                        <div v-for="item of orderDetail.departJson">
+                            <Row>
+                                <Col span="8">
+                                <FormItem label="部门:">
+                                    {{item.departName}}
+                                </FormItem>
+                                </Col>
+                                <Col span="8">
+                                <FormItem label="人员:">
+                                    {{item.realname}}
+                                </FormItem>
+                                </Col>
+                            </Row>
+                        </div>
+
+                    </Row>
+                </Form>
+                </Col>
+                <Col span="16">
+                <h3 style="margin-bottom: 10px;">
+                    产品详情
+                </h3>
+
+                <product-detail-list  :productList="orderItem" :pageFlag="pageFlag" :isDisabled="isDisabled" :orderDetail="orderDetail"></product-detail-list>
+                </Col>
+            </Row>
+
             <Tabs>
                 <TabPane label="任务处理" icon="clipboard">
                     <!-- 已无返回值 -->
@@ -126,10 +164,32 @@
 
 <script>
 import relateOrder from "./relateOrder"
-
+import productDetailList from "../../orderList/components/orderOp/productDetailList"
+import {simpleCodeToText} from "../../../../libs/utils"
 export default {
     components:{
-        relateOrder
+        relateOrder,
+        productDetailList
+    },
+    watch:{
+        orderDetail(val){
+            console.log(val);
+           this.orderDetail.paydirText =  simpleCodeToText(this.orderDetail.paydir,this.payDirs);
+            if(this.orderDetail.isornotkp == 'Y'){
+                this.orderDetail.isornotkpText = '是'
+            }else{
+                this.orderDetail.isornotkpText = '否'
+            }
+            if(this.orderDetail.gdsreport == 'ybd'){
+                this.orderDetail.gdsreportText = "已报道"
+            }else if(this.orderDetail.gdsreport == 'wbd'){
+                this.orderDetail.gdsreportText = "未报道"
+            }else if(this.orderDetail.gdsreport == 'bybd'){
+                this.orderDetail.gdsreportText = "不用报道"
+            }else{
+                this.orderDetail.gdsreportText = "未选择"
+            }
+        }
     },
     props: ['payDirs'],
     data(){
@@ -138,8 +198,10 @@ export default {
 			unusualCode:"",
             //  账期异常提示
             accoutError: false,
+            isDisabled: true,
             //  打开弹窗
             openApproveDealWith: false,
+            pageFlag:"createOrder",
             //  会计到家服务项
             kjdj: false,
             formValidateDetail: {
@@ -157,82 +219,10 @@ export default {
                 agree: "1",
                 desc: ""
             },
-            // payDirs: [],
             errMsg: "",
-            //  订单项
+
             orderItem: [],
-            orderItemHeader: [
-                {
-                    title: "序号",
-                    type: 'index',
-                    minWidth: 60,
-                    align: 'center'
-                },
-                {
-                    title: "产品名",
-                    key: "product",
-                    minWidth: 150,
-                },
-                {
-                    title: "产品属性",
-                    key: "propertys",
-                    minWidth: 250,
-                    render: (h, params) => {
-                        return h("div",{
-                            domProps:{
-                                innerHTML: params.row.propertys
-                            }
-                        })
-                    }
-                },
-                {
-                    title: "产品价格",
-                    key: "oaprice",
-                    minWidth: 100,
-                },
-                {
-                    title: "产品数量（个/月）",
-                    key: "productnumber",
-                    minWidth: 150,
-                },
-                {
-                    title: "销售价格",
-                    key: "paynumber",
-                    minWidth: 100,
-                },
-                {
-                    title: "赠送数量",
-                    key: "givethenumber",
-                    minWidth: 100,
-                },
-                {
-                    title: "服务开始税期",
-                    key: "servicestartdate",
-                    minWidth: 120
-                },
-                {
-                    title: "服务部门",
-                    key: "departname",
-                    minWidth: 140
-                },
-                {
-                    title: "单价/月",
-                    key: "unitprice",
-                    minWidth: 90
-                },
-                {
-                    title: "备注",
-                    key: "memo",
-                    minWidth: 300,
-                    render: (h, params) => {
-                        return h("div",{
-                            domProps:{
-                                innerHTML: params.row.memo
-                            }
-                        })
-                    }
-                }
-            ],
+            orderDetail:[],
             orderId:''
         }
     },
@@ -293,6 +283,7 @@ export default {
             function success(res){
                 console.log(res.data.data)
                 _self.formValidateDetail = res.data.data
+                _self.orderDetail = res.data.data
                 _self.orderItem = _self.formValidateDetail.items
                 for (let i = 0; i < _self.orderItem.length; i++) {
                     if (_self.orderItem[i].product == '会计到家') {

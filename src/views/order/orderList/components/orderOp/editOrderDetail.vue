@@ -76,8 +76,9 @@
 						<Col span="24">
 						    <FormItem label="异常工单号">
 						        <div style="display:inline-block">
-						            <Input size="small" v-model="orderCode" @on-focus="open_abOrder" readonly style="width:60%"/>
-						            <Button type="info" size="small" @click="open_abOrder">选择</Button>
+						            <Input size="small" v-model="unusualCode"  readonly style="width:60%"/>
+						            <Button type="info" size="small" v-if="unusualCode.trim() == ''" @click="open_abOrder">选择</Button>
+                                    <Button type="info" size="small"  v-if="unusualCode.trim() != ''" @click="open_relateOrder">查看</Button>
 						        </div>
 						    </FormItem>
 						</Col>
@@ -173,10 +174,12 @@
         </Modal>
         <service-item @close="close_item" v-if="openServiceItem" :id="orderDetail.companyid"></service-item>
         <ab-order-change @aborder-change="setting_aborder" :id="orderDetail.companyid"></ab-order-change>
+        <relate-order :id="orderId" :pageFlag="pageFlag"></relate-order>
     </div>
 </template>
 
 <script>
+ import relateOrder from '../relateOrder'
 import abOrderChange from '../abOrderChange'
 import serviceItem from '../accountHomeTree'
 import commonSetting from './comonSetting.js'
@@ -189,7 +192,8 @@ export default {
     components: {
         serviceItem,
         abOrderChange,
-        productDetailList
+        productDetailList,
+        relateOrder
     },
 
     data(){
@@ -230,6 +234,9 @@ export default {
         open_abOrder(){
             this.$bus.emit("CHANGE_ABORDER", true)
         },
+        open_relateOrder(){
+            this.$bus.emit("RELATE_ABORDER_"+this.pageFlag);
+        },
         //  选择对应异常工单后回调
         setting_aborder(e){
             this.applyId = e.id
@@ -249,8 +256,14 @@ export default {
                 console.log(res.data.data)
                 _self.unusualCode = ""
                 if(res.data.data){
-                    _self.unusualCode = res.data.data.unusual_code
-					_self.applyId = res.data.data.id
+
+                    if( res.data.data.unusual_code){
+                        _self.unusualCode = res.data.data.unusual_code
+                    }
+                    if(  res.data.data.id){
+                        _self.applyId = res.data.data.id
+                    }
+
                 }
             }
             this.$Get(url,config,success)
@@ -298,7 +311,9 @@ export default {
                     try {
                         let {status, data} = await orderApi.orderUpdate(config)
                         if(status){
-                            _self.relate()
+                            if(_self.applyId){
+                                _self.relate()
+                            }
                             setTimeout(()=>{
                                 _self.loading = false
                                 _self.openEditOrderDetail = false
@@ -331,6 +346,10 @@ export default {
     },
     created(){
         let _self = this
+        this.$bus.on("SET_PAYNUMBER",(e)=>{
+            _self.orderDetail.paynumber = e.paynumber
+            _self.orderDetail.realnumber = e.realnumber
+ 		})
         this.$bus.off("OPEN_ORDERLIST_EDIT", true)
         this.$bus.on("OPEN_ORDERLIST_EDIT", (e) => {
             this.checkBalance = false
@@ -421,38 +440,6 @@ export default {
                     }
                 };
                 oAjax.send();
-
-                /*	function success(res){
-
-                 if(res.data.data.length == 0){
-                 newRows[j].serverId = "";
-
-
-                 }else{
-                 let serverChangeFlag = true;
-                 for(let k=0;k<res.data.data.length;k++){
-                 if(res.data.data[k].userId == newRows[j].serverId  && newRows[j].serverId != null && newRows[j].serverId != ""){
-                 serverChangeFlag = false;
-                 }
-                 }
-
-                 if(serverChangeFlag){
-                 newRows[j].serverId = res.data.data[0].userId;
-                 }
-
-                 }
-                 newRows[j].serverList = res.data.data;
-                 requestFlag --;
-                 console.log(requestFlag+"---rquestEnd");
-                 }
-                 function fail(){
-                 _self.loading = false;
-                 newRows[j].serverId = "";
-                 newRows[j].serverList = [];
-                 requestFlag --;
-                 console.log(requestFlag+"---rquestEnd");
-                 }
-                 this.$Get(url, config, success,fail);*/
 
             }
 
