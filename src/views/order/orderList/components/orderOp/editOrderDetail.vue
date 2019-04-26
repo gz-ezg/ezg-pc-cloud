@@ -290,6 +290,11 @@ export default {
 
 
                    }
+                    let order =_self.orderItem;
+                    for(let i=0;i<order.length;i++){
+                        order[i].servicedeparts = ""
+                        order[i].servicestartdate = DateFormat(order[i].servicestartdate);
+                    }
                     let config = {
                         id: _self.orderDetail.id,
                         payDir: _self.orderDetail.paydir,
@@ -298,7 +303,7 @@ export default {
                         companyId: _self.orderDetail.companyid,
                         isornotkp: _self.orderDetail.isornotkp,
                         orderPayNumber: _self.orderDetail.realnumber,
-                        orderitems: JSON.stringify(_self.orderItem),
+                        orderitems: JSON.stringify(order),
                         usebalance: _self.orderDetail.usebalance,
                         serviceStartDate: "",
                         departJson:JSON.stringify(departParamObj)

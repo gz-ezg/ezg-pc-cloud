@@ -183,6 +183,11 @@ export default {
             this.$refs["orderDetail"].validate(async (valid) => {
                 if(valid){
                     // let url = `api/order/finishedUpdate`
+					let order =_self.orderItem;
+					for(let i=0;i<order.length;i++){
+						order[i].servicedeparts = ""
+						order[i].servicestartdate = DateFormat(order[i].servicestartdate);
+					}
                     let config = {
                         id: _self.orderDetail.id,
                         paydir: _self.orderDetail.paydir,
@@ -190,7 +195,7 @@ export default {
                         realnumber: _self.orderDetail.realnumber,
                         usebalance: _self.orderDetail.usebalance,
 						gdsreport:_self.orderDetail.gdsreport,
-                        items: JSON.stringify(_self.orderItem)
+                        items: JSON.stringify(order)
                     }
 
                     console.log(config)

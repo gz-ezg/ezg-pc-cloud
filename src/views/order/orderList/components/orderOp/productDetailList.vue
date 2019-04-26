@@ -71,6 +71,7 @@
                                             <DatePicker
                                                     :disabled="isDisabled"
                                                     type="month"
+
                                                     v-model="item.servicestartdate"
                                                     placeholder="选择月份"
                                                     style="width:100px"
@@ -253,7 +254,7 @@
         created(){
             let _self = this
             console.log(_self.productList);
-
+            this.$bus.off("ADD_PRODUCT_DETAIL_LIST",true);
             this.$bus.on("ADD_PRODUCT_DETAIL_LIST",(e)=>{
                 e.givethenumber = 0
             if(e.departid){

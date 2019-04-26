@@ -186,7 +186,7 @@ import serviceItem from '../accountHomeTree'
 import commonSetting from './comonSetting.js'
 import companySelect from '../companySelect'
 import abOrderSelect from '../abOrderSelect'
-import { DateFormat } from '../../../../../libs/utils.js'
+import { DateFormat,DateFormatYearMonth } from '../../../../../libs/utils.js'
 import * as orderApi from '../../api'
 import productDetailList from './productDetailList'
 
@@ -305,6 +305,7 @@ export default {
 			
 			for(let i=0;i<order.length;i++){
 				order[i].servicedeparts = ""
+				order[i].servicestartdate = DateFormat(order[i].servicestartdate);
 			}
 			let departParamObj = [];
 
