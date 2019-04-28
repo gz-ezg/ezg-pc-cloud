@@ -7,15 +7,15 @@
             @on-visible-change="modal_status_change"
         >
 		<Row>
-			<Col span="8">
+			<Col span="10">
 				<Form ref="orderDetail" :model="orderDetail" :label-width="100" :rules="orderDetailRule">
 				    <Row :gutter="16">
-				        <Col span="10">
+				        <Col span="12">
 				        <FormItem label="归属公司" prop="CompanyName">
 				            <Input size="small" v-model="orderDetail.CompanyName" @on-focus="open_company" readonly/>
 				        </FormItem>
 				        </Col>
-				        <Col span="10">
+				        <Col span="11">
 				        <FormItem label="归属客户" prop="name">
 				            <Input size="small" v-model="orderDetail.name" @on-focus="open_company" readonly/>
 				        </FormItem>
@@ -23,14 +23,14 @@
 				       
 				    </Row>
 				    <Row :gutter="16">
-						 <Col span="10">
+						 <Col span="12">
 						<FormItem label="缴费时间"  prop="payTime">
 						    <DatePicker size="small" type="date" style="width: 100%" v-model="orderDetail.payTime"></DatePicker>
 						</FormItem>
 						</Col>
 				        
 				        
-				        <Col span="10">
+				        <Col span="11">
 				        <FormItem label="缴费渠道" prop="paydir">
 				            <Select transfer v-model="orderDetail.paydir" style="width:100%" size="small">
 				                <Option v-for="(item, index) in payDirs" :key=index :value="item.typecode">{{item.typename}}</Option>                            
@@ -40,12 +40,12 @@
 				    </Row>
 					
 				    <Row :gutter="16">
-						<Col span="10">
+						<Col span="12">
 						<FormItem label="订单总价" prop="paynumber">
 						    <Input size="small" v-model="orderDetail.paynumber" number readonly/>
 						</FormItem>
 						</Col>
-				        <Col span="10">
+				        <Col span="11">
 				            <FormItem label="已付款" prop="realnumber">
 				                <Input size="small" v-model="orderDetail.realnumber" number />
 				            </FormItem>
@@ -53,7 +53,7 @@
 				    </Row>
 					
 					<Row :gutter="16">
-						<Col span="10">
+						<Col span="12">
 						    <FormItem label="是否提供发票" prop="isornotkp">
 						        <Select transfer v-model="orderDetail.isornotkp" size="small" style="width:100%" >
 						            <Option value="Y">是</Option>
@@ -61,7 +61,7 @@
 						        </Select>
 						    </FormItem>
 						</Col>
-						<Col span="10">
+						<Col span="11">
 						    <FormItem label="国地税报道" prop="gdsreport">
 						        <Select transfer v-model="orderDetail.gdsreport" size="small" >
 						            <Option value="ybd">已报道</Option>
@@ -124,7 +124,7 @@
 									{{item.departName}}
 								</FormItem>
 								</Col>
-								<Col span="8">
+								<Col span="15">
 								<FormItem label="人员:">
 									{{item.realname}}
 								</FormItem>
@@ -135,7 +135,7 @@
 					</Row>
 				</Form>
 			</Col>
-			<Col span="16">
+			<Col span="14">
 				<h3 style="margin-bottom: 10px;">
 					产品详情
 				</h3>
