@@ -155,25 +155,6 @@ export default{
 				{
 					title:"是否接单",
 					key:"order_receiving"
-				},
-				{
-					title:"操作",
-					key:"editor",
-					width:150,
-					align:'center',
-					render:(h,params)=>{
-						return h('Button',{
-							props:{
-								type:'primary',
-								size: 'small'
-							},
-							on: {
-								click: () => {
-									this.selectRow(params.index)
-								}
-							}
-						},'编辑')
-					}
 				}
 			],
 			data:[],
