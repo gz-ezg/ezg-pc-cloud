@@ -5,11 +5,11 @@
         <div v-for="(item,index) of productList" :key="index">
 
             <div>
-                <h6 style="display: flex; justify-content: space-between;align-items: center; padding: 5px; margin-top: 10px; background: #f8f8f9;border: 1px solid #dddee1;border-bottom: none">
+                <h3 style="display: flex; justify-content: space-between;align-items: center; padding: 5px; margin-top: 10px; background: #f8f8f9;border: 1px solid #dddee1;border-bottom: none">
                     <span>{{item.product}}</span>
                     <Button v-if="pageFlag =='createOrder' || pageFlag =='editOrder'" type="error" size="small" @click="removeItem(index)">删除</Button>
                     <Button type="error" v-if="pageFlag =='showOrder' && (operatorId ==10059 || operatorId == 10182) && item.deleteflag !=5 && orderDetail.orderstatus == 'approval_finish'" size="small" @click="refundItem(index)">退款</Button>
-                </h6>
+                </h3>
                 <Card>
                     <Form label-position="left" ref="formValidate" :rules="ruleValidate">
                         <Row>
@@ -47,13 +47,14 @@
                                     <FormItem label="购买数量" prop="productnumber">
                                         <!-- 手动处理修改数量后，业务逻辑 其他参照此-->
                                         <InputNumber
+                                                class="input-me"
                                                 :precision="0"
                                                 :min ="1"
                                                 @on-change="changeProductNumber(productList[index])"
                                                 v-model="item.productnumber"
                                                 number
                                                 size="small"
-                                                :readonly="readonly"
+                                                :disabled="isDisabled"
                                                 style="width:80px"></InputNumber>
                                     </FormItem>
                                     </Col>
@@ -87,6 +88,7 @@
                                     <Col span="10"  v-if="item.iscycle != 'N'">
                                         <FormItem label="赠送数量" style="margin-left: 10px">
                                             <InputNumber
+                                                    class="input-me"
                                                     :precision="0"
                                                     :disabled="isDisabled"
                                                     v-model="item.givethenumber"
@@ -98,6 +100,7 @@
                                     <Col  v-if="item.iscycle !='N'" span="12">
                                         <FormItem label="开始税期" prop="servicestartdate">
                                             <DatePicker
+                                                    class="input-me"
                                                     :disabled="isDisabled"
                                                     type="month"
 
@@ -112,6 +115,7 @@
                                     <Col span="10" v-if="item.iscycle === 'Y' && item.product != '会计到家'">
                                     <FormItem label="A 类外勤" prop="type_a_count" style="margin-left: 10px">
                                         <InputNumber
+                                                class="input-me"
                                                 :precision="0"
                                                 :min="0"
                                                 :disabled="isDisabled"
@@ -123,6 +127,7 @@
                                     <Col span="10" v-if="item.iscycle === 'Y' && item.product != '会计到家'">
                                     <FormItem label="B 类外勤" prop="type_b_count">
                                         <InputNumber
+                                                class="input-me"
                                                 :precision="0"
                                                 :min="0"
                                                 :disabled="isDisabled"
@@ -136,6 +141,7 @@
                                     <Col>
                                     <FormItem label="服务说明" style="margin-left: 10px">
                                         <Input
+                                                class="input-me"
                                                 :disabled="isDisabled"
                                                 v-model="productList[index].memo"
                                                 type="textarea"
@@ -295,5 +301,19 @@
         color: red !important;
         font-weight: 700;
         font-size: 14px;
+    }
+    .ivu-input[disabled], fieldset[disabled] .ivu-input{
+        background-color: white;
+        opacity: 1;
+        cursor: not-allowed;
+        color: #666;
+    }
+    .ivu-input-number-disabled .ivu-input-number-input{
+        opacity: 1;
+        cursor: not-allowed;
+        background-color: white;
+    }
+    .ivu-input-number-input[disabled]{
+        color:#666 ;
     }
 </style>
