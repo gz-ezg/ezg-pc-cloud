@@ -269,7 +269,7 @@ export const appRouter = [
                 path: 'schedule',
                 title: '日程',
                 name: 'schedule_index',
-                component: () => import( /* webpackChunkName: "schedule_index" */ '@/views/missionCenter/schedule/indextemp.vue')
+                component: () => import( /* webpackChunkName: "schedule_index" */ '@/views/missionCenter/schedule/index.vue')
             },
             {
                 access: 6202,

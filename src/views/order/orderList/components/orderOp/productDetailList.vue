@@ -90,6 +90,7 @@
                                             <InputNumber
                                                     class="input-me"
                                                     :precision="0"
+                                                    :min ="0"
                                                     :disabled="isDisabled"
                                                     v-model="item.givethenumber"
                                                     value = "0"
