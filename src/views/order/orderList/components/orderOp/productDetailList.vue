@@ -108,6 +108,7 @@
                                     <FormItem label="A类外勤" prop="type_a_count">
                                         <InputNumber
                                                 :precision="0"
+                                                :min="0"
                                                 :disabled="isDisabled"
                                                 v-model="item.type_a_count"
                                                 size="small"
@@ -118,6 +119,7 @@
                                     <FormItem label="B类外勤" prop="type_b_count">
                                         <InputNumber
                                                 :precision="0"
+                                                :min="0"
                                                 :disabled="isDisabled"
                                                 v-model="item.type_b_count"
                                                 size="small"
