@@ -8,7 +8,7 @@
                 </div>
                 <div class="proa">
                     <span>新增相对增长比例</span>
-                    <span><h3>{{this.arr.relativelyAmount}}</h3></span>
+                    <span><h3>{{this.arr.relativelyAmout}}</h3></span>
                 </div>
                 <div class="proa">
                     <span>交易额绝对增长比例</span>
