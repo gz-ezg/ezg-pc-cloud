@@ -262,6 +262,8 @@
                         productname:_self.NformInline.product,
                         marketer:_self.NformInline.marketername,
                         servicer:_self.NformInline.servicename,
+                        bcreatedate: DateFormat(_self.NformInline.date[0]),
+                        ecreatedate: DateFormat(_self.NformInline.date[1])
                 }
                 let toExcel = this.$MergeURL(url, config)
                 // console.log(toExcel)
