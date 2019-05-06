@@ -105,6 +105,7 @@ export default {
         customer:{
             type: [Array, Object, String]
         }
+
     },
     data(){
         //  自定义规则
@@ -302,6 +303,7 @@ export default {
         close_tag(e){
             this.formValidate.labels.splice(e,1)
         },
+
         update(){
             if(this.formValidate.TEL || this.formValidate.email || this.formValidate.fixedPhone || this.formValidate.weixin){
                 this.loading = true
@@ -358,8 +360,11 @@ export default {
 
             function success(res){
                 _self.loading = false
+
+                _self.$bus.emit("CLOSE_EDIT_PAGE", true)
                 setTimeout(()=>{
                     _self.$bus.emit("UPDATE_CUSTOMER", true)
+
                 },300)
             }
 

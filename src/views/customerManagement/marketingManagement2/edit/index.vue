@@ -74,6 +74,15 @@
                             ></dymaic>
                             </p>
                         </Panel>
+                        <Panel name="changeLog">
+                            客户变更日志
+                            <p slot="content">
+                                <changeLog
+                                        v-if="openPanel[0] == 'changeLog'"
+                                        :customer="customer"
+                                ></changeLog>
+                            </p>
+                        </Panel>
                         <Panel name="upload">
                             附件
                             <p slot="content">
@@ -99,6 +108,7 @@ import dymaic from './dymaic/index'
 import follow from './followUpList/index'
 import order from './orderDetail/index'
 import relation from './relationPerson/index'
+import changeLog from './customerChangeLog/index'
 import upload from './upload/index'
 
 export default {
@@ -109,7 +119,8 @@ export default {
         follow,
         order,
         relation,
-        upload
+        upload,
+        changeLog
     },
     props: {
         cluesources: {
@@ -148,6 +159,12 @@ export default {
         open(){
             console.log("112")
         }
+    },
+    created(){
+        this.$bus.off("CLOSE_EDIT_PAGE", true)
+        this.$bus.on("CLOSE_EDIT_PAGE", (e)=>{
+            this.close()
+    })
     }
 }
 </script>
