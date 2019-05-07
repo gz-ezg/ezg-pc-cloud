@@ -45,7 +45,7 @@
                 <Col span="8">
                     <Form ref="fileItem" :model="fileItem" :label-width="120" :rules="fileItemRule">
                         <FormItem label="文件类型：" prop="customerFileTypeId">
-                            <Select v-model="fileItem.customerFileTypeId" placeholder="选择文件类型" filterable @on-change="change">
+                            <Select v-model="fileItem.customerFileTypeId" placeholder="选择文件类型"  @on-change="change">
                                 <Option  v-for="item in fileList" :value="item.id" :key="item.id">{{item.file_type_name}}</Option>
                             </Select>
                         </FormItem>
@@ -284,7 +284,7 @@ export default {
         },
         get_data_center(){
             let _self = this
-            _self.departLoading = true 
+            _self.departLoading = true
             let url = "api/system/depart/queryDepartsByUserId"
             let config = {
                 params:{
