@@ -34,7 +34,6 @@
             </Form>
             <div slot="footer">
                 <Button type="primary" @click="submit">确定修改</Button>
-                <Button type="ghost">关闭</Button>
             </div>
         </Modal>
     </div>
@@ -58,7 +57,7 @@
 
             return {
                 openAccountUpdate: true,
-                now_account: "",
+                now_account: 0,
                 isNumber:{
                     now_account:[
                         { validator: validateNum, trigger: 'blur' }

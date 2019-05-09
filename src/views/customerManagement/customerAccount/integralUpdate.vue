@@ -47,7 +47,6 @@
             }
         },
         data() {
-
             return {
                 openIntegralUpdate: true,
                 accountData: this.selectRow,
