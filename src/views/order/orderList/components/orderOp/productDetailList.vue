@@ -198,10 +198,10 @@
                 let _self = this
                 let temp = 0
                 for(let i = 0; i < _self.productList.length; i++){
-                    temp = parseInt(temp) + parseInt(_self.productList[i].paynumber)
+                    temp = parseFloat(temp) + parseFloat(_self.productList[i].paynumber)
                 }
-                let paynumber = parseInt(temp)
-                let realnumber = parseInt(temp)
+                let paynumber = parseFloat(temp)
+                let realnumber = parseFloat(temp)
                 this.$bus.emit("SET_PAYNUMBER",{paynumber:paynumber,realnumber:realnumber})
             },
             removeItem(index){

@@ -45,7 +45,7 @@
                 <Col span="8">
                     <Form ref="fileItem" :model="fileItem" :label-width="120" :rules="fileItemRule">
                         <FormItem label="文件类型：" prop="customerFileTypeId">
-                            <Select v-model="fileItem.customerFileTypeId" placeholder="选择文件类型" filterable @on-change="change">
+                            <Select v-model="fileItem.customerFileTypeId" placeholder="选择文件类型"  @on-change="change">
                                 <Option  v-for="item in fileList" :value="item.id" :key="item.id">{{item.file_type_name}}</Option>
                             </Select>
                         </FormItem>
@@ -243,7 +243,7 @@ export default {
                     _self.openResoureFile = false
                     _self.loading = false
                     // _self.$emit("update",true)
-                    _self.reset_type()
+                    // _self.reset_type()
                     _self.formValidate.dataJson = []
                 }
 
@@ -262,6 +262,7 @@ export default {
             this.formValidate.storageCode = ""
             this.formValidate.fileNum = "1"
             this.formValidate.customerFileName = ""
+
         },
         get_all_file_type(){
             let _self = this
@@ -318,12 +319,13 @@ export default {
         },
         //  判断是否可以输入数量
         change(e){
+            console.log(e)
             let _self = this
             _self.fileItem.customerFileName = _self.fileType_map.get(e.toString())
             for(let i = 0; i<_self.fileList.length; i++){
                 if(_self.fileList[i].id == e){
                     if(_self.fileList[i].plural == "Y"){
-                        
+
                         _self.isCanInput = true
                     }else{
                         _self.fileItem.fileNum = "1"

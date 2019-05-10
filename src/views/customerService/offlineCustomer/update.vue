@@ -593,6 +593,7 @@
                 this.task_message.customer = ""
                 this.task_message.id = ""
                 this.$refs["task_message"].resetFields();
+                this.isOpenEdit = false
             },
             getProduct() {
                 let _self = this

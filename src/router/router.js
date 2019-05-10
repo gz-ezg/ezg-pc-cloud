@@ -263,13 +263,22 @@ export const appRouter = [
         name: 'missionCenter',
         title: "任务中心",
         component: Main,
-        children: [{
+        children: [
+            {
                 access: 6201,
                 meta: 6201,
                 path: 'schedule',
                 title: '日程',
                 name: 'schedule_index',
                 component: () => import( /* webpackChunkName: "schedule_index" */ '@/views/missionCenter/schedule/index.vue')
+            },
+            {
+                access: 11631,
+                meta: 11631,
+                path: 'comSchedule',
+                title: '商事排程',
+                name: 'business_schedule_index',
+                component: () => import( /* webpackChunkName: "business_schedule_index" */ '@/views/missionCenter/comSchedule/index.vue')
             },
             {
                 access: 6202,
@@ -279,6 +288,7 @@ export const appRouter = [
                 name: 'missionManagement_index',
                 component: () => import( /* webpackChunkName: "missionManagement_index" */ '@/views/missionCenter/missionManagement/index.vue')
             },
+
         ]
     },
     // 计划删除菜单，开发终止
