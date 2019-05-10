@@ -285,7 +285,7 @@ export default {
         },
         get_data_center(){
             let _self = this
-            _self.departLoading = true 
+            _self.departLoading = true
             let url = "api/system/depart/queryDepartsByUserId"
             let config = {
                 params:{

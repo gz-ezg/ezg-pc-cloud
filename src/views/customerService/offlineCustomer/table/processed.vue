@@ -323,6 +323,8 @@
                         productname:_self.YformInline.product,
                         marketer:_self.YformInline.marketername,
                         servicer:_self.YformInline.servicename,
+                        bcreatedate: DateFormat(_self.YformInline.date[0]),
+                        ecreatedate: DateFormat(_self.YformInline.date[1])
                 }
                 let toExcel = this.$MergeURL(url, config)
                 // console.log(toExcel)

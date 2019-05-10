@@ -479,7 +479,7 @@ export default {
             // }else{
             //     temp_status = _self.formValidate.customerType.join("-");
             // }
-            let url = `api/customer/list`;
+            let url = `api/customer/public/pool/list`;
             let config = {
                 deleteflag:"3",
                 page: "1",
@@ -532,7 +532,7 @@ export default {
         },
         get_data(){
             let _self = this
-            let url = `api/customer/list`
+            let url = `api/customer/public/pool/list`
             this.selectRow = ""
             _self.tableLoading = true
 

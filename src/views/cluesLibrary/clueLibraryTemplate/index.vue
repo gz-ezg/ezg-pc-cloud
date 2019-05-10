@@ -96,7 +96,7 @@ export default {
                                     props: {
                                         type: 'text',
                                         size: 'small',
-                                        disabled: new Boolean(1)
+                                        // disabled: new Boolean(1)
                                     },
                                     style: {
                                         marginRight: '5px'
