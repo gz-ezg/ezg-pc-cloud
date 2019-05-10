@@ -257,7 +257,7 @@
 			    }
 				
 				function success(res){
-					_self.$Message.success(res.data.msg)
+					// _self.$Message.success(res.data.msg)
 					_self.isAdd = false
 					_self.getData()
 					_self.addParams = {}

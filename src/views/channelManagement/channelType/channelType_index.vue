@@ -254,12 +254,12 @@
                     {
                         title: '渠道编码',
                         key: 'channel_type_code',
-                        width:160
+                        // width:160
                     },
                     {
                         title: '渠道名称',
                         key: 'channel_type_name',
-                        width:160
+                        // width:160
                     },
                     {
                         title: '操作',
@@ -291,12 +291,12 @@
                     {
                         title: '用户id',
                         key: 'user_id',
-                        width:160
+                        // width:160
                     },
                     {
                         title: '真实姓名',
                         key: 'userRealName',
-                        width:160
+                        // width:160
                     },
                     {
                         title: '操作',
@@ -469,10 +469,11 @@
 
             // 行选中事件（存储选中行的渠道id）
             selectRow(a) {
-                let _self = this
-                _self.channelId = a.id
-                _self.channelName = a.channel_type_name
-                _self.channelCode = a.channel_type_code
+                let _self = this;
+                _self.channelId = a.id;
+                _self.channelName = a.channel_type_name;
+                _self.channelCode = a.channel_type_code;
+                _self.getUser(a.id);
             },
 
             // 点击新增按钮
