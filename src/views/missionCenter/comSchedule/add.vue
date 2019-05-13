@@ -34,8 +34,8 @@
         },
         methods:{
             add_phrase(){
-                if (this.content===null){
-                    window.alert("请输入快捷短语")
+                if (this.content===null || this.content===""){
+                    this.$Message.warning("请输入快捷短语")
                 } else {
                 this.$bus.emit("ADD_PHRASE",this.content)
                 this.openAddTask = false

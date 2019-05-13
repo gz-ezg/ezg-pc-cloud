@@ -6,7 +6,7 @@
              placeholder="請输入新建排程任务......"
              @focus="lock=true"
              @blur="lock=false"
-             @input="changeText(event.target)">
+             @input="changeText">
         </div>
     </div>
 </template>
@@ -27,36 +27,36 @@
             }
         },
         watch:{
-            'value'(){
-                if (!this.lock){
-                    this.innerText = this.value
-                }
+            'value': {
+                handler(newValue, oldValue){
+                    if (!this.lock) {
+                        this.innerText = this.value
+                    }
+                },
+                deep:true
             }
         },
         methods:{
             changeText(e){
-                this.innerText = this.$el.innerText;
-                this.$emit('input',this.innerText);
-                setTimeout(()=>{
-                    this.keepLastIndex(e)
-                },5)
-
+                this.value = this.$el.innerText;
+                this.$emit('input',this.value);
+                // this.keepLastIndex(e)
             },
-            keepLastIndex(obj) {
-                if (window.getSelection) {//ie11 10 9 ff safari
-                    obj.focus(); //解决ff不获取焦点无法定位问题
-                    let range = window.getSelection();//创建range
-                    range.selectAllChildren(obj);//range 选择obj下所有子内容
-                    range.collapseToEnd();//光标移至最后
-                }
-                else if (document.selection) {//ie10 9 8 7 6 5
-                    let range = document.selection.createRange();//创建选择对象
-                    //var range = document.body.createTextRange();
-                    range.moveToElementText(obj);//range定位到obj
-                    range.collapse(false);//光标移至最后
-                    range.select();
-                }
-            }
+            // keepLastIndex(obj) {
+            //     if (window.getSelection) {//ie11 10 9 ff safari
+            //         obj.focus(); //解决ff不获取焦点无法定位问题
+            //         let range = window.getSelection();//创建range
+            //         range.selectAllChildren(obj);//range 选择obj下所有子内容
+            //         range.collapseToEnd();//光标移至最后
+            //     }
+            //     else if (document.selection) {//ie10 9 8 7 6 5
+            //         let range = document.selection.createRange();//创建选择对象
+            //         //var range = document.body.createTextRange();
+            //         range.moveToElementText(obj);//range定位到obj
+            //         range.collapse(false);//光标移至最后
+            //         range.select();
+            //     }
+            // }
 
         }
     }

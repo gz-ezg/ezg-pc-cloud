@@ -157,7 +157,7 @@
                         key: 'companyname',
                         minWidth: 260,
                         render:(h, params) => {
-                            // console.log(params)
+                            console.log(params)
                             if(params.row.companyname == ''||params.row.companyname == null){
                                 return ''
                             }else if(params.row.companyname.length>16){

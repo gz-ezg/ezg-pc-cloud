@@ -139,6 +139,7 @@
                     <!-- <Button type="primary" name="marketingManagement_index_edit_log" icon="ios-color-filter-outline" @click="check_select('OPEN_CUSTOMER_LOG')">客户动态</Button> -->
                     <!-- <Button type="primary" name="marketingManagement_index_field_log" icon="navigate" @click="check_select('OPEN_CUSTOMER_FIELD_LOG')">客户外勤</Button> -->
                     <Button type="primary" name="marketingManagement_index_field_log" icon="android-share-alt" @click="check_select('SHOW_OPEN_CUSTOMER_CLUE_LOG')">客户线索</Button>
+                    <Button type="primary" icon="ios-color-wand-outline" @click="batch_receipt" v-permission="['returnVisitN-edit']">批量领取</Button>
                 </ButtonGroup>
             </Row>
             <Row style="margin-top: 10px;">
@@ -147,6 +148,7 @@
                     size="small"
                     :columns="header"
                     :data="data"
+                    @on-selection-change="select_change"
                     @on-current-change="select_row"
                     :loading = "tableLoading"
                     @on-row-dblclick="open_edit"
@@ -244,10 +246,16 @@ export default {
     },
     data(){
         return {
+            selectRowArray:[],
             openImportCustomer: false,
             openEdit: false,
             search_model: "",
             header: [
+                {
+                    title: "#",
+                    type: "selection",
+                    width: 60,
+                },
                 {
                     title: "姓名",
                     key: "NAME",
@@ -612,6 +620,10 @@ export default {
             this.page = 1
             this.get_data()
         },
+        select_change(e){
+            this.selectRowArray = e
+            console.log(this.selectRowArray)
+        },
         select_row(e){
             this.selectRow = e
             // this.$store.commit("set_gobal_customer_id", e)
@@ -678,6 +690,32 @@ export default {
             }
 
             this.$Post(url,config,success,fail)
+        },
+        batch_receipt(){
+            let _self = this
+            if(this.selectRowArray.length === 0){
+                _self.$Message.warning("请先勾选需要批量处理的行！")
+            }else{
+                let ids = []
+                for(let i = 0; i<_self.selectRowArray.length; i++){
+                    ids.push(_self.selectRowArray[i].ID)
+                }
+                console.log(ids)
+                let url = `api/customer/receipt`
+
+                let config = {
+                    customerId: ids.join(",")
+                }
+                function success(res){
+                    _self.get_data()
+                }
+
+                function fail(err){
+
+                }
+
+                this.$Post(url,config,success,fail)
+            }
         },
         //  公海池导入
         import_excel(){

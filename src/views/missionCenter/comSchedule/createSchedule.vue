@@ -306,7 +306,7 @@
                 if (_self.newMission.taskName==="" ||
                     _self.newMission.companyId==="" ||
                     _self.newMission.businessId ===null){
-                    window.alert("请把上述信息填写完整")
+                    this.$Message.warning('请把上述信息填写完整')
                     return
                 }
                 _self.createLoading = true
