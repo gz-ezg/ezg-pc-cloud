@@ -231,7 +231,8 @@
         },
         methods:{
             giveData(item){
-                this.newMission.taskName=item.quick_content
+                this.newMission.taskName=this.newMission.taskName+item.quick_content
+                this.phraseShow = false
             },
             editable(content,id){
                 let _self = this
