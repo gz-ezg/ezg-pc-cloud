@@ -199,7 +199,7 @@
 <script>
 import commonVue from './commonVue'
 import { DateFormat } from '../../../libs/utils'
-
+import {FULLDateFormat} from "../../../libs/utils";
 import tagSelect from './components/tag_select'
 
 import createCustomer from './components/create'
@@ -314,7 +314,33 @@ export default {
                 {
                     title: "电话",
                     key: "TEL",
-                    minWidth: 120
+                    minWidth: 120,
+                },
+                {
+                    title: "操作",
+                    key: "TEL",
+                    minWidth: 120,
+                    align:"center",
+                    render: (h, params) => {
+                        console.log(params)
+                        let _self = this
+                        return h("div", [
+                            h("Button",{
+                                props:{
+                                    type: "primary",
+                                    size: "small",
+                                },
+                                style:{
+                                    // marginRight: "5px"
+                                },
+                                on: {
+                                    "click": function(event){
+                                        this.phone(params.row.ID,params.row.TEL)
+                                        event.stopPropagation()
+                                    }.bind(this)
+                                }
+                            }, "拨打")])
+                    }
                 },
                 {
                     title: "客户状态",
@@ -417,6 +443,37 @@ export default {
         }
     },
     methods: {
+        phone(e,T){
+            window.location.href="yhhl://call/num="+T+"&custom_key=123456&"
+            this.uploadPhoneType(e)
+            // this.$bus.emit("EDIT_PHONE_RECORD",e)
+        },
+        uploadPhoneType(e){
+            let _self = this
+            let url = `api/customer/addCustomerContentNote`
+            let date = new Date()
+            let config = {
+                companyId: e,
+                followUpType: 11,
+                content: "拨打电话，时间为:"+FULLDateFormat(date),
+                attIds: "",
+                customerId: e,
+                finishFlag: "",
+                notifyDate: "",
+                // notifyDate: "2018-10-24 13:00"
+                notify_ids:""
+            }
+
+            function success(res){
+                console.log(res)
+            }
+
+            function fail(err){
+                _self.loading = false
+            }
+
+            this.$Post(url, config, success, fail)
+        },
         //  下载
         download_excel() {
             let field = [

@@ -319,6 +319,42 @@ export default {
 
             this.$Post(url, config, success, fail)
         },
+        // uploadPhoneType(e){
+        //     let _self = this
+        //     let url = `api/customer/addCustomerContentNote`
+        //
+        //     let config = {
+        //         companyId: e,
+        //         followResult: _self.formValidate.followResult,
+        //         followUpType: 11,
+        //         content: "拨打电话，时间为:",
+        //         attIds: _self.formValidate.attIds,
+        //         customerId: _self.formValidate.customerId,
+        //         finishFlag: _self.formValidate.finishFlag,
+        //         notifyDate: (DateFormat(_self.formValidate.followupdate) + ' ' + _self.formValidate.followuptime),
+        //         // notifyDate: "2018-10-24 13:00"
+        //         notify_ids: _self.notify_ids
+        //     }
+        //
+        //     function success(res){
+        //         console.log(res)
+        //         if(_self.isClue){
+        //             _self.CreateClue()
+        //         }else{
+        //             setTimeout(()=>{
+        //                 _self.loading = false
+        //             },300)
+        //             _self.openFollowCreate = false
+        //             _self.$emit("update", e)
+        //         }
+        //     }
+        //
+        //     function fail(err){
+        //         _self.loading = false
+        //     }
+        //
+        //     this.$Post(url, config, success, fail)
+        // },
         CreateClue(){
             let _self = this
             let url = `api/customer/addCustomerContentNote`
@@ -348,6 +384,9 @@ export default {
     },
     created(){
         this.getUserData()
+        // this.$bus.on("EDIT_PHONE_RECORD",(e)=>{
+        //     this.uploadPhoneType(e)
+        // })
     },
     mounted(){
         let _self = this
@@ -358,6 +397,7 @@ export default {
             _self.get_role()
             _self.openFollowCreate = true
         })
+
     }
 }
 </script>
