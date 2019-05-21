@@ -34,7 +34,7 @@
                     <span>{{item.unitprice}}</span>
                   </div>
 
-                  <div v-if="item.defaultdepartalias=='PLAN'">
+                  <div v-if="!isDisabled && item.defaultdepartalias=='PLAN'">
                     <Button
                       :type="!isPlan[index]?'error':''"
                       size="small"
@@ -98,8 +98,7 @@
                     <Col span="8">
                       <FormItem label="服务部门" prop="departid">
                         <Select
-                          v-if="item.defaultdepartalias=='PLAN'"
-                          :disabled="isDisabled"
+                          v-if="!isDisabled && item.defaultdepartalias=='PLAN'"
                           style="width:120px"
                           size="small"
                           @on-change="departChange($event, index)"
@@ -130,6 +129,7 @@
                           format="yyyy"
                           @on-change="item.declare_year=$event"
                           v-model="item.declare_year"
+                          :disabled="isDisabled"
                           placeholder="选择年份"
                           style="width: 120px"
                         ></DatePicker>
@@ -241,8 +241,9 @@ export default {
         declare_year: [
           {
             required: true,
-            trigger: "blur",
-            message: ""
+            trigger: 'change',
+            type: "date",
+            message: " ",
           }
         ]
       }
