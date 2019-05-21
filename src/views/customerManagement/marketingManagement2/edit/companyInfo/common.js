@@ -14,7 +14,7 @@ export default {
         },
         cluesources: {
             type: Array
-        },
+        }
     },
     data(){
         let re = /^[\u4e00-\u9fa5()()]+|$/;

@@ -1,8 +1,7 @@
 <template>
     <div style="min-width:1300px" @click="close_right_menu">
-        <Button v-if="right_click_show" :style="{top: rightTop + 'px', left: rightLeft + 'px'}" style="position:fixed;z-index:9000" type="primary" @click="add_task">新增日程</Button>
-        <!-- <Button @click="get_date">下一天</Button> -->
-        <Card title="商事排程表">
+        <Button v-if="right_click_show" :style="{top: rightTop + 'px', left: rightLeft + 'px'}" style="position:fixed;z-index:9000" type="primary" @click="add_task">新增排程</Button>
+        <Card title="会计外勤任务">
             <Card style="width:400px;position:fixed;z-index:9999" v-if="click_show" :style="{top: top + 'px', left: left + 'px'}">
                 <Row :gutter="20">
                     <Col span="6">
@@ -79,8 +78,8 @@
                 </Col>
             </Row>
         </Card>
-        <create-schedule></create-schedule>
-        <detail-schedule-task></detail-schedule-task>
+        <create-accounter-task></create-accounter-task>
+        <detail-accounter-task></detail-accounter-task>
         <div v-show="showFilter">
             <div class="filter">
                 <Form :label-width="80" style="margin:20px 20px 0 0">
@@ -120,19 +119,19 @@
 
 <script>
     import { zh } from 'vuejs-datepicker/dist/locale/index'
-    import Datepicker from 'vuejs-datepicker';
-    import { FullCalendar } from 'vue-full-calendar'
+    import Datepicker from 'vuejs-datepicker'
+    import {FullCalendar} from 'vue-full-calendar'
     import {DateFormat} from "../../../libs/utils";
     import 'fullcalendar/dist/locale/zh-cn'
-    import CreateSchedule from './createSchedule'
-    import DetailScheduleTask from './detailScheduleTask'
+    import CreateAccounterTask from './createAccounterTask'
+    import DetailAccounterTask from './detailAccounterLegTask'
     export default {
         name: "index",
         components:{
             FullCalendar,
             Datepicker,
-            CreateSchedule,
-            DetailScheduleTask
+            CreateAccounterTask,
+            DetailAccounterTask
         },
         data(){
             return{
@@ -157,7 +156,7 @@
                 header:{
                     left:   'prev,next today',
                     center: 'title',
-                    right:  'filter,month,agendaDay'
+                    right:  'filter,month,agendaWeek,agendaDay'
                 },
                 config:{
                     locale: 'zh-cn',
@@ -189,16 +188,13 @@
                 rightClickDate: ""
             }
         },
-        mounted() {
-
-        },
         methods:{
             close_right_menu(){
                 this.right_click_show = false
             },
             eventSelected(event, jsEvent, view){
                 //  点击展示事件详情
-                this.$bus.emit("OPEN_SEHEDULE_DETAIL_TASK",event)
+                this.$bus.emit("OPEN_ACCOUNTER_DETAIL_TASK",event)
             },
             dayClick(date, jsEvent, view){
                 //  可以在此处新增日程
@@ -207,6 +203,10 @@
                 this.date = date._d
                 let dateTemp = DateFormat(date)
                 this.get_onedate_data(dateTemp)
+            },
+            add_task(){
+                let _self = this
+                this.$bus.emit("SCHEDULE_CREATE_ACCOUNTER_TASK", _self.rightClickDate)
             },
             next() {
                 //  通过这个函数调用calendar中的方法，
@@ -238,11 +238,6 @@
                 this.rightLeft = jsEvent.pageX
                 // console.log(date, jsEvent, view)
             },
-            add_task(){
-                let _self = this
-                this.$bus.emit("SCHEDULE_CREATE_BUSINESS_TASK", _self.rightClickDate)
-            },
-            //  关闭右键菜单
             close_right_menu(){
                 this.right_click_show = false
             },
@@ -273,7 +268,7 @@
                     params:{
                         page: 1,
                         pageSize: 1000,
-                        task_kind:"tkLegBus"
+                        accountKind:"accountKind"
                     }
                 }
 
@@ -293,27 +288,9 @@
                         _self.events_temp[i].Area = _self.businessArea_map.get(  _self.events_temp[i].taskArea)
                         _self.events_temp[i].depart = _self.businessPlace_map.get(_self.events_temp[i].taskPlace)
                         _self.events_temp[i].CompanyName = _self.events_temp[i].companyName
-                        if(_self.events_temp[i].taskKind === "tkLegBus"){
                             _self.events_temp[i].color = "blue"
-                        }
-                        // if(_self.events_temp[i].plan_date.slice(0,10) == _self.local_date){
-                        //     _self.events_temp[i].color = "orange"
-                        // }
-                        // if(_self.events_temp[i].task_stage == "tesFinished"){
-                        //     _self.events_temp[i].color = "#228B22"
-                        // }
-                        // if(_self.events_temp[i].task_des_code == "tdOverdue"){
-                        //     _self.events_temp[i].color = "red"
-                        // }
-                        // if(_self.events_temp[i].task_kind == "tkClue" && _self.events_temp[i].task_stage != "tesFinished"){
-                        //     _self.events_temp[i].color = "#FF7F00"
-                        // }
-                        // if(_self.events_temp[i].task_kind == "tkClue" && _self.events_temp[i].task_stage == "tesFinished"){
-                        //     _self.events_temp[i].color = "#228B22"
-                        // }
-
-                    _self.events = _self.events_temp
-                        }
+                        _self.events = _self.events_temp
+                    }
 
                 }
 
@@ -345,7 +322,7 @@
                         pageSize: 1000,
                         day: e,
                         sortField: "plan_date",
-                        task_kind:"tkLegBus"
+                        accountKind:"accountKind"
                     }
                 }
 
@@ -373,11 +350,11 @@
             this.local_date = (new Date()).toLocaleDateString().replace(new RegExp("/",'g'),"-")
             this.local_date = DateFormat(new Date())
             this.get_onedate_data(DateFormat(new Date()))
-            _self.$bus.on("UPDATE_BUSINESS_TASK_LIST_DEMO", (e)=>{
+            _self.$bus.on("UPDATE_ACCOUNT_TASK_LIST_DEMO", (e)=>{
                 _self.get_data()
                 _self.get_onedate_data(DateFormat(new Date()))
             })
-            _self.$bus.on("UPDATE_TASK_LIST",(e)=>{
+            _self.$bus.on("UPDATE_ACCOUNT_TASK_LIST",(e)=>{
                 _self.get_data()
             })
         }

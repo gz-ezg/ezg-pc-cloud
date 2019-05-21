@@ -71,7 +71,7 @@ export default {
                 _self.ServiceDeptID = ""
                 _self.servicerID = ""
                 _self.common_allot_open = false
-                _self.$bus.emit('update_allot_index',true)
+                _self.$bus.emit('update_allot_index1',true)
                 _self.loading = false
             }
 
@@ -84,7 +84,16 @@ export default {
     },
     created(){
         let _self = this
-        this.$bus.on('global_allot_commonorder',(e)=>{
+        // this.$bus.on('global_allot_commonorder',(e)=>{
+        //     console.log("123")
+        //     _self.show = true
+        //     _self.ServiceDeptID = e[0]
+        //     _self.departName = e[1]
+        //     _self.workorderIds = e[2]
+        //     _self.getAllUserList()
+        //     _self.common_allot_open = true
+        // })
+        this.$bus.on('global_allot_commonorder1',(e)=>{
             console.log("123")
             _self.show = true
             _self.ServiceDeptID = e[0]

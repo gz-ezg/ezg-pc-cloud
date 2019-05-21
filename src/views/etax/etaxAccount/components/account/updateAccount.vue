@@ -23,7 +23,7 @@
                 </Row>
                 <Row :gutter="16" >
                     <Col span="24">
-                        <FormItem label="会计名称：" prop="real_name">
+                        <FormItem label="服务人员：" prop="real_name">
                             <Input size="small" v-model="formValidate.real_name"/>
                         </FormItem>
                     </Col>

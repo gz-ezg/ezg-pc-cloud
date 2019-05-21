@@ -299,6 +299,21 @@ export default {
             this.openTypeTree = true
             this.checkedId = [this.property[0].typeId]
         }
+    },
+    created() {
+        let _self = this
+        _self.$bus.on("RESET_DETAIL_DATA",(e)=>{
+            _self.property = [
+                {
+                    id: "",
+                    typeId: "",
+                    typeName:"",
+                    name: ""
+                }
+            ]
+            _self.propertyV = []
+        })
+
     }
 }
 </script>

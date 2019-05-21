@@ -2,6 +2,7 @@
     <div>
         <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="open_company_create">新增</Button>
         <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="shift_company" v-permission="['company.shift']">转移</Button>
+        <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="open_company_merge">企业合并</Button>
         <Table
             :loading="loading"
                 highlight-row
@@ -20,11 +21,12 @@
             @on-change="pageChange"
             v-if="total>10"
             style="margin-top: 10px"></Page> -->
-        <create-company v-if="close" @update="get_data" :taxtype="taxtype" :companyarea="companyarea_Casr" :customer="customer" :importance="importance" :cluesources="cluesources"></create-company>
+        <create-company v-if="close" @update="get_data" :taxtype="taxtype" :companyarea="companyarea_Casr" :customer="customer" :importance="importance" :cluesources="cluesources" ></create-company>
         <update-company v-if="close" @update="get_data" :taxtype="taxtype" :companyarea="companyarea_Casr" :customer="customer" :importance="importance" :cluesources="cluesources"></update-company>
         <!-- <amend-company></amend-company> -->
         <change-log></change-log>
         <shift-company v-if="openShiftCompany" @close="close_shift_company" :company="selectCompany"></shift-company>
+        <merge-company :data="data"></merge-company>
     </div>
 </template>
 
@@ -34,14 +36,15 @@ import updateCompany from "./update"
 import amendCompany from "./amend"
 import changeLog from "./changeLog"
 import shiftCompany from './shift'
-
+import mergeCompany from './merge'
 export default {
     components: {
         createCompany,
         updateCompany,
         amendCompany,
         changeLog,
-        shiftCompany
+        shiftCompany,
+        mergeCompany
     },
     props: {
         customer:{
@@ -204,7 +207,16 @@ export default {
             this.$Get(url, config ,success)
         },
         select_row(e){
+            console.log(e)
             this.selectCompany = e
+        },
+        open_company_merge(){
+            if (this.selectCompany.length!==0) {
+                this.$bus.emit("OPEN_COMPANY_MERGE",this.selectCompany.id)
+            }else {
+                this.$Message.warning("请选择要合并的企业")
+            }
+
         },
         get_data_center(){
             let _self = this
@@ -247,6 +259,12 @@ export default {
         this.$bus.on("UPDATE_CUSTOMER", (e)=>{
             _self.get_data(this.customer.ID)
             _self.selectRow = ''
+        })
+        this.$bus.off("UPDATE_CUSTOMER_NEW", true)
+        this.$bus.on("UPDATE_CUSTOMER_NEW", (e)=>{
+            _self.get_data(this.customer.ID)
+            _self.selectRow = ''
+            _self.selectCompany = []
         })
     }
 }

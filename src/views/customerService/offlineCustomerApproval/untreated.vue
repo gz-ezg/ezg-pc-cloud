@@ -61,6 +61,7 @@
         <Row>
             <ButtonGroup>
                 <Button type="primary" icon="ios-color-wand-outline" @click="openApproval">办理审批</Button>
+                <Button v-permission="['orderA.exportN']" type="primary" icon="ios-color-filter-outline" @click="downExcel">导出Excel</Button>
                 <Button type="primary" icon="ios-color-filter-outline" @click="getData">刷新</Button>
             </ButtonGroup>
         </Row>
@@ -207,14 +208,17 @@
                     {field:'name',title:'客户名称'},
                     {field:'CompanyName',title:'公司名称'},
                     // {field:'baseorderid',title:'提示'},
+                    {field:'TEL',title:'客户手机'},
                     {field:'product',title:'产品名称'},
                     {field:'enddate',title:'下线时间'},
+                    {field:'taxperiod',title:'下线税期'},
                     {field:'callbackdate',title:'回访时间'},
                     {field:'servicebegindate',title:'服务开始时间'},
                     {field:'servicer',title:'服务人员'},                                                                   
                     {field:'marketer',title:'市场人员'},                                                                     
                     {field:'reasonforcallback',title:'客户实际下线原因'},
-                    {field:'reasonformarketer',title:'市场通知下线原因'} 
+                    {field:'reasonformarketer',title:'市场通知下线原因'},
+                    {field:'followbusiness',title:'跟进业务'}
                 ]
                 let _self = this
                 let url = `api/customer/customerEndList`
@@ -230,6 +234,9 @@
                         productname:_self.NformInline.product,
                         marketer:_self.NformInline.marketername,
                         servicer:_self.NformInline.servicename,
+                        TEL:_self.NformInline.TEL,
+                        followbusiness:_self.NformInline.followbusiness,
+                        taxperiod:_self.NformInline.taxperiod
                 }
                 let toExcel = this.$MergeURL(url, config)
                 // console.log(toExcel)

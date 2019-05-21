@@ -38,7 +38,7 @@
                 if (this.content===null || this.content===""){
                     this.$Message.warning("请输入快捷短语")
                 } else {
-                this.$bus.emit("ADD_PHRASE",this.content)
+                this.$bus.emit("ADD_ACCOUNTER_PHRASE",this.content)
                 this.openAddTask = false
                 }
             },
@@ -47,7 +47,7 @@
             }
         },
         created() {
-            this.$bus.on("ADD_SCHTASK",()=>{
+            this.$bus.on("ADD_ACCOUNT_TASK",(e)=>{
                 this.openAddTask=true
             })
         }

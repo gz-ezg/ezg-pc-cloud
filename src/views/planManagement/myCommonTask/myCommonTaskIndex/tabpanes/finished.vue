@@ -66,7 +66,6 @@
 
 <script>
 import mixin from './mixin.js'
-
 export default {
     mixins: [mixin],
     data() {
@@ -229,7 +228,6 @@ export default {
             }
         },
     methods:{
-
     },
     created(){
         var _self = this
