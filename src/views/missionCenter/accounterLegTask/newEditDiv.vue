@@ -3,7 +3,7 @@
         <div class="text-textarea"
              v-html="innerText"
              contenteditable="true"
-             placeholder="請输入新建排程任务......"
+             placeholder="请输入新建会计外勤任务......"
              @focus="lock=true"
              @blur="lock=false"
              @input="changeText">

@@ -2,7 +2,7 @@
     <div>
         <Modal
                 v-model="openTaskDetail"
-                title="商事任务详情"
+                title="会计外勤任务详情"
                 width="450"
 
                 class-name="vertical-center-modal"
