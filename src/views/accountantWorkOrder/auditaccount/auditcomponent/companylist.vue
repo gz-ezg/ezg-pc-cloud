@@ -176,7 +176,7 @@ export default {
                     pageSize: _self.pageSize,
                     financeAnalysisId: _self.id,
                     period: _self.date,
-                    analysisResult:'2',
+                    analysisResult:'1',
                     companyname:_self.formInline.companyname,
                     serverrealname:_self.formInline.serverrealname
                 }

@@ -12,8 +12,8 @@
             <Tabs v-model="showtab">
                 <TabPane label="统计" name="name1">
                     <Row :gutter="20" style="margin-top:20px" @click.native="show_main">
-                        <Col span="12"><Card><accoutsupsects :account="account_rule" @updateaccount="open_account_list" :loading="tableloading"></accoutsupsects></Card></Col>
-                        <Col span="12"><Card><companysuspects :company="company_rule" @updatecompany="open_company_list" :loading="tableloading"></companysuspects></Card></Col>            
+                        <Col span="12"><Card><accoutsupsects :account="account_rule" @updateaccount="open_company_list" :loading="tableloading"></accoutsupsects></Card></Col>
+                        <Col span="12"><Card><companysuspects :company="company_rule" @updatecompany="open_account_list" :loading="tableloading"></companysuspects></Card></Col>
                     </Row>
                     <!-- 饼状图暂时不做 -->
                     <!-- <Row :gutter="20" style="margin-top:20px">
@@ -31,12 +31,12 @@
                             <Card style="height:400px;"><companysupects-chart></companysupects-chart></Card></Col>             
                     </Row> -->
                 </TabPane>
-                <TabPane label="会计疑点" name="name2">
+                <TabPane label="企业疑点" name="name2">
                     <Row :gutter="20" style="margin-top:20px" >
                         <Col><Card><companylist  :date="auditdate" :disposes="disposes_map" :id="companyId" @OPENDEATAIL="open_detail"></companylist></Card></Col>
                     </Row>
                 </TabPane>
-                <TabPane label="企业疑点" name="name3">
+                <TabPane label="会计疑点" name="name3">
                     <Row :gutter="20" style="margin-top:20px" >
                         <Col><Card><auditlist :date="auditdate"  :id="accountId" @OPENDEATAIL="open_detail" :disposes="disposes_map"></auditlist></Card></Col>
                     </Row>
@@ -173,11 +173,24 @@ export default {
     },
     created(){
         let temp = new Date()
-        let month1 = temp.getMonth() + 1
+        let month1 = temp.getMonth() ;
+        let year1 = temp.getFullYear()
+        if(month1<=1){
+            if(month1 == 1){
+                month1 = 12
+            }
+            if(month1 == 0){
+                month1 = 11
+            }
+            year1 = year1-1
+        }else{
+            month1 = month1 -1
+        }
+
         if(month1<9){
             month1 = '0'+month1
         }
-        let year1 = temp.getFullYear()
+
         this.select_month = year1 + '-' + month1
         let _self =this
         this.init()
