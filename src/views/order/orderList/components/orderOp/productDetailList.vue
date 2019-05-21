@@ -127,6 +127,8 @@
                       <FormItem label=" 申报年份" prop="declare_year">
                         <DatePicker
                           type="year"
+                          format="yyyy"
+                          @on-change="item.declare_year=$event"
                           v-model="item.declare_year"
                           placeholder="选择年份"
                           style="width: 120px"
@@ -218,6 +220,7 @@
 
 <script>
 import * as orderApi from "../../api";
+import { DateFormat, DateFormatYearMonth } from "../../../../../libs/utils.js";
 export default {
   props: ["productList", "isDisabled", "orderDetail", "pageFlag"],
   inject: ["cancel_order"],
@@ -239,7 +242,7 @@ export default {
           {
             required: true,
             trigger: "blur",
-            message: "",
+            message: ""
           }
         ]
       }
@@ -253,12 +256,12 @@ export default {
       });
       if (this.isPlan[i]) {
         this.productList[i].receipt_type = "proportion";
-        this.productList[i].paynumber = 0
+        this.productList[i].paynumber = 0;
       } else {
         this.productList[i].receipt_type = "quota";
-        this.productList[i].receipt_proportion = 0
+        this.productList[i].receipt_proportion = 0;
       }
-      this.computer_paynumber()
+      this.computer_paynumber();
     },
     //	改变产品数量后自动执行该函数，可以在此函数处理其他值的相关逻辑
     changeProductNumber(item) {
@@ -270,7 +273,7 @@ export default {
       _self.computer_paynumber();
     },
     //  计算总金额
-    computer_paynumber(i) {
+    computer_paynumber() {
       let _self = this;
       let temp = 0;
       for (let i = 0; i < _self.productList.length; i++) {
