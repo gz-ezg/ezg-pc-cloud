@@ -157,7 +157,7 @@
                 header:{
                     left:   'prev,next today',
                     center: 'title',
-                    right:  'filter,month,agendaDay'
+                    right:  'month,agendaDay'
                 },
                 config:{
                     locale: 'zh-cn',
