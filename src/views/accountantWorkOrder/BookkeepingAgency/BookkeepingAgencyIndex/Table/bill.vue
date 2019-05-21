@@ -5,10 +5,10 @@
 				<FormItem label="成本票" style="margin-bottom: 5px;" label-width=80>
 					<Row>
 						<Col span="8" style="margin-right: 5px;">
-							<InputNumber style="width:100%;" :min="0" v-model="formBill.costAmount" placeholder="数量"></InputNumber>
+							数量:<InputNumber style="width:100%;" :min="0" v-model="formBill.costAmount" placeholder="数量"></InputNumber>
 						</Col>
 						<Col span="8">
-							<InputNumber style="width:100%;" :min="0" v-model="formBill.costMoney" placeholder="金额"></InputNumber>
+							金额:<InputNumber style="width:100%;" :min="0" v-model="formBill.costMoney" placeholder="金额"></InputNumber>
 						</Col>
 					</Row>
 				</FormItem>
@@ -16,10 +16,10 @@
 				<FormItem label="费用票" style="margin-bottom: 5px;" label-width=80>
 					<Row>
 						<Col span="8" style="margin-right: 5px;">
-							<InputNumber style="width:100%;" :min="0" v-model="formBill.exesAmount" placeholder="数量"></InputNumber>
+							数量:<InputNumber style="width:100%;" :min="0" v-model="formBill.exesAmount" placeholder="数量"></InputNumber>
 						</Col>
 						<Col span="8">
-							<InputNumber style="width:100%;" :min="0" v-model="formBill.exesMoney" placeholder="金额"></InputNumber>
+							金额:<InputNumber style="width:100%;" :min="0" v-model="formBill.exesMoney" placeholder="金额"></InputNumber>
 						</Col>
 					</Row>
 				</FormItem>
@@ -27,10 +27,10 @@
 				<FormItem label="收入" style="margin-bottom: 5px;" label-width=80>
 					<Row>
 						<Col span="8" style="margin-right: 5px;">
-							<InputNumber style="width:100%;" :min="0" v-model="formBill.incomeAmount" placeholder="数量"></InputNumber>
+							数量:<InputNumber style="width:100%;" :min="0" v-model="formBill.incomeAmount" placeholder="数量"></InputNumber>
 						</Col>
 						<Col span="8">
-							<InputNumber style="width:100%;" :min="0" v-model="formBill.incomeMoney" placeholder="金额"></InputNumber>
+							金额:<InputNumber style="width:100%;" :min="0" v-model="formBill.incomeMoney" placeholder="金额"></InputNumber>
 						</Col>
 					</Row>
 				</FormItem>
@@ -38,7 +38,7 @@
 				<FormItem label="银行回单" style="margin-bottom: 5px;" label-width=80>
 					<Row>
 						<Col span="8">
-							<InputNumber style="width:100%;" :min="0" v-model="formBill.bankReceipt" placeholder="数量"></InputNumber>
+						数量:<InputNumber style="width:100%;" :min="0" v-model="formBill.bankReceipt" placeholder="数量"></InputNumber>
 						</Col>
 					</Row>
 				</FormItem>

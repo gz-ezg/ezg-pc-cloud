@@ -32,12 +32,14 @@
                                 <Row>[余额表:主营业务收入:本期借方]*0.03)&&[余额表:应交税金-应交增值税:本期借方]!=[余额表:主营业务收入:本期借方]/0.01</Row>
                                 <Row>公式规则：[{ 表名 }：{ 科目名 }：{ 可用值 } { 公式符号 } { 判断值 }]</Row>
                                 <Row>参数说明:</Row>
-                                <Row>表名：余额表，资产负债表</Row>
+                                <Row>表名：余额表，资产负债表,利润表,上期余额表,上期资产负债表,上期利润表</Row>
                                 <Row>科目名：自行填写</Row>
                                 <Row>可用值：</Row>
-                                <Row style="margin-left:40px">余额表 => { 期初借方，期初贷方，本期借方，本期贷方，本年借方，本年贷方，期末借方，期末贷方 }</Row>
-                                <Row style="margin-left:40px">资产负债表 => { 年初数，期末数 }</Row>
+                                <Row style="margin-left:40px">余额表|| 上期余额表 => { 期初借方，期初贷方，本期借方，本期贷方，本年借方，本年贷方，期末借方，期末贷方 }</Row>
+                                <Row style="margin-left:40px">资产负债表||上期资产负债表 => { 年初数，期末数 }</Row>
+                                <Row style="margin-left:40px">利润表||上期利润表 => {本月金额，本年金额 }</Row>
                                 <Row>公式符号：>,=,<,!=......</Row>
+                                <Row>运算符合：+,-,*,/,||,&&</Row>
                             </div> 
                         </Poptip>
                 </Row>
@@ -48,7 +50,7 @@
                             </Input>
                         </FormItem>
                     </Col>
-                </Row>
+                </Ro
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="baseMessage" label="基础信息：">

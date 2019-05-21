@@ -39,6 +39,7 @@
                 <Button type="primary" icon="ios-color-wand-outline" @click="finish_workerOrder" >一键完结</Button>
 				<Button type="primary" icon="ios-color-wand-outline" @click="stopWorkOrder">暂停/解锁</Button>
 				<Button type="primary" icon="ios-color-wand-outline" @click="openStopWorkOrderList">查看暂停/解锁日志</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="declareResult">申报结果</Button>
             </ButtonGroup>
         </Row>
         <Row style="margin-top: 10px;">
@@ -70,7 +71,7 @@
 
 <script>
 import mixin from './mixin.js'
-
+import declareResult from './declareResult'
 export default {
     mixins: [mixin],
     data() {
@@ -78,7 +79,7 @@ export default {
                 workStatusId: 40,
                 workOrderStatus:[],
                 workOrderStatus_map:new Map(),
-				current_row:'',
+
                 header: [
                     {
                         title: '归属公司',
@@ -230,10 +231,7 @@ export default {
             }
         },
     methods:{
-		 //  保存当前选中行
-		save_current_row(e){
-		    this.current_row = e
-		},
+
 		stopWorkOrder(){
 			if(this.current_row != ''){
 			    // Bus.$emit('myCommonTask',this.current_row)

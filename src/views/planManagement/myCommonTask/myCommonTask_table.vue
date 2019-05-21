@@ -54,7 +54,6 @@ import notbegin from './myCommonTaskIndex/tabpanes/notbegin'
 import stop from './myCommonTaskIndex/tabpanes/stop'
 import StopWorkOrder from "@/views/commercialManagement/myCommonTask/stopWorkOrder";
 import workOrderLog from "@/views/commercialManagement/myCommonTask/workOrderLog";
-
     export default {
         name:'plantaskmanagement',
         components:{

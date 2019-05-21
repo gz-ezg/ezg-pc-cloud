@@ -78,7 +78,6 @@ export default {
                 workStatusId: 20,
                 workOrderStatus:[],
                 workOrderStatus_map:new Map(),
-				current_row:'',
                 header: [
                     {
                         title: '归属公司',
@@ -230,10 +229,7 @@ export default {
             }
         },
     methods:{
-		 //  保存当前选中行
-		save_current_row(e){
-		    this.current_row = e
-		},
+
 		stopWorkOrder(){
 			if(this.current_row != ''){
 			    // Bus.$emit('myCommonTask',this.current_row)
