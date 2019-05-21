@@ -111,6 +111,7 @@ export default {
         _self.newFollowByName = "";
         _self.newFollowById = "";
         _self.$bus.emit("UPDATE_CUSTOMER", true);
+          _self.openChangeMarket = false
       }
 
       function fail(res) {

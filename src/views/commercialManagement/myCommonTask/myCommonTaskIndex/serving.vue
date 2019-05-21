@@ -42,6 +42,7 @@
         </Row>
         <Row>
             <ButtonGroup style="float:left">
+                <Button type="primary" icon="ios-color-wand-outline" @click="Distribution_task" v-permission="['workorder.allot']">一键分配</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="open_set_time">设置计划完成时间</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="over_due_reason">逾期原因</Button>
@@ -111,17 +112,21 @@
                 <Button type="ghost" style="margin-left:20px" @click="endlife=!endlife">取消</Button>
             </div>
         </Modal> -->
+        <allot-serving></allot-serving>
+        <allot-account-serving></allot-account-serving>
     </Card>
 </template>
 
 <script>
 // import Search from './search'
 import Bus from '../../../../components/bus'
-
+import allotServing from "./allot_serving"
+import allotAccountServing from "./allot_accout_serving"
 export default {
-    // components:{
-    //     Search
-    // },
+    components:{
+        allotServing,
+        allotAccountServing
+    },
     data() {
             return {
                 managestatus:[],
@@ -152,12 +157,13 @@ export default {
                 page:'1',
                 pageSize:'10',
                 data:[],
+                local_router_name:'',
                 header: [
-                    // {
-                    //     type: 'selection',
-                    //     width: 60,
-                    //     align: 'center'
-                    // },
+                    {
+                        type: 'selection',
+                        width: 60,
+                        align: 'center'
+                    },
                     // {
                     //     title: '工单状态',
                     //     key: 'zhuangtai',
@@ -438,13 +444,79 @@ export default {
                         }
                     }
                 ],
-                tempArray:[]
+                tempArray:[],
+                change_rowN:[]
             }
         },
     methods:{
         get_all_selection(e){
-            // console.log(e)
             this.tempArray = e
+            this.change_rowN = e
+            console.log(this.change_rowN)
+        },
+        Distribution_task(){
+            let flag = false
+            let _self = this
+            if(_self.change_rowN!=''){
+                let temp = _self.change_rowN[0].ServiceDeptID
+                for(let i = 0;i<_self.change_rowN.length;i++){
+                    if(temp == _self.change_rowN[i].ServiceDeptID && i ==_self.change_rowN.length-1){
+                        flag = true
+                    }
+                }
+                if(flag==true){
+                    //  如果是会计部门工单分配，则使用allot_account_service组件
+                    //  分配工单的id，生成字符串
+                    let temp = []
+                    for(let i = 0;i<_self.change_rowN.length;i++){
+                        temp.push(_self.change_rowN[i].id)
+                    }
+                    let workOrderIds = temp.join(",")
+                    if(_self.local_router_name =="'ACCOUNT'"){
+
+                        //  分配表单需要接收三项数据1.服务部门的id，2.部门名称，3.分配的工单id
+                        _self.$bus.emit("global_allot_accountorder1",[_self.change_rowN[0].ServiceDeptID,_self.change_rowN[0].departname,workOrderIds])
+                    }else{
+                        //  否则则使用allot_service组件
+                        _self.$bus.emit("global_allot_commonorder1",[_self.change_rowN[0].ServiceDeptID,_self.change_rowN[0].departname,workOrderIds])
+                    }
+                }else{
+                    _self.$Message.warning('请选择相同的服务部门！')
+                }
+
+            }else{
+                _self.$Message.warning('请选择需要分配的工单！')
+            }
+        },
+        allot(){
+            let _self = this
+            let url = 'api/order/batchUpdateServicer'
+            let temp = []
+            for(let i = 0;i<_self.change_rowN.length;i++){
+                temp.push(_self.change_rowN[i].id)
+            }
+            _self.workOrderIds = temp.join(",")
+            let config = {
+                workOrderIds:_self.workOrderIds,
+                userId: _self.userId
+            }
+            this.$http.post(url,config).then(function(res){
+                // console.log(res.data.msgCode)
+                if(res.data.msgCode == 40000){
+                    _self.$Message.success(res.data.msg)
+                    _self.Distribution = false
+                    _self.getData()
+                    _self.userId = ''
+                }else{
+                    _self.$Message.error(res.data.msg)
+                }
+            })
+        },
+        init(){
+            // this.local_router_name = this.$route.name
+            this.local_router_name = `'${this.$route.params.depart}'`
+            this.getData()
+            this.change_rowN = []
         },
         flow_all(){
             let _self = this
@@ -664,6 +736,13 @@ export default {
 			}
 		}
     },
+    watch:{
+        '$route':'init'
+    },
+    mounted(){
+        this.init()
+        console.log(this.$route)
+    },
     created(){
         var _self = this
         this.getData()
@@ -673,6 +752,9 @@ export default {
 		this.$bus.on("reflash",(e)=>{
 			_self.getData()
 		})
+        _self.$bus.on('update_allot_index1',(e)=>{
+            _self.init()
+        })
     }
 
 }

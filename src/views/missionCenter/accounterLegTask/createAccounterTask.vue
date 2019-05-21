@@ -33,21 +33,37 @@
                                 @on-change="get_businessId(newMission.companyId)"
                                 :loading="companyLoading"
                         >
-                            <Option v-for="item in companyList" :value="item.companyid" :key="item.companyid">{{item.companyname}}</Option>
+                            <Option v-for="item in companyList" :value="item.companyid" :key="item.companyid" >{{item.companyname}}</Option>
                         </Select>
                     </FormItem>
                 </Col>
                 <Col span="12">
                     <FormItem label="产品" prop="companyId">
                         <Select v-model="newMission.businessId" placeholder="请先输入客户名称搜索"
-                                :loading="companyLoading"
+                                :loading="companyLoading" @on-change="type_change"
                         >
                             <Option v-for="item in productList" :value="item.businessId" :key="item.businessId">{{item.product}}</Option>
                         </Select>
                     </FormItem>
                 </Col>
             </Row>
-            <Row :gutter="12">
+            <Row :gutter="12" v-if="newMission.taskKind==='tkLegAccCyc'">
+                <Col span="12">
+                    <FormItem label="外勤类型" prop="cycleType">
+                        <Select v-model="newMission.cycleType" type="text" transfer @on-change="get_type_list">
+                            <Option v-for="(item,index) in cycleTypeList" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
+                <Col span="12">
+                    <FormItem label="外勤名称" prop="cycleTypeId">
+                        <Select v-model="newMission.cycleTypeId" type="text" transfer @on-change="name_change">
+                            <Option v-for="(item,index) in cycleTypeNameList" :key="index" :value="item.id">{{item.legwork_name}}</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
+            </Row>
+            <Row :gutter="12"  v-if="newMission.taskKind==='tkLegAcc'">
                 <Col span="12">
                     <FormItem label="区域" prop="businessArea">
                         <Select v-model="newMission.businessArea" type="text" transfer>
@@ -65,12 +81,15 @@
             </Row>
             <Row :gutter="12">
                 <Col span="12">
-                    <FormItem label="正常节点" prop="node">
-                        <Select v-model="newMission.node" type="text" transfer>
-                            <Option v-for="(item,index) in nodeList" :key="index" :value="item.typecode">{{item.typename}}</Option>
-                        </Select>
+                    <FormItem label="代办于" prop="planDate">
+                        <DatePicker type="datetime" v-model="newMission.planDate" style="width:100%"></DatePicker>
                     </FormItem>
                 </Col>
+                <!-- <Col span="12">
+                    <FormItem label="提醒时间">
+                        <DatePicker type="datetime" v-model="newMission.specificDate" style="width:100%"></DatePicker>
+                    </FormItem>
+                </Col> -->
                 <Col span="12">
                     <FormItem label="执行者" prop="executorId">
                         <Select
@@ -106,16 +125,7 @@
                 </Select>
             </FormItem> -->
             <Row :gutter="12">
-                <Col span="12">
-                    <FormItem label="代办于" prop="planDate">
-                        <DatePicker type="datetime" v-model="newMission.planDate" style="width:100%"></DatePicker>
-                    </FormItem>
-                </Col>
-                <!-- <Col span="12">
-                    <FormItem label="提醒时间">
-                        <DatePicker type="datetime" v-model="newMission.specificDate" style="width:100%"></DatePicker>
-                    </FormItem>
-                </Col> -->
+
             </Row>
             <Row :gutter="12">
 
@@ -182,16 +192,19 @@
                     specificDate: "",
                     taskLevel: "importance",
                     taskDesCode: "",
-                    taskKind: "tkFollow",
+                    taskKind: "",
                     businessPlace:"shuiju",
                     businessArea:"tianhe",
+                    cycleType:"A",
                     node:"Y",
                     taskStage: "",
                     followResult: "",
                     followUpType: "",
                     companyId: "",
                     executorId: [],
-                    businessId:""
+                    businessId:"",
+                    cycleTypeId:"",
+                    cycleTypeName:""
                 },
                 phraseLoading: false,
                 createLoading: false,
@@ -204,6 +217,8 @@
                 ],
                 productList:[],
                 nodeList:[{"typecode":"Y","typename":"是"},{"typecode":"N","typename":"否"}],
+                cycleTypeList:[{"typecode":"A","typename":"A类"},{"typecode":"B","typename":"B类"}],
+                cycleTypeNameList:[],
                 allUserList: [],
                 allUserList_map: new Map(),
                 businessArea:[],
@@ -235,14 +250,14 @@
             },
             editable(content,id){
                 let _self = this
-                _self.$bus.$emit("AMEND_PHRASE_DATA",content,id)
+                _self.$bus.$emit("AMEND_ACCOUNT_PHRASE_DATA",content,id)
             },
             selectArr(id){
                 this.delete_phrase_list(id)
                 // this.addArr.splice(index,1)
             },
             add_schtask(){
-                this.$bus.emit("ADD_SCHTASK")
+                this.$bus.emit("ADD_ACCOUNT_TASK",true)
             },
             showPhrase(){
                 if (this.phraseShow===true){
@@ -258,7 +273,7 @@
                 let url = 'api/task/findTaskQuickList'
                 let config = {
                     params:{
-                        quickType: "business"
+                        quickType: "account"
                     }
                 }
                 function success(res){
@@ -272,17 +287,16 @@
                 _self.phraseLoading = true
                 let url = 'api/task/addTaskQuick'
                 let config={
-                    quickType:"business",
+                    quickType:"account",
                     quickContent:e,
                     quickIndex:1,
                 }
                 function success(res){
                     _self.phraseLoading = false
-                    _self.$bus.emit("UPDATE_PHRASE_LIST", true)
+                    _self.$bus.emit("UPDATE_ACCOUNTER_PHRASE_LIST", true)
                 }
                 function fail(err){
                     _self.phraseLoading = true
-
                 }
                 this.$Post(url, config, success, fail)
             },
@@ -297,7 +311,7 @@
                 }
                 function success(res){
                     _self.phraseLoading = false
-                    _self.$bus.emit("UPDATE_PHRASE_LIST", true)
+                    _self.$bus.emit("UPDATE_ACCOUNTER_PHRASE_LIST", true)
                 }
                 this.$Get(url, config, success)
             },
@@ -310,56 +324,110 @@
                     return
                 }
                 _self.createLoading = true
-                let url = `api/task/addLegworkTask`
+                // let url = `api/task/addLegworkTask`
                 let executorNameArray = []
                 for(let i = 0; i < _self.newMission.executorId.length; i++){
                     executorNameArray.push(_self.allUserList_map.get(_self.newMission.executorId[i].toString()))
                 }
-                let config = {
-                    taskKind: "tkLegBus",
-                    taskName: _self.newMission.taskName,
-                    companyId: _self.newMission.companyId,
-                    taskArea:_self.newMission.businessArea,
-                    taskPlace:_self.newMission.businessPlace,
-                    executorId: _self.newMission.executorId.join(","),
-                    businessId:_self.newMission.businessId,
-                    workFlowStatus:_self.newMission.node,
-                    // executorName: _self.allUserList_map.get(_self.newMission.executorId.toString()),
-                    executorName: executorNameArray.join(","),
-                    // taskContent: _self.newMission.taskContent,
-                    // taskLevel: _self.newMission.taskLevel,
-                    // specificDate: FULLDateFormat(_self.newMission.specificDate),
-                    sPlanDate: FULLDateFormat(_self.newMission.planDate),
-                    // taskDesCode: _self.newMission.taskDesCode,
-                    // taskKind: _self.newMission.taskKind,
-                    // taskStage: "tesUnstarted",
-                    // followResult: _self.newMission.followResult,
-                    // followUpType: _self.newMission.followUpType,
-                    // taskLable: _self.newMission.taskLable.join(","),
-                    // taskLevelName: _self.taskLevel_map.get(_self.newMission.taskLevel),
-                    // taskDescription: _self.taskDesCode_map.get(_self.newMission.taskDesCode),
-                    // taskKindName: _self.taskKind_map.get(_self.newMission.taskKind),
-                    // taskStageName: "未开始",
-                    // creatorName:localStorage.getItem("realname")
-                    // followResultName: _self.market_status_map.get(_self.newMission.followResult),
-                    // followUpTypeName: _self.markert_follow_up_type_map.get(_self.newMission.followUpType),
+                // let config = {
+                //     taskKind: "tkLegBus",
+                //     taskName: _self.newMission.taskName,
+                //     companyId: _self.newMission.companyId,
+                //     taskArea:_self.newMission.businessArea,
+                //     taskPlace:_self.newMission.businessPlace,
+                //     executorId: _self.newMission.executorId.join(","),
+                //     businessId:_self.newMission.businessId,
+                //     workFlowStatus:_self.newMission.node,
+                //     executorName: executorNameArray.join(","),
+                //     sPlanDate: FULLDateFormat(_self.newMission.planDate),
+                //
+                // }
+                //
+                //
+                // function success(res){
+                //     _self.createLoading = false
+                //     _self.openAddMission = false
+                //     _self.$bus.emit("UPDATE_BUSINESS_TASK_LIST_DEMO", res.data.data.id)
+                //     _self.cancel_task()
+                // }
+                //
+                // function fail(err){
+                //     _self.createLoading = false
+                //
+                // }
+                //
+                // this.$Post(url, config, success, fail)
+                if (_self.newMission.taskKind==='tkLegAccCyc'){
+                    let url = `api/task/addAccLegworkTask`
+                    let config = {
+                            taskKind: "tkLegAccCyc",
+                            taskName: _self.newMission.taskName,
+                            companyId: _self.newMission.companyId,
+                            executorId: _self.newMission.executorId.join(","),
+                            businessId:_self.newMission.businessId,
+                            executorName: executorNameArray.join(","),
+                            sPlanDate: FULLDateFormat(_self.newMission.planDate),
+                            legTypeId: _self.newMission.cycleTypeId,
+                            legType: _self.newMission.cycleType,
+                            legName: _self.newMission.cycleTypeName
+                        }
+                    function success(res){
+                            _self.createLoading = false
+                            _self.openAddMission = false
+                            _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST_DEMO", true)
+                            _self.cancel_task()
+                        }
+                    function fail(err){
+                            _self.createLoading = false
+                        }
+                    this.$Post(url, config, success, fail)
                 }
-
-                // console.log(config)
-                function success(res){
-                    _self.createLoading = false
-                    _self.openAddMission = false
-                    _self.$bus.emit("UPDATE_BUSINESS_TASK_LIST_DEMO", res.data.data.id)
-                    _self.cancel_task()
+                if (_self.newMission.taskKind==='tkLegAcc') {
+                    let url = `api/task/addLegworkTask`
+                    let config = {
+                        taskKind: "tkLegAcc",
+                        taskName: _self.newMission.taskName,
+                        companyId: _self.newMission.companyId,
+                        executorId: _self.newMission.executorId.join(","),
+                        businessId:_self.newMission.businessId,
+                        executorName: executorNameArray.join(","),
+                        sPlanDate: FULLDateFormat(_self.newMission.planDate),
+                        taskArea:_self.newMission.businessArea,
+                        taskPlace:_self.newMission.businessPlace,
+                    }
+                    function success(res){
+                        _self.createLoading = false
+                        _self.openAddMission = false
+                        _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST_DEMO", true)
+                        _self.cancel_task()
+                    }
+                    function fail(err){
+                        _self.createLoading = false
+                    }
+                    this.$Post(url, config, success, fail)
                 }
-
-                function fail(err){
-                    _self.createLoading = false
-
+                if (_self.newMission.taskKind==='tkLegAccHom'){
+                    let url = `api/task/addAccLegworkTask`
+                    let config = {
+                        taskKind: "tkLegAccHom",
+                        taskName: _self.newMission.taskName,
+                        companyId: _self.newMission.companyId,
+                        executorId: _self.newMission.executorId.join(","),
+                        businessId:_self.newMission.businessId,
+                        executorName: executorNameArray.join(","),
+                        sPlanDate: FULLDateFormat(_self.newMission.planDate),
+                    }
+                    function success(res){
+                        _self.createLoading = false
+                        _self.openAddMission = false
+                        _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST_DEMO", true)
+                        _self.cancel_task()
+                    }
+                    function fail(err){
+                        _self.createLoading = false
+                    }
+                    this.$Post(url, config, success, fail)
                 }
-
-                this.$Post(url, config, success, fail)
-
             },
             cancel_task(){
                 this.$refs.select.setQuery(null)
@@ -404,12 +472,12 @@
                     _self.companyLoading = false
                     _self.companyList = res.data.data
                 }
-
                 this.$Get(url, config, success)
+                _self.name_change()
             },
             get_businessId(id){
                 let _self = this
-                let url = `api/task/getLegWorkOrderByCompanyId`
+                let url = `api/task/getLegCycWorkOrderByCompanyId`
                 _self.userLoading = true
 
                 let config = {
@@ -426,9 +494,72 @@
                     }else {
                         _self.newMission.businessId = null
                     }
-
+                    _self.get_type_list()
+                    _self.type_change()
+                    // let obj = {}
+                    // let arr = _self.productList
+                    //
+                    // for (let i=0;i<arr.length;i++){
+                    //     let taskKind = arr[i].taskKind
+                    //     console.log(taskKind)
+                    //     let businessId = arr[i].businessId
+                    //     obj[businessId] = taskKind
+                    // }
+                    // _self.newMission.taskKind = obj[_self.newMission.businessId]
+                    // console.log(_self.newMission.taskKind)
                 }
 
+                this.$Get(url, config, success)
+            },
+            type_change(){
+                let _self = this
+                let obj = {}
+                let arr = _self.productList
+
+                for (let i=0;i<arr.length;i++){
+                    let taskKind = arr[i].taskKind
+                    console.log(taskKind)
+                    let businessId = arr[i].businessId
+                    obj[businessId] = taskKind
+                }
+                _self.newMission.taskKind = obj[_self.newMission.businessId]
+                console.log(_self.newMission.taskKind)
+            },
+            name_change(){
+                let _self = this
+                let obj = {}
+                let arr = _self.cycleTypeNameList
+
+                for (let i=0;i<arr.length;i++){
+                    let id = arr[i].id
+                    let legwork_name = arr[i].legwork_name
+                    obj[id] = legwork_name
+                }
+                _self.newMission.cycleTypeName = obj[_self.newMission.cycleTypeId]
+                console.log(_self.newMission.cycleTypeName)
+            },
+            get_type_list(){
+                let _self = this
+                let url = `api/user/legwork/cycle/type/list`
+                _self.userLoading = true
+
+                let config = {
+                    params: {
+                        type:_self.newMission.cycleType
+                    }
+                }
+
+                function success(res){
+                    _self.userLoading = false
+                    _self.cycleTypeNameList = res.data.data
+                    if (_self.cycleTypeNameList.length!==0){
+                        _self.newMission.cycleTypeId = _self.cycleTypeNameList[0].id
+                        _self.newMission.cycleTypeName = _self.cycleTypeNameList[0].legwork_name
+                        console.log(_self.newMission.cycleTypeName)
+                    }else {
+                        _self.newMission.cycleTypeId = null
+                    }
+                }
                 this.$Get(url, config, success)
             },
             get_data_center(){
@@ -480,11 +611,14 @@
                 this.$Get(url, config, success)
             },
         },
+        mounted(){
+            // this.get_type_list()
+        },
         created() {
             let _self = this
             this.get_data_center()
             this.get_all_user()
-            this.$bus.on("SCHEDULE_CREATE_BUSINESS_TASK",(e)=>{
+            this.$bus.on("SCHEDULE_CREATE_ACCOUNTER_TASK",(e)=>{
                 console.log(e)
                 _self.user = localStorage.getItem("id")
                 _self.newMission.executorId = []
@@ -493,11 +627,11 @@
                 _self.openAddMission = true
                 _self.newMission.planDate = e
             })
-            this.$bus.on("ADD_PHRASE",(e)=>{
+            this.$bus.on("ADD_ACCOUNTER_PHRASE",(e)=>{
                 console.log(e)
                 this.add_phrase_list(e)
             })
-            this.$bus.on("UPDATE_PHRASE_LIST",(e)=>{
+            this.$bus.on("UPDATE_ACCOUNTER_PHRASE_LIST",(e)=>{
                 this.get_phrase_list()
             })
         },

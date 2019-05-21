@@ -123,7 +123,7 @@ export const otherRouter = {
         },
         {
             path: 'allot/:depart',
-            title: "分配工单",
+            title: "工单分配",
             name: 'allot',
             component: () => import( /* webpackChunkName: "workorderAllot" */ '@/views/woa-components/allot-task/allotCommonTask/index.vue')
         },
@@ -279,6 +279,46 @@ export const appRouter = [
                 title: '商事排程',
                 name: 'business_schedule_index',
                 component: () => import( /* webpackChunkName: "business_schedule_index" */ '@/views/missionCenter/comSchedule/index.vue')
+            },
+            {
+                access: 11632,
+                meta: 11632,
+                path: 'accounterLegTask',
+                title: '会计外勤任务',
+                name: 'accounterLegTask_index',
+                component: () => import( /* webpackChunkName: "accounterLegTask_index" */ '@/views/missionCenter/accounterLegTask/index.vue')
+            },
+            {
+                access: 11633,
+                meta: 11633,
+                path: 'marketLegTask',
+                title: '市场外勤任务',
+                name: 'marketLegTask_index',
+                component: () => import( /* webpackChunkName: "marketLegTask_index" */ '@/views/missionCenter/marketLegTask/index.vue')
+            },
+            {
+                access: 11634,
+                meta: 11634,
+                path: 'normalLegTask',
+                title: '普通外勤任务',
+                name: 'normalLegTask_index',
+                component: () => import( /* webpackChunkName: "normalLegTask_index" */ '@/views/missionCenter/normalLegTask/index.vue')
+            },
+            {
+                access: 11635,
+                meta: 11635,
+                path: 'legworkAssWorkorder',
+                title: '外勤协助工单',
+                name: 'legworkAssWorkorder_index',
+                component: () => import( /* webpackChunkName: "legworkAssWorkorder_index" */ '@/views/missionCenter/legworkAssWorkorder/index.vue')
+            },
+            {
+                access: 11636,
+                meta: 11636,
+                path: 'legworkAssWorkorderAudit',
+                title: '外勤协助审核 ',
+                name: 'legworkAssWorkorderAudit_index',
+                component: () => import( /* webpackChunkName: "legworkAssWorkorderAudit_index" */ '@/views/missionCenter/legworkAssWorkorderAudit/index.vue')
             },
             {
                 access: 6202,

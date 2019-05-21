@@ -62,7 +62,7 @@
                 </TabPane>
             </Tabs>
             <div slot="footer">
-            <Button type="primary" @click="submit" :loading="submitLoading">提交</Button>
+            <Button type="primary" @click="submit" :loading="submitLoading" :disabled="disabled">提交</Button>
             </div>
         </Modal>
     </div>
@@ -72,6 +72,7 @@
 export default {
     data(){
         return{
+            disabled:false,
             openAbApproveDeal: false,
             formValidateDetail: {},
             banlishenpi: {
@@ -90,6 +91,7 @@ export default {
         //办理审批
         submit(){
             let _self = this
+            _self.disabled = true
 			_self.submitLoading = true
             let url = `api/order/unusual/workorder/audit`
             let config = {
@@ -116,6 +118,7 @@ export default {
     created() {
         let _self = this
         this.$bus.on("AB_ORDER_APPROVE_DEAL",(e)=>{
+            _self.disabled = false
             _self.get_data(e)
             _self.openAbApproveDeal = true
         })

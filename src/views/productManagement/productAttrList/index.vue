@@ -207,6 +207,7 @@ export default {
             function success(res){
                 _self.$Message.success("删除成功！")
                 _self.get_data()
+                _self.$bus.emit("RESET_DETAIL_DATA",true)
             }
 
             function fail(err){
