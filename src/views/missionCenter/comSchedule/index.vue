@@ -136,6 +136,7 @@
         },
         data(){
             return{
+                load:false,
                 businessArea:[],
                 businessPlace:[],
                 businessArea_map:new Map(),
@@ -280,6 +281,9 @@
                 function success(res){
                     _self.events_temp = res.data.data.rows
                     console.log(_self.events_temp )
+                    if (_self.events_temp.length===0 && _self.load) {
+                        window.location.reload()
+                    }
                     for(let i = 0;i<_self.events_temp.length;i++){
                         _self.events_temp[i].start = _self.events_temp[i].planDate
                         _self.events_temp[i].title = _self.events_temp[i].taskName
@@ -379,6 +383,7 @@
             })
             _self.$bus.on("UPDATE_TASK_LIST",(e)=>{
                 _self.get_data()
+                _self.load= true
             })
         }
     }
