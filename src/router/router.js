@@ -753,7 +753,14 @@ export const appRouter = [
                 title: '工单管理',
                 name: 'plantaskmanagement',
                 component: () => import( /* webpackChunkName: "plantaskmanagement" */ '@/views/planManagement/myCommonTask/myCommonTask_table.vue')
-            },
+            },{
+                access: 11637,
+                meta: 11637,
+                path: 'planreceiptdetail',
+                title: '收款明细',
+                name: 'planreceiptdetail',
+                component: () => import( /* webpackChunkName: "plantaskmanagement" */ '@/views/planManagement/receiptDetail/receipt_detail_index.vue')
+             }
         ]
     },
     {
