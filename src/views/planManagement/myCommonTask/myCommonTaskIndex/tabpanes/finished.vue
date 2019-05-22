@@ -34,6 +34,7 @@
           <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
           <Button type="primary" icon="ios-color-wand-outline" @click="download_excel">导出Excel</Button>
           <Button type="primary" icon="ios-color-wand-outline" @click="declareResult">申报结果</Button>
+          <Button type="primary" icon="ios-color-wand-outline" @click="companyCollectionFlow">企业收款流水</Button>
         </ButtonGroup>
       </Row>
       <Row style="margin-top: 10px;">
@@ -63,6 +64,7 @@
       </Row>
       <declare-result></declare-result>
       <update-order-item-plan></update-order-item-plan>
+      <company-collection-flow></company-collection-flow>
     </Card>
   </div>
 </template>
@@ -70,12 +72,14 @@
 <script>
 import mixin from "./mixin.js";
 import declareResult from "./declareResult.vue";
+import companyCollectionFlow from './companyCollectionFlow.vue'
 import updateOrderItemPlan from "./updateOrderItemPlan.vue";
 export default {
   mixins: [mixin],
   components: {
     declareResult,
-    updateOrderItemPlan
+    updateOrderItemPlan,
+    companyCollectionFlow
   },
   data() {
     return {
@@ -241,6 +245,13 @@ export default {
     };
   },
   methods: {
+      companyCollectionFlow(e) {
+      if(!this.currentRow){
+          this.$Message.warning("请选中一行重试");
+          return;
+        }
+        this.$bus.emit("open_company_Collection_flow",this.currentRow);
+      },
     declareResult() {
       let _self = this;
       console.log(_self.currentRow);
