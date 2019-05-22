@@ -8,17 +8,30 @@
     >
         <Form ref="formItem"   :label-width="100" style="width:300px;margin:auto">
             <Row :gutter="16">
-                <FormItem prop="finish_status" label="完成情况：">
-                    <Select transfer v-model="formItem.finish_status" placeholder="">
-                        <Option value="Y">完成</Option>
-                        <Option value="N">未完成</Option>
-                    </Select>
+                <FormItem prop="finish_status" label="申报年份：">
+                    <DatePicker
+                            type="year"
+                            format="yyyy"
+                            :disabled="isDisabled"
+                            placeholder="选择年份"
+                            style="width: 120px"
+                    ></DatePicker>
                 </FormItem>
                 </Col>
             </Row>
+            <Row>
+                <FormItem prop="finish_status" label="收款类型：">
+                    <RadioGroup  v-model='monthServerChangeFlag' v-on >
+                        <Radio label="定额收款">定额收款</Radio>
+                        <Radio label="比例收款">比例收款</Radio>
+                    </RadioGroup>
+                </FormItem>
+
+            </Row>
+
             <Row :gutter="16">
                 <Col span="24">
-                <FormItem prop="record" label="预估企业收款：">
+                <FormItem prop="record" label="定额收款：">
                     <Input type="text" v-model="formItem.company_amount" :rows=rows></Input>
                 </FormItem>
                 </Col>
@@ -28,21 +41,8 @@
                     <Input type="text" v-model="formItem.receipt_proportion" :rows=rows></Input>
                 </FormItem>
 
-                <FormItem  prop="departid"  label="总收款:">
-                    <Input type="text" v-model="formItem.receipt_amount" :rows=rows></Input>
-                </FormItem>
+            </Row>
 
-            </Row>
-            <Row>
-                <FormItem  prop="departid"  label="定额收款：">
-                    <Input type="text" v-model="formItem.record" :rows=rows></Input>
-                </FormItem>
-            </Row>
-            <Row>
-                <FormItem  prop="departid" >
-                    <Input type="textarea" v-model="formItem.record" :rows=rows></Input>
-                </FormItem>
-            </Row>
         </Form>
         <div slot="footer">
             <Button type="primary"  :loading="loading">确认</Button>
