@@ -47,6 +47,12 @@
                                                 </Input>
                                             </FormItem>
                                         </Col>
+                                        <Col span="8">
+                                            <FormItem prop="process_type" label="流程状态：">
+                                                <Input type="text" v-model="NformInline.process_type" placeholder="" size="small">
+                                                </Input>
+                                            </FormItem>
+                                        </Col>
                                     </Row>
                                     <FormItem>
                                         <Button type="primary" @click="search">搜索</Button>
@@ -161,6 +167,11 @@
                     {
                         title: '服务开始时间',
                         key: 'servicebegindate',
+                        minWidth: 160
+                    },
+                    {
+                        title: '流程状态',
+                        key: 'process_type',
                         minWidth: 160
                     },
                     {
