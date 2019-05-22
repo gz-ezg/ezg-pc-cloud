@@ -72,7 +72,7 @@
             updateOrderItemPlan(){
                 let _self = this
                 if(!_self.formItem.declare_year ){
-                    _self.$Message.warning("请填写申报年份");
+                    return _self.$Message.warning("请填写申报年份");
                 }
                 console.log(_self.formItem.declare_year);
 
@@ -87,6 +87,7 @@
 
                 function doSuccess(res) {
                     console.log(res);
+                    // location.reload()
 
                 }
 
