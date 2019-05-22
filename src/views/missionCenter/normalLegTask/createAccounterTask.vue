@@ -24,8 +24,8 @@
             </div>
             <Row :gutter="12">
                 <Col span="12">
-                    <FormItem label="仅启用客户搜索" prop="companyId">
-                        <Checkbox  @on-change="changeSelect"></Checkbox>
+                    <FormItem label="仅客户搜索" prop="companyId">
+                        <Checkbox  @on-change="changeSelect" size="large"></Checkbox>
                     </FormItem>
                 </Col>
                 <Col span="12">
