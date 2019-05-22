@@ -1,7 +1,7 @@
 <template>
     <div style="min-width:1300px" @click="close_right_menu">
-        <Button v-if="right_click_show" :style="{top: rightTop + 'px', left: rightLeft + 'px'}" style="position:fixed;z-index:9000" type="primary" @click="add_task">新增排程</Button>
-        <Card title="会计外勤任务">
+        <Button v-if="right_click_show" :style="{top: rightTop + 'px', left: rightLeft + 'px'}" style="position:fixed;z-index:9000" type="primary" @click="add_task">新增市场外勤任务</Button>
+        <Card title="市场外勤任务">
             <Card style="width:400px;position:fixed;z-index:9999" v-if="click_show" :style="{top: top + 'px', left: left + 'px'}">
                 <Row :gutter="20">
                     <Col span="6">

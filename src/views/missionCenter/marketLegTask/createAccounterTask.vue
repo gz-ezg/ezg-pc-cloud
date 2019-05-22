@@ -1,6 +1,6 @@
 <template>
     <Modal
-            title="新建排程"
+            title="新建市场外勤任务"
             v-model="openAddMission"
             width="800"
             :mask-closable="false"
@@ -22,15 +22,26 @@
                     <div class="sszz1" @click="add_schtask"><h4>+添加</h4></div>
                 </Card>
             </div>
+            <!--<Row :gutter="12">-->
+                <!--<Col span="12">-->
+                    <!--<FormItem label="仅启用客户搜索" prop="companyId">-->
+                        <!--<Checkbox  @on-change="changeSelect"></Checkbox>-->
+                    <!--</FormItem>-->
+                <!--</Col>-->
+                <!--<Col span="12">-->
+
+                <!--</Col>-->
+            <!--</Row>-->
             <Row :gutter="12">
                 <Col span="12">
                     <FormItem label="企业" prop="companyId">
                         <Select ref="select"
-                                v-model="newMission.companyId" placeholder="请输入客户名称搜索"
+                                v-model="newMission.companyId" placeholder="请输入企业名称搜索"
                                 filterable
                                 remote
+                                :disabled="disabled"
                                 :remote-method="get_company"
-                                @on-change="get_businessId(newMission.companyId)"
+                                @on-change="get_customerId"
                                 :loading="companyLoading"
                         >
                             <Option v-for="item in companyList" :value="item.companyid" :key="item.companyid" >{{item.companyname}}</Option>
@@ -38,43 +49,16 @@
                     </FormItem>
                 </Col>
                 <Col span="12">
-                    <FormItem label="产品" prop="companyId">
-                        <Select v-model="newMission.businessId" placeholder="请先输入客户名称搜索"
-                                :loading="companyLoading" @on-change="type_change"
+                    <FormItem label="客户" prop="companyId">
+                        <Select ref="sel"
+                                v-model="newMission.customerId"
+                                placeholder="请输入客户名称或电话搜索"
+                                :filterable="filterable"
+                                :remote="remote"
+                                :remote-method="get_customer"
+                                :loading="companyLoading"
                         >
-                            <Option v-for="item in productList" :value="item.businessId" :key="item.businessId">{{item.product}}</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
-            </Row>
-            <Row :gutter="12" v-if="newMission.taskKind==='tkLegAccCyc'">
-                <Col span="12">
-                    <FormItem label="外勤类型" prop="cycleType">
-                        <Select v-model="newMission.cycleType" type="text" transfer @on-change="get_type_list">
-                            <Option v-for="(item,index) in cycleTypeList" :key="index" :value="item.typecode">{{item.typename}}</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
-                <Col span="12">
-                    <FormItem label="外勤名称" prop="cycleTypeId">
-                        <Select v-model="newMission.cycleTypeId" type="text" transfer @on-change="name_change">
-                            <Option v-for="(item,index) in cycleTypeNameList" :key="index" :value="item.id">{{item.legwork_name}}</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
-            </Row>
-            <Row :gutter="12"  v-if="newMission.taskKind==='tkLegAcc'">
-                <Col span="12">
-                    <FormItem label="区域" prop="businessArea">
-                        <Select v-model="newMission.businessArea" type="text" transfer>
-                            <Option v-for="(item,index) in businessArea" :key="index" :value="item.typecode">{{item.typename}}</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
-                <Col span="12">
-                    <FormItem label="地点" prop="businessPlace">
-                        <Select v-model="newMission.businessPlace" type="text" transfer>
-                            <Option v-for="(item,index) in businessPlace" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                            <Option v-for="item in productList" :value="item.customerid" :key="item.customerid">{{item.name}}</Option>
                         </Select>
                     </FormItem>
                 </Col>
@@ -91,7 +75,7 @@
                     </FormItem>
                 </Col> -->
                 <Col span="12">
-                    <FormItem label="执行者" prop="executorId">
+                    <FormItem label="执行者">
                         <Select
                                 v-model="newMission.executorId"
                                 placeholder="执行者"
@@ -183,6 +167,9 @@
         data(){
             return {
                 text:"",
+                disabled:false,
+                filterable:true,
+                remote:true,
                 phraseShow:false,
                 currentId:null,
                 newMission: {
@@ -202,9 +189,10 @@
                     followUpType: "",
                     companyId: "",
                     executorId: [],
-                    businessId:"",
+                    customerId:"",
                     cycleTypeId:"",
-                    cycleTypeName:""
+                    cycleTypeName:"",
+                    companyName:""
                 },
                 phraseLoading: false,
                 createLoading: false,
@@ -244,6 +232,12 @@
             }
         },
         methods:{
+            changeSelect(){
+                this.disabled=!this.disabled
+                this.filterable=!this.filterable
+                this.remote=!this.remote
+                this.cancel_task()
+            },
             giveData(item){
                 this.newMission.taskName=this.newMission.taskName+item.quick_content
                 this.phraseShow = false
@@ -319,7 +313,7 @@
                 let _self = this
                 if (_self.newMission.taskName==="" ||
                     _self.newMission.companyId==="" ||
-                    _self.newMission.businessId ===null){
+                    _self.newMission.customerId===null){
                     this.$Message.warning('请把上述信息填写完整')
                     return
                 }
@@ -364,7 +358,7 @@
                             taskName: _self.newMission.taskName,
                             companyId: _self.newMission.companyId,
                             executorId: _self.newMission.executorId.join(","),
-                            businessId:_self.newMission.businessId,
+                            customerId:_self.newMission.customerId,
                             executorName: executorNameArray.join(","),
                             sPlanDate: FULLDateFormat(_self.newMission.planDate),
                             legTypeId: _self.newMission.cycleTypeId,
@@ -389,7 +383,7 @@
                         taskName: _self.newMission.taskName,
                         companyId: _self.newMission.companyId,
                         executorId: _self.newMission.executorId.join(","),
-                        businessId:_self.newMission.businessId,
+                        customerId:_self.newMission.customerId,
                         executorName: executorNameArray.join(","),
                         sPlanDate: FULLDateFormat(_self.newMission.planDate),
                         taskArea:_self.newMission.businessArea,
@@ -413,7 +407,7 @@
                         taskName: _self.newMission.taskName,
                         companyId: _self.newMission.companyId,
                         executorId: _self.newMission.executorId.join(","),
-                        businessId:_self.newMission.businessId,
+                        customerId:_self.newMission.customerId,
                         executorName: executorNameArray.join(","),
                         sPlanDate: FULLDateFormat(_self.newMission.planDate),
                     }
@@ -431,9 +425,7 @@
             },
             cancel_task(){
                 this.$refs.select.setQuery(null)
-                this.newMission.taskName ="";
-                this.newMission.companyId ="";
-                this.newMission.businessId ="";
+                this.$refs.sel.setQuery(null)
                 this.$refs['newMission'].resetFields();
             },
             get_user(query){
@@ -473,70 +465,107 @@
                     _self.companyList = res.data.data
                 }
                 this.$Get(url, config, success)
-                _self.name_change()
             },
-            get_businessId(id){
+            get_customer(query){
                 let _self = this
-                let url = `api/task/getLegCycWorkOrderByCompanyId`
-                _self.userLoading = true
-
+                _self.productList=[]
+                _self.companyLoading = true
+                let url = "api/legwork/apiQueryCompanyOrCustomerMsg"
+                if (isNaN(query)) {
                 let config = {
                     params:{
-                    companyId:id,
+                        page: 1,
+                        pageSize: 10,
+                        name: query
+                    }
+                }
+
+                function success(res){
+                    _self.companyLoading = false
+                    _self.productList = res.data.data
+                    console.log(_self.productList)
+                }
+
+                this.$Get(url, config, success)
+                }
+                if (!isNaN(query)){
+                    let config = {
+                        params:{
+                            page: 1,
+                            pageSize: 10,
+                            tel: query
+                        }
+                    }
+
+                    function success(res){
+                        _self.companyLoading = false
+                        _self.productList = res.data.data
+                        console.log(_self.productList)
+                    }
+
+                    this.$Get(url, config, success)
+                }
+            },
+            get_companyId(id){
+                let _self = this
+                let url = `api/legwork/apiQueryCompanyOrCustomerMsg`
+                _self.userLoading = true
+                let config = {
+                    params:{
+                        customerId:id,
                     }
                 }
                 function success(res){
                     _self.userLoading = false
-                    _self.productList = res.data.data
+                    _self.companyList = res.data.data
                     console.log(res.data.data)
-                    if (_self.productList.length!==0){
-                        _self.newMission.businessId =  _self.productList[0].businessId
+                    if (_self.companyList.length!==0){
+                        _self.newMission.companyId =  _self.companyList[0].companyid
                     }else {
-                        _self.newMission.businessId = null
+                        _self.newMission.companyId = null
                     }
-                    _self.get_type_list()
-                    _self.type_change()
-                    // let obj = {}
-                    // let arr = _self.productList
-                    //
-                    // for (let i=0;i<arr.length;i++){
-                    //     let taskKind = arr[i].taskKind
-                    //     console.log(taskKind)
-                    //     let businessId = arr[i].businessId
-                    //     obj[businessId] = taskKind
-                    // }
-                    // _self.newMission.taskKind = obj[_self.newMission.businessId]
-                    // console.log(_self.newMission.taskKind)
                 }
 
                 this.$Get(url, config, success)
             },
-            type_change(){
+            get_customerId(){
                 let _self = this
-                let obj = {}
-                let arr = _self.productList
-
-                for (let i=0;i<arr.length;i++){
-                    let taskKind = arr[i].taskKind
-                    console.log(taskKind)
-                    let businessId = arr[i].businessId
-                    obj[businessId] = taskKind
+                let url = `api/legwork/apiQueryCompanyOrCustomerMsg`
+                _self.userLoading = true
+                let config = {
+                    params:{
+                    companyId:_self.newMission.companyId,
+                    }
                 }
-                _self.newMission.taskKind = obj[_self.newMission.businessId]
-                console.log(_self.newMission.taskKind)
+                function success(res){
+                    if (_self.newMission.companyId==null){
+                        _self.productList = []
+                    } else {
+                    _self.userLoading = false
+                    _self.productList = res.data.data
+                    console.log(res.data.data)
+                    if (_self.productList.length!==0){
+                        _self.newMission.customerId =  _self.productList[0].customerid
+                    }else {
+                        _self.newMission.customerId = null
+                    }
+                    }
+                }
+
+                this.$Get(url, config, success)
             },
             name_change(){
                 let _self = this
                 let obj = {}
-                let arr = _self.cycleTypeNameList
+                let arr = _self.companyList
 
                 for (let i=0;i<arr.length;i++){
-                    let id = arr[i].id
-                    let legwork_name = arr[i].legwork_name
-                    obj[id] = legwork_name
+                    let name= arr[i].companyname
+                    let id = arr[i].companyid
+                    obj[id] = name
                 }
-                _self.newMission.cycleTypeName = obj[_self.newMission.cycleTypeId]
-                console.log(_self.newMission.cycleTypeName)
+                _self.newMission.companyName = obj[_self.newMission.companyId]
+                console.log(_self.newMission.companyName)
             },
             get_type_list(){
                 let _self = this
