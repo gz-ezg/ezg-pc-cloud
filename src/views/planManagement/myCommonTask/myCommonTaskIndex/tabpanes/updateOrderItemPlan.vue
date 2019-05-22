@@ -21,7 +21,7 @@
             </Row>
             <Row>
                 <FormItem prop="finish_status" label="收款类型：">
-                    <RadioGroup  v-model='monthServerChangeFlag' v-on >
+                    <RadioGroup  v-model='monthServerChangeFlag' >
                         <Radio label="定额收款">定额收款</Radio>
                         <Radio label="比例收款">比例收款</Radio>
                     </RadioGroup>

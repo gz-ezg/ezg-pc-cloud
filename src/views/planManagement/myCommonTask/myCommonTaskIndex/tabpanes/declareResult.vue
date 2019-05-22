@@ -6,41 +6,57 @@
                 width="400"
 
         >
-           <Form ref="formItem"   :label-width="100" style="width:300px;margin:auto">
-                <Row :gutter="16">
+           <Form ref="formItem"   :label-width="100" style="width:340px;margin:auto">
+                <Row :gutter="12">
                     <FormItem prop="finish_status" label="完成情况：">
                         <Select transfer v-model="formItem.finish_status" placeholder="">
-                            <Option value="Y">完成</Option>
-                            <Option value="N">未完成</Option>
+                            <Option value="Y">成功</Option>
+                            <Option value="N">失败</Option>
                         </Select>
                     </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="16">
+                <div v-if="formItem.finish_status=='Y'">
+                <Row  :gutter="12">
                     <Col span="24">
                     <FormItem prop="record" label="预估企业收款：">
-                        <Input type="text" v-model="formItem.company_amount" :rows=rows></Input>
+                        <Row :gutter="10">
+                            <Col span="18">
+                                <Input type="text" v-model="formItem.company_amount" :rows=rows></Input>
+                            </Col>
+                            <Col span="4">
+                                元
+                            </Col>
+                        </Row>
                     </FormItem>
                     </Col>
                 </Row>
                 <Row>
-                    <FormItem  prop="departid"  label="收款比例：">
-                        <Input type="text" v-model="formItem.receipt_proportion" :rows=rows></Input>
-                    </FormItem>
-
-                    <FormItem  prop="departid"  label="总收款:">
-                        <Input type="text" v-model="formItem.receipt_amount" :rows=rows></Input>
-                    </FormItem>
-
+                    <Col span="12">
+                        <FormItem  prop="departid"  label="收款比例：">
+                            <Input disabled type="text" v-model="formItem.receipt_proportion" :rows=rows></Input>
+                        </FormItem>
+                    </Col>
+                    <Col span="12">
+                         <FormItem  prop="departid"  label="总收款:">
+                            <Input disabled type="text" v-model="formItem.receipt_amount" :rows=rows></Input>
+                        </FormItem>
+                    </Col>
+       
                 </Row>
+
                 <Row>
                      <FormItem  prop="departid"  label="定额收款：">
-                        <Input type="text" v-model="formItem.record" :rows=rows></Input>
+                        <Input disabled type="text" v-model="formItem.record" :rows=rows></Input>
                     </FormItem>
                 </Row>
-                <Row>
-                    <FormItem  prop="departid" >
-                        <Input type="textarea" v-model="formItem.record" :rows=rows></Input>
+                </div>
+
+
+
+                <Row :gutter="12" v-if="formItem.finish_status=='N'">
+                    <FormItem  prop="departid" label="失败说明： " >
+                        <Input placeholder="失败说明" type="textarea" v-model="formItem.record" :rows=rows></Input>
                     </FormItem>
                 </Row>
             </Form>
@@ -61,7 +77,9 @@
             return{
                 loading: false,
                 //  新增数据
-                formItem:{},
+                formItem:{
+                    finish_status: 'Y'
+                },
                 openDeclareResult:false
             }
         },
