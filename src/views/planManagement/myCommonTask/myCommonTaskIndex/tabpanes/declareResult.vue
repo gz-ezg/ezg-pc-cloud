@@ -79,7 +79,10 @@
                 formItem:{
                     finish_status: 'Y'
                 },
-                openDeclareResult:false
+                openDeclareResult:false,
+                currentRow: {
+                    receipt_type: 'quota'
+                }
             }
         },
         methods:{
@@ -121,8 +124,6 @@
             this.$bus.on("open_declare_result",(e)=>{
                 this.openDeclareResult = true
                 this.currentRow = e;
-                console.log('receipt_type', e.receipt_type)
-                console.log('receipt_proportion', e.receipt_proportion)
             })
         }
     }
