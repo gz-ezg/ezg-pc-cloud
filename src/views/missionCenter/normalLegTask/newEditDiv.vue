@@ -3,7 +3,7 @@
         <div class="text-textarea"
              v-html="innerText"
              contenteditable="true"
-             placeholder="請输入新建排程任务......"
+             placeholder="請输入新建普通外勤任务......"
              @focus="lock=true"
              @blur="lock=false"
              @input="changeText">
@@ -60,10 +60,7 @@
 
         },
         created() {
-            this.$bus.on("RESET_INNERTEXT",(e)=>{
-                this.value = null
-                this.innerText = null
-            })
+
         }
     }
 </script>

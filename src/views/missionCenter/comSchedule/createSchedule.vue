@@ -350,6 +350,7 @@
                     _self.createLoading = false
                     _self.openAddMission = false
                     _self.$bus.emit("UPDATE_BUSINESS_TASK_LIST_DEMO", res.data.data.id)
+                    _self.$bus.emit("RESET_INNERTEXT",true)
                     _self.cancel_task()
                 }
 

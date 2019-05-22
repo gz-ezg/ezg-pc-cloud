@@ -1,6 +1,6 @@
 <template>
     <Modal
-            title="新建市场外勤任务"
+            title="新建普通外勤任务"
             v-model="openAddMission"
             width="800"
             :mask-closable="false"
@@ -10,14 +10,6 @@
                 <new-edit-div v-model="newMission.taskName"></new-edit-div>
                 <div class="spz">
                     <div class="spzz" @click="showPhrase"><Icon type="android-chat" ></Icon></div>
-                    <div class="select">
-                        <Select ref="sel"
-                                 size="small"
-                                 v-model="newMission.followResult"
-                        >
-                        <Option v-for="item in followResult" :value="item.typecode" :key="item.typecode">{{item.typename}}</Option>
-                        </Select>
-                    </div>
                 </div>
             </div>
             <div v-show="phraseShow" class="ssz">
@@ -292,7 +284,7 @@
                 let url = 'api/task/findTaskQuickList'
                 let config = {
                     params:{
-                        quickType: "market"
+                        quickType: "normal"
                     }
                 }
                 function success(res){
@@ -306,7 +298,7 @@
                 _self.phraseLoading = true
                 let url = 'api/task/addTaskQuick'
                 let config={
-                    quickType:"market",
+                    quickType:"normal",
                     quickContent:e,
                     quickIndex:1,
                 }
@@ -374,7 +366,7 @@
                 // }
                 //
                 // this.$Post(url, config, success, fail)
-                let url = `api/task/addMarketLegworkTask`
+                let url = `api/task/addNoramlLegworkTask`
                 let config = {
                     taskName: _self.newMission.taskName,
                     companyId: _self.newMission.companyId,
@@ -382,7 +374,6 @@
                     customerId: _self.newMission.customerId,
                     executorName: executorNameArray.join(","),
                     sPlanDate: FULLDateFormat(_self.newMission.planDate),
-                    followResult: _self.newMission.followResult
                 }
 
                 function success(res) {
@@ -650,15 +641,12 @@
 
 <style>
 .spz{
-    height: 50px;
+    height: 25px;
     width: 100%;
     border: 1px solid #dddee1;
     border-top: none;
     background-color: #fff;
     cursor: text;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 .sp{
     margin-bottom: 25px;
@@ -671,10 +659,6 @@
 }
 .spzz:hover{
     color: #2d8cf0;
-}
-.select{
-    width: 150px;
-    margin: 0 10px 0 0;
 }
 .ssz{
     width: 200px;

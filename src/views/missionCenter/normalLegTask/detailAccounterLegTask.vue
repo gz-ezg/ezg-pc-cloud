@@ -2,7 +2,7 @@
     <div>
         <Modal
                 v-model="openTaskDetail"
-                title="市场外勤任务详情"
+                title="普通外勤任务详情"
                 width="450"
 
                 class-name="vertical-center-modal"
@@ -41,16 +41,6 @@
                     </Col>
                     <Col span="18">
                         <span style="line-height:24px">{{data[0].taskKindName}}</span>
-                    </Col>
-                </Row>
-                <Row :gutter="20" style="margin-top:20px">
-                    <Col span="6">
-                        <span style="line-height:24px">跟进阶段</span>
-                    </Col>
-                    <Col span="18">
-                        <Select v-model="data[0].followResult" size="small" style="width:180px" @on-change="getFollowResult">
-                            <Option v-for="item in followResult" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
-                        </Select>
                     </Col>
                 </Row>
                 <Row :gutter="20" style="margin-top:20px">
@@ -231,7 +221,7 @@
             },
             update_detail(){
                 let _self = this
-                    let url = `api/task/updateMarketLegworkTask`
+                    let url = `api/task/updateNoramlLegworkTask`
                     let config = {
                             taskId: _self.id,
                             taskName: _self.data[0].taskName,
@@ -240,7 +230,6 @@
                             executorName:_self.data[0].executorName,
                             companyId:_self.data[0].companyId,
                             customerId:_self.data[0].customerId,
-                            followResult:_self.data[0].	followResult
                         }
                     function success(res){
                             _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST",true)
