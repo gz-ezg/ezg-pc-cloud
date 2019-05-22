@@ -98,7 +98,6 @@
                     <Col span="8">
                       <FormItem label="服务部门" prop="departid">
                         <Select
-                          v-if="!isDisabled && item.defaultdepartalias=='PLAN'"
                           style="width:120px"
                           size="small"
                           @on-change="departChange($event, index)"
@@ -241,9 +240,9 @@ export default {
         declare_year: [
           {
             required: true,
-            trigger: 'change',
-            type: "date",
-            message: " ",
+            message: ".",
+            trigger: "change",
+            type: "date"
           }
         ]
       }
