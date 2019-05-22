@@ -42,7 +42,7 @@
         </Row>
         <Row>
             <ButtonGroup style="float:left">
-                <Button type="primary" icon="ios-color-wand-outline" disabled @click="Distribution_task" v-permission="['workorder.allot']">一键分配</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="Distribution_task" v-permission="['workorder.allot']">一键分配</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="open_set_time">设置计划完成时间</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="over_due_reason">逾期原因</Button>
