@@ -16,7 +16,7 @@
                     </FormItem>
                     </Col>
                 </Row>
-                <div v-if="formItem.finish_status=='Y'">
+                <div v-if="currentRow.finish_status=='Y'">
                 <Row  :gutter="12">
                     <Col span="24">
                     <FormItem prop="record" label="预估企业收款：">
