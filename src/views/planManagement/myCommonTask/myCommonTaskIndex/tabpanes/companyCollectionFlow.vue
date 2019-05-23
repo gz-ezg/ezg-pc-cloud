@@ -215,12 +215,21 @@
                     amount: this.datas[params.index].amounts,
                     receiptPeriod: this.datas[params.index].receipt_periods
                 }
+                let length = this.datas.filter((v,i)=>{
+                        return !v.amount && !v.amounts
+                    }).length
         
-                if(this.datas.filter((v,i)=>{
-                        return !v.amount
-                    }).length == 1) {
-                      if (this.datas[params.index].amounts < totalPrice - this.datas.reduce((a,v)=>{return a=a+v.amount},0)) {
-                          return this.$Message.warning('所填写的金额不能少于全部金额')
+                if( length == 0) {
+                      if ( Number(totalPrice) !== this.datas.reduce((a,v)=>{
+                          if(!!v.amount) {
+                              return a = a + Number(v.amount)
+                          }
+                          if(!!v.amounts) {
+                              return a = a + Number(v.amounts)
+                          }
+                          return a
+                        },0)) {
+                          return this.$Message.warning('所填写的金额须与全部金额一致')
                     }
                 }
                 let doSuccess = (res) => {

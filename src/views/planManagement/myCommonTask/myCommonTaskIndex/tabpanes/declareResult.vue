@@ -22,7 +22,7 @@
                     <FormItem prop="record" label="预估企业收款：">
                         <Row :gutter="10">
                             <Col span="18">
-                                <Input type="text" v-model="formItem.predicetReceipt"></Input>
+                                <Input placeholder="0" type="text" v-model="formItem.predicetReceipt"></Input>
                             </Col>
                             <Col span="4">
                                 元
@@ -160,7 +160,7 @@
 
                 let doSuccess = (res) => {
                     console.log(res);
-                    this.formItem= Object.assign({},this.formItem,{predicetReceipt: 0})
+                    this.formItem= Object.assign({},this.formItem,{predicetReceipt: '',memo: '',finish_status:'Y'})
                     this.openDeclareResult = false;
                     this.$bus.emit('refresh')
                 }
