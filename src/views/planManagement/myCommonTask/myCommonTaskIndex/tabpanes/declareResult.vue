@@ -31,7 +31,7 @@
                     </FormItem>
                     </Col>
                 </Row>
-                <Row v-if="formItem.receipt_type=='proportion'">
+                <Row v-if="currentRow.receipt_type=='proportion'">
                     <Col span="12">
                         <FormItem  prop="departid"  label="收款比例：">
                             {{currentRow.receipt_proportion}} %
@@ -45,7 +45,7 @@
        
                 </Row>
 
-                <Row v-if="formItem.receipt_type=='quota'">
+                <Row v-if="currentRow.receipt_type=='quota'">
                      <FormItem  prop="departid"  label="定额收款：">
                         {{currentRow.paynumber}} 元
                     </FormItem>
@@ -158,12 +158,15 @@
                 }
               
 
-                function doSuccess(res) {
+                let doSuccess = (res) => {
                     console.log(res);
                     this.formItem= Object.assign({},this.formItem,{predicetReceipt: 0})
+                    this.openDeclareResult = false;
+                    this.$bus.emit('refresh')
                 }
 
-                function fail(err){
+                let fail = (err)=>{
+                     this.openDeclareResult = false;
                 }
 
                 this.$Post(url, data, doSuccess,fail)
