@@ -85,6 +85,13 @@
                 this.openCompanyReceiptItem = true
                 this.get_data()
               })
+            this.$bus.on("openCompanyReceiptItem_arreas",(e)=>{
+
+                this.currentRow = e.currentRow
+            console.log(this.currentRow)
+            this.openCompanyReceiptItem = true
+            this.get_data()
+            })
         }
     }
 </script>

@@ -90,7 +90,7 @@ import planReceiptItem from  './plan_receipt_item.vue'
                         minWidth: 90
                     },{
                         title: '预估企业金额',
-                        key: 'predict_receipt',
+                        key: 'predicet_receipt',
                         minWidth: 90
                     },{
                         title: '回款分期',
@@ -98,11 +98,11 @@ import planReceiptItem from  './plan_receipt_item.vue'
                         minWidth: 90
                     },{
                         title: '总金额',
-                        key: 'predict_receipt',
+                        key: 'all_amount',
                         minWidth: 90
                     },{
                         title: '总已收款',
-                        key: 'realnumber',
+                        key: 'all_amount',
                         minWidth: 90
                     },{
                         title: '截止档期应收款',
