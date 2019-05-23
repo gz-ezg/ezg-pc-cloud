@@ -324,7 +324,7 @@ jsc */
                   makeReplacementNode = function (fill, matchIndex) {
                       var clone = stencilNode.cloneNode(false);
 
-                      clone.setAttribute('data-mce-index', matchIndex);
+                      clone.setAttribute('data-mce-index.vue', matchIndex);
 
                       if (fill) {
                           clone.appendChild(doc.createTextNode(fill));
@@ -438,7 +438,7 @@ jsc */
         ],
   function (Tools, FindReplaceText) {
       var getElmIndex = function (elm) {
-          var value = elm.getAttribute('data-mce-index');
+          var value = elm.getAttribute('data-mce-index.vue');
 
           if (typeof value === 'number') {
               return '' + value;
@@ -597,7 +597,7 @@ jsc */
                       nextIndex--;
                   }
               } else if (currentMatchIndex > currentIndexState.get()) {
-                  nodes[i].setAttribute('data-mce-index', currentMatchIndex - 1);
+                  nodes[i].setAttribute('data-mce-index.vue', currentMatchIndex - 1);
               }
           }
 

@@ -66,7 +66,7 @@
                                         <FormItem prop="importlevel" label="重要等级：">
                                             <Input type="text" v-model="task_message.importlevel" placeholder="" disabled></Input>
                                             <!-- <Select transfer v-model="task_message.importlevel" readonly>
-                                                <Option v-for="(item,index) in impLevel" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                                <Option v-for="(item,index.vue) in impLevel" :key="index.vue" :value="item.typecode">{{item.typename}}</Option>
                                             </Select> -->
                                         </FormItem>
                                     </Col>

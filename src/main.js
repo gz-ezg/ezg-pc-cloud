@@ -14,7 +14,7 @@ import util from '@/libs/util';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 //  引入自定义主题文件
-// import './my-theme/index.less';
+// import './my-theme/index.vue.less';
 // 最低可以兼容IE11,启用此行并将babelrc配置修改即可
 // import "@babel/polyfill";
 

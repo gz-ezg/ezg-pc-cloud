@@ -55,7 +55,7 @@
                                 placeholder="请先输入企业名称搜索"
                                 :loading="companyLoading"
                         >
-                            <Option v-for="item in productList" :value="item.customerid" :key="item.customerid">{{item.name}}</Option>
+                            <Option v-if="rendering"  v-for="item in productList" :value="item.customerid" :key="item.customerid">{{item.name}}</Option>
                         </Select>
                     </FormItem>
                 </Col>
@@ -69,7 +69,7 @@
                                 :remote-method="get_customer"
                                 :loading="companyLoading"
                         >
-                            <Option v-for="item in productList" :value="item.customerid" :key="item.customerid">{{item.name}}</Option>
+                            <Option v-if="rendering" v-for="item in productList" :value="item.customerid" :key="item.customerid">{{item.name}}</Option>
                         </Select>
                     </FormItem>
                 </Col>
@@ -127,7 +127,7 @@
                 <!-- <Col span="12">
                     <FormItem label="任务阶段">
                         <Select v-model="newMission.taskStage">
-                            <Option v-for="(item,index) in taskStage" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                            <Option v-for="(item,index.vue) in taskStage" :key="index.vue" :value="item.typecode">{{item.typename}}</Option>
                         </Select>
                     </FormItem>
                 </Col> -->
@@ -136,21 +136,21 @@
                 <Col span="12">
                     <FormItem label="跟进结果">
                         <Select v-model="newMission.followResult">
-                            <Option v-for="(item,index) in market_status" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                            <Option v-for="(item,index.vue) in market_status" :key="index.vue" :value="item.typecode">{{item.typename}}</Option>
                         </Select>
                     </FormItem>
                 </Col>
                 <Col span="12">
                     <FormItem label="跟进方式">
                         <Select v-model="newMission.followUpType">
-                            <Option v-for="(item,index) in markert_follow_up_type" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                            <Option v-for="(item,index.vue) in markert_follow_up_type" :key="index.vue" :value="item.typecode">{{item.typename}}</Option>
                         </Select>
                     </FormItem>
                 </Col>
             </Row> -->
             <!-- <FormItem label="任务标签">
                 <CheckboxGroup v-model="newMission.taskLable">
-                    <Checkbox v-for="(item, index) in label" :key="index" :label="item"></Checkbox>
+                    <Checkbox v-for="(item, index.vue) in label" :key="index.vue" :label="item"></Checkbox>
                 </CheckboxGroup>
             </FormItem> -->
         </Form>
@@ -181,7 +181,8 @@
                 disabled:false,
                 showSelect:true,
                 showSelecte:false,
-                readonly:false,
+                readonly:true,
+                rendering:false,
                 phraseShow:false,
                 currentId:null,
                 newMission: {
@@ -254,6 +255,7 @@
                 this.$refs.sel.setQuery(null)
                 this.newMission.companyId = null
                 this.newMission.customerId = null
+                this.rendering = false
             },
             giveData(item){
                 this.newMission.taskName=this.newMission.taskName+item.quick_content
@@ -265,7 +267,7 @@
             },
             selectArr(id){
                 this.delete_phrase_list(id)
-                // this.addArr.splice(index,1)
+                // this.addArr.splice(index.vue,1)
             },
             add_schtask(){
                 this.$bus.emit("ADD_ACCOUNT_TASK",true)
@@ -451,6 +453,7 @@
                 function success(res){
                     _self.companyLoading = false
                     _self.productList = res.data.data
+                    _self.rendering = true
                     console.log(_self.productList)
                 }
 
@@ -468,6 +471,7 @@
                     function success(res){
                         _self.companyLoading = false
                         _self.productList = res.data.data
+                        _self.rendering=true
                         console.log(_self.productList)
                     }
 
@@ -506,6 +510,7 @@
                     }
                 }
                 function success(res){
+                    _self.rendering =true
                     if (_self.newMission.companyId==null){
                         _self.productList = []
                     } else {

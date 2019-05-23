@@ -1163,7 +1163,7 @@ export const appRouter = [
             //     access: 6089,
             //     meta: 6089,
             //     path: 'index2', title: '公海池', name: 'publicPool_index', component: resolve => {
-            //         require(['@/views/publicPool/index/pubilcPool_table.vue'], resolve);
+            //         require(['@/views/publicPool/index.vue/pubilcPool_table.vue'], resolve);
             //     }
             // },
             {

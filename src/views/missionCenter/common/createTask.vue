@@ -83,7 +83,7 @@
                     <!-- <Col span="12">
                         <FormItem label="任务状态">
                             <Select v-model="newMission.taskDesCode">
-                                <Option v-for="(item,index) in taskDesCode" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                <Option v-for="(item,index.vue) in taskDesCode" :key="index.vue" :value="item.typecode">{{item.typename}}</Option>
                             </Select>
                         </FormItem>
                     </Col> -->
@@ -93,7 +93,7 @@
                     <!-- <Col span="12"> 
                         <FormItem label="任务阶段">
                             <Select v-model="newMission.taskStage">
-                                <Option v-for="(item,index) in taskStage" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                <Option v-for="(item,index.vue) in taskStage" :key="index.vue" :value="item.typecode">{{item.typename}}</Option>
                             </Select>
                         </FormItem>
                     </Col> -->
@@ -102,21 +102,21 @@
                     <Col span="12">
                         <FormItem label="跟进结果">
                             <Select v-model="newMission.followResult">
-                                <Option v-for="(item,index) in market_status" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                <Option v-for="(item,index.vue) in market_status" :key="index.vue" :value="item.typecode">{{item.typename}}</Option>
                             </Select>
                         </FormItem>
                     </Col>
                     <Col span="12"> 
                         <FormItem label="跟进方式">
                             <Select v-model="newMission.followUpType">
-                                <Option v-for="(item,index) in markert_follow_up_type" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                <Option v-for="(item,index.vue) in markert_follow_up_type" :key="index.vue" :value="item.typecode">{{item.typename}}</Option>
                             </Select>
                         </FormItem>
                     </Col>
                 </Row> -->
                 <!-- <FormItem label="任务标签">
                     <CheckboxGroup v-model="newMission.taskLable">
-                        <Checkbox v-for="(item, index) in label" :key="index" :label="item"></Checkbox>
+                        <Checkbox v-for="(item, index.vue) in label" :key="index.vue" :label="item"></Checkbox>
                     </CheckboxGroup>
                 </FormItem> -->
             </Form>

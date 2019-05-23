@@ -99,7 +99,7 @@ import dymaic from './dymaic/index'
 import follow from './followUpList/index'
 import order from './orderDetail/index'
 import relation from './relationPerson/index'
-// import upload from './upload/index'
+// import upload from './upload/index.vue'
 
 export default {
     components:{

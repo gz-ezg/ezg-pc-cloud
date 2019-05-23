@@ -148,7 +148,7 @@ import amendOrder from './components/orderOp/amendOrder'
 import editOrder from './components/orderOp/editOrderDetail'
 import showContarct from './show_contarct'
 import productSelect from './components/productSelect'
-// import invoice from './components//invoice/index'
+// import invoice from './components//invoice/index.vue'
 
 import { DateFormat,simpleCodeToText } from '../../../libs/utils.js'
 
@@ -211,7 +211,7 @@ export default {
                     //                 placement: 'bottom'
                     //             }
                     //         }, [
-                    //             h('span', this.data[params.index].companyname[0] + ''),
+                    //             h('span', this.data[params.index.vue].companyname[0] + ''),
                     //             h('Icon', {
                     //                 props: {
                     //                     type: 'arrow-down-b'
@@ -220,7 +220,7 @@ export default {
                     //             h('div', {
                     //                 slot: 'content'
                     //             }, [
-                    //                 h('ul', this.data[params.index].companyname.map(item => [
+                    //                 h('ul', this.data[params.index.vue].companyname.map(item => [
                     //                     h('li', {
                     //                         style: {
                     //                             padding: '4px'
@@ -349,7 +349,7 @@ export default {
                     minWidth: 120,
                     render: (h, params) => {
                         let _self = this
-                        // if(params.index != this.pageSize){
+                        // if(params.index.vue != this.pageSize){
                         if(params.index != this.data.length-1){
                             return h('div', [
                                 h('Button', {
