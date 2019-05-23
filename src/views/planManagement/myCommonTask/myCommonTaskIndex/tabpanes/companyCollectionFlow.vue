@@ -362,7 +362,7 @@
         },
         created(){
             this.$bus.on("open_company_Collection_flow",(e)=>{
-                if (e.receipt_type!=='proportion' && e.finish_status == 'Y') {
+                if (e.receipt_type!=='proportion' || e.finish_status == 'N') {
                     return this.$Message.warning("该企业不能分期收款");
                 }
                 this.openDeclareResult = true
