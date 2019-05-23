@@ -1,18 +1,18 @@
 <template>
     <div>
         <Card style="min-width:800px">
-            <!--<Row style="margin-bottom:10px">
+        <!--    <Row style="margin-bottom:10px">
                 <search-model :data="searchData" @search="search"></search-model>
+            </Row>-->
+            <Row>
+
+                <ButtonGroup>
+                    <Button  type="primary"  icon="ios-color-filter-outline" @click="download_excel">导出Excel</Button>
+                    <Button  type="primary"  icon="ios-color-filter-outline" @click="openCompanyReceiptItem">企业流水</Button>
+                    <Button   type="primary"  icon="ios-color-filter-outline" @click="openPlanReceiptItem">收款流水</Button>
+                </ButtonGroup>
+
             </Row>
--->     <Row>
-
-            <ButtonGroup>
-                <Button  type="primary"  icon="ios-color-filter-outline" @click="download_excel">导出Excel</Button>
-                <Button  type="primary"  icon="ios-color-filter-outline" @click="openCompanyReceiptItem">企业流水</Button>
-                <Button   type="primary"  icon="ios-color-filter-outline" @click="openPlanReceiptItem">收款流水</Button>
-            </ButtonGroup>
-
-        </Row>
             <Row style="margin-top: 10px;">
                 <Table
                         :loading="loading"
@@ -41,16 +41,17 @@
 </template>
 
 <script>
-    import companyReceiptItem from  './company_receipt_item.vue'
-    import planReceiptItem from  './plan_receipt_item.vue'
+import companyReceiptItem from  './company_receipt_item.vue'
+import planReceiptItem from  './plan_receipt_item.vue'
     export default {
-
+        props:["finish_flag"],
         components:{
             companyReceiptItem,
             planReceiptItem
         },
         data(){
             return {
+                order:'finish_date',
                 currentRow: {},
                 loading: true,
                 page: 1,
@@ -61,27 +62,27 @@
                     {
                         title: "企业名称",
                         key: 'companyname',
-                        width: 90
+                        width: 180
                     },
                     {
                         title: "项目名称",
                         key: 'alisname',
-                        minWidth: 180
+                        minWidth: 140
                     },
                     {
                         title: "申报时间",
                         key: "finish_date",
-                        minWidth: 180
+                        minWidth: 140
                     },
                     {
                         title: "定额金额",
                         key: 'paynumber',
-                        minWidth: 120
+                        minWidth: 100
                     },
                     {
                         title: "收款比例",
                         key: "receipt_proportion",
-                        minWidth: 250
+                        minWidth: 100
                     },
                     {
                         title: '申报结果',
@@ -125,7 +126,7 @@
                         order:_self.order,
                         page:_self.page,
                         pageSize:_self.pageSize,
-                        arrears_flag:'Y'
+                        finish_flag:_self.finish_flag
 
                     }
                 }
@@ -135,6 +136,13 @@
                     _self.data = res.data.data.rows
                     _self.total = res.data.data.total
                     _self.loading = false;
+                    for(let i = 0; i < _self.data.length; i++){
+                        if(_self.data[i].finish_status =="Y"){
+                            _self.data[i].finish_status = "通过"
+                        }else{
+                            _self.data[i].finish_status = "未通过"
+                        }
+                    }
 
                 })
 
@@ -157,7 +165,7 @@
                     return;
                 }
 
-                this.$bus.emit("openCompanyReceiptItem_arrers",{"currentRow":_self.currentRow});
+                this.$bus.emit("openCompanyReceiptItem",{"currentRow":_self.currentRow});
             },
             openPlanReceiptItem(){
                 var _self = this
@@ -171,7 +179,7 @@
                     return;
                 }
 
-                this.$bus.emit("openPlanReceiptItem_arrers",{"currentRow":_self.currentRow});
+                this.$bus.emit("openPlanReceiptItem",{"currentRow":_self.currentRow});
             },
             download_excel(){
                 let field = [
@@ -181,9 +189,9 @@
                     {field:'paynumber',title:'定额金额'},
                     {field:'receipt_proportion',title:'收款比例'},
                     {field:'finish_status',title:'申报结果'},
-                    {field:'predict_receipt',title:'预估企业金额'},
+                    {field:'predicet_receipt',title:'预估企业金额'},
                     {field:'period_num',title:'回款分期'},
-                    {field:'predict_receipt',title:'总金额'},
+                    {field:'all_amount',title:'总金额'},
                     {field:'realnumber',title:'总已收款'},
                     {field:'current_receipt',title:'截止档期应收款'},
                     {field:'neednumber',title:'总待收款'}
@@ -192,12 +200,11 @@
                 let url = 'api/order/work/order/plan/receipt/list'
                 let config = {
 
-                    order:_self.order,
-                    page:'1',
-                    pageSize:'1000000' ,
-                    arrears_flag:'Y',
-                    export: 'Y',
-                    exportField: encodeURI(JSON.stringify(field))
+                        order:_self.order,
+                        page:'1',
+                        pageSize:'1000000' ,
+                        export: 'Y',
+                        exportField: encodeURI(JSON.stringify(field))
 
                 }
                 let toExcel = this.$MergeURL(url, config)
