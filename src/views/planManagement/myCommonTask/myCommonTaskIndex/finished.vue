@@ -273,11 +273,17 @@
                     // _self.data = res.data.data.rows
                     _self.total = res.data.data.total
                     _self.data = res.data.data.rows.map((item)=>{
-                                if(item.CreateDate){
+                    if(item.CreateDate){
                         item.CreateDate = item.CreateDate.slice(0,10)
                     }
                     if(item.ServiceStart){
                         item.ServiceStart = item.ServiceStart.slice(0,10)
+                    }
+                    if(item.ServiceEnd) {
+                        item.ServiceEnd = item.ServiceEnd.slice(0,10)
+                    }
+                    if(item.allotTime){
+                        item.allotTime = item.allotTime.slice(0,10)
                     }
                     if(item.UpdateDate){
                         item.UpdateDate = item.UpdateDate.slice(0,10)

@@ -87,12 +87,13 @@
 
                 function doSuccess(res) {
                     console.log(res);
-                    // location.reload()
+                    _self.openUpdateOrderItemPlan = false
+                    _self.$bus.emit("reflash")
 
                 }
 
                 function fail(err){
-
+                     _self.openUpdateOrderItemPlan = false
 
                 }
 

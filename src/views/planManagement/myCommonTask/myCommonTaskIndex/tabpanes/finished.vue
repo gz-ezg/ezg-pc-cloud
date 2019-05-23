@@ -285,15 +285,21 @@ export default {
         // _self.data = res.data.data.rows
         _self.total = res.data.data.total;
         _self.data = res.data.data.rows.map(item => {
-          if (item.CreateDate) {
-            item.CreateDate = item.CreateDate.slice(0, 10);
-          }
-          if (item.ServiceStart) {
-            item.ServiceStart = item.ServiceStart.slice(0, 10);
-          }
-          if (item.UpdateDate) {
-            item.UpdateDate = item.UpdateDate.slice(0, 10);
-          }
+        if(item.createdate){
+            item.createdate = item.createdate.slice(0,10)
+        }
+        if(item.service_begin_time){
+            item.service_begin_time = item.service_begin_time.slice(0,10)
+        }
+        if(item.service_end_time) {
+            item.service_end_time = item.service_end_time.slice(0,10)
+        }
+        if(item.allotTime){
+            item.allotTime = item.allotTime.slice(0,10)
+        }
+        if(item.updatedate){
+            item.updatedate = item.updatedate.slice(0,10)
+        }
           return item;
         });
         _self.loading = false;
