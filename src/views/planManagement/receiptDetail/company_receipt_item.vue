@@ -71,13 +71,17 @@
 
                     _self.data = res.data.data
                     _self.loading = false;
-
+                    for(let i = 0; i < _self.data.length; i++){
+                        if(_self.data[i].receipt_period){
+                            _self.data[i].receipt_period = _self.data[i].receipt_period.slice(0,10)
+                        }
+                    }
                 })
 
             }
         },
         created(){
-
+            this.$bus.off("openCompanyReceiptItem",false)
             this.$bus.on("openCompanyReceiptItem",(e)=>{
 
                 this.currentRow = e.currentRow
@@ -85,13 +89,7 @@
                 this.openCompanyReceiptItem = true
                 this.get_data()
               })
-            this.$bus.on("openCompanyReceiptItem_arreas",(e)=>{
 
-                this.currentRow = e.currentRow
-            console.log(this.currentRow)
-            this.openCompanyReceiptItem = true
-            this.get_data()
-            })
         }
     }
 </script>
