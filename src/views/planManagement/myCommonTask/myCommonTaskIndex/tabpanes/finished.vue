@@ -259,8 +259,7 @@ export default {
         _self.$Message.warning("请选中一行重试");
         return;
       }
-      console.log(JSON.stringify(_self.currentRow))
-      return;
+
       if (!_self.currentRow.order_item_plan_id) {
         _self.$Message.warning("请先补全订单数据");
         _self.$bus.emit("update_order_item_plan", _self.currentRow);
