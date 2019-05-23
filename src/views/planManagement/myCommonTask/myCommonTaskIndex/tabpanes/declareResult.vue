@@ -16,7 +16,7 @@
                     </FormItem>
                     </Col>
                 </Row>
-                <div v-if="currentRow.finish_status=='Y'">
+                <div v-if="formItem.finish_status=='Y'">
                 <Row  :gutter="12">
                     <Col span="24">
                     <FormItem prop="record" label="预估企业收款：">
@@ -31,7 +31,7 @@
                     </FormItem>
                     </Col>
                 </Row>
-                <Row v-if="currentRow.receipt_type=='proportion'">
+                <Row v-if="formItem.receipt_type=='proportion'">
                     <Col span="12">
                         <FormItem  prop="departid"  label="收款比例：">
                             {{currentRow.receipt_proportion}} %
@@ -45,7 +45,7 @@
        
                 </Row>
 
-                <Row v-if="currentRow.receipt_type=='quota'">
+                <Row v-if="formItem.receipt_type=='quota'">
                      <FormItem  prop="departid"  label="定额收款：">
                         {{currentRow.paynumber}} 元
                     </FormItem>
@@ -68,7 +68,7 @@
                     </FormItem>
                     </Col>
                 </Row>
-                <div v-if="formItem.finish_status=='Y'">
+                <div v-if="currentRow.finish_status=='Y'">
                 <Row  :gutter="12">
                     <Col span="24">
                     <FormItem prop="record" label="预估企业收款：">
