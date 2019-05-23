@@ -188,8 +188,7 @@
                     render:(h, params) => {
                             return h('Input',{
                                 props:{
-                                    value: params.row.amount,
-                                    type: 'number'
+                                    value: params.row.amount
                                 },
                                 style: {
                                     width: '100px'
@@ -256,21 +255,23 @@
                         return true
                     }
                 });
-                console.log('tempArray2',tempArray2)
+                
                 if (this.otherdatas.length > tempArray.length) {
                     return this.$Message.warning("金额和日期必须同时填写");
                 }
                 
 
-                if (this.otherdatas.length == tempArray2.length && tempArray2.reduce((a,v)=>{a = a + v.amount},0) != totalPrice) {
+                if (this.otherdatas.length == tempArray2.length && tempArray2.reduce((a,v)=>{return a + Number(v.amount)},0) !== Number(totalPrice)) {
+                    console.log(tempArray2.reduce((a,v)=>{return a + Number(v.amount)},0))
+                    console.log(Number(totalPrice))
+
                     return this.$Message.warning("金额要和收款金额一致");
                 }
 
-
-                if (this.otherdatas.length > tempArray2.length && tempArray2.reduce((a,v)=>{a = a + v.amount},0) > totalPrice) {
+                if (this.otherdatas.length > tempArray2.length && tempArray2.reduce((a,v)=>{a = a + Number(v.amount)},0) > totalPrice) {
                     return this.$Message.warning("金额已大于收款金额");
                 }
-
+                console.log('tempArray2',tempArray2)
                 let url = 'api/order/work/order/plan/receipt/item/create'
                 let data = {
                     workOrderId: this.currentRow.work_order_id,
@@ -349,7 +350,7 @@
                         this.otherdatas.push({
                             receipt_period: '',
                             time: i+1,
-                            amount: 0,
+                            amount: '',
                         })
                     }
                    
@@ -363,6 +364,9 @@
                     return this.$Message.warning("该企业不能分期收款");
                 }
                 this.openDeclareResult = true
+                if(e.receipt_period) {
+                    e.receipt_period = e.receipt_period.slice(0,10)
+                }
                 this.currentRow = e;
                 this.datas = [];
                 this.otherdatas = [];
