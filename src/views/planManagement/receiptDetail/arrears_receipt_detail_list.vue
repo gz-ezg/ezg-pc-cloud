@@ -89,7 +89,7 @@
                         minWidth: 90
                     },{
                         title: '预估企业金额',
-                        key: 'predict_receipt',
+                        key: 'predicet_receipt',
                         minWidth: 90
                     },{
                         title: '回款分期',
@@ -97,7 +97,7 @@
                         minWidth: 90
                     },{
                         title: '总金额',
-                        key: 'predict_receipt',
+                        key: 'all_amount',
                         minWidth: 90
                     },{
                         title: '总已收款',
@@ -157,7 +157,7 @@
                     return;
                 }
 
-                this.$bus.emit("openCompanyReceiptItem",{"currentRow":_self.currentRow});
+                this.$bus.emit("openCompanyReceiptItem_arrers",{"currentRow":_self.currentRow});
             },
             openPlanReceiptItem(){
                 var _self = this
@@ -171,7 +171,7 @@
                     return;
                 }
 
-                this.$bus.emit("openPlanReceiptItem",{"currentRow":_self.currentRow});
+                this.$bus.emit("openPlanReceiptItem_arrers",{"currentRow":_self.currentRow});
             },
             download_excel(){
                 let field = [
