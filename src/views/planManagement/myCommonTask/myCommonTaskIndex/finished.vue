@@ -37,6 +37,7 @@
                     <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
                     <Button type="primary" icon="ios-color-wand-outline" @click="download_excel">导出Excel</Button>
                     <Button type="primary" icon="ios-color-wand-outline" @click="declareResult">申报结果</Button>
+                    <Button type="primary" icon="ios-color-wand-outline" @click="companyCollectionFlow">企业收款流水</Button>
                 </ButtonGroup>
             </Row>
             <Row style="margin-top: 10px;">
@@ -272,11 +273,17 @@
                     // _self.data = res.data.data.rows
                     _self.total = res.data.data.total
                     _self.data = res.data.data.rows.map((item)=>{
-                                if(item.CreateDate){
+                    if(item.CreateDate){
                         item.CreateDate = item.CreateDate.slice(0,10)
                     }
                     if(item.ServiceStart){
                         item.ServiceStart = item.ServiceStart.slice(0,10)
+                    }
+                    if(item.ServiceEnd) {
+                        item.ServiceEnd = item.ServiceEnd.slice(0,10)
+                    }
+                    if(item.allotTime){
+                        item.allotTime = item.allotTime.slice(0,10)
                     }
                     if(item.UpdateDate){
                         item.UpdateDate = item.UpdateDate.slice(0,10)
@@ -296,6 +303,13 @@
             page_change_plan(e){
                 this.page = e
                 this.getPlanFinishedData()
+            },
+            companyCollectionFlow(e) {
+                if(!this.currentRow){
+                    this.$Message.warning("请选中一行重试");
+                    return;
+                }
+                this.$bus.emit("open_company_Collection_flow",this.currentRow);
             },
             page_size_change_plan(e){
                 this.page = 1

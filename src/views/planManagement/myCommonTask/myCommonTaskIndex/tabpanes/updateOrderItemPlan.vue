@@ -22,7 +22,7 @@
             </Row>
             <Row>
                 <FormItem label="收款类型：">
-                    <RadioGroup  v-model='formItem.receipt_flag' v-on >
+                    <RadioGroup  v-model='formItem.receipt_flag' >
                         <Radio label="quota">定额收款</Radio>
                         <Radio label="proportion">比例收款</Radio>
                     </RadioGroup>
@@ -39,7 +39,11 @@
             </Row>
             <Row :gutter="16" >
                 <FormItem  v-if=" formItem.receipt_flag == 'proportion'"  label="收款比例：">
-                    <Input type="text" v-model="formItem.receipt_proportion" :rows=rows></Input>%
+                    <Row> 
+                        <Col span="18"><Input type="text" v-model="formItem.receipt_proportion" :rows=rows></Input>
+                        </Col>
+                        <Col span="4">%</Col>
+                    </Row>
                 </FormItem>
 
             </Row>
@@ -87,12 +91,14 @@
 
                 function doSuccess(res) {
                     console.log(res);
-                    // location.reload()
+                    _self.formItem = Object.assign({},{declare_year:'',receipt_flag:'',receipt_proportion:'',company_amount:''})
+                    _self.openUpdateOrderItemPlan = false
+                    _self.$bus.emit("reflash")
 
                 }
 
                 function fail(err){
-
+                     _self.openUpdateOrderItemPlan = false
 
                 }
 

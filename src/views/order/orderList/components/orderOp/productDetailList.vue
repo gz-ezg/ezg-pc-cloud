@@ -359,6 +359,9 @@ export default {
       if (e.departid) {
         e.departid = parseInt(e.departid);
       }
+      if (e.defaultdepartalias == "PLAN") {
+        e.receipt_type = "quota";
+      }
       _self.productList.push(e);
       _self.departChange();
       _self.computer_paynumber();

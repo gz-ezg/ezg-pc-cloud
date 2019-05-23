@@ -43,6 +43,7 @@
                 total: 0,
                 data:[],
                 openPlanReceiptItem:false,
+                payDirMap:{},
                 header: [
                     {
                         title: "缴费时间",
@@ -86,6 +87,8 @@
                         if(_self.data[i].transcationtime){
                             _self.data[i].transcationtime = _self.data[i].transcationtime.slice(0,10)
                         }
+                        _self.data[i].paydir= _self.payDirMap.get(_self.data[i].paydircode);
+                        console.log(_self.data[i]);
                     }
                 })
 
@@ -95,12 +98,18 @@
             }
         },
         created(){
-
+            let _self = this
+            this.$bus.off("openPlanReceiptItem",false)
             this.$bus.on("openPlanReceiptItem",(e)=>{
                 this.currentRow = e.currentRow;
                 this.openPlanReceiptItem = true
-                this.get_data()
-        })
+                this.$GetDataCenter("payDirs",callback);
+                function  callback(e) {
+                    _self.payDirMap = _self.$array2map(e.data.data.payDirs)
+                    _self.get_data();
+                }
+            })
+
         }
     }
 </script>

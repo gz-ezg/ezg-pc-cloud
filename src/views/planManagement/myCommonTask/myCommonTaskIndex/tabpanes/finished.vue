@@ -5,7 +5,7 @@
         <Collapse v-model="search_model">
           <Panel name="1">
             <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>筛选
-            <div slot="content" @keydown.enter="search">
+            <div slot="content" @keydown.enter="search_finish">
               <Form ref="formInline" :model="formInline" :label-width="100">
                 <Row :gutter="16">
                   <Col span="8">
@@ -20,7 +20,7 @@
                   </Col>
                 </Row>
                 <FormItem>
-                  <Button type="primary" @click="search">搜索</Button>
+                  <Button type="primary" @click="search_finish">搜索</Button>
                   <Button type="ghost" style="margin-left:20px" @click="finishReset">重置</Button>
                 </FormItem>
               </Form>
@@ -34,6 +34,7 @@
           <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
           <Button type="primary" icon="ios-color-wand-outline" @click="download_excel">导出Excel</Button>
           <Button type="primary" icon="ios-color-wand-outline" @click="declareResult">申报结果</Button>
+          <Button type="primary" icon="ios-color-wand-outline" @click="companyCollectionFlow">企业收款流水</Button>
         </ButtonGroup>
       </Row>
       <Row style="margin-top: 10px;">
@@ -63,6 +64,7 @@
       </Row>
       <declare-result></declare-result>
       <update-order-item-plan></update-order-item-plan>
+      <company-collection-flow></company-collection-flow>
     </Card>
   </div>
 </template>
@@ -70,12 +72,14 @@
 <script>
 import mixin from "./mixin.js";
 import declareResult from "./declareResult.vue";
+import companyCollectionFlow from './companyCollectionFlow.vue'
 import updateOrderItemPlan from "./updateOrderItemPlan.vue";
 export default {
   mixins: [mixin],
   components: {
     declareResult,
-    updateOrderItemPlan
+    updateOrderItemPlan,
+    companyCollectionFlow
   },
   data() {
     return {
@@ -241,6 +245,13 @@ export default {
     };
   },
   methods: {
+      companyCollectionFlow(e) {
+      if(!this.currentRow){
+          this.$Message.warning("请选中一行重试");
+          return;
+        }
+        this.$bus.emit("open_company_Collection_flow",this.currentRow);
+      },
     declareResult() {
       let _self = this;
       console.log(_self.currentRow);
@@ -248,6 +259,7 @@ export default {
         _self.$Message.warning("请选中一行重试");
         return;
       }
+
       if (!_self.currentRow.order_item_plan_id) {
         _self.$Message.warning("请先补全订单数据");
         _self.$bus.emit("update_order_item_plan", _self.currentRow);
@@ -274,15 +286,21 @@ export default {
         // _self.data = res.data.data.rows
         _self.total = res.data.data.total;
         _self.data = res.data.data.rows.map(item => {
-          if (item.CreateDate) {
-            item.CreateDate = item.CreateDate.slice(0, 10);
-          }
-          if (item.ServiceStart) {
-            item.ServiceStart = item.ServiceStart.slice(0, 10);
-          }
-          if (item.UpdateDate) {
-            item.UpdateDate = item.UpdateDate.slice(0, 10);
-          }
+        if(item.createdate){
+            item.createdate = item.createdate.slice(0,10)
+        }
+        if(item.service_begin_time){
+            item.service_begin_time = item.service_begin_time.slice(0,10)
+        }
+        if(item.service_end_time) {
+            item.service_end_time = item.service_end_time.slice(0,10)
+        }
+        if(item.allotTime){
+            item.allotTime = item.allotTime.slice(0,10)
+        }
+        if(item.updatedate){
+            item.updatedate = item.updatedate.slice(0,10)
+        }
           return item;
         });
         _self.loading = false;
@@ -303,6 +321,8 @@ export default {
       this.page = 1;
       this.pageSize = e;
       this.getPlanFinishedData();
+    },search_finish(){
+      this.getPlanFinishedData();
     }
   },
   created() {
@@ -313,6 +333,9 @@ export default {
     } else {
       _self.isAdmin = false;
     }
+    this.$bus.$on('refresh',(e)=>{
+      this.getPlanFinishedData()
+    })
   }
 };
 </script>
