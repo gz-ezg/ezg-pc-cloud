@@ -314,11 +314,7 @@
                                         _self.$Message.success('录入成功!')
                                         _self.getTableData()
                                         _self.modal1 = false
-                                        _self.formValidate.id = ''
-                                        _self.formValidate.labelname = ''
-                                        _self.formValidate.labelCode = ''
-                                        _self.formValidate.channelFlag = ''
-                                        _self.formValidate.labelMemo = ''
+                                        _self.formValidate = Object({},{labelMemo:'',channelFlag:'',labelname: '',labelCode:'',id:''})
                                         _self.loading = false;
                                     }
                                 }).catch(function(error){
