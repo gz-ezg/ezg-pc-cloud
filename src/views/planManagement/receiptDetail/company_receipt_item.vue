@@ -86,9 +86,9 @@
 
                 this.currentRow = e.currentRow
             console.log(this.currentRow)
-                this.openCompanyReceiptItem = true
-                this.get_data()
-              })
+            this.openCompanyReceiptItem = true
+            this.get_data()
+        })
 
         }
     }

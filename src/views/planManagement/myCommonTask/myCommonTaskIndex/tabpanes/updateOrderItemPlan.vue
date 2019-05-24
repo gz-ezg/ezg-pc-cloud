@@ -93,7 +93,7 @@
                     console.log(res);
                     _self.formItem = Object.assign({},{declare_year:'',receipt_flag:'',receipt_proportion:'',company_amount:''})
                     _self.openUpdateOrderItemPlan = false
-                    _self.$bus.emit("reflash")
+                    _self.$bus.emit("refresh_plan")
 
                 }
 
