@@ -264,9 +264,9 @@
                 this.get_data_center().then(
                     this.get_data(e)
                 ).then(
-                    this.get_user
-                ).then(
                     this.get_all_user
+                ).then(
+                    this.get_user
                 )
             })
         }

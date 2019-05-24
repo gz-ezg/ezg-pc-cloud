@@ -28,6 +28,18 @@
                     </Col>
                     <Col span="18"><span>{{hover_local.creatorName}}</span></Col>
                 </Row>
+                <Row :gutter="20">
+                    <Col span="6">
+                        <span>地区：</span>
+                    </Col>
+                    <Col span="18"><span>{{hover_local.Area}}</span></Col>
+                </Row>
+                <Row :gutter="20">
+                    <Col span="6">
+                        <span>地点：</span>
+                    </Col>
+                    <Col span="18"><span>{{hover_local.depart}}</span></Col>
+                </Row>
             </Card>
             <Row :gutter="20">
                 <Col span="18">
