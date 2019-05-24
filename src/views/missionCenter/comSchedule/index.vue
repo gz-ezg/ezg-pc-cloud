@@ -56,12 +56,9 @@
                         </datepicker>
                     </Row>
                     <Row>
-                        <span>执行中的任务——<span style="color:blue">蓝色</span><br/></span>
-                        <span>当天需要完结的任务——<span style="color:orange">黄色</span><br/></span>
-                        <span>完结任务——<span style="color:#228B22">绿色</span><br/></span>
-                        <span>逾期任务——<span style="color:red">红色</span><br/></span>
-                        <span>线索未完成——<span style="color:#FF7F00">橙色</span><br/></span>
-                        <span>线索完成——<span style="color:#228B22">绿色</span><br/></span>
+                        <span>商事外勤——<span style="color:#FC9D99">橙红色</span><br/></span>
+                        <span>工单协助——<span style="color:#AEDD81">草绿色</span><br/></span>
+                        <span>代账协助——<span style="color:orange">橙色</span><br/></span>
                     </Row>
                     <Row>
                         <Row style="margin-bottom:10px"><h3>{{local_date}}</h3></Row>
@@ -298,7 +295,13 @@
                         _self.events_temp[i].depart = _self.businessPlace_map.get(_self.events_temp[i].taskPlace)
                         _self.events_temp[i].CompanyName = _self.events_temp[i].companyName
                         if(_self.events_temp[i].taskKind === "tkLegBus"){
-                            _self.events_temp[i].color = "blue"
+                            _self.events_temp[i].color = "#FC9D99"
+                        }
+                        if(_self.events_temp[i].taskKind === "tkLegCycAss"){
+                            _self.events_temp[i].color = "orange"
+                        }
+                        if(_self.events_temp[i].taskKind === "tkLegBusAss"){
+                            _self.events_temp[i].color = "#AEDD81"
                         }
                         // if(_self.events_temp[i].plan_date.slice(0,10) == _self.local_date){
                         //     _self.events_temp[i].color = "orange"

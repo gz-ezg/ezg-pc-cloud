@@ -103,7 +103,7 @@
                 allUserList:[],
                 allUserList_map:new Map(),
                 createLoading:false,
-                cycleTypeList:[{"typecode":"A","typename":"A类"},{"typecode":"B","typename":"B类"}],
+                cycleTypeList:[{"typecode":"A","typename":"A类"},{"typecode":"B","typename":"B类"},{"typecode":"其他","typename":"其他"}],
                 cycleTypeNameList:[],
                 userLoading:false,
                 newMission: {

@@ -217,7 +217,7 @@
                 ],
                 productList:[],
                 nodeList:[{"typecode":"Y","typename":"是"},{"typecode":"N","typename":"否"}],
-                cycleTypeList:[{"typecode":"A","typename":"A类"},{"typecode":"B","typename":"B类"}],
+                cycleTypeList:[{"typecode":"A","typename":"A类"},{"typecode":"B","typename":"B类"},{"typecode":"其他","typename":"其他"}],
                 cycleTypeNameList:[],
                 allUserList: [],
                 allUserList_map: new Map(),

@@ -124,16 +124,15 @@
                 let _self = this
                 _self.createLoading = true
                 let executorNameArray = []
-                for(let i = 0; i < _self.newMission.userId.length; i++){
-                    executorNameArray.push(_self.allUserList_map.get(_self.newMission.userId[i].toString()))
-                }
+                    executorNameArray.push(_self.allUserList_map.get(_self.newMission.userId.toString()))
+                    console.log(executorNameArray[0])
                 let url = `api/task/checkBusAssApply`
                 let config = {
                     applyId:_self.data[0].id,
                     applyStatus:"tesFinished",
                     checkMemo:_self.newMission.checkMemo,
                     excutorId:_self.newMission.userId,
-                    excutorName:executorNameArray,
+                    excutorName:executorNameArray[0],
                     checkDate:FULLDateFormat(_self.data[0].expect_date),
                     taskArea:_self.newMission.businessArea,
                     taskPlace:_self.newMission.businessPlace
@@ -158,16 +157,15 @@
                 }
                 _self.backLoading = true
                 let executorNameArray = []
-                for(let i = 0; i < _self.newMission.userId.length; i++){
-                    executorNameArray.push(_self.allUserList_map.get(_self.newMission.userId[i].toString()))
-                }
+                    executorNameArray.push(_self.allUserList_map.get(_self.newMission.userId.toString()))
+
                 let url = `api/task/checkBusAssApply`
                 let config = {
                     applyId:_self.data[0].id,
                     applyStatus:"tesReturned",
                     checkMemo:_self.newMission.checkMemo,
                     excutorId:_self.newMission.userId,
-                    excutorName:executorNameArray,
+                    excutorName:executorNameArray[0],
                     checkDate:FULLDateFormat(_self.data[0].expect_date),
                     taskArea:_self.newMission.businessArea,
                     taskPlace:_self.newMission.businessPlace
@@ -261,7 +259,7 @@
             }
         },
         created() {
-            this.$bus.on("OPEN_ORDERLIST_EDIT", (e)=>{
+            this.$bus.on("OPEN_LIST_EDIT", (e)=>{
                 this.openAddMission=true
                 this.get_data_center().then(
                     this.get_data(e)

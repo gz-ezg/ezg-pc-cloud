@@ -1,6 +1,48 @@
 <template>
     <div>
         <Card style="min-width:800px">
+            <Row style="margin-bottom:10px">
+                <Collapse v-model="search_model">
+                    <Panel name="1" >
+                        <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
+                        筛选
+                        <div slot="content" @keydown.enter="Search">
+                            <Form ref="formValidateSearch" :model="formValidateSearch" :label-width="100">
+                                <Row :gutter="24">
+                                    <Col span="8">
+                                        <FormItem label="公司名称：" prop="companyname">
+                                            <Input v-model="formValidateSearch.companyName" size="small"></Input>
+                                        </FormItem>
+                                    </Col>
+                                    <Col span="8">
+                                        <FormItem label="会计名称：" prop="customername">
+                                            <Input v-model="formValidateSearch.creatorName" size="small"></Input>
+                                        </FormItem>
+                                    </Col>
+                                </Row>
+                                <Row :gutter="24">
+                                    <Col span="8">
+                                        <FormItem label="核实时间：" prop="date">
+                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:100%" size="small"></DatePicker>
+                                        </FormItem>
+                                    </Col>
+                                    <Col span="8">
+                                        <FormItem label="创建时间：" prop="paytime">
+                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.paytime" style="width:100%" size="small"></DatePicker>
+                                        </FormItem>
+                                    </Col>
+                                </Row>
+                                <center>
+                                    <FormItem>
+                                        <Button type="primary" @click="Search">搜索</Button>
+                                        <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
+                                    </FormItem>
+                                </center>
+                            </Form>
+                        </div>
+                    </Panel>
+                </Collapse>
+            </Row>
             <Row style="margin-top: 10px;">
                 <Table
                         :loading="loading"
@@ -40,6 +82,19 @@
                 taskPlace:[],
                 taskArea_map:new Map(),
                 taskPlace_map:new Map(),
+                search_model: "0",
+                formValidateSearch: {
+                    ordercode: "",
+                    companyName: "",
+                    creatorName: "",
+                    customertel: "",
+                    payDir: "",
+                    date: [],
+                    crealname: "",
+                    frealname: "",
+                    paytime: [],
+                    customerCreateTime: []
+                },
                 header:[
                     {
                         title: '协助工单号',
@@ -83,7 +138,7 @@
                     },
                     {
                         title: '商事',
-                        key: 'excutor_name',
+                        key: 'final_executor_name',
                         minWidth: 140,
                     },
                     {
@@ -118,13 +173,33 @@
                 this.pageSize = e
                 this.get_data()
             },
+            Search(){
+                this.page = 1
+                this.get_data()
+            },
+            handleReset(){
+                this.$refs["formValidateSearch"].resetFields()
+                this.formValidateSearch.date = []
+                this.formValidateSearch.companyName=null
+                this.formValidateSearch.creatorName = null
+                this.formValidateSearch.paytime=[]
+                this.get_data()
+            },
             get_data(){
                 let _self = this
                 let url =`api/task/getBusAssApplyList`
                 _self.loading = true
                 let config = {
                     params: {
-                        Audited:"Audited"
+                        Audited:"Audited",
+                        page:_self.page,
+                        pageSize:_self.pageSize,
+                        companyName:_self.formValidateSearch.companyName,
+                        creatorName:_self.formValidateSearch.creatorName,
+                        bcheckDate:DateFormat(_self.formValidateSearch.date[0]),
+                        echeckDate:DateFormat(_self.formValidateSearch.date[1]),
+                        bcreateDate:DateFormat(_self.formValidateSearch.paytime[0]),
+                        ecreateDate:DateFormat(_self.formValidateSearch.paytime[1])
                     }
                 }
                 function success(res){
