@@ -7,9 +7,7 @@
     >
         <div  v-if="data.length!==0">
             <Form ref="newMission" :model="newMission" :label-width="80" style="margin-left:50px;margin-right:50px">
-                <div class="spz">
-                    <Input v-model="data[0].apply_content" type="textarea" placeholder="请输入要修改的协助工单缘由" :autosize="{minRows: 4,maxRows: 6}" disabled/>
-                </div>
+                    <Input v-model="data[0].apply_content" style="margin-bottom: 25px" type="textarea" placeholder="请输入要修改的协助工单缘由" :autosize="{minRows: 4,maxRows: 6}" disabled/>
                 <Row :gutter="12">
                     <Col span="12">
                         <FormItem label="企业" prop="companyId">
@@ -143,6 +141,7 @@
                     _self.get_data(_self.data[0].id)
                     _self.createLoading = false
                     _self.openAddMission = false
+                    this.newMission.checkMemo = null
                 }
                 function fail(){
 
@@ -231,7 +230,6 @@
                 }
 
                 function success(res){
-                    _self.userList = res.data.data.rows
                     _self.allUserList = res.data.data.rows
                     for(let i = 0;i<_self.allUserList.length;i++){
                         _self.allUserList_map.set(_self.allUserList[i].id.toString(),_self.allUserList[i].realname)
@@ -261,13 +259,10 @@
         created() {
             this.$bus.on("OPEN_LIST_EDIT", (e)=>{
                 this.openAddMission=true
-                this.get_data_center().then(
+                this.get_data_center()
                     this.get_data(e)
-                ).then(
-                    this.get_all_user
-                ).then(
-                    this.get_user
-                )
+                    this.get_all_user()
+                    this.get_user()
             })
         }
     }
