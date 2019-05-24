@@ -108,7 +108,7 @@
                             </Col>
                         </Form>
                     </Row>
-                    <div v-for="(item,index) in process" :key="index" style="margin:15px 10px;border:1px solid #CFCFCF">
+                    <div v-for="(item,index.vue) in process" :key="index.vue" style="margin:15px 10px;border:1px solid #CFCFCF">
                         <Form :model="item" :label-width="120" style="margin:15px;">
                         <Row>
                             <Col span="24">
@@ -175,7 +175,7 @@
                 </TabPane>  -->
                 <TabPane label="相关在服工单" name="name44" >
                     <Scroll height="500">
-                        <!-- <div style="height:60px;width:100%;z-index:100"></div> -->
+                        <!-- <div style="height:60px;width:100%;z-index.vue:100"></div> -->
                         <div v-if="!correlation.length"><center>暂无数据</center></div>
                         <!-- <div class="wrapper" ref="wrapper" style="height:500px;overflow:hidden">
                         <div class="content"> -->

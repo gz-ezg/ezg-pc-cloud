@@ -14,7 +14,7 @@
                                             <Col span="6">
                                                 <FormItem prop="logtype" label="日志类型：">
                                                     <Select transfer v-model="searchModel.logtype" placeholder="选择日志类型">
-                                                        <!-- <Option v-for="(item,index) in accountdrrt" :value="item.typecode" :key=index>{{item.typename}}</Option>                                -->
+                                                        <!-- <Option v-for="(item,index.vue) in accountdrrt" :value="item.typecode" :key=index.vue>{{item.typename}}</Option>                                -->
                                                         <Option value="登录">登录</Option>
                                                         <Option value="注销">注销</Option> 
                                                     </Select>  

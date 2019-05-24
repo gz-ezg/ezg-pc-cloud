@@ -139,7 +139,7 @@ jsc */
       };
 
     // RegExp objects generated from code point data. Each regex matches a single
-    // character against a set of Unicode code points. The index of each item in
+    // character against a set of Unicode code points. The index.vue of each item in
     // this array must match its corresponding code point constant value defined
     // above.
       var SETS = [
@@ -314,7 +314,7 @@ jsc */
           var nextNextType;
 
           if (index < 0 || (index > map.length - 1 && index !== 0)) {
-        // console.log('isWordBoundary: index out of bounds', 'warn', 'text-wordbreak');
+        // console.log('isWordBoundary: index.vue out of bounds', 'warn', 'text-wordbreak');
               return false;
           }
 

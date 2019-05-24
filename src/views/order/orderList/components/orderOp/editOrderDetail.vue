@@ -109,8 +109,8 @@
 				                        >
 				                    <Button type="ghost" icon="ios-cloud-upload-outline">选择文件</Button>
 				                </Upload>
-				                <span v-for="(item,index) in show_file" :key=index>{{ item.name }}
-				                    <Button type="text" @click="fileRemove(index)">移除</Button>
+				                <span v-for="(item,index.vue) in show_file" :key=index.vue>{{ item.name }}
+				                    <Button type="text" @click="fileRemove(index.vue)">移除</Button>
 				                </span>
 				            </FormItem>
 				        </Col>

@@ -121,7 +121,7 @@
                 <TabPane label="任务处理" icon="clipboard">
                     <!-- 已无返回值 -->
                     <!-- <Steps style="margin-top: 3%" size="small">
-                        <Step v-if="item.activityType == 'userTask'" :title="item.activityName" :content="item.assignee" :key=index v-for="(item,index) in ApproveFlow" ></Step>
+                        <Step v-if="item.activityType == 'userTask'" :title="item.activityName" :content="item.assignee" :key=index.vue v-for="(item,index.vue) in ApproveFlow" ></Step>
                     </Steps> -->
                     <Form ref="banlishenpi" :model="banlishenpi" :label-width="120" style="margin-top: 5px">
                         <FormItem label="审批备注" prop="desc">

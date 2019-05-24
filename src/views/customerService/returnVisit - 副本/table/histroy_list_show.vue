@@ -43,7 +43,7 @@
                                         <Col span="8">
                                             <FormItem prop="depart" label="责任部门：">
                                                 <Select transfer v-model="YformInline.depart" placeholder="" size="small">
-                                                    <Option v-for="(item,index) in departAlias" :key=index :value="item.typecode">{{item.typename}}</Option>
+                                                    <Option v-for="(item,index.vue) in departAlias" :key=index.vue :value="item.typecode">{{item.typename}}</Option>
                                                 </Select>
                                             </FormItem>
                                         </Col>

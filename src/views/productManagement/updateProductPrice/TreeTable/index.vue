@@ -9,7 +9,7 @@
     @current-change="get_current_click"
     size="small">
     <!-- <el-table-column
-      type="index"
+      type="index.vue"
       label="序号"
       width="60"
     > -->
@@ -121,7 +121,7 @@ export default {
     handleSelectionChange(rows, index){
       if(index.children){
         for(let i = 0; i<index.children.length; i++){
-          // console.log(index.children[i].event)
+          // console.log(index.vue.children[i].event)
           this.$refs.multipleTable.toggleRowSelection(index.children[i]);
           this.handleSelectionChange("", index.children[i])
         }

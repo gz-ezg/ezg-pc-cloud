@@ -52,7 +52,7 @@
                         </Row>
                         <!-- 针对地址变更的暂时性处理 -->
                         <Row class="type-select" v-if="selectProduct.id == 100 && changeArea">
-                            <!-- <Row v-for="(item, index) in queryProperty" :key="index" class="type-select"> -->
+                            <!-- <Row v-for="(item, index.vue) in queryProperty" :key="index.vue" class="type-select"> -->
                                 <p>{{queryProperty[0].name}}</p>
                                 <RadioGroup v-model="selectProperty[0]" type="button" size="large" @on-change="property_change;selectProperty[1]='';productPrice=0;SKU=''" >
                                     <Radio v-for="(type, index2) in queryProperty[0].children" :label="type.pvId" :key="index2">{{type.propertyValue}}</Radio>
@@ -95,9 +95,9 @@
                             </div>
                         </div>
                         <div class="productDetail-option" id="productDetail-option-id" @click="areaChange()">
-                            <div class="_propertys_class_" v-for="(item, index) in basePropertys" :key=index>
+                            <div class="_propertys_class_" v-for="(item, index.vue) in basePropertys" :key=index.vue>
                                 <p :id="item.propertyId">{{ item.name }}</p>
-                                <div class="productDetail-option-buttonList" :name="index==0?'firstProperty':''">
+                                <div class="productDetail-option-buttonList" :name="index.vue==0?'firstProperty':''">
                                     <button
                                             type="button"
                                             v-for="(item2, index2) in item.children"

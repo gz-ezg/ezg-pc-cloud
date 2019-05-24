@@ -103,7 +103,7 @@
                     <Row :gutter="10" style="margin-top:5px">
                        <!--  <Col span="8">
                             <Select transfer v-model="status" placeholder="服务状态" transfer>
-                                <Option v-for="(item,index) in serviceres" :value="item.typecode" :key=index>{{item.typename}}</Option>                             
+                                <Option v-for="(item,index.vue) in serviceres" :value="item.typecode" :key=index.vue>{{item.typename}}</Option>
                             </Select>
                         </Col> -->
                         <Col span="8">

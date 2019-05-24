@@ -131,7 +131,7 @@
     import util from '@/libs/util.js';
     import Cookies from 'js-cookie';
     const companyDetail =  () => import( /* webpackChunkName: "CompanyDetail" */ '@views/woa-components/companyDetail/CompanyDetail.vue')
-    const customerDetail =  () => import( /* webpackChunkName: "CompanyDetail" */ '@views/woa-components/customerDetail2/index')
+    const customerDetail =  () => import( /* webpackChunkName: "CompanyDetail" */ '@views/woa-components/customerDetail2/index.vue')
     import changePassword from '@views/woa-components/updatePassword/index.vue'
     import shrinkableMenu from '@views/main-components/shrinkable-menu/shrinkable-menu.vue';
     import tagsPageOpened from '@views/main-components/tags-page-opened.vue';
@@ -147,9 +147,9 @@
     import aduitLog from '@views/order/orderApprove/common/aduitLog.vue'
     //  新版全局性客户详情
     import workOrderDetail from '@views/woa-components/workOrderDetail/index.vue';
-    import reLogin from '@views/woa-components/relogin/index'
+    import reLogin from '@views/woa-components/relogin/index.vue'
     // 以下两个文件由于过大，单独打包
-    // import customerDetail from '@views/woa-components/customerDetail2/index'
+    // import customerDetail from '@views/woa-components/customerDetail2/index.vue'
     // import companyDetail from '@views/woa-components/companyDetail/CompanyDetail.vue'
 
     export default {
@@ -172,7 +172,7 @@
             customerDetail,
             companyDetail
             //  需要使用时引入，并且只引入一次
-            // customerDetail: () => import( /* webpackChunkName: "customer&companyDetail" */ './woa-components/customerDetail2/index'),
+            // customerDetail: () => import( /* webpackChunkName: "customer&companyDetail" */ './woa-components/customerDetail2/index.vue'),
             // companyDetail: ()=> import( /* webpackChunkName: "customer&companyDetail" */ './woa-components/companyDetail/CompanyDetail.vue'),
         },
         data () {

@@ -274,7 +274,7 @@
                     params:{
                         page: 1,
                         pageSize: 1000,
-                        task_kind:"tkLegBus"
+                        businessKind:"businessKind"
                     }
                 }
 

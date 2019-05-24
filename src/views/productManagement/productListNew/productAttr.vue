@@ -17,7 +17,7 @@
         <div class="productDetail-title-content"></div>
       </Row>
       <Row class="type-select" v-if="selectProduct.id == 100 && changeArea">
-        <!-- <Row v-for="(item, index) in queryProperty" :key="index" class="type-select"> -->
+        <!-- <Row v-for="(item, index.vue) in queryProperty" :key="index.vue" class="type-select"> -->
         <p>{{queryProperty[0].name}}</p>
         <RadioGroup
           v-model="selectProperty[0]"

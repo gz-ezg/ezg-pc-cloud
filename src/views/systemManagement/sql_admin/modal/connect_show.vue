@@ -27,7 +27,7 @@
                 <!-- <Card :bordered="false">
                     <FormItem label="角色ID" prop="roleId" >
                         <CheckboxGroup v-model="connect_detail_item.roleId" >
-                            <span v-for="(item,index) in role" :key=index>
+                            <span v-for="(item,index.vue) in role" :key=index.vue>
                                 <Checkbox  :label=item.id disabled>
                                     <span>{{item.value}}</span>
                                 </Checkbox>

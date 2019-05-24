@@ -108,7 +108,7 @@
                             </Col>
                         </Form>
                     </Row>
-                    <div v-for="(item,index) in process" :key="index" style="margin:15px 10px;border:1px solid #CFCFCF">
+                    <div v-for="(item,index.vue) in process" :key="index.vue" style="margin:15px 10px;border:1px solid #CFCFCF">
                         <Form :model="item" :label-width="120" style="margin:15px;">
                         <Row>
                             <Col span="24">

@@ -1814,7 +1814,7 @@
             departnamef(value, row, index) {
                 // console.log(value)
                 // console.log(row)
-                // console.log(index)
+                // console.log(index.vue)
                 if (row.departid) {
                     return value;
                 } else {
@@ -1990,7 +1990,7 @@
             },
 
             itemOnClick(index,field) {
-                // console.log(index)
+                // console.log(index.vue)
                 // console.log(field)
                 let _self = this
 
