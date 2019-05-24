@@ -333,8 +333,8 @@ export default {
     } else {
       _self.isAdmin = false;
     }
-    this.$bus.$on('refresh',(e)=>{
-      this.getPlanFinishedData()
+    this.$bus.$on('refresh_plan',(e)=>{
+      _self.getPlanFinishedData()
     })
   }
 };

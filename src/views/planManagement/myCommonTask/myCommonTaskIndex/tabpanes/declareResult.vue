@@ -162,7 +162,7 @@
                     console.log(res);
                     this.formItem= Object.assign({},this.formItem,{predicetReceipt: '',memo: '',finish_status:'Y'})
                     this.openDeclareResult = false;
-                    this.$bus.emit('refresh')
+                    this.$bus.emit('refresh_plan')
                 }
 
                 let fail = (err)=>{
