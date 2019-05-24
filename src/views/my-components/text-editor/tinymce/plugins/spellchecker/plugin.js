@@ -477,7 +477,7 @@ jsc */
                   }
 
                   var clone = match.stencil.cloneNode(false);
-                  clone.setAttribute('data-mce-index', matchIndex);
+                  clone.setAttribute('data-mce-index.vue', matchIndex);
 
                   if (fill) {
                       clone.appendChild(dom.doc.createTextNode(fill));
@@ -560,7 +560,7 @@ jsc */
               index = typeof index === 'number' ? '' + index : null;
 
               for (var i = 0; i < elements.length; i++) {
-                  var element = elements[i], dataIndex = element.getAttribute('data-mce-index');
+                  var element = elements[i], dataIndex = element.getAttribute('data-mce-index.vue');
 
                   if (dataIndex !== null && dataIndex.length && hasClass(element)) {
                       if (dataIndex === index || index === null) {
@@ -573,7 +573,7 @@ jsc */
           }
 
       /**
-      * Returns the index of a specific match object or -1 if it isn't found.
+      * Returns the index.vue of a specific match object or -1 if it isn't found.
       *
       * @param  {Match} match Text match object.
       * @return {Number} Index of match or -1 if it isn't found.
@@ -684,7 +684,7 @@ jsc */
       * @return {Object} Match object for the specified element.
       */
           function matchFromElement (element) {
-              return matches[element.getAttribute('data-mce-index')];
+              return matches[element.getAttribute('data-mce-index.vue')];
           }
 
       /**
@@ -937,7 +937,7 @@ jsc */
       };
 
       var getElmIndex = function (elm) {
-          var value = elm.getAttribute('data-mce-index');
+          var value = elm.getAttribute('data-mce-index.vue');
 
           if (typeof value === 'number') {
               return '' + value;

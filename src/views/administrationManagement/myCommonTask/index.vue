@@ -1,17 +1,17 @@
 <template>
     <div>
         <Tabs value="name1">
-            <TabPane label="未开始" name="name1">
+            <TabPane label="全部" name="name1">
+                <all></all>
+            </TabPane>
+            <TabPane label="未开始" name="name2">
                 <unbegin></unbegin>
             </TabPane>
-            <TabPane label="服务中" name="name2">
+            <TabPane label="服务中" name="name3">
                 <servicing></servicing>
             </TabPane>
-            <TabPane label="已完结" name="name3">
+            <TabPane label="已完结" name="name4">
                 <finish></finish>
-            </TabPane>
-            <TabPane label="全部" name="name4">
-                <all></all>
             </TabPane>
         </Tabs>
         <!-- <flow></flow> -->

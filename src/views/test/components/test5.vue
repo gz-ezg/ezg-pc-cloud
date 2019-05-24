@@ -11,7 +11,7 @@
                             class="content" 
                             @mousemove.prevent=" (current == 1 || current == 2) && mouseMoveState && mouseMoveFn($event)" 
                             @mouseup.prevent="mouseMoveState && moseUpFn($event)">
-                            <!-- <div v-for="(item, index) in imgaeArray" :key="index" @mousedown="mousedownFn($event)" :id="`image-${index}`" @click.right.prevent="remove_img(index)" :style="{backgroundImage: item.img, width: item.width+'px',height:item.height+'px'}" style="background-repeat:no-repeat;background-size:100%;"> -->
+                            <!-- <div v-for="(item, index.vue) in imgaeArray" :key="index.vue" @mousedown="mousedownFn($event)" :id="`image-${index.vue}`" @click.right.prevent="remove_img(index.vue)" :style="{backgroundImage: item.img, width: item.width+'px',height:item.height+'px'}" style="background-repeat:no-repeat;background-size:100%;"> -->
                             <div v-for="(item, index) in imgaeArray" :key="index" v-html="item.imageDom.outerHTML" @mousedown="mousedownImg(item.imageDom, index, $event)" :id="`image-${index}`" @click.right.prevent="remove_img(index)"></div>
                                 <h1 id="p-99999" @mousedown="mousedownFn($event)">这是测试页面</h1>
                                 <p

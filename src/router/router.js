@@ -318,7 +318,7 @@ export const appRouter = [
                 path: 'legworkAssWorkorderAudit',
                 title: '外勤协助审核 ',
                 name: 'legworkAssWorkorderAudit_index',
-                component: () => import( /* webpackChunkName: "legworkAssWorkorderAudit_index" */ '@/views/missionCenter/legworkAssWorkorderAudit/index.vue')
+                component: () => import( /* webpackChunkName: "legworkAssWorkorderAudit_index" */ '@/views/missionCenter/legworkAssWorkorderAudit/index1.vue')
             },
             {
                 access: 6202,

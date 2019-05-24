@@ -1,31 +1,12 @@
 <template>
     <div>
         <Card style="min-width:800px">
-            <Row>
-                <ButtonGroup>
-                    <Button  type="primary" icon="plus"  name="order_add" @click="open_add">新增</Button>
-                    <Button  type="primary" icon="edit"  name="order_edit" @click="open_edit">编辑</Button>
-                    <Button  type="primary" icon="information-circled" name="order_show" @click="order_show">查看</Button>
-                    <!--<Button v-permission="['orderL.flowChart']" type="primary" icon="ios-crop" @click="open_flowChart">查看流程图</Button>-->
-                    <!--<Button v-permission="['orderL.resubmit']" type="primary" icon="refresh" @click="reapply_process" name="order_re_submit">重新提交</Button>-->
-                    <!--<Button v-permission="['orderL.amend']" type="primary" icon="edit" @click="xiugai_open" name="order_amend">修改</Button>-->
-                    <Button  type="primary" icon="trash-b"  name="order_amend" @click="del_order">删除</Button>
-                    <Button  type="primary" icon="ios-color-filter-outline" @click="get_data">刷新</Button>
-                    <!--  ↓ ↓ 该功能暂定，代码勿删  -->
-                    <!--<Button type="primary" icon="ios-color-filter-outline" @click="qihuaOpen()">企划(修改)</Button>-->
-                    <!--<Button v-permission="['orderL.invalid']" type="primary" icon="ios-color-filter-outline" @click="deleteOrder = true">订单作废</Button>-->
-                    <!--<Button v-permission="['orderL.export']" type="primary" icon="ios-color-filter-outline" @click="downloadExcel">导出Excel</Button>-->
-                    <!--<Button v-permission="['orderL.export']" type="primary" icon="ios-color-filter-outline" @click="account_downloadExcel">结算导出</Button>-->
-                </ButtonGroup>
-            </Row>
             <Row style="margin-top: 10px;">
                 <Table
                         :loading="loading"
                         highlight-row
                         size="small"
                         border
-                        @on-row-click="select_row"
-                        @on-row-dblclick="open_order_detail"
                         :columns="header"
                         :data="data"></Table>
                 <Page
@@ -40,24 +21,14 @@
                         style="margin-top: 10px"></Page>
             </Row>
         </Card>
-        <creat-order></creat-order>
-        <edit-order></edit-order>
-        <show-order></show-order>
     </div>
 </template>
 
 <script>
     import {DateFormat} from "../../../libs/utils";
-    import creatOrder from './creatOrder'
-    import editOrder from './editOrder'
-    import showOrder from './showOrder'
+
     export default {
-        name: "index",
-        components:{
-            creatOrder,
-            editOrder,
-            showOrder
-        },
+        name: "unApproveList",
         data(){
             return{
                 loading:false,
@@ -71,13 +42,13 @@
                 taskPlace_map:new Map(),
                 header:[
                     {
-                        title: '协助工单',
+                        title: '协助工单号',
                         key: 'apply_code',
                         minWidth: 140,
                     },
                     {
-                        title: '创建时间',
-                        key: 'create_date',
+                        title: '预计截止时间',
+                        key: 'expect_date',
                         minWidth: 140,
                     },
                     {
@@ -103,11 +74,6 @@
                     {
                         title: '地点',
                         key: 'task_place',
-                        minWidth: 140,
-                    },
-                    {
-                        title: '预计截至时间',
-                        key: 'expect_date',
                         minWidth: 140,
                     },
                     {
@@ -144,17 +110,6 @@
             }
         },
         methods:{
-            select_row(e){
-                console.log(e)
-                if(e.id){
-                    this.selectRow = e
-                }else{
-                    this.selectRow = ""
-                }
-            },
-            open_order_detail(e){
-                this.$bus.emit("OPEN_ORDERLIST_DETAIL", e.id)
-            },
             pageChange(e){
                 this.page = e
                 this.get_data()
@@ -163,53 +118,13 @@
                 this.pageSize = e
                 this.get_data()
             },
-            open_add(){
-                this.$bus.emit("OPEN_ORDERLIST_ADD", true)
-            },
-            open_edit(){
-                if(this.selectRow){
-                        this.$bus.emit("OPEN_ORDERLIST_EDIT", this.selectRow.id)
-                }else{
-                    this.$Message.warning("请选择一行进行操作！")
-                }
-            },
-            order_show(){
-                if(this.selectRow){
-                    this.open_order_detail(this.selectRow)
-                }else{
-                    this.$Message.warning("请选择一行进行操作！")
-                }
-            },
-            del_order(){
-                let _self = this
-                if(this.selectRow){
-                    let url = `api/task/deleteBusAssApply`
-                    let config = {
-                        params: {
-                            applyId: _self.selectRow.id
-                        }
-                    }
-                    function success(res){
-                        // _self.$Message.success(res.data.msg)
-                        setTimeout(()=>{
-                            _self.get_data()
-                        }, 500)
-                    }
-                    function fail(err){
-
-                    }
-                    _self.$Get(url, config, success, fail)
-                }else{
-                    this.$Message.warning("请选择一行进行操作！")
-                }
-            },
             get_data(){
                 let _self = this
                 let url =`api/task/getBusAssApplyList`
                 _self.loading = true
                 let config = {
                     params: {
-
+                        Audited:"Audited"
                     }
                 }
                 function success(res){
@@ -217,9 +132,7 @@
                     _self.data = res.data.data.rows
                     _self.total = res.data.data.total
                     for(let i = 0; i < _self.data.length; i++){
-                        _self.data[i].create_date = DateFormat(_self.data[i].create_date)
                         _self.data[i].expect_date = DateFormat(_self.data[i].expect_date)
-                        _self.data[i].check_date = DateFormat(_self.data[i].check_date)
                         _self.data[i].task_area = _self.taskArea_map.get(_self.data[i].task_area)
                         _self.data[i].task_place = _self.taskPlace_map.get(_self.data[i].task_place)
                     }
@@ -245,10 +158,9 @@
         },
         created() {
             this.loading = true
-            this.get_data_center().then(
+            this.get_data_center()
                 this.get_data()
-            )
-            this.$bus.on("UPDATE_ORDER_LIST", (e)=>{
+            this.$bus.on("UPDATE_APPROVE_LIST",()=>{
                 this.get_data()
             })
         }

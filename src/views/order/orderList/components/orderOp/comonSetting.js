@@ -275,8 +275,8 @@ export default {
                                     type: "month",
                                     transfer: false,
                                     size: "small",
-                                    // disabled: !this.orderItem[parmas.index].hasOwnProperty("servicestartdate"),
-                                    // readonly: !this.orderItem[parmas.index].hasOwnProperty("servicestartdate")
+                                    // disabled: !this.orderItem[parmas.index.vue].hasOwnProperty("servicestartdate"),
+                                    // readonly: !this.orderItem[parmas.index.vue].hasOwnProperty("servicestartdate")
                                     disabled: this.orderItem[parmas.index].iscycle == 'N',
                                     readonly: this.orderItem[parmas.index].iscycle == 'N',
                                 },
@@ -359,7 +359,7 @@ export default {
                                     },
                                     // "on-enter":function(event){
                                     //     console.log(event)
-                                    //     _self.orderItem[parmas.index].memo = event.target.value
+                                    //     _self.orderItem[parmas.index.vue].memo = event.target.value
                                     // },
                                 },
                                 style: {
