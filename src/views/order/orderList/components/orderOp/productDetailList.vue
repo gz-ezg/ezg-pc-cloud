@@ -98,6 +98,7 @@
                     <Col span="8">
                       <FormItem label="服务部门" prop="departid">
                         <Select
+                          v-if="pageFlag =='createOrder' || pageFlag =='editOrder'"
                           style="width:120px"
                           size="small"
                           @on-change="departChange($event, index)"

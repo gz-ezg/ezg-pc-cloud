@@ -5,7 +5,7 @@
         <Collapse v-model="search_model">
           <Panel name="1">
             <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>筛选
-            <div slot="content" @keydown.enter="search_finish">
+            <div slot="content" @keydown.enter="search">
               <Form ref="formInline" :model="formInline" :label-width="100">
                 <Row :gutter="16">
                   <Col span="8">
@@ -20,7 +20,7 @@
                   </Col>
                 </Row>
                 <FormItem>
-                  <Button type="primary" @click="search_finish">搜索</Button>
+                  <Button type="primary" @click="search">搜索</Button>
                   <Button type="ghost" style="margin-left:20px" @click="finishReset">重置</Button>
                 </FormItem>
               </Form>
@@ -321,7 +321,8 @@ export default {
       this.page = 1;
       this.pageSize = e;
       this.getPlanFinishedData();
-    },search_finish(){
+    },
+    search_finish(){
       this.getPlanFinishedData();
     }
   },
@@ -333,8 +334,8 @@ export default {
     } else {
       _self.isAdmin = false;
     }
-    this.$bus.$on('refresh',(e)=>{
-      this.getPlanFinishedData()
+    this.$bus.$on('refresh_plan',(e)=>{
+      _self.getPlanFinishedData()
     })
   }
 };

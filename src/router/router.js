@@ -1017,7 +1017,16 @@ export const appRouter = [
             title: '外勤管理',
             name: "commonfieldmanagement_index",
             component: () => import( /* webpackChunkName: "commonfieldmanagement_index" */ '@/views/fieldManagement/commonfield/commonFieldIndex.vue')
-        },{
+        },
+        {
+        access: 11638,
+            meta: 11638,
+        path: 'v2/legwork',
+        title: '外勤管理v2',
+        name: "legwork",
+        component: () => import( /* webpackChunkName: "commonfieldmanagement_index" */ '@/views/fieldManagement/v2/legwork.vue')
+       },
+        {
             access: 11627,
             meta: 11627,
             path: 'accountingCommonfieldManagement',
