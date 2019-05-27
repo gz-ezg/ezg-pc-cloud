@@ -120,16 +120,6 @@
                 },
                 header:[
                     {
-                        title: '协助工单号',
-                        key: 'apply_code',
-                        minWidth: 140,
-                    },
-                    {
-                        title: '预计截止时间',
-                        key: 'expect_date',
-                        minWidth: 140,
-                    },
-                    {
                         title: '企业',
                         key: 'companyname',
                         minWidth: 240,
@@ -162,6 +152,11 @@
                     {
                         title: '待分配',
                         key: 'excutor_name',
+                        minWidth: 140,
+                    },
+                    {
+                        title: '预计截止时间',
+                        key: 'expect_date',
                         minWidth: 140,
                     },
                 ],

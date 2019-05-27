@@ -97,16 +97,6 @@
                 },
                 header:[
                     {
-                        title: '协助工单号',
-                        key: 'apply_code',
-                        minWidth: 140,
-                    },
-                    {
-                        title: '预计截止时间',
-                        key: 'expect_date',
-                        minWidth: 140,
-                    },
-                    {
                         title: '企业',
                         key: 'companyname',
                         minWidth: 240,
@@ -142,11 +132,6 @@
                         minWidth: 140,
                     },
                     {
-                        title: '安排时间',
-                        key: 'plan_date',
-                        minWidth: 140,
-                    },
-                    {
                         title: '确认',
                         key: 'check_name',
                         minWidth: 140,
@@ -157,8 +142,23 @@
                         minWidth: 140,
                     },
                     {
+                        title: '核实状态',
+                        key: 'apply_status',
+                        minWidth: 140,
+                    },
+                    {
                         title: '核实时间',
                         key: 'check_date',
+                        minWidth: 140,
+                    },
+                    {
+                        title: '预计截止时间',
+                        key: 'expect_date',
+                        minWidth: 140,
+                    },
+                    {
+                        title: '安排时间',
+                        key: 'plan_date',
                         minWidth: 140,
                     },
                 ],
@@ -210,6 +210,19 @@
                         _self.data[i].expect_date = DateFormat(_self.data[i].expect_date)
                         _self.data[i].task_area = _self.taskArea_map.get(_self.data[i].task_area)
                         _self.data[i].task_place = _self.taskPlace_map.get(_self.data[i].task_place)
+                        if (_self.data[i].apply_status==="tesFinished") {
+                            _self.data[i].apply_status="同意"
+                        }
+                        if (_self.data[i].apply_status==="tesReturned") {
+                            _self.data[i].apply_status="驳回"
+                        }
+                        if (_self.data[i].apply_status==="tesReady") {
+                            _self.data[i].apply_status="待审核"
+                        }
+                        _self.data[i].create_date = DateFormat(_self.data[i].create_date)
+                        _self.data[i].expect_date = DateFormat(_self.data[i].expect_date)
+                        _self.data[i].check_date = DateFormat(_self.data[i].check_date)
+                        _self.data[i].plan_date =  DateFormat(_self.data[i].plan_date)
                     }
                     _self.loading = false
                 }
