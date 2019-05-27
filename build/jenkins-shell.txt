@@ -19,9 +19,8 @@ cp -r ./dist/* /usr/local/ezg/front_end/zgcfo_cloud
 2.有新依赖需要安装时请执行下面的命令
 
 npm install
-cp -r ./package_cover/fullcalendar/_dist/fullcalendar.js ./node_modules/fullcalendar/dist/
-cp -r ./package_cover/iview-area/_dist/iview-area.js ./node_modules/iview-area/dist/
-cp -r ./package_cover/vue-full-calendar/components/FullCalendar.vue ./node_modules/vue-full-calendar/components/
+npm run copy:package
+npm run dev:dll
 npm run jen
 rm -rf /usr/local/ezg/front_end/all_back_up/zgcfo_cloud/*
 mv /usr/local/ezg/front_end/zgcfo_cloud/* /usr/local/ezg/front_end/all_back_up/zgcfo_cloud/
