@@ -161,6 +161,7 @@ export default {
         finish_workerOrder(){
             let _self = this
             if(this.currentRow){
+                console.log( _self.currentRow);
                 let url = `api/order/goFinshWorkOrderProcess`
                 let config = {
                     params:{
