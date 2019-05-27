@@ -56,7 +56,7 @@ export default {
             header: [
                 // {
                 //     title: "序号",
-                //     type: "index",
+                //     type: "index.vue",
                 //     width: 90
                 // },
                 {

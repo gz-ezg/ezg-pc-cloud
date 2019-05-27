@@ -105,7 +105,7 @@ export default {
             isshow:false,
             header:[
                 // {
-                //     type:'index',
+                //     type:'index.vue',
                 //     width:60
                 // },
                 {

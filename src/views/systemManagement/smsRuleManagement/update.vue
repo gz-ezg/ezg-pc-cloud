@@ -276,7 +276,7 @@ export default {
             this.linkUserData[index].departNameList.push(depart.departname)
             this.linkUserData[index].departIdList.push(depart.departId)
             this.openDepartTree = false
-            // console.log(index, depart)
+            // console.log(index.vue, depart)
         }
     },
     created(){

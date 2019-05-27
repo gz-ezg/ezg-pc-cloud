@@ -28,6 +28,18 @@
                     </Col>
                     <Col span="18"><span>{{hover_local.creatorName}}</span></Col>
                 </Row>
+                <Row :gutter="20">
+                    <Col span="6">
+                        <span>地区：</span>
+                    </Col>
+                    <Col span="18"><span>{{hover_local.Area}}</span></Col>
+                </Row>
+                <Row :gutter="20">
+                    <Col span="6">
+                        <span>地点：</span>
+                    </Col>
+                    <Col span="18"><span>{{hover_local.depart}}</span></Col>
+                </Row>
             </Card>
             <Row :gutter="20">
                 <Col span="18">
@@ -56,12 +68,9 @@
                         </datepicker>
                     </Row>
                     <Row>
-                        <span>执行中的任务——<span style="color:blue">蓝色</span><br/></span>
-                        <span>当天需要完结的任务——<span style="color:orange">黄色</span><br/></span>
-                        <span>完结任务——<span style="color:#228B22">绿色</span><br/></span>
-                        <span>逾期任务——<span style="color:red">红色</span><br/></span>
-                        <span>线索未完成——<span style="color:#FF7F00">橙色</span><br/></span>
-                        <span>线索完成——<span style="color:#228B22">绿色</span><br/></span>
+                        <span>商事外勤——<span style="color:#FC9D99">橙红色</span><br/></span>
+                        <span>工单协助——<span style="color:#AEDD81">草绿色</span><br/></span>
+                        <span>代账协助——<span style="color:orange">橙色</span><br/></span>
                     </Row>
                     <Row>
                         <Row style="margin-bottom:10px"><h3>{{local_date}}</h3></Row>
@@ -136,6 +145,7 @@
         },
         data(){
             return{
+                load:false,
                 businessArea:[],
                 businessPlace:[],
                 businessArea_map:new Map(),
@@ -273,13 +283,16 @@
                     params:{
                         page: 1,
                         pageSize: 1000,
-                        task_kind:"tkLegBus"
+                        businessKind:"businessKind"
                     }
                 }
 
                 function success(res){
                     _self.events_temp = res.data.data.rows
                     console.log(_self.events_temp )
+                    if (_self.events_temp.length===0 && _self.load) {
+                        window.location.reload()
+                    }
                     for(let i = 0;i<_self.events_temp.length;i++){
                         _self.events_temp[i].start = _self.events_temp[i].planDate
                         _self.events_temp[i].title = _self.events_temp[i].taskName
@@ -294,7 +307,13 @@
                         _self.events_temp[i].depart = _self.businessPlace_map.get(_self.events_temp[i].taskPlace)
                         _self.events_temp[i].CompanyName = _self.events_temp[i].companyName
                         if(_self.events_temp[i].taskKind === "tkLegBus"){
-                            _self.events_temp[i].color = "blue"
+                            _self.events_temp[i].color = "#FC9D99"
+                        }
+                        if(_self.events_temp[i].taskKind === "tkLegCycAss"){
+                            _self.events_temp[i].color = "orange"
+                        }
+                        if(_self.events_temp[i].taskKind === "tkLegBusAss"){
+                            _self.events_temp[i].color = "#AEDD81"
                         }
                         // if(_self.events_temp[i].plan_date.slice(0,10) == _self.local_date){
                         //     _self.events_temp[i].color = "orange"
@@ -379,6 +398,7 @@
             })
             _self.$bus.on("UPDATE_TASK_LIST",(e)=>{
                 _self.get_data()
+                _self.load= true
             })
         }
     }

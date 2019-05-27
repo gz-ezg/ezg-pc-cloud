@@ -10,6 +10,14 @@
                 <new-edit-div v-model="newMission.taskName"></new-edit-div>
                 <div class="spz">
                     <div class="spzz" @click="showPhrase"><Icon type="android-chat" ></Icon></div>
+                    <div class="select">
+                        <Select ref="sel"
+                                 size="small"
+                                 v-model="newMission.followResult"
+                        >
+                        <Option v-for="item in followResult" :value="item.typecode" :key="item.typecode">{{item.typename}}</Option>
+                        </Select>
+                    </div>
                 </div>
             </div>
             <div v-show="phraseShow" class="ssz">
@@ -22,19 +30,19 @@
                     <div class="sszz1" @click="add_schtask"><h4>+添加</h4></div>
                 </Card>
             </div>
-            <!--<Row :gutter="12">-->
-                <!--<Col span="12">-->
-                    <!--<FormItem label="仅启用客户搜索" prop="companyId">-->
-                        <!--<Checkbox  @on-change="changeSelect"></Checkbox>-->
-                    <!--</FormItem>-->
-                <!--</Col>-->
-                <!--<Col span="12">-->
-
-                <!--</Col>-->
-            <!--</Row>-->
             <Row :gutter="12">
                 <Col span="12">
-                    <FormItem label="企业" prop="companyId">
+                    <FormItem label="客户搜索" prop="companyId">
+                        <Checkbox  @on-change="changeSelect" size="large"></Checkbox>
+                    </FormItem>
+                </Col>
+                <Col span="12">
+
+                </Col>
+            </Row>
+            <Row :gutter="12">
+                <Col span="12" v-if="showSelect">
+                    <FormItem label="企业" prop="company">
                         <Select ref="select"
                                 v-model="newMission.companyId" placeholder="请输入企业名称搜索"
                                 filterable
@@ -44,23 +52,64 @@
                                 @on-change="get_customerId"
                                 :loading="companyLoading"
                         >
-                            <Option v-for="item in companyList" :value="item.companyid" :key="item.companyid" >{{item.companyname}}</Option>
+                            <Option v-if="rendering" v-for="item in companyList" :value="item.companyid" :key="item.companyid" >{{item.companyname}}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="12">
-                    <FormItem label="客户" prop="companyId">
-                        <Select ref="sel"
+                <Col span="12" v-if="showSelecte">
+                    <FormItem label="客户" prop="customer">
+                        <Select ref="select"
                                 v-model="newMission.customerId"
-                                placeholder="请输入客户名称或电话搜索"
-                                :filterable="filterable"
-                                :remote="remote"
+                                placeholder="请输入客户名称搜索"
+                                filterable
+                                remote
                                 :remote-method="get_customer"
+                                @on-change="get_companyId"
                                 :loading="companyLoading"
                         >
-                            <Option v-for="item in productList" :value="item.customerid" :key="item.customerid">{{item.name}}</Option>
+                            <Option  v-for="item in productList" :value="item.customerid" :key="item.customerid" :label="item.name">
+                                <span>{{item.name}}</span>
+                                <span style="float:right;color:#ccc">{{item.tel}}</span>
+                            </Option>
                         </Select>
                     </FormItem>
+                </Col>
+                <Col span="12" v-if="showSelect">
+                    <FormItem label="客户" prop="customerId">
+                        <Select ref="sel"
+                                v-model="newMission.customerId"
+                                placeholder="请先输入企业名称搜索"
+                                :loading="companyLoading"
+                        >
+                            <Option v-if="rendering" v-for="item in pproductList" :value="item.customerid" :key="item.customerid">{{item.name}}</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
+                <Col span="12" v-if="showSelecte">
+                    <FormItem label="企业" prop="companyId">
+                        <Select ref="sel"
+                                v-model="newMission.companyId"
+                                placeholder="请先输入客户名称搜索"
+                                :loading="companyLoading"
+                        >
+                            <Option v-if="rendering"  v-for="item in cIdList" :value="item.companyid" :key="item.companyid">{{item.companyname}}</Option>
+                        </Select>
+                    </FormItem>
+                    <!--<FormItem label="客户" prop="companyId">-->
+                        <!--<Select ref="sel"-->
+                                <!--v-model="newMission.customerId"-->
+                                <!--placeholder="请输入客户名称搜索"-->
+                                <!--filterable-->
+                                <!--remote-->
+                                <!--:remote-method="get_customer"-->
+                                <!--:loading="companyLoading"-->
+                        <!--&gt;-->
+                            <!--<Option v-if="rendering"  v-for="item in productList" :value="item.customerid" :key="item.customerid" :label="item.name">-->
+                                <!--<span>{{item.name}}</span>-->
+                                <!--<span style="float:right;color:#ccc">{{item.tel}}</span>-->
+                            <!--</Option>-->
+                        <!--</Select>-->
+                    <!--</FormItem>-->
                 </Col>
             </Row>
             <Row :gutter="12">
@@ -75,7 +124,7 @@
                     </FormItem>
                 </Col> -->
                 <Col span="12">
-                    <FormItem label="执行者">
+                    <FormItem label="执行者" prop="executorId">
                         <Select
                                 v-model="newMission.executorId"
                                 placeholder="执行者"
@@ -116,7 +165,7 @@
                 <!-- <Col span="12">
                     <FormItem label="任务阶段">
                         <Select v-model="newMission.taskStage">
-                            <Option v-for="(item,index) in taskStage" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                            <Option v-for="(item,index.vue) in taskStage" :key="index.vue" :value="item.typecode">{{item.typename}}</Option>
                         </Select>
                     </FormItem>
                 </Col> -->
@@ -125,21 +174,21 @@
                 <Col span="12">
                     <FormItem label="跟进结果">
                         <Select v-model="newMission.followResult">
-                            <Option v-for="(item,index) in market_status" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                            <Option v-for="(item,index.vue) in market_status" :key="index.vue" :value="item.typecode">{{item.typename}}</Option>
                         </Select>
                     </FormItem>
                 </Col>
                 <Col span="12">
                     <FormItem label="跟进方式">
                         <Select v-model="newMission.followUpType">
-                            <Option v-for="(item,index) in markert_follow_up_type" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                            <Option v-for="(item,index.vue) in markert_follow_up_type" :key="index.vue" :value="item.typecode">{{item.typename}}</Option>
                         </Select>
                     </FormItem>
                 </Col>
             </Row> -->
             <!-- <FormItem label="任务标签">
                 <CheckboxGroup v-model="newMission.taskLable">
-                    <Checkbox v-for="(item, index) in label" :key="index" :label="item"></Checkbox>
+                    <Checkbox v-for="(item, index.vue) in label" :key="index.vue" :label="item"></Checkbox>
                 </CheckboxGroup>
             </FormItem> -->
         </Form>
@@ -167,11 +216,14 @@
         data(){
             return {
                 text:"",
+                rendering:false,
                 disabled:false,
-                filterable:true,
-                remote:true,
+                showSelect:true,
+                showSelecte:false,
+                readonly:false,
                 phraseShow:false,
                 currentId:null,
+                companyRendering:false,
                 newMission: {
                     taskName: "",
                     taskContent: "",
@@ -182,10 +234,10 @@
                     taskKind: "",
                     businessPlace:"shuiju",
                     businessArea:"tianhe",
+                    followResult:"EarlyContact",
                     cycleType:"A",
                     node:"Y",
                     taskStage: "",
-                    followResult: "",
                     followUpType: "",
                     companyId: "",
                     executorId: [],
@@ -200,10 +252,12 @@
                 companyLoading: false,
                 phraseList:[],
                 companyList: [],
+                cIdList: [],
                 userList: [
 
                 ],
                 productList:[],
+                pproductList:[],
                 nodeList:[{"typecode":"Y","typename":"是"},{"typecode":"N","typename":"否"}],
                 cycleTypeList:[{"typecode":"A","typename":"A类"},{"typecode":"B","typename":"B类"}],
                 cycleTypeNameList:[],
@@ -211,6 +265,7 @@
                 allUserList_map: new Map(),
                 businessArea:[],
                 businessPlace:[],
+                followResult:[],
                 taskLevel: [],
                 taskDesCode: [],
                 taskKind: [],
@@ -225,6 +280,7 @@
                 markert_follow_up_type_map: new Map(),
                 businessArea_map:new Map(),
                 businessPlace_map:new Map(),
+                followResult_map:new Map(),
                 userLoading: false,
                 user: "",
                 useropen: false
@@ -234,9 +290,17 @@
         methods:{
             changeSelect(){
                 this.disabled=!this.disabled
-                this.filterable=!this.filterable
-                this.remote=!this.remote
-                this.cancel_task()
+                this.showSelect=!this.showSelect
+                this.showSelecte=!this.showSelecte
+                this.$refs.select.setQuery(null)
+                this.$refs.sel.setQuery(null)
+                this.newMission.companyId = null
+                this.newMission.customerId = null
+                this.rendering = false
+                this.companyList = []
+                this.productList = []
+                this.pproductList = []
+                this.cIdList = []
             },
             giveData(item){
                 this.newMission.taskName=this.newMission.taskName+item.quick_content
@@ -248,7 +312,7 @@
             },
             selectArr(id){
                 this.delete_phrase_list(id)
-                // this.addArr.splice(index,1)
+                // this.addArr.splice(index.vue,1)
             },
             add_schtask(){
                 this.$bus.emit("ADD_ACCOUNT_TASK",true)
@@ -267,7 +331,7 @@
                 let url = 'api/task/findTaskQuickList'
                 let config = {
                     params:{
-                        quickType: "account"
+                        quickType: "market"
                     }
                 }
                 function success(res){
@@ -281,7 +345,7 @@
                 _self.phraseLoading = true
                 let url = 'api/task/addTaskQuick'
                 let config={
-                    quickType:"account",
+                    quickType:"market",
                     quickContent:e,
                     quickIndex:1,
                 }
@@ -309,19 +373,18 @@
                 }
                 this.$Get(url, config, success)
             },
-            create_task(){
+            create_task() {
                 let _self = this
-                if (_self.newMission.taskName==="" ||
-                    _self.newMission.companyId==="" ||
-                    _self.newMission.customerId===null){
+                if (_self.newMission.taskName ==""|| _self.newMission.taskName ==null) {
                     this.$Message.warning('请把上述信息填写完整')
                     return
                 }
                 _self.createLoading = true
                 // let url = `api/task/addLegworkTask`
                 let executorNameArray = []
-                for(let i = 0; i < _self.newMission.executorId.length; i++){
+                for (let i = 0; i < _self.newMission.executorId.length; i++) {
                     executorNameArray.push(_self.allUserList_map.get(_self.newMission.executorId[i].toString()))
+                    console.log(executorNameArray)
                 }
                 // let config = {
                 //     taskKind: "tkLegBus",
@@ -351,82 +414,44 @@
                 // }
                 //
                 // this.$Post(url, config, success, fail)
-                if (_self.newMission.taskKind==='tkLegAccCyc'){
-                    let url = `api/task/addAccLegworkTask`
-                    let config = {
-                            taskKind: "tkLegAccCyc",
-                            taskName: _self.newMission.taskName,
-                            companyId: _self.newMission.companyId,
-                            executorId: _self.newMission.executorId.join(","),
-                            customerId:_self.newMission.customerId,
-                            executorName: executorNameArray.join(","),
-                            sPlanDate: FULLDateFormat(_self.newMission.planDate),
-                            legTypeId: _self.newMission.cycleTypeId,
-                            legType: _self.newMission.cycleType,
-                            legName: _self.newMission.cycleTypeName
-                        }
-                    function success(res){
-                            _self.createLoading = false
-                            _self.openAddMission = false
-                            _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST_DEMO", true)
-                            _self.cancel_task()
-                        }
-                    function fail(err){
-                            _self.createLoading = false
-                        }
-                    this.$Post(url, config, success, fail)
+                let url = `api/task/addMarketLegworkTask`
+                let config = {
+                    taskName: _self.newMission.taskName,
+                    companyId: _self.newMission.companyId,
+                    executorId: _self.newMission.executorId.join(","),
+                    customerId: _self.newMission.customerId,
+                    executorName: executorNameArray.join(","),
+                    sPlanDate: FULLDateFormat(_self.newMission.planDate),
+                    followResult: _self.newMission.followResult
                 }
-                if (_self.newMission.taskKind==='tkLegAcc') {
-                    let url = `api/task/addLegworkTask`
-                    let config = {
-                        taskKind: "tkLegAcc",
-                        taskName: _self.newMission.taskName,
-                        companyId: _self.newMission.companyId,
-                        executorId: _self.newMission.executorId.join(","),
-                        customerId:_self.newMission.customerId,
-                        executorName: executorNameArray.join(","),
-                        sPlanDate: FULLDateFormat(_self.newMission.planDate),
-                        taskArea:_self.newMission.businessArea,
-                        taskPlace:_self.newMission.businessPlace,
-                    }
-                    function success(res){
-                        _self.createLoading = false
-                        _self.openAddMission = false
-                        _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST_DEMO", true)
-                        _self.cancel_task()
-                    }
-                    function fail(err){
-                        _self.createLoading = false
-                    }
-                    this.$Post(url, config, success, fail)
+
+                function success(res) {
+                    _self.createLoading = false
+                    _self.openAddMission = false
+                    _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST_DEMO", true)
+                    _self.newMission.taskName=null
+                    _self.cancel_task()
                 }
-                if (_self.newMission.taskKind==='tkLegAccHom'){
-                    let url = `api/task/addAccLegworkTask`
-                    let config = {
-                        taskKind: "tkLegAccHom",
-                        taskName: _self.newMission.taskName,
-                        companyId: _self.newMission.companyId,
-                        executorId: _self.newMission.executorId.join(","),
-                        customerId:_self.newMission.customerId,
-                        executorName: executorNameArray.join(","),
-                        sPlanDate: FULLDateFormat(_self.newMission.planDate),
-                    }
-                    function success(res){
-                        _self.createLoading = false
-                        _self.openAddMission = false
-                        _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST_DEMO", true)
-                        _self.cancel_task()
-                    }
-                    function fail(err){
-                        _self.createLoading = false
-                    }
-                    this.$Post(url, config, success, fail)
+
+                function fail(err) {
+                    _self.createLoading = false
                 }
+
+                this.$Post(url, config, success, fail)
+
             },
             cancel_task(){
                 this.$refs.select.setQuery(null)
                 this.$refs.sel.setQuery(null)
+                this.newMission.taskName = null
                 this.$refs['newMission'].resetFields();
+                this.newMission.companyId = null
+                this.newMission.customerId = null
+                this.rendering = false
+                this.companyList = []
+                this.productList = []
+                this.pproductList = []
+                this.cIdList = []
             },
             get_user(query){
                 let _self = this
@@ -463,6 +488,7 @@
                 function success(res){
                     _self.companyLoading = false
                     _self.companyList = res.data.data
+                    _self.rendering = true
                 }
                 this.$Get(url, config, success)
             },
@@ -506,24 +532,29 @@
                     this.$Get(url, config, success)
                 }
             },
-            get_companyId(id){
+            get_companyId(){
                 let _self = this
                 let url = `api/legwork/apiQueryCompanyOrCustomerMsg`
                 _self.userLoading = true
                 let config = {
                     params:{
-                        customerId:id,
+                        customerId:_self.newMission.customerId,
                     }
                 }
                 function success(res){
                     _self.userLoading = false
-                    _self.companyList = res.data.data
+                    _self.cIdList = res.data.data
                     console.log(res.data.data)
-                    if (_self.companyList.length!==0){
-                        _self.newMission.companyId =  _self.companyList[0].companyid
-                    }else {
+                    if (_self.newMission.customerId==null){
+                        _self.cIdList= []
+                    }
+                    if (_self.cIdList.length!==0){
+                        _self.newMission.companyId =  _self.cIdList[0].companyid
+                    }
+                    else {
                         _self.newMission.companyId = null
                     }
+                        _self.rendering=true
                 }
 
                 this.$Get(url, config, success)
@@ -538,14 +569,15 @@
                     }
                 }
                 function success(res){
+                    _self.rendering=true
                     if (_self.newMission.companyId==null){
-                        _self.productList = []
+                        _self.pproductList = []
                     } else {
                     _self.userLoading = false
-                    _self.productList = res.data.data
+                    _self.pproductList = res.data.data
                     console.log(res.data.data)
-                    if (_self.productList.length!==0){
-                        _self.newMission.customerId =  _self.productList[0].customerid
+                    if (_self.pproductList.length!==0){
+                        _self.newMission.customerId =  _self.pproductList[0].customerid
                     }else {
                         _self.newMission.customerId = null
                     }
@@ -554,19 +586,19 @@
 
                 this.$Get(url, config, success)
             },
-            name_change(){
-                let _self = this
-                let obj = {}
-                let arr = _self.companyList
-
-                for (let i=0;i<arr.length;i++){
-                    let name= arr[i].companyname
-                    let id = arr[i].companyid
-                    obj[id] = name
-                }
-                _self.newMission.companyName = obj[_self.newMission.companyId]
-                console.log(_self.newMission.companyName)
-            },
+            // name_change(){
+            //     let _self = this
+            //     let obj = {}
+            //     let arr = _self.companyList
+            //
+            //     for (let i=0;i<arr.length;i++){
+            //         let name= arr[i].companyname
+            //         let id = arr[i].companyid
+            //         obj[id] = name
+            //     }
+            //     _self.newMission.companyName = obj[_self.newMission.companyId]
+            //     console.log(_self.newMission.companyName)
+            // },
             get_type_list(){
                 let _self = this
                 let url = `api/user/legwork/cycle/type/list`
@@ -592,7 +624,7 @@
                 this.$Get(url, config, success)
             },
             get_data_center(){
-                let params = "taskLevel,taskDesCode,taskKind,taskStage,market_status,markert_follow_up_type,gzbusinessarea,gzbusinessplace"
+                let params = "taskLevel,taskDesCode,taskKind,taskStage,market_status,markert_follow_up_type,gzbusinessarea,gzbusinessplace,followStage"
 
                 let _self = this
 
@@ -605,6 +637,7 @@
                     _self.markert_follow_up_type = res.data.data.markert_follow_up_type
                     _self.businessArea = res.data.data.gzbusinessarea
                     _self.businessPlace = res.data.data.gzbusinessplace
+                    _self.followResult= res.data.data.followStage
                     _self.taskLevel_map = _self.$array2map(_self.taskLevel)
                     _self.taskDesCode_map = _self.$array2map(_self.taskDesCode)
                     _self.taskKind_map = _self.$array2map(_self.taskKind)
@@ -613,6 +646,7 @@
                     _self.markert_follow_up_type_map = _self.$array2map(_self.markert_follow_up_type)
                     _self.businessArea_map = _self.$array2map(_self.businessArea)
                     _self.businessPlace_map = _self.$array2map(_self.businessPlace)
+                    _self.followResult_map = _self.$array2map(_self.followResult)
                 }
                 this.$GetDataCenter(params, success)
             },
@@ -671,12 +705,15 @@
 
 <style>
 .spz{
-    height: 25px;
+    height: 60px;
     width: 100%;
     border: 1px solid #dddee1;
     border-top: none;
     background-color: #fff;
     cursor: text;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .sp{
     margin-bottom: 25px;
@@ -689,6 +726,10 @@
 }
 .spzz:hover{
     color: #2d8cf0;
+}
+.select{
+    width: 150px;
+    margin: 0 10px 0 0;
 }
 .ssz{
     width: 200px;

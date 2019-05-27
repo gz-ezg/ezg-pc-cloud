@@ -40,7 +40,7 @@
                 _self.amendLoading = true
                 let url = 'api/task/updateTaskQuick'
                 let config={
-                    quickType:"account",
+                    quickType:"market",
                     quickContent:_self.content,
                     quickIndex:1,
                     id:_self.id

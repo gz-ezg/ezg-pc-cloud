@@ -266,7 +266,7 @@ export default {
                 if(params.row.companyNames == ''|| params.row.companyNames == null){
                   return ''
                 }else{
-                  // console.log(this.data[params.index].companyNames[0].name.length)
+                  // console.log(this.data[params.index.vue].companyNames[0].name.length)
                   if(this.data[params.index].companyNames[0].name.length>13){
                     return h('Poptip', {
                       props: {

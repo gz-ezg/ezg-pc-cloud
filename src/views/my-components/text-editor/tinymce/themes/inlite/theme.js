@@ -2358,7 +2358,7 @@ jsc */
                       filters = selector[si];
 
                       while (item) {
-              // Find the index and length since a pseudo filter like :first needs it
+              // Find the index.vue and length since a pseudo filter like :first needs it
                           if (filters.pseudo) {
                               siblings = item.parent().items();
                               index = length = siblings.length;
@@ -2616,7 +2616,7 @@ jsc */
           },
 
       /**
-       * Makes the current collection equal to the specified index.
+       * Makes the current collection equal to the specified index.vue.
        *
        * @method eq
        * @param {Number} index Index of the item to set the collection to.
@@ -2650,7 +2650,7 @@ jsc */
           },
 
       /**
-       * Finds the index of the specified control or return -1 if it isn't in the collection.
+       * Finds the index.vue of the specified control or return -1 if it isn't in the collection.
        *
        * @method indexOf
        * @param {Control} ctrl Control instance to look for.
@@ -5764,7 +5764,7 @@ jsc */
           }
 
       /**
-       * Focuses the first item in the specified targetControl element or the last aria index if the
+       * Focuses the first item in the specified targetControl element or the last aria index.vue if the
        * navigation root has the ariaRemember option enabled.
        *
        * @private
@@ -5782,13 +5782,13 @@ jsc */
           }
 
       /**
-       * Moves the focus to the specified index within the elements list.
-       * This will scope the index to the size of the element list if it changed.
+       * Moves the focus to the specified index.vue within the elements list.
+       * This will scope the index.vue to the size of the element list if it changed.
        *
        * @private
-       * @param {Number} idx Specified index to move to.
+       * @param {Number} idx Specified index.vue to move to.
        * @param {Array} elements Array with dom elements to move focus within.
-       * @return {Number} Input index or a changed index if it was out of range.
+       * @return {Number} Input index.vue or a changed index.vue if it was out of range.
        */
           function moveFocusToIndex (idx, elements) {
               if (idx < 0) {
@@ -6303,12 +6303,12 @@ jsc */
           },
 
       /**
-       * Inserts an control at a specific index.
+       * Inserts an control at a specific index.vue.
        *
        * @method insert
        * @param {Array/tinymce.ui.Collection} items Array if controls to insert.
        * @param {Number} index Index to insert controls at.
-       * @param {Boolean} [before=false] Inserts controls before the index.
+       * @param {Boolean} [before=false] Inserts controls before the index.vue.
        */
           insert: function (items, index, before) {
               var self = this, curItems, beforeItems, afterItems;
@@ -6979,7 +6979,7 @@ jsc */
           var modalBlockEl = DomQuery('#' + ctrl.classPrefix + 'modal-block', ctrl.getContainerElm())[0];
 
           if (topModal) {
-              DomQuery(modalBlockEl).css('z-index', topModal.zIndex - 1);
+              DomQuery(modalBlockEl).css('z-index.vue', topModal.zIndex - 1);
           } else if (modalBlockEl) {
               modalBlockEl.parentNode.removeChild(modalBlockEl);
               hasModal = false;
@@ -8162,7 +8162,7 @@ jsc */
   function () {
     /**
      * Returns a range bookmark. This will convert indexed bookmarks into temporary span elements with
-     * index 0 so that they can be restored properly after the DOM has been modified. Text bookmarks will not have spans
+     * index.vue 0 so that they can be restored properly after the DOM has been modified. Text bookmarks will not have spans
      * added to them since they can be restored after a dom operation.
      *
      * So this: <p><b>|</b><b>|</b></p>
@@ -11303,7 +11303,7 @@ jsc */
               self.on('click', function (e) {
                   var index, target = e.target;
 
-                  if ((index = target.getAttribute('data-index'))) {
+                  if ((index = target.getAttribute('data-index.vue'))) {
                       self.fire('select', { value: self.row()[index], index: index });
                   }
               });
@@ -11373,7 +11373,7 @@ jsc */
               for (i = 0, l = parts.length; i < l; i++) {
                   html += (
             (i > 0 ? '<div class="' + prefix + 'divider" aria-hidden="true"> ' + self.settings.delimiter + ' </div>' : '') +
-            '<div role="button" class="' + prefix + 'path-item' + (i == l - 1 ? ' ' + prefix + 'last' : '') + '" data-index="' +
+            '<div role="button" class="' + prefix + 'path-item' + (i == l - 1 ? ' ' + prefix + 'last' : '') + '" data-index.vue="' +
             i + '" tabindex="-1" id="' + self._id + '-' + i + '" aria-level="' + (i + 1) + '">' + parts[i].name + '</div>'
           );
               }
@@ -18079,7 +18079,7 @@ jsc */
  * @class tinymce.ui.TabPanel
  * @extends tinymce.ui.Panel
  *
- * @setting {Number} activeTab Active tab index.
+ * @setting {Number} activeTab Active tab index.vue.
  */
     define(
   'tinymce.ui.TabPanel',
@@ -18100,7 +18100,7 @@ jsc */
           },
 
       /**
-       * Activates the specified tab by index.
+       * Activates the specified tab by index.vue.
        *
        * @method activateTab
        * @param {Number} idx Index of the tab to activate.

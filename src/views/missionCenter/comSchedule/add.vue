@@ -40,6 +40,7 @@
                 } else {
                 this.$bus.emit("ADD_PHRASE",this.content)
                 this.openAddTask = false
+                this.content = null
                 }
             },
             cancel_task(){

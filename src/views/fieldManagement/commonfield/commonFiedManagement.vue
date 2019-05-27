@@ -154,7 +154,7 @@
                             <Col span="11">
                                 <FormItem prop="assiststatus" label="外勤类型：" style="margin-bottom:5px">
                                     <!-- <Select type="text" v-model="fiedDetail.fieldtype"  disabled>
-                                        <Option v-for="(item,index) in fieldClockType" :key=index :value="item.typecode">{{item.typename}}</Option>
+                                        <Option v-for="(item,index.vue) in fieldClockType" :key=index.vue :value="item.typecode">{{item.typename}}</Option>
                                     </Select> -->
                                     <Input type="text" v-model="fiedDetail.assiststatus"  disabled>
                                     </Input>
@@ -310,7 +310,7 @@
                                     }),
                                     h('div',{
                                         slot:'content',
-                                        
+
                                     },[
                                         h('span',params.row.address1)
                                     ])

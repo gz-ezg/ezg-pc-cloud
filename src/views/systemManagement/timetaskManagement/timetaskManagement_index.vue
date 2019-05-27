@@ -112,7 +112,7 @@ export default {
             isShow:false,
             header:[
                     // {
-                    //     type: 'index',
+                    //     type: 'index.vue',
                     //     width: 50,
                     //     title:'序号',
                     //     align: 'center'

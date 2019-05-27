@@ -58,6 +58,12 @@
             //     }
             // }
 
+        },
+        created() {
+            this.$bus.on("RESET_INNERTEXT",(e)=>{
+                this.value = null
+                this.innerText = null
+            })
         }
     }
 </script>

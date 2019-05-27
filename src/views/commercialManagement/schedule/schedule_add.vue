@@ -75,7 +75,7 @@
                     <!-- <Col span="12">
                         <FormItem prop="scheduleStatus" label="外勤状态：">
                             <Select transfer v-model="schedule.scheduleStatus" placeholder="" transfer>
-                                <Option v-for="(item,index) in fieldStatus" :key = index :value="item.typecode">{{item.typename}}</Option>                                
+                                <Option v-for="(item,index.vue) in fieldStatus" :key = index.vue :value="item.typecode">{{item.typename}}</Option>
                             </Select>
                         </FormItem>
                     </Col> -->

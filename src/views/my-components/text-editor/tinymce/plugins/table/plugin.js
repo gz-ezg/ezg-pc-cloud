@@ -2720,7 +2720,7 @@ jsc */
           // Get the element from the details
                   var item = thingsToMeasure[i].element;
 
-          // We need to zero index this again
+          // We need to zero index.vue this again
                   tablePositions.push(getInner(i - 1, item));
               }
 
@@ -3265,7 +3265,7 @@ jsc */
               return pixelBasedSizeRegex.test(size);
           }
 
-      // Adjust the width of the column of table at index, with delta.
+      // Adjust the width of the column of table at index.vue, with delta.
           function adjustWidth (table, delta, index) {
               var tableDetails = getTableDetails(table);
               var tableGrid = getTableGrid(tableDetails);
@@ -3319,7 +3319,7 @@ jsc */
               });
           }
 
-      // Adjust the height of the row of table at index, with delta.
+      // Adjust the height of the row of table at index.vue, with delta.
           function adjustHeight (table, delta, index) {
               var tableDetails = getTableDetails(table);
               var tableGrid = getTableGrid(tableDetails);

@@ -173,7 +173,7 @@ export default {
             ghostClass: 'placeholder-style',
             fallbackClass: 'iview-admin-cloned-item',
             onRemove (event) {
-                vm.doArray.splice(event.newIndex, 0, vm.todoArray[event.item.getAttribute('data-index')]);
+                vm.doArray.splice(event.newIndex, 0, vm.todoArray[event.item.getAttribute('data-index.vue')]);
             }
         });
         let doList = document.getElementById('doList');
@@ -200,7 +200,7 @@ export default {
             ghostClass: 'placeholder-style',
             fallbackClass: 'iview-admin-cloned-item',
             onRemove (event) {
-                vm.affordList.splice(event.newIndex, 0, vm.shoppingList[event.item.getAttribute('data-index')]);
+                vm.affordList.splice(event.newIndex, 0, vm.shoppingList[event.item.getAttribute('data-index.vue')]);
             }
         });
         let affordList = document.getElementById('affordList');

@@ -132,7 +132,7 @@
                 <!-- <Col span="12">
                     <FormItem label="任务阶段">
                         <Select v-model="newMission.taskStage">
-                            <Option v-for="(item,index) in taskStage" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                            <Option v-for="(item,index.vue) in taskStage" :key="index.vue" :value="item.typecode">{{item.typename}}</Option>
                         </Select>
                     </FormItem>
                 </Col> -->
@@ -141,21 +141,21 @@
                 <Col span="12">
                     <FormItem label="跟进结果">
                         <Select v-model="newMission.followResult">
-                            <Option v-for="(item,index) in market_status" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                            <Option v-for="(item,index.vue) in market_status" :key="index.vue" :value="item.typecode">{{item.typename}}</Option>
                         </Select>
                     </FormItem>
                 </Col>
                 <Col span="12">
                     <FormItem label="跟进方式">
                         <Select v-model="newMission.followUpType">
-                            <Option v-for="(item,index) in markert_follow_up_type" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                            <Option v-for="(item,index.vue) in markert_follow_up_type" :key="index.vue" :value="item.typecode">{{item.typename}}</Option>
                         </Select>
                     </FormItem>
                 </Col>
             </Row> -->
             <!-- <FormItem label="任务标签">
                 <CheckboxGroup v-model="newMission.taskLable">
-                    <Checkbox v-for="(item, index) in label" :key="index" :label="item"></Checkbox>
+                    <Checkbox v-for="(item, index.vue) in label" :key="index.vue" :label="item"></Checkbox>
                 </CheckboxGroup>
             </FormItem> -->
         </Form>
@@ -217,7 +217,7 @@
                 ],
                 productList:[],
                 nodeList:[{"typecode":"Y","typename":"是"},{"typecode":"N","typename":"否"}],
-                cycleTypeList:[{"typecode":"A","typename":"A类"},{"typecode":"B","typename":"B类"}],
+                cycleTypeList:[{"typecode":"A","typename":"A类"},{"typecode":"B","typename":"B类"},{"typecode":"其他","typename":"其他"}],
                 cycleTypeNameList:[],
                 allUserList: [],
                 allUserList_map: new Map(),
@@ -254,7 +254,7 @@
             },
             selectArr(id){
                 this.delete_phrase_list(id)
-                // this.addArr.splice(index,1)
+                // this.addArr.splice(index.vue,1)
             },
             add_schtask(){
                 this.$bus.emit("ADD_ACCOUNT_TASK",true)

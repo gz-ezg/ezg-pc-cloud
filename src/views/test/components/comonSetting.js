@@ -309,7 +309,7 @@ export default {
                                     },
                                     // "on-enter":function(event){
                                     //     console.log(event)
-                                    //     _self.orderItem[parmas.index].memo = event.target.value
+                                    //     _self.orderItem[parmas.index.vue].memo = event.target.value
                                     // },
                                 },
                                 style: {

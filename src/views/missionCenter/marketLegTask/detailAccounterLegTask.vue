@@ -2,7 +2,7 @@
     <div>
         <Modal
                 v-model="openTaskDetail"
-                title="商事任务详情"
+                title="市场外勤任务详情"
                 width="450"
 
                 class-name="vertical-center-modal"
@@ -10,7 +10,7 @@
             <div style="min-height:60vh;width:400px" v-if="data.length!==0">
                 <Row :gutter="20" style="margin-top:20px">
                     <Col span="6">
-                        <span style="line-height:24px">商事任务名称</span>
+                        <span style="line-height:24px">任务名称</span>
                     </Col>
                     <Col span="18">
                         <Input v-model="data[0].taskName" size="small" style="width:180px" type="textarea" :row="5" autosize>
@@ -19,7 +19,7 @@
                 </Row>
                 <Row :gutter="20" style="margin-top:20px">
                     <Col span="6">
-                        <span style="line-height:24px">商事任务对象</span>
+                        <span style="line-height:24px">任务对象</span>
                     </Col>
                     <Col span="18">
                         <span style="line-height:24px">{{data[0].companyName}}
@@ -28,10 +28,10 @@
                 </Row>
                 <Row :gutter="20" style="margin-top:20px">
                     <Col span="6">
-                        <span style="line-height:24px">产品</span>
+                        <span style="line-height:24px">客户</span>
                     </Col>
                     <Col span="18">
-                        <span style="line-height:24px">{{data[0].productName}}
+                        <span style="line-height:24px">{{data[0].customerName}}
                             </span>
                     </Col>
                 </Row>
@@ -45,47 +45,21 @@
                 </Row>
                 <Row :gutter="20" style="margin-top:20px">
                     <Col span="6">
+                        <span style="line-height:24px">跟进阶段</span>
+                    </Col>
+                    <Col span="18">
+                        <Select v-model="data[0].followResult" size="small" style="width:180px" @on-change="getFollowResult">
+                            <Option v-for="item in followResult" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
+                        </Select>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px">
+                    <Col span="6">
                         <span style="line-height:24px">代办于</span>
                     </Col>
                     <Col span="18">
                         <DatePicker v-model="data[0].planDate" size="small" style="width:180px" type="datetime" @on-change="getPlanTime">
                         </DatePicker>
-                    </Col>
-                </Row>
-                <Row :gutter="20" style="margin-top:20px" v-if="data[0].taskKind==='tkLegAcc'">
-                    <Col span="6">
-                        <span style="line-height:24px">地区</span>
-                    </Col>
-                    <Col span="18">
-                        <Select v-model="data[0].taskArea" size="small" style="width:180px" @on-change="getBusinessArea">
-                            <Option v-for="item in businessArea" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
-                        </Select>
-                    </Col>
-                </Row>
-                <Row :gutter="20" style="margin-top:20px" v-if="data[0].taskKind==='tkLegAcc'">
-                    <Col span="6">
-                        <span style="line-height:24px">地点</span>
-                    </Col>
-                    <Col span="18">
-                        <Select v-model="data[0].taskPlace" size="small" style="width:180px" @on-change="getBusinessPlace">
-                            <Option v-for="item in businessPlace" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
-                        </Select>
-                    </Col>
-                </Row>
-                <Row :gutter="20" style="margin-top:20px" v-if="data[0].taskKind==='tkLegAccCyc'">
-                <Col span="6">
-                    <span style="line-height:24px">外勤类型</span>
-                </Col>
-                <Col span="18">
-                    <span style="line-height:24px">{{data[0].legType}}</span>
-                </Col>
-                </Row>
-                <Row :gutter="20" style="margin-top:20px" v-if="data[0].taskKind==='tkLegAccCyc'">
-                    <Col span="6">
-                        <span style="line-height:24px">外勤名称</span>
-                    </Col>
-                    <Col span="18">
-                        <span style="line-height:24px">{{data[0].legName}}</span>
                     </Col>
                 </Row>
                 <Row style="margin-top:40px">
@@ -108,6 +82,7 @@
                 openTaskDetail:false,
                 businessArea:[],
                 businessPlace:[],
+                followResult:[],
                 data:[],
                 abtypeList:[{"typecode":"A","typename":"A类"},{"typecode":"B","typename":"B类"}],
                 typeList:[],
@@ -137,7 +112,9 @@
                 oldLegType:"",
                 newLegName:"",
                 oldLegName:"",
-                nowName:""
+                nowName:"",
+                newFollowResult:"",
+                oldFollowResult:""
             }
         },
         computed:{
@@ -158,7 +135,9 @@
                     return false
                 } else if(this.newLegName && this.newLegName !== this.oldLegName){
                     return false
-                }else {
+                } else if(this.data[0].followResult && this.data[0].followResult !== this.oldFollowResult){
+                    return false
+                } else {
                     return true
                 }
             }
@@ -169,17 +148,16 @@
                 let _self = this
                 _self.newPlanTime = e
             },
-            getBusinessArea(e){
+            getFollowResult(e){
                 console.log(e)
                 let _self = this
-                _self.newBusinessArea = e
+                _self.newFollowResult = e
             },
             getLegType(e){
                 console.log(e)
                 let _self = this
                 _self.newLegType = e
                 _self.name_change()
-                _self.get_type_list()
             },
             getLegName(e){
                 console.log(e)
@@ -253,8 +231,7 @@
             },
             update_detail(){
                 let _self = this
-                if (_self.data[0].taskKind==='tkLegAccCyc') {
-                    let url = `api/task/updateAccLegworkTask`
+                    let url = `api/task/updateMarketLegworkTask`
                     let config = {
                             taskId: _self.id,
                             taskName: _self.data[0].taskName,
@@ -262,10 +239,8 @@
                             executorId:_self.data[0].executorId,
                             executorName:_self.data[0].executorName,
                             companyId:_self.data[0].companyId,
-                            legTypeIds:_self.data[0].legTypeId,
-                            legType:_self.data[0].legType,
-                            legName:_self.data[0].legName,
-                            businessId:_self.data[0].businessId
+                            customerId:_self.data[0].customerId,
+                            followResult:_self.data[0].	followResult
                         }
                     function success(res){
                             _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST",true)
@@ -276,51 +251,6 @@
 
                         }
                         this.$Post(url,config,success,fail)
-                }
-                if (_self.data[0].taskKind==='tkLegAccHom') {
-                    let url = `api/task/updateAccLegworkTask`
-                    let config = {
-                        taskId: _self.id,
-                        taskName: _self.data[0].taskName,
-                        sPlanDate:FULLDateFormat(_self.data[0].planDate),
-                        executorId:_self.data[0].executorId,
-                        executorName:_self.data[0].executorName,
-                        companyId:_self.data[0].companyId,
-                        businessId:_self.data[0].businessId
-                    }
-                    function success(res){
-                        _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST",true)
-                        _self.get_detail(_self.id)
-                        _self.openTaskDetail = false
-                    }
-                    function fail(){
-
-                    }
-                    this.$Post(url,config,success,fail)
-                }
-                if (_self.data[0].taskKind==='tkLegAcc') {
-                    let url = `api/task/updateLegworkTask`
-                    let config = {
-                        taskId: _self.id,
-                        taskName: _self.data[0].taskName,
-                        sPlanDate:FULLDateFormat(_self.data[0].planDate),
-                        executorId:_self.data[0].executorId,
-                        executorName:_self.data[0].executorName,
-                        companyId:_self.data[0].companyId,
-                        taskArea:_self.data[0].taskArea,
-                        taskPlace:_self.data[0].taskPlace,
-                        businessId:_self.data[0].businessId
-                    }
-                    function success(res){
-                        _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST",true)
-                        _self.get_detail(_self.id)
-                        _self.openTaskDetail = false
-                    }
-                    function fail(){
-
-                    }
-                    this.$Post(url,config,success,fail)
-                }
                 // let url = `api/task/updateLegworkTask`
                 // let config = {
                 //     taskId: _self.id,
@@ -415,7 +345,7 @@
                     _self.nowName = res.data.data[0].legName
                     _self.oldCompanyId = res.data.data[0].companyId
                     _self.oldBusinessId = res.data.data[0].businessId
-                    _self.get_type_list_start(_self.oldLegType)
+                    _self.oldFollowResult = res.data.data[0].followResult
                     // if(res.data.data.taskData[0]){
                     //     _self.get_last_follow_up_content(res.data.data.taskData[0].company_id)
                     // }else{
@@ -459,13 +389,14 @@
                 this.$Get(url, config, success)
             },
             get_data_center(){
-                let params = "taskLevel,taskDesCode,taskKind,taskStage,market_status,markert_follow_up_type,gzbusinessarea,gzbusinessplace"
+                let params = "taskLevel,taskDesCode,taskKind,taskStage,market_status,markert_follow_up_type,gzbusinessarea,gzbusinessplace,followStage"
 
                 let _self = this
 
                 function success(res){
                     _self.businessArea = res.data.data.gzbusinessarea
                     _self.businessPlace = res.data.data.gzbusinessplace
+                    _self.followResult = res.data.data.followStage
                     // _self.taskLevel = res.data.data.taskLevel
                     // _self.taskDesCode = res.data.data.taskDesCode
                     // _self.taskKind = res.data.data.taskKind

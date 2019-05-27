@@ -74,7 +74,7 @@ export default {
         //         on: {
         //           'on-ok': () => {
         //             vm.$emit('on-delete', params)
-        //             vm.$emit('input', params.tableData.filter((item, index) => index !== params.row.initRowIndex))
+        //             vm.$emit('input', params.tableData.filter((item, index.vue) => index.vue !== params.row.initRowIndex))
         //           }
         //         }
         //       }, [

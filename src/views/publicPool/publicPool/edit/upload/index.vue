@@ -14,7 +14,7 @@
                     >
                 <Button type="ghost" icon="ios-cloud-upload-outline">选择文件</Button>
             </Upload>
-            <div v-for="(item,index) in file" :key=index>{{ item.name }}
+            <div v-for="(item,index.vue) in file" :key=index.vue>{{ item.name }}
                 <Button type="text" @click="fileRemove(item)" size="small">移除</Button>
             </div> -->
             <!-- <Input v-model="value6" type="textarea" :rows="7" placeholder="请填写备注"></Input> -->

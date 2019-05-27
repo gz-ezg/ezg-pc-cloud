@@ -628,7 +628,7 @@ export default {
             this.selectRow = e
             // this.$store.commit("set_gobal_customer_id", e)
         },
-        // row_class_name(row, index){
+        // row_class_name(row, index.vue){
         //     if ((row.residue_time <= 7 || typeof row.residue_time == "string") && row.residue_time != null) {
         //         return "demo-table-followdate-warning-row";
         //     } else {

@@ -106,7 +106,7 @@
                                             disabled style="margin-left:5px">
                                         {{ button.buttonText }}
                                     </Button>
-                                    <!-- <Button  shape="circle" v-for="(item2,index) in itemss" :key=index
+                                    <!-- <Button  shape="circle" v-for="(item2,index.vue) in itemss" :key=index.vue
                                             v-if="(item2.buttonsZt == '1') && (item.serviceId == item2.serviceId)">
                                         {{ item2.buttonText }}
                                     </Button> -->
@@ -292,9 +292,9 @@ export default {
                 }
                 let temp = _self.followList[index].chat
                 let len = temp.unshift(evaluateTemp)
-                // let len = parseInt(_self.followList[index].length) + 1
+                // let len = parseInt(_self.followList[index.vue].length) + 1
                 _self.$set(_self.followList[index], "evaluateNum", len)
-                // _self.followList[index].chat.unshift(evaluateTemp)
+                // _self.followList[index.vue].chat.unshift(evaluateTemp)
                 _self.$set(_self.followList[index],"chat",temp)
                 _self.currentIndex = -1
                 _self.currentIndex = index
