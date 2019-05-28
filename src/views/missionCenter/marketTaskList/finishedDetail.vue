@@ -18,7 +18,7 @@
                 <Row :gutter="12">
                     <Col span="12">
                         <FormItem label="公司名称">
-                            <Input v-model="data.customerName" size="small" readonly></Input>
+                            <Input v-model="data.companyName" size="small" readonly></Input>
                         </FormItem>
                     </Col>
                     <Col span="12">
@@ -51,14 +51,14 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="12" v-if="data.legId">
+                <Row :gutter="12" v-if="!data.legId">
                     <Col span="12">
                         <FormItem label="任务结果">
                             <Input v-model="data.mission_name" size="small" readonly></Input>
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="12" v-if="data.legId">
+                <Row :gutter="12" v-if="!data.legId">
                     <Col span="12">
                         <FormItem label="结束时间">
                             <Input v-model="data.expectEndDate" size="small" readonly></Input>
@@ -70,7 +70,7 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="12">
+                <Row :gutter="12" v-if="data.legId">
                     <Col span="12">
                         <FormItem label="外勤开始时间">
                             <Input v-model="fieldDetail.begin_time" size="small" readonly></Input>
@@ -82,7 +82,7 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="12">
+                <Row :gutter="12" v-if="data.legId">
                     <Col span="12">
                         <FormItem label="外勤结束时间">
                             <Input v-model="fieldDetail.end_time" size="small" readonly></Input>
@@ -94,7 +94,7 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="12">
+                <Row :gutter="12" v-if="data.legId">
                     <Col span="12">
                         <FormItem label="外勤结果">
                             <Input v-model="fieldDetail.finish_status" size="small" readonly></Input>
@@ -106,7 +106,7 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="12">
+                <Row :gutter="12" v-if="data.legId">
                     <Col span="12">
                         <FormItem label="外勤总结">
                             <Input v-model="fieldDetail.finish_memo" size="small" readonly></Input>
