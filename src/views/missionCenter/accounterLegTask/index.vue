@@ -57,7 +57,7 @@
                     <Row>
                         <span>会计外勤——<span style="color:#00CCFF">天蓝色</span><br/></span>
                         <span>代账外勤——<span style="color:red">红色</span><br/></span>
-                        <span>完结任务——<span style="color:#26A65B">绿色</span><br/></span>
+                        <span>会计到家——<span style="color:#26A65B">绿色</span><br/></span>
                     </Row>
                     <Row>
                         <Row style="margin-bottom:10px"><h3>{{local_date}}</h3></Row>

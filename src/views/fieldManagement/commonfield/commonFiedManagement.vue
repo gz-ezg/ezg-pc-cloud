@@ -460,6 +460,7 @@
                 function success(res){
                     console.log(res.data.data[1].realpath)
                     _self.fiedDetail = res.data.data[0]
+                    console.log(_self.fiedDetail)
                     _self.imgList = res.data.data[1].realpath
                 }
 
