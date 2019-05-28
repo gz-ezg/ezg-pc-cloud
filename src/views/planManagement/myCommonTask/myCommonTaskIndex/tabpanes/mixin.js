@@ -118,6 +118,7 @@ export default {
         },
         show_detail(){
             if(this.currentRow){
+                !this.currentRow.id && (this.currentRow.id = this.currentRow.work_order_id)
                 this.$store.commit("open_gobal_work_order_detail_modal", this.currentRow.id)
             }else{
                 this.$Message.warning('请选择一行查看详情！')
