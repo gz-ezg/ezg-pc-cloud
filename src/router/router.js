@@ -328,7 +328,14 @@ export const appRouter = [
                 name: 'missionManagement_index',
                 component: () => import( /* webpackChunkName: "missionManagement_index" */ '@/views/missionCenter/missionManagement/index.vue')
             },
-
+            {
+                access: 11639,
+                meta: 11639,
+                path: 'marketTaskList',
+                title: '市场任务管理',
+                name: 'marketTaskList_index',
+                component: () => import( /* webpackChunkName: "marketTaskList_index" */ '@/views/missionCenter/marketTaskList/index.vue')
+            },
         ]
     },
     // 计划删除菜单，开发终止

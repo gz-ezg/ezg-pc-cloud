@@ -7,9 +7,7 @@
     >
         <div  v-if="data.length!==0">
             <Form ref="newMission" :model="newMission" :label-width="80" style="margin-left:50px;margin-right:50px">
-                <div class="spz">
-                    <Input v-model="data[0].apply_content" type="textarea" placeholder="请输入要修改的协助工单缘由" :autosize="{minRows: 4,maxRows: 6}" ></Input>
-                </div>
+                <Input v-model="data[0].apply_content" style="margin-bottom: 25px" type="textarea" placeholder="请输入要修改的协助工单缘由" :autosize="{minRows: 4,maxRows: 6}" readonly></Input>
                 <Row :gutter="12">
                     <Col span="12">
                         <FormItem label="企业" prop="companyId">

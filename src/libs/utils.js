@@ -92,3 +92,20 @@ export function simpleCodeToText(codeValue,textList){
         }
     }
 }
+
+export function DateDifference(faultDate,completeTime){
+    // let d1 = new Date(faultDate);
+    // let d2 = new Date(completeTime);
+    let stime =new Date(faultDate).getTime();
+    let etime = new Date(completeTime).getTime();
+    let usedTime = etime - stime;  //两个时间戳相差的毫秒数
+    let days=Math.floor(usedTime/(24*3600*1000));
+    //计算出小时数
+    let leave1=usedTime%(24*3600*1000);    //计算天数后剩余的毫秒数
+    let hours=Math.floor(leave1/(3600*1000));
+    //计算相差分钟数
+    let leave2=leave1%(3600*1000);        //计算小时数后剩余的毫秒数
+    let minutes=Math.floor(leave2/(60*1000));
+    let time = days + "天"+hours+"时"+minutes+"分";
+    return time;
+}

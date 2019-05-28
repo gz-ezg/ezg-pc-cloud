@@ -55,12 +55,12 @@
                         </datepicker>
                     </Row>
                     <Row>
-                        <span>执行中的任务——<span style="color:blue">蓝色</span><br/></span>
-                        <span>当天需要完结的任务——<span style="color:orange">黄色</span><br/></span>
-                        <span>完结任务——<span style="color:#228B22">绿色</span><br/></span>
-                        <span>逾期任务——<span style="color:red">红色</span><br/></span>
-                        <span>线索未完成——<span style="color:#FF7F00">橙色</span><br/></span>
-                        <span>线索完成——<span style="color:#228B22">绿色</span><br/></span>
+                        <!--<span>执行中的任务——<span style="color:blue">蓝色</span><br/></span>-->
+                        <!--<span>当天需要完结的任务——<span style="color:orange">黄色</span><br/></span>-->
+                        <!--<span>完结任务——<span style="color:#228B22">绿色</span><br/></span>-->
+                        <!--<span>逾期任务——<span style="color:red">红色</span><br/></span>-->
+                        <!--<span>线索未完成——<span style="color:#FF7F00">橙色</span><br/></span>-->
+                        <!--<span>线索完成——<span style="color:#228B22">绿色</span><br/></span>-->
                     </Row>
                     <Row>
                         <Row style="margin-bottom:10px"><h3>{{local_date}}</h3></Row>

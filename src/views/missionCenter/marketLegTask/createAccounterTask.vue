@@ -10,14 +10,13 @@
                 <new-edit-div v-model="newMission.taskName"></new-edit-div>
                 <div class="spz">
                     <div class="spzz" @click="showPhrase"><Icon type="android-chat" ></Icon></div>
-                    <div class="select">
                         <Select ref="sel"
                                  size="small"
                                  v-model="newMission.followResult"
+                                 style="width: 150px;margin: 0 10px 0 0"
                         >
                         <Option v-for="item in followResult" :value="item.typecode" :key="item.typecode">{{item.typename}}</Option>
                         </Select>
-                    </div>
                 </div>
             </div>
             <div v-show="phraseShow" class="ssz">
@@ -32,69 +31,16 @@
             </div>
             <Row :gutter="12">
                 <Col span="12">
-                    <FormItem label="客户搜索" prop="companyId">
-                        <Checkbox  @on-change="changeSelect" size="large"></Checkbox>
+                    <FormItem label="企业" prop="company">
+                        <Input  v-model="newMission.companyName" placeholder="点击搜索企业名称" @on-focus="search_company" readonly/>
                     </FormItem>
                 </Col>
                 <Col span="12">
-
-                </Col>
-            </Row>
-            <Row :gutter="12">
-                <Col span="12" v-if="showSelect">
-                    <FormItem label="企业" prop="company">
-                        <Select ref="select"
-                                v-model="newMission.companyId" placeholder="请输入企业名称搜索"
-                                filterable
-                                remote
-                                :disabled="disabled"
-                                :remote-method="get_company"
-                                @on-change="get_customerId"
-                                :loading="companyLoading"
-                        >
-                            <Option v-if="rendering" v-for="item in companyList" :value="item.companyid" :key="item.companyid" >{{item.companyname}}</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
-                <Col span="12" v-if="showSelecte">
                     <FormItem label="客户" prop="customer">
-                        <Select ref="select"
-                                v-model="newMission.customerId"
-                                placeholder="请输入客户名称搜索"
-                                filterable
-                                remote
-                                :remote-method="get_customer"
-                                @on-change="get_companyId"
-                                :loading="companyLoading"
-                        >
-                            <Option  v-for="item in productList" :value="item.customerid" :key="item.customerid" :label="item.name">
-                                <span>{{item.name}}</span>
-                                <span style="float:right;color:#ccc">{{item.tel}}</span>
-                            </Option>
-                        </Select>
+                        <Input v-model="newMission.customerName" placeholder="点击搜索客户名称或电话" @on-focus="search_company" readonly/>
+
                     </FormItem>
                 </Col>
-                <Col span="12" v-if="showSelect">
-                    <FormItem label="客户" prop="customerId">
-                        <Select ref="sel"
-                                v-model="newMission.customerId"
-                                placeholder="请先输入企业名称搜索"
-                                :loading="companyLoading"
-                        >
-                            <Option v-if="rendering" v-for="item in pproductList" :value="item.customerid" :key="item.customerid">{{item.name}}</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
-                <Col span="12" v-if="showSelecte">
-                    <FormItem label="企业" prop="companyId">
-                        <Select ref="sel"
-                                v-model="newMission.companyId"
-                                placeholder="请先输入客户名称搜索"
-                                :loading="companyLoading"
-                        >
-                            <Option v-if="rendering"  v-for="item in cIdList" :value="item.companyid" :key="item.companyid">{{item.companyname}}</Option>
-                        </Select>
-                    </FormItem>
                     <!--<FormItem label="客户" prop="companyId">-->
                         <!--<Select ref="sel"-->
                                 <!--v-model="newMission.customerId"-->
@@ -110,7 +56,6 @@
                             <!--</Option>-->
                         <!--</Select>-->
                     <!--</FormItem>-->
-                </Col>
             </Row>
             <Row :gutter="12">
                 <Col span="12">
@@ -198,6 +143,7 @@
         </div>
         <add></add>
         <amend></amend>
+        <search-company @company-change="setting_company"></search-company>
     </Modal>
 
 </template>
@@ -207,23 +153,19 @@
     import Add from './add'
     import NewEditDiv from './newEditDiv'
     import Amend from './amend'
+    import searchCompany from './searchCompany'
     export default {
         components:{
             Amend,
             Add,
             NewEditDiv,
+            searchCompany
         },
         data(){
             return {
                 text:"",
-                rendering:false,
-                disabled:false,
-                showSelect:true,
-                showSelecte:false,
-                readonly:false,
                 phraseShow:false,
                 currentId:null,
-                companyRendering:false,
                 newMission: {
                     taskName: "",
                     taskContent: "",
@@ -234,7 +176,7 @@
                     taskKind: "",
                     businessPlace:"shuiju",
                     businessArea:"tianhe",
-                    followResult:"EarlyContact",
+                    followResult:"Party",
                     cycleType:"A",
                     node:"Y",
                     taskStage: "",
@@ -244,7 +186,8 @@
                     customerId:"",
                     cycleTypeId:"",
                     cycleTypeName:"",
-                    companyName:""
+                    companyName:"",
+                    customerName:""
                 },
                 phraseLoading: false,
                 createLoading: false,
@@ -288,20 +231,23 @@
             }
         },
         methods:{
-            changeSelect(){
-                this.disabled=!this.disabled
-                this.showSelect=!this.showSelect
-                this.showSelecte=!this.showSelecte
-                this.$refs.select.setQuery(null)
-                this.$refs.sel.setQuery(null)
-                this.newMission.companyId = null
-                this.newMission.customerId = null
-                this.rendering = false
-                this.companyList = []
-                this.productList = []
-                this.pproductList = []
-                this.cIdList = []
+            search_company(){
+              this.$bus.emit("OPEN_COMPANY_LIST",true)
             },
+            // changeSelect(){
+            //     this.disabled=!this.disabled
+            //     this.showSelect=!this.showSelect
+            //     this.showSelecte=!this.showSelecte
+            //     this.$refs.select.setQuery(null)
+            //     this.$refs.sel.setQuery(null)
+            //     this.newMission.companyId = null
+            //     this.newMission.customerId = null
+            //     this.rendering = false
+            //     this.companyList = []
+            //     this.productList = []
+            //     this.pproductList = []
+            //     this.cIdList = []
+            // },
             giveData(item){
                 this.newMission.taskName=this.newMission.taskName+item.quick_content
                 this.phraseShow = false
@@ -376,7 +322,27 @@
             create_task() {
                 let _self = this
                 if (_self.newMission.taskName ==""|| _self.newMission.taskName ==null) {
-                    this.$Message.warning('请把上述信息填写完整')
+                    this.$Message.warning('请填写市场任务名称')
+                    return
+                }
+                if (_self.newMission.followResult ==="FirstVisit" && _self.newMission.customerId ==null) {
+                    this.$Message.warning('初次拜访必须选择客户名称')
+                    return
+                }
+                if (_self.newMission.followResult ==="ContractSign" && _self.newMission.customerId ==null) {
+                    this.$Message.warning('签订合同必须选择客户名称')
+                    return
+                }
+                if (_self.newMission.followResult ==="Dunning" && _self.newMission.customerId ==null) {
+                    this.$Message.warning('上门催款必须选择客户名称')
+                    return
+                }
+                if (_self.newMission.followResult ==="InfoCollect" && _self.newMission.customerId ==null) {
+                    this.$Message.warning('收集资料必须选择客户名称')
+                    return
+                }
+                if (_self.newMission.followResult ==="Other" && _self.newMission.customerId ==null) {
+                    this.$Message.warning('必须选择客户名称')
                     return
                 }
                 _self.createLoading = true
@@ -430,6 +396,7 @@
                     _self.openAddMission = false
                     _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST_DEMO", true)
                     _self.newMission.taskName=null
+                    _self.newMission.followResult="Party"
                     _self.cancel_task()
                 }
 
@@ -441,151 +408,162 @@
 
             },
             cancel_task(){
-                this.$refs.select.setQuery(null)
-                this.$refs.sel.setQuery(null)
                 this.newMission.taskName = null
                 this.$refs['newMission'].resetFields();
                 this.newMission.companyId = null
                 this.newMission.customerId = null
-                this.rendering = false
-                this.companyList = []
-                this.productList = []
-                this.pproductList = []
-                this.cIdList = []
+                this.newMission.companyName = null
+                this.newMission.customerName = null
+
             },
-            get_user(query){
-                let _self = this
-                let url = `api/user/list`
-                _self.userLoading = true
-
-                let config = {
-                    params: {
-                        page: 1,
-                        pageSize: 5,
-                        realname: query
-                    }
-                }
-
-                function success(res){
-                    _self.userLoading = false
-                    _self.userList = res.data.data.rows
-                }
-
-                this.$Get(url, config, success)
+            setting_company(e){
+                console.log(e)
+                this.newMission.companyName=e.companyname
+                this.newMission.customerName=e.customerName
+                this.newMission.customerId=e.customerId
+                this.newMission.companyId=e.id
+                console.log(this.newMission.customerId)
+                console.log(this.newMission.companyId)
+                // this.orderDetail.CompanyName = e.companyname
+                // this.orderDetail.name = e.customerName
+                // this.orderDetail.tel = e.customerTel
+                // this.orderDetail.gdsreport = e.gdsreport
+                // this.orderDetail.companyid = e.id
+                // this.orderDetail.customerid = e.customerId
             },
-            get_company(query){
-                let _self = this
-                _self.companyLoading = true
-                let url = "api/legwork/apiQueryCompanyOrCustomerMsg"
-                let config = {
-                    params:{
-                        page: 1,
-                        pageSize: 10,
-                        companyname: query
-                    }
-                }
-
-                function success(res){
-                    _self.companyLoading = false
-                    _self.companyList = res.data.data
-                    _self.rendering = true
-                }
-                this.$Get(url, config, success)
-            },
-            get_customer(query){
-                let _self = this
-                _self.productList=[]
-                _self.companyLoading = true
-                let url = "api/legwork/apiQueryCompanyOrCustomerMsg"
-                if (isNaN(query)) {
-                let config = {
-                    params:{
-                        page: 1,
-                        pageSize: 10,
-                        name: query
-                    }
-                }
-
-                function success(res){
-                    _self.companyLoading = false
-                    _self.productList = res.data.data
-                    console.log(_self.productList)
-                }
-
-                this.$Get(url, config, success)
-                }
-                if (!isNaN(query)){
-                    let config = {
-                        params:{
-                            page: 1,
-                            pageSize: 10,
-                            tel: query
-                        }
-                    }
-
-                    function success(res){
-                        _self.companyLoading = false
-                        _self.productList = res.data.data
-                        console.log(_self.productList)
-                    }
-
-                    this.$Get(url, config, success)
-                }
-            },
-            get_companyId(){
-                let _self = this
-                let url = `api/legwork/apiQueryCompanyOrCustomerMsg`
-                _self.userLoading = true
-                let config = {
-                    params:{
-                        customerId:_self.newMission.customerId,
-                    }
-                }
-                function success(res){
-                    _self.userLoading = false
-                    _self.cIdList = res.data.data
-                    console.log(res.data.data)
-                    if (_self.newMission.customerId==null){
-                        _self.cIdList= []
-                    }
-                    if (_self.cIdList.length!==0){
-                        _self.newMission.companyId =  _self.cIdList[0].companyid
-                    }
-                    else {
-                        _self.newMission.companyId = null
-                    }
-                        _self.rendering=true
-                }
-
-                this.$Get(url, config, success)
-            },
-            get_customerId(){
-                let _self = this
-                let url = `api/legwork/apiQueryCompanyOrCustomerMsg`
-                _self.userLoading = true
-                let config = {
-                    params:{
-                    companyId:_self.newMission.companyId,
-                    }
-                }
-                function success(res){
-                    _self.rendering=true
-                    if (_self.newMission.companyId==null){
-                        _self.pproductList = []
-                    } else {
-                    _self.userLoading = false
-                    _self.pproductList = res.data.data
-                    console.log(res.data.data)
-                    if (_self.pproductList.length!==0){
-                        _self.newMission.customerId =  _self.pproductList[0].customerid
-                    }else {
-                        _self.newMission.customerId = null
-                    }
-                    }
-                }
-
-                this.$Get(url, config, success)
-            },
+            // get_user(query){
+            //     let _self = this
+            //     let url = `api/user/list`
+            //     _self.userLoading = true
+            //
+            //     let config = {
+            //         params: {
+            //             page: 1,
+            //             pageSize: 5,
+            //             realname: query
+            //         }
+            //     }
+            //
+            //     function success(res){
+            //         _self.userLoading = false
+            //         _self.userList = res.data.data.rows
+            //     }
+            //
+            //     this.$Get(url, config, success)
+            // },
+            // get_company(query){
+            //     let _self = this
+            //     _self.companyLoading = true
+            //     let url = "api/legwork/apiQueryCompanyOrCustomerMsg"
+            //     let config = {
+            //         params:{
+            //             page: 1,
+            //             pageSize: 10,
+            //             companyname: query
+            //         }
+            //     }
+            //
+            //     function success(res){
+            //         _self.companyLoading = false
+            //         _self.companyList = res.data.data
+            //         _self.rendering = true
+            //     }
+            //     this.$Get(url, config, success)
+            // },
+            // get_customer(query){
+            //     let _self = this
+            //     _self.productList=[]
+            //     _self.companyLoading = true
+            //     let url = "api/legwork/apiQueryCompanyOrCustomerMsg"
+            //     if (isNaN(query)) {
+            //     let config = {
+            //         params:{
+            //             page: 1,
+            //             pageSize: 10,
+            //             name: query
+            //         }
+            //     }
+            //
+            //     function success(res){
+            //         _self.companyLoading = false
+            //         _self.productList = res.data.data
+            //         console.log(_self.productList)
+            //     }
+            //
+            //     this.$Get(url, config, success)
+            //     }
+            //     if (!isNaN(query)){
+            //         let config = {
+            //             params:{
+            //                 page: 1,
+            //                 pageSize: 10,
+            //                 tel: query
+            //             }
+            //         }
+            //
+            //         function success(res){
+            //             _self.companyLoading = false
+            //             _self.productList = res.data.data
+            //             console.log(_self.productList)
+            //         }
+            //
+            //         this.$Get(url, config, success)
+            //     }
+            // },
+            // get_companyId(){
+            //     let _self = this
+            //     let url = `api/legwork/apiQueryCompanyOrCustomerMsg`
+            //     _self.userLoading = true
+            //     let config = {
+            //         params:{
+            //             customerId:_self.newMission.customerId,
+            //         }
+            //     }
+            //     function success(res){
+            //         _self.userLoading = false
+            //         _self.cIdList = res.data.data
+            //         console.log(res.data.data)
+            //         if (_self.newMission.customerId==null){
+            //             _self.cIdList= []
+            //         }
+            //         if (_self.cIdList.length!==0){
+            //             _self.newMission.companyId =  _self.cIdList[0].companyid
+            //         }
+            //         else {
+            //             _self.newMission.companyId = null
+            //         }
+            //             _self.rendering=true
+            //     }
+            //
+            //     this.$Get(url, config, success)
+            // },
+            // get_customerId(){
+            //     let _self = this
+            //     let url = `api/legwork/apiQueryCompanyOrCustomerMsg`
+            //     _self.userLoading = true
+            //     let config = {
+            //         params:{
+            //         companyId:_self.newMission.companyId,
+            //         }
+            //     }
+            //     function success(res){
+            //         _self.rendering=true
+            //         if (_self.newMission.companyId==null){
+            //             _self.pproductList = []
+            //         } else {
+            //         _self.userLoading = false
+            //         _self.pproductList = res.data.data
+            //         console.log(res.data.data)
+            //         if (_self.pproductList.length!==0){
+            //             _self.newMission.customerId =  _self.pproductList[0].customerid
+            //         }else {
+            //             _self.newMission.customerId = null
+            //         }
+            //         }
+            //     }
+            //
+            //     this.$Get(url, config, success)
+            // },
             // name_change(){
             //     let _self = this
             //     let obj = {}
