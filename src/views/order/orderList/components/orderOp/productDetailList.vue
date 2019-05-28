@@ -46,7 +46,20 @@
                       @click="changePayMethod(index)"
                     >比例</Button>
                   </div>
-                  <div v-if="!isPlan[index]">
+                  <div v-if="!isDisabled&&!isPlan[index]">
+                    <FormItem label="销售金额￥" prop="paynumber">
+                      <Input
+                        class="input-call"
+                        @on-change="computer_paynumber(index)"
+                        v-model="item.paynumber"
+                        :value="item.paynumber"
+                        size="small"
+                        style="width:100px"
+                        :disabled="isDisabled"
+                      ></Input>
+                    </FormItem>
+                  </div>
+                  <div v-if="isDisabled && item.receipt_type !== 'proportion'">
                     <FormItem label="销售金额￥" prop="paynumber">
                       <Input
                         class="input-call"
@@ -60,7 +73,20 @@
                     </FormItem>
                   </div>
 
-                  <div v-if="isPlan[index]">
+                  <div v-if="!isDisabled&&isPlan[index]">
+                    <FormItem label="销售比例 " prop="receipt_proportion">
+                      <Input
+                        class="input-call"
+                        @on-change="computer_paynumber(item)"
+                        v-model="item.receipt_proportion"
+                        :value="item.receipt_proportion"
+                        size="small"
+                        style="width:100px"
+                        :disabled="isDisabled"
+                      ></Input>%
+                    </FormItem>
+                  </div>
+                  <div v-if="isDisabled&&item.receipt_type == 'proportion'">
                     <FormItem label="销售比例 " prop="receipt_proportion">
                       <Input
                         class="input-call"
