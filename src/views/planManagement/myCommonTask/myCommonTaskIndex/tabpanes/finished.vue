@@ -252,6 +252,7 @@ export default {
         }
         this.$bus.emit("open_company_Collection_flow",this.currentRow);
       },
+
     declareResult() {
       let _self = this;
       console.log(_self.currentRow);
@@ -267,6 +268,7 @@ export default {
       }
       this.$bus.emit("open_declare_result", _self.currentRow);
     },
+
     getPlanFinishedData() {
       var _self = this;
       _self.loading = true;
@@ -310,21 +312,28 @@ export default {
 
       this.$Get(url, config, success);
     },
+
     finishReset() {
       this.page = 1;
       this.$refs.formInline.resetFields();
       this.getPlanFinishedData();
     },
+
     page_change_plan(e) {
       this.page = e;
       this.getPlanFinishedData();
     },
+
     page_size_change_plan(e) {
       this.page = 1;
       this.pageSize = e;
       this.getPlanFinishedData();
     },
+
     search_finish(){
+      this.getPlanFinishedData();
+    },
+    get_data() {
       this.getPlanFinishedData();
     }
   },
