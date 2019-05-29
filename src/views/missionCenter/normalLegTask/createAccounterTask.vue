@@ -24,85 +24,30 @@
             </div>
             <Row :gutter="12">
                 <Col span="12">
-                    <FormItem label="客户搜索" prop="companyId">
-                        <Checkbox  @on-change="changeSelect" size="large"></Checkbox>
+                    <FormItem label="企业" prop="company">
+                        <Input  v-model="newMission.companyName" placeholder="点击搜索企业名称" @on-focus="search_company" readonly/>
                     </FormItem>
                 </Col>
                 <Col span="12">
-
-                </Col>
-            </Row>
-            <Row :gutter="12">
-                <Col span="12" v-if="showSelect">
-                    <FormItem label="企业" prop="company">
-                        <Select ref="select"
-                                v-model="newMission.companyId" placeholder="请输入企业名称搜索"
-                                filterable
-                                remote
-                                :disabled="disabled"
-                                :remote-method="get_company"
-                                @on-change="get_customerId"
-                                :loading="companyLoading"
-                        >
-                            <Option v-if="rendering" v-for="item in companyList" :value="item.companyid" :key="item.companyid" >{{item.companyname}}</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
-                <Col span="12" v-if="showSelecte">
                     <FormItem label="客户" prop="customer">
-                        <Select ref="select"
-                                v-model="newMission.customerId"
-                                placeholder="请输入客户名称搜索"
-                                filterable
-                                remote
-                                :remote-method="get_customer"
-                                @on-change="get_companyId"
-                                :loading="companyLoading"
-                        >
-                            <Option  v-for="item in productList" :value="item.customerid" :key="item.customerid" :label="item.name">
-                                <span>{{item.name}}</span>
-                                <span style="float:right;color:#ccc">{{item.tel}}</span>
-                            </Option>
-                        </Select>
+                        <Input v-model="newMission.customerName" placeholder="点击搜索客户名称或电话" @on-focus="search_company" readonly/>
                     </FormItem>
                 </Col>
-                <Col span="12" v-if="showSelect">
-                    <FormItem label="客户" prop="customerId">
-                        <Select ref="sel"
-                                v-model="newMission.customerId"
-                                placeholder="请先输入企业名称搜索"
-                                :loading="companyLoading"
-                        >
-                            <Option v-if="rendering" v-for="item in pproductList" :value="item.customerid" :key="item.customerid">{{item.name}}</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
-                <Col span="12" v-if="showSelecte">
-                    <FormItem label="企业" prop="companyId">
-                        <Select ref="sel"
-                                v-model="newMission.companyId"
-                                placeholder="请先输入客户名称搜索"
-                                :loading="companyLoading"
-                        >
-                            <Option v-if="rendering"  v-for="item in cIdList" :value="item.companyid" :key="item.companyid">{{item.companyname}}</Option>
-                        </Select>
-                    </FormItem>
-                    <!--<FormItem label="客户" prop="companyId">-->
-                    <!--<Select ref="sel"-->
-                    <!--v-model="newMission.customerId"-->
-                    <!--placeholder="请输入客户名称搜索"-->
-                    <!--filterable-->
-                    <!--remote-->
-                    <!--:remote-method="get_customer"-->
-                    <!--:loading="companyLoading"-->
-                    <!--&gt;-->
-                    <!--<Option v-if="rendering"  v-for="item in productList" :value="item.customerid" :key="item.customerid" :label="item.name">-->
-                    <!--<span>{{item.name}}</span>-->
-                    <!--<span style="float:right;color:#ccc">{{item.tel}}</span>-->
-                    <!--</Option>-->
-                    <!--</Select>-->
-                    <!--</FormItem>-->
-                </Col>
+                <!--<FormItem label="客户" prop="companyId">-->
+                <!--<Select ref="sel"-->
+                <!--v-model="newMission.customerId"-->
+                <!--placeholder="请输入客户名称搜索"-->
+                <!--filterable-->
+                <!--remote-->
+                <!--:remote-method="get_customer"-->
+                <!--:loading="companyLoading"-->
+                <!--&gt;-->
+                <!--<Option v-if="rendering"  v-for="item in productList" :value="item.customerid" :key="item.customerid" :label="item.name">-->
+                <!--<span>{{item.name}}</span>-->
+                <!--<span style="float:right;color:#ccc">{{item.tel}}</span>-->
+                <!--</Option>-->
+                <!--</Select>-->
+                <!--</FormItem>-->
             </Row>
             <Row :gutter="12">
                 <Col span="12">
@@ -190,6 +135,7 @@
         </div>
         <add></add>
         <amend></amend>
+        <search-company @company-change="setting_company"></search-company>
     </Modal>
 
 </template>
@@ -199,11 +145,13 @@
     import Add from './add'
     import NewEditDiv from './newEditDiv'
     import Amend from './amend'
+    import searchCompany from './searchCompany'
     export default {
         components:{
             Amend,
             Add,
             NewEditDiv,
+            searchCompany
         },
         data(){
             return {
@@ -279,19 +227,8 @@
             }
         },
         methods:{
-            changeSelect(){
-                this.disabled=!this.disabled
-                this.showSelect=!this.showSelect
-                this.showSelecte=!this.showSelecte
-                this.$refs.select.setQuery(null)
-                this.$refs.sel.setQuery(null)
-                this.newMission.companyId = null
-                this.newMission.customerId = null
-                this.rendering = false
-                this.companyList = []
-                this.productList = []
-                this.pproductList = []
-                this.cIdList = []
+            search_company(){
+                this.$bus.emit("OPEN_COMPANY_LIST_NORMAL",true)
             },
             giveData(item){
                 this.newMission.taskName=this.newMission.taskName+item.quick_content
@@ -348,6 +285,21 @@
                     _self.phraseLoading = true
                 }
                 this.$Post(url, config, success, fail)
+            },
+            setting_company(e){
+                console.log(e)
+                this.newMission.companyName=e.companyname
+                this.newMission.customerName=e.customerName
+                this.newMission.customerId=e.customerId
+                this.newMission.companyId=e.id
+                console.log(this.newMission.customerId)
+                console.log(this.newMission.companyId)
+                // this.orderDetail.CompanyName = e.companyname
+                // this.orderDetail.name = e.customerName
+                // this.orderDetail.tel = e.customerTel
+                // this.orderDetail.gdsreport = e.gdsreport
+                // this.orderDetail.companyid = e.id
+                // this.orderDetail.customerid = e.customerId
             },
             delete_phrase_list(id){
                 let _self = this

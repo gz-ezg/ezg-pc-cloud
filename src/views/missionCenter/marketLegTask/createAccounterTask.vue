@@ -38,7 +38,6 @@
                 <Col span="12">
                     <FormItem label="客户" prop="customer">
                         <Input v-model="newMission.customerName" placeholder="点击搜索客户名称或电话" @on-focus="search_company" readonly/>
-
                     </FormItem>
                 </Col>
                     <!--<FormItem label="客户" prop="companyId">-->
