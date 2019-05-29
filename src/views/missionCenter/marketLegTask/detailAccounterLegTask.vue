@@ -74,6 +74,14 @@
                         <Input size="small" v-model="norMission" style="width:180px" disabled></Input>
                     </Col>
                 </Row>
+                <Row :gutter="20" style="margin-top:20px" v-if="taskStage=='tesFinished'">
+                    <Col span="6">
+                        <span style="line-height:24px">结束时间</span>
+                    </Col>
+                    <Col span="18">
+                        <Input size="small" v-model="expectEndDate" style="width:180px" disabled></Input>
+                    </Col>
+                </Row>
                 <Row :gutter="20" style="margin-top:20px" >
                     <Col span="6">
                         <span style="line-height:24px">任务总结</span>
@@ -88,11 +96,13 @@
                     </Col>
                 </Row>
                 <Row style="margin-top:40px">
-                    <Button @click="update_detail" type="primary" :disabled="openSubmit" style="margin-left:40px"  :loading="loading">提交</Button>
-                    <Button @click="delete_task" type="error" style="margin-left:50px">作废</Button>
+                    <Button @click="update_detail" type="primary" :disabled="openSubmit" style="margin-left:40px"  :loading="loading" v-if="taskStage=='tesUnstarted'">提交</Button>
+                    <Button @click="delete_task" type="error" style="margin-left:50px" v-if="taskStage=='tesUnstarted'">作废</Button>
                 </Row>
             </div>
-            <div slot="footer"></div>
+            <div slot="footer">
+                <Button @click="openTaskDetail = false" type="primary"  style="margin-left:40px"  :loading="loading" v-if="taskStage=='tesFinished'">关闭</Button>
+            </div>
         </Modal>
     </div>
 </template>
@@ -116,6 +126,7 @@
                 id:"",
                 openTaskDetail:false,
                 taskStage:"",
+                expectEndDate:"",
                 missionList:[{"typecode":"Completed","typename":"完成"},{"typecode":"Failed","typename":"失败"}],
                 businessArea:[],
                 businessPlace:[],
@@ -445,6 +456,7 @@
                 _self.id = e.taskId
                 _self.taskStage = e.taskStage
                 _self.norTaskSummary = e.taskSummary
+                _self.expectEndDate = FULLDateFormat(e.expectEndDate)
                 if (e.mission=="Completed") {
                     _self.norMission = "完成"
                 }

@@ -140,7 +140,7 @@
                     },
                     {
                         title: '完结时间',
-                        key: 'actualEndDate',
+                        key: 'expectEndDate',
                         minWidth: 180,
                     },
                     {

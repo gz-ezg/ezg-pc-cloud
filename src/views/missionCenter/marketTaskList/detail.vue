@@ -61,7 +61,7 @@
             </Row>
             <Row :gutter="20" style="margin-top:20px">
                 <Col span="6">
-                    <span style="line-height:24px">跟进阶段</span>
+                    <span style="line-height:24px">任务结果</span>
                 </Col>
                 <Col span="18">
                     <Select v-model="mission" size="small" style="width:180px" @on-change="getFollowResult">
