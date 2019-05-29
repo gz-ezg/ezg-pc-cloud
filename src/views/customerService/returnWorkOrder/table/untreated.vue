@@ -411,8 +411,10 @@
                 }
                 this.$http.get(url,config).then(function(res){
                     _self.$backToLogin(res)
-                    // 默认选中第一条
-                    res.data.data.rows[0]._checked = true
+                    // // 默认选中第一条
+                    // if(res.data.data.rows.length) {
+                    //     res.data.data.rows[0]._checked = true;
+                    // }
                     _self.data = res.data.data.rows
                     _self.pageTotal = res.data.data.total
                     for(let i = 0;i<res.data.data.rows.length;i++){
