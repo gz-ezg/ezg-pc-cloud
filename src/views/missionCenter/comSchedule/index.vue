@@ -62,7 +62,7 @@
                         </datepicker>
                     </Row>
                     <Row>
-                        <span>商事外勤——<span style="color:#FC9D99">橙红色</span><br/></span>
+                        <span>商事外勤——<span style="color:#00CCFF">蓝色</span><br/></span>
                         <span>工单协助——<span style="color:#AEDD81">草绿色</span><br/></span>
                         <span>代账协助——<span style="color:orange">橙色</span><br/></span>
                     </Row>
@@ -161,13 +161,19 @@
                 header:{
                     left:   'prev,next today',
                     center: 'title',
-                    right:  'month,agendaDay'
+                    right:  'month,agendaDay',
                 },
                 config:{
                     locale: 'zh-cn',
                     //  周末不显示
                     // weekends: false,
                     slotEventOverlap:false,
+                    minTime : "08:00:00",
+                    maxTime : "20:00:00",
+                    contentHeight : 1000,
+                    slotDuration : "00:10:00",
+                    aspectRatio : 2,
+
                     customButtons:{
                         filter:{
                             text:"筛选",
@@ -178,7 +184,6 @@
                     }
                 },
                 events:[
-
                 ],
                 events_temp: [],
                 //  默认显示月
@@ -190,7 +195,7 @@
                 // },
                 hover_local: "",
                 oneData: [],
-                rightClickDate: ""
+                rightClickDate: "",
             }
         },
         mounted() {
