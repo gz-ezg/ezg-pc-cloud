@@ -24,12 +24,6 @@
                 </Row>
                 <Row :gutter="20">
                     <Col span="6">
-                        <span>创建人：</span>
-                    </Col>
-                    <Col span="18"><span>{{hover_local.creatorName}}</span></Col>
-                </Row>
-                <Row :gutter="20">
-                    <Col span="6">
                         <span>地区：</span>
                     </Col>
                     <Col span="18"><span>{{hover_local.Area}}</span></Col>
@@ -307,7 +301,7 @@
                         _self.events_temp[i].depart = _self.businessPlace_map.get(_self.events_temp[i].taskPlace)
                         _self.events_temp[i].CompanyName = _self.events_temp[i].companyName
                         if(_self.events_temp[i].taskKind === "tkLegBus"){
-                            _self.events_temp[i].color = "#FC9D99"
+                            _self.events_temp[i].color = "#00CCFF"
                         }
                         if(_self.events_temp[i].taskKind === "tkLegCycAss"){
                             _self.events_temp[i].color = "orange"

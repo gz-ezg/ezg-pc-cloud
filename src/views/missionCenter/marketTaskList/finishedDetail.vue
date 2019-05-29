@@ -4,6 +4,7 @@
             v-model="openAddMission"
             width="800"
             :mask-closable="false"
+            class-name="vertical-top-modal"
     >
         <Card>
             <Form ref="newMission" :model="data" :label-width="100" style="margin-left:50px;margin-right:50px">
@@ -235,5 +236,7 @@
 </script>
 
 <style>
-
+    .vertical-top-modal .ivu-modal{
+        top: 0;
+    }
 </style>

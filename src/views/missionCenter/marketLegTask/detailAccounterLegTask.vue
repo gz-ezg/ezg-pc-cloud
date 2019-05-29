@@ -95,6 +95,82 @@
                         </Input>
                     </Col>
                 </Row>
+                <Row :gutter="20" style="margin-top:20px" v-if="taskKindName=='市场外勤'">
+                    <Col span="6">
+                        <span style="line-height:24px">外勤开始时间</span>
+                    </Col>
+                    <Col span="18">
+                        <Input size="small" v-model="fieldDetail.begin_time" style="width:180px" disabled></Input>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px" v-if="taskKindName=='市场外勤'">
+                    <Col span="6">
+                        <span style="line-height:24px">开始打卡地点</span>
+                    </Col>
+                    <Col span="18">
+                        <Input size="small" v-model="fieldDetail.begin_address" style="width:180px" disabled></Input>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px" v-if="taskKindName=='市场外勤'">
+                    <Col span="6">
+                        <span style="line-height:24px">外勤结束时间</span>
+                    </Col>
+                    <Col span="18">
+                        <Input size="small" v-model="fieldDetail.end_time" style="width:180px" disabled></Input>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px" v-if="taskKindName=='市场外勤'">
+                    <Col span="6">
+                        <span style="line-height:24px">结束打卡地点</span>
+                    </Col>
+                    <Col span="18">
+                        <Input size="small" v-model="fieldDetail.end_address" style="width:180px" disabled></Input>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px" v-if="taskKindName=='市场外勤'">
+                    <Col span="6">
+                        <span style="line-height:24px">外勤结果</span>
+                    </Col>
+                    <Col span="18">
+                        <Input size="small" v-model="fieldDetail.finish_status" style="width:180px" disabled></Input>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px" v-if="taskKindName=='市场外勤'">
+                    <Col span="6">
+                        <span style="line-height:24px">开始打卡备注</span>
+                    </Col>
+                    <Col span="18">
+                        <Input size="small" v-model="fieldDetail.begin_memo" style="width:180px" disabled></Input>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px" v-if="taskKindName=='市场外勤'">
+                    <Col span="6">
+                        <span style="line-height:24px">外勤总结</span>
+                    </Col>
+                    <Col span="18">
+                        <Input size="small" v-model="fieldDetail.finish_memo" style="width:180px" disabled></Input>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px" v-if="taskKindName=='市场外勤'">
+                    <Col span="6">
+                        <span style="line-height:24px">开始打卡照片</span>
+                    </Col>
+                    <Col span="18" v-for="(item,index) in beginImgList " :key="index">
+                        <a target="_blank" :href="'/api/assets/' + item" >
+                            <img :src="'/api/assets/' +item" alt=""  width="100" height="100" onerror="this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null">
+                        </a>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px" v-if="taskKindName=='市场外勤'">
+                    <Col span="6">
+                        <span style="line-height:24px">结束打卡照片</span>
+                    </Col>
+                    <Col span="18" v-for="(item,index) in endImgList " :key="index">
+                        <a target="_blank" :href="'/api/assets/' + item" >
+                            <img :src="'/api/assets/' +item" alt=""  width="100" height="100" onerror="this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null">
+                        </a>
+                    </Col>
+                </Row>
                 <Row style="margin-top:40px">
                     <Button @click="update_detail" type="primary" :disabled="openSubmit" style="margin-left:40px"  :loading="loading" v-if="taskStage=='tesUnstarted'">提交</Button>
                     <Button @click="delete_task" type="error" style="margin-left:50px" v-if="taskStage=='tesUnstarted'">作废</Button>
@@ -139,6 +215,7 @@
                 typeList:[],
                 companyList:[],
                 productList:[],
+                fieldDetail:[],
                 // newTaskLevel: "",
                 // oldTaskLevel: "",
                 // oldRemindTime: "",
@@ -167,6 +244,9 @@
                 newFollowResult:"",
                 oldFollowResult:"",
                 taskSummary:"",
+                beginImgList:"",
+                endImgList:"",
+                dateLength:""
             }
         },
         methods:{
@@ -351,6 +431,37 @@
                 this.$Get(url, config, success)
                 _self.newCompanyId = e
             },
+            get_field_detail(e){
+                let _self = this
+                let url = `api/user/legwork/task/detail`
+                let config = {
+                    params:{
+                        legworkTaskId: e,
+                    }
+                }
+
+                function success(res){
+                    _self.fieldDetail = res.data.data
+                    if (_self.fieldDetail.finish_status=="wancheng"){
+                        _self.fieldDetail.finish_status = "完成"
+                    }
+                    if (_self.fieldDetail.finish_status=="weiwancheng"){
+                        _self.fieldDetail.finish_status = "未完成"
+                    }
+                    _self.beginImgList = res.data.data.begin_realpath.split(",")
+                    _self.endImgList = res.data.data.end_realpath.split(",")
+                    // _self.dateLength = DateDifference(res.data.data.begin_time,res.data.data.end_time)
+                    console.log(_self.beginImgList)
+                    console.log(_self.endImgList)
+                    console.log(_self.fieldDetail)
+                }
+
+                function fail(err){
+
+                }
+
+                this.$Get(url, config, success, fail)
+            },
             get_detail(e){
                 let _self = this
                 let url = 'api/task/getTaskPropertyDetailByTaskId'
@@ -457,6 +568,10 @@
                 _self.taskStage = e.taskStage
                 _self.norTaskSummary = e.taskSummary
                 _self.expectEndDate = FULLDateFormat(e.expectEndDate)
+                _self.taskKindName = e.taskKindName
+                if (e.legId){
+                    _self.get_field_detail(e.legId)
+                }
                 if (e.mission=="Completed") {
                     _self.norMission = "完成"
                 }

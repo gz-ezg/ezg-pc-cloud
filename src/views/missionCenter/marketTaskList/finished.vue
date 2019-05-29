@@ -70,6 +70,7 @@
 
 <script>
     import {DateFormat} from "../../../libs/utils";
+    import {FULLDateFormat} from "../../../libs/utils";
     import finishedDetail from './finishedDetail'
     import fieldDetail from './fieldDetail'
     export default {
@@ -140,7 +141,7 @@
                     },
                     {
                         title: '完结时间',
-                        key: 'expectEndDate',
+                        key: 'actualEndDate',
                         minWidth: 180,
                     },
                     {
