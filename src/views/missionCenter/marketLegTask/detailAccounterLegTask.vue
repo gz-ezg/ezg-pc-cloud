@@ -65,23 +65,30 @@
                     <Col span="6">
                         <span style="line-height:24px">任务结果</span>
                     </Col>
-                    <Col span="18">
+                    <Col span="18" v-if="taskStage=='tesUnstarted'">
                         <Select v-model="mission" size="small" style="width:180px">
                             <Option v-for="item in missionList" :value="item.typecode" :key="item.typecode">{{item.typename}}</Option>
                         </Select>
                     </Col>
+                    <Col span="18" v-if="taskStage=='tesFinished'">
+                        <Input size="small" v-model="norMission" style="width:180px" disabled></Input>
+                    </Col>
                 </Row>
-                <Row :gutter="20" style="margin-top:20px">
+                <Row :gutter="20" style="margin-top:20px" >
                     <Col span="6">
                         <span style="line-height:24px">任务总结</span>
                     </Col>
-                    <Col span="18">
+                    <Col span="18" v-if="taskStage=='tesUnstarted'">
                         <Input v-model="taskSummary" size="small" style="width:180px" type="textarea" :row="5" autosize>
+                        </Input>
+                    </Col>
+                    <Col span="18" v-if="taskStage=='tesFinished'">
+                        <Input v-model="norTaskSummary" size="small" style="width:180px" type="textarea" :row="5" autosize disabled>
                         </Input>
                     </Col>
                 </Row>
                 <Row style="margin-top:40px">
-                    <Button @click="update_detail" type="primary" style="margin-left:40px"  :loading="loading">提交</Button>
+                    <Button @click="update_detail" type="primary" :disabled="openSubmit" style="margin-left:40px"  :loading="loading">提交</Button>
                     <Button @click="delete_task" type="error" style="margin-left:50px">作废</Button>
                 </Row>
             </div>
@@ -94,16 +101,29 @@
     import {FULLDateFormat} from "../../../libs/utils";
     export default {
         name: "detailAccounterLegTask",
+        computed:{
+            openSubmit(){
+                if(this.taskStage === "tesUnstarted" ){
+                    return false
+                }
+                if(this.taskStage === "tesFinished" ){
+                    return true
+                }
+            }
+        },
         data(){
             return{
                 id:"",
                 openTaskDetail:false,
+                taskStage:"",
                 missionList:[{"typecode":"Completed","typename":"完成"},{"typecode":"Failed","typename":"失败"}],
                 businessArea:[],
                 businessPlace:[],
                 followResult:[],
                 data:[],
                 mission:"Completed",
+                norMission:"",
+                norTaskSummary:"",
                 abtypeList:[{"typecode":"A","typename":"A类"},{"typecode":"B","typename":"B类"}],
                 typeList:[],
                 companyList:[],
@@ -332,7 +352,8 @@
 
                 function success(res){
                     _self.data = res.data.data
-                    console.log(_self.data[0].taskKindName)
+                    console.log(_self.data[0])
+                    console.log(_self.data[0].taskStageName)
                     // _self.oldTaskLevel = res.data.data.taskData[0].task_level
                     _self.oldRemindTime = res.data.data[0].planDate
                     // _self.oldTaskStage = res.data.data.taskData[0].task_stage
@@ -422,6 +443,14 @@
                 console.log(e)
                 _self.get_data_center()
                 _self.id = e.taskId
+                _self.taskStage = e.taskStage
+                _self.norTaskSummary = e.taskSummary
+                if (e.mission=="Completed") {
+                    _self.norMission = "完成"
+                }
+                if (e.mission=="Failed") {
+                    _self.norMission = "失败"
+                }
                 console.log(e.taskId)
                 _self.get_detail(e.taskId)
                 _self.detail = e
