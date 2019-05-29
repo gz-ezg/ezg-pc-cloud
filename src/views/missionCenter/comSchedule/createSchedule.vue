@@ -26,7 +26,8 @@
                 <Col span="12">
                     <FormItem label="企业" prop="companyId">
                         <Select ref="select"
-                                v-model="newMission.companyId" placeholder="请输入客户名称搜索"
+                                v-model="newMission.companyId"
+                                placeholder="请输入客户名称搜索"
                                 filterable
                                 remote
                                 :remote-method="get_company"

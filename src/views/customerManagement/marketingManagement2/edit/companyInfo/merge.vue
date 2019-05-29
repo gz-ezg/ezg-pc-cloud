@@ -7,9 +7,14 @@
                 :closable="false">
                 <Form>
                     <FormItem label="请选择要合并的公司" prop="merge">
-                        <Select transfer v-model="idArray.id" >
-                            <Option v-for="item in newData" :value="item.id" :key="item.id">{{ item.companyname }}
-                            </Option>
+                        <Select transfer
+                                v-model="idArray.id"
+                                placeholder="请输入客户名称搜索"
+                                filterable
+                                remote
+                                :remote-method="get_company"
+                                :loading="companyLoading">
+                            <Option v-for="item in companyList" :value="item.companyid" :key="item.companyid">{{item.companyname}}</Option>
                         </Select>
                     </FormItem>
                 </Form>
@@ -28,7 +33,7 @@
         props:{
             data:{
                 type:Array,
-                default:[]
+                default:[],
             },
         },
         data(){
@@ -36,6 +41,8 @@
                 openMergeCompany:false,
                 id:"",
                 newData:[],
+                companyList:[],
+                companyLoading:false,
                 idArray:[
                     {id:'',companyname:""}
                 ],
@@ -47,6 +54,25 @@
                 let _self = this
                 _self.newData = []
                 _self.openMergeCompany = false
+            },
+            get_company(query){
+                let _self = this
+                _self.companyLoading = true
+                let url = "api/legwork/apiQueryCompanyOrCustomerMsg"
+                let config = {
+                    params:{
+                        page: 1,
+                        pageSize: 10,
+                        companyname: query
+                    }
+                }
+
+                function success(res){
+                    _self.companyLoading = false
+                    _self.companyList = res.data.data
+                }
+
+                this.$Get(url, config, success)
             },
             merge(){
                 let _self = this

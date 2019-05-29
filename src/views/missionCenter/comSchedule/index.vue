@@ -170,8 +170,8 @@
                     slotEventOverlap:false,
                     minTime : "08:00:00",
                     maxTime : "20:00:00",
-                    contentHeight : 1000,
-                    slotDuration : "00:10:00",
+                    contentHeight : 1150,
+                    slotDuration : "00:15:00",
                     aspectRatio : 2,
 
                     customButtons:{
@@ -283,6 +283,7 @@
                         page: 1,
                         pageSize: 1000,
                         businessKind:"businessKind"
+
                     }
                 }
 
@@ -411,7 +412,19 @@
     .fc-event{
         font-size:14px;
         border: 1px solid #2d8cf0;
-        color: #ffffff
+        color: #ffffff;
+        height: 20px;
+    }
+    .fc-content .fc-time{
+        line-height: 18px;
+        display: inline;
+    }
+    .fc-content{
+        overflow: hidden;
+    }
+    .fc-title{
+        margin-left: 3px;
+        display: inline;
     }
     .fc-event, .fc-event-dot{
         background: #2d8cf0
