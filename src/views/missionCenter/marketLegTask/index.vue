@@ -55,12 +55,9 @@
                         </datepicker>
                     </Row>
                     <Row>
-                        <!--<span>执行中的任务——<span style="color:blue">蓝色</span><br/></span>-->
-                        <!--<span>当天需要完结的任务——<span style="color:orange">黄色</span><br/></span>-->
-                        <!--<span>完结任务——<span style="color:#228B22">绿色</span><br/></span>-->
-                        <!--<span>逾期任务——<span style="color:red">红色</span><br/></span>-->
-                        <!--<span>线索未完成——<span style="color:#FF7F00">橙色</span><br/></span>-->
-                        <!--<span>线索完成——<span style="color:#228B22">绿色</span><br/></span>-->
+                        <span>执行中的任务——<span style="color:#00CCFF">蓝色</span><br/></span>
+                        <span>完结任务成功——<span style="color:#AEDD81">绿色</span><br/></span>
+                        <span>完结任务失败——<span style="color:#D24D57">红色</span><br/></span>
                     </Row>
                     <Row>
                         <Row style="margin-bottom:10px"><h3>{{local_date}}</h3></Row>
@@ -292,7 +289,15 @@
                         _self.events_temp[i].Area = _self.businessArea_map.get(  _self.events_temp[i].taskArea)
                         _self.events_temp[i].depart = _self.businessPlace_map.get(_self.events_temp[i].taskPlace)
                         _self.events_temp[i].CompanyName = _self.events_temp[i].companyName
-                        _self.events_temp[i].color = "blue"
+                        if (_self.events_temp[i].taskStage=="tesFinished" && _self.events_temp[i].mission=="Completed") {
+                            _self.events_temp[i].color = "#AEDD81"
+                        }
+                        if (_self.events_temp[i].taskStage=="tesUnstarted") {
+                            _self.events_temp[i].color = "#00CCFF"
+                        }
+                        if (_self.events_temp[i].taskStage=="tesFinished" && _self.events_temp[i].mission=="Failed") {
+                            _self.events_temp[i].color = "#D24D57"
+                        }
                         _self.events = _self.events_temp
                     }
 
