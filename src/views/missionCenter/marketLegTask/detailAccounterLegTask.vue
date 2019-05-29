@@ -19,7 +19,7 @@
                 </Row>
                 <Row :gutter="20" style="margin-top:20px">
                     <Col span="6">
-                        <span style="line-height:24px">任务对象</span>
+                        <span style="line-height:24px">公司名称</span>
                     </Col>
                     <Col span="18">
                         <span style="line-height:24px">{{data[0].companyName}}
@@ -31,8 +31,7 @@
                         <span style="line-height:24px">客户</span>
                     </Col>
                     <Col span="18">
-                        <span style="line-height:24px">{{data[0].customerName}}
-                            </span>
+                        <span style="line-height:24px">{{data[0].customerName}}<span style="margin-left: 10px"><Button v-if="data[0].customerName!==null" type="primary" size="small" @click="open_customer_detail">客户详情</Button></span></span>
                     </Col>
                 </Row>
                 <Row :gutter="20" style="margin-top:20px">
@@ -62,9 +61,28 @@
                         </DatePicker>
                     </Col>
                 </Row>
+                <Row :gutter="20" style="margin-top:20px">
+                    <Col span="6">
+                        <span style="line-height:24px">任务结果</span>
+                    </Col>
+                    <Col span="18">
+                        <Select v-model="mission" size="small" style="width:180px">
+                            <Option v-for="item in missionList" :value="item.typecode" :key="item.typecode">{{item.typename}}</Option>
+                        </Select>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px">
+                    <Col span="6">
+                        <span style="line-height:24px">任务总结</span>
+                    </Col>
+                    <Col span="18">
+                        <Input v-model="taskSummary" size="small" style="width:180px" type="textarea" :row="5" autosize>
+                        </Input>
+                    </Col>
+                </Row>
                 <Row style="margin-top:40px">
-                    <Button @click="update_detail" type="primary" style="margin-left:40px" :disabled="openSubmit" :loading="loading">修改</Button>
-                    <Button @click="delete_task" type="error" style="margin-left:50px">删除任务</Button>
+                    <Button @click="update_detail" type="primary" style="margin-left:40px"  :loading="loading">提交</Button>
+                    <Button @click="delete_task" type="error" style="margin-left:50px">作废</Button>
                 </Row>
             </div>
             <div slot="footer"></div>
@@ -80,10 +98,12 @@
             return{
                 id:"",
                 openTaskDetail:false,
+                missionList:[{"typecode":"Completed","typename":"完成"},{"typecode":"Failed","typename":"失败"}],
                 businessArea:[],
                 businessPlace:[],
                 followResult:[],
                 data:[],
+                mission:"Completed",
                 abtypeList:[{"typecode":"A","typename":"A类"},{"typecode":"B","typename":"B类"}],
                 typeList:[],
                 companyList:[],
@@ -114,35 +134,14 @@
                 oldLegName:"",
                 nowName:"",
                 newFollowResult:"",
-                oldFollowResult:""
-            }
-        },
-        computed:{
-            openSubmit(){
-                if(this.data[0].taskName !== this.oldTaskName ){
-                    return false
-                } else if(this.newPlanTime && this.newPlanTime !== this.oldPlanTime){
-                    return false
-                } else if(this.newBusinessPlace && this.newBusinessPlace !== this.oldBusinessPlace){
-                    return false
-                }else if(this.newBusinessArea && this.newBusinessArea !== this.oldBusinessArea){
-                    return false
-                } else if(this.newLegType && this.newLegType !== this.oldLegType){
-                    return false
-                } else if(this.newBusinessId && this.newBusinessId !== this.oldBusinessId){
-                    return false
-                }else if(this.newCompanyId && this.newCompanyId !== this.oldCompanyId){
-                    return false
-                } else if(this.newLegName && this.newLegName !== this.oldLegName){
-                    return false
-                } else if(this.data[0].followResult && this.data[0].followResult !== this.oldFollowResult){
-                    return false
-                } else {
-                    return true
-                }
+                oldFollowResult:"",
+                taskSummary:"",
             }
         },
         methods:{
+            open_customer_detail(){
+                this.$store.commit('open_gobal_customer_detail_modal', {ID: this.data[0].customerId});
+            },
             getPlanTime(e){
                 console.log(e)
                 let _self = this
@@ -240,12 +239,15 @@
                             executorName:_self.data[0].executorName,
                             companyId:_self.data[0].companyId,
                             customerId:_self.data[0].customerId,
-                            followResult:_self.data[0].	followResult
+                            followResult:_self.data[0].	followResult,
+                            taskSummary:_self.taskSummary,
+                            mission:_self.mission
                         }
                     function success(res){
                             _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST",true)
                             _self.get_detail(_self.id)
                             _self.openTaskDetail = false
+                            _self.taskSummary = ""
                         }
                     function fail(){
 

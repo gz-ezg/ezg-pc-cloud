@@ -120,13 +120,13 @@
                     {
                         title: '任务类型',
                         key: 'taskKind',
-                        minWidth: 140,
+                        minWidth: 180,
                     },
                     {
                         title: '操作',
                         key: 'expect_date',
                         fixed: 'right',
-                        width: 180,
+                        width: 140,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
@@ -210,7 +210,7 @@
                 let config = {
                     params: {
                         task_stage:"tesCanceled",
-                        task_kind :"tkLegMar",
+                        marketKind:"marketKind",
                         page:_self.page,
                         pageSize:_self.pageSize,
                         companyName:_self.formValidateSearch.companyName,

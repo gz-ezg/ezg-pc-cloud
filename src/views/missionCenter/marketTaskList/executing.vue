@@ -68,6 +68,7 @@
 </template>
 
 <script>
+    import {FULLDateFormat} from "../../../libs/utils";
     import {DateFormat} from "../../../libs/utils";
     import detail from './detail'
 
@@ -130,7 +131,7 @@
                         title: '操作',
                         key: 'expect_date',
                         fixed: 'right',
-                        width: 180,
+                        width: 140,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
@@ -213,7 +214,7 @@
                 let config = {
                     params: {
                         task_stage:"tesUnstarted",
-                        task_kind :"tkLegMar",
+                        task_kind :"tkNormal",
                         page:_self.page,
                         pageSize:_self.pageSize,
                         companyName:_self.formValidateSearch.companyName,
@@ -230,6 +231,7 @@
                     for(let i = 0; i < _self.data.length; i++){
                     //     _self.data[i].expect_date = DateFormat(_self.data[i].expect_date)
                         _self.data[i].taskKind = _self.taskKind_map.get(_self.data[i].taskKind)
+                        _self.data[i].planDate = FULLDateFormat(_self.data[i].planDate)
                     //     _self.data[i].task_place = _self.taskPlace_map.get(_self.data[i].task_place)
                     //     if (_self.data[i].apply_status==="tesFinished") {
                     //         _self.data[i].apply_status="同意"

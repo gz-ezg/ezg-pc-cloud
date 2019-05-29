@@ -51,14 +51,14 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="12" v-if="!data.legId">
+                <Row :gutter="12" v-if="data.taskKindName=='普通任务'">
                     <Col span="12">
                         <FormItem label="任务结果">
                             <Input v-model="data.mission_name" size="small" readonly></Input>
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="12" v-if="!data.legId">
+                <Row :gutter="12" v-if="data.taskKindName=='普通任务'">
                     <Col span="12">
                         <FormItem label="结束时间">
                             <Input v-model="data.expectEndDate" size="small" readonly></Input>
@@ -66,11 +66,11 @@
                     </Col>
                     <Col span="12">
                         <FormItem label="任务总结">
-                            <Input type="textarea" v-model="data.taskContent" :autosize="true" readonly></Input>
+                            <Input type="textarea" v-model="data.taskSummary" :autosize="true" readonly></Input>
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="12" v-if="data.legId">
+                <Row :gutter="12" v-if="data.taskKindName=='市场外勤'">
                     <Col span="12">
                         <FormItem label="外勤开始时间">
                             <Input v-model="fieldDetail.begin_time" size="small" readonly></Input>
@@ -82,7 +82,7 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="12" v-if="data.legId">
+                <Row :gutter="12" v-if="data.taskKindName=='市场外勤'">
                     <Col span="12">
                         <FormItem label="外勤结束时间">
                             <Input v-model="fieldDetail.end_time" size="small" readonly></Input>
@@ -94,7 +94,7 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="12" v-if="data.legId">
+                <Row :gutter="12" v-if="data.taskKindName=='市场外勤'">
                     <Col span="12">
                         <FormItem label="外勤结果">
                             <Input v-model="fieldDetail.finish_status" size="small" readonly></Input>
@@ -106,7 +106,7 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="12" v-if="data.legId">
+                <Row :gutter="12" v-if="data.taskKindName=='市场外勤'">
                     <Col span="12">
                         <FormItem label="外勤总结">
                             <Input v-model="fieldDetail.finish_memo" size="small" readonly></Input>
@@ -118,7 +118,7 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="16">
+                <Row :gutter="16" v-if="data.taskKindName=='市场外勤'">
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="11">
                         <FormItem prop="Providentfund" label="开始打卡照片：" style="margin:5px" disabled >
@@ -133,7 +133,7 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="16">
+                <Row :gutter="16" v-if="data.taskKindName=='市场外勤'">
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="11">
                         <FormItem prop="Providentfund" label="结束打卡照片：" style="margin:5px" disabled >
@@ -201,6 +201,12 @@
 
                 function success(res){
                     _self.fieldDetail = res.data.data
+                    if (_self.fieldDetail.finish_status=="wancheng"){
+                        _self.fieldDetail.finish_status = "完成"
+                    }
+                    if (_self.fieldDetail.finish_status=="weiwancheng"){
+                        _self.fieldDetail.finish_status = "未完成"
+                    }
                     _self.beginImgList = res.data.data.begin_realpath.split(",")
                     _self.endImgList = res.data.data.end_realpath.split(",")
                     _self.dateLength = DateDifference(res.data.data.begin_time,res.data.data.end_time)

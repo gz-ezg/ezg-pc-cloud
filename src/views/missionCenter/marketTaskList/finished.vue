@@ -99,6 +99,7 @@
                     crealname: "",
                     frealname: "",
                     paytime: [],
+                    endtime:[],
                     customerCreateTime: []
                 },
                 header:[
@@ -125,7 +126,7 @@
                     {
                         title: '计划执行时间',
                         key: 'planDate',
-                        minWidth: 140,
+                        minWidth: 180,
                     },
                     {
                         title: '任务类型',
@@ -134,19 +135,19 @@
                     },
                     {
                         title: '任务结果',
-                        key: 'taskStage',
+                        key: 'mission_name',
                         minWidth: 140,
                     },
                     {
                         title: '完结时间',
                         key: 'actualEndDate',
-                        minWidth: 140,
+                        minWidth: 180,
                     },
                     {
                         title: '操作',
                         key: 'expect_date',
                         fixed: 'right',
-                        width: 180,
+                        width: 140,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
@@ -202,7 +203,7 @@
                 let config = {
                     params: {
                         task_stage:"tesFinished",
-                        task_kind :"tkLegMar",
+                        marketKind:"marketKind",
                         page:_self.page,
                         pageSize:_self.pageSize,
                         companyName:_self.formValidateSearch.companyName,
@@ -210,6 +211,7 @@
                         customerTel:_self.formValidateSearch.customertel,
                         bplan_date:DateFormat(_self.formValidateSearch.date[0]),
                         eplan_date:DateFormat(_self.formValidateSearch.date[1]),
+
                     }
                 }
                 function success(res){
@@ -259,6 +261,9 @@
             this.loading = true
             this.get_data_center()
             this.get_data()
+            this.$bus.on("UPDATE_FINISHED_DATA",()=>{
+                this.get_data()
+            })
         }
     }
 </script>
