@@ -41,7 +41,7 @@
                 <Col span="12">
                     <FormItem label="产品" prop="companyId">
                         <Select v-model="newMission.businessId" placeholder="请先输入客户名称搜索"
-                                :loading="companyLoading"
+                                :loading="companyLoading" @on-change="get_product_name"
                         >
                             <Option v-for="item in productList" :value="item.businessId" :key="item.businessId">{{item.product}}</Option>
                         </Select>
@@ -191,8 +191,11 @@
                     followResult: "",
                     followUpType: "",
                     companyId: "",
+                    companyName:"",
+                    businessId:"",
+                    nodeName:"",
+                    businessName:"",
                     executorId: [],
-                    businessId:""
                 },
                 phraseLoading: false,
                 createLoading: false,
@@ -200,10 +203,13 @@
                 companyLoading: false,
                 phraseList:[],
                 companyList: [],
+                companyNameList:[],
                 userList: [
 
                 ],
                 productList:[],
+                productListName:[],
+                nodeNameList:[],
                 nodeList:[{"typecode":"Y","typename":"是"},{"typecode":"N","typename":"否"}],
                 allUserList: [],
                 allUserList_map: new Map(),
@@ -405,9 +411,51 @@
                 function success(res){
                     _self.companyLoading = false
                     _self.companyList = res.data.data
+                    _self.companyNameList = res.data.data
                 }
 
                 this.$Get(url, config, success)
+            },
+            get_company_name(){
+                let _self = this
+                let obj = {}
+                let arr = _self.companyNameList
+
+                for (let i=0;i<arr.length;i++){
+                    let companyname = arr[i].companyname
+                    let companyid = arr[i].companyid
+                    obj[companyid] = companyname
+                }
+                _self.newMission.companyName = obj[_self.newMission.companyId]
+                console.log(_self.newMission.companyName)
+            },
+            get_product_name(){
+                let _self = this
+                let obj = {}
+                let arr = _self.productListName
+
+                for (let i=0;i<arr.length;i++){
+                    let product = arr[i].product
+                    let businessId = arr[i].businessId
+                    obj[businessId] = product
+                }
+                _self.newMission.businessName = obj[_self.newMission.businessId]
+                console.log(_self.newMission.businessName)
+                _self._self.get_node_name()
+            },
+            get_node_name(){
+                let _self = this
+                let obj = {}
+                let arr = _self.nodeNameList
+
+                for (let i=0;i<arr.length;i++){
+                    let currentProcess = arr[i].currentProcess
+                    let businessId = arr[i].businessId
+                    obj[businessId] = currentProcess
+                }
+                _self.newMission.nodeName = obj[_self.newMission.businessId]
+                console.log(_self.newMission.nodeName)
+                _self.newMission.taskName=_self.newMission.companyName+"--"+_self.newMission.businessName+"--"+_self.newMission.nodeName
             },
             get_businessId(id){
                 let _self = this
@@ -422,13 +470,17 @@
                 function success(res){
                     _self.userLoading = false
                     _self.productList = res.data.data
+                    _self.productListName = res.data.data
+                    _self.nodeNameList = res.data.data
                     console.log(res.data.data)
                     if (_self.productList.length!==0){
                         _self.newMission.businessId =  _self.productList[0].businessId
                     }else {
                         _self.newMission.businessId = null
                     }
-
+                    _self.get_company_name()
+                    _self.get_product_name()
+                    _self.get_node_name()
                 }
 
                 this.$Get(url, config, success)

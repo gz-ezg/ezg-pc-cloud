@@ -4,7 +4,6 @@
                 v-model="openTaskDetail"
                 title="市场外勤任务详情"
                 width="450"
-
                 class-name="vertical-center-modal"
         >
             <div style="min-height:60vh;width:400px" v-if="data.length!==0">
@@ -148,7 +147,7 @@
                         <span style="line-height:24px">外勤总结</span>
                     </Col>
                     <Col span="18">
-                        <Input size="small" v-model="fieldDetail.finish_memo" style="width:180px" disabled></Input>
+                        <Input size="small" v-model="fieldDetail.finish_memo" style="width:180px" disabled></Input><span style="margin-left: 20px"><Button v-if="data[0].followResult=='Party' || data[0].followResult=='Visit'" type="primary" size="small" @click="add_customer">新增客户</Button></span>
                     </Col>
                 </Row>
                 <Row :gutter="20" style="margin-top:20px" v-if="taskKindName=='市场外勤'">
@@ -180,13 +179,18 @@
                 <Button @click="openTaskDetail = false" type="primary"  style="margin-left:40px"  :loading="loading" v-if="taskStage=='tesFinished'">关闭</Button>
             </div>
         </Modal>
+        <create></create>
     </div>
 </template>
 
 <script>
     import {FULLDateFormat} from "../../../libs/utils";
+    import create from './create'
     export default {
         name: "detailAccounterLegTask",
+        components:{
+            create
+        },
         computed:{
             openSubmit(){
                 if(this.taskStage === "tesUnstarted" ){
@@ -250,6 +254,9 @@
             }
         },
         methods:{
+            add_customer(){
+                this.$bus.emit('OPEN_ADD_CUSTOMER_MODAL',true);
+            },
             open_customer_detail(){
                 this.$store.commit('open_gobal_customer_detail_modal', {ID: this.data[0].customerId});
             },

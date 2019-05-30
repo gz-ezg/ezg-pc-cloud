@@ -208,10 +208,10 @@
                 function success(res){
                     _self.fieldDetail = res.data.data
                     if (_self.fieldDetail.finish_status=="youxiao"){
-                        _self.fieldDetail.finish_status = "完成"
+                        _self.fieldDetail.finish_status = "有效"
                     }
                     if (_self.fieldDetail.finish_status=="wuxiao"){
-                        _self.fieldDetail.finish_status = "未完成"
+                        _self.fieldDetail.finish_status = "无效"
                     }
                     _self.beginImgList = res.data.data.begin_realpath.split(",")
                     _self.endImgList = res.data.data.end_realpath.split(",")
