@@ -1,6 +1,7 @@
 <template>
     <div>
         <Modal
+            :transfer="false"
             title="新增客户"
             v-model="openCustomerCreate"
             width="700"
@@ -134,30 +135,17 @@
                 <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
             </div>
         </Modal>
+        <tag></tag>
     </div>
 </template>
 
 <script>
+    import commonVue from './commonVue'
+    import tag from './tag_select'
 export default {
-    props: {
-        cluesources: {
-            type: Array
-        },
-        customerrating: {
-            type: Array
-        },
-        area: {
-            type: Array
-        },
-        sf_yn: {
-            type: Array
-        },
-        importance: {
-            type: Array
-        },
-        customerTypes_Casr: {
-            type: Array
-        },
+    mixins: [commonVue],
+    components:{
+        tag
     },
     data(){
         //  自定义规则
@@ -441,13 +429,19 @@ export default {
     },
     created(){
         this.get_all_label()
+        this.get_data_center()
     },
     mounted(){
         let _self = this
         this.$bus.on("CREATE_CUSTOMER", (e)=>{
             _self.formValidate.labels = []
             _self.openCustomerCreate = true
-        })
+    })
+        this.$bus.on('OPEN_CREATE_MODAL',()=>{
+            _self.formValidate.labels = []
+            _self.openCustomerCreate = true
+
+        });
     },
     watch:{
         'formValidate.labels': function(){

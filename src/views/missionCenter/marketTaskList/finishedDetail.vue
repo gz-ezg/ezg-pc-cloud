@@ -162,13 +162,18 @@
         <div slot="footer">
             <Button @click="cancel_task" type="primary">关闭</Button>
         </div>
+        <create></create>
     </Modal>
 </template>
 
 <script>
     import {DateDifference} from "../../../libs/utils";
+    import create from './create'
     export default {
         name: "finishedDetail",
+        components:{
+            create
+        },
         data(){
             return{
                 openAddMission:false,
@@ -189,7 +194,7 @@
                 this.openAddMission = false
             },
             add_customer(){
-                this.$store.commit('open_gobal_customer_detail_modal', {ID: this.data.customer_id});
+                this.$bus.emit('OPEN_CREATE_MODAL',true);
             },
             get_data(e){
                 let _self = this
@@ -202,10 +207,10 @@
 
                 function success(res){
                     _self.fieldDetail = res.data.data
-                    if (_self.fieldDetail.finish_status=="wancheng"){
+                    if (_self.fieldDetail.finish_status=="youxiao"){
                         _self.fieldDetail.finish_status = "完成"
                     }
-                    if (_self.fieldDetail.finish_status=="weiwancheng"){
+                    if (_self.fieldDetail.finish_status=="wuxiao"){
                         _self.fieldDetail.finish_status = "未完成"
                     }
                     _self.beginImgList = res.data.data.begin_realpath.split(",")
