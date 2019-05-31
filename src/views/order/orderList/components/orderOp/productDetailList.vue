@@ -104,7 +104,7 @@
               <Col span="16">
                 <div class="d2">
                   <Row>
-                    <Col span="6">
+                    <Col span="12">
                       <FormItem label="购买数量" prop="productnumber">
                         <!-- 手动处理修改数量后，业务逻辑 其他参照此-->
                         <InputNumber
@@ -121,7 +121,7 @@
                       </FormItem>
                     </Col>
 
-                    <Col span="8">
+                    <Col span="12">
                       <FormItem label="服务部门" prop="departid">
                         <Select
                           v-if="pageFlag =='createOrder' || pageFlag =='editOrder'"
@@ -147,9 +147,35 @@
                         />
                       </FormItem>
                     </Col>
-
-                    <Col v-if="item.defaultdepartalias=='PLAN'" span="8">
-                      <FormItem label=" 申报年份" prop="declare_year">
+                  </Row>
+                  <Row>
+                    <Col span="9">
+                      <FormItem
+                        
+                        style="margin-left: 10px"
+                        label=" 服务人员："
+                      >
+                        <div v-if="pageFlag =='createOrder' || pageFlag =='editOrder'" style="display:inline-block">
+                          <Select v-model="item.selectServer">
+                            <Option
+                              v-for="item in serverList[index]"
+                              :key="item.userId"
+                              :value="item"
+                            >{{item.realname +"【"+item.flag+"】"}}</Option>
+                          </Select>
+                        </div>
+                        <Input
+                          v-if="pageFlag =='showOrder' || pageFlag =='amendOrder'"
+                          :disabled="isDisabled"
+                          v-model="item.realname"
+                          style="width:120px"
+                          type="text"
+                          size="small"
+                        />
+                      </FormItem>
+                    </Col>
+                    <Col v-if="item.defaultdepartalias=='PLAN'" span="15">
+                      <FormItem label="申报年份" prop="declare_year">
                         <DatePicker
                           type="year"
                           format="yyyy"
@@ -157,10 +183,11 @@
                           v-model="item.declare_year"
                           :disabled="isDisabled"
                           placeholder="选择年份"
-                          style="width: 120px"
+                          style="margin-left: 10px;display:inline-block;width:200px"
                         ></DatePicker>
                       </FormItem>
                     </Col>
+                    <!-- </div> -->
                   </Row>
                   <Row>
                     <Col span="10" v-if="item.iscycle != 'N'">
@@ -221,7 +248,7 @@
                   </Row>
                   <Row>
                     <Col>
-                      <FormItem label="服务说明" style="margin-left: 10px">
+                      <FormItem label="服务说明：" style="margin-left: 10px">
                         <Input
                           class="input-me"
                           :disabled="isDisabled"
@@ -254,6 +281,8 @@ export default {
     return {
       isPlan: {},
       companyId: "",
+      departServerObj: [],
+      serverList: [],
       operatorId: localStorage.getItem("id"),
       ruleValidate: {
         productnumber: [
@@ -322,7 +351,6 @@ export default {
     departChange(item, index) {
       let idObj = {};
       let _self = this;
-      console.log(_self.productList);
 
       for (let i = 0; i < _self.productList.length; i++) {
         let param = {};
@@ -354,7 +382,37 @@ export default {
           idObj[row.departid] = param;
         }
       }
-      this.$bus.emit("DEPART_CHANGE_" + this.pageFlag, idObj);
+      if (item) {
+        this.changeServerPerson(item, index);
+      }
+      // this.$bus.emit("DEPART_CHANGE_" + this.pageFlag, idObj);
+    },
+    changeServerPerson(item, index) {
+      let url = `api/product/server/list`;
+      let config;
+      if (!item) {
+        let product = this.productList[index];
+        config = {
+          params: {
+            productSkuId: product.skuid,
+            serviceDepartId: product.departid,
+            companyId: this.companyId
+          }
+        };
+      } else {
+        config = {
+          params: {
+            productSkuId: this.productList[index].skuid,
+            serviceDepartId: item.value,
+            companyId: this.companyId
+          }
+        };
+      }
+      let success = res => {
+        this.serverList.splice(index, 1, res.data.data);
+      };
+      function fail() {}
+      this.$Get(url, config, success);
     },
     refundItem(index) {
       let _self = this;
@@ -392,6 +450,7 @@ export default {
       _self.productList.push(e);
       _self.departChange();
       _self.computer_paynumber();
+      _self.changeServerPerson("", _self.productList.length - 1);
     });
     this.$bus.on("OPEN_ORDER_PRODUCT_LIST", e => {
       _self.companyId = e;
