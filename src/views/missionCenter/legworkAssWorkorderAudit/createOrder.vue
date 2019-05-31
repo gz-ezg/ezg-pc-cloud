@@ -141,7 +141,7 @@
                     _self.get_data(_self.data[0].id)
                     _self.createLoading = false
                     _self.openAddMission = false
-                    this.newMission.checkMemo = null
+                    _self.newMission.checkMemo = null
                 }
                 function fail(){
 

@@ -282,24 +282,24 @@
                 }
                 this.$Get(url, config, success)
             },
-            add_phrase_list(e){
-                let _self = this
-                _self.phraseLoading = true
-                let url = 'api/task/addTaskQuick'
-                let config={
-                    quickType:"account",
-                    quickContent:e,
-                    quickIndex:1,
-                }
-                function success(res){
-                    _self.phraseLoading = false
-                    _self.$bus.emit("UPDATE_ACCOUNTER_PHRASE_LIST", true)
-                }
-                function fail(err){
-                    _self.phraseLoading = true
-                }
-                this.$Post(url, config, success, fail)
-            },
+            // add_phrase_list(e){
+            //     let _self = this
+            //     _self.phraseLoading = true
+            //     let url = 'api/task/addTaskQuick'
+            //     let config={
+            //         quickType:"account",
+            //         quickContent:e,
+            //         quickIndex:1,
+            //     }
+            //     function success(res){
+            //         _self.phraseLoading = false
+            //         _self.$bus.emit("UPDATE_ACCOUNTER_PHRASE_LIST", true)
+            //     }
+            //     function fail(err){
+            //         _self.phraseLoading = true
+            //     }
+            //     this.$Post(url, config, success, fail)
+            // },
             delete_phrase_list(id){
                 let _self = this
                 _self.phraseLoading = true
@@ -627,10 +627,10 @@
                 _self.openAddMission = true
                 _self.newMission.planDate = e
             })
-            this.$bus.on("ADD_ACCOUNTER_PHRASE",(e)=>{
-                console.log(e)
-                this.add_phrase_list(e)
-            })
+            // this.$bus.on("ADD_ACCOUNTER_PHRASE",(e)=>{
+            //     console.log(e)
+            //     this.add_phrase_list(e)
+            // })
             this.$bus.on("UPDATE_ACCOUNTER_PHRASE_LIST",(e)=>{
                 this.get_phrase_list()
             })

@@ -47,7 +47,7 @@
                 }
                 function success(res){
                     _self.amendLoading = false
-                    _self.$bus.$emit("UPDATE_ACCOUNTER_PHRASE_LIST",true)
+                    _self.$bus.$emit("UPDATE_MARKET_PHRASE_LIST",true)
                     _self.openAmendTask = false
                 }
                 function fail(err){
@@ -59,7 +59,7 @@
         },
         created() {
             let _self = this
-            _self.$bus.on("AMEND_ACCOUNT_PHRASE_DATA",(content,id)=>{
+            _self.$bus.on("AMEND_MARKET_PHRASE_DATA",(content,id)=>{
                 _self.openAmendTask = true
                 _self.content = content
                 console.log(id)

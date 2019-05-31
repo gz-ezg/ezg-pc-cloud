@@ -362,7 +362,7 @@
                             mission:_self.mission
                         }
                     function success(res){
-                            _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST",true)
+                            _self.$bus.emit("UPDATE_MARKET_TASK_LIST",true)
                             _self.get_detail(_self.id)
                             _self.openTaskDetail = false
                             _self.taskSummary = ""
@@ -535,7 +535,7 @@
                     console.log(res)
                     _self.$Message.success("删除任务成功")
                     _self.openTaskDetail = false
-                    _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST",true)
+                    _self.$bus.emit("UPDATE_MARKET_TASK_LIST",true)
                 }
 
                 this.$Get(url, config, success)
@@ -567,8 +567,8 @@
         },
         created() {
             let _self = this
-            this.$bus.off("OPEN_ACCOUNTER_DETAIL_TASK",true)
-            this.$bus.on("OPEN_ACCOUNTER_DETAIL_TASK",(e)=>{
+            this.$bus.off("OPEN_MARKET_DETAIL_TASK",true)
+            this.$bus.on("OPEN_MARKET_DETAIL_TASK",(e)=>{
                 console.log(e)
                 _self.get_data_center()
                 _self.id = e.taskId

@@ -38,9 +38,27 @@
                 if (this.content===null || this.content===""){
                     this.$Message.warning("请输入快捷短语")
                 } else {
-                this.$bus.emit("ADD_ACCOUNTER_PHRASE",this.content)
+                this. add_phrase_list(this.content)
                 this.openAddTask = false
                 }
+            },
+            add_phrase_list(e){
+                let _self = this
+                _self.phraseLoading = true
+                let url = 'api/task/addTaskQuick'
+                let config={
+                    quickType:"account",
+                    quickContent:e,
+                    quickIndex:1,
+                }
+                function success(res){
+                    _self.phraseLoading = false
+                    _self.$bus.emit("UPDATE_ACCOUNTER_PHRASE_LIST", true)
+                }
+                function fail(err){
+                    _self.phraseLoading = true
+                }
+                this.$Post(url, config, success, fail)
             },
             cancel_task(){
                 this.content = null

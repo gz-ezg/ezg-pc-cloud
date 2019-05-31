@@ -192,7 +192,7 @@
             },
             eventSelected(event, jsEvent, view){
                 //  点击展示事件详情
-                this.$bus.emit("OPEN_ACCOUNTER_DETAIL_TASK",event)
+                this.$bus.emit("OPEN_MARKET_DETAIL_TASK",event)
             },
             dayClick(date, jsEvent, view){
                 //  可以在此处新增日程
@@ -204,7 +204,7 @@
             },
             add_task(){
                 let _self = this
-                this.$bus.emit("SCHEDULE_CREATE_ACCOUNTER_TASK", _self.rightClickDate)
+                this.$bus.emit("SCHEDULE_CREATE_MARKET_TASK", _self.rightClickDate)
             },
             next() {
                 //  通过这个函数调用calendar中的方法，
@@ -359,11 +359,11 @@
             this.local_date = (new Date()).toLocaleDateString().replace(new RegExp("/",'g'),"-")
             this.local_date = DateFormat(new Date())
             this.get_onedate_data(DateFormat(new Date()))
-            _self.$bus.on("UPDATE_ACCOUNT_TASK_LIST_DEMO", (e)=>{
+            _self.$bus.on("UPDATE_MARKET_TASK_LIST_DEMO", (e)=>{
                 _self.get_data()
                 _self.get_onedate_data(DateFormat(new Date()))
             })
-            _self.$bus.on("UPDATE_ACCOUNT_TASK_LIST",(e)=>{
+            _self.$bus.on("UPDATE_MARKET_TASK_LIST",(e)=>{
                 _self.get_data()
                 _self.load=true
             })

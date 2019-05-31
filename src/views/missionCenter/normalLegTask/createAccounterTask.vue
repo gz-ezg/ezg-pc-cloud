@@ -236,14 +236,14 @@
             },
             editable(content,id){
                 let _self = this
-                _self.$bus.$emit("AMEND_ACCOUNT_PHRASE_DATA",content,id)
+                _self.$bus.$emit("AMEND_NORMAL_PHRASE_DATA",content,id)
             },
             selectArr(id){
                 this.delete_phrase_list(id)
                 // this.addArr.splice(index.vue,1)
             },
             add_schtask(){
-                this.$bus.emit("ADD_ACCOUNT_TASK",true)
+                this.$bus.emit("ADD_NORMAL_TASK",true)
             },
             showPhrase(){
                 if (this.phraseShow===true){
@@ -268,24 +268,24 @@
                 }
                 this.$Get(url, config, success)
             },
-            add_phrase_list(e){
-                let _self = this
-                _self.phraseLoading = true
-                let url = 'api/task/addTaskQuick'
-                let config={
-                    quickType:"normal",
-                    quickContent:e,
-                    quickIndex:1,
-                }
-                function success(res){
-                    _self.phraseLoading = false
-                    _self.$bus.emit("UPDATE_ACCOUNTER_PHRASE_LIST", true)
-                }
-                function fail(err){
-                    _self.phraseLoading = true
-                }
-                this.$Post(url, config, success, fail)
-            },
+            // add_phrase_list(e){
+            //     let _self = this
+            //     _self.phraseLoading = true
+            //     let url = 'api/task/addTaskQuick'
+            //     let config={
+            //         quickType:"normal",
+            //         quickContent:e,
+            //         quickIndex:1,
+            //     }
+            //     function success(res){
+            //         _self.phraseLoading = false
+            //         _self.$bus.emit("UPDATE_NORMAL_PHRASE_LIST", true)
+            //     }
+            //     function fail(err){
+            //         _self.phraseLoading = true
+            //     }
+            //     this.$Post(url, config, success, fail)
+            // },
             setting_company(e){
                 console.log(e)
                 this.newMission.companyName=e.companyname
@@ -312,7 +312,7 @@
                 }
                 function success(res){
                     _self.phraseLoading = false
-                    _self.$bus.emit("UPDATE_ACCOUNTER_PHRASE_LIST", true)
+                    _self.$bus.emit("UPDATE_NORMAL_PHRASE_LIST", true)
                 }
                 this.$Get(url, config, success)
             },
@@ -369,7 +369,7 @@
                 function success(res) {
                     _self.createLoading = false
                     _self.openAddMission = false
-                    _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST_DEMO", true)
+                    _self.$bus.emit("UPDATE_NORMAL_TASK_LIST_DEMO", true)
                     _self.newMission.taskName=null
                     _self.cancel_task()
                 }
@@ -621,7 +621,7 @@
             let _self = this
             this.get_data_center()
             this.get_all_user()
-            this.$bus.on("SCHEDULE_CREATE_ACCOUNTER_TASK",(e)=>{
+            this.$bus.on("SCHEDULE_CREATE_NORMAL_TASK",(e)=>{
                 console.log(e)
                 _self.user = localStorage.getItem("id")
                 _self.newMission.executorId = []
@@ -630,11 +630,11 @@
                 _self.openAddMission = true
                 _self.newMission.planDate = e
             })
-            this.$bus.on("ADD_ACCOUNTER_PHRASE",(e)=>{
-                console.log(e)
-                this.add_phrase_list(e)
-            })
-            this.$bus.on("UPDATE_ACCOUNTER_PHRASE_LIST",(e)=>{
+            // this.$bus.on("ADD_NORMAL_PHRASE",(e)=>{
+            //     console.log(e)
+            //     this.add_phrase_list(e)
+            // })
+            this.$bus.on("UPDATE_NORMAL_PHRASE_LIST",(e)=>{
                 this.get_phrase_list()
             })
         },

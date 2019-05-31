@@ -232,7 +232,7 @@
                             customerId:_self.data[0].customerId,
                         }
                     function success(res){
-                            _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST",true)
+                            _self.$bus.emit("UPDATE_NORMAL_TASK_LIST",true)
                             _self.get_detail(_self.id)
                             _self.openTaskDetail = false
                         }
@@ -372,7 +372,7 @@
                     console.log(res)
                     _self.$Message.success("删除任务成功")
                     _self.openTaskDetail = false
-                    _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST",true)
+                    _self.$bus.emit("UPDATE_NORMAL_TASK_LIST",true)
                 }
 
                 this.$Get(url, config, success)
@@ -404,8 +404,8 @@
         },
         created() {
             let _self = this
-            this.$bus.off("OPEN_ACCOUNTER_DETAIL_TASK",true)
-            this.$bus.on("OPEN_ACCOUNTER_DETAIL_TASK",(e)=>{
+            this.$bus.off("OPEN_NORMAL_DETAIL_TASK",true)
+            this.$bus.on("OPEN_NORMAL_DETAIL_TASK",(e)=>{
                 console.log(e)
                 _self.get_data_center()
                 _self.id = e.taskId
