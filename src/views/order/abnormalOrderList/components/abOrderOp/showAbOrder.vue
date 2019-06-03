@@ -72,7 +72,14 @@
         </Row>
         <Row :gutter="12" v-if="abnormalOrderDetail.imgs.length">
           <FormItem label="图片">
-              <img :key="index" v-for="(item, index) in abnormalOrderDetail.imgs" style="width:200px;height:200px" :src="item">
+            <a
+              :key="index"
+              v-for="(item, index) in abnormalOrderDetail.imgs"
+              target="_blank"
+              :href="item"
+            >
+              <img style="width:200px;height:200px;border-radius:10px" :src="item">
+            </a>
           </FormItem>
         </Row>
       </Form>
