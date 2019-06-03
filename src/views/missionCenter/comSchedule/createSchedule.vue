@@ -455,7 +455,12 @@
                 }
                 _self.newMission.nodeName = obj[_self.newMission.businessId]
                 console.log(_self.newMission.nodeName)
-                _self.newMission.taskName=_self.newMission.companyName+"--"+_self.newMission.businessName+"--"+_self.newMission.nodeName
+                if (_self.newMission.businessName &&  _self.newMission.nodeName) {
+                    _self.newMission.taskName=_self.newMission.companyName+"--"+_self.newMission.businessName+"--"+_self.newMission.nodeName
+                } else {
+                    _self.newMission.taskName=_self.newMission.companyName
+                }
+
             },
             get_businessId(id){
                 let _self = this
