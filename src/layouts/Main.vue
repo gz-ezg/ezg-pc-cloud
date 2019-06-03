@@ -371,7 +371,7 @@
                         // if(localStorage.getItem('id')==10059){
                             // _self.tip = false
                         // }else{
-                            _self.tip = true
+                            // _self.tip = true
                         // }
                     }else{
                         _self.tip = false

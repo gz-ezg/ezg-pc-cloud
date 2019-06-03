@@ -632,7 +632,7 @@ export default {
           } else {
             if (!res.data.data.day) {
               _self.UserPlanData.week = res.data.data.week;
-              _self.day_open = true;
+              // _self.day_open = true;
             } else {
               _self.UserPlanData.week = res.data.data.week;
               _self.UserPlanData.day = res.data.data.day;
