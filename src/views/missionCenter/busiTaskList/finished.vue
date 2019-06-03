@@ -15,20 +15,27 @@
                                         </FormItem>
                                     </Col>
                                     <Col span="8">
-                                        <FormItem label="客户联系方式：" prop="customername">
-                                            <Input v-model="formValidateSearch.customertel" size="small"></Input>
+                                        <FormItem label="执行人：" prop="date">
+                                            <Input v-model="formValidateSearch.creatorName"  size="small"></Input>
+                                        </FormItem>
+                                    </Col>
+                                    <Col span="8">
+                                        <FormItem label="任务结果：" prop="customername">
+                                            <Select v-model="formValidateSearch.mission" size="small" style="width:180px">
+                                                <Option v-for="item in missionList" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
+                                            </Select>
                                         </FormItem>
                                     </Col>
                                 </Row>
                                 <Row :gutter="24">
                                     <Col span="8">
-                                        <FormItem label="执行人：" prop="date">
-                                            <Input v-model="formValidateSearch.creatorName" s size="small"></Input>
+                                        <FormItem label="执行时间期间：" prop="paytime">
+                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:100%" size="small"></DatePicker>
                                         </FormItem>
                                     </Col>
                                     <Col span="8">
-                                        <FormItem label="执行时间期间：" prop="paytime">
-                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:100%" size="small"></DatePicker>
+                                        <FormItem label="完结时间期间：" prop="paytime">
+                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.endDate" style="width:100%" size="small"></DatePicker>
                                         </FormItem>
                                     </Col>
                                 </Row>
@@ -86,6 +93,7 @@
                 page:1,
                 data:[],
                 taskKind:[],
+                missionList:[{"typecode":"Completed","typename":"成功"},{"typecode":"Failed","typename":"失败"}],
                 taskKind_map:new Map(),
                 taskStage:[],
                 taskStage_map:new Map(),
@@ -96,7 +104,9 @@
                     creatorName: "",
                     customertel: "",
                     payDir: "",
+                    mission:"",
                     date: [],
+                    endDate:[],
                     crealname: "",
                     frealname: "",
                     paytime: [],
@@ -205,6 +215,8 @@
                 this.formValidateSearch.companyName=null
                 this.formValidateSearch.creatorName=null
                 this.formValidateSearch.customertel=null
+                this.formValidateSearch.mission = null
+                this.formValidateSearch.endDate=[]
                 this.get_data()
             },
             show(p){
@@ -226,9 +238,11 @@
                         companyName:_self.formValidateSearch.companyName,
                         executor_name:_self.formValidateSearch.creatorName,
                         customerTel:_self.formValidateSearch.customertel,
+                        mission:_self.formValidateSearch.mission,
                         bplan_date:DateFormat(_self.formValidateSearch.date[0]),
                         eplan_date:DateFormat(_self.formValidateSearch.date[1]),
-
+                        bend_date:DateFormat(_self.formValidateSearch.endDate[0]),
+                        eend_date:DateFormat(_self.formValidateSearch.endDate[1])
                     }
                 }
                 function success(res){

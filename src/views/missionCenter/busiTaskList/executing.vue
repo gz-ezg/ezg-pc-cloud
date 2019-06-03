@@ -14,13 +14,11 @@
                                             <Input v-model="formValidateSearch.companyName" size="small"></Input>
                                         </FormItem>
                                     </Col>
-                                    <Col span="8">
-                                        <FormItem label="客户联系方式：" prop="customername">
-                                            <Input v-model="formValidateSearch.customertel" size="small"></Input>
-                                        </FormItem>
-                                    </Col>
-                                </Row>
-                                <Row :gutter="24">
+                                    <!--<Col span="8">-->
+                                        <!--<FormItem label="客户联系方式：" prop="customername">-->
+                                            <!--<Input v-model="formValidateSearch.customertel" size="small"></Input>-->
+                                        <!--</FormItem>-->
+                                    <!--</Col>-->
                                     <Col span="8">
                                         <FormItem label="执行人：" prop="date">
                                             <Input v-model="formValidateSearch.creatorName" s size="small"></Input>
