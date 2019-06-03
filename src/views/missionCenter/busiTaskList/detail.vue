@@ -5,7 +5,7 @@
             width="450"
             :mask-closable="false"
     >
-        <div style="min-height:60vh;width:400px" v-if="data.length!==0">
+        <div style="min-height:40vh;width:400px" v-if="data.length!==0">
             <Row :gutter="20" style="margin-top:20px">
                 <Col span="6">
                     <span style="line-height:24px">任务名称</span>
@@ -24,15 +24,23 @@
                             </span>
                 </Col>
             </Row>
-            <Row :gutter="20" style="margin-top:20px">
+            <Row :gutter="20" style="margin-top:20px" v-if="data.taskKindName=='商事外勤'">
                 <Col span="6">
                     <span style="line-height:24px">服务内容</span>
                 </Col>
                 <Col span="18">
-                    <span style="line-height:24px">{{data.productName}}<span style="margin-left: 10px"><Button v-if="data.customerName!==null" type="primary" size="small" @click="customer_detail">客户详情</Button></span></span>
+                    <span style="line-height:24px">{{data.productName}}</span>
                 </Col>
             </Row>
-            <Row :gutter="20" style="margin-top:20px">
+            <Row :gutter="20" style="margin-top:20px" v-if="data.taskKindName!=='商事外勤'">
+                <Col span="6">
+                    <span style="line-height:24px">服务内容</span>
+                </Col>
+                <Col span="18">
+                    <span style="line-height:24px">{{data.legName}}</span>
+                </Col>
+            </Row>
+            <Row :gutter="20" style="margin-top:20px" v-if="data.taskKindName=='商事外勤'">
                 <Col span="6">
                     <span style="line-height:24px">服务节点</span>
                 </Col>
@@ -65,11 +73,13 @@
                     </DatePicker>
                 </Col>
             </Row>
-            <Row style="margin-top:40px">
-                <Button @click="delete_task" type="error" style="margin-left:50px">作废</Button>
+        </div>
+        <div slot="footer">
+            <Row>
+                <Button v-if="data.taskKindName=='商事外勤' && data.taskStage!=='tesCanceled'" @click="delete_task" type="error">作废</Button>
+                <Button @click="cancel_task" type="primary">关闭</Button>
             </Row>
         </div>
-        <div slot="footer"></div>
     </Modal>
 </template>
 
@@ -147,6 +157,29 @@
                 console.log(e)
                 let _self = this
                 _self.newFollowResult = e
+            },
+            delete_task(){
+                let _self = this
+
+                let url = `api/task/deleteTask`
+                let config = {
+                    params: {
+                        taskId: _self.data.taskId
+                    }
+                }
+                function success(res){
+                    // _self.$Message.success(res.data.msg)
+                    setTimeout(()=>{
+                        _self.$bus.emit("UPDATE_EXECUTING_DATA",true)
+                        _self.$bus.emit("UPDATE_DATA",true)
+                        _self.openAddMission = false
+
+                    }, 500)
+                }
+                function fail(err){
+
+                }
+                _self.$Get(url, config, success, fail)
             },
             update_detail(){
                 let _self = this
