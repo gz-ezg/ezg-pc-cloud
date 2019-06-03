@@ -201,7 +201,7 @@ export default {
             isDisabled: true,
             //  打开弹窗
             openApproveDealWith: false,
-            pageFlag:"createOrder",
+            pageFlag:"showOrder",
             //  会计到家服务项
             kjdj: false,
             formValidateDetail: {
