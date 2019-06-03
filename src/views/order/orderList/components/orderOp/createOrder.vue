@@ -328,14 +328,13 @@ export default {
       let order = JSON.parse(JSON.stringify(_self.orderItem));
 
       console.log("order", order);
-      let departParamObj = [];
+
       for (let i = 0; i < order.length; i++) {
         order[i].servicedeparts = "";
 		order[i].servicestartdate = DateFormat(order[i].servicestartdate);
-        departParamObj.push({
-          departId: order[i].departid,
-          serverId: order[i].selectServer && order[i].selectServer.userId || ''
-        });
+        if(order[i].selectServer){
+          order[i].serverId = order[i].selectServer.userId
+        }
       }
 
     //   for (let j = 0; j < _self.departServerObj.length; j++) {
@@ -354,8 +353,8 @@ export default {
         payTime: DateFormat(_self.orderDetail.payTime),
         isornotkp: _self.orderDetail.isornotkp,
         usebalance: _self.orderDetail.usebalance,
-        orderitems: JSON.stringify(order),
-        departJson: JSON.stringify(departParamObj)
+        orderitems: JSON.stringify(order)
+
       };
 
       try {
