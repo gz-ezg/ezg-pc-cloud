@@ -31,7 +31,7 @@
                 <Row :gutter="12">
                     <Col span="12">
                         <FormItem label="外勤时长">
-                            <Input v-model="fieldDetail.executorName" size="small" disabled></Input>
+                            <Input v-model="dateLength" size="small" disabled></Input>
                         </FormItem>
                     </Col>
                     <Col span="12">
@@ -46,7 +46,7 @@
                             <Input v-model="fieldDetail.service_content" size="small" readonly></Input>
                         </FormItem>
                     </Col>
-                    <Col span="12">
+                    <Col span="12" v-if="fieldDetail.task_kind=='商事外勤'">
                         <FormItem label="服务节点">
                             <Input v-model="fieldDetail.process" size="small" readonly></Input>
                         </FormItem>
@@ -143,7 +143,10 @@
                 data:[],
                 fieldDetail:[],
                 beginImgList:[],
-                endImgList:[]
+                endImgList:[],
+                dateLength:"",
+                taskKind:"",
+                taskKind_map:new Map()
                 // taskKind:[],
                 // taskKind_map:new Map(),
                 // taskArea:[],
@@ -176,6 +179,12 @@
                     if (_self.fieldDetail.finish_status=="wuxiao"){
                         _self.fieldDetail.finish_status = "无效"
                     }
+                    if (_self.fieldDetail.finish_status=="mingzhong"){
+                        _self.fieldDetail.finish_status = "命中"
+                    }
+                    _self.fieldDetail.task_kind = _self.taskKind_map.get(_self.fieldDetail.task_kind)
+                    console.log(_self.fieldDetail.task_kind)
+
                     _self.beginImgList = res.data.data.begin_realpath.split(",")
                     _self.endImgList = res.data.data.end_realpath.split(",")
                     _self.dateLength = DateDifference(res.data.data.begin_time,res.data.data.end_time)
@@ -190,11 +199,27 @@
                 }
 
                 this.$Get(url, config, success, fail)
-            }
+            },
+            get_data_center(){
+                let _self = this
+                return new Promise((resolve, reject)=>{
+                    let _self = this
+                    let params = "taskKind";
+
+                    function success(res){
+                        _self.taskKind = res.data.data.taskKind
+
+                        _self.taskKind_map = _self.$array2map(_self.taskKind)
+                        resolve()
+                    }
+                    this.$GetDataCenter(params, success)
+                })
+            },
         },
         created() {
             this.$bus.on("SHOW_FINISHED_DETAILS",(e)=>{
                 this.openAddMission = true
+                this.get_data_center()
                 this.get_data(e)
                 this.data = e.row
             })

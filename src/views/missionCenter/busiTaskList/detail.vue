@@ -26,10 +26,26 @@
             </Row>
             <Row :gutter="20" style="margin-top:20px">
                 <Col span="6">
-                    <span style="line-height:24px">客户</span>
+                    <span style="line-height:24px">服务内容</span>
                 </Col>
                 <Col span="18">
-                    <span style="line-height:24px">{{data.customerName}}<span style="margin-left: 10px"><Button v-if="data.customerName!==null" type="primary" size="small" @click="customer_detail">客户详情</Button></span></span>
+                    <span style="line-height:24px">{{data.productName}}<span style="margin-left: 10px"><Button v-if="data.customerName!==null" type="primary" size="small" @click="customer_detail">客户详情</Button></span></span>
+                </Col>
+            </Row>
+            <Row :gutter="20" style="margin-top:20px">
+                <Col span="6">
+                    <span style="line-height:24px">服务节点</span>
+                </Col>
+                <Col span="18">
+                    <span style="line-height:24px">{{data.currentProcess}}</span>
+                </Col>
+            </Row>
+            <Row :gutter="20" style="margin-top:20px">
+                <Col span="6">
+                    <span style="line-height:24px">执行人</span>
+                </Col>
+                <Col span="18">
+                    <span style="line-height:24px">{{data.executorName}}</span>
                 </Col>
             </Row>
             <Row :gutter="20" style="margin-top:20px">
@@ -42,16 +58,6 @@
             </Row>
             <Row :gutter="20" style="margin-top:20px">
                 <Col span="6">
-                    <span style="line-height:24px">跟进阶段</span>
-                </Col>
-                <Col span="18">
-                    <Select v-model="data.follow_result" size="small" style="width:180px" @on-change="getFollowResult">
-                        <Option v-for="item in followResult" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
-                    </Select>
-                </Col>
-            </Row>
-            <Row :gutter="20" style="margin-top:20px">
-                <Col span="6">
                     <span style="line-height:24px">代办于</span>
                 </Col>
                 <Col span="18">
@@ -59,27 +65,7 @@
                     </DatePicker>
                 </Col>
             </Row>
-            <Row :gutter="20" style="margin-top:20px">
-                <Col span="6">
-                    <span style="line-height:24px">任务结果</span>
-                </Col>
-                <Col span="18">
-                    <Select v-model="mission" size="small" style="width:180px" @on-change="getFollowResult">
-                        <Option v-for="item in missionList" :value="item.typecode" :key="item.typecode">{{item.typename}}</Option>
-                    </Select>
-                </Col>
-            </Row>
-            <Row :gutter="20" style="margin-top:20px">
-                <Col span="6">
-                    <span style="line-height:24px">任务总结</span>
-                </Col>
-                <Col span="18">
-                    <Input v-model="taskSummary" size="small" style="width:180px" type="textarea" :row="5" autosize>
-                    </Input>
-                </Col>
-            </Row>
             <Row style="margin-top:40px">
-                <Button @click="update_detail" type="primary" style="margin-left:40px" :disabled="openSubmit" :loading="loading">提交</Button>
                 <Button @click="delete_task" type="error" style="margin-left:50px">作废</Button>
             </Row>
         </div>
