@@ -810,6 +810,7 @@ export default {
                 if(this.selectRow.CurrentProcess != 'Ready' && this.selectRow.CurrentProcess != 'Returned' && this.selectRow.CurrentProcess != 'ReturnedToReady'){
                     this.$Message.warning("当前订单状态不允许编辑！")
                 }else{
+                    console.log('this.selectRow',this.selectRow.companyid)
                     this.$bus.emit("OPEN_ORDERLIST_EDIT", this.selectRow.id)
                 }
             }else{

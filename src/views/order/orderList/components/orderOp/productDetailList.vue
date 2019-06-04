@@ -149,13 +149,12 @@
                     </Col>
                   </Row>
                   <Row>
-                    <Col span="9">
-                      <FormItem
-                        
-                        style="margin-left: 10px"
-                        label=" 服务人员："
-                      >
-                        <div v-if="pageFlag =='createOrder' || pageFlag =='editOrder'" style="display:inline-block">
+                    <Col span="12">
+                      <FormItem style="margin-left: 10px" label=" 服务人员：">
+                        <div
+                          v-if="pageFlag =='createOrder' || pageFlag =='editOrder'"
+                          style="display:inline-block"
+                        >
                           <Select v-model="item.selectServer">
                             <Option
                               v-for="item in serverList[index]"
@@ -168,13 +167,13 @@
                           v-if="pageFlag =='showOrder' || pageFlag =='amendOrder'"
                           :disabled="isDisabled"
                           v-model="item.realname"
-                          style="width:120px"
+                          style="width:140px"
                           type="text"
                           size="small"
                         />
                       </FormItem>
                     </Col>
-                    <Col v-if="item.defaultdepartalias=='PLAN'" span="15">
+                    <Col v-if="item.defaultdepartalias=='PLAN'" span="12">
                       <FormItem label="申报年份" prop="declare_year">
                         <DatePicker
                           type="year"
@@ -275,7 +274,7 @@
 import * as orderApi from "../../api";
 import { DateFormat, DateFormatYearMonth } from "../../../../../libs/utils.js";
 export default {
-  props: ["productList", "isDisabled", "orderDetail", "pageFlag"],
+  props: ["productList", "isDisabled", "orderDetail", "pageFlag", "id"],
   inject: ["cancel_order"],
   data() {
     return {
@@ -351,7 +350,6 @@ export default {
     departChange(item, index) {
       let idObj = {};
       let _self = this;
-
       for (let i = 0; i < _self.productList.length; i++) {
         let param = {};
         let row = _self.productList[i];
@@ -396,7 +394,7 @@ export default {
           params: {
             productSkuId: product.skuid,
             serviceDepartId: product.departid,
-            companyId: this.companyId
+            companyId: this.companyId || this.id
           }
         };
       } else {
@@ -404,12 +402,14 @@ export default {
           params: {
             productSkuId: this.productList[index].skuid,
             serviceDepartId: item.value,
-            companyId: this.companyId
+            companyId: this.companyId || this.id
           }
         };
       }
       let success = res => {
         this.serverList.splice(index, 1, res.data.data);
+        this.productList[index].selectServer =
+          (this.serverList.length && this.serverList[index][0]) || "";
       };
       function fail() {}
       this.$Get(url, config, success);
@@ -436,7 +436,6 @@ export default {
         e.receipt_type = "quota";
       }
     });
-    console.log(_self.productList);
 
     this.$bus.off("ADD_PRODUCT_DETAIL_LIST", true);
     this.$bus.on("ADD_PRODUCT_DETAIL_LIST", e => {
@@ -448,13 +447,24 @@ export default {
         e.receipt_type = "quota";
       }
       _self.productList.push(e);
+      // e.selectServer = e.realname;
+
       _self.departChange();
       _self.computer_paynumber();
       _self.changeServerPerson("", _self.productList.length - 1);
     });
-    this.$bus.on("OPEN_ORDER_PRODUCT_LIST", e => {
+
+    _self.$bus.on('GET_ID',e => {
+      console.log('getiddd',this)
+      _self.productList = _self.productList.map(v=>{
+        v.selectServer = v.realname
+        return v
+      })
+    })
+    _self.$bus.on("OPEN_ORDER_PRODUCT_LIST", e => {
       _self.companyId = e;
     });
+
   }
 };
 </script>
