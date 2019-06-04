@@ -310,9 +310,12 @@
             },
             create_task(){
                 let _self = this
-                if (_self.newMission.taskName==="" ||
-                    _self.newMission.companyId==="" ||
-                    _self.newMission.businessId ===null){
+                if (_self.newMission.taskName=="" ||
+                    _self.newMission.taskName==null ||
+                    _self.newMission.companyId=="" ||
+                    _self.newMission.companyId==null||
+                    _self.newMission.businessId ==null ||
+                    _self.newMission.businessId ==""){
                     this.$Message.warning('请把上述信息填写完整')
                     return
                 }

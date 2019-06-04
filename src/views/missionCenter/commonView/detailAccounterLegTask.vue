@@ -6,7 +6,7 @@
                 width="450"
                 class-name="vertical-center-modal"
         >
-            <div style="min-height:60vh;width:400px" v-if="data.length!==0">
+            <div style="min-height:60vh;width:400px" v-if="fieldDetail.length!==0">
                 <Row :gutter="20" style="margin-top:20px">
                     <Col span="6">
                         <span style="line-height:24px">任务名称</span>
