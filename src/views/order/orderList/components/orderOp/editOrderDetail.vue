@@ -407,6 +407,7 @@ export default {
       this.get_ab_worker_id();
       this.openEditOrderDetail = true;
       function callback() {
+        
         console.log(_self.orderDetail);
         _self.$bus.emit('GET_ID',_self.orderDetail)
         _self.departServerObj = _self.orderDetail.departJson;

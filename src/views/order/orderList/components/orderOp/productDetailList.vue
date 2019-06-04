@@ -303,7 +303,6 @@ export default {
       }
     };
   },
-
   methods: {
     changePayMethod(i) {
       this.isPlan = Object.assign({}, this.isPlan, {
@@ -407,9 +406,11 @@ export default {
         };
       }
       let success = res => {
-        this.serverList.splice(index, 1, res.data.data);
-        this.productList[index].selectServer =
-          (this.serverList.length && this.serverList[index][0]) || "";
+        try {
+          this.serverList.splice(index, 1, res.data.data);
+          this.productList[index].selectServer =
+            (this.serverList[index].length && this.serverList[index][0]) || {};
+        } catch (error) {}
       };
       function fail() {}
       this.$Get(url, config, success);
@@ -431,12 +432,16 @@ export default {
   },
   created() {
     let _self = this;
-    this.productList.forEach(e => {
+    this.productList.forEach((e, i) => {
       if (e.defaultdepartalias == "PLAN") {
         e.receipt_type = "quota";
       }
+      this.serverList[i] = {
+        realname: e.realname,
+        flag: "",
+        userId: e.serverid
+      };
     });
-
     this.$bus.off("ADD_PRODUCT_DETAIL_LIST", true);
     this.$bus.on("ADD_PRODUCT_DETAIL_LIST", e => {
       e.givethenumber = 0;
@@ -446,6 +451,7 @@ export default {
       if (e.defaultdepartalias == "PLAN") {
         e.receipt_type = "quota";
       }
+
       _self.productList.push(e);
       // e.selectServer = e.realname;
 
@@ -454,17 +460,16 @@ export default {
       _self.changeServerPerson("", _self.productList.length - 1);
     });
 
-    _self.$bus.on('GET_ID',e => {
-      console.log('getiddd',this)
-      _self.productList = _self.productList.map(v=>{
-        v.selectServer = v.realname
-        return v
-      })
-    })
+    _self.$bus.on("GET_ID", e => {
+      console.log("getiddd", this);
+      _self.productList = _self.productList.map(v => {
+        v.selectServer = v.realname;
+        return v;
+      });
+    });
     _self.$bus.on("OPEN_ORDER_PRODUCT_LIST", e => {
       _self.companyId = e;
     });
-
   }
 };
 </script>
