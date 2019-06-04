@@ -62,9 +62,9 @@
                         </datepicker>
                     </Row>
                     <Row>
-                        <span>商事外勤——<span style="color:#00CCFF">蓝色</span><br/></span>
-                        <span>工单协助——<span style="color:#AEDD81">草绿色</span><br/></span>
-                        <span>代账协助——<span style="color:orange">橙色</span><br/></span>
+                        <span>未完成——<span style="color:#00CCFF">蓝色</span><br/></span>
+                        <span>成功——<span style="color:#AEDD81">绿色</span><br/></span>
+                        <span>失败——<span style="color:#D24D57">红色</span><br/></span>
                     </Row>
                     <Row>
                         <Row style="margin-bottom:10px"><h3>{{local_date}}</h3></Row>
@@ -172,6 +172,7 @@
                     maxTime : "20:00:00",
                     contentHeight : 1150,
                     slotDuration : "00:15:00",
+                    timezone:"local",
                     aspectRatio : 2,
 
                     customButtons:{
@@ -184,6 +185,7 @@
                     }
                 },
                 events:[
+
                 ],
                 events_temp: [],
                 //  默认显示月
@@ -214,6 +216,7 @@
                 console.log(date)
                 let _self = this
                 this.date = date._d
+                console.log(this.date)
                 let dateTemp = DateFormat(date)
                 this.get_onedate_data(dateTemp)
             },
@@ -306,14 +309,14 @@
                         _self.events_temp[i].Area = _self.businessArea_map.get(  _self.events_temp[i].taskArea)
                         _self.events_temp[i].depart = _self.businessPlace_map.get(_self.events_temp[i].taskPlace)
                         _self.events_temp[i].CompanyName = _self.events_temp[i].companyName
-                        if(_self.events_temp[i].taskKind === "tkLegBus"){
+                        if (_self.events_temp[i].taskStage=="tesFinished" && _self.events_temp[i].mission=="Completed") {
+                            _self.events_temp[i].color = "#AEDD81"
+                        }
+                        if (_self.events_temp[i].taskStage=="tesUnstarted") {
                             _self.events_temp[i].color = "#00CCFF"
                         }
-                        if(_self.events_temp[i].taskKind === "tkLegCycAss"){
-                            _self.events_temp[i].color = "orange"
-                        }
-                        if(_self.events_temp[i].taskKind === "tkLegBusAss"){
-                            _self.events_temp[i].color = "#AEDD81"
+                        if (_self.events_temp[i].taskStage=="tesFinished" && _self.events_temp[i].mission=="Failed") {
+                            _self.events_temp[i].color = "#D24D57"
                         }
                         // if(_self.events_temp[i].plan_date.slice(0,10) == _self.local_date){
                         //     _self.events_temp[i].color = "orange"
@@ -409,29 +412,33 @@
     .fc-unthemed td.fc-today{
         background: #fcf4cd;
     }
-    .fc-event{
+    .fc-agendaDay-view .fc-event{
         font-size:14px;
         border: 1px solid #2d8cf0;
         color: #ffffff;
+        height: 110px;
+    }
+    .fc-agendaDay-view  .fc-short{
         height: 20px;
     }
     .fc-content .fc-time{
-        line-height: 18px;
-        display: inline;
+        /*line-height: 18px;*/
+        /*display: inline;*/
     }
     .fc-content{
-        overflow: hidden;
+        /*overflow: hidden;*/
     }
     .fc-title{
-        margin-left: 3px;
-        display: inline;
+        /*margin-left: 3px;*/
+        /*display: inline;*/
     }
     .fc-event, .fc-event-dot{
-        background: #2d8cf0
+        background: #2d8cf0;
     }
     .vdp-datepicker__calendar .cell.selected{
         background:  #2d8cf0;
         color: #ffffff;
+
     }
     .vdp-datepicker__calendar .cell.selected:hover{
         background:  #2d8cf0;
@@ -441,7 +448,8 @@
         background-color: #2d8cf0;
         background-image: none;
         box-shadow: none;
-        color: #ffffff
+        color: #ffffff;
+
     }
     .filter{
         background: white none;

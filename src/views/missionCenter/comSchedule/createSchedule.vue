@@ -310,9 +310,12 @@
             },
             create_task(){
                 let _self = this
-                if (_self.newMission.taskName==="" ||
-                    _self.newMission.companyId==="" ||
-                    _self.newMission.businessId ===null){
+                if (_self.newMission.taskName=="" ||
+                    _self.newMission.taskName==null ||
+                    _self.newMission.companyId=="" ||
+                    _self.newMission.companyId==null||
+                    _self.newMission.businessId ==null ||
+                    _self.newMission.businessId ==""){
                     this.$Message.warning('请把上述信息填写完整')
                     return
                 }
@@ -455,7 +458,12 @@
                 }
                 _self.newMission.nodeName = obj[_self.newMission.businessId]
                 console.log(_self.newMission.nodeName)
-                _self.newMission.taskName=_self.newMission.companyName+"--"+_self.newMission.businessName+"--"+_self.newMission.nodeName
+                if (_self.newMission.businessName &&  _self.newMission.nodeName) {
+                    _self.newMission.taskName=_self.newMission.companyName+"--"+_self.newMission.businessName+"--"+_self.newMission.nodeName
+                } else {
+                    _self.newMission.taskName=_self.newMission.companyName
+                }
+
             },
             get_businessId(id){
                 let _self = this

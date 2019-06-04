@@ -241,12 +241,13 @@
                     // {field:'baseorderid',title:'提示'},
                     {field:'product',title:'产品名称'},
                     {field:'enddate',title:'下线时间'},
-                    {field:'createdate',title:'创建时间'},
+                    {field:'taxperiod',title:'下线税期'},
                     {field:'servicebegindate',title:'服务开始时间'},
                     {field:'servicer',title:'服务人员'},                                                                   
                     {field:'marketer',title:'市场人员'},                                                                     
                     {field:'reasonforcallback',title:'客户实际下线原因'},
-                    {field:'reasonformarketer',title:'市场通知下线原因'} 
+                    {field:'reasonformarketer',title:'市场通知下线原因'},
+                    {field:'followbusiness',title:'跟进中的业务'}
                 ]
                 let _self = this
                 let url = `api/customer/customerEndList`
