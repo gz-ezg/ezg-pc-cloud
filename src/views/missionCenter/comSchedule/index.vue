@@ -409,22 +409,22 @@
     .fc-unthemed td.fc-today{
         background: #fcf4cd;
     }
-    .fc-event{
+    .fc-agendaDay-view .fc-event{
         font-size:14px;
         border: 1px solid #2d8cf0;
         color: #ffffff;
-        height: 20px;
+        height: 110px;
     }
     .fc-content .fc-time{
-        line-height: 18px;
-        display: inline;
+        /*line-height: 18px;*/
+        /*display: inline;*/
     }
     .fc-content{
-        overflow: hidden;
+        /*overflow: hidden;*/
     }
     .fc-title{
-        margin-left: 3px;
-        display: inline;
+        /*margin-left: 3px;*/
+        /*display: inline;*/
     }
     .fc-event, .fc-event-dot{
         background: #2d8cf0

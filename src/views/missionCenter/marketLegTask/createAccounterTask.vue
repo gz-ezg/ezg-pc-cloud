@@ -418,9 +418,9 @@
             setting_company(e){
                 console.log(e)
                 this.newMission.companyName=e.companyname
-                this.newMission.customerName=e.customerName
-                this.newMission.customerId=e.customerId
-                this.newMission.companyId=e.id
+                this.newMission.customerName=e.name
+                this.newMission.customerId=e.customerid
+                this.newMission.companyId=e.companyid
                 console.log(this.newMission.customerId)
                 console.log(this.newMission.companyId)
                 // this.orderDetail.CompanyName = e.companyname

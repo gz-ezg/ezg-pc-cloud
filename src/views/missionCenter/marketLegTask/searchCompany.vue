@@ -63,12 +63,12 @@
                     },
                     {
                         title: '归属客户',
-                        key: 'customerName',
+                        key: 'name',
                         minWidth:150
                     },
                     {
                         title: '客户电话',
-                        key: 'customerTel',
+                        key: 'tel',
                         minWidth:150
                     },
                 ],
@@ -82,21 +82,19 @@
         methods:{
             get_data(){
                 let _self = this
-                let url = `api/customer/company/list`
+                let url = `api/legwork/apiQueryCompanyOrCustomerMsg`
                 _self.loading = true
                 let config = {
                     params: {
-                        page: _self.page,
-                        pageSize: 10,
                         companyname: _self.searchCompany,
-                        customerName:_self.searchName,
-                        customerTel:_self.searchTel
+                        name:_self.searchName,
+                        tel:_self.searchTel
                     }
                 }
 
                 function success(res){
-                    _self.data = res.data.data.rows
-                    _self.total = res.data.data.total
+                    _self.data = res.data.data
+                    // _self.total = res.data.data.total
                     _self.loading = false
                 }
 

@@ -131,7 +131,7 @@
                     <Button type="primary" name="marketingManagement_index_edit_add" icon="plus" @click="create_customer" v-permission="['marketingM.add']">录入</Button>
                     <Button type="primary" name="marketingManagement_index_edit_edit" icon="edit" @click="open_edit" v-permission="['marketingM.edit']">编辑</Button>
                     <Button type="primary" name="marketingManagement_index_edit_change" icon="ios-crop" @click="check_select('CUSTOMER_CHANGE_MARKETER')" v-permission="['marketingM.change']">变更</Button>
-                    <Button type="primary" name="marketingManagement_index_edit_delete" icon="trash-b" @click="check_select('DELETE_CUSTOMER')" v-permission="['marketingM.delete']">删除</Button>
+                    <Button type="primary" name="marketingManagement_index_edit_delete" icon="trash-b" @click="check_select('DELETE_CUSTOMER')" v-permission="['marketingM.delete']">回滚公海池</Button>
                     <Button type="primary" name="marketingManagement_index_edit_qrcode" icon="grid" @click="check_select('OPEN_CODE')">查看二维码</Button>
                     <Button type="primary" name="marketingManagement_index_edit_excel" icon="ios-download" @click="download_excel">导出Excel</Button>
                     <Button type="primary" name="marketingManagement_index_info_log" icon="drag" @click="check_select('OPEN_CHANGE_LOG')">销售变更日志</Button>
