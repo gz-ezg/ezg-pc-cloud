@@ -316,7 +316,7 @@
                     _self.newMission.companyId==null||
                     _self.newMission.businessId ==null ||
                     _self.newMission.businessId ==""){
-                    this.$Message.warning('请把上述信息填写完整')
+                    this.$Message.warning('请把信息填写完整')
                     return
                 }
                 _self.createLoading = true
