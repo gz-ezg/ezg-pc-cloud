@@ -1,9 +1,65 @@
 <template>
     <div>
         <Card style="min-width:800px">
-            <!--    <Row style="margin-bottom:10px">
-                    <search-model :data="searchData" @search="search"></search-model>
-                </Row>-->
+            <Row style="margin-bottom:10px">
+                <Collapse v-model="search_model">
+                    <Panel name="1" >
+                        <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
+                        筛选
+                        <div slot="content" @keydown.enter="Search">
+                            <Form ref="formValidateSearch" :model="formValidateSearch" :label-width="100">
+                                <Row :gutter="16">
+                                    <Col span="8">
+                                    <FormItem label="打卡人：" prop="realname">
+                                        <Input v-model="formValidateSearch.realname" size="small"></Input>
+                                    </FormItem>
+                                    </Col>
+                                    <Col span="8">
+                                    <FormItem label="打卡部门：" prop="servicedepart">
+                                        <Input v-model="formValidateSearch.servicedepart" size="small"></Input>
+                                    </FormItem>
+                                    </Col>
+                                    <Col span="8">
+                                    <FormItem label="客户名称：" prop="name">
+                                        <Input v-model="formValidateSearch.name" size="small"></Input>
+                                    </FormItem>
+                                    </Col>
+                                </Row>
+                                <Row :gutter="16">
+                                    <Col span="8">
+                                    <FormItem label="公司名称：" prop="companyname">
+                                        <Input v-model="formValidateSearch.realname" size="small"></Input>
+                                    </FormItem>
+                                    </Col>
+                                    <Col span="8">
+                                    <FormItem label="客户电话：" prop="tel">
+                                        <Input v-model="formValidateSearch.tel" size="small"></Input>
+                                    </FormItem>
+                                    </Col>
+                                   <!-- <Col span="8">
+                                    <FormItem label="任务类型：" prop="task_kind">
+                                        <Select transfer v-model="formValidateSearch.task_kind" size="small">
+                                            <Option v-for="(item, index) in taskKindArray" :key=index :value="item.typecode">{{item.typename}}</Option>
+                                        </Select>
+                                    </FormItem>
+                                    </Col>-->
+                                    <Col span="8">
+                                    <FormItem label="开始打卡时间：" prop="begin_time">
+                                        <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.begin_time" style="width:100%" size="small"></DatePicker>
+                                    </FormItem>
+                                    </Col>
+                                </Row>
+                                <center>
+                                    <FormItem>
+                                        <Button type="primary" @click="Search">搜索</Button>
+                                        <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
+                                    </FormItem>
+                                </center>
+                            </Form>
+                        </div>
+                    </Panel>
+                </Collapse>
+            </Row>
             <Row>
 
                 <ButtonGroup>
@@ -33,14 +89,15 @@
                         @on-page-size-change="page_size_change"
                         style="margin-top: 10px"></Page>
             </Row>
-            <detail :legworkId="currentRow.id" :legwork_finish_statusMap="legwork_finish_statusMap" :taskKindMap="taskKindMap"></detail>
+            <detail :taskKindMap="taskKindMap" :legwork_finish_statusMap="legwork_finish_statusMap" :gzbusinessareaMap="gzbusinessareaMap" :gzbusinessplaceMap="gzbusinessplaceMap"></detail>
         </Card>
 
     </div>
 </template>
 
 <script>
-    import detail from "./detail.vue"
+    import detail from './detail.vue'
+    import { DateFormat, DateFormatYearMonth } from "../../../libs/utils"
     export default {
         components:{
             detail
@@ -56,39 +113,63 @@
                 data:[],
                 legwork_finish_statusMap:{},
                 taskKindMap:{},
+                taskKindArray:{},
+                gzbusinessareaMap:{},
+                gzbusinessplaceMap:{},
+                formValidateSearch:{},
                 header: [
                     {
-                        title: "开始打卡地址",
-                        key: 'begin_address',
+                        title: "公司名称",
+                        key: 'CompanyName',
                         width: 180
                     },
                     {
-                        title: "开始打卡时间",
-                        key: 'begin_time',
-                        minWidth: 140
+                        title: "客户名称",
+                        key: 'name',
+                        minWidth: 80
                     },
                     {
-                        title: "结束打卡地址",
-                        key: "end_address",
-                        minWidth: 140
+                        title: "客户电话",
+                        key: "tel",
+                        minWidth: 120
                     },
                     {
-                        title: "结束打卡时间",
-                        key: 'end_time',
+                        title: "任务名称",
+                        key: 'task_name',
                         minWidth: 100
                     },
                     {
-                        title: "开始打卡备注",
-                        key: "begin_memo",
+                        title: "任务类型",
+                        key: "task_kind",
                         minWidth: 100
                     },
                     {
-                        title: '外勤状态',
-                        key: 'legwork_status',
+                        title: '任务结果',
+                        key: 'finish_status',
+                        minWidth: 90
+                    },{
+                        title: '服务内容',
+                        key: 'service_content',
                         minWidth: 90
                     },{
                         title: '打卡人',
                         key: 'realname',
+                        minWidth: 90
+                    },{
+                        title: '打卡部门',
+                        key: 'departname',
+                        minWidth: 120
+                    },{
+                        title: '开始打卡时间',
+                        key: 'begin_time',
+                        minWidth: 100
+                    },{
+                        title: '结束打卡时间',
+                        key: 'end_time',
+                        minWidth: 100
+                    },{
+                        title: '总结',
+                        key: 'finish_memo',
                         minWidth: 90
                     }
                 ]
@@ -103,8 +184,14 @@
                     params:{
                         order:_self.order,
                         page:_self.page,
-                        pageSize:_self.pageSize
-
+                        pageSize:_self.pageSize,
+                        realname:_self.formValidateSearch.realname,
+                        servicedepart:_self.formValidateSearch.servicedepart,
+                        companyname:_self.formValidateSearch.companyname,
+                        name:_self.formValidateSearch.name,
+                        tel:_self.formValidateSearch.tel,
+                        bbegin_time:DateFormat(_self.formValidateSearch.begin_time[0]),
+                        ebegin_time:DateFormat(_self.formValidateSearch.begin_time[1])
                     }
                 }
 
@@ -121,6 +208,16 @@
                         }else{
                             _self.data[i].legwork_status = "打卡完成"
                         }
+                        if(_self.data[i].begin_time){
+                            _self.data[i].begin_time =   DateFormat(_self.data[i].begin_time);
+
+                        }
+                       if(_self.data[i].end_time){
+                           _self.data[i].end_time =   DateFormat(_self.data[i].end_time);
+
+                       }
+                       _self.data[i].finish_status = _self.legwork_finish_statusMap.get( _self.data[i].finish_status);
+                       _self.data[i].task_kind = _self.taskKindMap.get(_self.data[i].task_kind);
                     }
 
                 })
@@ -136,16 +233,22 @@
             },
             select_row(e){
                 this.currentRow = e;
+                console.log(e);
             },
             download_excel(){
                 let field = [
-                    {field:'begin_address',title:'开始打卡地址'},
+                    {field:'CompanyName',title:'公司名称'},
+                    {field:'name',title:'客户名'},
+                    {field:'tel',title:'电话号码'},
+                    {field:'task_kind',title:'任务类型',format:'taskKind'},
+                    {field:'finish_status',title:'完成状态',format:'legwork_finish_status'},
+                    {field:'service_content',title:'服务内容'},
+                    {field:'realname',title:'打卡人'},
+                    {field:'departname',title:'服务部门'},
                     {field:'begin_time',title:'开始打卡时间'},
-                    {field:'end_address',title:'结束打卡地址'},
                     {field:'end_time',title:'结束打卡时间'},
-                    {field:'begin_memo',title:'开始打卡备注'},
-                    {field:'legwork_status',title:'外勤状态'},
-                    {field:'realname',title:'打卡人'}
+                    {field:'task_name',title:'任务名称'},
+
                 ]
                 let _self = this
                 var url = 'api/user/legwork/list'
@@ -154,26 +257,50 @@
                     page:'1',
                     pageSize:'1000000' ,
                     export: 'Y',
-                    exportField: encodeURI(JSON.stringify(field))
-
+                    exportField: encodeURI(JSON.stringify(field)),
+                    realname:_self.formValidateSearch.realname,
+                    servicedepart:_self.formValidateSearch.servicedepart,
+                    companyname:_self.formValidateSearch.companyname,
+                    name:_self.formValidateSearch.name,
+                    tel:_self.formValidateSearch.tel,
+                    bbegin_time:DateFormat(_self.formValidateSearch.begin_time[0]),
+                    ebegin_time:DateFormat(_self.formValidateSearch.begin_time[1])
                 }
-                let toExcel = this.$MergeURL(url, config)
+
+                console.log(config);
+                let toExcel = this.$MergeURL(url,config)
                 window.open(toExcel)
             },
             showDetail(){
-                if(!this.currentRow.id){
+                if(!this.currentRow.legwork_id){
                     this.$Message.warning("请选中一行后操作");
                     return
                 }
-                this.$bus.emit("openShowDetail")
+                this.$bus.emit("OPEN_LEGWORK_DETAIL",{"id":this.currentRow.legwork_task_id})
+
+
+            },
+            handleReset(){
+                this.formValidateSearch ={}
+                this.formValidateSearch.begin_time=['','']
+                this.loading = true;
+                this.get_data();
+            },
+            Search(){
+                this.loading = true;
+                this.get_data();
             }
+
         },
         created(){
             let _self = this;
-            this.$GetDataCenter("legwork_finish_status,taskKind",callback);
+            this.$GetDataCenter("legwork_finish_status,taskKind,gzbusinessarea,gzbusinessplace",callback);
             function  callback(e) {
                 _self.legwork_finish_statusMap = _self.$array2map(e.data.data.legwork_finish_status);
                 _self.taskKindMap = _self.$array2map(e.data.data.taskKind);
+                _self.gzbusinessareaMap = _self.$array2map(e.data.data.gzbusinessarea);
+                _self.gzbusinessplaceMap = _self.$array2map(e.data.data.gzbusinessplace);
+                _self.taskKindArray = e.data.data.taskKind;
                 _self.get_data();
             }
 
