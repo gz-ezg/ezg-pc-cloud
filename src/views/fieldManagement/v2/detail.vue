@@ -1,127 +1,233 @@
 <template>
-    <Modal
-            v-model="openShowDetail"
-            title="查看详情"
-            width="880"
-
-    >
-        <div>
-            <Card style="min-width:850px">
-                <!--<Row style="margin-bottom:10px">
-                    <search-model :data="searchData" @search="search"></search-model>
+    <div>
+        <Modal
+                v-model="openLegworkDetail"
+                title="外勤详情"
+                width="450"
+        >
+            <div style="min-height:60vh;width:400px" >
+                <Row :gutter="20" style="margin-top:20px">
+                    <Col span="6">
+                    <span style="line-height:24px">任务名称</span>
+                    </Col>
+                    <Col span="18">
+                    <Input v-model="detail.task_name" size="small" readonly="true" style="width:180px" >
+                    </Input>
+                    </Col>
                 </Row>
-    -->
-                <Row style="margin-top: 10px;">
-                    <Table
-                            :loading="loading"
-                            highlight-row
-                            size="small"
-                            border
-                            @on-row-click="select_row"
-                            :columns="header"
-                            :data="data"></Table>
+                <Row :gutter="20" style="margin-top:20px">
+                    <Col span="6">
+                    <span style="line-height:24px">公司名称</span>
+                    </Col>
+                    <Col span="18">
+                        <span style="line-height:24px">{{detail.CompanyName}}
+                        </span>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px">
+                    <Col span="6">
+                    <span style="line-height:24px">客户</span>
+                    </Col>
+                    <Col span="18">
+                    <span style="line-height:24px">{{detail.name}}</span>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px"  v-if="detail.task_kind != '会计代账' && detail.task_kind != '代账协助' ">
+                    <Col span="6">
+                    <span style="line-height:24px">任务类型</span>
+                    </Col>
+                    <Col span="18">
+                    <span style="line-height:24px">{{detail.task_kind}}</span>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px"   v-if=" detail.task_kind == '会计代账' || detail.task_kind == '代账协助' ">
+                    <Col span="6">
+                    <span style="line-height:24px">任务类型</span>
+                    </Col>
+                    <Col span="18">
+                    <span style="line-height:24px">{{detail.type}}</span>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px" v-if=" detail.task_kind == '商事外勤' || detail.task_kind == '工单协助' ">
+                    <Col span="6">
+                    <span style="line-height:24px">地区</span>
+                    </Col>
+                    <Col span="6">
+                    <span style="line-height:24px">{{detail.task_area}}</span>
+                    </Col>
+                    <Col span="6">
+                    <span style="line-height:24px">地点</span>
+                    </Col>
+                    <Col span="6">
+                    <span style="line-height:24px">{{detail.task_place}}</span>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px"   v-if=" detail.task_kind != '市场外勤' ">
+                    <Col span="6">
+                    <span style="line-height:24px">服务内容</span>
+                    </Col>
+                    <Col span="18">
+                    <span style="line-height:24px">{{detail.service_content}}</span>
+                    </Col>
+                </Row>
+
+                <Row :gutter="20" style="margin-top:20px"  v-if=" detail.task_kind == '商事外勤' ">
+                    <Col span="6">
+                    <span style="line-height:24px">服务节点</span>
+                    </Col>
+                    <Col span="18">
+                    <span style="line-height:24px">{{detail.process}}</span>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px"   v-if=" detail.task_kind == '市场外勤' ">
+                    <Col span="6">
+                    <span style="line-height:24px">跟进阶段</span>
+                    </Col>
+                    <Col span="18">
+                    <span style="line-height:24px">{{detail.service_content}}</span>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px">
+                    <Col span="6">
+                    <span style="line-height:24px">代办于</span>
+                    </Col>
+                    <Col span="18">
+                    <Input size="small" v-model="detail.plan_date" style="width:180px" readonly="true" ></Input>
+                    </Col>
 
                 </Row>
 
-            </Card>
 
-        </div>
-    </Modal>
-
+                <Row :gutter="20" style="margin-top:20px" >
+                    <Col span="6">
+                    <span style="line-height:24px">外勤开始时间</span>
+                    </Col>
+                    <Col span="18">
+                    <Input size="small" v-model="detail.begin_time" style="width:180px" readonly="true" ></Input>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px" >
+                    <Col span="6">
+                    <span style="line-height:24px">开始打卡地点</span>
+                    </Col>
+                    <Col span="18">
+                    <Input size="small" v-model="detail.begin_address" style="width:180px" readonly="true" ></Input>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px" >
+                    <Col span="6">
+                    <span style="line-height:24px">外勤结束时间</span>
+                    </Col>
+                    <Col span="18">
+                    <Input size="small" v-model="detail.end_time" style="width:180px" readonly="true" ></Input>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px">
+                    <Col span="6">
+                    <span style="line-height:24px">结束打卡地点</span>
+                    </Col>
+                    <Col span="18">
+                    <Input size="small" v-model="detail.end_address" style="width:180px" readonly="true" ></Input>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px">
+                    <Col span="6">
+                    <span style="line-height:24px">外勤结果</span>
+                    </Col>
+                    <Col span="18">
+                    <Input size="small" v-model="detail.finish_status" style="width:180px" readonly="true" ></Input>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px" >
+                    <Col span="6">
+                    <span style="line-height:24px">开始打卡备注</span>
+                    </Col>
+                    <Col span="18">
+                    <Input size="small" v-model="detail.begin_memo" style="width:180px" readonly="true" ></Input>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px">
+                    <Col span="6">
+                    <span style="line-height:24px">外勤总结</span>
+                    </Col>
+                    <Col span="18">
+                    <Input size="small" v-model="detail.finish_memo" style="width:180px" readonly="true" ></Input>
+                    </Col>
+                </Row>
+               <Row :gutter="20" style="margin-top:20px" >
+                    <Col span="6">
+                    <span style="line-height:24px">打卡照片</span>
+                    </Col>
+                    <Col span="18" v-for="(item,index) in imgUrls " :key="index">
+                    <a target="_blank" :href="'/api/assets/' + item" >
+                        <img :src="'/api/assets/' +item" alt=""  width="100" height="100" onerror="this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null">
+                    </a>
+                    </Col>
+                </Row>
+            </div>
+            <div slot="footer">
+                <Button @click="openLegworkDetail = false" type="primary"  style="margin-left:40px"  :loading="loading" >关闭</Button>
+            </div>
+        </Modal>
+        <create></create>
+    </div>
 </template>
 
 <script>
-
-
-    export default {
-        props:["legworkId","legwork_finish_statusMap","taskKindMap"],
-        components:{
-
-        },
+    export default{
+        props:["taskKindMap","legwork_finish_statusMap","gzbusinessareaMap","gzbusinessplaceMap"],
         data(){
-            return {
-                currentRow: {},
-                loading: true,
-                total: 0,
-                data:[],
-                openShowDetail:false,
-                payDirMap:{},
-                header: [
-                    {
-                        title: "任务名称",
-                        key: 'task_name',
-                        width: 120
-                    },
-                    {
-                        title: "任务类型",
-                        key: 'task_kind',
-                        minWidth: 140
-                    },{
-                        title: "完成状态",
-                        key: 'finish_status',
-                        minWidth: 140
-                    },
-                    {
-                        title: "公司名称",
-                        key: "CompanyName",
-                        minWidth: 140
-                    },
-                    {
-                        title: "客户名称",
-                        key: 'NAME',
-                        minWidth: 120
-                    },
-                    {
-                        title: "客户电话",
-                        key: 'TEL',
-                        minWidth: 120
-                    }
-                ]
+            return{
+                detail:{},
+                openLegworkDetail:false,
+                id:'',
+                imgUrls:[]
             }
         },
         methods:{
             get_data(){
-                var _self = this
-
-                var url = 'api/user/legwork/detail'
+                let _self = this;
+                var url = 'api/user/legwork/task/detail'
                 var config = {
                     params:{
-                        legworkId:_self.legworkId
+                        legworkTaskId:_self.id
                     }
                 }
 
                 _self.$http.get(url,config).then(function(res){
-
-                    _self.data = res.data.data
-                    _self.loading = false
-
-                    for(let i = 0; i < _self.data.length; i++){
-
-                        _self.data[i].task_kind =  _self.taskKindMap.get(_self.data[i].task_kind);
-                        _self.data[i].finish_status= _self.legwork_finish_statusMap.get(_self.data[i].finish_status);
-                        console.log(_self.data[i]);
+                    _self.imgUrls = [];
+                    _self.detail = res.data.data;
+                    if(res.data.data.begin_realpath){
+                        for(let k = 0;k<res.data.data.begin_realpath.split(",").length;k++){
+                            _self.imgUrls.push(res.data.data.begin_realpath.split(",")[k])
+                        }
+                    }
+                    if(res.data.data.end_realpath){
+                        for(let k = 0;k<res.data.data.end_realpath.split(",").length;k++){
+                            _self.imgUrls.push(res.data.data.end_realpath.split(",")[k])
+                        }
+                    }
+                    if(_self.detail.task_kind){
+                        _self.detail.task_kind = _self.taskKindMap.get( _self.detail.task_kind);
+                        _self.detail.finish_status = _self.legwork_finish_statusMap.get( _self.detail.finish_status);
+                    }
+                    if(_self.detail.task_area){
+                        _self.detail.task_area = _self.gzbusinessareaMap.get( _self.detail.task_area);
+                    }
+                    if(_self.detail.task_place){
+                        _self.detail.task_place = _self.gzbusinessplaceMap.get( _self.detail.task_place);
                     }
                 })
-
-            },
-            search(){
-
             }
         },
-        created(){
-            let _self = this
-            this.$bus.off("openShowDetail",false)
-            this.$bus.on("openShowDetail",(e)=>{
-
-             this.openShowDetail = true
-          //  this.$GetDataCenter("payDirs",callback);
-            _self.get_data();
-           /* function  callback(e) {
-                _self.payDirMap = _self.$array2map(e.data.data.payDirs)
-
-            }*/
-        })
-
+        created() {
+            let _self = this;
+            this.$bus.off("OPEN_LEGWORK_DETAIL",true);
+            this.$bus.on("OPEN_LEGWORK_DETAIL",(e)=>{
+                _self.id = e.id;
+                _self.get_data();
+                 _self.openLegworkDetail = true;
+            });
         }
     }
 </script>

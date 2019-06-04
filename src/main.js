@@ -324,8 +324,12 @@ Vue.prototype.$http = axios
 Vue.prototype.$MergeURL = function(url, config){
     let temp = `${url}?`
     for(let i in config){
-        let params = `${i}=${config[i]}&`
-        temp = temp + params
+        if(config[i]){
+            let params = `${i}=${config[i]}&`
+            temp = temp + params
+        }
+
+
     }
     return temp
 }
