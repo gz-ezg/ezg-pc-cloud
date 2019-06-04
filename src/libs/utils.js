@@ -93,6 +93,7 @@ export function simpleCodeToText(codeValue,textList){
     }
 }
 
+//  两个时间的差值
 export function DateDifference(faultDate,completeTime){
     // let d1 = new Date(faultDate);
     // let d2 = new Date(completeTime);
@@ -109,3 +110,4 @@ export function DateDifference(faultDate,completeTime){
     let time = days + "天"+hours+"时"+minutes+"分";
     return time;
 }
+

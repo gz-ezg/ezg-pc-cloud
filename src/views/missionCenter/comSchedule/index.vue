@@ -172,6 +172,7 @@
                     maxTime : "20:00:00",
                     contentHeight : 1150,
                     slotDuration : "00:15:00",
+                    timezone:"local",
                     aspectRatio : 2,
 
                     customButtons:{
@@ -184,6 +185,7 @@
                     }
                 },
                 events:[
+
                 ],
                 events_temp: [],
                 //  默认显示月
@@ -214,6 +216,7 @@
                 console.log(date)
                 let _self = this
                 this.date = date._d
+                console.log(this.date)
                 let dateTemp = DateFormat(date)
                 this.get_onedate_data(dateTemp)
             },
@@ -415,6 +418,9 @@
         color: #ffffff;
         height: 110px;
     }
+    .fc-agendaDay-view  .fc-short{
+        height: 20px;
+    }
     .fc-content .fc-time{
         /*line-height: 18px;*/
         /*display: inline;*/
@@ -427,11 +433,12 @@
         /*display: inline;*/
     }
     .fc-event, .fc-event-dot{
-        background: #2d8cf0
+        background: #2d8cf0;
     }
     .vdp-datepicker__calendar .cell.selected{
         background:  #2d8cf0;
         color: #ffffff;
+
     }
     .vdp-datepicker__calendar .cell.selected:hover{
         background:  #2d8cf0;
@@ -441,7 +448,8 @@
         background-color: #2d8cf0;
         background-image: none;
         box-shadow: none;
-        color: #ffffff
+        color: #ffffff;
+
     }
     .filter{
         background: white none;
