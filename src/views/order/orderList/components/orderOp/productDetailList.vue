@@ -320,6 +320,9 @@ export default {
       let success = res => {
         this.serverList.splice(index, 1, res.data.data);
         e.orderItem[index].selectServer = res.data.data.find(v => {
+          if (!v.userId) {
+            return {};
+          }
           return v.userId == e.orderItem[index].serverid;
         });
       };

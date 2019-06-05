@@ -331,15 +331,15 @@ export default {
           for (let j = 0; j < _self.orderItem.length; j++) {
             departParamObj.push({
               departId: _self.orderItem[j].departid,
-              serverId: _self.orderItem[j].selectServer.userId
+              serverId: _self.orderItem[j].selectServer && _self.orderItem[j].selectServer.userId || ''
             });
           }
           let order = _self.orderItem;
           for (let i = 0; i < order.length; i++) {
             order[i].servicedeparts = "";
             order[i].servicestartdate = DateFormat(order[i].servicestartdate);
-            order[i].serverId = order[i].selectServer.userId;
-            order[i].realname = order[i].selectServer.realname;
+            order[i].serverId = order[i].selectServer && order[i].selectServer.userId || '';
+            order[i].realname = order[i].selectServer && order[i].selectServer.realname || '';
             order[i].declare_year &&
               (order[i].declare_year = new Date(
                 order[i].declare_year
