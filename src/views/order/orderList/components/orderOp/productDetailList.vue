@@ -494,8 +494,9 @@ export default {
       _self.changeServerPerson("", _self.productList.length - 1);
     });
 
-    this.$bus.off("PRODUCT_LIST", true);
+    _self.$bus.off("PRODUCT_LIST", true);
     _self.$bus.on("PRODUCT_LIST", e => {
+      console.log('dioayongyici')
       for (let i = 0; i < e.orderItem.length; i++) {
         _self.handleGetService(e, i);
       }
