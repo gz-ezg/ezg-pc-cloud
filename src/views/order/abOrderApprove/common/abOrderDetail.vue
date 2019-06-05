@@ -54,7 +54,7 @@
           </FormItem>
         </Row>
 
-        <Row>
+        <Row v-if="formValidateDetail.imgs && formValidateDetail.imgs.length">
           <FormItem label="图片">
             <a
               :key="index"
