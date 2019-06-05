@@ -133,7 +133,7 @@
                         >
                           <Option
                             :value="parseInt(departItem.type)"
-                            v-for="departItem of JSON.parse(item.servicedeparts) "
+                            v-for="departItem of item.servicedeparts "
                             :key="departItem.departCode"
                           >{{departItem.text}}</Option>
                         </Select>

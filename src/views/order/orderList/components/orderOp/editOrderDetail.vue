@@ -331,19 +331,27 @@ export default {
           for (let j = 0; j < _self.orderItem.length; j++) {
             departParamObj.push({
               departId: _self.orderItem[j].departid,
-              serverId: _self.orderItem[j].selectServer && _self.orderItem[j].selectServer.userId || ''
+              serverId:
+                (_self.orderItem[j].selectServer &&
+                  _self.orderItem[j].selectServer.userId) ||
+                ""
             });
           }
           let order = _self.orderItem;
           for (let i = 0; i < order.length; i++) {
             order[i].servicedeparts = "";
             order[i].servicestartdate = DateFormat(order[i].servicestartdate);
-            order[i].serverId = order[i].selectServer && order[i].selectServer.userId || '';
-            order[i].realname = order[i].selectServer && order[i].selectServer.realname || '';
-            order[i].declare_year &&
-              (order[i].declare_year = new Date(
-                order[i].declare_year
-              ).getFullYear());
+            order[i].serverId =
+              (order[i].selectServer && order[i].selectServer.userId) || "";
+            order[i].realname =
+              (order[i].selectServer && order[i].selectServer.realname) || "";
+
+            try {
+              order[i].declare_year &&
+                (order[i].declare_year = new Date(
+                  order[i].declare_year
+                ).getFullYear());
+            } catch (error) {}
           }
           let config = {
             id: _self.orderDetail.id,
@@ -413,7 +421,7 @@ export default {
       this.get_ab_worker_id();
       this.openEditOrderDetail = true;
       function callback() {
-        console.log('callback')
+        console.log("callback");
         _self.$bus.emit("PRODUCT_LIST_EDIT", _self);
         _self.departServerObj = _self.orderDetail.departJson;
       }
