@@ -337,7 +337,7 @@ export default {
                 ""
             });
           }
-          let order = _self.orderItem;
+          let order = JSON.parse(JSON.stringify(_self.orderItem));
           for (let i = 0; i < order.length; i++) {
             order[i].servicedeparts = "";
             order[i].servicestartdate = DateFormat(order[i].servicestartdate);
@@ -346,12 +346,11 @@ export default {
             order[i].realname =
               (order[i].selectServer && order[i].selectServer.realname) || "";
 
-            try {
-              order[i].declare_year &&
-                (order[i].declare_year =
-                  new Date(order[i].declare_year).getFullYear &&
-                  new Date(order[i].declare_year).getFullYear());
-            } catch (error) {}
+            if (order[i].declare_year) {
+              order[i].declare_year = new Date(
+                order[i].declare_year
+              ).getFullYear();
+            }
           }
           let config = {
             id: _self.orderDetail.id,
@@ -363,10 +362,8 @@ export default {
             orderPayNumber: _self.orderDetail.realnumber,
             orderitems: JSON.stringify(order),
             usebalance: _self.orderDetail.usebalance,
-            serviceStartDate: "",
-y
-          console.log(config);
-
+            serviceStartDate: ""
+          };
           try {
             let { status, data } = await orderApi.orderUpdate(config);
             if (status) {
