@@ -159,12 +159,14 @@
                         </a>
                     </Col>
                 </Row>
-                <Row style="margin-top:40px">
-                    <Button @click="delete_task" type="error" style="margin-left:40px" :loading="loading">作废</Button>
-                    <Button @click="cancel_task"  type="primary" style="margin-left:50px">关闭</Button>
+
+            </div>
+            <div slot="footer">
+                <Row>
+                    <Button @click="delete_task" type="error"  :loading="loading" v-if="!legId">作废</Button>
+                    <Button @click="cancel_task"  type="primary" >关闭</Button>
                 </Row>
             </div>
-            <div slot="footer"></div>
          </Modal>
      </div>
 </template>
