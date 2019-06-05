@@ -311,7 +311,7 @@ export default {
       this.departServerObj = [];
     },
     edit() {
-      this.open_product_list();
+      // this.open_product_list();
       let _self = this;
       _self.$ButtonCollect("order_edit");
       _self.loading = true;
@@ -320,18 +320,26 @@ export default {
           // let url = `api/order/update`
           // console.log(_self.orderDetail.payTime)
           let departParamObj = [];
+          console.log("_self", _self);
+          // for (let j = 0; j < _self.departServerObj.length; j++) {
+          //   departParamObj.push({
+          //     departId: _self.departServerObj[j].departId,
+          //     serverId: _self.departServerObj[j].serverId
+          //   });
+          // }
 
-          for (let j = 0; j < _self.departServerObj.length; j++) {
+          for (let j = 0; j < _self.orderItem.length; j++) {
             departParamObj.push({
-              departId: _self.departServerObj[j].departId,
-              serverId: _self.departServerObj[j].serverId
+              departId: _self.orderItem[j].departid,
+              serverId: _self.orderItem[j].selectServer.userId
             });
           }
           let order = _self.orderItem;
           for (let i = 0; i < order.length; i++) {
             order[i].servicedeparts = "";
             order[i].servicestartdate = DateFormat(order[i].servicestartdate);
-
+            order[i].serverId = order[i].selectServer.userId;
+            order[i].realname = order[i].selectServer.realname;
             order[i].declare_year &&
               (order[i].declare_year = new Date(
                 order[i].declare_year
@@ -380,12 +388,11 @@ export default {
         }
         _self.loading = false;
       });
-    //   this.$bus.emit("OPEN_ORDER_PRODUCT_LIST", this.orderDetail.companyid);
-      
+      //   this.$bus.emit("OPEN_ORDER_PRODUCT_LIST", this.orderDetail.companyid);
     },
     open_product_list() {
       if (this.orderDetail.companyid) {
-        console.log('wochufale')
+        console.log("wochufale");
         this.$bus.emit("OPEN_ORDER_PRODUCT_LIST", this.orderDetail.companyid);
       } else {
         this.$Message.warning("请先选择公司！");
@@ -407,9 +414,7 @@ export default {
       this.get_ab_worker_id();
       this.openEditOrderDetail = true;
       function callback() {
-        
-        console.log(_self.orderDetail);
-        _self.$bus.emit('GET_ID',_self.orderDetail)
+        _self.$bus.emit("PRODUCT_LIST", _self);
         _self.departServerObj = _self.orderDetail.departJson;
       }
     });
@@ -431,81 +436,81 @@ export default {
         newRows.push(row);
       }
 
-      for (let j = 0; j < newRows.length; j++) {
-        if (newRows[j].productSkuId != newRows[j].oldProductSkuId) {
-          //表示需要重置服务人员
+      // for (let j = 0; j < newRows.length; j++) {
+      //   if (newRows[j].productSkuId != newRows[j].oldProductSkuId) {
+      //     //表示需要重置服务人员
 
-          let url = `api/product/server/list`;
+      //     let url = `api/product/server/list`;
 
-          let config = {
-            params: {
-              productSkuId: newRows[j].productSkuId,
-              serviceDepartId: newRows[j].departId,
-              companyId: _self.orderDetail.companyid
-            }
-          };
+      //     let config = {
+      //       params: {
+      //         productSkuId: newRows[j].productSkuId,
+      //         serviceDepartId: newRows[j].departId,
+      //         companyId: _self.orderDetail.companyid
+      //       }
+      //     };
 
-          var oAjax = new XMLHttpRequest();
+      //     var oAjax = new XMLHttpRequest();
 
-          oAjax.open(
-            "GET",
-            url +
-              "?" +
-              "productSkuId=" +
-              newRows[j].productSkuId +
-              "&serviceDepartId=" +
-              newRows[j].departId +
-              "&companyId=" +
-              _self.orderDetail.companyid,
-            false
-          ); //false表示同步请求
+      //     oAjax.open(
+      //       "GET",
+      //       url +
+      //         "?" +
+      //         "productSkuId=" +
+      //         newRows[j].productSkuId +
+      //         "&serviceDepartId=" +
+      //         newRows[j].departId +
+      //         "&companyId=" +
+      //         _self.orderDetail.companyid,
+      //       false
+      //     ); //false表示同步请求
 
-          oAjax.onreadystatechange = function() {
-            //6,通过状态确认完成
-            if (oAjax.readyState == 4 && oAjax.status == 200) {
-              //7,获取返回值，解析json格式字符串为对象
-              var data = JSON.parse(oAjax.responseText);
-              if (data.msgCode == 40000) {
-                if (data.data.length == 0) {
-                  newRows[j].serverId = "";
-                } else {
-                  let serverChangeFlag = true;
-                  for (let k = 0; k < data.data.length; k++) {
-                    if (
-                      data.data[k].userId == newRows[j].serverId &&
-                      newRows[j].serverId != null &&
-                      newRows[j].serverId != ""
-                    ) {
-                      serverChangeFlag = false;
-                    }
-                  }
+      //     oAjax.onreadystatechange = function() {
+      //       //6,通过状态确认完成
+      //       if (oAjax.readyState == 4 && oAjax.status == 200) {
+      //         //7,获取返回值，解析json格式字符串为对象
+      //         var data = JSON.parse(oAjax.responseText);
+      //         if (data.msgCode == 40000) {
+      //           if (data.data.length == 0) {
+      //             newRows[j].serverId = "";
+      //           } else {
+      //             let serverChangeFlag = true;
+      //             for (let k = 0; k < data.data.length; k++) {
+      //               if (
+      //                 data.data[k].userId == newRows[j].serverId &&
+      //                 newRows[j].serverId != null &&
+      //                 newRows[j].serverId != ""
+      //               ) {
+      //                 serverChangeFlag = false;
+      //               }
+      //             }
 
-                  if (serverChangeFlag) {
-                    console.log(data);
-                    newRows[j].serverId = parseInt(data.data[0].userId);
-                  }
-                }
-                newRows[j].serverList = data.data;
-              } else {
-                newRows[j].serverId = "";
-                newRows[j].serverList = [];
-              }
-            } else {
-              console.log(oAjax);
-              newRows[j].serverId = "";
-              newRows[j].serverList = [];
-            }
-          };
-          oAjax.send();
-        }
-      }
+      //             if (serverChangeFlag) {
+      //               console.log(data);
+      //               newRows[j].serverId = parseInt(data.data[0].userId);
+      //             }
+      //           }
+      //           newRows[j].serverList = data.data;
+      //         } else {
+      //           newRows[j].serverId = "";
+      //           newRows[j].serverList = [];
+      //         }
+      //       } else {
+      //         console.log(oAjax);
+      //         newRows[j].serverId = "";
+      //         newRows[j].serverList = [];
+      //       }
+      //     };
+      //     oAjax.send();
+      //   }
+      // }
 
-      if (countFlag == _self.departChangeCountFlag) {
-        _self.departServerObj = [];
-        _self.departServerObj = newRows;
-      }
+      // if (countFlag == _self.departChangeCountFlag) {
+      //   _self.departServerObj = [];
+      //   _self.departServerObj = newRows;
+      // }
 
-      console.log(_self.departServerObj);
+      // console.log(_self.departServerObj);
     });
     this.$bus.emit("OPEN_ORDER_PRODUCT_LIST", this.orderDetail.companyid);
   }

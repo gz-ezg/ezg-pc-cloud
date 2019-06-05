@@ -304,6 +304,36 @@ export default {
     };
   },
   methods: {
+    async handleGetService(e, index) {
+      console.log("diaoyong");
+      let url = `api/product/server/list`;
+      let config;
+
+      let product = e.orderItem[index];
+      config = {
+        params: {
+          productSkuId: product.skuid,
+          serviceDepartId: product.departid,
+          companyId: e.orderDetail.companyid || this.id
+        }
+      };
+
+      let success = res => {
+        this.serverList.splice(index, 1, res.data.data);
+        e.orderItem[index].selectServer = res.data.data.find(v => {
+          return v.userId == e.orderItem[index].serverid;
+        });
+      };
+      function fail() {}
+      this.$Get(url, config, success);
+    },
+    // getList() {
+    //   setTimeout(v => {
+    //     for (let i = 0; i < this.productList.length; i++) {
+    //       this.handleGetService(i);
+    //     }
+    //   }, 200);
+    // },
     changePayMethod(i) {
       this.isPlan = Object.assign({}, this.isPlan, {
         [i]: !this.isPlan[i]
@@ -415,6 +445,7 @@ export default {
       function fail() {}
       this.$Get(url, config, success);
     },
+
     refundItem(index) {
       let _self = this;
       this.$Modal.confirm({
@@ -430,17 +461,20 @@ export default {
       });
     }
   },
+  // mounted() {
+  //   this.getList();
+  // },
   created() {
+    
     let _self = this;
     this.productList.forEach((e, i) => {
       if (e.defaultdepartalias == "PLAN") {
         e.receipt_type = "quota";
       }
-      this.serverList[i] = {
-        realname: e.realname,
-        flag: "",
-        userId: e.serverid
-      };
+    });
+
+    this.serverList = this.productList.map(v => {
+      return v.serverList;
     });
     this.$bus.off("ADD_PRODUCT_DETAIL_LIST", true);
     this.$bus.on("ADD_PRODUCT_DETAIL_LIST", e => {
@@ -460,13 +494,13 @@ export default {
       _self.changeServerPerson("", _self.productList.length - 1);
     });
 
-    _self.$bus.on("GET_ID", e => {
-      console.log("getiddd", this);
-      _self.productList = _self.productList.map(v => {
-        v.selectServer = v.realname;
-        return v;
-      });
+    this.$bus.off("PRODUCT_LIST", true);
+    _self.$bus.on("PRODUCT_LIST", e => {
+      for (let i = 0; i < e.orderItem.length; i++) {
+        _self.handleGetService(e, i);
+      }
     });
+    _self.$bus.off("OPEN_ORDER_PRODUCT_LIST", true);
     _self.$bus.on("OPEN_ORDER_PRODUCT_LIST", e => {
       _self.companyId = e;
     });

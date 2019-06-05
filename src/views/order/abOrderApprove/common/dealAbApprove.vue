@@ -53,7 +53,7 @@
             />
           </FormItem>
         </Row>
-        <Row :gutter="12" v-if="formValidateDetail.imgs.length">
+        <Row :gutter="12" v-if="formValidateDetail.imgs && formValidateDetail.imgs.length">
           <FormItem label="图片">
             <a
               :key="index"
@@ -105,7 +105,7 @@ export default {
   methods: {
     get_data(e) {
       this.formValidateDetail = e;
-      if (e.urls.length) {
+      if (e.urls && e.urls.length) {
         this.formValidateDetail.imgs = e.urls.split(",").map(v => {
           return "/api/assets/" + v;
         });
