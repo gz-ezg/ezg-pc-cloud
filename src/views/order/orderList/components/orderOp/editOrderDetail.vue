@@ -364,9 +364,7 @@ export default {
             orderitems: JSON.stringify(order),
             usebalance: _self.orderDetail.usebalance,
             serviceStartDate: "",
-            departJson: JSON.stringify(departParamObj)
-          };
-
+y
           console.log(config);
 
           try {
