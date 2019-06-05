@@ -348,9 +348,9 @@ export default {
 
             try {
               order[i].declare_year &&
-                (order[i].declare_year = new Date(
-                  order[i].declare_year
-                ).getFullYear());
+                (order[i].declare_year =
+                  new Date(order[i].declare_year).getFullYear &&
+                  new Date(order[i].declare_year).getFullYear());
             } catch (error) {}
           }
           let config = {
