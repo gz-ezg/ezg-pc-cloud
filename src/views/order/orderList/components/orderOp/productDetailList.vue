@@ -133,7 +133,7 @@
                         >
                           <Option
                             :value="parseInt(departItem.type)"
-                            v-for="departItem of JSON.parse(item.servicedeparts)"
+                            v-for="departItem of JSON.parse(item.servicedeparts) "
                             :key="departItem.departCode"
                           >{{departItem.text}}</Option>
                         </Select>
@@ -305,7 +305,6 @@ export default {
   },
   methods: {
     async handleGetService(e, index) {
-      console.log("diaoyong");
       let url = `api/product/server/list`;
       let config;
 
@@ -382,8 +381,9 @@ export default {
       for (let i = 0; i < _self.productList.length; i++) {
         let param = {};
         let row = _self.productList[i];
+        let departs;
 
-        let departs = JSON.parse(row.servicedeparts);
+        departs = JSON.parse(JSON.stringify(row.servicedeparts));
 
         for (let k = 0; k < departs.length; k++) {
           if (departs[k].type == row.departid) {
@@ -461,11 +461,11 @@ export default {
       });
     }
   },
-  // mounted() {
-  //   this.getList();
-  // },
+
+  beforeCreate() {
+    this.$bus.off("PRODUCT_LIST_EDIT", true);
+  },
   created() {
-    
     let _self = this;
     this.productList.forEach((e, i) => {
       if (e.defaultdepartalias == "PLAN") {
@@ -494,9 +494,9 @@ export default {
       _self.changeServerPerson("", _self.productList.length - 1);
     });
 
-    _self.$bus.off("PRODUCT_LIST", true);
-    _self.$bus.on("PRODUCT_LIST", e => {
-      console.log('dioayongyici')
+    _self.$bus.off("PRODUCT_LIST_EDIT");
+    _self.$bus.on("PRODUCT_LIST_EDIT", e => {
+      console.log("PRODUCT_LIST_EDIT");
       for (let i = 0; i < e.orderItem.length; i++) {
         _self.handleGetService(e, i);
       }

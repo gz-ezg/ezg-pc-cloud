@@ -392,7 +392,6 @@ export default {
     },
     open_product_list() {
       if (this.orderDetail.companyid) {
-        console.log("wochufale");
         this.$bus.emit("OPEN_ORDER_PRODUCT_LIST", this.orderDetail.companyid);
       } else {
         this.$Message.warning("请先选择公司！");
@@ -414,7 +413,8 @@ export default {
       this.get_ab_worker_id();
       this.openEditOrderDetail = true;
       function callback() {
-        _self.$bus.emit("PRODUCT_LIST", _self);
+        console.log('callback')
+        _self.$bus.emit("PRODUCT_LIST_EDIT", _self);
         _self.departServerObj = _self.orderDetail.departJson;
       }
     });
