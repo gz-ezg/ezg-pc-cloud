@@ -65,14 +65,14 @@
             </Row>
             <Row :gutter="12"  v-if="newMission.taskKind==='tkLegAcc'">
                 <Col span="12">
-                    <FormItem label="区域" prop="businessArea">
+                    <FormItem label="区域">
                         <Select v-model="newMission.businessArea" type="text" transfer>
                             <Option v-for="(item,index) in businessArea" :key="index" :value="item.typecode">{{item.typename}}</Option>
                         </Select>
                     </FormItem>
                 </Col>
                 <Col span="12">
-                    <FormItem label="地点" prop="businessPlace">
+                    <FormItem label="地点">
                         <Select v-model="newMission.businessPlace" type="text" transfer>
                             <Option v-for="(item,index) in businessPlace" :key="index" :value="item.typecode">{{item.typename}}</Option>
                         </Select>
@@ -212,6 +212,8 @@
                 companyLoading: false,
                 phraseList:[],
                 companyList: [],
+                productListName:[],
+                companyNameList:[],
                 userList: [
 
                 ],
@@ -317,9 +319,12 @@
             },
             create_task(){
                 let _self = this
-                if (_self.newMission.taskName==="" ||
-                    _self.newMission.companyId==="" ||
-                    _self.newMission.businessId ===null){
+                if (_self.newMission.taskName=="" ||
+                    _self.newMission.taskName==null ||
+                    _self.newMission.companyId=="" ||
+                    _self.newMission.companyId==null||
+                    _self.newMission.businessId ==null ||
+                    _self.newMission.businessId ==""){
                     this.$Message.warning('请把上述信息填写完整')
                     return
                 }
@@ -434,7 +439,52 @@
                 this.newMission.taskName ="";
                 this.newMission.companyId ="";
                 this.newMission.businessId ="";
-                this.$refs['newMission'].resetFields();
+                this.newMission.executorId = "";
+                this.newMission.cycleType = "A";
+                this.newMission.businessArea = "tianhe";
+                this.newMission.businessPlace = "shuiju";
+            },
+            get_company_name(){
+                let _self = this
+                let obj = {}
+                let arr = _self.companyNameList
+
+                for (let i=0;i<arr.length;i++){
+                    let companyname = arr[i].companyname
+                    let companyid = arr[i].companyid
+                    obj[companyid] = companyname
+                }
+                _self.newMission.companyName = obj[_self.newMission.companyId]
+                console.log(_self.newMission.companyName)
+            },
+            get_product_name(){
+                let _self = this
+                let obj = {}
+                let arr = _self.productListName
+
+                for (let i=0;i<arr.length;i++){
+                    let product = arr[i].product
+                    let businessId = arr[i].businessId
+                    obj[businessId] = product
+                }
+                _self.newMission.businessName = obj[_self.newMission.businessId]
+                console.log(_self.newMission.businessName)
+            },
+            get_task_name(){
+                let _self = this
+                if (_self.newMission.businessName) {
+                    _self.newMission.taskName=_self.newMission.companyName+"--"+_self.newMission.businessName
+                }
+                if (!_self.newMission.businessName){
+                    _self.newMission.taskName=_self.newMission.companyName
+                }
+                if ( _self.newMission.taskKind=='tkLegAccCyc'){
+                    _self.newMission.taskName=_self.newMission.companyName+"--"+_self.newMission.businessName+"--"+_self.newMission.cycleTypeName
+                }
+                if ( _self.newMission.businessName && !_self.newMission.cycleTypeName){
+                    _self.newMission.taskName=_self.newMission.companyName+"--"+_self.newMission.businessName
+                }
+
             },
             get_user(query){
                 let _self = this
@@ -471,6 +521,7 @@
                 function success(res){
                     _self.companyLoading = false
                     _self.companyList = res.data.data
+                    _self.companyNameList = res.data.data
                 }
                 this.$Get(url, config, success)
                 _self.name_change()
@@ -488,6 +539,7 @@
                 function success(res){
                     _self.userLoading = false
                     _self.productList = res.data.data
+                    _self.productListName = res.data.data
                     console.log(res.data.data)
                     if (_self.productList.length!==0){
                         _self.newMission.businessId =  _self.productList[0].businessId
@@ -496,6 +548,9 @@
                     }
                     _self.get_type_list()
                     _self.type_change()
+                    _self.get_company_name()
+                    _self.get_product_name()
+                    _self.get_task_name()
                     // let obj = {}
                     // let arr = _self.productList
                     //
@@ -524,6 +579,8 @@
                 }
                 _self.newMission.taskKind = obj[_self.newMission.businessId]
                 console.log(_self.newMission.taskKind)
+                _self.get_product_name()
+                _self.get_task_name()
             },
             name_change(){
                 let _self = this
@@ -537,6 +594,7 @@
                 }
                 _self.newMission.cycleTypeName = obj[_self.newMission.cycleTypeId]
                 console.log(_self.newMission.cycleTypeName)
+                _self.get_task_name()
             },
             get_type_list(){
                 let _self = this
@@ -559,6 +617,7 @@
                     }else {
                         _self.newMission.cycleTypeId = null
                     }
+                    _self.get_task_name()
                 }
                 this.$Get(url, config, success)
             },

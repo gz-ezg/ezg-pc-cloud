@@ -418,7 +418,7 @@ export default {
     refundItem(index) {
       let _self = this;
       this.$Modal.confirm({
-        title: "您确定要对该订单项退款吗",
+        title: "您确定要对该订单项退款吗？",
         content: _self.productList[index].propertys,
         onOk: () => {
           _self.$bus.$emit("CANCEL_ORDER", {
