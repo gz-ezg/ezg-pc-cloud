@@ -392,16 +392,11 @@ export default {
                     if (item.product == "会计到家") {
                         this.showAccountHomeItem = true
                     }
+                    if (item.servicedeparts) {
+                        item.servicedeparts = JSON.parse(item.servicedeparts);
+                    }
                     if (item.deleteflag == 5) {
                         item.product = item.product.concat("（已退款）")
-                    }
-                    if (item.realname) {
-                        item.selectServer = item.realname;
-                        item.serverList =  [{
-                            realname: item.realname,
-                            flag:'',
-                            userId: ''
-                        }]
                     }
                     return item
                 })

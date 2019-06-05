@@ -89,7 +89,6 @@
 
 
                     <Row :gutter="16">
-
                         <div v-for="item of orderDetail.departJson">
                             <Row>
                                 <Col span="8">

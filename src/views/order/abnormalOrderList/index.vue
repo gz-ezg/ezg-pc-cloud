@@ -429,7 +429,7 @@ export default {
         console.log(this.selectRow);
         if (
           this.selectRow.current_process == "Ready" ||
-          this.selectRow.current_process == "sczj"
+          this.selectRow.current_process == "Returned"
         ) {
           this.$bus.emit("OPEN_AB_ORDERLIST_EDIT", _self.selectRow);
         } else {
