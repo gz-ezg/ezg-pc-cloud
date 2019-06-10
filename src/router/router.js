@@ -344,6 +344,14 @@ export const appRouter = [
                 name: 'busiTaskList_index',
                 component: () => import( /* webpackChunkName: "busiTaskList_index" */ '@/views/missionCenter/busiTaskList/index.vue')
             },
+            {
+                access: 11641,
+                meta: 11641,
+                path: 'accTaskList',
+                title: '会计任务管理',
+                name: 'accTaskList_index',
+                component: () => import( /* webpackChunkName: "accTaskList_index" */ '@/views/missionCenter/accTaskList/index.vue')
+            },
         ]
     },
     // 计划删除菜单，开发终止
