@@ -1,5 +1,4 @@
 <template>
-
         <Modal
                 v-model="openDeclareResult"
                 title="企业流水状态"
@@ -12,7 +11,7 @@
                     <FormItem prop="finish_status" label="企业收款期数">
                         <Row :gutter="12">
                             <Col span="18">
-                                <Input type="number" v-model="period" @on-change="changeDatas"></Input>
+                                <Input type="number" maxlength="100" v-model="period" @on-change="changeDatas"/>
                             </Col>
                             <Col span="4">
                                 <Button type="primary" :loading="loading" @click="handleSubmit">保存</Button>
@@ -22,7 +21,7 @@
                     <FormItem  label="总金额：">
                         <Row>
                             <Col span="18">
-                                {{currentRow.predicet_receipt * currentRow.receipt_proportion /100}}元
+                                {{currentRow.predicet_receipt || '0'}}元
                             </Col>
                         </Row>
                     </FormItem>
@@ -45,7 +44,7 @@
                 <FormItem  label="总金额：">
                         <Row>
                             <Col span="18">
-                                {{currentRow.predicet_receipt * currentRow.receipt_proportion /100}}元
+                                {{currentRow.predicet_receipt || '0'}}元
                             </Col>
                         </Row>
                 </FormItem>
@@ -128,8 +127,7 @@
                                 }
                             },h('strong', params.row.tem))
                         }
-                        console.log('params',params)
-                        return h('div', params.row.amount,);
+                        return h('div', (params.row.amount / this.currentRow.receipt_proportion * 100).toFixed(2),);
                       }
                     },
                     {
@@ -207,7 +205,7 @@
         },
         methods:{
             handleOneSubmit(params) {
-                let totalPrice = this.currentRow.predicet_receipt * this.currentRow.receipt_proportion /100;
+                let totalPrice = this.currentRow.predicet_receipt;
                 let url = 'api/order/work/order/plan/receipt/item/update'
                 let data = {
                     id:  this.datas[params.index].id,
@@ -233,7 +231,7 @@
                 }
                 let doSuccess = (res) => {
                     this.datas[params.index].receipt_period = this.datas[params.index].receipt_periods;
-                    this.datas[params.index].amount = this.datas[params.index].amounts
+                    this.datas[params.index].amount = this.datas[params.index].amounts * this.currentRow.receipt_proportion /100
                 }
 
                 function fail(err){
@@ -242,7 +240,7 @@
                 this.$Post(url, data, doSuccess,fail)
             },
             handleSubmit() {
-                let totalPrice = this.currentRow.predicet_receipt * this.currentRow.receipt_proportion /100;
+                let totalPrice = this.currentRow.predicet_receipt;
                 // 同时为空或同时为有值得数组
                 let tempArray = this.otherdatas.filter(v=>{
                     if(v.amount && v.receipt_period || !v.amount && !v.receipt_period) {
@@ -282,7 +280,7 @@
                             }
                         } else {
                             return {
-                                amount: v.amount || null,
+                                amount: v.amount * this.currentRow.receipt_proportion /100 || null,
                                 receiptPeriod: v.receipt_period || null
                             }
                         }
@@ -362,6 +360,7 @@
         },
         created(){
             this.$bus.on("open_company_Collection_flow",(e)=>{
+                console.log(e)
                 if (e.receipt_type!=='proportion' || e.finish_status == 'N') {
                     return this.$Message.warning("该企业不能分期收款");
                 }

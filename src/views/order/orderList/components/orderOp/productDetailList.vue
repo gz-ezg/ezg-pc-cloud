@@ -381,37 +381,7 @@ export default {
     departChange(item, index) {
       let idObj = {};
       let _self = this;
-      for (let i = 0; i < _self.productList.length; i++) {
-        let param = {};
-        let row = _self.productList[i];
-        let departs;
 
-        departs = JSON.parse(JSON.stringify(row.servicedeparts));
-
-        for (let k = 0; k < departs.length; k++) {
-          if (departs[k].type == row.departid) {
-            row.departname = departs[k].text;
-          }
-        }
-        param.departId = row.departid;
-        param.departName = row.departname;
-        param.productSkuId = row.skuid;
-        if (idObj[row.departid]) {
-          var skuFlag = true;
-          var skuArray = (idObj[row.departid].productSkuId + "").split(",");
-          for (var j = 0; j < skuArray.length; j++) {
-            if (skuArray[j] == row.skuid) {
-              skuFlag = false;
-            }
-          }
-          if (skuFlag) {
-            idObj[row.departid].productSkuId =
-              idObj[row.departid].productSkuId + "," + row.skuid;
-          }
-        } else {
-          idObj[row.departid] = param;
-        }
-      }
       if (item) {
         this.changeServerPerson(item, index);
       }
