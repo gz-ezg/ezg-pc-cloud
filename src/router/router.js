@@ -67,93 +67,93 @@ export const otherRouter = {
     redirect: '/home',
     component: Main,
     children: [{
-            path: 'home',
-            title: '首页',
-            name: 'home_index',
-            component: () => import( /* webpackChunkName: "commonIndex" */ '@/views/home/common_index/home.vue')
-        },
-        {
-            path: 'cannelIndex',
-            title: '渠道首页',
-            name: 'cannelIndex_index',
-            component: () => import( /* webpackChunkName: "cannelIndex" */ '@/views/home/cannel_index/cannelIndex.vue')
-        },
-        {
-            path: 'commercialIndex',
-            title: '商事首页',
-            name: 'commercialIndex_index',
-            component: () => import( /* webpackChunkName: "commercialIndex" */ '@/views/home/commercial_index/commercialIndex.vue')
-        },
-        {
-            path: 'accountIndex',
-            title: '会计首页',
-            name: 'accountIndex_index',
-            component: () => import( /* webpackChunkName: "accountIndex" */ '@/views/home/account_index/accountIndex.vue')
-        },
-        {
-            path: 'marketIndex',
-            title: '市场首页',
-            name: 'marketIndex_index',
-            component: () => import( /* webpackChunkName: "marketIndex" */ '@/views/home/market_index/marketIndex.vue')
-        },
-        // 待开发，无原型
-        // {
-        //     path: 'auditIndex', 
-        //     title: '审计首页', 
-        //     name: 'auditIndex_index',
-        //     component: () => import(/* webpackChunkName: "auditIndex" */ '@/views/home/audit_index/auditIndex.vue')
-        // },
-        // {
-        //     path: 'planIndex', 
-        //     title: '企划首页', 
-        //     name: 'planIndex_index', 
-        //     component: () => import(/* webpackChunkName: "planIndex" */ '@/views/home/plan_index/planIndex.vue')
-        // },
-        {
-            path: 'ownspace', 
-            title: '个人中心', 
-            name: 'ownspace_index',
-            component: () => import(/* webpackChunkName: "ownspace" */ '@/views/own-space/own-space.vue')
-        },
-        {
-            path: 'message',
-            title: '消息中心',
-            name: 'message_index',
-            component: () => import( /* webpackChunkName: "commonIndex" */ '@/views/message/message.vue')
-        },
-        {
-            path: 'allot/:depart',
-            title: "工单分配",
-            name: 'allot',
-            component: () => import( /* webpackChunkName: "workorderAllot" */ '@/views/woa-components/allot-task/allotCommonTask/index.vue')
-        },
-        {
-            path: 'productPrice/:id',
-            title: "修改产品价格",
-            access: 6013,
-            name: "updateProductPrice",
-            component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/updateProductPrice/index.vue')
-        },
-        {
-            path: 'productDetail',
-            title: "产品详情",
-            access: 6013,
-            name: "productDetail",
-            component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/productDetail/index.vue')
-        },
-        {
-            path: 'productAnalysis',
-            title: "产品数据分析",
-            access: 6013,
-            name: "productAnalysis",
-            component: ()=> import('@/views/productManagement/productAnalysis/index.vue')
-        },
-        {
-            path: 'customerList',
-            title: "客户列表",
-            name: "customerList",
-            component: () => import( /* webpackChunkName: "customerList" */ '@/views/home/market_index/customerList/index.vue')
-        }
+        path: 'home',
+        title: '首页',
+        name: 'home_index',
+        component: () => import( /* webpackChunkName: "commonIndex" */ '@/views/home/common_index/home.vue')
+    },
+    {
+        path: 'cannelIndex',
+        title: '渠道首页',
+        name: 'cannelIndex_index',
+        component: () => import( /* webpackChunkName: "cannelIndex" */ '@/views/home/cannel_index/cannelIndex.vue')
+    },
+    {
+        path: 'commercialIndex',
+        title: '商事首页',
+        name: 'commercialIndex_index',
+        component: () => import( /* webpackChunkName: "commercialIndex" */ '@/views/home/commercial_index/commercialIndex.vue')
+    },
+    {
+        path: 'accountIndex',
+        title: '会计首页',
+        name: 'accountIndex_index',
+        component: () => import( /* webpackChunkName: "accountIndex" */ '@/views/home/account_index/accountIndex.vue')
+    },
+    {
+        path: 'marketIndex',
+        title: '市场首页',
+        name: 'marketIndex_index',
+        component: () => import( /* webpackChunkName: "marketIndex" */ '@/views/home/market_index/marketIndex.vue')
+    },
+    // 待开发，无原型
+    // {
+    //     path: 'auditIndex', 
+    //     title: '审计首页', 
+    //     name: 'auditIndex_index',
+    //     component: () => import(/* webpackChunkName: "auditIndex" */ '@/views/home/audit_index/auditIndex.vue')
+    // },
+    // {
+    //     path: 'planIndex', 
+    //     title: '企划首页', 
+    //     name: 'planIndex_index', 
+    //     component: () => import(/* webpackChunkName: "planIndex" */ '@/views/home/plan_index/planIndex.vue')
+    // },
+    {
+        path: 'ownspace',
+        title: '个人中心',
+        name: 'ownspace_index',
+        component: () => import(/* webpackChunkName: "ownspace" */ '@/views/own-space/own-space.vue')
+    },
+    {
+        path: 'message',
+        title: '消息中心',
+        name: 'message_index',
+        component: () => import( /* webpackChunkName: "commonIndex" */ '@/views/message/message.vue')
+    },
+    {
+        path: 'allot/:depart',
+        title: "工单分配",
+        name: 'allot',
+        component: () => import( /* webpackChunkName: "workorderAllot" */ '@/views/woa-components/allot-task/allotCommonTask/index.vue')
+    },
+    {
+        path: 'productPrice/:id',
+        title: "修改产品价格",
+        access: 6013,
+        name: "updateProductPrice",
+        component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/updateProductPrice/index.vue')
+    },
+    {
+        path: 'productDetail',
+        title: "产品详情",
+        access: 6013,
+        name: "productDetail",
+        component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/productDetail/index.vue')
+    },
+    {
+        path: 'productAnalysis',
+        title: "产品数据分析",
+        access: 6013,
+        name: "productAnalysis",
+        component: () => import('@/views/productManagement/productAnalysis/index.vue')
+    },
+    {
+        path: 'customerList',
+        title: "客户列表",
+        name: "customerList",
+        component: () => import( /* webpackChunkName: "customerList" */ '@/views/home/market_index/customerList/index.vue')
+    }
     ]
 };
 
@@ -373,45 +373,45 @@ export const appRouter = [
         title: '市场管理',
         component: Main,
         children: [{
-                access: 6111,
-                meta: 6111,
-                path: 'customerFollowUp',
-                title: '跟进记录管理',
-                name: 'customerFollowUp_index',
-                component: () => import( /* webpackChunkName: "customerFollowUp_index" */ '@/views/marketplaceManagement/followUpData/followUpdata.vue')
-            },
-            {
-                access: 6112,
-                meta: 6112,
-                path: 'market_rule_index',
-                title: '销售规则管理',
-                name: 'market_rule_index',
-                component: () => import( /* webpackChunkName: "market_rule_index" */ '@/views/marketplaceManagement/rule/index.vue')
-            },
-            {
-                access: 6113,
-                meta: 6113,
-                path: 'person_target_index',
-                title: '销售目标管理',
-                name: 'person_target_index',
-                component: () => import( /* webpackChunkName: "person_target_index" */ '@/views/marketplaceManagement/personTarget/index.vue')
-            },
-            {
-                access: 6115,
-                meta: 6115,
-                path: 'statistics',
-                title: '销售统计',
-                name: "statistics_index",
-                component: () => import( /* webpackChunkName: "statistics_index" */ '@/views/marketplaceManagement/statistics/index.vue')
-            },
-            {
-                access: 11609,
-                meta: 11609,
-                path: 'clueControl',
-                title: '公海池控制',
-                name: "clueControl_index",
-                component: () => import( /* webpackChunkName: "clueControl_index" */ '@/views/marketplaceManagement/clueControl/index.vue')
-            }
+            access: 6111,
+            meta: 6111,
+            path: 'customerFollowUp',
+            title: '跟进记录管理',
+            name: 'customerFollowUp_index',
+            component: () => import( /* webpackChunkName: "customerFollowUp_index" */ '@/views/marketplaceManagement/followUpData/followUpdata.vue')
+        },
+        {
+            access: 6112,
+            meta: 6112,
+            path: 'market_rule_index',
+            title: '销售规则管理',
+            name: 'market_rule_index',
+            component: () => import( /* webpackChunkName: "market_rule_index" */ '@/views/marketplaceManagement/rule/index.vue')
+        },
+        {
+            access: 6113,
+            meta: 6113,
+            path: 'person_target_index',
+            title: '销售目标管理',
+            name: 'person_target_index',
+            component: () => import( /* webpackChunkName: "person_target_index" */ '@/views/marketplaceManagement/personTarget/index.vue')
+        },
+        {
+            access: 6115,
+            meta: 6115,
+            path: 'statistics',
+            title: '销售统计',
+            name: "statistics_index",
+            component: () => import( /* webpackChunkName: "statistics_index" */ '@/views/marketplaceManagement/statistics/index.vue')
+        },
+        {
+            access: 11609,
+            meta: 11609,
+            path: 'clueControl',
+            title: '公海池控制',
+            name: "clueControl_index",
+            component: () => import( /* webpackChunkName: "clueControl_index" */ '@/views/marketplaceManagement/clueControl/index.vue')
+        }
         ]
     },
     {
@@ -423,29 +423,37 @@ export const appRouter = [
         title: '渠道管理',
         component: Main,
         children: [{
-                access: 6006,
-                meta: 6006,
-                path: 'channelCustomer',
-                title: '渠道客户管理',
-                name: 'channelCustomer_index',
-                component: () => import( /* webpackChunkName: "channelCustomer_index" */ '@/views/channelManagement/channelCustomer/channelCustomer.vue')
-            },
-            {
-                access: 6007,
-                meta: 6007,
-                path: 'channelType',
-                title: '渠道类型管理',
-                name: 'channelType_index',
-                component: () => import( /* webpackChunkName: "channelType_index" */ '@/views/channelManagement/channelType/channelType_index.vue')
-            },
-            {
-                access: 6008,
-                meta: 6008,
-                path: 'transactionRecord',
-                title: '交易查询',
-                name: 'transactionRecord_index',
-                component: () => import( /* webpackChunkName: "transactionRecord_index" */ '@/views/channelManagement/transactionRecord/transactionRecord.vue')
-            },
+            access: 6006,
+            meta: 6006,
+            path: 'channelCustomer',
+            title: '渠道客户管理',
+            name: 'channelCustomer_index',
+            component: () => import( /* webpackChunkName: "channelCustomer_index" */ '@/views/channelManagement/channelCustomer/channelCustomer.vue')
+        },
+        {
+            access: 6007,
+            meta: 6007,
+            path: 'channelType',
+            title: '渠道类型管理',
+            name: 'channelType_index',
+            component: () => import( /* webpackChunkName: "channelType_index" */ '@/views/channelManagement/channelType/channelType_index.vue')
+        },
+        {
+            access: 6008,
+            meta: 6008,
+            path: 'transactionRecord',
+            title: '交易查询',
+            name: 'transactionRecord_index',
+            component: () => import( /* webpackChunkName: "transactionRecord_index" */ '@/views/channelManagement/transactionRecord/transactionRecord.vue')
+        },
+        {
+            access: 6009,
+            meta: 6009,
+            path: 'parkManagement',
+            title: '园区内容管理',
+            name: 'parkManagement_index',
+            component: () => import( /* webpackChunkName: "parkManagement_index" */ '@/views/channelManagement/parkManagement/parkManagement.vue')
+        },
         ]
     },
     {
@@ -457,29 +465,29 @@ export const appRouter = [
         title: '线索库',
         component: Main,
         children: [{
-                access: 6010,
-                meta: 6010,
-                path: 'cluesLibraryM',
-                title: '线索库管理',
-                name: 'cluesLibrary_index',
-                component: () => import( /* webpackChunkName: "cluesLibrary_index" */ '@/views/cluesLibrary/cluesLibraryTable/cluesLibrary_table.vue')
-            },
-            {
-                access: 6011,
-                meta: 6011,
-                path: 'cluesLabels',
-                title: '线索标签管理',
-                name: 'cluesLabels_index',
-                component: () => import( /* webpackChunkName: "cluesLabels_index" */ '@/views/cluesLibrary/cluesLabelManagement/cluesLabels.vue')
-            },
-            {
-                access: 6099,
-                meta: 6099,
-                path: 'cluelibrarytemplate',
-                title: '线索模板',
-                name: 'clueLibraryTemplate_index',
-                component: () => import( /* webpackChunkName: "clueLibraryTemplate_index" */ '@/views/cluesLibrary/clueLibraryTemplate/index.vue')
-            },
+            access: 6010,
+            meta: 6010,
+            path: 'cluesLibraryM',
+            title: '线索库管理',
+            name: 'cluesLibrary_index',
+            component: () => import( /* webpackChunkName: "cluesLibrary_index" */ '@/views/cluesLibrary/cluesLibraryTable/cluesLibrary_table.vue')
+        },
+        {
+            access: 6011,
+            meta: 6011,
+            path: 'cluesLabels',
+            title: '线索标签管理',
+            name: 'cluesLabels_index',
+            component: () => import( /* webpackChunkName: "cluesLabels_index" */ '@/views/cluesLibrary/cluesLabelManagement/cluesLabels.vue')
+        },
+        {
+            access: 6099,
+            meta: 6099,
+            path: 'cluelibrarytemplate',
+            title: '线索模板',
+            name: 'clueLibraryTemplate_index',
+            component: () => import( /* webpackChunkName: "clueLibraryTemplate_index" */ '@/views/cluesLibrary/clueLibraryTemplate/index.vue')
+        },
         ]
     },
     {
@@ -491,53 +499,53 @@ export const appRouter = [
         title: '客服管理',
         component: Main,
         children: [{
-                access: 6048,
-                path: 'complaintcenter',
-                title: '投诉管理',
-                meta: 6048,
-                name: 'complaintcenter_index',
-                component: () => import( /* webpackChunkName: "complaintcenter_index" */ '@/views/customerService/complaintCenter/complaintcenter_index.vue')
-            },
-            {
-                path: 'returnVisit',
-                access: 6061,
-                meta: 6061,
-                title: '客户回访',
-                name: 'returnVisit_index',
-                component: () => import( /* webpackChunkName: "complaintcenter" */ '@/views/customerService/returnVisit/table/returnVisit_table.vue')
-            },
-            {
-                path: 'returnWorkOrder',
-                access: 6100,
-                meta: 6100,
-                title: '完结工单回访',
-                name: 'returnWorkOrder_index',
-                component: () => import( /* webpackChunkName: "complaintcenter" */ '@/views/customerService/returnWorkOrder/table/returnVisit_table.vue')
-            },
-            {
-                path: 'offlineCustomer',
-                access: 6062,
-                meta: 6062,
-                title: '下线客户',
-                name: 'offlineCustomer_index',
-                component: () => import( /* webpackChunkName: "complaintcenter" */ '@/views/customerService/offlineCustomer/table/offline_index.vue')
-            },
-            {
-                path: 'offlineCustomerApproval',
-                access: 11625,
-                meta: 11625,
-                title: '下线客户审批',
-                name: 'offlineCustomerApproval_index',
-                component: () => import( /* webpackChunkName: "complaintcenter" */ '@/views/customerService/offlineCustomerApproval/index.vue')
-            },
-            {
-                access: 11613,
-                path: 'customerRate',
-                title: '客户评价',
-                meta: 11613,
-                name: 'customerRate_index',
-                component: () => import( /* webpackChunkName: "complaintcenter_index" */ '@/views/customerService/customerRate/index.vue')
-            },
+            access: 6048,
+            path: 'complaintcenter',
+            title: '投诉管理',
+            meta: 6048,
+            name: 'complaintcenter_index',
+            component: () => import( /* webpackChunkName: "complaintcenter_index" */ '@/views/customerService/complaintCenter/complaintcenter_index.vue')
+        },
+        {
+            path: 'returnVisit',
+            access: 6061,
+            meta: 6061,
+            title: '客户回访',
+            name: 'returnVisit_index',
+            component: () => import( /* webpackChunkName: "complaintcenter" */ '@/views/customerService/returnVisit/table/returnVisit_table.vue')
+        },
+        {
+            path: 'returnWorkOrder',
+            access: 6100,
+            meta: 6100,
+            title: '完结工单回访',
+            name: 'returnWorkOrder_index',
+            component: () => import( /* webpackChunkName: "complaintcenter" */ '@/views/customerService/returnWorkOrder/table/returnVisit_table.vue')
+        },
+        {
+            path: 'offlineCustomer',
+            access: 6062,
+            meta: 6062,
+            title: '下线客户',
+            name: 'offlineCustomer_index',
+            component: () => import( /* webpackChunkName: "complaintcenter" */ '@/views/customerService/offlineCustomer/table/offline_index.vue')
+        },
+        {
+            path: 'offlineCustomerApproval',
+            access: 11625,
+            meta: 11625,
+            title: '下线客户审批',
+            name: 'offlineCustomerApproval_index',
+            component: () => import( /* webpackChunkName: "complaintcenter" */ '@/views/customerService/offlineCustomerApproval/index.vue')
+        },
+        {
+            access: 11613,
+            path: 'customerRate',
+            title: '客户评价',
+            meta: 11613,
+            name: 'customerRate_index',
+            component: () => import( /* webpackChunkName: "complaintcenter_index" */ '@/views/customerService/customerRate/index.vue')
+        },
         ]
     },
     {
@@ -548,40 +556,40 @@ export const appRouter = [
         title: '产品管理',
         component: Main,
         children: [{
-                access: 6013,
-                path: 'productList',
-                title: '产品列表',
-                name: 'productList_index',
-                component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/productListNew/index.vue')
-            },
-            {
-                access: 6014,
-                path: 'productType',
-                title: '产品类型',
-                name: 'productType_index',
-                component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/productTypeNew/index.vue')
-            },
-            {
-                access: 6015,
-                path: 'productAttrList',
-                title: '属性管理',
-                name: 'productAttrList_index',
-                component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/productAttrList/index.vue')
-            },
-            {
-                access: 11618,
-                path: 'productProcess',
-                title: '产品流程',
-                name: 'productProcess_index',
-                component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/productProcess/index.vue')
-            },
-            {
-                access: 11619,
-                path: 'flowChart',
-                title: '流程图',
-                name: 'flowChart_index',
-                component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/flowChart/index.vue')
-            }
+            access: 6013,
+            path: 'productList',
+            title: '产品列表',
+            name: 'productList_index',
+            component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/productListNew/index.vue')
+        },
+        {
+            access: 6014,
+            path: 'productType',
+            title: '产品类型',
+            name: 'productType_index',
+            component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/productTypeNew/index.vue')
+        },
+        {
+            access: 6015,
+            path: 'productAttrList',
+            title: '属性管理',
+            name: 'productAttrList_index',
+            component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/productAttrList/index.vue')
+        },
+        {
+            access: 11618,
+            path: 'productProcess',
+            title: '产品流程',
+            name: 'productProcess_index',
+            component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/productProcess/index.vue')
+        },
+        {
+            access: 11619,
+            path: 'flowChart',
+            title: '流程图',
+            name: 'flowChart_index',
+            component: () => import( /* webpackChunkName: "productList" */ '@/views/productManagement/flowChart/index.vue')
+        }
             // 此部分已由iview-area代替
             // {
             //     access: 6016,
@@ -600,70 +608,70 @@ export const appRouter = [
         title: '订单管理',
         component: Main,
         children: [{
-                meta: 6018,
-                access: 6018,
-                path: 'orderList',
-                title: '订单列表',
-                name: 'orderList_index',
-                component: () => import( /* webpackChunkName: "orderList_index" */ '@/views/order/orderList/orderListIndex.vue')
-            },
-            {
-                access: 6019,
-                meta: 6019,
-                path: 'orderApprove',
-                title: '订单审批',
-                name: 'orderApprove_index',
-                component: () => import( /* webpackChunkName: "orderApprove_index" */ '@/views/order/orderApprove/index.vue')
-            },
-            // 重构版异常工单（已废弃，可以参考；不推荐项目现有写法）
-            // {
-            //     access: 6019,
-            //     meta: 6019,
-            //     path: 'errorWorkOrder',
-            //     title: '异常工单',
-            //     name: 'errorWorkOrder_index',
-            //     component: () => import( /* webpackChunkName: "errorWorkOrder_index" */ '@/views/order/errorWorkOrder/index.vue')
-            // },
-            // {
-            //     access: 6019,
-            //     meta: 6019,
-            //     path: 'errorWorkOrderApprove',
-            //     title: '异常审批',
-            //     name: 'errorWorkOrderApprove_index',
-            //     component: () => import( /* webpackChunkName: "errorWorkOrder_index" */ '@/views/order/errorWorkOrderApprove/index.vue')
-            // },
-            {
-                access: 6020,
-                meta: 6020,
-                path: 'spareManagement',
-                title: '余款管理',
-                name: 'spareManagement_index',
-                component: () => import( /* webpackChunkName: "spareManagement_index" */ '@/views/order/spareManagement/spareManagement.vue')
-            },
-            {
-                access: 11602,
-                meta: 11602,
-                path: 'invoiceManagement',
-                title: '发票管理',
-                name: "invoicelist_index",
-                component: () => import( /* webpackChunkName: "invoicelist_index" */ '@/views/order/invoiceManagement/index.vue')
-            },
-            {
-                access:11622,
-                meta: 11622,
-                path: 'abnormalOrderList',
-                title: '异常工单',
-                name: "abnormalOrderList_index",
-                component: () => import( /* webpackChunkName: "abnormalOrderList_index" */ '@/views/order/abnormalOrderList/index.vue')
-            },
-            {
-                access:11623,
-                meta: 11623,
-                path: 'abOrderApprove',
-                title: '异常审批',
-                name: "abOrderApprove_index",
-                component: () => import( /* webpackChunkName: "abOrderApprove_index" */ '@/views/order/abOrderApprove/index.vue')
-            }
+            meta: 6018,
+            access: 6018,
+            path: 'orderList',
+            title: '订单列表',
+            name: 'orderList_index',
+            component: () => import( /* webpackChunkName: "orderList_index" */ '@/views/order/orderList/orderListIndex.vue')
+        },
+        {
+            access: 6019,
+            meta: 6019,
+            path: 'orderApprove',
+            title: '订单审批',
+            name: 'orderApprove_index',
+            component: () => import( /* webpackChunkName: "orderApprove_index" */ '@/views/order/orderApprove/index.vue')
+        },
+        // 重构版异常工单（已废弃，可以参考；不推荐项目现有写法）
+        // {
+        //     access: 6019,
+        //     meta: 6019,
+        //     path: 'errorWorkOrder',
+        //     title: '异常工单',
+        //     name: 'errorWorkOrder_index',
+        //     component: () => import( /* webpackChunkName: "errorWorkOrder_index" */ '@/views/order/errorWorkOrder/index.vue')
+        // },
+        // {
+        //     access: 6019,
+        //     meta: 6019,
+        //     path: 'errorWorkOrderApprove',
+        //     title: '异常审批',
+        //     name: 'errorWorkOrderApprove_index',
+        //     component: () => import( /* webpackChunkName: "errorWorkOrder_index" */ '@/views/order/errorWorkOrderApprove/index.vue')
+        // },
+        {
+            access: 6020,
+            meta: 6020,
+            path: 'spareManagement',
+            title: '余款管理',
+            name: 'spareManagement_index',
+            component: () => import( /* webpackChunkName: "spareManagement_index" */ '@/views/order/spareManagement/spareManagement.vue')
+        },
+        {
+            access: 11602,
+            meta: 11602,
+            path: 'invoiceManagement',
+            title: '发票管理',
+            name: "invoicelist_index",
+            component: () => import( /* webpackChunkName: "invoicelist_index" */ '@/views/order/invoiceManagement/index.vue')
+        },
+        {
+            access: 11622,
+            meta: 11622,
+            path: 'abnormalOrderList',
+            title: '异常工单',
+            name: "abnormalOrderList_index",
+            component: () => import( /* webpackChunkName: "abnormalOrderList_index" */ '@/views/order/abnormalOrderList/index.vue')
+        },
+        {
+            access: 11623,
+            meta: 11623,
+            path: 'abOrderApprove',
+            title: '异常审批',
+            name: "abOrderApprove_index",
+            component: () => import( /* webpackChunkName: "abOrderApprove_index" */ '@/views/order/abOrderApprove/index.vue')
+        }
             // {
             //     access:6020,
             //     path: 'orderLog',
@@ -708,34 +716,34 @@ export const appRouter = [
         name: 'commercialManagement',
         component: Main,
         children: [{
-                access: 6049,
-                meta: 6049,
-                path: "bussiness/allot",
-                redirect: {
-                    name: "allot",
-                    params: {
-                        depart: "BUSSINESS"
-                    }
-                },
-                title: '工单分配',
-                name: "allotBussinessWorkOrder",
+            access: 6049,
+            meta: 6049,
+            path: "bussiness/allot",
+            redirect: {
+                name: "allot",
+                params: {
+                    depart: "BUSSINESS"
+                }
             },
-            {
-                access: 6038,
-                meta: 6038,
-                path: 'mycommontaskmanagement',
-                title: '工单管理',
-                name: 'commercialTaskManagement',
-                component: () => import( /* webpackChunkName: "commercialTaskManagement" */ '@/views/commercialManagement/myCommonTask/myCommonTask_table.vue')
-            },
-            {
-                access: 6038,
-                meta: 6038,
-                path: 'schedule',
-                title: '商事排程表',
-                name: 'newSchedule',
-                component: () => import( /* webpackChunkName: "newSchedule" */ '@/views/commercialManagement/newSchedule/index.vue')
-            }
+            title: '工单分配',
+            name: "allotBussinessWorkOrder",
+        },
+        {
+            access: 6038,
+            meta: 6038,
+            path: 'mycommontaskmanagement',
+            title: '工单管理',
+            name: 'commercialTaskManagement',
+            component: () => import( /* webpackChunkName: "commercialTaskManagement" */ '@/views/commercialManagement/myCommonTask/myCommonTask_table.vue')
+        },
+        {
+            access: 6038,
+            meta: 6038,
+            path: 'schedule',
+            title: '商事排程表',
+            name: 'newSchedule',
+            component: () => import( /* webpackChunkName: "newSchedule" */ '@/views/commercialManagement/newSchedule/index.vue')
+        }
         ]
     },
     {
@@ -768,14 +776,14 @@ export const appRouter = [
                 title: '工单管理',
                 name: 'plantaskmanagement',
                 component: () => import( /* webpackChunkName: "plantaskmanagement" */ '@/views/planManagement/myCommonTask/myCommonTask_table.vue')
-            },{
+            }, {
                 access: 11637,
                 meta: 11637,
                 path: 'planreceiptdetail',
                 title: '收款明细',
                 name: 'planreceiptdetail',
                 component: () => import( /* webpackChunkName: "plantaskmanagement" */ '@/views/planManagement/receiptDetail/receipt_detail_index.vue')
-             }
+            }
         ]
     },
     {
@@ -787,78 +795,78 @@ export const appRouter = [
         title: '会计管理',
         component: Main,
         children: [{
-                access: 6050,
-                meta: 6050,
-                path: "plan/allot",
-                redirect: {
-                    name: "allot",
-                    params: {
-                        depart: "ACCOUNT"
-                    }
-                },
-                title: '工单分配',
-                name: "allotAccountWorkOrder",
+            access: 6050,
+            meta: 6050,
+            path: "plan/allot",
+            redirect: {
+                name: "allot",
+                params: {
+                    depart: "ACCOUNT"
+                }
+            },
+            title: '工单分配',
+            name: "allotAccountWorkOrder",
 
-            },
-            {
-                access: 6043,
-                meta: 6043,
-                path: 'accounttaskmanagement',
-                title: '工单管理',
-                name: 'accounttaskmanagement_index',
-                component: () => import( /* webpackChunkName: "accounttaskmanagement_index" */ '@/views/accountantWorkOrder/myCommonTask/myCommonTask_table.vue')
-            },
-            {
-                access: 6044,
-                meta: 6044,
-                path: 'BookkeepingAgency',
-                title: '代理记账管理',
-                name: 'BookkeepingAgency_index',
-                component: () => import( /* webpackChunkName: "BookkeepingAgency_index" */ '@/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgency.vue')
-            },
-			{
-			    access: 11629,
-			    meta: 11629,
-			    path: 'expireCustomer',
-			    title: '到期客户管理',
-			    name: 'expireCustomer_index',
-			    component: () => import( /* webpackChunkName: "BookkeepingAgency_index" */ '@/views/accountantWorkOrder/expireCustomer/expireCustomer.vue')
-			},
-            {
-                access: 6046,
-                meta: 6046,
-                path: 'accountantOrder',
-                title: '会计到家工单管理',
-                name: 'accountantOrder_index',
-                component: () => import( /* webpackChunkName: "accountantOrder_index" */ '@/views/accountantWorkOrder/accountantOrder/accountantOrder.vue')
-            },
-            {
-                access: 6047,
-                meta: 6047,
-                path: 'serviceTemplate',
-                title: '服务总结模板',
-                name: 'serviceTemplate_index',
-                component: () => import( /* webpackChunkName: "serviceTemplate_index" */ '@/views/accountantWorkOrder/serviceTemplate/serviceTemplate.vue')
-            },
-            {
-                access: 6053,
-                meta: 6053,
-                path: 'auditaccount',
-                title: '审账',
-                name: 'auditaccount_index',
-                component: () => import( /* webpackChunkName: "auditaccount_index" */ '@/views/accountantWorkOrder/auditaccount/auditaccount.vue')
-            },
-            {
-                access: 6054,
-                meta: 6054,
-                path: 'auditaccountrule',
-                title: '审账规则',
-                name: 'auditaccount_rule',
-                component: () => import( /* webpackChunkName: "auditaccount_rule" */ '@/views/accountantWorkOrder/auditaccountrule/auditaccount_rule.vue')
-            },
+        },
+        {
+            access: 6043,
+            meta: 6043,
+            path: 'accounttaskmanagement',
+            title: '工单管理',
+            name: 'accounttaskmanagement_index',
+            component: () => import( /* webpackChunkName: "accounttaskmanagement_index" */ '@/views/accountantWorkOrder/myCommonTask/myCommonTask_table.vue')
+        },
+        {
+            access: 6044,
+            meta: 6044,
+            path: 'BookkeepingAgency',
+            title: '代理记账管理',
+            name: 'BookkeepingAgency_index',
+            component: () => import( /* webpackChunkName: "BookkeepingAgency_index" */ '@/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgency.vue')
+        },
+        {
+            access: 11629,
+            meta: 11629,
+            path: 'expireCustomer',
+            title: '到期客户管理',
+            name: 'expireCustomer_index',
+            component: () => import( /* webpackChunkName: "BookkeepingAgency_index" */ '@/views/accountantWorkOrder/expireCustomer/expireCustomer.vue')
+        },
+        {
+            access: 6046,
+            meta: 6046,
+            path: 'accountantOrder',
+            title: '会计到家工单管理',
+            name: 'accountantOrder_index',
+            component: () => import( /* webpackChunkName: "accountantOrder_index" */ '@/views/accountantWorkOrder/accountantOrder/accountantOrder.vue')
+        },
+        {
+            access: 6047,
+            meta: 6047,
+            path: 'serviceTemplate',
+            title: '服务总结模板',
+            name: 'serviceTemplate_index',
+            component: () => import( /* webpackChunkName: "serviceTemplate_index" */ '@/views/accountantWorkOrder/serviceTemplate/serviceTemplate.vue')
+        },
+        {
+            access: 6053,
+            meta: 6053,
+            path: 'auditaccount',
+            title: '审账',
+            name: 'auditaccount_index',
+            component: () => import( /* webpackChunkName: "auditaccount_index" */ '@/views/accountantWorkOrder/auditaccount/auditaccount.vue')
+        },
+        {
+            access: 6054,
+            meta: 6054,
+            path: 'auditaccountrule',
+            title: '审账规则',
+            name: 'auditaccount_rule',
+            component: () => import( /* webpackChunkName: "auditaccount_rule" */ '@/views/accountantWorkOrder/auditaccountrule/auditaccount_rule.vue')
+        },
         {
             access: 11630,
-                meta: 11630,
+            meta: 11630,
             path: 'cancelWorkOrder_index',
             title: '注销工单',
             name: 'cancelWorkOrder',
@@ -876,21 +884,21 @@ export const appRouter = [
         title: '电子税务局',
         component: Main,
         children: [{
-                access: 11611,
-                meta: 11611,
-                path: 'taxResult',
-                title: '申报情况',
-                name: "taxResult",
-                component: () => import( /* webpackChunkName: "taxResult" */ '@/views/etax/etaxResult/index.vue')
-            },
-            {
-                access: 11612,
-                meta: 11612,
-                path: 'etaxAccount',
-                title: '账号管理',
-                name: "etaxAccount",
-                component: () => import( /* webpackChunkName: "etaxAccount" */ '@/views/etax/etaxAccount/index.vue')
-            }
+            access: 11611,
+            meta: 11611,
+            path: 'taxResult',
+            title: '申报情况',
+            name: "taxResult",
+            component: () => import( /* webpackChunkName: "taxResult" */ '@/views/etax/etaxResult/index.vue')
+        },
+        {
+            access: 11612,
+            meta: 11612,
+            path: 'etaxAccount',
+            title: '账号管理',
+            name: "etaxAccount",
+            component: () => import( /* webpackChunkName: "etaxAccount" */ '@/views/etax/etaxAccount/index.vue')
+        }
         ]
     },
     {
@@ -902,26 +910,26 @@ export const appRouter = [
         title: '审计管理',
         component: Main,
         children: [{
-                access: 6072,
-                meta: 6072,
-                path: "plan/allot",
-                redirect: {
-                    name: "allot",
-                    params: {
-                        depart: "AUDIT"
-                    }
-                },
-                title: '工单分配',
-                name: "allotAuditWorkOrder",
+            access: 6072,
+            meta: 6072,
+            path: "plan/allot",
+            redirect: {
+                name: "allot",
+                params: {
+                    depart: "AUDIT"
+                }
             },
-            {
-                access: 6073,
-                meta: 6073,
-                path: 'audittaskmanagement',
-                title: '工单管理',
-                name: "audittaskmanagement_index",
-                component: () => import( /* webpackChunkName: "audittaskmanagement_index" */ '@/views/auditManagement/myCommonTask/myCommonTask_table.vue')
-            },
+            title: '工单分配',
+            name: "allotAuditWorkOrder",
+        },
+        {
+            access: 6073,
+            meta: 6073,
+            path: 'audittaskmanagement',
+            title: '工单管理',
+            name: "audittaskmanagement_index",
+            component: () => import( /* webpackChunkName: "audittaskmanagement_index" */ '@/views/auditManagement/myCommonTask/myCommonTask_table.vue')
+        },
         ]
     },
     {
@@ -933,53 +941,53 @@ export const appRouter = [
         meta: 6091,
         component: Main,
         children: [{
-                access: 6092,
-                meta: 6092,
-                path: "plan/allot",
-                redirect: {
-                    name: "allot",
-                    params: {
-                        depart: "EXECUTIVE"
-                    }
-                },
-                title: '工单分配',
-                name: "allotExecutiveWorkOrder",
+            access: 6092,
+            meta: 6092,
+            path: "plan/allot",
+            redirect: {
+                name: "allot",
+                params: {
+                    depart: "EXECUTIVE"
+                }
             },
-            {
-                access: 6093,
-                meta: 6093,
-                path: 'administratiotaskmanagement',
-                title: '工单管理',
-                name: "administratiotaskmanagement",
-                component: () => import( /* webpackChunkName: "audittaskmanagement_index" */ '@/views/administrationManagement/myCommonTask/index.vue')
-            },
-            {
-                access: 6094,
-                meta: 6094,
-                path: 'clockin',
-                title: '考勤管理',
-                name: "clockin_index",
-                component: () => import( /* webpackChunkName: "clockin_index" */ '@/views/administrationManagement/clockIn/index.vue')
-            },
-            // 待开发
-            // {
-            //     access: 6095,
-            //     meta: 6095,
-            //     path: 'marketPerformance',
-            //     title: '市场绩效',
-            //     name:"marketPerformance_index",
-            //     component: resolve => {
-            //         require(['@/views/administrationManagement/marketPerformance/index.vue'], resolve);
-            //     }
-            // },
-            {
-                access: 6096,
-                meta: 6096,
-                path: 'resumeManagement',
-                title: '简历管理',
-                name: "resumeManagement_index",
-                component: () => import( /* webpackChunkName: "resumeManagement_index" */ '@/views/administrationManagement/resumeManagement/index.vue')
-            },
+            title: '工单分配',
+            name: "allotExecutiveWorkOrder",
+        },
+        {
+            access: 6093,
+            meta: 6093,
+            path: 'administratiotaskmanagement',
+            title: '工单管理',
+            name: "administratiotaskmanagement",
+            component: () => import( /* webpackChunkName: "audittaskmanagement_index" */ '@/views/administrationManagement/myCommonTask/index.vue')
+        },
+        {
+            access: 6094,
+            meta: 6094,
+            path: 'clockin',
+            title: '考勤管理',
+            name: "clockin_index",
+            component: () => import( /* webpackChunkName: "clockin_index" */ '@/views/administrationManagement/clockIn/index.vue')
+        },
+        // 待开发
+        // {
+        //     access: 6095,
+        //     meta: 6095,
+        //     path: 'marketPerformance',
+        //     title: '市场绩效',
+        //     name:"marketPerformance_index",
+        //     component: resolve => {
+        //         require(['@/views/administrationManagement/marketPerformance/index.vue'], resolve);
+        //     }
+        // },
+        {
+            access: 6096,
+            meta: 6096,
+            path: 'resumeManagement',
+            title: '简历管理',
+            name: "resumeManagement_index",
+            component: () => import( /* webpackChunkName: "resumeManagement_index" */ '@/views/administrationManagement/resumeManagement/index.vue')
+        },
         ]
     },
     {
@@ -1034,13 +1042,13 @@ export const appRouter = [
             component: () => import( /* webpackChunkName: "commonfieldmanagement_index" */ '@/views/fieldManagement/commonfield/commonFieldIndex.vue')
         },
         {
-        access: 11638,
+            access: 11638,
             meta: 11638,
-        path: 'v2/legwork',
-        title: '外勤管理v2',
-        name: "legwork",
-        component: () => import( /* webpackChunkName: "commonfieldmanagement_index" */ '@/views/fieldManagement/v2/legwork.vue')
-       },
+            path: 'v2/legwork',
+            title: '外勤管理v2',
+            name: "legwork",
+            component: () => import( /* webpackChunkName: "commonfieldmanagement_index" */ '@/views/fieldManagement/v2/legwork.vue')
+        },
         {
             access: 11627,
             meta: 11627,
@@ -1059,21 +1067,21 @@ export const appRouter = [
         title: '系统反馈',
         component: Main,
         children: [{
-                access: 6081,
-                meta: 6081,
-                path: 'complainAndAdvice',
-                title: '意见管理',
-                name: 'complainAndAdvice_index',
-                component: () => import( /* webpackChunkName: "complainAndAdvice_index" */ '@/views/stystemComplain/complainAndAdvice/complainAndAdvice.vue')
-            },
-            {
-                access: 6082,
-                meta: 6082,
-                path: 'complainReply',
-                title: '反馈回复',
-                name: 'complainReply_index',
-                component: () => import( /* webpackChunkName: "complainReply_index" */ '@/views/stystemComplain/complainReply/complainReply.vue')
-            }
+            access: 6081,
+            meta: 6081,
+            path: 'complainAndAdvice',
+            title: '意见管理',
+            name: 'complainAndAdvice_index',
+            component: () => import( /* webpackChunkName: "complainAndAdvice_index" */ '@/views/stystemComplain/complainAndAdvice/complainAndAdvice.vue')
+        },
+        {
+            access: 6082,
+            meta: 6082,
+            path: 'complainReply',
+            title: '反馈回复',
+            name: 'complainReply_index',
+            component: () => import( /* webpackChunkName: "complainReply_index" */ '@/views/stystemComplain/complainReply/complainReply.vue')
+        }
         ]
     },
     {
@@ -1102,22 +1110,22 @@ export const appRouter = [
         name: 'solutionTool',
         component: Main,
         children: [{
-                access: 6141,
-                meta: 6141,
-                path: 'useRecord',
-                title: '使用记录',
-                name: 'useRecord_index',
-                component: () => import( /* webpackChunkName: "useRecord_index" */ '@/views/solutionTool/useRecord/index.vue')
+            access: 6141,
+            meta: 6141,
+            path: 'useRecord',
+            title: '使用记录',
+            name: 'useRecord_index',
+            component: () => import( /* webpackChunkName: "useRecord_index" */ '@/views/solutionTool/useRecord/index.vue')
 
-            },
-            {
-                access: 11601,
-                meta: 11601,
-                path: 'product',
-                title: '方案产品',
-                name: 'tool_product_index',
-                component: () => import( /* webpackChunkName: "tool_product_index" */ '@/views/solutionTool/tools/index.vue')
-            },
+        },
+        {
+            access: 11601,
+            meta: 11601,
+            path: 'product',
+            title: '方案产品',
+            name: 'tool_product_index',
+            component: () => import( /* webpackChunkName: "tool_product_index" */ '@/views/solutionTool/tools/index.vue')
+        },
         ]
     },
     /**
@@ -1133,101 +1141,101 @@ export const appRouter = [
         title: '系统管理',
         component: Main,
         children: [{
-                access: 6029,
-                meta: 6029,
-                path: 'menuMangement',
-                title: '菜单管理',
-                name: 'menuMangement_index',
-                component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/menuManagement/index.vue')
-            },
-			{
-				access: 11628,
-				meta: 11628,
-				path: 'serveMangement',
-				title: '服务管理',
-				name: 'serveMangement_index',
-				component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/serveManagement/index.vue')
-			},
-            {
-                access: 6030,
-                meta: 6030,
-                path: 'roleMangement',
-                title: '角色管理',
-                name: 'roleMangement_index',
-                component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/roleManagement/roleM_index.vue')
-            },
-            {
-                access: 6031,
-                meta: 6031,
-                path: 'userManagement',
-                title: '用户管理',
-                name: 'userManagement_index',
-                component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/userManagement/userM_index.vue')
-            },
-            {
-                access: 6031,
-                meta: 6031,
-                path: 'departManagement',
-                title: '部门管理',
-                name: 'departManagement_index',
-                component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/departManagement/index.vue')
-            },
-            {
-                access: 6032,
-                meta: 6032,
-                path: 'sqlDeal',
-                title: 'SQL管理',
-                name: 'admin_sql_deal',
-                component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/sql_admin/main.vue')
-            },
-            {
-                access: 11620,
-                meta: 11620,
-                path: 'wechatTemplate',
-                title: '信息模板',
-                name: 'wechatTemplate_index',
-                component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/wechatTemplate/index.vue')
-            },
-            {
-                access: 11621,
-                meta: 11621,
-                path: 'smsRuleManagement',
-                title: '短信规则',
-                name: 'smsRuleManagement_index',
-                component: () => import(/* webpackChunkName: "systemManagement" */ '@/views/systemManagement/smsRuleManagement/index.vue')
-            },
-            {
-                access: 6085,
-                meta: 6085,
-                path: 'datacenterManagement',
-                title: '数据字典',
-                name: 'datacenterManagement_index',
-                component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/dataCenterManagement/dataCenterManagement_index.vue')
-            },
-            {
-                access: 6033,
-                meta: 6033,
-                path: 'systemparamsManagement',
-                title: '系统参数',
-                name: 'systemparamsManagement_index',
-                component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/systemparamsManagement/systemparamsManagement_index.vue')
-            },
-            {
-                access: 6034,
-                meta: 6034,
-                path: 'timetaskManagement',
-                title: '定时任务',
-                name: 'timetaskManagement',
-                component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/timetaskManagement/timetaskManagement_index.vue')
-            },
-            {
-                access: 6086,
-                meta: 6086,
-                path: 'attributeManagement',
-                title: '属性管理',
-                name: 'attributeManagement',
-                component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/attributeManagement/attributeManagement_index.vue')
-            },
+            access: 6029,
+            meta: 6029,
+            path: 'menuMangement',
+            title: '菜单管理',
+            name: 'menuMangement_index',
+            component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/menuManagement/index.vue')
+        },
+        {
+            access: 11628,
+            meta: 11628,
+            path: 'serveMangement',
+            title: '服务管理',
+            name: 'serveMangement_index',
+            component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/serveManagement/index.vue')
+        },
+        {
+            access: 6030,
+            meta: 6030,
+            path: 'roleMangement',
+            title: '角色管理',
+            name: 'roleMangement_index',
+            component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/roleManagement/roleM_index.vue')
+        },
+        {
+            access: 6031,
+            meta: 6031,
+            path: 'userManagement',
+            title: '用户管理',
+            name: 'userManagement_index',
+            component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/userManagement/userM_index.vue')
+        },
+        {
+            access: 6031,
+            meta: 6031,
+            path: 'departManagement',
+            title: '部门管理',
+            name: 'departManagement_index',
+            component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/departManagement/index.vue')
+        },
+        {
+            access: 6032,
+            meta: 6032,
+            path: 'sqlDeal',
+            title: 'SQL管理',
+            name: 'admin_sql_deal',
+            component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/sql_admin/main.vue')
+        },
+        {
+            access: 11620,
+            meta: 11620,
+            path: 'wechatTemplate',
+            title: '信息模板',
+            name: 'wechatTemplate_index',
+            component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/wechatTemplate/index.vue')
+        },
+        {
+            access: 11621,
+            meta: 11621,
+            path: 'smsRuleManagement',
+            title: '短信规则',
+            name: 'smsRuleManagement_index',
+            component: () => import(/* webpackChunkName: "systemManagement" */ '@/views/systemManagement/smsRuleManagement/index.vue')
+        },
+        {
+            access: 6085,
+            meta: 6085,
+            path: 'datacenterManagement',
+            title: '数据字典',
+            name: 'datacenterManagement_index',
+            component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/dataCenterManagement/dataCenterManagement_index.vue')
+        },
+        {
+            access: 6033,
+            meta: 6033,
+            path: 'systemparamsManagement',
+            title: '系统参数',
+            name: 'systemparamsManagement_index',
+            component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/systemparamsManagement/systemparamsManagement_index.vue')
+        },
+        {
+            access: 6034,
+            meta: 6034,
+            path: 'timetaskManagement',
+            title: '定时任务',
+            name: 'timetaskManagement',
+            component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/timetaskManagement/timetaskManagement_index.vue')
+        },
+        {
+            access: 6086,
+            meta: 6086,
+            path: 'attributeManagement',
+            title: '属性管理',
+            name: 'attributeManagement',
+            component: () => import( /* webpackChunkName: "systemManagement" */ '@/views/systemManagement/attributeManagement/attributeManagement_index.vue')
+        },
 
         ]
     },
@@ -1241,26 +1249,26 @@ export const appRouter = [
         title: "消息推送",
         component: Main,
         children: [{
-                access: 11604,
-                path: 'WeChatPushLog',
-                title: '微信推送客户日志',
-                name: 'WeChatPushLog',
-                component: () => import( /* webpackChunkName: "messageLog" */ '@/views/logManagement/WeChatPushLog/log_index.vue')
-            },
-            {
-                access: 11605,
-                path: 'smsSendLog',
-                title: '短信发送日志',
-                name: 'smsSendLog',
-                component: () => import( /* webpackChunkName: "messageLog" */ '@/views/logManagement/smsSendLog.vue')
-            },
-            {
-                access: 11606,
-                path: 'internalPushLog',
-                title: '微信内部推送日志',
-                name: 'internalPushLog',
-                component: () => import( /* webpackChunkName: "messageLog" */ '@/views/logManagement/internalPushLog.vue')
-            },
+            access: 11604,
+            path: 'WeChatPushLog',
+            title: '微信推送客户日志',
+            name: 'WeChatPushLog',
+            component: () => import( /* webpackChunkName: "messageLog" */ '@/views/logManagement/WeChatPushLog/log_index.vue')
+        },
+        {
+            access: 11605,
+            path: 'smsSendLog',
+            title: '短信发送日志',
+            name: 'smsSendLog',
+            component: () => import( /* webpackChunkName: "messageLog" */ '@/views/logManagement/smsSendLog.vue')
+        },
+        {
+            access: 11606,
+            path: 'internalPushLog',
+            title: '微信内部推送日志',
+            name: 'internalPushLog',
+            component: () => import( /* webpackChunkName: "messageLog" */ '@/views/logManagement/internalPushLog.vue')
+        },
         ]
     },
     {
@@ -1272,37 +1280,37 @@ export const appRouter = [
         title: '数据中心',
         component: Main,
         children: [{
-                access: 6104,
-                meta: 6104,
-                path: 'cannelIndex',
-                title: '渠道首页',
-                name: 'datacannelIndex_index',
-                component: () => import( /* webpackChunkName: "allindex" */ '@/views/home/cannel_index/cannelIndex.vue')
-            },
-            {
-                access: 6105,
-                meta: 6105,
-                path: 'commercialIndex',
-                title: '商事首页',
-                name: 'datacommercialIndex_index',
-                component: () => import( /* webpackChunkName: "allindex" */ '@/views/home/commercial_index/commercialIndex.vue')
-            },
-            {
-                access: 6106,
-                meta: 6106,
-                path: 'accountIndex',
-                title: '会计首页',
-                name: 'dataaccountIndex_index',
-                component: () => import( /* webpackChunkName: "allindex" */ '@/views/home/account_index/accountIndex.vue')
-            },
-            {
-                access: 6107,
-                meta: 6107,
-                path: 'marketIndex',
-                title: '市场首页',
-                name: 'datamarketIndex_index',
-                component: () => import( /* webpackChunkName: "allindex" */ '@/views/home/market_index/marketIndex.vue')
-            }
+            access: 6104,
+            meta: 6104,
+            path: 'cannelIndex',
+            title: '渠道首页',
+            name: 'datacannelIndex_index',
+            component: () => import( /* webpackChunkName: "allindex" */ '@/views/home/cannel_index/cannelIndex.vue')
+        },
+        {
+            access: 6105,
+            meta: 6105,
+            path: 'commercialIndex',
+            title: '商事首页',
+            name: 'datacommercialIndex_index',
+            component: () => import( /* webpackChunkName: "allindex" */ '@/views/home/commercial_index/commercialIndex.vue')
+        },
+        {
+            access: 6106,
+            meta: 6106,
+            path: 'accountIndex',
+            title: '会计首页',
+            name: 'dataaccountIndex_index',
+            component: () => import( /* webpackChunkName: "allindex" */ '@/views/home/account_index/accountIndex.vue')
+        },
+        {
+            access: 6107,
+            meta: 6107,
+            path: 'marketIndex',
+            title: '市场首页',
+            name: 'datamarketIndex_index',
+            component: () => import( /* webpackChunkName: "allindex" */ '@/views/home/market_index/marketIndex.vue')
+        }
         ]
     },
     {
@@ -1314,21 +1322,21 @@ export const appRouter = [
         title: '资源库',
         component: Main,
         children: [{
-                access: 6066,
-                meta: 6066,
-                path: 'CompanyInformation',
-                title: '公司资料',
-                name: 'CompanyInformation_index',
-                component: () => import( /* webpackChunkName: "CompanyInformation_index" */ '@/views/material-house/companyMaterial/index.vue')
-            },
-            {
-                access: 6068,
-                meta: 6068,
-                path: 'DepartmentInformation',
-                title: '部门资料',
-                name: 'DepartmentInformation_index',
-                component: () => import( /* webpackChunkName: "DepartmentInformation_index" */ '@/views/material-house/departMaterial/index.vue')
-            }
+            access: 6066,
+            meta: 6066,
+            path: 'CompanyInformation',
+            title: '公司资料',
+            name: 'CompanyInformation_index',
+            component: () => import( /* webpackChunkName: "CompanyInformation_index" */ '@/views/material-house/companyMaterial/index.vue')
+        },
+        {
+            access: 6068,
+            meta: 6068,
+            path: 'DepartmentInformation',
+            title: '部门资料',
+            name: 'DepartmentInformation_index',
+            component: () => import( /* webpackChunkName: "DepartmentInformation_index" */ '@/views/material-house/departMaterial/index.vue')
+        }
         ]
     },
     {
@@ -1340,44 +1348,44 @@ export const appRouter = [
         title: '日志管理',
         component: Main,
         children: [{
-                access: 11607,
-                meta: 11607,
-                path: 'stystemLog',
-                title: '系统日志',
-                name: 'stystemLog',
-                component: () => import( /* webpackChunkName: "logManagement" */ '@/views/logManagement/stystemlog/stystemLog.vue')
-            },
-            {
-                access: 6121,
-                meta: 6122,
-                path: 'MQLog',
-                title: '消息队列日志',
-                name: 'MQ_index',
-                component: () => import( /* webpackChunkName: "logManagement" */ '@/views/logManagement/MQlog/index.vue')
-            },
-            {
-                access: 6122,
-                meta: 6122,
-                path: 'opLog',
-                title: '操作统计',
-                name: 'OP_index',
-                component: () => import( /* webpackChunkName: "logManagement" */ '@/views/logManagement/opLog/index.vue')
-            },
-            {
-                access: 6123,
-                meta: 6123,
-                path: 'frontErrLog',
-                title: '异常统计',
-                name: 'frontErrLog_index',
-                component: () => import( /* webpackChunkName: "logManagement" */ '@/views/logManagement/frontErrLog/index.vue')
-            },
-            {
-                access: 11608,
-                path: 'systemLog2',
-                title: '日志',
-                name: 'systemLog2',
-                component: () => import( /* webpackChunkName: "logManagement" */ '@/views/logManagement/systemLog.vue')
-            }
+            access: 11607,
+            meta: 11607,
+            path: 'stystemLog',
+            title: '系统日志',
+            name: 'stystemLog',
+            component: () => import( /* webpackChunkName: "logManagement" */ '@/views/logManagement/stystemlog/stystemLog.vue')
+        },
+        {
+            access: 6121,
+            meta: 6122,
+            path: 'MQLog',
+            title: '消息队列日志',
+            name: 'MQ_index',
+            component: () => import( /* webpackChunkName: "logManagement" */ '@/views/logManagement/MQlog/index.vue')
+        },
+        {
+            access: 6122,
+            meta: 6122,
+            path: 'opLog',
+            title: '操作统计',
+            name: 'OP_index',
+            component: () => import( /* webpackChunkName: "logManagement" */ '@/views/logManagement/opLog/index.vue')
+        },
+        {
+            access: 6123,
+            meta: 6123,
+            path: 'frontErrLog',
+            title: '异常统计',
+            name: 'frontErrLog_index',
+            component: () => import( /* webpackChunkName: "logManagement" */ '@/views/logManagement/frontErrLog/index.vue')
+        },
+        {
+            access: 11608,
+            path: 'systemLog2',
+            title: '日志',
+            name: 'systemLog2',
+            component: () => import( /* webpackChunkName: "logManagement" */ '@/views/logManagement/systemLog.vue')
+        }
         ]
     },
 ];
