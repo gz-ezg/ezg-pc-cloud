@@ -24,30 +24,6 @@
                             </span>
                 </Col>
             </Row>
-            <Row :gutter="20" style="margin-top:20px" v-if="data.taskKindName=='商事外勤'">
-                <Col span="6">
-                    <span style="line-height:24px">服务内容</span>
-                </Col>
-                <Col span="18">
-                    <span style="line-height:24px">{{data.productName}}</span>
-                </Col>
-            </Row>
-            <Row :gutter="20" style="margin-top:20px" v-if="data.taskKindName!=='商事外勤'">
-                <Col span="6">
-                    <span style="line-height:24px">服务内容</span>
-                </Col>
-                <Col span="18">
-                    <span style="line-height:24px">{{data.legName}}</span>
-                </Col>
-            </Row>
-            <Row :gutter="20" style="margin-top:20px" v-if="data.taskKindName=='商事外勤'">
-                <Col span="6">
-                    <span style="line-height:24px">服务节点</span>
-                </Col>
-                <Col span="18">
-                    <span style="line-height:24px">{{data.currentProcess}}</span>
-                </Col>
-            </Row>
             <Row :gutter="20" style="margin-top:20px">
                 <Col span="6">
                     <span style="line-height:24px">执行人</span>
@@ -56,12 +32,36 @@
                     <span style="line-height:24px">{{data.executorName}}</span>
                 </Col>
             </Row>
-            <Row :gutter="20" style="margin-top:20px">
+            <Row :gutter="20" style="margin-top:20px" v-if="data.taskKindName!=='代账外勤'">
                 <Col span="6">
                     <span style="line-height:24px">任务类型</span>
                 </Col>
                 <Col span="18">
                     <span style="line-height:24px">{{data.taskKindName}}</span>
+                </Col>
+            </Row>
+            <Row :gutter="20" style="margin-top:20px" v-if="data.taskKindName=='代账外勤'">
+                <Col span="6">
+                    <span style="line-height:24px">任务类型</span>
+                </Col>
+                <Col span="18">
+                    <span style="line-height:24px">{{data.legType}}</span>
+                </Col>
+            </Row>
+            <Row :gutter="20" style="margin-top:20px" v-if="data.taskKindName!=='代账外勤'">
+                <Col span="6">
+                    <span style="line-height:24px">服务内容</span>
+                </Col>
+                <Col span="18">
+                    <span style="line-height:24px">{{data.productName}}</span>
+                </Col>
+            </Row>
+            <Row :gutter="20" style="margin-top:20px" v-if="data.taskKindName=='代账外勤'">
+                <Col span="6">
+                    <span style="line-height:24px">服务内容</span>
+                </Col>
+                <Col span="18">
+                    <span style="line-height:24px">{{data.legName}}</span>
                 </Col>
             </Row>
             <Row :gutter="20" style="margin-top:20px">
@@ -76,7 +76,7 @@
         </div>
         <div slot="footer">
             <Row>
-                <Button v-if="data.taskKindName=='商事外勤' && data.taskStage!=='tesCanceled'" @click="delete_task" type="error">作废</Button>
+                <Button  @click="delete_task" type="error">作废</Button>
                 <Button @click="cancel_task" type="primary">关闭</Button>
             </Row>
         </div>

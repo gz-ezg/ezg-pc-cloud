@@ -7,19 +7,19 @@
 
                 class-name="vertical-center-modal"
         >
-            <div style="min-height:60vh;width:400px" v-if="data.length!==0">
+            <div style="min-height:40vh;width:400px" v-if="data.length!==0">
                 <Row :gutter="20" style="margin-top:20px">
                     <Col span="6">
-                        <span style="line-height:24px">商事任务名称</span>
+                        <span style="line-height:24px">任务名称</span>
                     </Col>
                     <Col span="18">
-                        <Input v-model="data[0].taskName" size="small" style="width:180px" type="textarea" :row="5" autosize>
+                        <Input v-model="data[0].taskName" size="small" style="width:180px" type="textarea" :row="5" autosize readonly>
                         </Input>
                     </Col>
                 </Row>
                 <Row :gutter="20" style="margin-top:20px">
                     <Col span="6">
-                        <span style="line-height:24px">商事任务对象</span>
+                        <span style="line-height:24px">公司名称</span>
                     </Col>
                     <Col span="18">
                         <span style="line-height:24px">{{data[0].companyName}}
@@ -28,14 +28,13 @@
                 </Row>
                 <Row :gutter="20" style="margin-top:20px">
                     <Col span="6">
-                        <span style="line-height:24px">产品</span>
+                        <span style="line-height:24px">执行人</span>
                     </Col>
                     <Col span="18">
-                        <span style="line-height:24px">{{data[0].productName}}
-                            </span>
+                        <Input v-model="data[0].executorName" size="small" style="width:180px" disabled></Input>
                     </Col>
                 </Row>
-                <Row :gutter="20" style="margin-top:20px">
+                <Row :gutter="20" style="margin-top:20px" v-if="data[0].taskKind!=='tkLegAccCyc'">
                     <Col span="6">
                         <span style="line-height:24px">任务类型</span>
                     </Col>
@@ -43,12 +42,37 @@
                         <span style="line-height:24px">{{data[0].taskKindName}}</span>
                     </Col>
                 </Row>
+                <Row :gutter="20" style="margin-top:20px" v-if="data[0].taskKind!=='tkLegAccCyc'">
+                    <Col span="6">
+                        <span style="line-height:24px">服务内容</span>
+                    </Col>
+                    <Col span="18">
+                        <span style="line-height:24px">{{data[0].productName}}
+                            </span>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px" v-if="data[0].taskKind==='tkLegAccCyc'">
+                    <Col span="6">
+                        <span style="line-height:24px">任务类型</span>
+                    </Col>
+                    <Col span="18">
+                        <span style="line-height:24px">{{data[0].legType}}</span>
+                    </Col>
+                </Row>
+                <Row :gutter="20" style="margin-top:20px" v-if="data[0].taskKind==='tkLegAccCyc'">
+                    <Col span="6">
+                        <span style="line-height:24px">服务内容</span>
+                    </Col>
+                    <Col span="18">
+                        <span style="line-height:24px">{{data[0].legName}}</span>
+                    </Col>
+                </Row>
                 <Row :gutter="20" style="margin-top:20px">
                     <Col span="6">
                         <span style="line-height:24px">代办于</span>
                     </Col>
                     <Col span="18">
-                        <DatePicker v-model="data[0].planDate" size="small" style="width:180px" type="datetime" @on-change="getPlanTime">
+                        <DatePicker v-model="data[0].planDate" size="small" style="width:180px" type="datetime" @on-change="getPlanTime" disabled readonly>
                         </DatePicker>
                     </Col>
                 </Row>
@@ -57,7 +81,7 @@
                         <span style="line-height:24px">地区</span>
                     </Col>
                     <Col span="18">
-                        <Select v-model="data[0].taskArea" size="small" style="width:180px" @on-change="getBusinessArea">
+                        <Select v-model="data[0].taskArea" size="small" style="width:180px" @on-change="getBusinessArea" disabled>
                             <Option v-for="item in businessArea" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
                         </Select>
                     </Col>
@@ -67,33 +91,96 @@
                         <span style="line-height:24px">地点</span>
                     </Col>
                     <Col span="18">
-                        <Select v-model="data[0].taskPlace" size="small" style="width:180px" @on-change="getBusinessPlace">
+                        <Select v-model="data[0].taskPlace" size="small" style="width:180px" @on-change="getBusinessPlace" disabled>
                             <Option v-for="item in businessPlace" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
                         </Select>
                     </Col>
                 </Row>
-                <Row :gutter="20" style="margin-top:20px" v-if="data[0].taskKind==='tkLegAccCyc'">
-                <Col span="6">
-                    <span style="line-height:24px">外勤类型</span>
-                </Col>
-                <Col span="18">
-                    <span style="line-height:24px">{{data[0].legType}}</span>
-                </Col>
-                </Row>
-                <Row :gutter="20" style="margin-top:20px" v-if="data[0].taskKind==='tkLegAccCyc'">
-                    <Col span="6">
-                        <span style="line-height:24px">外勤名称</span>
-                    </Col>
-                    <Col span="18">
-                        <span style="line-height:24px">{{data[0].legName}}</span>
-                    </Col>
-                </Row>
-                <Row style="margin-top:40px">
-                    <Button @click="update_detail" type="primary" style="margin-left:40px" :disabled="openSubmit" :loading="loading">修改</Button>
-                    <Button @click="delete_task" type="error" style="margin-left:50px">删除任务</Button>
+                <div v-if="fieldDetail!==[]">
+                    <Row :gutter="20" style="margin-top:20px" v-if="legId">
+                        <Col span="6">
+                            <span style="line-height:24px">外勤开始时间</span>
+                        </Col>
+                        <Col span="18">
+                            <Input v-model="fieldDetail.begin_time" size="small" style="width:180px" disabled></Input>
+                        </Col>
+                    </Row>
+                    <Row :gutter="20" style="margin-top:20px" v-if="legId">
+                        <Col span="6">
+                            <span style="line-height:24px">打卡地点</span>
+                        </Col>
+                        <Col span="18">
+                            <Input v-model="fieldDetail.begin_address" size="small" style="width:180px" readonly></Input>
+                        </Col>
+                    </Row>
+                    <Row :gutter="20" style="margin-top:20px" v-if="legId">
+                        <Col span="6">
+                            <span style="line-height:24px">外勤结束时间</span>
+                        </Col>
+                        <Col span="18">
+                            <Input v-model="fieldDetail.end_time" size="small" style="width:180px" disabled></Input>
+                        </Col>
+                    </Row>
+                    <Row :gutter="20" style="margin-top:20px" v-if="legId">
+                        <Col span="6">
+                            <span style="line-height:24px">打卡地点</span>
+                        </Col>
+                        <Col span="18">
+                            <Input v-model="fieldDetail.end_address" size="small" style="width:180px" readonly></Input>
+                        </Col>
+                    </Row>
+                    <Row :gutter="20" style="margin-top:20px" v-if="legId">
+                        <Col span="6">
+                            <span style="line-height:24px">外勤结果</span>
+                        </Col>
+                        <Col span="18">
+                            <Input v-model="fieldDetail.finish_status" size="small" style="width:180px" disabled></Input>
+                        </Col>
+                    </Row>
+                    <Row :gutter="20" style="margin-top:20px" v-if="legId">
+                        <Col span="6">
+                            <span style="line-height:24px">开始打卡备注</span>
+                        </Col>
+                        <Col span="18">
+                            <Input v-model="fieldDetail.begin_memo" size="small" style="width:180px" readonly></Input>
+                        </Col>
+                    </Row>
+                    <Row :gutter="20" style="margin-top:20px" v-if="legId">
+                        <Col span="6">
+                            <span style="line-height:24px">外勤总结</span>
+                        </Col>
+                        <Col span="18">
+                            <Input v-model="fieldDetail.finish_memo" size="small" style="width:180px" readonly></Input>
+                        </Col>
+                    </Row>
+                    <Row :gutter="20" style="margin-top:20px" v-if="legId">
+                        <Col span="6">
+                            <span style="line-height:24px">开始打卡照片</span>
+                        </Col>
+                        <Col span="18" v-for="(item,index) in beginImgList " :key="index">
+                            <a target="_blank" :href="'/api/assets/' + item" >
+                                <img :src="'/api/assets/' +item" alt=""  width="100" height="100" onerror="this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null">
+                            </a>
+                        </Col>
+                    </Row>
+                    <Row :gutter="20" style="margin-top:20px" v-if="legId">
+                        <Col span="6">
+                            <span style="line-height:24px">结束打卡照片</span>
+                        </Col>
+                        <Col span="18" v-for="(item,index) in endImgList " :key="index">
+                            <a target="_blank" :href="'/api/assets/' + item" >
+                                <img :src="'/api/assets/' +item" alt=""  width="100" height="100" onerror="this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null">
+                            </a>
+                        </Col>
+                    </Row>
+                </div>
+            </div>
+            <div slot="footer">
+                <Row>
+                    <Button @click="delete_task" type="error"  :loading="loading" v-if="!legId">作废</Button>
+                    <Button @click="cancel_task"  type="primary" >关闭</Button>
                 </Row>
             </div>
-            <div slot="footer"></div>
         </Modal>
     </div>
 </template>
@@ -109,6 +196,7 @@
                 businessArea:[],
                 businessPlace:[],
                 data:[],
+                fieldDetail:[],
                 abtypeList:[{"typecode":"A","typename":"A类"},{"typecode":"B","typename":"B类"}],
                 typeList:[],
                 companyList:[],
@@ -140,29 +228,29 @@
                 nowName:""
             }
         },
-        computed:{
-            openSubmit(){
-                if(this.data[0].taskName !== this.oldTaskName ){
-                    return false
-                } else if(this.newPlanTime && this.newPlanTime !== this.oldPlanTime){
-                    return false
-                } else if(this.newBusinessPlace && this.newBusinessPlace !== this.oldBusinessPlace){
-                    return false
-                }else if(this.newBusinessArea && this.newBusinessArea !== this.oldBusinessArea){
-                    return false
-                } else if(this.newLegType && this.newLegType !== this.oldLegType){
-                    return false
-                } else if(this.newBusinessId && this.newBusinessId !== this.oldBusinessId){
-                    return false
-                }else if(this.newCompanyId && this.newCompanyId !== this.oldCompanyId){
-                    return false
-                } else if(this.newLegName && this.newLegName !== this.oldLegName){
-                    return false
-                }else {
-                    return true
-                }
-            }
-        },
+        // computed:{
+        //     openSubmit(){
+        //         if(this.data[0].taskName !== this.oldTaskName ){
+        //             return false
+        //         } else if(this.newPlanTime && this.newPlanTime !== this.oldPlanTime){
+        //             return false
+        //         } else if(this.newBusinessPlace && this.newBusinessPlace !== this.oldBusinessPlace){
+        //             return false
+        //         }else if(this.newBusinessArea && this.newBusinessArea !== this.oldBusinessArea){
+        //             return false
+        //         } else if(this.newLegType && this.newLegType !== this.oldLegType){
+        //             return false
+        //         } else if(this.newBusinessId && this.newBusinessId !== this.oldBusinessId){
+        //             return false
+        //         }else if(this.newCompanyId && this.newCompanyId !== this.oldCompanyId){
+        //             return false
+        //         } else if(this.newLegName && this.newLegName !== this.oldLegName){
+        //             return false
+        //         }else {
+        //             return true
+        //         }
+        //     }
+        // },
         methods:{
             getPlanTime(e){
                 console.log(e)
@@ -388,6 +476,40 @@
                 this.$Get(url, config, success)
                 _self.newCompanyId = e
             },
+            get_field_detail(e) {
+                let _self = this
+                let url = `api/user/legwork/task/detail`
+                let config = {
+                    params: {
+                        legworkTaskId: e,
+                    }
+                }
+
+                function success(res) {
+                    _self.fieldDetail = res.data.data
+                    if (_self.fieldDetail.finish_status == "youxiao") {
+                        _self.fieldDetail.finish_status = "有效"
+                    }
+                    if (_self.fieldDetail.finish_status == "wuxiao") {
+                        _self.fieldDetail.finish_status = "无效"
+                    }
+                    if (_self.fieldDetail.finish_status == "mingzhong") {
+                        _self.fieldDetail.finish_status = "命中"
+                    }
+                    _self.beginImgList = res.data.data.begin_realpath.split(",")
+                    _self.endImgList = res.data.data.end_realpath.split(",")
+                    // _self.dateLength = DateDifference(res.data.data.begin_time,res.data.data.end_time)
+                    console.log(_self.beginImgList)
+                    console.log(_self.endImgList)
+                    console.log(_self.fieldDetail)
+                }
+
+                function fail(err) {
+
+                }
+
+                this.$Get(url, config, success, fail)
+            },
             get_detail(e){
                 let _self = this
                 let url = 'api/task/getTaskPropertyDetailByTaskId'
@@ -403,6 +525,12 @@
                     console.log(_self.data[0].taskKindName)
                     // _self.oldTaskLevel = res.data.data.taskData[0].task_level
                     _self.oldRemindTime = res.data.data[0].planDate
+                    if (_self.data[0].legType=='A'){
+                        _self.data[0].legType = 'A类外勤'
+                    }
+                    if (_self.data[0].legType=='B'){
+                        _self.data[0].legType = 'B类外勤'
+                    }
                     // _self.oldTaskStage = res.data.data.taskData[0].task_stage
                     _self.oldTaskName = res.data.data[0].taskName
                     // _self.oldTaskContent = res.data.data.taskData[0].task_content
@@ -458,6 +586,9 @@
 
                 this.$Get(url, config, success)
             },
+            cancel_task(){
+                this.openTaskDetail = false
+            },
             get_data_center(){
                 let params = "taskLevel,taskDesCode,taskKind,taskStage,market_status,markert_follow_up_type,gzbusinessarea,gzbusinessplace"
 
@@ -490,9 +621,13 @@
                 _self.get_data_center()
                 _self.id = e.taskId
                 console.log(e.taskId)
+                _self.taskKindName = e.taskKindName
+                _self.legId= e.legId
+                if (e.legId){
+                    _self.get_field_detail(e.legId)
+                }
                 _self.get_detail(e.taskId)
                 _self.detail = e
-                e = null
                 _self.openTaskDetail = true
             })
         }

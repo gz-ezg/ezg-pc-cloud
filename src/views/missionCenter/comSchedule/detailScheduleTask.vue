@@ -79,7 +79,7 @@
                         <span style="line-height:24px">代办于</span>
                     </Col>
                     <Col span="18">
-                        <DatePicker v-model="data[0].planDate" size="small" style="width:180px" type="datetime" @on-change="getPlanTime" disabled>
+                        <DatePicker v-model="data[0].planDate" size="small" style="width:180px" type="datetime" @on-change="getPlanTime" disabled readonly>
                         </DatePicker>
                     </Col>
                 </Row>
