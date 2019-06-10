@@ -161,6 +161,7 @@
                     //  周末不显示
                     // weekends: false,
                     slotEventOverlap:false,
+                    timezone:"local",
                     customButtons:{
                         filter:{
                             text:"筛选",
