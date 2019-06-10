@@ -77,12 +77,13 @@
             <FormItem label="上传图片">
               <center>
                 <Upload
+                  Upload
                   multiple
                   ref="upload"
                   :before-upload="handleUpload"
                   action="/api/customer/addCustomerContentImg"
                 >
-                  <Button type="ghost" icon="ios-cloud-upload-outline">选择文件</Button>
+                  <Button type="ghost" icon="ios-cloud-upload-outline">上传图片</Button>
                 </Upload>
                 <div v-for="(item,index) in file" :key="index">
                   {{ item.name }}
@@ -121,7 +122,7 @@ export default {
         linkname: "",
         linkTel: "",
         type: "",
-        attIds:'',
+        attIds: "",
         productContent: "",
         reason: ""
       },
@@ -201,9 +202,9 @@ export default {
     },
     submit() {
       let _self = this;
-      console.log('haha')
+      console.log("haha");
       this.$refs["abnormalOrderDetail"].validate(valid => {
-          console.log(valid)
+        console.log(valid);
         if (valid) {
           if (this.file.length) {
             this.uploadImg();
@@ -224,7 +225,7 @@ export default {
         unusualType: _self.abnormalOrderDetail.type,
         productContent: _self.abnormalOrderDetail.productContent,
         applyMemo: _self.abnormalOrderDetail.reason,
-        attIds:_self.abnormalOrderDetail.attIds,
+        attIds: _self.abnormalOrderDetail.attIds
       };
 
       function success(res) {
