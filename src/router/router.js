@@ -455,8 +455,8 @@ export const appRouter = [
             component: () => import( /* webpackChunkName: "transactionRecord_index" */ '@/views/channelManagement/transactionRecord/transactionRecord.vue')
         },
         {
-            access: 6009,
-            meta: 6009,
+            access: 11642,
+            meta: 11642,
             path: 'parkManagement',
             title: '园区内容管理',
             name: 'parkManagement_index',
