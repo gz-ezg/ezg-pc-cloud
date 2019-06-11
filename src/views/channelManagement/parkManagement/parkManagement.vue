@@ -58,7 +58,7 @@
         <FormItem v-if="formItem.type=='sy'&&isAdmin" label="园区">
           <Input @on-focus="handleFocus" v-model="formItem.channelTypeName" placeholder="请填写园区"/>
         </FormItem>
-        <Button class="mg-auto" @click="uploadImg" type="primary">保存并更新</Button>
+        <Button class="mg-auto" :loading="loading" @click="uploadImg" type="primary">保存并更新</Button>
       </Form>
     </Modal>
 
@@ -259,13 +259,16 @@ export default {
       this.getTableData();
     },
     async uploadImg() {
+      if (this.loading) {
+        return;
+      }
+      this.loading = true;
       if (!this.imgUrl) {
         return this.$Message.warning("请上传图片");
       }
       // if (this.formItem.type == "sy" && !this.formItem.channelTypeId) {
       //   return this.$Message.warning("请选择园区");
       // }
-      console.log(this.file.type);
       if (
         this.file.type !== "image/jpeg" &&
         this.file.type !== "image/jpg" &&
@@ -300,6 +303,7 @@ export default {
         this.$Message.warning("创建失败");
       } finally {
         this.isShowAdd = false;
+        this.loading = false;
         // 初始化数据
         this.imgUrl = "";
         this.file = "";

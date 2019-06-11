@@ -477,9 +477,9 @@ export default {
             id: _data.rows[i].id,
             channel_type_code: _data.rows[i].channel_type_code,
             channel_type_name: _data.rows[i].channel_type_name,
-            province: _data.rows[i].province,
-            city: _data.rows[i].city,
-            area: _data.rows[i].area
+            province: _data.rows[i].province || '',
+            city: _data.rows[i].city || '',
+            area: _data.rows[i].area || ''
           });
         }
       }
