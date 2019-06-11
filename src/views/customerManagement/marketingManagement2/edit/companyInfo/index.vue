@@ -27,6 +27,7 @@
         <change-log></change-log>
         <shift-company v-if="openShiftCompany" @close="close_shift_company" :company="selectCompany"></shift-company>
         <merge-company :data="data"></merge-company>
+        <field-detail></field-detail>
     </div>
 </template>
 
@@ -37,6 +38,7 @@ import amendCompany from "./amend"
 import changeLog from "./changeLog"
 import shiftCompany from './shift'
 import mergeCompany from './merge'
+import fieldDetail from './field'
 export default {
     components: {
         createCompany,
@@ -44,7 +46,8 @@ export default {
         amendCompany,
         changeLog,
         shiftCompany,
-        mergeCompany
+        mergeCompany,
+        fieldDetail
     },
     props: {
         customer:{
@@ -133,7 +136,7 @@ export default {
                     {
                         title: '操作',
                         key: 'action',
-                        minWidth: 250,
+                        minWidth: 300,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
@@ -180,6 +183,20 @@ export default {
                                         }
                                     }
                                 }, '名称变更日志'),
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.$bus.emit("OPEN_FIELD_DETAIL", params.row)
+                                        }
+                                    }
+                                }, '外勤'),
                             ]);
                         }
                     }

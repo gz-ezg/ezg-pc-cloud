@@ -76,7 +76,7 @@
         </div>
         <div slot="footer">
             <Row>
-                <Button  @click="delete_task" type="error">作废</Button>
+                <Button v-if="data.taskStage!=='tesCanceled'"  @click="delete_task" type="error">作废</Button>
                 <Button @click="cancel_task" type="primary">关闭</Button>
             </Row>
         </div>
