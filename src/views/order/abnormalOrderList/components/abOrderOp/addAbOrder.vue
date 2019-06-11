@@ -79,6 +79,7 @@
                 <Upload
                   Upload
                   multiple
+                  type="drag"
                   ref="upload"
                   :before-upload="handleUpload"
                   action="/api/customer/addCustomerContentImg"

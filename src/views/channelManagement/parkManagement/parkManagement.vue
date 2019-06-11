@@ -262,9 +262,9 @@ export default {
       if (!this.imgUrl) {
         return this.$Message.warning("请上传图片");
       }
-      if (this.formItem.type == "sy" && !this.formItem.channelTypeId) {
-        return this.$Message.warning("请选择园区");
-      }
+      // if (this.formItem.type == "sy" && !this.formItem.channelTypeId) {
+      //   return this.$Message.warning("请选择园区");
+      // }
       console.log(this.file.type);
       if (
         this.file.type !== "image/jpeg" &&

@@ -517,7 +517,7 @@ export default {
           };
         });
       };
-      this.PostData(url, doSuccess);
+      this.GetData(url, doSuccess);
     },
 
     // 新增渠道类型

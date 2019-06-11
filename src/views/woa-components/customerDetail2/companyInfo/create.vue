@@ -73,6 +73,7 @@ export default {
     },
     create() {
       let _self = this;
+      _self.loading = true;
       let url = "/api/channel/company/createChannelTypeCompany";
 
       let config = {
