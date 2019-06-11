@@ -55,8 +55,8 @@
                     <span style="line-height:24px">代办于</span>
                 </Col>
                 <Col span="18">
-                    <DatePicker v-model="data.planDate" size="small" style="width:180px" type="datetime" @on-change="getPlanTime">
-                    </DatePicker>
+                    <Input v-model="data.planDate" size="small" style="width:180px" readonly>
+                    </Input>
                 </Col>
             </Row>
             <Row :gutter="20" style="margin-top:20px">
@@ -79,11 +79,13 @@
                 </Col>
             </Row>
             <Row style="margin-top:40px">
-                <Button @click="update_detail" type="primary" style="margin-left:40px" :disabled="openSubmit" :loading="loading">提交</Button>
-                <Button @click="delete_task" type="error" style="margin-left:50px">作废</Button>
+                <Button @click="update_detail" v-if="data.taskStage!=='tesCanceled'"  type="primary" style="margin-left:40px" :disabled="openSubmit" :loading="loading">提交</Button>
+                <Button @click="delete_task" v-if="data.taskStage!=='tesCanceled'"  type="error" style="margin-left:50px">作废</Button>
             </Row>
         </div>
-        <div slot="footer"></div>
+        <div slot="footer">
+            <Button @click="cancel_detail" v-if="data.taskStage=='tesCanceled'"  type="primary" style="margin-left:40px" :loading="loading">关闭</Button>
+        </div>
     </Modal>
 </template>
 
@@ -162,6 +164,32 @@
                 let _self = this
                 _self.newFollowResult = e
             },
+            cancel_detail(){
+                this.openAddMission = false
+            },
+            delete_task(){
+                let _self = this
+
+                let url = `api/task/deleteTask`
+                let config = {
+                    params: {
+                        taskId: _self.data.taskId
+                    }
+                }
+                function success(res){
+                    // _self.$Message.success(res.data.msg)
+                    setTimeout(()=>{
+                        _self.$bus.emit("UPDATE_EXECUTING_DATA",true)
+                        _self.$bus.emit("UPDATE_DATA",true)
+                        _self.openAddMission = false
+
+                    }, 500)
+                }
+                function fail(err){
+
+                }
+                _self.$Get(url, config, success, fail)
+            },
             update_detail(){
                 let _self = this
                 let url = `api/task/updateMarketLegworkTask`
@@ -215,11 +243,13 @@
             }
         },
         created() {
-            this.$bus.on("SHOW_DETAILS",(e)=>{
+            this.$bus.off("SHOW_MARKET_DETAILS",true)
+            this.$bus.on("SHOW_MARKET_DETAILS",(e)=>{
                 this.openAddMission = true
                 this.get_data_center()
                 this.data = e.row
             })
+            this.$bus.off("SHOW_OBSOLETE_DETAILS",true)
             this.$bus.on("SHOW_OBSOLETE_DETAILS",(e)=>{
                 this.openAddMission = true
                 this.get_data_center()

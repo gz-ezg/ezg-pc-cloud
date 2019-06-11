@@ -96,8 +96,32 @@
                     },
                     {
                         title: '外勤图片',
-                        key: 'realpath',
                         minWidth: 160,
+                        render: (h, params) => {
+                            console.log(params.row.realpath)
+                                return h('div', params.row.realpath.map(i=>{
+                                    console.log(i)
+                                        return h('img',{
+                                            attrs:{
+                                                src:'/api/assets/'+i
+                                            },
+                                            style:{
+                                                width:'35px',
+                                                height:'35px',
+                                                marginRight:'10px',
+                                                marginTop:'3px'
+                                            },
+                                            on:{
+                                                click:()=>{
+                                                    window.open('/api/assets/'+i)
+                                        }
+                                            }
+                                        })
+                                })
+
+                                )
+
+                        }
                     },
                 ],
             }
@@ -117,7 +141,7 @@
                 let url = 'api/user/legwork/companyLegworkListByCompanyId'
                 let config = {
                     params:{
-                        companyId:33014,
+                        companyId:_self.id,
                         page:_self.page,
                         pageSize:_self.pageSize
                     }
