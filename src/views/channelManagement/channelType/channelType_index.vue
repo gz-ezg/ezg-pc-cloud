@@ -587,7 +587,7 @@ export default {
     // 点击新增按钮
     addT() {
       let _self = this;
-
+      _self.province = [];
       _self.title = "新增";
       _self.isAdd = true;
       _self.addType = true;
