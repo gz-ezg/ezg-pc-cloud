@@ -571,12 +571,16 @@ export default {
 
     // 行选中事件（存储选中行的渠道id）
     selectRow(a) {
-      console.log(a);
       let _self = this;
       _self.channelId = a.id;
       _self.channelName = a.channel_type_name;
       _self.channelCode = a.channel_type_code;
-      _self.province = [a.province, a.city, a.area];
+      if (!a.province) {
+        _self.province = [];
+      } else {
+        _self.province = [a.province, a.city, a.area];
+      }
+
       _self.getUser(a.id);
     },
 
