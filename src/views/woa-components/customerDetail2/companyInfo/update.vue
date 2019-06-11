@@ -95,8 +95,9 @@ export default {
     },
     created(){
         let _self = this
-        this.$bus.off("OPEN_COMPANY_UPDATE",true)
+        this.$bus.off("OPEN_COMPANY_UPDATE")
         this.$bus.on("OPEN_COMPANY_UPDATE",(e)=>{
+            console.log('update')
             _self.formValidate = e
             if(_self.formValidate.companyarea){
                 _self.formValidate.companyarea = _self.formValidate.companyarea.split("-")
