@@ -35,6 +35,15 @@ function getOrderCycleMonthServiceList(config, success, fail){
     })
 }
 
+function getOrderCycleServiceList(config, success, fail){
+    let url = 'order/cycle/service/record/list'
+    return new Promise((resolve, reject)=>{
+        resolve(AjaxGet(url, config, success, fail))
+    }).catch((err)=>{
+        return err
+    })
+}
+
 function getOrderCycleServiceRecordList(config, success, fail){
     let url = 'order/cycle/service/record/list'
     return new Promise((resolve, reject)=>{
@@ -109,5 +118,6 @@ export{
     getOrderCycleServiceRecordList,
     orderCycleMonthServiceList,
     orderETaxSynchronizeCycleMonthServiceItemFinish,
-    orderSpiderETaxDeclare
+    orderSpiderETaxDeclare,
+    getOrderCycleServiceList
 }

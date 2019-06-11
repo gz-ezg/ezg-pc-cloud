@@ -37,7 +37,10 @@
         <img v-if="!!imgUrl" class="modal_img" :src="imgUrl">
         <Row type="flex" justify="center">
           <Upload
+            max-size="5120"
             ref="upload"
+            :on-format-error="handleFormatError"
+            :format="['jpg','jpeg','png']"
             type="drag"
             action="/api/customer/addCustomerContentImg"
             :before-upload="handleBeforeUpload"
@@ -259,8 +262,16 @@ export default {
       if (!this.imgUrl) {
         return this.$Message.warning("请上传图片");
       }
-      if (!this.formItem.channelTypeId) {
+      if (this.formItem.type == "sy" && !this.formItem.channelTypeId) {
         return this.$Message.warning("请选择园区");
+      }
+      console.log(this.file.type);
+      if (
+        this.file.type !== "image/jpeg" &&
+        this.file.type !== "image/jpg" &&
+        this.file.type !== "image/png"
+      ) {
+        return this.$Message.warning("请上传jpg或者png的类型图片");
       }
       let url = "/api/customer/addCustomerContentImg";
       let formdata = new FormData();
