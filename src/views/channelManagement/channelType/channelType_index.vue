@@ -490,7 +490,7 @@ export default {
       if (this.provinceData.length) {
         return;
       }
-      let url = "product/area/getProvinceList";
+      let url = "/product/area/getProvinceList";
       let doSuccess = resp => {
         this.provinceData = resp.data.data.map(v => {
           if (!!v.city) {
@@ -517,7 +517,7 @@ export default {
           };
         });
       };
-      this.GetData(url, doSuccess);
+      this.PostData(url, doSuccess);
     },
 
     // 新增渠道类型
