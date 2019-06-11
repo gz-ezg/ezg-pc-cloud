@@ -156,8 +156,18 @@
                     },
                     {
                         title: '任务类型',
-                        key: 'taskKind',
                         minWidth: 140,
+                        render: (h, params) => {
+                            if(params.row.taskKindName=='代账外勤') {
+                                return h('div', [
+                                    h('div', {},params.row.legType)
+                                ])
+                            } else {
+                                return h('div', [
+                                    h('div', {},params.row.taskKindName)
+                                ])
+                            }
+                        }
                     },
 
                     {
@@ -248,6 +258,12 @@
                         //     _self.data[i].expect_date = DateFormat(_self.data[i].expect_date)
                         _self.data[i].taskKind = _self.taskKind_map.get(_self.data[i].taskKind)
                         _self.data[i].taskStage = _self.taskStage_map.get(_self.data[i].taskStage)
+                        if (_self.data[i].legType=='A'){
+                            _self.data[i].legType = 'A类外勤'
+                        }
+                        if (_self.data[i].legType=='B'){
+                            _self.data[i].legType = 'B类外勤'
+                        }
                         //     _self.data[i].task_place = _self.taskPlace_map.get(_self.data[i].task_place)
                         //     if (_self.data[i].apply_status==="tesFinished") {
                         //         _self.data[i].apply_status="同意"

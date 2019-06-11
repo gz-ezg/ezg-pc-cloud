@@ -93,27 +93,22 @@
                     {
                         title: '任务',
                         key: 'taskName',
-                        minWidth: 140,
+                        minWidth: 200,
                     },
                     {
                         title: '服务内容',
-                        minWidth: 295,
+                        minWidth: 200,
                         render: (h, params) => {
-                            if(params.row.taskKindName==='商事外勤') {
-                                return h('div', [
-                                    h('div', {},params.row.productName)
-                                ])
-                            } else {
+                            if(params.row.taskKindName==='代账外勤') {
                                 return h('div', [
                                     h('div', {},params.row.legName)
                                 ])
+                            } else {
+                                return h('div', [
+                                    h('div', {},params.row.productName)
+                                ])
                             }
                         }
-                    },
-                    {
-                        title: '服务节点',
-                        key: 'currentProcess',
-                        minWidth: 100,
                     },
                     {
                         title: '执行人',
@@ -127,8 +122,18 @@
                     },
                     {
                         title: '任务类型',
-                        key: 'taskKind',
                         minWidth: 180,
+                        render: (h, params) => {
+                            if(params.row.taskKindName=='代账外勤') {
+                                return h('div', [
+                                    h('div', {},params.row.legType)
+                                ])
+                            } else {
+                                return h('div', [
+                                    h('div', {},params.row.taskKindName)
+                                ])
+                            }
+                        }
                     },
                     {
                         title: '操作',
@@ -235,6 +240,12 @@
                     for(let i = 0; i < _self.data.length; i++){
                         //     _self.data[i].expect_date = DateFormat(_self.data[i].expect_date)
                         _self.data[i].taskKind = _self.taskKind_map.get(_self.data[i].taskKind)
+                        if (_self.data[i].legType=='A'){
+                            _self.data[i].legType = 'A类外勤'
+                        }
+                        if (_self.data[i].legType=='B'){
+                            _self.data[i].legType = 'B类外勤'
+                        }
                         //     _self.data[i].task_place = _self.taskPlace_map.get(_self.data[i].task_place)
                         //     if (_self.data[i].apply_status==="tesFinished") {
                         //         _self.data[i].apply_status="同意"

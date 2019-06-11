@@ -2,7 +2,7 @@
     <div>
         <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="open_company_create">新增</Button>
         <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="shift_company" v-permission="['company.shift']">转移</Button>
-        <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="open_company_merge">企业合并</Button>
+        <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="open_company_merge" v-permission="['company.merge']">企业合并</Button>
         <Table
             :loading="loading"
                 highlight-row
