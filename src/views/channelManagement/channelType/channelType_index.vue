@@ -478,9 +478,9 @@ export default {
             id: _data.rows[i].id,
             channel_type_code: _data.rows[i].channel_type_code,
             channel_type_name: _data.rows[i].channel_type_name,
-            province: _data.rows[i].province || "",
-            city: _data.rows[i].city || "",
-            area: _data.rows[i].area || ""
+            pId: _data.rows[i].pId || "",
+            cId: _data.rows[i].cId || "",
+            aId: _data.rows[i].aId || ""
           });
         }
       }
@@ -604,12 +604,12 @@ export default {
       if (_self.channelId == "") {
         _self.$Message.warning("请选择要编辑的渠道类型");
       } else {
-        if (!currentRow.province) {
+        if (!currentRow.pId) {
           _self.province = [];
         } else {
-          _self.province.push(currentRow.province);
-          _self.province.push(currentRow.city);
-          _self.province.push(currentRow.area);
+          _self.province.push(currentRow.pId);
+          _self.province.push(currentRow.cId);
+          _self.province.push(currentRow.aId);
         }
 
         _self.title = "编辑";

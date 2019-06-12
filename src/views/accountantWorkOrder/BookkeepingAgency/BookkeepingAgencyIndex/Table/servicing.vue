@@ -272,7 +272,7 @@ export default {
       header: [
         {
           title: "对应企业",
-          key: "Companyname",
+          key: "CompanyName",
           minWidth: 250
         },
         {
