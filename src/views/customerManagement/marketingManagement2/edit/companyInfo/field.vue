@@ -191,6 +191,7 @@
             this.$bus.on("OPEN_FIELD_DETAIL", (e)=>{
                 this.openAddMission = true
                 this.id = e.id
+                this.companyDetail = e.companyname+'外勤明细'
                 this.get_count_data(e)
                 this.get_data()
                 console.log(e)
