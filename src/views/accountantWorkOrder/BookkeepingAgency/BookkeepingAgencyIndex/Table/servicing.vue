@@ -235,6 +235,11 @@ export default {
       accout_level_open: false,
       cservicest: "",
       cservicest_map: new Map(),
+      gdsreportMap: new Map([
+        ["ybd", "已报道"],
+        ["wbd", "未报道"],
+        ["bybd", "不用报道"]
+      ]),
       loading: false,
       search_model: "",
       SearchValidate: {
@@ -267,27 +272,37 @@ export default {
       header: [
         {
           title: "对应企业",
-          key: "companyname",
+          key: "Companyname",
           minWidth: 250
-        },
-        {
-          title: "企业经营状态",
-          key: "managestatusName",
-          width: 120
         },
         {
           title: "产品名称",
           key: "product",
-          minWidth: 180
+          width: 120
         },
         {
-          title: "服务人员",
-          key: "realname",
+          title: "国地税报道",
+          key: "gdsreport",
           minWidth: 120
         },
         {
-          title: "服务状态",
-          key: "service_status",
+          title: "服务人员",
+          key: "server_realname",
+          minWidth: 120
+        },
+        {
+          title: "市场",
+          key: "followby_realname",
+          minWidth: 120
+        },
+        {
+          title: "剩余时长",
+          key: "balance_count",
+          minWidth: 120
+        },
+        {
+          title: "开始税期",
+          key: "begin_period",
           minWidth: 120
         },
         {
@@ -298,78 +313,17 @@ export default {
         {
           title: "单价",
           key: "unit_price",
-          minWidth: 160,
-          render: (h, params) => {
-            let _self = this;
-            if (params.index != this.currentIndex) {
-              return h("div", [
-                h(
-                  "span",
-                  {
-                    style: {
-                      display: "inline-block",
-                      lineHeight: "24px",
-                      height: "24px",
-                      width: "40px"
-                    }
-                  },
-                  params.row.unit_price
-                ),
-                h(
-                  "Button",
-                  {
-                    props: {
-                      type: "text",
-                      size: "small"
-                    },
-                    on: {
-                      click: function() {
-                        _self.handle_edit_unit_price(params.row, params.index);
-                      }
-                    }
-                  },
-                  "修改"
-                )
-              ]);
-            } else {
-              return h("div", [
-                h("Input", {
-                  props: {
-                    value: this.data[params.index].unit_price,
-                    size: "small"
-                  },
-                  style: {
-                    display: "inline-block",
-                    width: "60px"
-                  },
-                  on: {
-                    "on-blur": function(event) {
-                      _self.data[params.index].unit_price = event.target.value;
-                    }
-                  }
-                }),
-                h(
-                  "Button",
-                  {
-                    props: {
-                      type: "info",
-                      size: "small"
-                    },
-                    style: {
-                      display: "inline-block"
-                    },
-                    on: {
-                      click: () => {
-                        console.log("123");
-                        _self.update_unit_price(params.index);
-                      }
-                    }
-                  },
-                  "保存"
-                )
-              ]);
-            }
-          }
+          minWidth: 120
+        },
+        {
+          title: "警戒值",
+          key: "accounter_security_line",
+          minWidth: 120
+        },
+        {
+          title: "累计外勤",
+          key: "dljz_legwork",
+          minWidth: 120
         },
         {
           title: "备注",
@@ -409,91 +363,6 @@ export default {
           //         return h('span',params.row.memo)
           //     }
           // }
-        },
-        {
-          title: "报税",
-          key: "baoshui",
-          width: 120,
-          align: "center",
-          render: (h, params) => {
-            let reg = /^[-+]?\d*$/;
-            if (params.row.baoshui.confirm_date == undefined) {
-              return h("div", [
-                h(
-                  "Button",
-                  {
-                    props: {
-                      type: "text",
-                      size: "small"
-                    },
-                    on: {
-                      click: () => {
-                        this.zlwc(params.row.baoshui);
-                      }
-                    }
-                  },
-                  "[ 完成 ]"
-                )
-              ]);
-            } else {
-              return h("div", params.row.baoshui.confirm_date.slice(0, 10));
-            }
-          }
-        },
-        {
-          title: "做账",
-          key: "zuozhang",
-          align: "center",
-          width: 120,
-          render: (h, params) => {
-            let reg = /^[-+]?\d*$/;
-            if (params.row.zuozhang.confirm_date == undefined) {
-              return h("div", [
-                h(
-                  "Button",
-                  {
-                    props: {
-                      type: "text",
-                      size: "small"
-                    },
-                    on: {
-                      click: () => {
-                        this.zlwc(params.row.zuozhang);
-                      }
-                    }
-                  },
-                  "[ 完成 ]"
-                )
-              ]);
-            } else {
-              return h("div", params.row.zuozhang.confirm_date.slice(0, 10));
-            }
-          }
-        },
-        {
-          title: "客户跟进",
-          key: "note_kj_flag",
-          minWidth: 120
-        },
-        {
-          title: "警戒值",
-          key: "accounter_security_line",
-          minWidth: 120
-        },
-        {
-          title: "账务等级",
-          key: "accountgrade",
-          minWidth: 120
-        },
-        {
-          title: "累计外勤",
-          key: "dljz_legwork",
-          minWidth: 100
-        },
-        {
-          title: "实名账号",
-          key: "has_account",
-          minWidth: 120
         },
         {
           title: "操作",
@@ -663,8 +532,8 @@ export default {
         this.pageTotal = total;
         this.data = rows.map(item => {
           item.service_status = this.cservicest_map.get(item.service_status);
-          item.managestatusName = this.managestatus_map.get(item.managestatus);
-          item.note_kj_flag = item.note_kj_flag == "Y" ? "完成" : "未完成";
+          // item.managestatusName = this.managestatus_map.get(item.managestatus);
+          item.gdsreport = this.gdsreportMap.get(item.gdsreport);
           return item;
         });
       } catch (error) {

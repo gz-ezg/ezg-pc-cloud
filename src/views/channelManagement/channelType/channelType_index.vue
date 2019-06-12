@@ -275,6 +275,7 @@ export default {
       channelCode: "",
       qudao: "",
       single: false,
+      currentRow: "",
       data: [],
       data2: [],
       data3: [],
@@ -477,9 +478,9 @@ export default {
             id: _data.rows[i].id,
             channel_type_code: _data.rows[i].channel_type_code,
             channel_type_name: _data.rows[i].channel_type_name,
-            province: _data.rows[i].province || '',
-            city: _data.rows[i].city || '',
-            area: _data.rows[i].area || ''
+            province: _data.rows[i].province || "",
+            city: _data.rows[i].city || "",
+            area: _data.rows[i].area || ""
           });
         }
       }
@@ -489,6 +490,10 @@ export default {
     getProvice() {
       if (this.provinceData.length) {
         return;
+      }
+      let provinceData = localStorage.getItem("province");
+      if (provinceData) {
+        return (this.provinceData = JSON.parse(provinceData));
       }
       let url = "/product/area/getProvinceList";
       let doSuccess = resp => {
@@ -516,6 +521,8 @@ export default {
             children: v.children
           };
         });
+
+        localStorage.setItem("province", JSON.stringify(this.provinceData));
       };
       this.GetData(url, doSuccess);
     },
@@ -566,6 +573,7 @@ export default {
     cancel(name) {
       this.isAdd = false;
       this.isEdit = false;
+      this.province = [];
       this.$refs[name].resetFields();
     },
 
@@ -575,19 +583,14 @@ export default {
       _self.channelId = a.id;
       _self.channelName = a.channel_type_name;
       _self.channelCode = a.channel_type_code;
-      if (!a.province) {
-        _self.province = [];
-      } else {
-        _self.province = [a.province, a.city, a.area];
-      }
-
+      this.currentRow = a;
       _self.getUser(a.id);
     },
 
     // 点击新增按钮
     addT() {
       let _self = this;
-
+      _self.province = [];
       _self.title = "新增";
       _self.isAdd = true;
       _self.addType = true;
@@ -597,14 +600,23 @@ export default {
     TypeEdit() {
       this.getProvice();
       let _self = this;
-
+      let { currentRow } = this;
       if (_self.channelId == "") {
         _self.$Message.warning("请选择要编辑的渠道类型");
       } else {
+        if (!currentRow.province) {
+          _self.province = [];
+        } else {
+          _self.province.push(currentRow.province);
+          _self.province.push(currentRow.city);
+          _self.province.push(currentRow.area);
+        }
+
         _self.title = "编辑";
         _self.isEdit = true;
         _self.formValidate.channelTypeCode = _self.channelCode;
         _self.formValidate.channelTypeName = _self.channelName;
+
         _self.addType = true;
       }
     },
