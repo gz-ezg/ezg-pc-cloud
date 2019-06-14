@@ -222,9 +222,13 @@
                 this.$bus.emit("OPEN_ORDERLIST_ADD", true)
             },
             open_edit(){
-                if(this.selectRow){
+                if(this.selectRow && this.selectRow.apply_status=="待审核"){
                         this.$bus.emit("OPEN_ORDERLIST_EDIT", this.selectRow.id)
-                }else{
+                }
+                if (this.selectRow.apply_status!=="待审核") {
+                    this.$Message.warning("已审批的工单不允许编辑")
+                }
+                if(!this.selectRow) {
                     this.$Message.warning("请选择一行进行操作！")
                 }
             },

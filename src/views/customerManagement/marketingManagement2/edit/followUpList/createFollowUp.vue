@@ -45,8 +45,23 @@
                     </Col>
                 </Row>
                 <FormItem label="跟进记录" prop="content" style="margin-bottom:20px">
-                    <Input size="small" type="textarea" v-model="formValidate.content"/>
+                    <div class="sp">
+                        <new-edit-div v-model="formValidate.content"></new-edit-div>
+                        <div class="spz">
+                            <div class="spzz" @click="showPhrase"><Icon type="android-chat" ></Icon></div>
+                        </div>
+                    </div>
                 </FormItem>
+                <div v-show="phraseShow" class="ssz">
+                    <Card>
+                        <div class="sszz" v-for="(item,index) in phraseList" @click="giveData(item)" :loading="phraseLoading">
+                            <div class="ssz1">{{item.quick_content}}</div>
+                            <div class="ssz2" @click.stop="editable(item.quick_content,item.id)"><Icon type="edit" ></Icon></div>
+                            <div class="ssz3" @click.stop="selectArr(item.id)"><Icon type="close" ></Icon></div>
+                        </div>
+                        <div class="sszz1" @click="add_schtask"><h4>+添加</h4></div>
+                    </Card>
+                </div>
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem label="通知用户" prop="customerTags" style="margin-bottom:10px">
@@ -90,6 +105,8 @@
                 <Button name="marketingManagement_index_followUp_submit" type="primary" @click="submit" :loading="loading" :disabled="loading">提交</Button>
                 <Button type="ghost" @click="cancel" style="margin-left: 8px">重置</Button>
             </div>
+            <add></add>
+            <amend></amend>
         </Modal>
     </div>
 </template>
@@ -97,8 +114,9 @@
 <script>
 import { yasuo } from '../../../../../libs/img_beforeUpload'
 import { DateFormat } from '../../../../../libs/utils.js'
-
-
+import Add from './add'
+import Amend from './amend'
+import newEditDiv from './newEditDiv'
 export default {
     props:{
         customer: {
@@ -108,10 +126,18 @@ export default {
             type: [Array]
         }
     },
+    components:{
+        Add,
+        Amend,
+        newEditDiv
+    },
     data(){
         return {
             openFinish: true,
             openFollowCreate: false,
+            phraseShow:false,
+            phraseLoading:false,
+            phraseList:[],
             formValidate: {
                 companyId: "",
                 followResult: "",
@@ -142,6 +168,78 @@ export default {
         }
     },
     methods: {
+        giveData(item){
+            this.formValidate.content=this.formValidate.content+item.quick_content
+            this.phraseShow = false
+        },
+        editable(content,id){
+            let _self = this
+            _self.$bus.$emit("AMEND_PHRASE_DATA",content,id)
+        },
+        selectArr(id){
+            this.delete_phrase_list(id)
+            // this.addArr.splice(index.vue,1)
+        },
+        add_schtask(){
+            this.$bus.emit("ADD_SCHTASK")
+        },
+        showPhrase(){
+            if (this.phraseShow===true){
+                this.phraseShow=false
+            } else {
+                this.phraseShow=true
+            }
+            this.get_phrase_list()
+        },
+        get_phrase_list(){
+            let _self = this
+            _self.phraseLoading = true
+            let url = 'api/task/findTaskQuickList'
+            let config = {
+                params:{
+                    quickType: "customerNote"
+                }
+            }
+            function success(res){
+                _self.phraseLoading = false
+                _self.phraseList = res.data.data
+            }
+            this.$Get(url, config, success)
+        },
+        // add_phrase_list(e){
+        //     let _self = this
+        //     _self.phraseLoading = true
+        //     let url = 'api/task/addTaskQuick'
+        //     let config={
+        //         quickType:"business",
+        //         quickContent:e,
+        //         quickIndex:1,
+        //     }
+        //     function success(res){
+        //         _self.phraseLoading = false
+        //         _self.$bus.emit("UPDATE_PHRASE_LIST", true)
+        //     }
+        //     function fail(err){
+        //         _self.phraseLoading = true
+        //
+        //     }
+        //     this.$Post(url, config, success, fail)
+        // },
+        delete_phrase_list(id){
+            let _self = this
+            _self.phraseLoading = true
+            let url = 'api/task/deleteTaskQuick'
+            let config = {
+                params:{
+                    taskQuickId: id
+                }
+            }
+            function success(res){
+                _self.phraseLoading = false
+                _self.$bus.emit("UPDATE_PHRASE_LIST", true)
+            }
+            this.$Get(url, config, success)
+        },
         t(e){
             console.log(e)
             this.notify_ids = ''
@@ -237,7 +335,12 @@ export default {
         cancel(){
             this.showFile = []
             this.fileArray = []
+            this.test = ""
+            this.formValidate.followupdate = ""
+            this.formValidate.followuptime = ""
             this.formValidate.content = ""
+            this.$refs['formValidate'].resetFields();
+            this.$bus.emit("RESET_INNERTEXT",true)
         },
         submit(){
             this.loading = true
@@ -387,6 +490,10 @@ export default {
         // this.$bus.on("EDIT_PHONE_RECORD",(e)=>{
         //     this.uploadPhoneType(e)
         // })
+        this.$bus.off("UPDATE_PHRASE_LIST",true)
+        this.$bus.on("UPDATE_PHRASE_LIST",(e)=>{
+            this.get_phrase_list()
+        })
     },
     mounted(){
         let _self = this
@@ -401,3 +508,71 @@ export default {
     }
 }
 </script>
+
+<style>
+    .spz{
+        height: 25px;
+        width: 100%;
+        border: 1px solid #dddee1;
+        border-top: none;
+        background-color: #fff;
+        cursor: text;
+    }
+    .sp{
+        /*margin-bottom: 25px;*/
+    }
+    .spzz{
+        width: 20px;
+        margin-left: 10px;
+        cursor: pointer;
+        text-align: center;
+    }
+    .spzz:hover{
+        color: #2d8cf0;
+    }
+    .ssz{
+        width: 200px;
+        position: relative;
+        left: 120px;
+        top: 0px;
+        z-index: 100;
+        background: #dddee1;
+    }
+    .ssz1{
+        width: 100px;
+        word-break: break-all;
+    }
+    .ssz1,.ssz2,.ssz3{
+        display: inline-block;
+    }
+    .sszz{
+        padding: 5px 0;
+    }
+    .sszz:hover{
+        background: #fff5e6;
+    }
+    .ssz2:hover{
+        color: #2d8cf0;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .ssz3:hover{
+        cursor: pointer;
+        font-size: 16px;
+        color: #ed3f14;
+    }
+    .ssz2{
+        margin-left: 30px;
+    }
+
+    .sszz1{
+        padding: 10px 10px 0 10px;
+        text-align: center;
+        color: #2d8cf0;
+    }
+    .sszz1:hover{
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+</style>
