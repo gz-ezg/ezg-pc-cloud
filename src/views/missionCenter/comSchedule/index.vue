@@ -392,7 +392,8 @@
                         // }
 
                     _self.events = _self.events_temp
-                        }
+
+                    }
 
                 }
 
