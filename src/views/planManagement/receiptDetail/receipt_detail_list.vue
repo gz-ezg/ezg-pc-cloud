@@ -4,6 +4,40 @@
         <!--    <Row style="margin-bottom:10px">
                 <search-model :data="searchData" @search="search"></search-model>
             </Row>-->
+        <Row style="margin-bottom:10px">
+            <Collapse v-model="search_model">
+                <Panel name="1">
+                    <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>筛选
+                    <div slot="content" @keydown.enter="search">
+                    <Form ref="formInline" :model="formInline" :label-width="100">
+                        <Row :gutter="16">
+                            <Col span="8">
+                                <FormItem prop="companyname" label="企业名称：">
+                                    <Input size="small"  type="text" v-model="formInline.companyname" placeholder="">
+                                    </Input>
+                                </FormItem>
+                            </Col>
+                            <Col span="8">
+                                <FormItem prop="alisname" label="项目名称：">
+                                    <Input size="small"  type="text" v-model="formInline.alisname" placeholder="">
+                                    </Input>
+                                </FormItem>
+                            </Col>
+                            <Col span="8">  
+                                <FormItem prop="date" label="申报时间：">
+                                    <DatePicker transfer type="daterange" placement="bottom-end" v-model="formInline.date" style="width:100%" size="small"></DatePicker>
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <FormItem>
+                        <Button type="primary" @click="search">搜索</Button>
+                        <Button type="ghost" style="margin-left:20px" @click="handleReset">重置</Button>
+                        </FormItem>
+                    </Form>
+                    </div>
+                </Panel>
+            </Collapse>
+      </Row>
             <Row>
 
                 <ButtonGroup>
@@ -43,6 +77,7 @@
 <script>
 import companyReceiptItem from  './company_receipt_item.vue'
 import planReceiptItem from  './plan_receipt_item.vue'
+import { DateFormat } from '../../../libs/utils.js'
     export default {
         props:["finish_flag"],
         components:{
@@ -51,8 +86,14 @@ import planReceiptItem from  './plan_receipt_item.vue'
         },
         data(){
             return {
+                search_model: '',
                 order:'finish_date',
                 currentRow: {},
+                formInline:{
+                    companyname:'',
+                    alisname:'',
+                    date: '',
+                },
                 loading: true,
                 page: 1,
                 pageSize: 10,
@@ -118,16 +159,20 @@ import planReceiptItem from  './plan_receipt_item.vue'
         },
         methods:{
             get_data(){
-                var _self = this
 
+                var _self = this
+                _self.loading = true;
                 var url = 'api/order/work/order/plan/receipt/list'
                 var config = {
                     params:{
                         order:_self.order,
                         page:_self.page,
                         pageSize:_self.pageSize,
-                        finish_flag:_self.finish_flag
-
+                        finish_flag:_self.finish_flag,
+                        companyname:_self.formInline.companyname,
+                        alisname:_self.formInline.alisname,
+                        startDate:DateFormat(_self.formInline.date[0]),
+                        endDate:DateFormat(_self.formInline.date[1]),
                     }
                 }
 
@@ -146,6 +191,14 @@ import planReceiptItem from  './plan_receipt_item.vue'
 
                 })
 
+            },
+            search(){
+                this.page = 1
+                this.get_data()
+            },
+            handleReset(){
+                this.$refs["formInline"].resetFields()
+                this.get_data()
             },
             page_size_change(e){
                 this.pageSize = e

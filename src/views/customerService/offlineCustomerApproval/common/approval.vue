@@ -80,6 +80,17 @@
                     </Col>
                 </Row>
                 <Row :gutter="16">
+                    <Col span="10">
+                        <FormItem prop="taxperiod" label="下线税期">
+                            <DatePicker type="month" v-model="task_message.taxperiod" style="width: 100%" size="small" readonly></DatePicker>
+                        </FormItem>
+                    </Col>
+                    <Col span="10">
+                        <FormItem prop="endreason" label="客户类别">
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="16">
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
                         <FormItem prop="" label="是否需退款">

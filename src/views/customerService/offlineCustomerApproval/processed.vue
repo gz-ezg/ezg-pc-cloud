@@ -48,6 +48,18 @@
                                             </FormItem>
                                         </Col>
                                     </Row>
+                                    <Row>
+                                        <Col span="8">  
+                                            <FormItem prop="callbackdate" label="回访时间：">
+                                                <DatePicker transfer type="daterange" placement="bottom-end" v-model="NformInline.callbackdate" style="width:100%" size="small"></DatePicker>
+                                            </FormItem>
+                                        </Col>
+                                        <Col span="8">  
+                                            <FormItem prop="updatedate" label="完结时间：">
+                                                <DatePicker transfer type="daterange" placement="bottom-end" v-model="NformInline.updatedate" style="width:100%" size="small"></DatePicker>
+                                            </FormItem>
+                                        </Col>
+                                    </Row>
                                     <FormItem>
                                         <Button type="primary" @click="search">搜索</Button>
                                         <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
@@ -92,6 +104,7 @@
 
 <script>
     import Bus from '../../../components/bus'
+    import { DateFormat } from '../../../libs/utils.js'
 
     export default {
         components: {
@@ -104,7 +117,9 @@
                     tel:"",
                     product:"",
                     marketername:"",
-                    servicename:""
+                    servicename:"",
+                    callbackdate: [],
+                    updatedate: []
                 },
                 loading: false,
                 search_model:"",
@@ -256,18 +271,12 @@
                 _self.isExamine = false
             },
             search(){
-                console.log('123')
                 this.page = 1
                 this.getData()
             },
             reset(){
                 this.page = 1
-                this.NformInline.companyname = ""
-                this.NformInline.name = ""
-                this.NformInline.tel = ""
-                this.NformInline.product = ""
-                this.NformInline.marketername = ""
-                this.NformInline.servicename = ""
+                this.$refs['NformInline'].resetFields()
                 this.getData()
             },
             customerDetail(a) {
@@ -329,7 +338,17 @@
                         isAudit: "Y",
                         createName: "",
                         bcreatedate: "",
-                        ecreatedate: ""
+                        ecreatedate: "",
+                        companyname:_self.NformInline.companyname,
+						customername:_self.NformInline.name,
+						customertel:_self.NformInline.tel,
+						productname:_self.NformInline.product,
+						marketer:_self.NformInline.marketername,
+                        servicer:_self.NformInline.servicename,
+                        bcallbackdate:DateFormat(_self.NformInline.callbackdate[0]),
+                        ecallbackdate:DateFormat(_self.NformInline.callbackdate[1]),
+                        bupdatedate:DateFormat(_self.NformInline.updatedate[0]),
+                        eupdatedate:DateFormat(_self.NformInline.updatedate[1]),
                     }
                 }
                 _self.row = {}

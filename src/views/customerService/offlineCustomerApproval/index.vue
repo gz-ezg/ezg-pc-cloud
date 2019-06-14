@@ -15,8 +15,8 @@
 </template>
 
 <script>
-    import Processed from './processed'
-    import Untreated from './untreated'
+    import Processed from './processed.vue'
+    import Untreated from './untreated.vue'
     import Approval from './common/approval'
     import Detail from './common/detail'
     import AduitLog from './common/aduitLog'

@@ -49,8 +49,8 @@ import incomeDetail from './incomeDetail'
 
 import all from './myCommonTaskIndex/tabpanes/all'
 import finished from './myCommonTaskIndex/tabpanes/finished'
-import serving from './myCommonTaskIndex/tabpanes/servicing'
-import notbegin from './myCommonTaskIndex/tabpanes/notbegin'
+import serving from './myCommonTaskIndex/tabpanes/servicing.vue'
+import notbegin from './myCommonTaskIndex/tabpanes/notbegin.vue'
 import stop from './myCommonTaskIndex/tabpanes/stop'
 import StopWorkOrder from "../../commercialManagement/myCommonTask/stopWorkOrder.vue"
 import workOrderLog from "../../commercialManagement/myCommonTask/workOrderLog.vue"
