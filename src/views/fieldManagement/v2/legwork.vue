@@ -28,7 +28,7 @@
                                 <Row :gutter="16">
                                     <Col span="8">
                                     <FormItem label="公司名称：" prop="companyname">
-                                        <Input v-model="formValidateSearch.realname" size="small"></Input>
+                                        <Input v-model="formValidateSearch.companyname" size="small"></Input>
                                     </FormItem>
                                     </Col>
                                     <Col span="8">
