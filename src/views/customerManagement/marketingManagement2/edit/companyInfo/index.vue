@@ -6,7 +6,7 @@
         <Table
             :loading="loading"
                 highlight-row
-                @on-current-change="select_row"
+                @on-selection-change="select_row"
                 border
                 size="small"
                 :columns="header"
@@ -67,6 +67,11 @@ export default {
             loading: false,
             close: false,
             header: [
+                {
+                    type:'selection',
+                    width: 60,
+                    align: 'center'
+                },
                 {
                     title: "序号",
                     type: 'index',
@@ -225,12 +230,17 @@ export default {
         },
         select_row(e){
             console.log(e)
+            this.selectCompany = []
             this.selectCompany = e
         },
         open_company_merge(){
-            if (this.selectCompany.length!==0) {
+            if (this.selectCompany.length==1) {
                 this.$bus.emit("OPEN_COMPANY_MERGE",this.selectCompany.id)
-            }else {
+            }
+            if (this.selectCompany.length>1){
+                this.$Message.warning("只能选择一家企业合并")
+            }
+            else {
                 this.$Message.warning("请选择要合并的企业")
             }
 
@@ -254,7 +264,7 @@ export default {
             this.$bus.emit("OPEN_COMPANY_CREATE",true)
         },
         shift_company(){
-            if(this.selectCompany){
+            if(this.selectCompany.length!==0){
                 this.openShiftCompany = true
             }else{
                 this.$Message.warning("请选择需要变更的公司！")

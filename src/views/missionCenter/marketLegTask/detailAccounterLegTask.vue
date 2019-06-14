@@ -139,7 +139,8 @@
                         <span style="line-height:24px">开始打卡备注</span>
                     </Col>
                     <Col span="18">
-                        <Input size="small" v-model="fieldDetail.begin_memo" style="width:180px" disabled></Input>
+                        <Input v-model="fieldDetail.begin_memo" size="small" style="width:180px" type="textarea" :row="5" autosize>
+                        </Input>
                     </Col>
                 </Row>
                 <Row :gutter="20" style="margin-top:20px" v-if="taskKindName=='市场外勤'">
@@ -147,7 +148,7 @@
                         <span style="line-height:24px">外勤总结</span>
                     </Col>
                     <Col span="18">
-                        <Input size="small" v-model="fieldDetail.finish_memo" style="width:180px" disabled></Input><span style="margin-left: 20px"><Button v-if="data[0].followResult=='Party' || data[0].followResult=='Visit'" type="primary" size="small" @click="add_customer">新增客户</Button></span>
+                        <Input v-model="fieldDetail.finish_memo" size="small" style="width:180px" type="textarea" :row="5" autosize></Input><span style="margin-left: 20px"><Button v-if="data[0].followResult=='Party' || data[0].followResult=='Visit'" type="primary" size="small" @click="add_customer">新增客户</Button></span>
                     </Col>
                 </Row>
                 <Row :gutter="20" style="margin-top:20px" v-if="taskKindName=='市场外勤'">
