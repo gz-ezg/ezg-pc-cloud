@@ -723,6 +723,7 @@ export default {
         },
         handleUpload(file){
             let _self = this
+            _self.$Spin.show();
             let formdata = new FormData()
             let url = 'api/customer/importHighSeasPoolMessage'
 
@@ -731,10 +732,12 @@ export default {
             function success(res){
                 _self.get_data()
                 _self.openImportCustomer = false
+                _self.$Spin.hide();
                 return false
             }
 
             function fail(err){
+                _self.$Spin.hide();
                 return false
             }
 

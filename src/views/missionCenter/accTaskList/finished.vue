@@ -15,20 +15,27 @@
                                         </FormItem>
                                     </Col>
                                     <Col span="8">
-                                        <FormItem label="客户联系方式：" prop="customername">
-                                            <Input v-model="formValidateSearch.customertel" size="small"></Input>
+                                        <FormItem label="执行人：" prop="date">
+                                            <Input v-model="formValidateSearch.creatorName"  size="small"></Input>
+                                        </FormItem>
+                                    </Col>
+                                    <Col span="8">
+                                        <FormItem label="任务结果：" prop="customername">
+                                            <Select v-model="formValidateSearch.mission" size="small" style="width:180px">
+                                                <Option v-for="item in missionList" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
+                                            </Select>
                                         </FormItem>
                                     </Col>
                                 </Row>
                                 <Row :gutter="24">
                                     <Col span="8">
-                                        <FormItem label="执行人：" prop="date">
-                                            <Input v-model="formValidateSearch.creatorName" s size="small"></Input>
+                                        <FormItem label="执行时间期间：" prop="paytime">
+                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:100%" size="small"></DatePicker>
                                         </FormItem>
                                     </Col>
                                     <Col span="8">
-                                        <FormItem label="执行时间期间：" prop="paytime">
-                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:100%" size="small"></DatePicker>
+                                        <FormItem label="完结时间期间：" prop="paytime">
+                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.endDate" style="width:100%" size="small"></DatePicker>
                                         </FormItem>
                                     </Col>
                                 </Row>
@@ -63,18 +70,22 @@
                         style="margin-top: 10px"></Page>
             </Row>
         </Card>
-        <detail></detail>
+        <finished-detail></finished-detail>
+        <field-detail></field-detail>
     </div>
 </template>
 
 <script>
-    import {FULLDateFormat} from "../../../libs/utils";
     import {DateFormat} from "../../../libs/utils";
-    import detail from './detail'
-
+    import {FULLDateFormat} from "../../../libs/utils";
+    import finishedDetail from './finishedDetail'
+    import fieldDetail from './fieldDetail'
     export default {
-        name: "Executing",
-        components: {detail},
+        name: "finished",
+        components:{
+            finishedDetail,
+            fieldDetail
+        },
         data(){
             return{
                 loading:false,
@@ -82,7 +93,10 @@
                 page:1,
                 data:[],
                 taskKind:[],
+                missionList:[{"typecode":"Completed","typename":"成功"},{"typecode":"Failed","typename":"失败"}],
                 taskKind_map:new Map(),
+                taskStage:[],
+                taskStage_map:new Map(),
                 search_model: "0",
                 formValidateSearch: {
                     ordercode: "",
@@ -90,18 +104,16 @@
                     creatorName: "",
                     customertel: "",
                     payDir: "",
+                    mission:"",
                     date: [],
+                    endDate:[],
                     crealname: "",
                     frealname: "",
                     paytime: [],
+                    endtime:[],
                     customerCreateTime: []
                 },
                 header:[
-                    {
-                        title: '客户名称',
-                        key: 'customerName',
-                        minWidth: 180,
-                    },
                     {
                         title: '公司名称',
                         key: 'companyName',
@@ -113,19 +125,55 @@
                         minWidth: 140,
                     },
                     {
+                        title: '服务内容',
+                        minWidth: 295,
+                        render: (h, params) => {
+                            if(params.row.taskKindName==='会计外勤' || params.row.taskKindName==='会计到家') {
+                                return h('div', [
+                                    h('div', {},params.row.productName)
+                                ])
+                            } else {
+                                return h('div', [
+                                    h('div', {},params.row.legName)
+                                ])
+                            }
+                        }
+                    },
+                    {
+                        title: '任务结果',
+                        key: 'mission_name',
+                        minWidth: 140,
+                    },
+                    {
                         title: '执行人',
                         key: 'executorName',
                         minWidth: 140,
                     },
                     {
-                        title: '执行时间',
+                        title: '计划执行时间',
                         key: 'planDate',
                         minWidth: 180,
                     },
                     {
                         title: '任务类型',
-                        key: 'taskKind',
                         minWidth: 140,
+                        render: (h, params) => {
+                            if(params.row.taskKindName=='代账外勤') {
+                                return h('div', [
+                                    h('div', {},params.row.legType)
+                                ])
+                            } else {
+                                return h('div', [
+                                    h('div', {},params.row.taskKindName)
+                                ])
+                            }
+                        }
+                    },
+
+                    {
+                        title: '完结时间',
+                        key: 'actualEndDate',
+                        minWidth: 180,
                     },
                     {
                         title: '操作',
@@ -142,21 +190,11 @@
                                     },
                                     on: {
                                         click: () => {
+                                            console.log(params)
                                             this.show(params)
                                         }
                                     }
                                 }, '[查看]'),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.delete(params)
-                                        }
-                                    }
-                                }, '[作废]')
                             ]);
                         }
                     },
@@ -182,30 +220,15 @@
                 this.formValidateSearch.companyName=null
                 this.formValidateSearch.creatorName=null
                 this.formValidateSearch.customertel=null
+                this.formValidateSearch.mission = null
+                this.formValidateSearch.endDate=[]
                 this.get_data()
             },
             show(p){
-                this.$bus.emit("SHOW_MARKET_DETAILS",p)
+                this.$bus.emit("SHOW_FINISHED_DETAILS",p)
             },
-            delete(p){
-                let _self = this
-                let url = `api/task/deleteTask`
-                let config = {
-                    params: {
-                        taskId: p.row.taskId
-                    }
-                }
-                function success(res){
-                    // _self.$Message.success(res.data.msg)
-                    setTimeout(()=>{
-                        _self.get_data()
-                        _self.$bus.emit("UPDATE_DATA",true)
-                    }, 500)
-                }
-                function fail(err){
-
-                }
-                _self.$Get(url, config, success, fail)
+            show_field_detail(p){
+                this.$bus.emit("SHOW_FIELD_DETAIL",p)
             },
             get_data(){
                 let _self = this
@@ -213,15 +236,18 @@
                 _self.loading = true
                 let config = {
                     params: {
-                        task_stage:"tesUnstarted",
-                        task_kind :"tkNormal",
+                        task_stage:"tesFinished",
+                        accountKind:"accountKind",
                         page:_self.page,
                         pageSize:_self.pageSize,
                         companyName:_self.formValidateSearch.companyName,
                         executor_name:_self.formValidateSearch.creatorName,
                         customerTel:_self.formValidateSearch.customertel,
+                        mission:_self.formValidateSearch.mission,
                         bplan_date:DateFormat(_self.formValidateSearch.date[0]),
                         eplan_date:DateFormat(_self.formValidateSearch.date[1]),
+                        bend_date:DateFormat(_self.formValidateSearch.endDate[0]),
+                        eend_date:DateFormat(_self.formValidateSearch.endDate[1])
                     }
                 }
                 function success(res){
@@ -229,23 +255,29 @@
                     _self.data = res.data.data.rows
                     _self.total = res.data.data.total
                     for(let i = 0; i < _self.data.length; i++){
-                    //     _self.data[i].expect_date = DateFormat(_self.data[i].expect_date)
+                        //     _self.data[i].expect_date = DateFormat(_self.data[i].expect_date)
                         _self.data[i].taskKind = _self.taskKind_map.get(_self.data[i].taskKind)
-                        // _self.data[i].planDate = FULLDateFormat(_self.data[i].planDate)
-                    //     _self.data[i].task_place = _self.taskPlace_map.get(_self.data[i].task_place)
-                    //     if (_self.data[i].apply_status==="tesFinished") {
-                    //         _self.data[i].apply_status="同意"
-                    //     }
-                    //     if (_self.data[i].apply_status==="tesReturned") {
-                    //         _self.data[i].apply_status="驳回"
-                    //     }
-                    //     if (_self.data[i].apply_status==="tesReady") {
-                    //         _self.data[i].apply_status="待审核"
-                    //     }
-                    //     _self.data[i].create_date = DateFormat(_self.data[i].create_date)
-                    //     _self.data[i].expect_date = DateFormat(_self.data[i].expect_date)
-                    //     _self.data[i].check_date = DateFormat(_self.data[i].check_date)
-                    //     _self.data[i].plan_date =  DateFormat(_self.data[i].plan_date)
+                        _self.data[i].taskStage = _self.taskStage_map.get(_self.data[i].taskStage)
+                        if (_self.data[i].legType=='A'){
+                            _self.data[i].legType = 'A类外勤'
+                        }
+                        if (_self.data[i].legType=='B'){
+                            _self.data[i].legType = 'B类外勤'
+                        }
+                        //     _self.data[i].task_place = _self.taskPlace_map.get(_self.data[i].task_place)
+                        //     if (_self.data[i].apply_status==="tesFinished") {
+                        //         _self.data[i].apply_status="同意"
+                        //     }
+                        //     if (_self.data[i].apply_status==="tesReturned") {
+                        //         _self.data[i].apply_status="驳回"
+                        //     }
+                        //     if (_self.data[i].apply_status==="tesReady") {
+                        //         _self.data[i].apply_status="待审核"
+                        //     }
+                        //     _self.data[i].create_date = DateFormat(_self.data[i].create_date)
+                        //     _self.data[i].expect_date = DateFormat(_self.data[i].expect_date)
+                        //     _self.data[i].check_date = DateFormat(_self.data[i].check_date)
+                        //     _self.data[i].plan_date =  DateFormat(_self.data[i].plan_date)
                     }
                     _self.loading = false
                 }
@@ -254,11 +286,13 @@
             get_data_center(){
                 let _self = this
                 return new Promise((resolve,reject) => {
-                    let params ="taskKind"
+                    let params ="taskKind,taskStage"
 
                     function success(res){
                         _self.taskKind = res.data.data.taskKind
+                        _self.taskStage = res.data.data.taskStage
                         _self.taskKind_map = _self.$array2map(_self.taskKind)
+                        _self.taskStage_map=_self.$array2map(_self.taskStage)
                         resolve()
                     }
                     this.$GetDataCenter(params, success)
@@ -269,7 +303,7 @@
             this.loading = true
             this.get_data_center()
             this.get_data()
-            this.$bus.on("UPDATE_EXECUTING_DATA",(e)=>{
+            this.$bus.on("UPDATE_FINISHED_DATA",()=>{
                 this.get_data()
             })
         }

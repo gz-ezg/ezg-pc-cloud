@@ -99,14 +99,14 @@ export default {
         this.$bus.off("OPEN_COMPANY_UPDATE",true)
         this.$bus.on("OPEN_COMPANY_UPDATE",(e)=>{
             _self.formValidate = e
-            if(_self.formValidate.companyarea){
-                // console.log(_self.formValidate.companyarea)
+            if(_self.formValidate.companyarea!==null){
+                console.log(_self.formValidate.companyarea)
                 _self.formValidate.companyarea_temp = _self.formValidate.companyarea.split("-")
                 _self.formValidate.companyarea_temp[0] = parseInt(_self.formValidate.companyarea_temp[0])
                 _self.formValidate.companyarea_temp[1] = parseInt(_self.formValidate.companyarea_temp[1])
-                // console.log(_self.formValidate.companyarea)
+                console.log(_self.formValidate.companyarea)
             }else{
-                _self.formValidate.companyarea = []
+                _self.formValidate.companyarea = null
             }
             _self.openUpdateCompany = true
         })

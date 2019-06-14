@@ -15,13 +15,6 @@
                                         </FormItem>
                                     </Col>
                                     <Col span="8">
-                                        <FormItem label="客户联系方式：" prop="customername">
-                                            <Input v-model="formValidateSearch.customertel" size="small"></Input>
-                                        </FormItem>
-                                    </Col>
-                                </Row>
-                                <Row :gutter="24">
-                                    <Col span="8">
                                         <FormItem label="执行人：" prop="date">
                                             <Input v-model="formValidateSearch.creatorName" s size="small"></Input>
                                         </FormItem>
@@ -63,18 +56,13 @@
                         style="margin-top: 10px"></Page>
             </Row>
         </Card>
-        <detail></detail>
     </div>
 </template>
 
 <script>
-    import {FULLDateFormat} from "../../../libs/utils";
     import {DateFormat} from "../../../libs/utils";
-    import detail from './detail'
-
     export default {
-        name: "Executing",
-        components: {detail},
+        name: "obsolete",
         data(){
             return{
                 loading:false,
@@ -98,11 +86,6 @@
                 },
                 header:[
                     {
-                        title: '客户名称',
-                        key: 'customerName',
-                        minWidth: 180,
-                    },
-                    {
                         title: '公司名称',
                         key: 'companyName',
                         minWidth: 240,
@@ -110,7 +93,22 @@
                     {
                         title: '任务',
                         key: 'taskName',
-                        minWidth: 140,
+                        minWidth: 200,
+                    },
+                    {
+                        title: '服务内容',
+                        minWidth: 200,
+                        render: (h, params) => {
+                            if(params.row.taskKindName==='代账外勤') {
+                                return h('div', [
+                                    h('div', {},params.row.legName)
+                                ])
+                            } else {
+                                return h('div', [
+                                    h('div', {},params.row.productName)
+                                ])
+                            }
+                        }
                     },
                     {
                         title: '执行人',
@@ -120,12 +118,22 @@
                     {
                         title: '执行时间',
                         key: 'planDate',
-                        minWidth: 180,
+                        minWidth: 160,
                     },
                     {
                         title: '任务类型',
-                        key: 'taskKind',
-                        minWidth: 140,
+                        minWidth: 180,
+                        render: (h, params) => {
+                            if(params.row.taskKindName=='代账外勤') {
+                                return h('div', [
+                                    h('div', {},params.row.legType)
+                                ])
+                            } else {
+                                return h('div', [
+                                    h('div', {},params.row.taskKindName)
+                                ])
+                            }
+                        }
                     },
                     {
                         title: '操作',
@@ -142,6 +150,7 @@
                                     },
                                     on: {
                                         click: () => {
+                                            // console.log(params)
                                             this.show(params)
                                         }
                                     }
@@ -153,10 +162,10 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.delete(params)
+                                            this.delete_return(params)
                                         }
                                     }
-                                }, '[作废]')
+                                }, '[还原]')
                             ]);
                         }
                     },
@@ -176,6 +185,9 @@
                 this.page = 1
                 this.get_data()
             },
+            show(p){
+                this.$bus.emit("SHOW_OBSOLETE_DETAILS",p)
+            },
             handleReset(){
                 this.$refs["formValidateSearch"].resetFields()
                 this.formValidateSearch.date = []
@@ -184,12 +196,9 @@
                 this.formValidateSearch.customertel=null
                 this.get_data()
             },
-            show(p){
-                this.$bus.emit("SHOW_MARKET_DETAILS",p)
-            },
-            delete(p){
+            delete_return(p){
                 let _self = this
-                let url = `api/task/deleteTask`
+                let url = `api/task/deleteReturnTask`
                 let config = {
                     params: {
                         taskId: p.row.taskId
@@ -199,7 +208,7 @@
                     // _self.$Message.success(res.data.msg)
                     setTimeout(()=>{
                         _self.get_data()
-                        _self.$bus.emit("UPDATE_DATA",true)
+                        _self.$bus.emit("UPDATE_EXECUTING_DATA",true)
                     }, 500)
                 }
                 function fail(err){
@@ -213,8 +222,8 @@
                 _self.loading = true
                 let config = {
                     params: {
-                        task_stage:"tesUnstarted",
-                        task_kind :"tkNormal",
+                        task_stage:"tesCanceled",
+                        accountKind:"accountKind",
                         page:_self.page,
                         pageSize:_self.pageSize,
                         companyName:_self.formValidateSearch.companyName,
@@ -229,23 +238,28 @@
                     _self.data = res.data.data.rows
                     _self.total = res.data.data.total
                     for(let i = 0; i < _self.data.length; i++){
-                    //     _self.data[i].expect_date = DateFormat(_self.data[i].expect_date)
+                        //     _self.data[i].expect_date = DateFormat(_self.data[i].expect_date)
                         _self.data[i].taskKind = _self.taskKind_map.get(_self.data[i].taskKind)
-                        // _self.data[i].planDate = FULLDateFormat(_self.data[i].planDate)
-                    //     _self.data[i].task_place = _self.taskPlace_map.get(_self.data[i].task_place)
-                    //     if (_self.data[i].apply_status==="tesFinished") {
-                    //         _self.data[i].apply_status="同意"
-                    //     }
-                    //     if (_self.data[i].apply_status==="tesReturned") {
-                    //         _self.data[i].apply_status="驳回"
-                    //     }
-                    //     if (_self.data[i].apply_status==="tesReady") {
-                    //         _self.data[i].apply_status="待审核"
-                    //     }
-                    //     _self.data[i].create_date = DateFormat(_self.data[i].create_date)
-                    //     _self.data[i].expect_date = DateFormat(_self.data[i].expect_date)
-                    //     _self.data[i].check_date = DateFormat(_self.data[i].check_date)
-                    //     _self.data[i].plan_date =  DateFormat(_self.data[i].plan_date)
+                        if (_self.data[i].legType=='A'){
+                            _self.data[i].legType = 'A类外勤'
+                        }
+                        if (_self.data[i].legType=='B'){
+                            _self.data[i].legType = 'B类外勤'
+                        }
+                        //     _self.data[i].task_place = _self.taskPlace_map.get(_self.data[i].task_place)
+                        //     if (_self.data[i].apply_status==="tesFinished") {
+                        //         _self.data[i].apply_status="同意"
+                        //     }
+                        //     if (_self.data[i].apply_status==="tesReturned") {
+                        //         _self.data[i].apply_status="驳回"
+                        //     }
+                        //     if (_self.data[i].apply_status==="tesReady") {
+                        //         _self.data[i].apply_status="待审核"
+                        //     }
+                        //     _self.data[i].create_date = DateFormat(_self.data[i].create_date)
+                        //     _self.data[i].expect_date = DateFormat(_self.data[i].expect_date)
+                        //     _self.data[i].check_date = DateFormat(_self.data[i].check_date)
+                        //     _self.data[i].plan_date =  DateFormat(_self.data[i].plan_date)
                     }
                     _self.loading = false
                 }
@@ -269,7 +283,7 @@
             this.loading = true
             this.get_data_center()
             this.get_data()
-            this.$bus.on("UPDATE_EXECUTING_DATA",(e)=>{
+            this.$bus.on("UPDATE_DATA",(e)=>{
                 this.get_data()
             })
         }

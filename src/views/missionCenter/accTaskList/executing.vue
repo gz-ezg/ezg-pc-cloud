@@ -14,13 +14,11 @@
                                             <Input v-model="formValidateSearch.companyName" size="small"></Input>
                                         </FormItem>
                                     </Col>
-                                    <Col span="8">
-                                        <FormItem label="客户联系方式：" prop="customername">
-                                            <Input v-model="formValidateSearch.customertel" size="small"></Input>
-                                        </FormItem>
-                                    </Col>
-                                </Row>
-                                <Row :gutter="24">
+                                    <!--<Col span="8">-->
+                                        <!--<FormItem label="客户联系方式：" prop="customername">-->
+                                            <!--<Input v-model="formValidateSearch.customertel" size="small"></Input>-->
+                                        <!--</FormItem>-->
+                                    <!--</Col>-->
                                     <Col span="8">
                                         <FormItem label="执行人：" prop="date">
                                             <Input v-model="formValidateSearch.creatorName" s size="small"></Input>
@@ -98,11 +96,6 @@
                 },
                 header:[
                     {
-                        title: '客户名称',
-                        key: 'customerName',
-                        minWidth: 180,
-                    },
-                    {
                         title: '公司名称',
                         key: 'companyName',
                         minWidth: 240,
@@ -113,19 +106,44 @@
                         minWidth: 140,
                     },
                     {
+                        title: '服务内容',
+                        minWidth: 295,
+                        render: (h, params) => {
+                            if(params.row.taskKindName==='会计外勤' || params.row.taskKindName==='会计到家') {
+                                return h('div', [
+                                    h('div', {},params.row.productName)
+                                ])
+                            } else {
+                                return h('div', [
+                                    h('div', {},params.row.legName)
+                                ])
+                            }
+                        }
+                    },
+                    {
                         title: '执行人',
                         key: 'executorName',
-                        minWidth: 140,
+                        minWidth: 130,
+                    },
+                    {
+                        title: '任务类型',
+                        minWidth: 100,
+                        render: (h, params) => {
+                            if(params.row.taskKindName==='会计外勤' || params.row.taskKindName==='会计到家') {
+                                return h('div', [
+                                    h('div', {},params.row.taskKindName)
+                                ])
+                            } else {
+                                return h('div', [
+                                    h('div', {},params.row.legType)
+                                ])
+                            }
+                        }
                     },
                     {
                         title: '执行时间',
                         key: 'planDate',
-                        minWidth: 180,
-                    },
-                    {
-                        title: '任务类型',
-                        key: 'taskKind',
-                        minWidth: 140,
+                        minWidth: 160,
                     },
                     {
                         title: '操作',
@@ -134,30 +152,30 @@
                         width: 140,
                         align: 'center',
                         render: (h, params) => {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.show(params)
+                                return h('div', [
+                                    h('Button', {
+                                        props: {
+                                            type: 'text',
+                                            size: 'small'
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.show(params)
+                                            }
                                         }
-                                    }
-                                }, '[查看]'),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.delete(params)
+                                    }, '[查看]'),
+                                    h('Button', {
+                                        props: {
+                                            type: 'text',
+                                            size: 'small',
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.delete(params)
+                                            }
                                         }
-                                    }
-                                }, '[作废]')
-                            ]);
+                                    }, '[作废]')
+                                ]);
                         }
                     },
                 ],
@@ -185,10 +203,11 @@
                 this.get_data()
             },
             show(p){
-                this.$bus.emit("SHOW_MARKET_DETAILS",p)
+                this.$bus.emit("SHOW_DETAILS",p)
             },
             delete(p){
                 let _self = this
+
                 let url = `api/task/deleteTask`
                 let config = {
                     params: {
@@ -214,7 +233,7 @@
                 let config = {
                     params: {
                         task_stage:"tesUnstarted",
-                        task_kind :"tkNormal",
+                        accountKind :"accountKind",
                         page:_self.page,
                         pageSize:_self.pageSize,
                         companyName:_self.formValidateSearch.companyName,
@@ -227,11 +246,18 @@
                 function success(res){
                     console.log(res.data.data.rows)
                     _self.data = res.data.data.rows
+
                     _self.total = res.data.data.total
                     for(let i = 0; i < _self.data.length; i++){
                     //     _self.data[i].expect_date = DateFormat(_self.data[i].expect_date)
                         _self.data[i].taskKind = _self.taskKind_map.get(_self.data[i].taskKind)
-                        // _self.data[i].planDate = FULLDateFormat(_self.data[i].planDate)
+                        _self.data[i].planDate = FULLDateFormat(_self.data[i].planDate)
+                        if (_self.data[i].legType=='A'){
+                            _self.data[i].legType = 'A类外勤'
+                        }
+                        if (_self.data[i].legType=='B'){
+                            _self.data[i].legType = 'B类外勤'
+                        }
                     //     _self.data[i].task_place = _self.taskPlace_map.get(_self.data[i].task_place)
                     //     if (_self.data[i].apply_status==="tesFinished") {
                     //         _self.data[i].apply_status="同意"

@@ -79,7 +79,7 @@
                         <span style="line-height:24px">代办于</span>
                     </Col>
                     <Col span="18">
-                        <DatePicker v-model="data[0].planDate" size="small" style="width:180px" type="datetime" @on-change="getPlanTime" disabled>
+                        <DatePicker v-model="data[0].planDate" size="small" style="width:180px" type="datetime" @on-change="getPlanTime" disabled readonly>
                         </DatePicker>
                     </Col>
                 </Row>
@@ -128,7 +128,8 @@
                         <span style="line-height:24px">开始打卡备注</span>
                     </Col>
                     <Col span="18">
-                        <Input v-model="fieldDetail.begin_memo" size="small" style="width:180px" readonly></Input>
+                        <Input v-model="fieldDetail.begin_memo" size="small" style="width:180px" type="textarea" :row="5" autosize readonly>
+                        </Input>
                     </Col>
                 </Row>
                 <Row :gutter="20" style="margin-top:20px" v-if="legId">
@@ -136,7 +137,8 @@
                         <span style="line-height:24px">外勤总结</span>
                     </Col>
                     <Col span="18">
-                        <Input v-model="fieldDetail.finish_memo" size="small" style="width:180px" readonly></Input>
+                        <Input v-model="fieldDetail.finish_memo" size="small" style="width:180px" type="textarea" :row="5" autosize readonly>
+                        </Input>
                     </Col>
                 </Row>
                 <Row :gutter="20" style="margin-top:20px" v-if="legId">

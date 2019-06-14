@@ -39,6 +39,19 @@ module.exports = {
         port: 9999,
         message: 'Now Proxy in 224(yrl); You application is running here http://localhost:9999'
     },
+    "dev-225":{
+        proxyTable: {
+            '/api': {
+                target: 'http://192.168.0.225:9000',
+                pathRewrite: {
+                  '^/api': ''
+                },
+                changeOrigin: true
+            }
+        },
+        port: 9999,
+        message: 'Now Proxy in 225(yrl); You application is running here http://localhost:9999'
+    },
     "dev-cloud":{
         proxyTable: {
             '/api': {

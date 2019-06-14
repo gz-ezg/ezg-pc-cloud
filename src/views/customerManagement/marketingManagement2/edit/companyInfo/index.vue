@@ -2,11 +2,11 @@
     <div>
         <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="open_company_create">新增</Button>
         <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="shift_company" v-permission="['company.shift']">转移</Button>
-        <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="open_company_merge">企业合并</Button>
+        <Button name="marketingManagement_index_company_add" type="primary" shape="circle" icon="plus" @click="open_company_merge" v-permission="['company.merge']">企业合并</Button>
         <Table
             :loading="loading"
                 highlight-row
-                @on-current-change="select_row"
+                @on-selection-change="select_row"
                 border
                 size="small"
                 :columns="header"
@@ -27,6 +27,7 @@
         <change-log></change-log>
         <shift-company v-if="openShiftCompany" @close="close_shift_company" :company="selectCompany"></shift-company>
         <merge-company :data="data"></merge-company>
+        <field-detail></field-detail>
     </div>
 </template>
 
@@ -37,6 +38,7 @@ import amendCompany from "./amend"
 import changeLog from "./changeLog"
 import shiftCompany from './shift'
 import mergeCompany from './merge'
+import fieldDetail from './field'
 export default {
     components: {
         createCompany,
@@ -44,7 +46,8 @@ export default {
         amendCompany,
         changeLog,
         shiftCompany,
-        mergeCompany
+        mergeCompany,
+        fieldDetail
     },
     props: {
         customer:{
@@ -64,6 +67,11 @@ export default {
             loading: false,
             close: false,
             header: [
+                {
+                    type:'selection',
+                    width: 60,
+                    align: 'center'
+                },
                 {
                     title: "序号",
                     type: 'index',
@@ -133,7 +141,7 @@ export default {
                     {
                         title: '操作',
                         key: 'action',
-                        minWidth: 250,
+                        minWidth: 300,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
@@ -180,6 +188,20 @@ export default {
                                         }
                                     }
                                 }, '名称变更日志'),
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.$bus.emit("OPEN_FIELD_DETAIL", params.row)
+                                        }
+                                    }
+                                }, '外勤'),
                             ]);
                         }
                     }
@@ -208,12 +230,17 @@ export default {
         },
         select_row(e){
             console.log(e)
+            this.selectCompany = []
             this.selectCompany = e
         },
         open_company_merge(){
-            if (this.selectCompany.length!==0) {
+            if (this.selectCompany.length==1) {
                 this.$bus.emit("OPEN_COMPANY_MERGE",this.selectCompany.id)
-            }else {
+            }
+            if (this.selectCompany.length>1){
+                this.$Message.warning("只能选择一家企业合并")
+            }
+            else {
                 this.$Message.warning("请选择要合并的企业")
             }
 
@@ -237,7 +264,7 @@ export default {
             this.$bus.emit("OPEN_COMPANY_CREATE",true)
         },
         shift_company(){
-            if(this.selectCompany){
+            if(this.selectCompany.length!==0){
                 this.openShiftCompany = true
             }else{
                 this.$Message.warning("请选择需要变更的公司！")
