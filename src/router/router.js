@@ -305,6 +305,14 @@ export const appRouter = [
                 component: () => import( /* webpackChunkName: "normalLegTask_index" */ '@/views/missionCenter/normalLegTask/index.vue')
             },
             {
+                access: 11643,
+                meta: 11643,
+                path: 'remindTask',
+                title: '提醒任务',
+                name: 'remindTask_index',
+                component: () => import( /* webpackChunkName: "remindTask_index" */ '@/views/missionCenter/remindTask/index.vue')
+            },
+            {
                 access: 11635,
                 meta: 11635,
                 path: 'legworkAssWorkorder',

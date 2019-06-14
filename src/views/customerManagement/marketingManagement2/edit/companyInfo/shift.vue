@@ -158,8 +158,18 @@ export default {
     },
     mounted(){
         this.get_data()
-        this.companyName = this.company.companyname
-        this.companyId = this.company.id
+        let companyNameList = []
+        let companyIdList = []
+        for (let i=0;i<this.company.length;i++){
+            companyNameList.push(this.company[i].companyname)
+            companyIdList.push(this.company[i].id)
+        }
+        // console.log(companyNameList)
+        // console.log(companyIdList)
+        this.companyName = companyNameList.join(",")
+        this.companyId = companyIdList.join(",")
+        console.log(this.companyName)
+        console.log(this.companyId)
     }
 }
 </script>

@@ -1,5 +1,6 @@
 <template>
-    <div style="min-width:1300px" @click="close_right_menu">
+    <div>
+        <div style="min-width:1300px" @click="close_right_menu">
         <Button v-if="right_click_show" :style="{top: rightTop + 'px', left: rightLeft + 'px'}" style="position:fixed;z-index:9000" type="primary" @click="add_task">新增日程</Button>
         <!-- <Button @click="get_date">下一天</Button> -->
         <Card title="商事排程表">
@@ -84,36 +85,26 @@
         </Card>
         <create-schedule></create-schedule>
         <detail-schedule-task></detail-schedule-task>
-        <div v-show="showFilter">
+
+        </div>
+        <div v-if="showFilter">
             <div class="filter">
                 <Form :label-width="80" style="margin:20px 20px 0 0">
-                    <FormItem label="客户：" >
-                        <Input placeholder="搜索相关的客户/人员">
-                            <Button  slot="append" icon="ios-search"  style="background: #2d8cf0;color: #fff;border-radius: 0px;font-weight: 700"></Button>
-                        </Input>
+                    <FormItem label="人员：" style="display: inline-block">
+                        <div class="d" v-for="(item,index) in personList" :class="{b:currentIndex==index}"  @click="showItem(item,index)">
+                            <span>{{item.realname}}</span>
+                        </div>
                     </FormItem>
                     <FormItem label="状态：" >
-                        <div class="d" >全部</div>
-                        <div class="d" >已完成</div>
-                        <div class="d" >正在处理</div>
-                        <div class="d" >已终止</div>
+                        <div class="d" v-for="(item,index) in statusList" :class="{b:currentIndexOne==index}" @click="showItemOne(item,index)" >
+                            <span>{{item}}</span>
+                        </div>
                     </FormItem>
-                    <FormItem label="类型：" >
-                        <div class="d" >全部</div>
-                        <div class="d" >微信</div>
-                        <div class="d" >电话</div>
-                        <div class="d" >QQ</div>
-                        <div class="d" >拜访</div>
-                        <div class="d" >商事</div>
-                        <div class="d" >会计</div>
-                        <div class="d" >线索</div>
-                        <div class="d" >客服</div>
-                        <div class="d" >其他</div>
-                    </FormItem>
-                    <FormItem label="包含任务：" >
-                        <div class="d">全部</div>
-                        <div class="d">是</div>
-                        <div class="d">否</div>
+                    <FormItem label="地区：" >
+                        <Select v-model="newMission.businessArea" type="text" style="width: 130px" size="small" transfer @on-change="select_area">
+                            <Option v-for="(item,index) in businessArea" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                        </Select>
+                        <Button type="primary" size="small" @click="reset_area">重置地区</Button>
                     </FormItem>
                 </Form>
             </div>
@@ -140,11 +131,21 @@
         data(){
             return{
                 load:false,
+                personList:["全部","符东","张威雄","王碧心","梁宝愿","潘美珊"],
+                statusList:["全部","未完成","成功","失败"],
+                executor_id:"",
+                mission:"",
+                newMission:{
+                    businessArea:""
+                },
                 businessArea:[],
                 businessPlace:[],
                 businessArea_map:new Map(),
                 businessPlace_map:new Map(),
                 showFilter:false,
+                currentIndex:"",
+                currentIndexOne:"",
+                taskStage:"",
                 rightTop:"",
                 rightLeft: "",
                 right_click_show: false,
@@ -161,7 +162,7 @@
                 header:{
                     left:   'prev,next today',
                     center: 'title',
-                    right:  'month,agendaDay',
+                    right:  'filter,month,agendaDay',
                 },
                 config:{
                     locale: 'zh-cn',
@@ -180,6 +181,7 @@
                             text:"筛选",
                             click:function () {
                                 this.showFilter=!this.showFilter
+                                event.stopPropagation()
                             }.bind(this)
                         }
                     }
@@ -204,8 +206,41 @@
 
         },
         methods:{
-            close_right_menu(){
-                this.right_click_show = false
+            showItem(item,index){
+                this.currentIndex = index
+                this.executor_id = item.id
+                console.log(this.executor_id )
+                this.get_data()
+            },
+            showItemOne(item,index){
+                this.currentIndexOne = index
+                if (index==0) {
+                    this.taskStage = ""
+                    this.mission = ""
+                    this.get_data()
+                }
+                if (index==1){
+                    this.taskStage = "tesUnstarted"
+                    this.mission = ""
+                    this.get_data()
+                }
+                if (index==2){
+                    this.taskStage = "tesFinished"
+                    this.mission = "Completed"
+                    this.get_data()
+                }
+                if (index==3){
+                    this.taskStage = "tesFinished"
+                    this.mission = "Failed"
+                    this.get_data()
+                }
+            },
+            select_area(){
+                this.get_data()
+            },
+            reset_area(){
+                this.newMission.businessArea = ""
+                this.get_data()
             },
             eventSelected(event, jsEvent, view){
                 //  点击展示事件详情
@@ -257,6 +292,7 @@
             //  关闭右键菜单
             close_right_menu(){
                 this.right_click_show = false
+                this.showFilter = false
             },
             mouse_out(){
                 // console.log("鼠标离开了！")
@@ -278,6 +314,24 @@
                 // 更改到指定日期
                 this.$refs.calendar.fireMethod('changeView', 'agendaDay', '2017-06-01')
             },
+            get_executor_list(){
+                let _self = this
+                let url = 'api/user/serviceList'
+                let config = {
+                    params: {}
+                }
+                function success(res){
+                    _self.personList =res.data.data.rows
+                    _self.personList.unshift({"id":null,"realname":"全部"})
+                    console.log(_self.personList)
+                }
+                function fail(err){
+                }
+                this.$Get(url, config, success, fail)
+            },
+            remove_data(){
+                this.$refs.calendar.fireMethod('removeEvents')
+            },
             get_data(){
                 let _self = this
                 let url = 'api/task/getLegWorklist'
@@ -285,16 +339,19 @@
                     params:{
                         page: 1,
                         pageSize: 1000,
-                        businessKind:"businessKind"
-
+                        businessKind:"businessKind",
+                        task_stage:_self.taskStage,
+                        executor_id:_self.executor_id,
+                        mission:_self.mission,
+                        task_area:_self.newMission.businessArea
                     }
                 }
 
                 function success(res){
                     _self.events_temp = res.data.data.rows
                     console.log(_self.events_temp )
-                    if (_self.events_temp.length===0 && _self.load) {
-                        window.location.reload()
+                    if (_self.events_temp.length==0) {
+                        _self.remove_data()
                     }
                     for(let i = 0;i<_self.events_temp.length;i++){
                         _self.events_temp[i].start = _self.events_temp[i].planDate
@@ -352,7 +409,7 @@
                     _self.businessPlace = res.data.data.gzbusinessplace
                     _self.businessArea_map = _self.$array2map(_self.businessArea)
                     _self.businessPlace_map = _self.$array2map(_self.businessPlace)
-                    console.log(_self.businessPlace_map)
+                    console.log(_self.businessArea)
                 }
                 this.$GetDataCenter(params, success)
             },
@@ -391,6 +448,7 @@
             let _self = this
             _self.get_data_center()
             _self.get_data()
+            _self.get_executor_list()
             _self.get_onedate_data((new Date()).toLocaleDateString().replace(new RegExp("/",'g'),"-"))
             this.local_date = (new Date()).toLocaleDateString().replace(new RegExp("/",'g'),"-")
             this.local_date = DateFormat(new Date())
@@ -461,6 +519,10 @@
         width: 300px;
         z-index: 1;
     }
+    .a{
+        display: flex;
+        justify-content: flex-start;
+    }
     .d{
         display: inline-block;
         height: 22px;
@@ -477,6 +539,11 @@
         cursor: pointer;
     }
     .d:hover{
+        opacity: 0.8;
+        background:  #2d8cf0;
+        color: #fff;
+    }
+    .b{
         opacity: 0.8;
         background:  #2d8cf0;
         color: #fff;
