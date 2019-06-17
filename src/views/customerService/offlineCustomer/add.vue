@@ -4,6 +4,7 @@
             v-model="isOpenAdd"
             title="录入"
             width="800"
+            @on-cancel="close"
         >
             <Form ref="task_message" :model="task_message" :rules="task_message_rule" :label-width="120">
                 <Row :gutter="16">
@@ -460,6 +461,7 @@
             close(){
                 this.cancel()
                 this.add = false
+                this.isOpenAdd = false
                 this.task_message.company = ""
                 this.task_message.product = ""
                 this.task_message.customer = ""
