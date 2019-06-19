@@ -135,6 +135,8 @@ export default {
             loading: false,
             sideLoading: false,
             productPrice: 0,
+            isCycle:"",
+            isCycleNum:0,
             areaCode: ['440000', '440100', '440103'],
             SKU: "",
             orderAddProduct: false,
@@ -237,6 +239,7 @@ export default {
         },
         //  生成产品详情
         select_product(e){
+            console.log(e)
             if(e.id == "14"){
                 this.$Message.error("对不起，该产品已经不允许操作！")
                 return false;
@@ -247,8 +250,10 @@ export default {
             this.productPrice = 0
             this.queryProperty = []
             this.selectProperty = []
+            this.isCycle = e.iscycle
             this.get_queryProperty(e.id)
             this.get_product_sku(e.id)
+            console.log(this.isCycle )
         },
         //  获取产品子属性
         get_queryProperty(e){
@@ -262,6 +267,7 @@ export default {
 
             function success(res){
                 _self.queryProperty = res.data.data
+                console.log(_self.queryProperty)
                 if(e == 100){
 
                     let temp = []
@@ -398,6 +404,13 @@ export default {
         },
         //  产品操作
         add_product(){
+            if (this.isCycle=="Y"){
+                this.isCycleNum = this.isCycleNum+1
+            }
+            if (this.isCycle=="Y" && this.isCycleNum>1) {
+                this.$Message.warning("XXXX产品请单独下一个订单")
+                return
+            }
             let _self = this
             let url = '/api/order/queryItemDetail'
 
@@ -486,6 +499,8 @@ export default {
             _self.selectProduct = ""
             _self.searchProduct = ""
             _self.companyId = e
+            _self.isCycle = ""
+            _self.isCycleNum = 0
             _self.search_product()
             _self.orderAddProduct = true
         })

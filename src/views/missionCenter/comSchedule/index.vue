@@ -484,12 +484,14 @@
         /*line-height: 18px;*/
         /*display: inline;*/
     }
-    .fc-content{
-        /*overflow: hidden;*/
-    }
-    .fc-title{
-        /*margin-left: 3px;*/
-        /*display: inline;*/
+    /*.fc-agendaDay-view  .fc-content{*/
+        /*text-overflow:ellipsis;*/
+        /*white-space:nowrap;*/
+    /*}*/
+    .fc-agendaDay-view .fc-title{
+        overflow: hidden;
+        white-space:nowrap;
+        text-overflow:ellipsis;
     }
     .fc-event, .fc-event-dot{
         background: #2d8cf0;
