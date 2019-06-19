@@ -67,6 +67,11 @@
                                         <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.customerCreateTime" style="width:100%" size="small"></DatePicker>
                                     </FormItem>
                                 </Col>
+                                <Col span="8">
+                                    <FormItem label="产品名称：" prop="productname">
+                                        <Input v-model="formValidateSearch.productname" size="small"></Input>
+                                    </FormItem>
+                                </Col>
                             </Row>
                             <center>
                                 <FormItem>
@@ -176,6 +181,7 @@ export default {
             formValidateSearch: {
                 ordercode: "",
                 companyname: "",
+                productname: "",
                 customername: "",
                 customertel: "",
                 payDir: "",
@@ -617,6 +623,7 @@ export default {
                     customertel:_self.formValidateSearch.customertel,
                     crealname:_self.formValidateSearch.crealname,
                     frealname:_self.formValidateSearch.frealname,
+                    productname:_self.formValidateSearch.productname,
                     payDir:_self.formValidateSearch.payDir,
                     bpaytime: DateFormat(_self.formValidateSearch.paytime[0]),
                     epaytime: DateFormat(_self.formValidateSearch.paytime[1]),
