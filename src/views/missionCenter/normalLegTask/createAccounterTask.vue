@@ -382,8 +382,6 @@
 
             },
             cancel_task(){
-                this.$refs.select.setQuery(null)
-                this.$refs.sel.setQuery(null)
                 this.newMission.taskName = null
                 this.$refs['newMission'].resetFields();
                 this.newMission.companyId = null

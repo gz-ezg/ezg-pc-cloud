@@ -486,9 +486,9 @@
                     }else {
                         _self.newMission.businessId = null
                     }
-                    _self.get_company_name()
-                    _self.get_product_name()
-                    _self.get_node_name()
+                    // _self.get_company_name()
+                    // _self.get_product_name()
+                    // _self.get_node_name()
                 }
 
                 this.$Get(url, config, success)

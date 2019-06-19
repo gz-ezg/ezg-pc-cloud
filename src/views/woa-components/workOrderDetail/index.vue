@@ -207,6 +207,7 @@ export default {
 
             function success(res){
                 _self.task_message = res.data.data.taskInfo.length?res.data.data.taskInfo[0]:{}
+                console.log(_self.task_message)
                 _self.process = res.data.data.process
                 _self.correlation = res.data.data.correlation
                 _self.loading = false

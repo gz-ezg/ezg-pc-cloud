@@ -1,6 +1,7 @@
 <template>
     <div>
         <div class="text-textarea"
+             ref="msg"
              v-html="innerText"
              contenteditable="true"
              placeholder="請输入新建普通外勤任务......"
@@ -31,6 +32,9 @@
                 handler(newValue, oldValue){
                     if (!this.lock) {
                         this.innerText = this.value
+                    }
+                    if (!newValue) {
+                        this.$refs.msg.innerHTML = '';
                     }
                 },
                 deep:true

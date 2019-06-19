@@ -27,7 +27,7 @@
                     </Col>
                     <Col span="10">
                         <FormItem label="现增加" prop="now_account">
-                            <Input size="small" v-model="now_account" />
+                            <Input size="small" type="number" v-model="now_account" />
                         </FormItem>
                     </Col>
                 </Row>

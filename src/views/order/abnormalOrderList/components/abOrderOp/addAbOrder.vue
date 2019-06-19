@@ -231,7 +231,6 @@ export default {
 
       function success(res) {
         console.log(res);
-        _self.$Message.success("提交成功!");
         _self.$bus.emit("OPEN_AB_ORDER_LIST", true);
         _self.openAddAbOrderDetail = false;
       }
