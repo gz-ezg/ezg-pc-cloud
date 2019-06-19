@@ -232,7 +232,7 @@
                     {field:'followbusiness',title:'跟进业务'}
                 ]
                 let _self = this
-                let url = `api/customer/customerEndList`
+                let url = `api/customer/auditList`
                 let config = {
                         page: '1',
                         pageSize: '1000000',
