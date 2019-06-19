@@ -236,18 +236,9 @@
                 let config = {
                         page: '1',
                         pageSize: '1000000',
-                        status:"N",
+                        isAudit: 'N',
                         export: 'Y',
-                        exportField: encodeURI(JSON.stringify(field)),
-                        companyname: _self.NformInline.companyname,
-                        customername:_self.NformInline.name,
-                        customertel:_self.NformInline.tel,
-                        productname:_self.NformInline.product,
-                        marketer:_self.NformInline.marketername,
-                        servicer:_self.NformInline.servicename,
-                        TEL:_self.NformInline.TEL,
-                        followbusiness:_self.NformInline.followbusiness,
-                        taxperiod:_self.NformInline.taxperiod
+                        exportField: encodeURI(JSON.stringify(field))
                 }
                 let toExcel = this.$MergeURL(url, config)
                 // console.log(toExcel)

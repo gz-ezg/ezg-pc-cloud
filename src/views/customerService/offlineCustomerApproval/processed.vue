@@ -73,6 +73,7 @@
         <Row>
             <ButtonGroup>
                 <Button type="primary" icon="ios-color-wand-outline" @click="openDetail">查看详情</Button>
+                <Button v-permission="['orderA.exportN']" type="primary" icon="ios-color-filter-outline" @click="downExcel">导出Excel</Button>
                 <Button type="primary" icon="ios-color-filter-outline" @click="getData">刷新</Button>
             </ButtonGroup>
         </Row>
@@ -247,19 +248,13 @@
                     {field:'reasonformarketer',title:'市场通知下线原因'} 
                 ]
                 let _self = this
-                let url = `api/customer/customerEndList`
+                let url = `api/customer/auditList`
                 let config = {
                         page: '1',
                         pageSize: '1000000',
-                        status:"N",
+                        isAudit: 'Y',
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field)),
-                        companyname: _self.NformInline.companyname,
-                        customername:_self.NformInline.name,
-                        customertel:_self.NformInline.tel,
-                        productname:_self.NformInline.product,
-                        marketer:_self.NformInline.marketername,
-                        servicer:_self.NformInline.servicename,
                 }
                 let toExcel = this.$MergeURL(url, config)
                 // console.log(toExcel)
