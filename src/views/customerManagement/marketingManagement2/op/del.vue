@@ -23,7 +23,9 @@ export default {
             openDeleteCustomer: false,
             loading: false,
             NAME: "",
-            ID: ""
+            ID: "",
+            nameList:[],
+            idList:[]
         }
     },
     methods:{
@@ -39,6 +41,9 @@ export default {
                 _self.openDeleteCustomer = false
                 _self.$bus.emit("UPDATE_CUSTOMER", true)
                 _self.$Message.success("删除成功!")
+                _self.NAME = ""
+                _self.ID = ""
+                _self.loading = false
             }
 
             function fail(err){
@@ -50,10 +55,19 @@ export default {
     },
     created(){
         let _self = this
-        this.$bus.off("DELETE_CUSTOMER", true)
-        this.$bus.on("DELETE_CUSTOMER", (e)=>{
-            _self.NAME = e.NAME
-            _self.ID = e.ID
+        _self.$bus.off("DELETE_CUSTOMER", true)
+        _self.$bus.on("DELETE_CUSTOMER", (e)=>{
+            console.log(e)
+            _self.nameList= []
+            _self.idList = []
+            for (let i=0;i<e.length;i++){
+                _self.nameList.push(e[i].NAME)
+                _self.idList.push(e[i].ID)
+            }
+            _self.NAME = _self.nameList.join(",")
+            _self.ID = _self.idList.join(",")
+            console.log(_self.NAME)
+            console.log(_self.ID)
             _self.openDeleteCustomer = true
         })
     }

@@ -139,7 +139,7 @@
                     <!-- <Button type="primary" name="marketingManagement_index_edit_log" icon="ios-color-filter-outline" @click="check_select('OPEN_CUSTOMER_LOG')">客户动态</Button> -->
                     <!-- <Button type="primary" name="marketingManagement_index_field_log" icon="navigate" @click="check_select('OPEN_CUSTOMER_FIELD_LOG')">客户外勤</Button> -->
                     <Button type="primary" name="marketingManagement_index_field_log" icon="android-share-alt" @click="check_select('SHOW_OPEN_CUSTOMER_CLUE_LOG')">客户线索</Button>
-                    <Button type="primary" icon="ios-color-wand-outline" @click="batch_receipt" v-permission="['returnVisitN-edit']">批量领取</Button>
+                    <Button type="primary" icon="ios-color-wand-outline" @click="batch_receipt" v-permission="['returnVisitN-edit']" :loading="receiptLoading">批量领取</Button>
                 </ButtonGroup>
             </Row>
             <Row style="margin-top: 10px;">
@@ -250,6 +250,7 @@ export default {
             openImportCustomer: false,
             openEdit: false,
             search_model: "",
+            receiptLoading:false,
             header: [
                 {
                     title: "#",
@@ -696,6 +697,7 @@ export default {
             if(this.selectRowArray.length === 0){
                 _self.$Message.warning("请先勾选需要批量处理的行！")
             }else{
+                _self.receiptLoading = true
                 let ids = []
                 for(let i = 0; i<_self.selectRowArray.length; i++){
                     ids.push(_self.selectRowArray[i].ID)
@@ -708,6 +710,7 @@ export default {
                 }
                 function success(res){
                     _self.get_data()
+                    _self.receiptLoading = false
                 }
 
                 function fail(err){

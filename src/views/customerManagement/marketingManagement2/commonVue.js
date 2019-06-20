@@ -54,12 +54,23 @@ export default {
         },
         check_select(e){
             console.log(e)
-            if(this.selectRow){
-                this.$bus.emit(e, this.selectRow)
-            }else{
+            if(e=='CUSTOMER_CHANGE_MARKETER'|| e=='OPEN_CODE'|| e=='OPEN_CHANGE_LOG'|| e=='OPEN_CUSTOMER_LOG'|| e=='OPEN_CUSTOMER_FIELD_LOG'|| e=='OPEN_CUSTOMER_CLUE_LOG'){
+                if (this.selectRow.length==1){
+                    this.$bus.emit(e,this.selectRow[0])
+                }
+                if (this.selectRow.length>1){
+                    this.$Message.warning("只能选择一行！")
+                }
+            }
+            if (e=='DELETE_CUSTOMER') {
+                if (this.selectRow.length!==0){
+                    this.$bus.emit(e,this.selectRow)
+                }
+            }
+            if(this.selectRow.length==0 ){
                 this.$Message.warning("请选择需要操作的客户！")
             }
-        }
+        },
     },
     created(){
         

@@ -4,6 +4,7 @@ export default {
         return {
             //  选中的一行
             selectRow: "",
+            selectRowArray:[],
             customerId: "",
             //  数据字典
             customerTypes: [],

@@ -142,14 +142,12 @@
             </Row>
             <Row style="margin-top: 10px;">
                 <Table
-                    highlight-row
                     size="small"
                     :columns="header"
                     :data="data"
-                    @on-current-change="select_row"
+                    @on-selection-change="select_change"
                     :row-class-name="row_class_name"
                     :loading = "tableLoading"
-                    @on-row-dblclick="open_edit"
                     @on-sort-change="sort"
                 ></Table>
                 <Page
@@ -183,7 +181,7 @@
         <Qcode></Qcode>
         <del-customer></del-customer>
         <edit-customer 
-            :customer="selectRow"
+            :customer="selectRow[0]"
             @close-edit="close_edit" 
             v-if="openEdit"
             :cluesources="cluesources"
@@ -233,6 +231,11 @@ export default {
             openEdit: false,
             search_model: "",
             header: [
+                {
+                    title: "#",
+                    type: "selection",
+                    width: 60,
+                },
                 {
                     title: "姓名",
                     key: "NAME",
@@ -633,9 +636,14 @@ export default {
             this.page = 1
             this.get_data()
         },
-        select_row(e){
+        select_change(e){
             this.selectRow = e
+            console.log(this.selectRow)
         },
+        // select_row(e){
+        //     this.selectRow = e
+        //     console.log(this.selectRow)
+        // },
         row_class_name(row, index){
             if ((row.residue_time <= 7 || typeof row.residue_time == "string") && row.residue_time != null) {
                 return "demo-table-followdate-warning-row";
@@ -644,9 +652,13 @@ export default {
             }
         },
         open_edit(){
-            if(this.selectRow){
+            if(this.selectRow.length==1){
                 this.openEdit = true
-            }else{
+            }
+            if(this.selectRow.length>1){
+                this.$Message.warning("只能选择一行!")
+            }
+            if(this.selectRow.length==0){
                 this.$Message.warning("请选择一行!")
             }
         },
