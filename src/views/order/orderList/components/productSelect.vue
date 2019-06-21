@@ -408,7 +408,7 @@ export default {
                 this.isCycleNum = this.isCycleNum+1
             }
             if (this.isCycle=="Y" && this.isCycleNum>1) {
-                this.$Message.warning("XXXX产品请单独下一个订单")
+                this.$Message.warning(this.selectProduct.product+"产品请单独下一个订单")
                 return
             }
             let _self = this

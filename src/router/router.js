@@ -313,6 +313,14 @@ export const appRouter = [
                 component: () => import( /* webpackChunkName: "remindTask_index" */ '@/views/missionCenter/remindTask/index.vue')
             },
             {
+                access: 11644,
+                meta: 11644,
+                path: 'customerService',
+                title: '客服任务',
+                name: 'customerServiceIndex',
+                component: () => import( /* webpackChunkName: "customerServiceIndex" */ '@/views/missionCenter/customerService/index.vue')
+            },
+            {
                 access: 11635,
                 meta: 11635,
                 path: 'legworkAssWorkorder',
