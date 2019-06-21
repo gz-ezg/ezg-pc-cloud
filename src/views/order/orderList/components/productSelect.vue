@@ -499,8 +499,8 @@ export default {
             _self.selectProduct = ""
             _self.searchProduct = ""
             _self.companyId = e
-            _self.isCycle = ""
-            _self.isCycleNum = 0
+            // _self.isCycle = ""
+            // _self.isCycleNum = 0
             _self.search_product()
             _self.orderAddProduct = true
         })
