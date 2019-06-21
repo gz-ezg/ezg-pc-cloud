@@ -136,7 +136,10 @@ export default {
             sideLoading: false,
             productPrice: 0,
             isCycle:"",
+            isCycleOne:"",
             isCycleNum:0,
+            orderItem:[],
+            cycleList:[],
             areaCode: ['440000', '440100', '440103'],
             SKU: "",
             orderAddProduct: false,
@@ -404,10 +407,27 @@ export default {
         },
         //  产品操作
         add_product(){
+            for (let i=0;i<this.cycleList.length;i++){
+                console.log(i)
+                if (this.cycleList[i].iscycle=="Y"){
+                    this.isCycleOne = "Y"
+                }
+            }
+            console.log(this.isCycleOne)
+            // if (this.isCycleOne == "Y" && this.isCycle=="Y"){
+            //     this.$Message.warning(this.selectProduct.product+"产品请单独下一个订单")
+            //     return
+            // }
             if (this.isCycle=="Y"){
                 this.isCycleNum = this.isCycleNum+1
             }
+            if ( this.isCycleOne == "Y" && this.isCycle=="Y") {
+                console.log("1111")
+                this.$Message.warning(this.selectProduct.product+"产品请单独下一个订单")
+                return
+            }
             if (this.isCycle=="Y" && this.isCycleNum>1) {
+                console.log("2222")
                 this.$Message.warning(this.selectProduct.product+"产品请单独下一个订单")
                 return
             }
@@ -494,13 +514,21 @@ export default {
     created(){
         let _self = this
         this.$bus.off("OPEN_ORDER_PRODUCT_LIST", true)
-        this.$bus.on("OPEN_ORDER_PRODUCT_LIST", (e) => {
+        this.$bus.on("OPEN_ORDER_PRODUCT_LIST", (e,p) => {
             _self.productPrice = 0
             _self.selectProduct = ""
             _self.searchProduct = ""
             _self.companyId = e
-            // _self.isCycle = ""
-            // _self.isCycleNum = 0
+            _self.orderItem = p
+            _self.cycleList = []
+            _self.isCycleNum = 0
+            _self.isCycle = ""
+            _self.isCycleOne =""
+            console.log(_self.orderItem )
+            for (let i=0;i<_self.orderItem.length;i++){
+                _self.cycleList.push({iscycle:_self.orderItem[i].iscycle})
+            }
+            console.log(_self.cycleList)
             _self.search_product()
             _self.orderAddProduct = true
         })
