@@ -55,21 +55,21 @@
                             <Row :gutter="12">
                                 <Col span="24">
                                     <FormItem label="问题反馈或建议">
-                                        <Input type="textarea" v-model="fieldDetail.problem_feedback" :autosize="{minRows: 5}"></Input>
+                                        <Input type="textarea" v-model="fieldDetail.problem_feedback" :autosize="{minRows: 5}" readonly></Input>
                                     </FormItem>
                                 </Col>
                             </Row>
                             <Row :gutter="12">
                                 <Col span="24">
                                     <FormItem label="市场反馈">
-                                        <Input type="textarea" v-model="fieldDetail.market_feedback" size="small" :autosize="{minRows: 5}"></Input>
+                                        <Input type="textarea" v-model="fieldDetail.market_feedback" size="small" :autosize="{minRows: 5}" readonly></Input>
                                     </FormItem>
                                 </Col>
                             </Row>
                             <Row :gutter="12">
                                 <Col span="24">
                                     <FormItem label="服务人员反馈">
-                                        <Input type="textarea" v-model="fieldDetail.server_feedback" size="small" :autosize="{minRows: 5}"></Input>
+                                        <Input type="textarea" v-model="fieldDetail.server_feedback" size="small" :autosize="{minRows: 5}" readonly></Input>
                                     </FormItem>
                                 </Col>
                             </Row>
@@ -89,58 +89,68 @@
                                     </FormItem>
                                 </Col>
                             </Row>
-                        </Form>
-                        <Tabs value="1">
-                            <TabPane label="市场" name="1" >
-                                <finish-market  :data="market"></finish-market>
-                            </TabPane>
-                            <TabPane label="商事" name="2">
-                                <finish-business  :data="business"></finish-business>
-                            </TabPane>
-                            <TabPane label="会计" name="3">
-                                <finish-account :data="account"></finish-account>
-                            </TabPane>
-                        </Tabs>
-                        <Form ref="newMission" :model="fieldDetail" :label-width="100" style="margin-left:50px;margin-right:50px">
-                            <Row :gutter="12">
-                                <Col span="8">
-                                    <FormItem label="市场评分">
-                                        <Input v-model="marketRanks" size="small" disabled></Input>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem label="商事评分">
-                                        <Input v-model="businessRanks" size="small" disabled></Input>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem label="会计评分">
-                                        <Input  v-model="accountRanks" size="small" disabled></Input>
-                                    </FormItem>
-                                </Col>
-                            </Row>
-                            <Row :gutter="12">
-                                <Col span="24">
-                                    <FormItem label="问题反馈或建议">
-                                        <Input type="textarea" v-model="fieldDetail.problem_feedback" :autosize="{minRows: 5}"></Input>
-                                    </FormItem>
-                                </Col>
-                            </Row>
-                            <Row :gutter="12">
-                                <Col span="24">
-                                    <FormItem label="市场反馈">
-                                        <Input type="textarea" v-model="fieldDetail.market_feedback" size="small" :autosize="{minRows: 5}"></Input>
-                                    </FormItem>
-                                </Col>
-                            </Row>
-                            <Row :gutter="12">
-                                <Col span="24">
-                                    <FormItem label="服务人员反馈">
-                                        <Input type="textarea" v-model="fieldDetail.server_feedback" size="small" :autosize="{minRows: 5}"></Input>
-                                    </FormItem>
-                                </Col>
+                            <Row style="margin-top: 10px;">
+                                <Table
+                                        :loading="loading"
+                                        highlight-row
+                                        size="small"
+                                        border
+                                        :columns="header"
+                                        :data="detail"></Table>
                             </Row>
                         </Form>
+
+                        <!--<Tabs value="1">-->
+                            <!--<TabPane label="市场" name="1" >-->
+                                <!--<finish-market  :data="market"></finish-market>-->
+                            <!--</TabPane>-->
+                            <!--<TabPane label="商事" name="2">-->
+                                <!--<finish-business  :data="business"></finish-business>-->
+                            <!--</TabPane>-->
+                            <!--<TabPane label="会计" name="3">-->
+                                <!--<finish-account :data="account"></finish-account>-->
+                            <!--</TabPane>-->
+                        <!--</Tabs>-->
+                        <!--<Form ref="newMission" :model="fieldDetail" :label-width="100" style="margin-left:50px;margin-right:50px">-->
+                            <!--<Row :gutter="12">-->
+                                <!--<Col span="8">-->
+                                    <!--<FormItem label="市场评分">-->
+                                        <!--<Input v-model="marketRanks" size="small" disabled></Input>-->
+                                    <!--</FormItem>-->
+                                <!--</Col>-->
+                                <!--<Col span="8">-->
+                                    <!--<FormItem label="商事评分">-->
+                                        <!--<Input v-model="businessRanks" size="small" disabled></Input>-->
+                                    <!--</FormItem>-->
+                                <!--</Col>-->
+                                <!--<Col span="8">-->
+                                    <!--<FormItem label="会计评分">-->
+                                        <!--<Input  v-model="accountRanks" size="small" disabled></Input>-->
+                                    <!--</FormItem>-->
+                                <!--</Col>-->
+                            <!--</Row>-->
+                            <!--<Row :gutter="12">-->
+                                <!--<Col span="24">-->
+                                    <!--<FormItem label="问题反馈或建议">-->
+                                        <!--<Input type="textarea" v-model="fieldDetail.problem_feedback" :autosize="{minRows: 5}"></Input>-->
+                                    <!--</FormItem>-->
+                                <!--</Col>-->
+                            <!--</Row>-->
+                            <!--<Row :gutter="12">-->
+                                <!--<Col span="24">-->
+                                    <!--<FormItem label="市场反馈">-->
+                                        <!--<Input type="textarea" v-model="fieldDetail.market_feedback" size="small" :autosize="{minRows: 5}"></Input>-->
+                                    <!--</FormItem>-->
+                                <!--</Col>-->
+                            <!--</Row>-->
+                            <!--<Row :gutter="12">-->
+                                <!--<Col span="24">-->
+                                    <!--<FormItem label="服务人员反馈">-->
+                                        <!--<Input type="textarea" v-model="fieldDetail.server_feedback" size="small" :autosize="{minRows: 5}"></Input>-->
+                                    <!--</FormItem>-->
+                                <!--</Col>-->
+                            <!--</Row>-->
+                        <!--</Form>-->
                     </TabPane>
                 </Tabs>
             </Card>
@@ -204,7 +214,24 @@
                 endImgList:[],
                 dateLength:"",
                 taskKind:"",
-                taskKind_map:new Map()
+                taskKind_map:new Map(),
+                header:[
+                    {
+                        title: '公司名称',
+                        key: 'CompanyName',
+                        minWidth: 240,
+                    },
+                    {
+                        title: '服务评分',
+                        key: 'serviceranks',
+                        minWidth: 100,
+                    },
+                    {
+                        title: '任务名称',
+                        key: 'task_name',
+                        minWidth: 280,
+                    },
+                ],
                 // taskKind:[],
                 // taskKind_map:new Map(),
                 // taskArea:[],
@@ -247,7 +274,6 @@
                 }
 
                 function success(res){
-                    _self.detail = res.data.data
 
                     for (let i=0;i<res.data.data.length;i++){
                         if (res.data.data[i].datatype==1){
@@ -328,6 +354,8 @@
                 }
 
                 function success(res){
+                    _self.detail = res.data.data
+                    console.log(_self.detail)
                     for (let i=0;i<res.data.data.length;i++){
                         if (res.data.data[i].datatype==1){
                             _self.account.push({CompanyName:res.data.data[i].CompanyName,serviceranks:res.data.data[i].serviceranks,task_name:res.data.data[i].task_name})

@@ -486,6 +486,7 @@
                     function success(res){
                         // _self.getDataN()
                         _self.$bus.emit("update_returnVisit_edit")
+                        _self.selectRowArray=[]
                     }
 
                     function fail(err){

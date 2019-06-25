@@ -183,7 +183,7 @@
                     specificDate: "",
                     taskLevel: "importance",
                     taskDesCode: "",
-                    taskKind: "tkFollow",
+                    taskKind: "",
                     businessPlace:"shuiju",
                     businessArea:"tianhe",
                     node:"Y",
@@ -204,6 +204,7 @@
                 phraseList:[],
                 companyList: [],
                 companyNameList:[],
+                productListTask:[],
                 userList: [
 
                 ],
@@ -326,7 +327,7 @@
                     executorNameArray.push(_self.allUserList_map.get(_self.newMission.executorId[i].toString()))
                 }
                 let config = {
-                    taskKind: "tkLegBus",
+                    taskKind: _self.newMission.taskKind,
                     taskName: _self.newMission.taskName,
                     companyId: _self.newMission.companyId,
                     taskArea:_self.newMission.businessArea,
@@ -377,6 +378,8 @@
                 this.newMission.taskName ="";
                 this.newMission.companyId ="";
                 this.newMission.businessId ="";
+                this.newMission.taskKind = "";
+                this.productList = []
                 this.$refs['newMission'].resetFields();
             },
             get_user(query){
@@ -432,6 +435,20 @@
                 _self.newMission.companyName = obj[_self.newMission.companyId]
                 console.log(_self.newMission.companyName)
             },
+            get_product_kind(){
+                let _self = this
+                let obj = {}
+                let arr = _self.productListTask
+
+                for (let i=0;i<arr.length;i++){
+                    let taskkind = arr[i].taskKind
+                    let businessId = arr[i].businessId
+                    obj[businessId] = taskkind
+
+                    _self.newMission.taskKind = obj[_self.newMission.businessId]
+                    console.log(_self.newMission.taskKind)
+                }
+            },
             get_product_name(){
                 let _self = this
                 let obj = {}
@@ -444,7 +461,8 @@
                 }
                 _self.newMission.businessName = obj[_self.newMission.businessId]
                 console.log(_self.newMission.businessName)
-                _self._self.get_node_name()
+                _self.get_product_kind()
+                // _self.get_node_name()
             },
             get_node_name(){
                 let _self = this
@@ -466,6 +484,9 @@
 
             },
             get_businessId(id){
+                if (id==null || id==""){
+                    return
+                }
                 let _self = this
                 let url = `api/task/getLegWorkOrderByCompanyId`
                 _self.userLoading = true
@@ -478,11 +499,13 @@
                 function success(res){
                     _self.userLoading = false
                     _self.productList = res.data.data
+                    _self.productListTask =res.data.data
                     _self.productListName = res.data.data
                     _self.nodeNameList = res.data.data
                     console.log(res.data.data)
                     if (_self.productList.length!==0){
                         _self.newMission.businessId =  _self.productList[0].businessId
+                        _self.newMission.taskKind = _self.productList[0].taskKind
                     }else {
                         _self.newMission.businessId = null
                     }

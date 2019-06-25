@@ -198,6 +198,10 @@
                             } else {
                                 // console.log(params.row.companynames)
                                 let temp = params.row.taskName.split("|")
+                                for (let i=0;i<temp.length;i++){
+                                    temp[i] = temp[i].substring(temp[i].indexOf('--')+2, temp[i].length)
+                                    // console.log(temp[i])
+                                }
                                 if (temp[0].length > 13) {
                                     return h("Poptip",{
                                         props: {

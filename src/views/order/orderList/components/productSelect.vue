@@ -138,6 +138,11 @@ export default {
             isCycle:"",
             isCycleOne:"",
             isCycleNum:0,
+            defaultdepartalias:'',
+            defaultdepartaliasOne:'',
+            flag:0,
+            fflag:0,
+            defaultdepartaliasList:[],
             orderItem:[],
             cycleList:[],
             areaCode: ['440000', '440100', '440103'],
@@ -254,9 +259,11 @@ export default {
             this.queryProperty = []
             this.selectProperty = []
             this.isCycle = e.iscycle
+            this.defaultdepartalias = e.defaultdepartalias
             this.get_queryProperty(e.id)
             this.get_product_sku(e.id)
             console.log(this.isCycle )
+            console.log(this.defaultdepartalias )
         },
         //  获取产品子属性
         get_queryProperty(e){
@@ -413,7 +420,13 @@ export default {
                     this.isCycleOne = "Y"
                 }
             }
-            console.log(this.isCycleOne)
+            for (let i=0;i<this.defaultdepartaliasList.length;i++){
+                if (this.defaultdepartaliasList[i].defaultdepartalias=="PLAN"){
+                    this.defaultdepartaliasOne = "PLAN"
+                }
+            }
+            // console.log(this.isCycleOne)
+            console.log(this.defaultdepartaliasOne)
             // if (this.isCycleOne == "Y" && this.isCycle=="Y"){
             //     this.$Message.warning(this.selectProduct.product+"产品请单独下一个订单")
             //     return
@@ -421,14 +434,44 @@ export default {
             if (this.isCycle=="Y"){
                 this.isCycleNum = this.isCycleNum+1
             }
+            if (this.defaultdepartalias=="PLAN"){
+                this.flag = 1
+            }
+            if (this.defaultdepartalias!=="PLAN"){
+                this.fflag = 1
+            }
+            console.log(this.flag)
+
             if ( this.isCycleOne == "Y" && this.isCycle=="Y") {
-                console.log("1111")
                 this.$Message.warning(this.selectProduct.product+"产品请单独下一个订单")
                 return
             }
             if (this.isCycle=="Y" && this.isCycleNum>1) {
-                console.log("2222")
                 this.$Message.warning(this.selectProduct.product+"产品请单独下一个订单")
+                return
+            }
+            if (this.defaultdepartalias!=='PLAN' && this.flag==1) {
+                console.log("111")
+                this.$Message.warning("此订单只能下企划部产品，如果想下其他产品请单独下一个订单")
+                this.fflag=0
+                return
+            }
+            if (this.defaultdepartalias=='PLAN' && this.fflag==1) {
+                console.log("222")
+                this.$Message.warning("此订单只能下非企划部产品，如果想下企划部产品请单独下一个订单")
+                this.flag = 0
+                return
+            }
+            if (this.defaultdepartaliasOne=='PLAN' && this.defaultdepartalias!=='PLAN'){
+                console.log("333")
+                this.$Message.warning("此订单只能下企划部产品，如果想下其他产品请单独下一个订单")
+                this.fflag=0
+                return
+            }
+            if (this.defaultdepartaliasOne!=='PLAN' && this.defaultdepartalias=='PLAN' && this.defaultdepartaliasList.length!==0){
+                console.log("444")
+                this.$Message.warning("此订单只能下非企划部产品，如果想下企划部产品请单独下一个订单")
+                this.flag = 0
                 return
             }
             let _self = this
@@ -524,11 +567,18 @@ export default {
             _self.isCycleNum = 0
             _self.isCycle = ""
             _self.isCycleOne =""
+            _self.defaultdepartaliasList = []
+            _self.defaultdepartalias = ''
+            _self.defaultdepartaliasOne = ''
+            _self.flag = 0
+            _self.fflag = 0
             console.log(_self.orderItem )
             for (let i=0;i<_self.orderItem.length;i++){
                 _self.cycleList.push({iscycle:_self.orderItem[i].iscycle})
+                _self.defaultdepartaliasList.push({defaultdepartalias:_self.orderItem[i].defaultdepartalias})
             }
             console.log(_self.cycleList)
+            console.log(_self.defaultdepartaliasList)
             _self.search_product()
             _self.orderAddProduct = true
         })

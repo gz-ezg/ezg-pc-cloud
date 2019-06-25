@@ -546,6 +546,14 @@ export const appRouter = [
             name: 'returnWorkOrder_index',
             component: () => import( /* webpackChunkName: "complaintcenter" */ '@/views/customerService/returnWorkOrder/table/returnVisit_table.vue')
         },
+            {
+                path: 'ordercallback',
+                access: 11645,
+                meta: 11645,
+                title: '下单回访',
+                name: 'ordercallback_index',
+                component: () => import( /* webpackChunkName: "ordercallback" */ '@/views/customerService/ordercallback/table/returnVisit_table.vue')
+            },
         {
             path: 'offlineCustomer',
             access: 6062,

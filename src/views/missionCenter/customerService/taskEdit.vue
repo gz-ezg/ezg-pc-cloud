@@ -25,13 +25,106 @@
                     </Form>
                     <Tabs value="1">
                         <TabPane label="市场" name="1" >
-                            <market v-if="showDetail" :data="unMarket"></market>
+                            <div v-if="showDetail">
+                                <Form ref="newMission" :model="unMarket" :label-width="100" style="margin-left:50px;margin-right:50px">
+                                    <div v-if="unMarket.length!==0" v-for="item in unMarket">
+                                        <Row :gutter="12">
+                                            <Col span="8">
+                                                <FormItem label="公司名称">
+                                                    <Input  v-model="item.CompanyName" size="small" readonly></Input>
+                                                </FormItem>
+                                            </Col>
+                                            <Col span="8">
+                                                <FormItem label="回访任务">
+                                                    <Input  v-model="item.task_name" size="small" readonly></Input>
+                                                </FormItem>
+                                            </Col>
+                                            <Col span="8">
+                                                <FormItem label="评分">
+                                                    <Input  v-model="item.serviceranks" size="small"></Input>
+                                                </FormItem>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                    <div v-if="unMarket.length==0">
+                                        <Row :gutter="12">
+                                            <Col span="24">
+                                                <FormItem style="text-align: center">
+                                                    <div>暂无数据.....</div>
+                                                </FormItem>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </Form>
+                            </div>
                         </TabPane>
                         <TabPane label="商事" name="2">
-                            <business v-if="showDetail" :data="unBusiness"></business>
+                            <div v-if="showDetail">
+                                <Form ref="newMission" :model="unBusiness" :label-width="100" style="margin-left:50px;margin-right:50px">
+                                    <div v-if="unBusiness.length!==0" v-for="item in unBusiness">
+                                        <Row :gutter="12">
+                                            <Col span="8">
+                                                <FormItem label="公司名称">
+                                                    <Input  v-model="item.CompanyName" size="small" readonly></Input>
+                                                </FormItem>
+                                            </Col>
+                                            <Col span="8">
+                                                <FormItem label="回访任务">
+                                                    <Input  v-model="item.task_name" size="small" readonly></Input>
+                                                </FormItem>
+                                            </Col>
+                                            <Col span="8">
+                                                <FormItem label="评分">
+                                                    <Input  v-model="item.serviceranks" size="small"></Input>
+                                                </FormItem>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                    <div v-if="unBusiness.length==0">
+                                        <Row :gutter="12">
+                                            <Col span="24">
+                                                <FormItem style="text-align: center">
+                                                    <div>暂无数据.....</div>
+                                                </FormItem>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </Form>
+                            </div>
                         </TabPane>
                         <TabPane label="会计" name="3">
-                            <account v-if="showDetail" :data="unAccount"></account>
+                            <div v-if="showDetail">
+                                <Form ref="newMission" :model="unAccount" :label-width="100" style="margin-left:50px;margin-right:50px">
+                                    <div v-if="unAccount.length!==0" v-for="item in unAccount">
+                                        <Row :gutter="12">
+                                            <Col span="8">
+                                                <FormItem label="公司名称">
+                                                    <Input  v-model="item.CompanyName" size="small" readonly></Input>
+                                                </FormItem>
+                                            </Col>
+                                            <Col span="8">
+                                                <FormItem label="回访任务">
+                                                    <Input  v-model="item.task_name" size="small" readonly></Input>
+                                                </FormItem>
+                                            </Col>
+                                            <Col span="8">
+                                                <FormItem label="评分">
+                                                    <Input  v-model="item.serviceranks" size="small"></Input>
+                                                </FormItem>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                    <div v-if="unAccount.length==0">
+                                        <Row :gutter="12">
+                                            <Col span="24">
+                                                <FormItem style="text-align: center">
+                                                    <div>暂无数据.....</div>
+                                                </FormItem>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </Form>
+                            </div>
                         </TabPane>
                     </Tabs>
                     <Form ref="newMission" :model="fieldDetail" :label-width="100" style="margin-left:50px;margin-right:50px">
@@ -99,56 +192,57 @@
                                     :data="detail"></Table>
                         </Row>
                     </Form>
+
                     <!--<Tabs value="1">-->
-                        <!--<TabPane label="市场" name="1" >-->
-                            <!--<finish-market  :data="market"></finish-market>-->
-                        <!--</TabPane>-->
-                        <!--<TabPane label="商事" name="2">-->
-                            <!--<finish-business  :data="business"></finish-business>-->
-                        <!--</TabPane>-->
-                        <!--<TabPane label="会计" name="3">-->
-                            <!--<finish-account :data="account"></finish-account>-->
-                        <!--</TabPane>-->
+                    <!--<TabPane label="市场" name="1" >-->
+                    <!--<finish-market  :data="market"></finish-market>-->
+                    <!--</TabPane>-->
+                    <!--<TabPane label="商事" name="2">-->
+                    <!--<finish-business  :data="business"></finish-business>-->
+                    <!--</TabPane>-->
+                    <!--<TabPane label="会计" name="3">-->
+                    <!--<finish-account :data="account"></finish-account>-->
+                    <!--</TabPane>-->
                     <!--</Tabs>-->
                     <!--<Form ref="newMission" :model="fieldDetail" :label-width="100" style="margin-left:50px;margin-right:50px">-->
-                        <!--<Row :gutter="12">-->
-                            <!--<Col span="8">-->
-                                <!--<FormItem label="市场评分">-->
-                                    <!--<Input v-model="marketRanks" size="small" disabled></Input>-->
-                                <!--</FormItem>-->
-                            <!--</Col>-->
-                            <!--<Col span="8">-->
-                                <!--<FormItem label="商事评分">-->
-                                    <!--<Input v-model="businessRanks" size="small" disabled></Input>-->
-                                <!--</FormItem>-->
-                            <!--</Col>-->
-                            <!--<Col span="8">-->
-                                <!--<FormItem label="会计评分">-->
-                                    <!--<Input  v-model="accountRanks" size="small" disabled></Input>-->
-                                <!--</FormItem>-->
-                            <!--</Col>-->
-                        <!--</Row>-->
-                        <!--<Row :gutter="12">-->
-                            <!--<Col span="24">-->
-                                <!--<FormItem label="问题反馈或建议">-->
-                                    <!--<Input type="textarea" v-model="fieldDetail.problem_feedback" :autosize="{minRows: 5}"></Input>-->
-                                <!--</FormItem>-->
-                            <!--</Col>-->
-                        <!--</Row>-->
-                        <!--<Row :gutter="12">-->
-                            <!--<Col span="24">-->
-                                <!--<FormItem label="市场反馈">-->
-                                    <!--<Input type="textarea" v-model="fieldDetail.market_feedback" size="small" :autosize="{minRows: 5}"></Input>-->
-                                <!--</FormItem>-->
-                            <!--</Col>-->
-                        <!--</Row>-->
-                        <!--<Row :gutter="12">-->
-                            <!--<Col span="24">-->
-                                <!--<FormItem label="服务人员反馈">-->
-                                    <!--<Input type="textarea" v-model="fieldDetail.server_feedback" size="small" :autosize="{minRows: 5}"></Input>-->
-                                <!--</FormItem>-->
-                            <!--</Col>-->
-                        <!--</Row>-->
+                    <!--<Row :gutter="12">-->
+                    <!--<Col span="8">-->
+                    <!--<FormItem label="市场评分">-->
+                    <!--<Input v-model="marketRanks" size="small" disabled></Input>-->
+                    <!--</FormItem>-->
+                    <!--</Col>-->
+                    <!--<Col span="8">-->
+                    <!--<FormItem label="商事评分">-->
+                    <!--<Input v-model="businessRanks" size="small" disabled></Input>-->
+                    <!--</FormItem>-->
+                    <!--</Col>-->
+                    <!--<Col span="8">-->
+                    <!--<FormItem label="会计评分">-->
+                    <!--<Input  v-model="accountRanks" size="small" disabled></Input>-->
+                    <!--</FormItem>-->
+                    <!--</Col>-->
+                    <!--</Row>-->
+                    <!--<Row :gutter="12">-->
+                    <!--<Col span="24">-->
+                    <!--<FormItem label="问题反馈或建议">-->
+                    <!--<Input type="textarea" v-model="fieldDetail.problem_feedback" :autosize="{minRows: 5}"></Input>-->
+                    <!--</FormItem>-->
+                    <!--</Col>-->
+                    <!--</Row>-->
+                    <!--<Row :gutter="12">-->
+                    <!--<Col span="24">-->
+                    <!--<FormItem label="市场反馈">-->
+                    <!--<Input type="textarea" v-model="fieldDetail.market_feedback" size="small" :autosize="{minRows: 5}"></Input>-->
+                    <!--</FormItem>-->
+                    <!--</Col>-->
+                    <!--</Row>-->
+                    <!--<Row :gutter="12">-->
+                    <!--<Col span="24">-->
+                    <!--<FormItem label="服务人员反馈">-->
+                    <!--<Input type="textarea" v-model="fieldDetail.server_feedback" size="small" :autosize="{minRows: 5}"></Input>-->
+                    <!--</FormItem>-->
+                    <!--</Col>-->
+                    <!--</Row>-->
                     <!--</Form>-->
                 </TabPane>
             </Tabs>
@@ -162,7 +256,9 @@
         <!--</Col>-->
         <!--</Row>-->
         <div slot="footer">
-            <Button @click="cancel_task" type="primary">取消</Button>
+            <Button @click="compeleted_task" type="primary" style="background: #00a050">完结</Button>
+            <Button @click="update_detail" type="primary">保存</Button>
+            <Button @click="cancel_task" type="warning">取消</Button>
         </div>
     </Modal>
 </template>
@@ -188,6 +284,8 @@
             return{
                 openAddMission:false,
                 showDetail:false,
+                ID:"",
+                id:"",
                 data:[],
                 marketTotalServiceRanks:0,
                 businessTotalServiceRanks:0,
@@ -243,17 +341,98 @@
             cancel_task(){
                 this.openAddMission = false
             },
+            compeleted_task(){
+                let _self = this
+                let url = `api/task/callback/taskServerCallbackFinish`
+                let config = {
+                    params:{
+                        id: _self.ID,
+                    }
+                }
+
+                function success(res){
+                    _self.$bus.emit("UPDATE_EXECUTING_DATA",true)
+                    _self.$bus.emit("UPDATE_FINISHED_DATA",true)
+                    _self.openAddMission = false
+                }
+
+                function fail(err){
+
+                }
+
+                this.$Get(url, config, success, fail)
+            },
+            update_detail(){
+                let _self = this
+                // let rank = JSON.stringify([..._self.unBusiness.map(v=>{
+                //     return{
+                //         id: v.callbackId,
+                //         rank: v.serviceranks
+                //     }
+                // }),..._self.unMarket.map(v=>{
+                //     return{
+                //         id: v.callbackId,
+                //         rank: v.serviceranks
+                //     }
+                // }),..._self.unAccount.map(v=>{
+                //     return{
+                //         id: v.callbackId,
+                //         rank: v.serviceranks
+                //     }
+                // })])
+                // console.log(rank)
+                // return
+                let url = `api/task/callback/taskServerFeedbackSave`
+                let config = {
+                    id: _self.id,
+                    problemFeedback: _self.fieldDetail.problem_feedback,
+                    marketFeedback:_self.fieldDetail.market_feedback,
+                    serverFeedback:_self.fieldDetail.server_feedback,
+                    ranks:JSON.stringify([..._self.unBusiness.map(v=>{
+                        return{
+                            id: v.callbackId,
+                            rank: v.serviceranks
+                        }
+                    }),..._self.unMarket.map(v=>{
+                        return{
+                            id: v.callbackId,
+                            rank: v.serviceranks
+                        }
+                    }),..._self.unAccount.map(v=>{
+                        return{
+                            id: v.callbackId,
+                            rank: v.serviceranks
+                        }
+                    })])
+                }
+
+
+                function success(res){
+                    // _self.$bus.emit("UPDATE_TASK_LIST",true)
+                    _self.get_data(_self.data)
+                    _self.get_one_data(_self.data)
+                    _self.$bus.emit("UPDATE_EXECUTING_DATA",true)
+                    _self.$bus.emit("UPDATE_FINISHED_DATA",true)
+                    _self.openAddMission = false
+                }
+                function fail(){
+
+                }
+                this.$Post(url,config,success,fail)
+            },
             get_data(e){
                 let _self = this
                 let url = `api/task/callback/taskServerCallbackDetail`
                 let config = {
                     params:{
-                        id: e.row.id,
+                        id: e.id,
                     }
                 }
 
                 function success(res){
                     _self.fieldDetail = res.data.data
+                    console.log(res.data.data)
+                    _self.id = res.data.data.feedbackId
                 }
 
                 function fail(err){
@@ -267,23 +446,22 @@
                 let url = `api/task/callback/customerCallbackListByTaskId`
                 let config = {
                     params:{
-                        taskId: e.row.id,
+                        taskId: e.id,
                         status:"N"
                     }
                 }
 
                 function success(res){
-                    // _self.detail = res.data.data
 
                     for (let i=0;i<res.data.data.length;i++){
                         if (res.data.data[i].datatype==1){
-                            _self.unAccount.push({CompanyName:res.data.data[i].CompanyName,serviceranks:res.data.data[i].serviceranks,task_name:res.data.data[i].task_name})
+                            _self.unAccount.push({CompanyName:res.data.data[i].CompanyName,serviceranks:res.data.data[i].serviceranks,task_name:res.data.data[i].task_name,callbackId:res.data.data[i].callbackId})
                         }
                         if (res.data.data[i].datatype==2){
-                            _self.unBusiness.push({CompanyName:res.data.data[i].CompanyName,serviceranks:res.data.data[i].serviceranks,task_name:res.data.data[i].task_name})
+                            _self.unBusiness.push({CompanyName:res.data.data[i].CompanyName,serviceranks:res.data.data[i].serviceranks,task_name:res.data.data[i].task_name,callbackId:res.data.data[i].callbackId})
                         }
                         if (res.data.data[i].datatype==3){
-                            _self.unMarket.push({CompanyName:res.data.data[i].CompanyName,serviceranks:res.data.data[i].serviceranks,task_name:res.data.data[i].task_name})
+                            _self.unMarket.push({CompanyName:res.data.data[i].CompanyName,serviceranks:res.data.data[i].serviceranks,task_name:res.data.data[i].task_name,callbackId:res.data.data[i].callbackId})
                         }
                     }
                     console.log(_self.unMarket)
@@ -348,22 +526,23 @@
                 let url = `api/task/callback/customerCallbackListByTaskId`
                 let config = {
                     params:{
-                        taskId: e.row.id,
+                        taskId: e.id,
                         status:"Y"
                     }
                 }
 
                 function success(res){
                     _self.detail = res.data.data
+                    console.log(_self.detail)
                     for (let i=0;i<res.data.data.length;i++){
                         if (res.data.data[i].datatype==1){
-                            _self.account.push({CompanyName:res.data.data[i].CompanyName,serviceranks:res.data.data[i].serviceranks,task_name:res.data.data[i].task_name})
+                            _self.account.push({CompanyName:res.data.data[i].CompanyName,serviceranks:res.data.data[i].serviceranks,task_name:res.data.data[i].task_name,callbackId:res.data.data[i].callbackId})
                         }
                         if (res.data.data[i].datatype==2){
-                            _self.business.push({CompanyName:res.data.data[i].CompanyName,serviceranks:res.data.data[i].serviceranks,task_name:res.data.data[i].task_name})
+                            _self.business.push({CompanyName:res.data.data[i].CompanyName,serviceranks:res.data.data[i].serviceranks,task_name:res.data.data[i].task_name,callbackId:res.data.data[i].callbackId})
                         }
                         if (res.data.data[i].datatype==3){
-                            _self.market.push({CompanyName:res.data.data[i].CompanyName,serviceranks:res.data.data[i].serviceranks,task_name:res.data.data[i].task_name})
+                            _self.market.push({CompanyName:res.data.data[i].CompanyName,serviceranks:res.data.data[i].serviceranks,task_name:res.data.data[i].task_name,callbackId:res.data.data[i].callbackId})
                         }
                     }
                     console.log(_self.market)
@@ -425,8 +604,8 @@
             }
         },
         created() {
-            this.$bus.off("SHOW_FINISHED_RECORD",true)
-            this.$bus.on("SHOW_FINISHED_RECORD",(e)=>{
+            this.$bus.off("EDIT_RECORD",true)
+            this.$bus.on("EDIT_RECORD",(e)=>{
                 this.openAddMission = true
                 this.get_data(e)
                 this.get_one_data(e)
@@ -437,22 +616,24 @@
                 this.market=[]
                 this.business=[]
                 this.account=[]
-                this.marketTotalServiceRanks=0,
-                    this.businessTotalServiceRanks=0,
-                    this.accountTotalServiceRanks=0,
-                    this.marketServiceRanks=0,
-                    this.businessServiceRanks=0,
-                    this.accountServiceRanks=0,
-                    this.marketTotalRanks=0,
-                    this.businessTotalRanks=0,
-                    this.accountTotalRanks=0,
-                    this.marketRanks=0,
-                    this.businessRanks=0,
-                    this.accountRanks=0,
-                    this.data = e.row
+                this.marketTotalServiceRanks=0
+                this.businessTotalServiceRanks=0
+                this.accountTotalServiceRanks=0
+                this.marketServiceRanks=0
+                this.businessServiceRanks=0
+                this.accountServiceRanks=0
+                this.marketTotalRanks=0
+                this.businessTotalRanks=0
+                this.accountTotalRanks=0
+                this.marketRanks=0
+                this.businessRanks=0
+                this.accountRanks=0
+                this.data = e
+                this.ID = e.id
+
             })
-            this.$bus.off("SHOW_FINISHED_DETAILS",true)
-            this.$bus.on("SHOW_FINISHED_DETAILS",(e)=>{
+            this.$bus.off("EDIT_FINISHED_DETAILS",true)
+            this.$bus.on("EDIT_FINISHED_DETAILS",(e)=>{
                 this.openAddMission = true
                 this.get_data(e)
                 this.get_one_data(e)

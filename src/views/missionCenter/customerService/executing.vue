@@ -41,12 +41,21 @@
                     </Panel>
                 </Collapse>
             </Row>
+
+            <Row>
+                <ButtonGroup>
+                    <Button type="primary" icon="ios-color-wand-outline" @click="task_complete">任务完结</Button>
+                    <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
+                </ButtonGroup>
+            </Row>
+
             <Row style="margin-top: 10px;">
                 <Table
                         :loading="loading"
                         highlight-row
                         size="small"
                         border
+                        @on-current-change="selectrow"
                         :columns="header"
                         :data="data"></Table>
                 <Page
@@ -62,6 +71,7 @@
             </Row>
         </Card>
         <finished-detail></finished-detail>
+        <task-edit></task-edit>
     </div>
 </template>
 
@@ -69,10 +79,12 @@
     import {FULLDateFormat} from "../../../libs/utils";
     import {DateFormat} from "../../../libs/utils";
     import finishedDetail from './finishedDetail'
+    import taskEdit from './taskEdit'
     export default {
         name: "Executing",
         components:{
-            finishedDetail
+            finishedDetail,
+            taskEdit
         },
         data(){
             return{
@@ -82,6 +94,7 @@
                 pageSize:10,
                 data:[],
                 taskKind:[],
+                row:[],
                 taskKind_map:new Map(),
                 search_model: "0",
                 formValidateSearch: {
@@ -183,6 +196,10 @@
                             } else {
                                 // console.log(params.row.companynames)
                                 let temp = params.row.taskName.split("|")
+                                for (let i=0;i<temp.length;i++){
+                                    temp[i] = temp[i].substring(temp[i].indexOf('--')+2, temp[i].length)
+                                    // console.log(temp[i])
+                                }
                                 if (temp[0].length > 13) {
                                     return h("Poptip",{
                                         props: {
@@ -311,8 +328,59 @@
                 this.formValidateSearch.customertel=null
                 this.get_data()
             },
+            selectrow(e) {
+                this.row = e
+                console.log(this.row)
+            },
             show(p){
                 this.$bus.emit("SHOW_RECORD",p)
+            },
+            task_complete(){
+                if (this.row.length==0){
+                    this.$Message.warning("请先选中一行进行完结")
+                } else {
+                    this.$bus.emit("EDIT_RECORD",this.row)
+                }
+            },
+            downloadExcel(){
+                let field = [
+                    {field:'name',title:'客户名称'},
+                    {field:'companyname',title:'公司名称'},
+                    {field:'alisname',title:'产品名称'},
+                    {field:'calltype',title:'问题类型',format:'hfwtlx'},
+                    {field:'createdate',title:'创建时间'},
+                    {field:'callbackdate',title:'回访时间'},
+                    {field:'callbackstatus',title:'回访状态',format:'hfzt'},
+                    {field:'server_realname',title:'服务人员'},
+                    {field:'followby_realname',title:'市场人员'},
+                    {field:'depart',title:'责任部门',format:'departAlias'},
+                    {field:'serviceranks',title:'服务评分'},
+                ]
+                let _self = this
+                let url = `api/customer/customerCallbackList`
+                let config = {
+                    page: '1',
+                    pageSize: '1000000',
+                    status:"N",
+                    export: 'Y',
+                    exportField: encodeURI(JSON.stringify(field)),
+                    sortField:'callbackdate',
+                    datatype:2,
+                    companyname:_self.NformInline.companyname,
+                    name:_self.NformInline.name,
+                    tel:_self.NformInline.tel,
+                    servicename:_self.NformInline.servicename,
+                    marketername:_self.NformInline.marketername,
+                    depart:_self.NformInline.depart,
+                    bcreatedate:DateFormat(_self.NformInline.createdate[0]),
+                    ecreatedate:DateFormat(_self.NformInline.createdate[1]),
+                    bcallbackdate:DateFormat(_self.NformInline.updatedate[0]),
+                    ecallbackdate:DateFormat(_self.NformInline.updatedate[1]),
+                    productname:_self.NformInline.productname
+                }
+                let toExcel = this.$MergeURL(url, config)
+                // console.log(toExcel)
+                window.open(toExcel)
             },
             delete(p){
                 let _self = this
@@ -359,6 +427,7 @@
                     //     _self.data[i].expect_date = DateFormat(_self.data[i].expect_date)
                     //     _self.data[i].taskKind = _self.taskKind_map.get(_self.data[i].taskKind)
                         _self.data[i].plan_date = FULLDateFormat(_self.data[i].plan_date)
+                        _self.data[i].serviceranks = (parseFloat(_self.data[i].serviceranks)).toFixed(1)
                     //     _self.data[i].task_place = _self.taskPlace_map.get(_self.data[i].task_place)
                     //     if (_self.data[i].apply_status==="tesFinished") {
                     //         _self.data[i].apply_status="同意"
