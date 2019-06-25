@@ -325,7 +325,7 @@
                         productname:_self.NformInline.productname                        
                 }
                 let toExcel = this.$MergeURL(url, config)
-                // console.log(toExcel)
+                console.log(toExcel)
                 window.open(toExcel)
             },
             search(){

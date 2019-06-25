@@ -50,6 +50,13 @@
                     </Panel>
                 </Collapse>
             </Row>
+
+            <Row>
+                <ButtonGroup>
+                    <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
+                </ButtonGroup>
+            </Row>
+
             <Row style="margin-top: 10px;">
                 <Table
                         :loading="loading"
@@ -331,6 +338,38 @@
                 this.formValidateSearch.mission = null
                 this.formValidateSearch.endDate=[]
                 this.get_data()
+            },
+            downloadExcel(){
+                let field = [
+                    {field:'NAME',title:'客户名称'},
+                    {field:'TEL',title:'联系方式'},
+                    {field:'companyName',title:'公司名称'},
+                    // {field:'calltype',title:'问题类型',format:'hfwtlx'},
+                    {field:'taskName',title:'回访任务'},
+                    {field:'plan_date',title:'计划回访时间'},
+                    // {field:'serviceranks',title:'回访状态',format:'hfzt'},
+                    {field:'serviceranks',title:'服务评分'},
+                    {field:'realname',title:'市场人员'},
+                    // {field:'depart',title:'责任部门',format:'departAlias'},
+                    // {field:'serviceranks',title:'服务评分'},
+                ]
+                let _self = this
+                let url = `api/task/callback/taskServerCallbackList`
+                let config = {
+                    taskStage:"tesFinished",
+                    page:_self.page,
+                    pageSize:_self.pageSize,
+                    export: 'Y',
+                    companyName:_self.formValidateSearch.companyName,
+                    realname:_self.formValidateSearch.creatorName,
+                    tel:_self.formValidateSearch.customertel,
+                    startDate:DateFormat(_self.formValidateSearch.date[0]),
+                    endDate:DateFormat(_self.formValidateSearch.date[1]),
+                    exportField: encodeURI(JSON.stringify(field)),
+                }
+                let toExcel = this.$MergeURL(url, config)
+                // console.log(toExcel)
+                window.open(toExcel)
             },
             show(p){
                 this.$bus.emit("SHOW_FINISHED_RECORD",p)

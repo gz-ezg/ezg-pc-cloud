@@ -344,39 +344,31 @@
             },
             downloadExcel(){
                 let field = [
-                    {field:'name',title:'客户名称'},
-                    {field:'companyname',title:'公司名称'},
-                    {field:'alisname',title:'产品名称'},
-                    {field:'calltype',title:'问题类型',format:'hfwtlx'},
-                    {field:'createdate',title:'创建时间'},
-                    {field:'callbackdate',title:'回访时间'},
-                    {field:'callbackstatus',title:'回访状态',format:'hfzt'},
-                    {field:'server_realname',title:'服务人员'},
-                    {field:'followby_realname',title:'市场人员'},
-                    {field:'depart',title:'责任部门',format:'departAlias'},
+                    {field:'NAME',title:'客户名称'},
+                    {field:'TEL',title:'联系方式'},
+                    {field:'companyName',title:'公司名称'},
+                    // {field:'calltype',title:'问题类型',format:'hfwtlx'},
+                    {field:'taskName',title:'回访任务'},
+                    {field:'plan_date',title:'计划回访时间'},
+                    // {field:'serviceranks',title:'回访状态',format:'hfzt'},
                     {field:'serviceranks',title:'服务评分'},
+                    {field:'realname',title:'市场人员'},
+                    // {field:'depart',title:'责任部门',format:'departAlias'},
+                    // {field:'serviceranks',title:'服务评分'},
                 ]
                 let _self = this
-                let url = `api/customer/customerCallbackList`
+                let url = `api/task/callback/taskServerCallbackList`
                 let config = {
-                    page: '1',
-                    pageSize: '1000000',
-                    status:"N",
+                    taskStage:"tesUnstarted",
+                    page:_self.page,
+                    pageSize:_self.pageSize,
                     export: 'Y',
+                    companyName:_self.formValidateSearch.companyName,
+                    realname:_self.formValidateSearch.creatorName,
+                    tel:_self.formValidateSearch.customertel,
+                    startDate:DateFormat(_self.formValidateSearch.date[0]),
+                    endDate:DateFormat(_self.formValidateSearch.date[1]),
                     exportField: encodeURI(JSON.stringify(field)),
-                    sortField:'callbackdate',
-                    datatype:2,
-                    companyname:_self.NformInline.companyname,
-                    name:_self.NformInline.name,
-                    tel:_self.NformInline.tel,
-                    servicename:_self.NformInline.servicename,
-                    marketername:_self.NformInline.marketername,
-                    depart:_self.NformInline.depart,
-                    bcreatedate:DateFormat(_self.NformInline.createdate[0]),
-                    ecreatedate:DateFormat(_self.NformInline.createdate[1]),
-                    bcallbackdate:DateFormat(_self.NformInline.updatedate[0]),
-                    ecallbackdate:DateFormat(_self.NformInline.updatedate[1]),
-                    productname:_self.NformInline.productname
                 }
                 let toExcel = this.$MergeURL(url, config)
                 // console.log(toExcel)
