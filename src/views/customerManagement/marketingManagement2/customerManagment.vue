@@ -165,6 +165,7 @@
         </Card>
         
         <tag-select></tag-select>
+        <re-customer></re-customer>
         <create-customer v-if="createCustomerStatus"
             :cluesources="cluesources"
             :customerrating="customerrating"
@@ -199,6 +200,7 @@ import commonVue from './commonVue'
 import { DateFormat } from '../../../libs/utils'
 import {FULLDateFormat} from "../../../libs/utils";
 import tagSelect from './components/tag_select'
+import reCustomer from './components/re_customer.vue'
 
 import createCustomer from './components/create'
 import editCustomer from './edit/index'
@@ -224,7 +226,8 @@ export default {
         dymaic,
         Qcode,
         delCustomer,
-        editCustomer
+        editCustomer,
+        reCustomer
     },
     data(){
         return {
