@@ -31,12 +31,12 @@
                                         <Row :gutter="12">
                                             <Col span="8">
                                                 <FormItem label="公司名称">
-                                                    <Input  v-model="item.CompanyName" size="small" readonly></Input>
+                                                    <div :title=item.CompanyName  class="s1">{{item.CompanyName}}</div>
                                                 </FormItem>
                                             </Col>
                                             <Col span="8">
                                                 <FormItem label="回访任务">
-                                                    <Input  v-model="item.task_name" size="small" readonly></Input>
+                                                    <div :title=item.task_name  class="s1">{{item.task_name}}</div>
                                                 </FormItem>
                                             </Col>
                                             <Col span="8">
@@ -65,12 +65,12 @@
                                         <Row :gutter="12">
                                             <Col span="8">
                                                 <FormItem label="公司名称">
-                                                    <Input  v-model="item.CompanyName" size="small" readonly></Input>
+                                                    <div :title=item.CompanyName  class="s1">{{item.CompanyName}}</div>
                                                 </FormItem>
                                             </Col>
                                             <Col span="8">
                                                 <FormItem label="回访任务">
-                                                    <Input  v-model="item.task_name" size="small" readonly></Input>
+                                                    <div :title=item.task_name  class="s1">{{item.task_name}}</div>
                                                 </FormItem>
                                             </Col>
                                             <Col span="8">
@@ -99,12 +99,12 @@
                                         <Row :gutter="12">
                                             <Col span="8">
                                                 <FormItem label="公司名称">
-                                                    <Input  v-model="item.CompanyName" size="small" readonly></Input>
+                                                    <div :title=item.CompanyName  class="s1">{{item.CompanyName}}</div>
                                                 </FormItem>
                                             </Col>
                                             <Col span="8">
                                                 <FormItem label="回访任务">
-                                                    <Input  v-model="item.task_name" size="small" readonly></Input>
+                                                    <div :title=item.task_name  class="s1">{{item.task_name}}</div>
                                                 </FormItem>
                                             </Col>
                                             <Col span="8">
@@ -653,5 +653,10 @@
 <style>
     .vertical-top-modal .ivu-modal{
         top: 0;
+    }
+    .s1{
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
     }
 </style>

@@ -65,22 +65,25 @@ export default {
   data() {
     return {
       // 组件控制相关
-      openChangeMarket: false,
+        openChangeMarket: false,
+        idArray : [],
+        nameArray : [],
+        followArray:[],
       // 变更人员具体相关
-      customerDetail: {
+        customerDetail: {
           NAME: "",
           ID: "",
           followbyname: ""
       },
         newFollowName: "",
         newFollowId: "",
-      submit_loading: false,
+        submit_loading: false,
       // 选择市场人员相关
-      loading: false,
-      realname: "",
-      page: 1,
-      total: 0,
-      header: [
+        loading: false,
+        realname: "",
+        page: 1,
+        total: 0,
+        header: [
         {
           title: "市场人员",
           key: "realname",
@@ -92,7 +95,7 @@ export default {
           minWidth: 250
         }
       ],
-      data: []
+        data: []
     };
   },
   methods: {
@@ -157,9 +160,22 @@ export default {
     let _self = this;
     this.$bus.off("CUSTOMER_CHANGE_MARKETER", true)
     this.$bus.on("CUSTOMER_CHANGE_MARKETER", e => {
-      _self.customerDetail = e
-      _self.get_data();
-      _self.openChangeMarket = true
+        _self.idArray=[]
+        _self.nameArray=[]
+        _self.followArray=[]
+        for (let i=0;i<e.length;i++){
+            _self.idArray.push(e[i].ID)
+            _self.nameArray.push(e[i].NAME)
+            _self.followArray.push(e[i].followbyname)
+        }
+        _self.customerDetail.ID = _self.idArray.join(",")
+        _self.customerDetail.NAME = _self.nameArray.join(",")
+        _self.customerDetail.followbyname = _self.followArray.join(",")
+        // console.log(_self.customerDetail.ID )
+        // console.log(_self.customerDetail.NAME)
+        // console.log(_self.customerDetail.followbyname)
+        _self.get_data();
+        _self.openChangeMarket = true
     });
   }
 };

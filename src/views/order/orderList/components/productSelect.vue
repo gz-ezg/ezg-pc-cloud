@@ -573,6 +573,7 @@ export default {
             _self.flag = 0
             _self.fflag = 0
             console.log(_self.orderItem )
+            console.log(_self.companyId  )
             for (let i=0;i<_self.orderItem.length;i++){
                 _self.cycleList.push({iscycle:_self.orderItem[i].iscycle})
                 _self.defaultdepartaliasList.push({defaultdepartalias:_self.orderItem[i].defaultdepartalias})
