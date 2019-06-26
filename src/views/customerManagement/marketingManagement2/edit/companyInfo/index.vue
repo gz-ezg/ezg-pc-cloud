@@ -240,7 +240,7 @@ export default {
             if (this.selectCompany.length>1){
                 this.$Message.warning("只能选择一家企业合并")
             }
-            else {
+            if (this.selectCompany.length==0) {
                 this.$Message.warning("请选择要合并的企业")
             }
 

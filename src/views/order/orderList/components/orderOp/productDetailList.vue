@@ -460,6 +460,7 @@ export default {
       }
 
       _self.productList.push(e);
+      console.log(_self.productList)
       // e.selectServer = e.realname;
 
       _self.departChange();

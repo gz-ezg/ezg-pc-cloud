@@ -311,7 +311,7 @@
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field)),
                         sortField:'callbackdate',
-                        datatype:2,
+                        datatype:3,
                         companyname:_self.NformInline.companyname,
                         name:_self.NformInline.name,
                         tel:_self.NformInline.tel,
@@ -325,7 +325,7 @@
                         productname:_self.NformInline.productname                        
                 }
                 let toExcel = this.$MergeURL(url, config)
-                console.log(toExcel)
+                // console.log(toExcel)
                 window.open(toExcel)
             },
             search(){
@@ -403,7 +403,7 @@
                         servicename:_self.NformInline.servicename,
                         marketername:_self.NformInline.marketername,
                         depart:_self.NformInline.depart,
-                        datatype:2,
+                        datatype:3,
                         bcreatedate:DateFormat(_self.NformInline.createdate[0]),
                         ecreatedate:DateFormat(_self.NformInline.createdate[1]),
                         bcallbackdate:DateFormat(_self.NformInline.updatedate[0]),

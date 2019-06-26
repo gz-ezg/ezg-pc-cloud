@@ -365,7 +365,7 @@
                 if (_self.newMission.taskKind==='tkLegAccCyc'){
                     let url = `api/task/addAccLegworkTask`
                     let config = {
-                            taskKind: "tkLegAccCyc",
+                            taskKind: _self.newMission.taskKind,
                             taskName: _self.newMission.taskName,
                             companyId: _self.newMission.companyId,
                             executorId: _self.newMission.executorId.join(","),
@@ -390,7 +390,7 @@
                 if (_self.newMission.taskKind==='tkLegAcc') {
                     let url = `api/task/addLegworkTask`
                     let config = {
-                        taskKind: "tkLegAcc",
+                        taskKind: _self.newMission.taskKind,
                         taskName: _self.newMission.taskName,
                         companyId: _self.newMission.companyId,
                         executorId: _self.newMission.executorId.join(","),
@@ -414,7 +414,29 @@
                 if (_self.newMission.taskKind==='tkLegAccHom'){
                     let url = `api/task/addAccLegworkTask`
                     let config = {
-                        taskKind: "tkLegAccHom",
+                        taskKind: _self.newMission.taskKind,
+                        taskName: _self.newMission.taskName,
+                        companyId: _self.newMission.companyId,
+                        executorId: _self.newMission.executorId.join(","),
+                        businessId:_self.newMission.businessId,
+                        executorName: executorNameArray.join(","),
+                        sPlanDate: FULLDateFormat(_self.newMission.planDate),
+                    }
+                    function success(res){
+                        _self.createLoading = false
+                        _self.openAddMission = false
+                        _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST_DEMO", true)
+                        _self.cancel_task()
+                    }
+                    function fail(err){
+                        _self.createLoading = false
+                    }
+                    this.$Post(url, config, success, fail)
+                }
+                if (_self.newMission.taskKind==='tkLegAccNon'){
+                    let url = `api/task/addAccLegworkTask`
+                    let config = {
+                        taskKind: _self.newMission.taskKind,
                         taskName: _self.newMission.taskName,
                         companyId: _self.newMission.companyId,
                         executorId: _self.newMission.executorId.join(","),
@@ -440,6 +462,7 @@
                 this.newMission.companyId ="";
                 this.newMission.businessId ="";
                 this.newMission.executorId = "";
+                this.newMission.taskKind = "";
                 this.newMission.cycleType = "A";
                 this.newMission.businessArea = "tianhe";
                 this.newMission.businessPlace = "shuiju";
@@ -477,6 +500,9 @@
                 }
                 if (!_self.newMission.businessName){
                     _self.newMission.taskName=_self.newMission.companyName
+                }
+                if (!_self.newMission.companyId || !_self.newMission.businessId) {
+                    _self.newMission.taskName=""
                 }
                 if ( _self.newMission.taskKind=='tkLegAccCyc'){
                     _self.newMission.taskName=_self.newMission.companyName+"--"+_self.newMission.businessName+"--"+_self.newMission.cycleTypeName
@@ -527,6 +553,9 @@
                 _self.name_change()
             },
             get_businessId(id){
+                if(id==null || id==""){
+                    return
+                }
                 let _self = this
                 let url = `api/task/getLegCycWorkOrderByCompanyId`
                 _self.userLoading = true
@@ -543,6 +572,7 @@
                     console.log(res.data.data)
                     if (_self.productList.length!==0){
                         _self.newMission.businessId =  _self.productList[0].businessId
+                        _self.newMission.taskKind  = _self.productList[0].taskKind
                     }else {
                         _self.newMission.businessId = null
                     }
@@ -685,6 +715,7 @@
 
                 _self.openAddMission = true
                 _self.newMission.planDate = e
+                _self.newMission.taskName = ""
             })
             // this.$bus.on("ADD_ACCOUNTER_PHRASE",(e)=>{
             //     console.log(e)

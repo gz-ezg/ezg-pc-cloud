@@ -147,6 +147,7 @@
                     :data="data"
                     @on-selection-change="select_change"
                     :row-class-name="row_class_name"
+                    @on-row-dblclick="get_row"
                     :loading = "tableLoading"
                     @on-sort-change="sort"
                 ></Table>
@@ -192,6 +193,17 @@
             :importance="importance"
             :customerTypes_Casr="customerTypes_Casr"
         ></edit-customer>
+        <edit-customer
+                :customer="selectRowOBj"
+                @close-edit="close_edit"
+                v-if="openEditOne"
+                :cluesources="cluesources"
+                :customerrating="customerrating"
+                :area="area"
+                :sf_yn="sf_yn"
+                :importance="importance"
+                :customerTypes_Casr="customerTypes_Casr"
+        ></edit-customer>
     </div>
 </template>
 
@@ -232,6 +244,7 @@ export default {
     data(){
         return {
             openEdit: false,
+            openEditOne:false,
             search_model: "",
             header: [
                 {
@@ -444,6 +457,7 @@ export default {
                 order: "desc",
                 sortField: "updatedate",
             },
+            selectRowOBj:"",
             //  模态框控制
             createCustomerStatus: false,
         }
@@ -643,6 +657,11 @@ export default {
             this.selectRow = e
             console.log(this.selectRow)
         },
+        get_row(e){
+            this.selectRowOBj = e
+            console.log(this.selectRowOBj )
+            this.open_edit_one()
+        },
         // select_row(e){
         //     this.selectRow = e
         //     console.log(this.selectRow)
@@ -663,6 +682,11 @@ export default {
             }
             if(this.selectRow.length==0){
                 this.$Message.warning("请选择一行!")
+            }
+        },
+        open_edit_one(){
+            if (this.selectRowOBj){
+                this.openEditOne = true
             }
         },
         //  转换客户状态
@@ -694,6 +718,7 @@ export default {
         },
         close_edit(){
             this.openEdit = false
+            this.openEditOne = false
         }
     },
     created(){

@@ -313,6 +313,14 @@ export const appRouter = [
                 component: () => import( /* webpackChunkName: "remindTask_index" */ '@/views/missionCenter/remindTask/index.vue')
             },
             {
+                access: 11644,
+                meta: 11644,
+                path: 'customerService',
+                title: '客服任务',
+                name: 'customerServiceIndex',
+                component: () => import( /* webpackChunkName: "customerServiceIndex" */ '@/views/missionCenter/customerService/index.vue')
+            },
+            {
                 access: 11635,
                 meta: 11635,
                 path: 'legworkAssWorkorder',
@@ -538,6 +546,14 @@ export const appRouter = [
             name: 'returnWorkOrder_index',
             component: () => import( /* webpackChunkName: "complaintcenter" */ '@/views/customerService/returnWorkOrder/table/returnVisit_table.vue')
         },
+            {
+                path: 'ordercallback',
+                access: 11645,
+                meta: 11645,
+                title: '下单回访',
+                name: 'ordercallback_index',
+                component: () => import( /* webpackChunkName: "ordercallback" */ '@/views/customerService/ordercallback/table/returnVisit_table.vue')
+            },
         {
             path: 'offlineCustomer',
             access: 6062,

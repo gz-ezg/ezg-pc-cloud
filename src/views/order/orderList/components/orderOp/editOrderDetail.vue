@@ -395,7 +395,7 @@ export default {
     },
     open_product_list() {
       if (this.orderDetail.companyid) {
-        this.$bus.emit("OPEN_ORDER_PRODUCT_LIST", this.orderDetail.companyid);
+        this.$bus.emit("OPEN_ORDER_PRODUCT_LIST", this.orderDetail.companyid,this.orderItem);
       } else {
         this.$Message.warning("请先选择公司！");
       }
