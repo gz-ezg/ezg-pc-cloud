@@ -49,6 +49,15 @@
                                     </FormItem>
                                     </Col>
                                 </Row>
+                                <Row :gutter="16">
+                                    <Col span="8">
+                                        <FormItem label="任务结果：" prop="customername">
+                                            <Select v-model="formValidateSearch.finish_status" size="small">
+                                                <Option v-for="item in finishStatusList" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
+                                            </Select>
+                                        </FormItem>
+                                    </Col>
+                                </Row>
                                 <center>
                                     <FormItem>
                                         <Button type="primary" @click="Search">搜索</Button>
@@ -104,13 +113,15 @@
         },
         data(){
             return {
-                order:'begin_time',
+                order:'desc',
+                sortField:"begin_time",
                 currentRow: {},
                 loading: true,
                 page: 1,
                 pageSize: 10,
                 total: 0,
                 data:[],
+                finishStatusList:[],
                 legwork_finish_statusMap:{},
                 taskKindMap:{},
                 taskKindArray:{},
@@ -147,7 +158,8 @@
                         title: '任务结果',
                         key: 'finish_status',
                         minWidth: 90
-                    },{
+                    },
+                    {
                         title: '服务内容',
                         key: 'service_content',
                         minWidth: 90
@@ -155,22 +167,62 @@
                         title: '打卡人',
                         key: 'realname',
                         minWidth: 90
-                    },{
+                    },
+                    {
                         title: '打卡部门',
                         key: 'departname',
                         minWidth: 120
-                    },{
+                    },
+                    {
                         title: '开始打卡时间',
                         key: 'begin_time',
-                        minWidth: 100
-                    },{
+                        minWidth: 140,
+                    },
+                    {
                         title: '结束打卡时间',
                         key: 'end_time',
-                        minWidth: 100
-                    },{
+                        minWidth: 140
+                    },
+                    {
                         title: '总结',
                         key: 'finish_memo',
                         minWidth: 90
+                    },
+                    {
+                        title: '操作',
+                        key: 'action',
+                        fixed: 'right',
+                        width: 100,
+                        align: 'center',
+                        render: (h, params) => {
+                            console.log(params)
+                            return h('div', [
+                                // h('Button', {
+                                //     props: {
+                                //         type: 'text',
+                                //         size: 'small'
+                                //     },
+                                //     on: {
+                                //         click: () => {
+                                //             Bus.$emit('openCompanyDetail',params.row.companyid)
+                                //         }
+                                //     }
+                                // }, '[公司详情]'),
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            // console.log(params.row.customerid)
+                                            this.$store.commit('open_gobal_customer_detail_modal', {ID: params.row.customer_id});
+                                            // Bus.$emit('Open_customer_detail',params.row.customerid)
+                                        }
+                                    }
+                                }, '[客户详情]'),
+                            ]);
+                        }
                     }
                 ]
             }
@@ -185,11 +237,13 @@
                         order:_self.order,
                         page:_self.page,
                         pageSize:_self.pageSize,
+                        sortField:_self.sortField,
                         realname:_self.formValidateSearch.realname,
                         servicedepart:_self.formValidateSearch.servicedepart,
                         companyname:_self.formValidateSearch.companyname,
                         name:_self.formValidateSearch.name,
                         tel:_self.formValidateSearch.tel,
+                        finish_status:_self.formValidateSearch.finish_status,
                         bbegin_time:DateFormat(_self.formValidateSearch.begin_time[0]),
                         ebegin_time:DateFormat(_self.formValidateSearch.begin_time[1])
                     }
@@ -257,6 +311,7 @@
                     page:'1',
                     pageSize:'1000000' ,
                     export: 'Y',
+                    sortField:_self.sortField,
                     exportField: encodeURI(JSON.stringify(field)),
                     realname:_self.formValidateSearch.realname,
                     servicedepart:_self.formValidateSearch.servicedepart,
@@ -296,6 +351,7 @@
             let _self = this;
             this.$GetDataCenter("legwork_finish_status,taskKind,gzbusinessarea,gzbusinessplace",callback);
             function  callback(e) {
+                _self.finishStatusList = e.data.data.legwork_finish_status
                 _self.legwork_finish_statusMap = _self.$array2map(e.data.data.legwork_finish_status);
                 _self.taskKindMap = _self.$array2map(e.data.data.taskKind);
                 _self.gzbusinessareaMap = _self.$array2map(e.data.data.gzbusinessarea);

@@ -443,34 +443,34 @@ export default {
             console.log(this.flag)
 
             if ( this.isCycleOne == "Y" && this.isCycle=="Y") {
-                this.$Message.warning(this.selectProduct.product+"产品请单独下一个订单")
+                this.$Message.warning("订单中只能含有一个周期性产品的订单项")
                 return
             }
             if (this.isCycle=="Y" && this.isCycleNum>1) {
-                this.$Message.warning(this.selectProduct.product+"产品请单独下一个订单")
+                this.$Message.warning("订单中只能含有一个周期性产品的订单项")
                 return
             }
             if (this.defaultdepartalias!=='PLAN' && this.flag==1) {
-                console.log("111")
-                this.$Message.warning("此订单只能下企划部产品，如果想下其他产品请单独下一个订单")
+                // console.log("111")
+                this.$Message.warning("企划产品只能单独下单")
                 this.fflag=0
                 return
             }
             if (this.defaultdepartalias=='PLAN' && this.fflag==1) {
-                console.log("222")
-                this.$Message.warning("此订单只能下非企划部产品，如果想下企划部产品请单独下一个订单")
+                // console.log("222")
+                this.$Message.warning("企划产品只能单独下单")
                 this.flag = 0
                 return
             }
             if (this.defaultdepartaliasOne=='PLAN' && this.defaultdepartalias!=='PLAN'){
-                console.log("333")
-                this.$Message.warning("此订单只能下企划部产品，如果想下其他产品请单独下一个订单")
+                // console.log("333")
+                this.$Message.warning("企划产品只能单独下单")
                 this.fflag=0
                 return
             }
             if (this.defaultdepartaliasOne!=='PLAN' && this.defaultdepartalias=='PLAN' && this.defaultdepartaliasList.length!==0){
-                console.log("444")
-                this.$Message.warning("此订单只能下非企划部产品，如果想下企划部产品请单独下一个订单")
+                // console.log("444")
+                this.$Message.warning("企划产品只能单独下单")
                 this.flag = 0
                 return
             }

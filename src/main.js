@@ -243,10 +243,12 @@ Vue.prototype.$changeCars = function(data){
 Vue.prototype.$Get = function(url, config, success, fail=function(err){console.log(err);_self.$Message.error(err)}){
     let _self = this
     this.$http.get(url,config).then(function(res){
-        if(res.data.msgCode == "40000"){
+        if(res.data.msgCode == "40000" ){
             success(res)
-        }else{
+        }
+        else{
             if(res.data.msg){
+                _self.$Message.error(res.data.msg)
                 fail(res.data.msg)
             }else{
                 console.error(res)

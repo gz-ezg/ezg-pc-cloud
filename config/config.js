@@ -11,6 +11,8 @@ module.exports = {
             }
         },
         port: 8089,
+        // disableHostCheck:true,
+        // host: '0.0.0.0',
         message: 'Now Proxy in 220(test); You application is running here http://localhost:8089'
     },
     "dev-222":{
