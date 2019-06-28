@@ -233,7 +233,7 @@
 
                 var url = 'api/user/legwork/list'
                 var config = {
-                    params:{
+                        params:{
                         order:_self.order,
                         page:_self.page,
                         pageSize:_self.pageSize,

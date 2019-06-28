@@ -356,9 +356,9 @@
                  let _self = this
 
                 if (this.currentRow) {
-                    this.$Message.warning('请选择要变更会计的项目')
-                } else {
                     Bus.$emit('fenpei', _self.currentRow)
+                } else {
+                    this.$Message.warning('请选择要变更会计的项目')
                 }
             },
             stop_service() {
@@ -376,10 +376,10 @@
 
                         try {
                             let {status, data} = accountApi.cycleServiceRecordUpdate(config)
-                            if(status){
-                                this.page = 1,
-                                _self.getData()
-                            }
+                                this.page = 1
+                                setTimeout(()=>{
+                                    _self.getData()
+                                },500)
                         } catch (error) {
                             console.log(error)
                         }
