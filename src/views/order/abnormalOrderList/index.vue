@@ -73,16 +73,18 @@
           <Button type="primary" icon="trash-b" @click="del_abOrder">删除</Button>
           <Button type="primary" icon="ios-color-filter-outline" @click="refresh">刷新</Button>
           <Button type="primary" icon="ios-color-filter-outline" @click="resubmit">重新提交</Button>
+          <Button type="primary" icon="ios-color-filter-outline" @click="Untied">解绑</Button>
         </ButtonGroup>
       </Row>
       <Row style="margin-top: 10px;">
         <Table
           :loading="loading"
-          highlight-row
           size="small"
           border
+          highlight-row
           :columns="header"
           :data="data"
+          :row-class-name="row_class_name"
           @on-row-click="select_row"
           @on-row-dblclick="open_abOrder_detail"
           @on-sort-change="sort"
@@ -302,6 +304,35 @@ export default {
     };
   },
   methods: {
+    Untied(){
+      let _self = this
+      if (_self.selectRow) {
+        console.log(_self.selectRow);
+        if (_self.selectRow.current_process == "Finished" ) {
+          let url = `api/order/unusual/workorder/unlinkUnusualWorkOrderByUnusualId`;
+          let config = {
+            params: {
+              unusualId: _self.selectRow.applyId
+            }
+          };
+
+          function success(res) {
+              _self.$Message.success("解绑成功！");
+              _self.get_data()
+
+          }
+          function fail() {}
+
+          this.$Get(url, config, success, fail);
+          //   this.$bus.emit("OPEN_AB_ORDERLIST_EDIT", _self.selectRow);
+        }
+        if( _self.selectRow.current_process !== "Finished" ){
+          _self.$Message.warning("当前订单状态不允许解绑！");
+        }
+      } else {
+        _self.$Message.warning("请选择一行进行操作！");
+      }
+    },
     //获取数据字典
     get_data_center() {
       let _self = this;
@@ -401,6 +432,13 @@ export default {
     pageSizeChange(e) {
       this.pageSize = e;
       this.get_data();
+    },
+    row_class_name(row, index){
+      if (row.oa_order_id== null || row.oa_order_id=="") {
+        return "demo-table-followdate-warning-row";
+      } else {
+        return "";
+      }
     },
     //选中某行
     select_row(e) {
@@ -507,3 +545,9 @@ export default {
   }
 };
 </script>
+
+<style>
+  .ivu-table .demo-table-followdate-warning-row {
+    color: #ff6600;
+  }
+</style>

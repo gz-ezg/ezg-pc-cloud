@@ -14,28 +14,38 @@
                                             <Input v-model="formValidateSearch.companyName" size="small"></Input>
                                         </FormItem>
                                     </Col>
+                                    <!--<Col span="8">-->
+                                    <!--<FormItem label="客户联系方式：" prop="customername">-->
+                                    <!--<Input v-model="formValidateSearch.customertel" size="small"></Input>-->
+                                    <!--</FormItem>-->
+                                    <!--</Col>-->
                                     <Col span="8">
-                                        <FormItem label="执行人：" prop="date">
-                                            <Input v-model="formValidateSearch.creatorName"  size="small"></Input>
+                                        <FormItem label="市场人员：" prop="date">
+                                            <Input v-model="formValidateSearch.creatorName" s size="small"></Input>
                                         </FormItem>
                                     </Col>
                                     <Col span="8">
-                                        <FormItem label="任务结果：" prop="customername">
-                                            <Select v-model="formValidateSearch.mission" size="small" style="width:180px">
-                                                <Option v-for="item in missionList" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
-                                            </Select>
+                                        <FormItem label="计划回访时间：" prop="paytime">
+                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:100%" size="small"></DatePicker>
                                         </FormItem>
                                     </Col>
                                 </Row>
                                 <Row :gutter="24">
                                     <Col span="8">
-                                        <FormItem label="执行时间期间：" prop="paytime">
-                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:100%" size="small"></DatePicker>
+                                        <FormItem label="联系方式：" prop="customertel">
+                                            <Input v-model="formValidateSearch.customertel" size="small"></Input>
                                         </FormItem>
                                     </Col>
+                                    <!--<Col span="8">-->
+                                    <!--<FormItem label="客户联系方式：" prop="customername">-->
+                                    <!--<Input v-model="formValidateSearch.customertel" size="small"></Input>-->
+                                    <!--</FormItem>-->
+                                    <!--</Col>-->
                                     <Col span="8">
-                                        <FormItem label="完结时间期间：" prop="paytime">
-                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.endDate" style="width:100%" size="small"></DatePicker>
+                                        <FormItem label="服务评分：" prop="paytime">
+                                            <Input v-model="formValidateSearch.brank" style="width:45%" size="small" type="number"></Input>
+                                            ----
+                                            <Input v-model="formValidateSearch.erank" style="width:45%" size="small" type="number"></Input>
                                         </FormItem>
                                     </Col>
                                 </Row>
@@ -104,6 +114,8 @@
                 taskStage_map:new Map(),
                 search_model: "0",
                 formValidateSearch: {
+                    brank:"",
+                    erank:"",
                     ordercode: "",
                     companyName: "",
                     creatorName: "",
@@ -121,24 +133,24 @@
                 header:[
                     {
                         title: '客户',
-                        key: 'NAME',
+                        key: 'name',
                         minWidth: 240,
                     },
                     {
                         title: '联系方式',
-                        key: 'TEL',
+                        key: 'tel',
                         minWidth: 140,
                     },
                     {
                         title: '公司名称',
-                        key: 'companyName',
+                        key: 'companyname',
                         minWidth: 220,
                         render: (h, params) => {
-                            if (params.row.companyName == "" || params.row.companyName == null) {
+                            if (params.row.companyname == "" || params.row.companyname == null) {
                                 return "";
                             } else {
                                 // console.log(params.row.companynames)
-                                let temp = params.row.companyName.split(",")
+                                let temp = params.row.companyname.split(",")
                                 if (temp[0].length > 13) {
                                     return h("Poptip",{
                                         props: {
@@ -282,7 +294,6 @@
                     },
                     {
                         title: '操作',
-                        key: 'expect_date',
                         fixed: 'right',
                         width: 140,
                         align: 'center',
@@ -336,6 +347,8 @@
                 this.formValidateSearch.creatorName=null
                 this.formValidateSearch.customertel=null
                 this.formValidateSearch.mission = null
+                this.formValidateSearch.brank=null
+                this.formValidateSearch.erank=null
                 this.formValidateSearch.endDate=[]
                 this.get_data()
             },
@@ -357,8 +370,8 @@
                 let url = `api/task/callback/taskServerCallbackList`
                 let config = {
                     taskStage:"tesFinished",
-                    page:_self.page,
-                    pageSize:_self.pageSize,
+                    page: "1",
+                    pageSize: "1000000",
                     export: 'Y',
                     companyName:_self.formValidateSearch.companyName,
                     realname:_self.formValidateSearch.creatorName,
@@ -366,6 +379,8 @@
                     startDate:DateFormat(_self.formValidateSearch.date[0]),
                     endDate:DateFormat(_self.formValidateSearch.date[1]),
                     exportField: encodeURI(JSON.stringify(field)),
+                    startRanks:_self.formValidateSearch.brank,
+                    endRanks:_self.formValidateSearch.erank
                 }
                 let toExcel = this.$MergeURL(url, config)
                 // console.log(toExcel)
@@ -388,6 +403,8 @@
                         tel:_self.formValidateSearch.customertel,
                         startDate:DateFormat(_self.formValidateSearch.date[0]),
                         endDate:DateFormat(_self.formValidateSearch.date[1]),
+                        startRanks:_self.formValidateSearch.brank,
+                        endRanks:_self.formValidateSearch.erank
                     }
                 }
                 function success(res){

@@ -36,6 +36,7 @@ module.exports = merge(baseConfig, {
     contentBase: path.resolve(__dirname, '../dist'),
     open: false,
     disableHostCheck: true,
+    host:"0.0.0.0",
     port: config[env].port,
     inline: false,
     proxy: config[env].proxyTable,
