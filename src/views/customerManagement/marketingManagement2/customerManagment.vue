@@ -714,9 +714,9 @@ export default {
     onChangeHeaderCheckBox() {
       let headerValue = [];
       this.headerCheckBox.forEach((value, i) => {
-        headerValue[i] = value ? this.headerTemp[i] : {};
+        headerValue[i] = value ? this.headerTemp[i] : '';
       });
-      this.header = headerValue;
+      this.header = headerValue.filter(v=>!!v);
       this.showHeaderCheckBox = false;
     },
     handleReset() {
