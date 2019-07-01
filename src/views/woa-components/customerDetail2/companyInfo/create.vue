@@ -13,23 +13,15 @@
         </FormItem>
         <FormItem label="重要等级" prop="importlevel">
           <Select transfer v-model="formValidate.importlevel" size="small">
-            <Option
-              v-for="item in importance"
-              :value="item.typecode"
-              :key="item.typecode"
-            >{{ item.typename }}</Option>
+            <Option v-for="item in importance" :value="item.typecode" :key="item.typecode">{{ item.typename }}</Option>
           </Select>
         </FormItem>
         <FormItem label="产品特点" prop="productFeature">
-          <Input v-model="formValidate.productFeature"  size="small"></Input>
+          <Input v-model="formValidate.productFeature" size="small"></Input>
         </FormItem>
         <FormItem label="是否在服" prop="isSuits">
           <Select v-model="formValidate.ifSuit" size="small">
-            <Option
-              v-for="item in ifSuits"
-              :value="item"
-              :key="item"
-            >{{ item }}</Option>
+            <Option v-for="item in ifSuits" :value="item" :key="item">{{ item }}</Option>
           </Select>
         </FormItem>
         <FormItem label="地址" prop="address">
@@ -59,7 +51,7 @@
 </template>
 
 <script>
-import relationCommon from "./common";
+import relationCommon from './common';
 export default {
   mixins: [relationCommon],
   data() {
@@ -69,16 +61,16 @@ export default {
   },
   methods: {
     submit() {
+      this.loading = true;
       this.check_data(this.create);
     },
     create() {
       let _self = this;
-      _self.loading = true;
-      let url = "/api/channel/company/createChannelTypeCompany";
+      let url = '/api/channel/company/createChannelTypeCompany';
 
       let config = {
         // cluesource: _self.formValidate.cluesource,
-        companyarea: _self.formValidate.companyarea.join("-"),
+        companyarea: _self.formValidate.companyarea.join('-'),
         companyname: _self.formValidate.companyname,
         customerid: _self.formValidate.customerid,
         importlevel: _self.formValidate.importlevel.toString(),
@@ -90,9 +82,9 @@ export default {
       };
 
       function success(res) {
-        _self.$refs["formValidate"].resetFields();
+        _self.$refs['formValidate'].resetFields();
         _self.loading = false;
-        _self.$emit("update", _self.customer.ID);
+        _self.$emit('update', _self.customer.ID);
         _self.openCreateCompany = false;
       }
 
@@ -105,8 +97,8 @@ export default {
   },
   created() {
     let _self = this;
-    this.$bus.off("OPEN_COMPANY_CREATE", true);
-    this.$bus.on("OPEN_COMPANY_CREATE", e => {
+    this.$bus.off('OPEN_COMPANY_CREATE', true);
+    this.$bus.on('OPEN_COMPANY_CREATE', e => {
       _self.openCreateCompany = true;
     });
   }

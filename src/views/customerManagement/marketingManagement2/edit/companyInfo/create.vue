@@ -61,6 +61,7 @@ export default {
     },
     methods: {
         submit(){
+            this.loading = true;
             this.check_data(this.create)
         },
         create(){

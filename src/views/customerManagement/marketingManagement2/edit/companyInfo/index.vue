@@ -156,6 +156,7 @@ export default {
                                     },
                                     on: {
                                         click: () => {
+                                          console.log(params.row)
                                             this.$bus.emit("OPEN_COMPANY_UPDATE", params.row)
                                         }
                                     }
