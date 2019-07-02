@@ -18,7 +18,8 @@
     "dev:cloud": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --env=dev-cloud",
     "dev:dll": "webpack --progress --config build/webpack.dll.conf.js",
     "analyse": "webpack --config ./build/webpack.prod.conf.js --json > compilation-stats.json",
-    "copy:package": "node copyFile.js"
+    "copy:package": "node copyFile.js",
+    "depoly": "sh ./deploy.sh 'caicai'"
   },
   "keywords": [],
   "author": "roderickt1an@gmail.com",
