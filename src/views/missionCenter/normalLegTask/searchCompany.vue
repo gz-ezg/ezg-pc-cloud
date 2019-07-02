@@ -68,7 +68,7 @@
                     },
                     {
                         title: '客户电话',
-                        key: 'tel',
+                        key: 'encryTel',
                         minWidth:150
                     },
                 ],

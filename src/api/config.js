@@ -1,6 +1,6 @@
 export default {
 	clue: {
-		createTemplate: 'clue/template/create',
-		updateTemplate: '/clue/template/update',
+		postCreateTemplate: 'clue/template/create',
+		updateTemplate: 'clue/template/update',
 	},
 }

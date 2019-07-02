@@ -8,6 +8,7 @@
       },
       set: function(arg) {
         if (typeof arg === 'string') arg = [arg]
+        console.log(arg)
         bus.$emit.apply(bus, arg)
       }
     })

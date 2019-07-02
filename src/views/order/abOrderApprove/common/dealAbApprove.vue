@@ -56,8 +56,9 @@
         <Row>
           <FormItem label="历史审批：" prop="apply_memo">
             <div class="s">
-              <div v-for="item in memoData" v-if="memoData">
-                <div>{{item}}</div>
+              <div v-for="item in historyData" v-if="historyData" class="s1">
+                <div>{{item.realname}}：{{item.audit_memo}}</div>
+                <div class="s2">{{item.audit_date}}</div>
               </div>
             </div>
           </FormItem>
@@ -139,14 +140,12 @@ export default {
       function success(res){
         _self.data = res.data.data
         _self.historyData = res.data.data.items
-        console.log(_self.historyData )
         for (let i=0;i<_self.historyData.length;i++){
           if (_self.historyData[i].audit_memo =="" || _self.historyData[i].audit_memo==null){
-            _self.historyData[i].audit_memo = "审批备注为空"
+            _self.historyData[i].audit_memo = "审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空"
           }
-          _self.memoData.push(_self.historyData[i].realname+"："+_self.historyData[i].audit_memo)
         }
-        console.log(_self.memoData)
+        console.log(_self.historyData )
         _self.tableLoading = false
       }
 
@@ -207,5 +206,13 @@ export default {
     font-family: inherit;
     word-wrap: break-word;
     white-space: pre-wrap;
+  }
+  .s1{
+    display: flex;
+    justify-content: space-between;
+  }
+  .s2{
+    flex: 0 0 120px;
+    margin-left: 50px;
   }
 </style>

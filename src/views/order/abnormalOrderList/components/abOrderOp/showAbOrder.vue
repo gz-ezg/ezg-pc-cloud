@@ -129,11 +129,14 @@ export default {
         _self.abnormalOrderDetail.companyName = e.companyname;
         _self.abnormalOrderDetail.linkname = e.name;
         _self.abnormalOrderDetail.linkTel = e.tel;
-        _self.abnormalOrderDetail.imgs = res.data.data.urls
-          .split(",")
-          .map(v => {
-            return "/api/assets/" + v;
-          });
+        if (res.data.data.urls) {
+          _self.abnormalOrderDetail.imgs = res.data.data.urls
+                  .split(",")
+                  .map(v => {
+                    return "/api/assets/" + v;
+                  });
+        }
+
         console.log(_self.abnormalOrderDetail);
       }
 
