@@ -142,7 +142,7 @@ export default {
         _self.historyData = res.data.data.items
         for (let i=0;i<_self.historyData.length;i++){
           if (_self.historyData[i].audit_memo =="" || _self.historyData[i].audit_memo==null){
-            _self.historyData[i].audit_memo = "审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空审批备注为空"
+            _self.historyData[i].audit_memo = "审批备注为空"
           }
         }
         console.log(_self.historyData )
