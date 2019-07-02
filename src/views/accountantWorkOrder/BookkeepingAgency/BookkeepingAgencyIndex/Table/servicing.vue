@@ -5,12 +5,7 @@
         <Panel name="1">
           <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>筛选
           <div slot="content" @keydown.enter="Search">
-            <Form
-              ref="SearchValidate"
-              :model="SearchValidate"
-              :label-width="130"
-              style="margin-top: 15px"
-            >
+            <Form ref="SearchValidate" :model="SearchValidate" :label-width="130" style="margin-top: 15px">
               <Row :gutter="8" style="height:56px">
                 <Col span="8">
                   <FormItem label="企业名称：" prop="CompanyName">
@@ -24,18 +19,8 @@
                 </Col>
                 <Col span="8">
                   <FormItem label="结束账期：" prop="followby_realname">
-                    <Input
-                      v-model="SearchValidate.begin_end_period"
-                      size="small"
-                      style="width:40%"
-                      placeholder="201807"
-                    ></Input>-
-                    <Input
-                      v-model="SearchValidate.end_end_period"
-                      size="small"
-                      style="width:40%"
-                      placeholder="201807"
-                    ></Input>
+                    <Input v-model="SearchValidate.begin_end_period" size="small" style="width:40%" placeholder="201807"></Input>-
+                    <Input v-model="SearchValidate.end_end_period" size="small" style="width:40%" placeholder="201807"></Input>
                   </FormItem>
                 </Col>
               </Row>
@@ -71,12 +56,9 @@
     </Row>
     <Row>
       <ButtonGroup>
-        <Button
-          type="primary"
-          icon="ios-color-wand-outline"
-          @click="stop_service"
-          v-permission="['bookkeepingAgency.stop']"
-        >停止服务</Button>
+        <Button type="primary" icon="ios-color-wand-outline" @click="stop_service" v-permission="['bookkeepingAgency.stop']"
+          >停止服务</Button
+        >
         <Button type="primary" icon="information-circled" @click="fpkj">变更会计</Button>
         <Button type="primary" icon="ios-color-wand-outline" @click="setLevel">设置财务等级</Button>
         <Button type="primary" icon="ios-color-wand-outline" @click="openFollow">服务详情</Button>
@@ -115,16 +97,12 @@
     </Row>
     <Modal v-model="accout_level_open" title="设置账务等级" width="300">
       <Row>
-        <center>{{current_row.companyname}}</center>
+        <center>{{ current_row.companyname }}</center>
       </Row>
       <Row style="margin-top:20px">
         <center>
           <Select v-model="current_row.accountgrade" type="size" style="width:150px">
-            <Option
-              v-for="item in financialLevel"
-              :key="item.id"
-              :value="item.typecode"
-            >{{item.typename}}</Option>
+            <Option v-for="item in financialLevel" :key="item.id" :value="item.typecode">{{ item.typename }}</Option>
           </Select>
         </center>
       </Row>
@@ -134,10 +112,10 @@
     </Modal>
     <Modal v-model="finsih_work" title="完成节点" width="500">
       <Row>
-        <div v-for="(item,index) in show_img" :key="index">
+        <div v-for="(item, index) in show_img" :key="index">
           <Row>
             <center>
-              <img :src="item.src" alt="节点" style="width: 300px;height:300px;">
+              <img :src="item.src" alt="节点" style="width: 300px;height:300px;" />
             </center>
           </Row>
           <center>
@@ -149,12 +127,7 @@
         </Upload>
       </Row>
       <div slot="footer">
-        <Button
-          type="primary"
-          style="margin:auto"
-          @click="finsih_upload"
-          :loading="finsih_loading"
-        >提交</Button>
+        <Button type="primary" style="margin:auto" @click="finsih_upload" :loading="finsih_loading">提交</Button>
       </div>
     </Modal>
     <Modal title="无效账号企业" width="500" v-model="openInvalidCompany">
@@ -168,12 +141,12 @@
 </template>
 
 <script>
-import Bus from "../../../../../components/bus";
-import { yasuo } from "../../../../../libs/img_beforeUpload";
-import * as accountApi from "../../api";
-import followUp from "./followUp";
-import bill from "./bill";
-import billHistroy from "./billHistroy";
+import Bus from '../../../../../components/bus';
+import { yasuo } from '../../../../../libs/img_beforeUpload';
+import * as accountApi from '../../api';
+import followUp from './followUp';
+import bill from './bill';
+import billHistroy from './billHistroy';
 
 export default {
   components: {
@@ -190,147 +163,211 @@ export default {
       detailList: [],
       inValidHeader: [
         {
-          title: "企业名称",
-          key: "companyname"
+          title: '企业名称',
+          key: 'companyname'
         },
         {
-          title: "服务状态",
-          key: "service_status",
+          title: '服务状态',
+          key: 'service_status',
           width: 90
         },
         {
-          title: "操作",
+          title: '操作',
           width: 120,
           render: (h, params) => {
             return h(
-              "Button",
+              'Button',
               {
                 props: {
-                  type: "text",
-                  size: "small"
+                  type: 'text',
+                  size: 'small'
                 },
                 on: {
                   click: () => {
-                    this.$store.commit(
-                      "open_gobal_company_detail_modal",
-                      params.row.companyid
-                    );
+                    this.$store.commit('open_gobal_company_detail_modal', params.row.companyid);
                   }
                 }
               },
-              "[查看公司]"
+              '[查看公司]'
             );
           }
         }
       ],
-      time: "",
+      time: '',
       managestatus: [],
       managestatus_map: new Map(),
       finsih_loading: false,
-      upload_id: "",
+      upload_id: '',
       finsih_work: false,
       img_array: [],
       show_img: [],
-      financialLevel: "",
+      financialLevel: '',
       accout_level_open: false,
-      cservicest: "",
+      cservicest: '',
       cservicest_map: new Map(),
-      gdsreportMap: new Map([
-        ["ybd", "已报道"],
-        ["wbd", "未报道"],
-        ["bybd", "不用报道"]
-      ]),
+      gdsreportMap: new Map([['ybd', '已报道'], ['wbd', '未报道'], ['bybd', '不用报道']]),
       loading: false,
-      search_model: "",
+      search_model: '',
       SearchValidate: {
-        CompanyName: "",
-        server_realname: "",
-        followby_realname: "",
-        begin_end_period: "",
-        end_end_period: "",
-        note_kj_flag: "",
-        etaxStatus: ""
+        CompanyName: '',
+        server_realname: '',
+        followby_realname: '',
+        begin_end_period: '',
+        end_end_period: '',
+        note_kj_flag: '',
+        etaxStatus: ''
       },
-      current_row: "",
+      current_row: '',
       page: 1,
       pageSize: 10,
       tiaozheng: false,
       zl: false,
       zz: false,
       bs: false,
-      zlid: "",
-      zzid: "",
-      bsid: "",
-      search_model: "",
+      zlid: '',
+      zzid: '',
+      bsid: '',
+      search_model: '',
       id: {},
       pageTotal: 0,
       task_message: {
-        companyName: "1111111111"
+        companyName: '1111111111'
       },
       data: [],
       currentIndex: -1,
       header: [
         {
-          title: "对应企业",
-          key: "CompanyName",
+          title: '对应企业',
+          key: 'CompanyName',
           minWidth: 250
         },
         {
-          title: "产品名称",
-          key: "product",
+          title: '产品名称',
+          key: 'product',
           width: 120
         },
         {
-          title: "国地税报道",
-          key: "gdsreport",
+          title: '国地税报道',
+          key: 'gdsreport',
           minWidth: 120
         },
         {
-          title: "服务人员",
-          key: "server_realname",
+          title: '服务人员',
+          key: 'server_realname',
           minWidth: 120
         },
         {
-          title: "市场",
-          key: "followby_realname",
+          title: '市场',
+          key: 'followby_realname',
           minWidth: 120
         },
         {
-          title: "剩余时长",
-          key: "balance_count",
+          title: '剩余时长',
+          key: 'balance_count',
           minWidth: 120
         },
         {
-          title: "开始税期",
-          key: "begin_period",
+          title: '开始税期',
+          key: 'begin_period',
           minWidth: 120
         },
         {
-          title: "结束税期",
-          key: "end_period",
+          title: '结束税期',
+          key: 'end_period',
           minWidth: 120
         },
         {
-          title: "单价",
-          key: "unit_price",
+          title: '单价',
+          key: 'unit_price',
+          minWidth: 120,
+          render: (h, params) => {
+            let _self = this;
+            if (params.index != this.currentIndex) {
+              return h('div', [
+                h(
+                  'span',
+                  {
+                    style: {
+                      display: 'inline-block',
+                      lineHeight: '24px',
+                      height: '24px',
+                      width: '40px'
+                    }
+                  },
+                  params.row.unit_price
+                ),
+                h(
+                  'Button',
+                  {
+                    props: {
+                      type: 'text',
+                      size: 'small'
+                    },
+                    on: {
+                      click: function() {
+                        _self.handle_edit_unit_price(params.row, params.index);
+                      }
+                    }
+                  },
+                  '修改'
+                )
+              ]);
+            } else {
+              return h('div', [
+                h('Input', {
+                  props: {
+                    value: this.data[params.index].unit_price,
+                    size: 'small'
+                  },
+                  style: {
+                    display: 'inline-block',
+                    width: '60px'
+                  },
+                  on: {
+                    'on-blur': function(event) {
+                      _self.data[params.index].unit_price = event.target.value;
+                    }
+                  }
+                }),
+                h(
+                  'Button',
+                  {
+                    props: {
+                      type: 'info',
+                      size: 'small'
+                    },
+                    style: {
+                      display: 'inline-block'
+                    },
+                    on: {
+                      click: () => {
+                        console.log('123');
+                        _self.update_unit_price(params.index);
+                      }
+                    }
+                  },
+                  '保存'
+                )
+              ]);
+            }
+          }
+        },
+        {
+          title: '警戒值',
+          key: 'accounter_security_line',
           minWidth: 120
         },
         {
-          title: "警戒值",
-          key: "accounter_security_line",
+          title: '累计外勤',
+          key: 'dljz_legwork',
           minWidth: 120
         },
         {
-          title: "累计外勤",
-          key: "dljz_legwork",
-          minWidth: 120
-        },
-        {
-          title: "备注",
-          key: "memo",
+          title: '备注',
+          key: 'memo',
           minWidth: 200,
           render: (h, params) => {
-            return h("div", {
+            return h('div', {
               domProps: {
                 innerHTML: params.row.memo
               }
@@ -365,52 +402,46 @@ export default {
           // }
         },
         {
-          title: "操作",
-          key: "action",
-          fixed: "right",
+          title: '操作',
+          key: 'action',
+          fixed: 'right',
           width: 200,
-          align: "center",
+          align: 'center',
           render: (h, params) => {
-            return h("div", [
+            return h('div', [
               h(
-                "Button",
+                'Button',
                 {
                   props: {
-                    type: "text",
-                    size: "small"
+                    type: 'text',
+                    size: 'small'
                   },
                   on: {
                     click: () => {
-                      this.$store.commit(
-                        "open_gobal_company_detail_modal",
-                        params.row.company_id
-                      );
+                      this.$store.commit('open_gobal_company_detail_modal', params.row.company_id);
                     }
                   }
                 },
-                "[查看公司]"
+                '[查看公司]'
               ),
               h(
-                "Button",
+                'Button',
                 {
                   props: {
-                    type: "text",
-                    size: "small"
+                    type: 'text',
+                    size: 'small'
                   },
                   on: {
                     click: () => {
                       if (params.row.batchBookId != null) {
-                        Bus.$emit(
-                          "open_yichang_detail",
-                          params.row.batchBookId
-                        );
+                        Bus.$emit('open_yichang_detail', params.row.batchBookId);
                       } else {
-                        this.$Message.warning("未绑定账本");
+                        this.$Message.warning('未绑定账本');
                       }
                     }
                   }
                 },
-                "[查看异常]"
+                '[查看异常]'
               )
             ]);
           }
@@ -422,77 +453,77 @@ export default {
     downloadExcel() {
       let field = [
         {
-          field: "service_status",
-          title: "服务状态",
-          format: "cservicest"
+          field: 'service_status',
+          title: '服务状态',
+          format: 'cservicest'
         },
         {
-          field: "customername",
-          title: "客户名称"
+          field: 'customername',
+          title: '客户名称'
         },
         {
-          field: "companyname",
-          title: "对应企业"
+          field: 'companyname',
+          title: '对应企业'
         },
         {
-          field: "product",
-          title: "产品名称"
+          field: 'product',
+          title: '产品名称'
         },
         {
-          field: "realname",
-          title: "服务人员"
+          field: 'realname',
+          title: '服务人员'
         },
         {
-          field: "followbyrealname",
-          title: "市场"
+          field: 'followbyrealname',
+          title: '市场'
         },
         {
-          field: "unitprice",
-          title: "单价"
+          field: 'unitprice',
+          title: '单价'
         },
         {
-          field: "end_period",
-          title: "结束期间"
+          field: 'end_period',
+          title: '结束期间'
         },
         {
-          field: "memo",
-          title: "备注"
+          field: 'memo',
+          title: '备注'
         },
         {
-          field: "unit_price",
-          title: "单价"
+          field: 'unit_price',
+          title: '单价'
         }
       ];
       let _self = this;
       let url = `api/order/cycle/month/service/list`;
       let config = {
-        page: "1",
-        pageSize: "1000000",
+        page: '1',
+        pageSize: '1000000',
         period: _self.time,
         companyname: _self.SearchValidate.CompanyName,
         realname: _self.SearchValidate.server_realname,
-        sortField: "updatedate",
+        sortField: 'updatedate',
         followbyrealname: _self.SearchValidate.followby_realname,
         begin_end_period: _self.SearchValidate.begin_end_period,
         end_end_period: _self.SearchValidate.end_end_period,
         note_kj_flag: _self.SearchValidate.note_kj_flag,
-        hasEAccount: _self.SearchValidate.etaxStatus == 1 ? 1 : "",
-        hasEAccountAndWrong: _self.SearchValidate.etaxStatus == 2 ? 1 : "",
-        hasNotEAccount: _self.SearchValidate.etaxStatus == 3 ? 1 : "",
-        export: "Y",
+        hasEAccount: _self.SearchValidate.etaxStatus == 1 ? 1 : '',
+        hasEAccountAndWrong: _self.SearchValidate.etaxStatus == 2 ? 1 : '',
+        hasNotEAccount: _self.SearchValidate.etaxStatus == 3 ? 1 : '',
+        export: 'Y',
         exportField: encodeURI(JSON.stringify(field))
       };
       let toExcel = this.$MergeURL(url, config);
       window.open(toExcel);
     },
     handleReset() {
-      this.SearchValidate.CompanyName = "";
-      this.SearchValidate.server_realname = "";
-      this.SearchValidate.followby_realname = "";
-      this.SearchValidate.begin_end_period = "";
-      this.SearchValidate.end_end_period = "";
-      this.SearchValidate.note_kj_flag = "";
-      this.SearchValidate.etaxStatus = "";
+      this.SearchValidate.CompanyName = '';
+      this.SearchValidate.server_realname = '';
+      this.SearchValidate.followby_realname = '';
+      this.SearchValidate.begin_end_period = '';
+      this.SearchValidate.end_end_period = '';
+      this.SearchValidate.note_kj_flag = '';
+      this.SearchValidate.etaxStatus = '';
       this.Search();
     },
     Search() {
@@ -500,7 +531,7 @@ export default {
       this.getData();
     },
     show(e) {
-      if (e.key == "Enter") {
+      if (e.key == 'Enter') {
         this.Search();
       }
     },
@@ -509,11 +540,11 @@ export default {
       _self.loading = true;
       let config = {
         params: {
-          sortField: "updatedate",
-          service_type: "dljz",
+          sortField: 'updatedate',
+          service_type: 'dljz',
           page: _self.page,
           pageSize: _self.pageSize,
-          service_status: "inservice",
+          service_status: 'inservice',
           period: _self.time,
           companyname: _self.SearchValidate.CompanyName,
           realname: _self.SearchValidate.server_realname,
@@ -521,9 +552,9 @@ export default {
           begin_end_period: _self.SearchValidate.begin_end_period,
           end_end_period: _self.SearchValidate.end_end_period,
           note_kj_flag: _self.SearchValidate.note_kj_flag,
-          hasEAccount: _self.SearchValidate.etaxStatus == 1 ? 1 : "",
-          hasEAccountAndWrong: _self.SearchValidate.etaxStatus == 2 ? 1 : "",
-          hasNotEAccount: _self.SearchValidate.etaxStatus == 3 ? 1 : ""
+          hasEAccount: _self.SearchValidate.etaxStatus == 1 ? 1 : '',
+          hasEAccountAndWrong: _self.SearchValidate.etaxStatus == 2 ? 1 : '',
+          hasNotEAccount: _self.SearchValidate.etaxStatus == 3 ? 1 : ''
         }
       };
 
@@ -558,14 +589,13 @@ export default {
     fpkj() {
       let _self = this;
 
-      if (_self.current_row == "" || _self.current_row == undefined) {
-        this.$Message.warning("请选择要变更会计的项目");
+      if (_self.current_row == '' || _self.current_row == undefined) {
+        this.$Message.warning('请选择要变更会计的项目');
       } else {
         _self.current_row.workordermemo = _self.current_row.memo;
-        _self.current_row.followby_realname =
-          _self.current_row.followbyrealname;
+        _self.current_row.followby_realname = _self.current_row.followbyrealname;
         _self.current_row.CompanyName = _self.current_row.companyname;
-        Bus.$emit("fenpei", _self.current_row);
+        Bus.$emit('fenpei', _self.current_row);
       }
     },
 
@@ -574,17 +604,15 @@ export default {
 
       if (_self.current_row) {
         this.$Modal.confirm({
-          title: "提示信息",
-          content: "<p>您确定停止服务吗</p>",
+          title: '提示信息',
+          content: '<p>您确定停止服务吗</p>',
           onOk: async () => {
             let config = {
               id: _self.current_row.cycle_service_record_id,
-              serviceStatus: "stop"
+              serviceStatus: 'stop'
             };
             try {
-              let { status, data } = await accountApi.cycleServiceRecordUpdate(
-                config
-              );
+              let { status, data } = await accountApi.cycleServiceRecordUpdate(config);
               if (status) {
                 _self.page = 1;
                 _self.getData();
@@ -596,7 +624,7 @@ export default {
           onCancel: () => {}
         });
       } else {
-        _self.$Message.warning("请选择要停止服务的工单！");
+        _self.$Message.warning('请选择要停止服务的工单！');
       }
     },
 
@@ -639,13 +667,11 @@ export default {
         _self.finsih_loading = true;
 
         let formdata = new FormData();
-        formdata.append("monthServiceItemId", _self.upload_id);
-        formdata.append("file", _self.img_array[0]);
+        formdata.append('monthServiceItemId', _self.upload_id);
+        formdata.append('file', _self.img_array[0]);
 
         try {
-          let { status, data } = await accountApi.cycleMonthServiceItemFinish(
-            formdata
-          );
+          let { status, data } = await accountApi.cycleMonthServiceItemFinish(formdata);
 
           if (status) {
             this.finsih_work = false;
@@ -659,24 +685,20 @@ export default {
 
         this.finsih_loading = false;
       } else {
-        this.$Message.warning("请上传图片！(最多上传一张图片)");
+        this.$Message.warning('请上传图片！(最多上传一张图片)');
       }
     },
 
     rowClassName(row, index) {
       let _self = this;
       if (row.balance_count <= 2) {
-        return "demo-table-error-row2";
+        return 'demo-table-error-row2';
       }
     },
     async get_data_center() {
-      let params = "cservicest,managestatus,financialLevel";
+      let params = 'cservicest,managestatus,financialLevel';
       try {
-        let {
-          cservicest,
-          managestatus,
-          financialLevel
-        } = await accountApi.getDictionary(params);
+        let { cservicest, managestatus, financialLevel } = await accountApi.getDictionary(params);
         this.cservicest = cservicest;
         this.cservicest_map = this.$array2map(this.cservicest);
         this.managestatus = managestatus;
@@ -689,8 +711,8 @@ export default {
     },
     setLevel() {
       let _self = this;
-      if (_self.current_row == "" || _self.current_row == null) {
-        _self.$Message.warning("请选择要设置的记录！");
+      if (_self.current_row == '' || _self.current_row == null) {
+        _self.$Message.warning('请选择要设置的记录！');
       } else {
         _self.accout_level_open = true;
       }
@@ -713,8 +735,8 @@ export default {
     },
     openFollow() {
       let _self = this;
-      if (_self.current_row == "" || _self.current_row == null) {
-        _self.$Message.warning("请选择要设置的记录！");
+      if (_self.current_row == '' || _self.current_row == null) {
+        _self.$Message.warning('请选择要设置的记录！');
       } else {
         // _self.$bus.emit('open_booking_follow',_self.current_row)
         this.openFollowUp = true;
@@ -725,57 +747,51 @@ export default {
       let _self = this;
 
       if (!_self.current_row) {
-        this.$Message.warning("请选择要查看的项目！");
+        this.$Message.warning('请选择要查看的项目！');
       } else {
-        _self.$bus.emit("rizhi", _self.current_row.cycle_service_record_id);
+        _self.$bus.emit('rizhi', _self.current_row.cycle_service_record_id);
       }
     },
     //  打开外勤信息
     openFieldByCompanyId() {
       let _self = this;
       if (!_self.current_row) {
-        this.$Message.warning("请选择要查看的项目！");
+        this.$Message.warning('请选择要查看的项目！');
       } else {
-        _self.$bus.emit("OPEN_FIELD_LIST_BY_COMPANYID", [
-          _self.current_row.company_id,
-          _self.current_row.companyname
-        ]);
+        _self.$bus.emit('OPEN_FIELD_LIST_BY_COMPANYID', [_self.current_row.company_id, _self.current_row.companyname]);
       }
     },
     //  获取电子税务局账号异常的信息
     async get_etax_error() {
       let _self = this;
       try {
-        let {
-          countList,
-          detailList
-        } = await accountApi.getNotRecordTaxAccountCompanyInfos();
+        let { countList, detailList } = await accountApi.getNotRecordTaxAccountCompanyInfos();
         _self.countList = countList;
         _self.detailList = detailList;
         if (_self.detailList.length) {
           _self.$Notice.info({
-            name: "etax",
-            title: "账号异常通知",
+            name: 'etax',
+            title: '账号异常通知',
             duration: 0,
             render: (h, params) => {
-              return h("div", [
-                "部分企业电子税务局账号无效！",
+              return h('div', [
+                '部分企业电子税务局账号无效！',
                 h(
-                  "Button",
+                  'Button',
                   {
                     props: {
-                      type: "info",
-                      size: "small"
+                      type: 'info',
+                      size: 'small'
                     },
-                    class: "ivu-btn ivu-btn-info",
+                    class: 'ivu-btn ivu-btn-info',
                     on: {
                       click: () => {
-                        _self.$Notice.close("etax");
+                        _self.$Notice.close('etax');
                         _self.openInvalidCompany = true;
                       }
                     }
                   },
-                  "查看详情"
+                  '查看详情'
                 )
               ]);
             }
@@ -795,9 +811,7 @@ export default {
       };
 
       try {
-        let { status, data } = await accountApi.workOrderCycleUnitPriceUpdate(
-          config
-        );
+        let { status, data } = await accountApi.workOrderCycleUnitPriceUpdate(config);
         if (status) {
           (this.currentIndex = -1), this.getData();
         }
@@ -808,7 +822,7 @@ export default {
     //  更新电子税务局信息
     async update_etax_info() {
       if (!this.current_row) {
-        this.$Message.warning("请选择要查看的企业！");
+        this.$Message.warning('请选择要查看的企业！');
       } else {
         // let config = {
         //     companyId: this.current_row.company_id,
@@ -819,17 +833,11 @@ export default {
           let config = new FormData();
           let now = new Date();
           let currentYear = now.getFullYear();
-          let currentTime =
-            currentYear +
-            (now.getMonth() < 9
-              ? "0" + (now.getMonth() + 1)
-              : now.getMonth() + 1);
-          config.append("companyId", this.current_row.company_id);
-          config.append("yearAndMonth", currentTime);
+          let currentTime = currentYear + (now.getMonth() < 9 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1);
+          config.append('companyId', this.current_row.company_id);
+          config.append('yearAndMonth', currentTime);
 
-          let { status, data } = await accountApi.orderSpiderETaxDeclare(
-            config
-          );
+          let { status, data } = await accountApi.orderSpiderETaxDeclare(config);
           if (status) {
             this.getData();
           }
@@ -841,7 +849,7 @@ export default {
     //  更新服务动态
     async update_service() {
       if (!this.current_row) {
-        this.$Message.warning("请选择要查看的企业！");
+        this.$Message.warning('请选择要查看的企业！');
       } else {
         // let config = {
         //     companyId: this.current_row.company_id,
@@ -852,20 +860,11 @@ export default {
           let config = new FormData();
           let now = new Date();
           let currentYear = now.getFullYear();
-          let currentTime =
-            currentYear +
-            (now.getMonth() < 9
-              ? "0" + (now.getMonth() + 1)
-              : now.getMonth() + 1);
-          config.append("companyId", this.current_row.company_id);
-          config.append("yearAndMonth", currentTime);
+          let currentTime = currentYear + (now.getMonth() < 9 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1);
+          config.append('companyId', this.current_row.company_id);
+          config.append('yearAndMonth', currentTime);
 
-          let {
-            status,
-            data
-          } = await accountApi.orderETaxSynchronizeCycleMonthServiceItemFinish(
-            config
-          );
+          let { status, data } = await accountApi.orderETaxSynchronizeCycleMonthServiceItemFinish(config);
           if (status) {
             this.getData();
           }
@@ -877,17 +876,17 @@ export default {
     open_bill() {
       let _self = this;
       if (_self.current_row) {
-        _self.$bus.emit("OPEN_bill", _self.current_row);
+        _self.$bus.emit('OPEN_bill', _self.current_row);
       } else {
-        _self.$Message.warning("请选择一行查看");
+        _self.$Message.warning('请选择一行查看');
       }
     },
     open_bill_histroy() {
       let _self = this;
       if (_self.current_row) {
-        _self.$bus.emit("OPEN_bill_History", _self.current_row);
+        _self.$bus.emit('OPEN_bill_History', _self.current_row);
       } else {
-        _self.$Message.warning("请选择一行查看");
+        _self.$Message.warning('请选择一行查看');
       }
     }
   },
@@ -896,25 +895,25 @@ export default {
     this.get_etax_error();
     await this.get_data_center();
     let now = new Date();
-    let year = "";
-    let month = "";
+    let year = '';
+    let month = '';
     if (now.getMonth() == 0) {
       year = now.getFullYear() - 1;
-      month = "12";
+      month = '12';
     } else {
       year = now.getFullYear();
       if (now.getMonth() <= 9) {
-        month = "0" + now.getMonth();
+        month = '0' + now.getMonth();
       } else {
         month = now.getMonth();
       }
     }
     _self.time = year.toString() + month.toString();
     await this.getData();
-    Bus.$on("UPDATE_ALL_ACCOUNT_PAGE", e => {
+    Bus.$on('UPDATE_ALL_ACCOUNT_PAGE', e => {
       _self.getData();
     });
-    Bus.$on("update_auditlist_detail", e => {
+    Bus.$on('update_auditlist_detail', e => {
       _self.getData();
     });
   }

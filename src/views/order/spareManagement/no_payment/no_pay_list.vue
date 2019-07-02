@@ -239,6 +239,7 @@ export default {
         ordercode: _that.searchgroups.ordercode,
         createbyname: _that.searchgroups.createbyname,
         approval: _that.searchgroups.approval,
+        product: _that.searchgroups.product,
         export: 'Y',
         exportField: encodeURI(JSON.stringify(field))
       };
