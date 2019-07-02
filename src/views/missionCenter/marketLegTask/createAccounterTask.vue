@@ -321,7 +321,7 @@
             create_task() {
                 let _self = this
                 if (_self.newMission.taskName ==""|| _self.newMission.taskName ==null) {
-                    this.$Message.warning('请填写市场任务名称AA')
+                    this.$Message.warning('请填写市场任务名称')
                     return
                 }
                 if (_self.newMission.followResult ==="FirstVisit" && _self.newMission.customerId ==null) {
