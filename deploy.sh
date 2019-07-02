@@ -5,6 +5,7 @@ set -e
 git add -A
 git commit -m "$1"
 git push origin master
+exit
 
 echo '正在构建'
 curl -X POST "build.yrl.fun/job/front_cloud_zgcfo_front/build?token=yjg" --user admin:build.123
