@@ -8,7 +8,7 @@
 
 changelog
 1.babel6 update babel7
-2.autodll 变更 手动控制
+2.autodll 变更 手动控制11
 3.支持ie11
 4.支持首页预渲染(需翻墙)
 5.一级路由移入layout文件夹，更名为布局
