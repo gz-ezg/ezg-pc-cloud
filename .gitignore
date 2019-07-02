@@ -5,7 +5,7 @@ node_modules
 .history
 .DS_Store
 \.settings/
-.idea/
+.idea
 build/env.js
 dist/
 .svn
