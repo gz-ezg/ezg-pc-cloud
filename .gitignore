@@ -10,3 +10,4 @@ dist/
 .svn
 .sentryclirc
 .cache
+deploy.sh
