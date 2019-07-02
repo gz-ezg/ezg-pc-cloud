@@ -141,7 +141,9 @@ export default {
             this.get_data()
         },
         create_template(){
-            this.$bus.emit("OPEN_CREATE_CLUE_TEMPLATE",true)
+            // this.$bus.emit("OPEN_CREATE_CLUE_TEMPLATE",true)
+            this.$Bus = ["OPEN_CREATE_CLUE_TEMPLATE",true]
+            // this.$Bus.emit("OPEN_CREATE_CLUE_TEMPLATE",true)
         },
         edit_tempalte(e){
             this.$bus.emit("OPEN_EDIT_CLUE_TEMPLATE", e.row)
