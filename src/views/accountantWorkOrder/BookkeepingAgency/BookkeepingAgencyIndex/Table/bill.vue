@@ -53,6 +53,8 @@
 </template>
 
 <script>
+	import {DateFormatYearMonth2} from "../../../../../libs/utils";
+
 	export default {
 		props:["status"],
 		data(){
@@ -169,7 +171,9 @@
 			this.$bus.on("OPEN_bill",(e)=>{
 				_self.status = true
 				_self.companyId = e.company_id
-				_self.period = e.period
+				let date = new Date()
+				_self.period = DateFormatYearMonth2(date)
+				console.log(_self.period)
 				_self.getData()
 			})
 		}

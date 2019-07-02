@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="新增注销工单，修改服务管理页面问题，增加服务管理搜索功能">
+    <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/dll/_dll_iview.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/dll/_dll_iview.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/home/account_index/accountIndex.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/home/account_index/accountIndex.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/productManagement/productListNew/productAttr.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/productManagement/productListNew/productAttr.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/libs/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/libs/utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/bill.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/bill.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/billHistroy.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/billHistroy.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -24,30 +26,19 @@
     <favorites_list name="pubg" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-225" />
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/views/productManagement/productListNew/productAttr.vue">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="175" column="29" lean-forward="true" selection-start-line="175" selection-start-column="29" selection-end-line="175" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/productManagement/productAnalysis/index.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-100">
-              <caret line="17" column="14" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/productManagement/productAnalysis/components/placeAnalysis.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="26" column="36" lean-forward="true" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
+            <state relative-caret-position="300">
+              <caret line="12" column="6" lean-forward="true" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -64,36 +55,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getChannelType</find>
-      <find>handleSubmit</find>
-      <find>channelTypeId</find>
-      <find>qudaotype</find>
-      <find>appRouter</find>
-      <find>setTimeout</find>
-      <find>getData</find>
-      <find>getAllLabel</find>
-      <find>_self.data1</find>
-      <find>iview</find>
-      <find>td_icon</find>
-      <find>iView</find>
-      <find>shrink</find>
-      <find>CompanyDetail</find>
-      <find>Bus</find>
-      <find>showcompanydetail</find>
-      <find>企业创建时间</find>
-      <find>ztfw</find>
-      <find>formValidateDetail</find>
-      <find>orderItemList3</find>
-      <find>备注</find>
-      <find>开始服务</find>
-      <find>ksfw</find>
-      <find>fpkj</find>
-      <find>ckbgrz</find>
-      <find>scbd</find>
-      <find>task_message.companyName</find>
-      <find>label=&quot;归属客户：&quot;</find>
-      <find>gszx</find>
-      <find>openUpdateLink</find>
+      <find>type:</find>
+      <find>工单分配</find>
+      <find>executor_id</find>
+      <find>退款</find>
+      <find>订单</find>
+      <find>订单管理</find>
+      <find>公海</find>
+      <find>营销</find>
+      <find>客户回访</find>
+      <find>add_customer</find>
+      <find>openEdit</find>
+      <find>ORDER_OPEN_SELECT_COMPANY</find>
+      <find>isCycle</find>
+      <find>isCycleOne</find>
+      <find>get_product_kind</find>
+      <find>get_task_name</find>
+      <find>showDetail</find>
+      <find>marketServiceRanks</find>
+      <find>fieldDetail.problem_feedback</find>
+      <find>fieldDetail</find>
+      <find>update_detail</find>
+      <find>v2</find>
+      <find>this.sortName</find>
+      <find>sortName</find>
+      <find>order</find>
+      <find>companyName</find>
+      <find>会计管理</find>
+      <find>代理记账</find>
+      <find>format</find>
+      <find>this.data.forEach</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -103,65 +94,65 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/store/modules/app.js" />
-        <option value="$PROJECT_DIR$/src/views/login.vue" />
-        <option value="$PROJECT_DIR$/dist/index.html" />
-        <option value="$PROJECT_DIR$/src/views/workOrder/accountantTask/accountantTask_table.vue" />
-        <option value="$PROJECT_DIR$/src/views/customerManagement/marketingManagement/customerManagement_edit_from.vue" />
-        <option value="$PROJECT_DIR$/src/views/publicPool/publicPool_detail__serviceDynamic.vue" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/marketLegTask/newEditDiv.vue" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/normalLegTask/newEditDiv.vue" />
+        <option value="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/edit/followUpList/newEditDiv.vue" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/normalLegTask/createAccounterTask.vue" />
+        <option value="$PROJECT_DIR$/src/views/customerManagement/customerAccount/accountUpdate.vue" />
+        <option value="$PROJECT_DIR$/src/views/customerManagement/customerAccount/integralUpdate.vue" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/comSchedule/index.vue" />
+        <option value="$PROJECT_DIR$/src/views/publicPool/publicPool/customerManagment.vue" />
+        <option value="$PROJECT_DIR$/src/views/publicPool/publicPool/commonVue.js" />
+        <option value="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/op/del.vue" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/customerService/index.vue" />
+        <option value="$PROJECT_DIR$/src/views/order/orderList/components/orderOp/productDetailList.vue" />
+        <option value="$PROJECT_DIR$/src/views/order/orderList/components/orderOp/createOrder.vue" />
+        <option value="$PROJECT_DIR$/config/config.js" />
+        <option value="$PROJECT_DIR$/build/webpack.dev.conf.js" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/src/views/workOrder/myCommonTask/shuiwu.vue" />
-        <option value="$PROJECT_DIR$/src/views/Main.vue" />
-        <option value="$PROJECT_DIR$/build/webpack.dev.config.js" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/DistributionOfAccounting.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/ChangeLog.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/CompanyDetail.vue" />
-        <option value="$PROJECT_DIR$/src/views/workOrder/myCommonTask/myCommonTaskIndex/companydetail.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/OrderDetail.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/CompanyCancellation.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantField/accountantFieldIndex/customerRecords.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantField/accountantFieldIndex/campanyDetail.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantField/accountantFieldIndex/workOrderDetail.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantField/accountantFieldIndex/clientRelation.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantField/accountantFieldIndex/customersPayReturnVisit.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantField/accountantFieldIndex/customerDetail.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantField/accountantFieldIndex/offlineCustomer.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantField/accountantFieldIndex/campay.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantField/accountantFieldIndex/clockInDetail.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantField/accountantField.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrder.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/productChanges.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/changeTheLength.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/serviceTemplate/serviceTemplate.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgency.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/notbegin.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/notbegin.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/detail.vue" />
-        <option value="$PROJECT_DIR$/src/libs/utils.js" />
-        <option value="$PROJECT_DIR$/src/views/cluesLibrary/cluesLibraryTable/cluesLibrary_table.vue" />
-        <option value="$PROJECT_DIR$/src/views/systemManagement/userManagement/userM_index.vue" />
-        <option value="$PROJECT_DIR$/src/views/systemManagement/userManagement/lock_user.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/cancelWorkOrder/cancelWorkOrder.vue" />
-        <option value="$PROJECT_DIR$/src/views/systemManagement/serveManagement/index.vue" />
         <option value="$PROJECT_DIR$/src/router/router.js" />
-        <option value="$PROJECT_DIR$/新版项目初始文档！必看！" />
-        <option value="$PROJECT_DIR$/src/views/commercialManagement/myCommonTask/myCommonTask_table.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/expireCustomer/expireCustomer.vue" />
-        <option value="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/edit/edit.vue" />
-        <option value="$PROJECT_DIR$/src/views/productManagement/productListNew/updateCycleProperty.vue" />
-        <option value="$PROJECT_DIR$/src/views/home/account_index/totalOutputValue.vue" />
-        <option value="$PROJECT_DIR$/src/views/home/account_index/accountIndex.vue" />
-        <option value="$PROJECT_DIR$/src/views/home/account_index/completion.vue" />
-        <option value="$PROJECT_DIR$/src/views/productManagement/productListNew/productAttr.vue" />
+        <option value="$PROJECT_DIR$/src/views/customerService/ordercallback/table/processed.vue" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/customerService/finishedDetail.vue" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/customerService/detail.vue" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/comSchedule/createSchedule.vue" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/createAccounterTask.vue" />
+        <option value="$PROJECT_DIR$/src/views/customerService/ordercallback/table/untreated.vue" />
+        <option value="$PROJECT_DIR$/src/views/customerService/returnVisit/table/untreated.vue" />
+        <option value="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/edit/companyInfo/index.vue" />
+        <option value="$PROJECT_DIR$/src/views/customerService/returnWorkOrder/table/untreated.vue" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/customerService/market.vue" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/customerService/account.vue" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/customerService/business.vue" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/customerService/finishMarket.vue" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/customerService/finishAccount.vue" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/customerService/finishBusiness.vue" />
+        <option value="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/commonVue.js" />
+        <option value="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/op/change.vue" />
+        <option value="$PROJECT_DIR$/src/views/order/orderList/components/orderOp/editOrderDetail.vue" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/customerService/taskEdit.vue" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/accTaskList/finished.vue" />
+        <option value="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue" />
+        <option value="$PROJECT_DIR$/src/views/order/abnormalOrderList/index.vue" />
+        <option value="$PROJECT_DIR$/src/views/order/orderList/components/productSelect.vue" />
+        <option value="$PROJECT_DIR$/src/views/order/abOrderApprove/common/aduitLog.vue" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/customerService/executing.vue" />
+        <option value="$PROJECT_DIR$/src/main.js" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/customerService/finished.vue" />
+        <option value="$PROJECT_DIR$/src/views/fieldManagement/v2/legwork.vue" />
+        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/notbegin.vue" />
+        <option value="$PROJECT_DIR$/src/views/order/abOrderApprove/common/dealAbApprove.vue" />
+        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/bill.vue" />
+        <option value="$PROJECT_DIR$/src/libs/utils.js" />
+        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/billHistroy.vue" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="width" value="1386" />
+    <option name="height" value="650" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
@@ -174,6 +165,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -181,46 +173,10 @@
               <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="productManagement" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="productManagement" type="462c0819:PsiDirectoryNode" />
-              <item name="productAnalysis" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="productManagement" type="462c0819:PsiDirectoryNode" />
-              <item name="productAnalysis" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -253,7 +209,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="editor.config.ad.shown" value="true" />
     <property name="js-jscs-nodeInterpreter" value="E:\nodejs\node.exe" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="D:/vue.js脚手架项目/sell" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.prettier" value="project" />
     <property name="node.js.selected.package.prettier" value="C:\VueProject\pubg\node_modules\prettier" />
@@ -261,21 +217,21 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
-    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="project.propDebugger" />
+    <property name="ts.external.directory.path" value="E:\webstorm\WebStorm 2018.3.5\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\ezg\ezg-pc-cloud\src\views\customerService\ordercallback" />
+      <recent name="D:\ezg\ezg-pc-cloud\src\views\missionCenter\customerService" />
+      <recent name="D:\ezg\ezg-pc-cloud\src\views\customerManagement\marketingManagement2\edit\followUpList" />
+      <recent name="D:\ezg\ezg-pc-cloud\src\views\missionCenter\accTaskList" />
+      <recent name="D:\ezg\ezg-pc-cloud\src\views\missionCenter\commonView" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\VueProject\pubg" />
       <recent name="C:\VueProject\pubg\src\views\customerManagement\marketingManagement" />
       <recent name="C:\VueProject\pubg\src\components" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\static_page_workspace\ezg-pc-cloud\src\views\customerManagement\marketingManagement2" />
-      <recent name="E:\static_page_workspace\ezg-pc-cloud\src\views\accountantWorkOrder\BookkeepingAgency\BookkeepingAgencyIndex" />
-      <recent name="E:\static_page_workspace\ezg-pc-cloud\src\views\cluesLibrary\cluesLibraryTable" />
-      <recent name="E:\static_page_workspace\ezg-pc-cloud\src\views\systemManagement\serveManagement" />
-      <recent name="C:\VueProject\pubg\src\images" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -360,153 +316,46 @@
       <workItem from="1555986653659" duration="35437000" />
       <workItem from="1556089738555" duration="12486000" />
       <workItem from="1556153763723" duration="2177000" />
-    </task>
-    <task id="LOCAL-00001">
-      <created>1523672176957</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1523672176957</updated>
-    </task>
-    <task id="LOCAL-00002">
-      <created>1523706030574</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1523706030574</updated>
-    </task>
-    <task id="LOCAL-00003">
-      <created>1523867528128</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1523867528128</updated>
-    </task>
-    <task id="LOCAL-00004">
-      <created>1523878993489</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1523878993489</updated>
-    </task>
-    <task id="LOCAL-00005">
-      <created>1523880455979</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1523880455979</updated>
-    </task>
-    <task id="LOCAL-00006">
-      <created>1524065199096</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1524065199097</updated>
-    </task>
-    <task id="LOCAL-00007">
-      <created>1524127977275</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1524127977276</updated>
-    </task>
-    <task id="LOCAL-00008">
-      <created>1524317560755</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1524317560755</updated>
-    </task>
-    <task id="LOCAL-00009">
-      <created>1524325575606</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1524325575606</updated>
-    </task>
-    <task id="LOCAL-00010">
-      <created>1524382719306</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1524382719306</updated>
-    </task>
-    <task id="LOCAL-00011">
-      <created>1524388875881</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1524388875881</updated>
-    </task>
-    <task id="LOCAL-00012">
-      <created>1524396343868</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1524396343868</updated>
-    </task>
-    <task id="LOCAL-00013">
-      <created>1524532603756</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1524532603756</updated>
-    </task>
-    <task id="LOCAL-00014">
-      <created>1524586562334</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1524586562334</updated>
-    </task>
-    <task id="LOCAL-00015">
-      <created>1524642100748</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1524642100748</updated>
-    </task>
-    <task id="LOCAL-00016">
-      <created>1524807466261</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1524807466261</updated>
-    </task>
-    <task id="LOCAL-00017">
-      <created>1524821951959</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1524821951959</updated>
-    </task>
-    <task id="LOCAL-00018">
-      <created>1525428303712</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1525428303712</updated>
-    </task>
-    <task id="LOCAL-00019" summary="新增默认方法">
-      <created>1555987104061</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1555987104061</updated>
-    </task>
-    <task id="LOCAL-00020" summary="客户列表新增标签导出，线索管理增加结算状态，周期性工单分配新增是否本月服务选项，服务管理的BUG修复">
-      <created>1555987679558</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1555987679558</updated>
-    </task>
-    <task id="LOCAL-00021" summary="测试">
-      <created>1555988936164</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1555988936164</updated>
+      <workItem from="1558665440231" duration="32137000" />
+      <workItem from="1558919285566" duration="23548000" />
+      <workItem from="1559007791106" duration="44168000" />
+      <workItem from="1559090995131" duration="54908000" />
+      <workItem from="1559265260554" duration="7037000" />
+      <workItem from="1559282033872" duration="16103000" />
+      <workItem from="1559522523080" duration="33082000" />
+      <workItem from="1559610226900" duration="31725000" />
+      <workItem from="1559697256080" duration="19815000" />
+      <workItem from="1559783442472" duration="13442000" />
+      <workItem from="1560128267336" duration="19538000" />
+      <workItem from="1560165271799" duration="37000" />
+      <workItem from="1560215245370" duration="29804000" />
+      <workItem from="1560301762399" duration="23030000" />
+      <workItem from="1560387667097" duration="10129000" />
+      <workItem from="1560407044752" duration="1267000" />
+      <workItem from="1560474446618" duration="26463000" />
+      <workItem from="1560734345219" duration="2054000" />
+      <workItem from="1560736741589" duration="28000" />
+      <workItem from="1560767295963" duration="4000" />
+      <workItem from="1560767388738" duration="623000" />
+      <workItem from="1560819890579" duration="30306000" />
+      <workItem from="1560911400672" duration="19365000" />
+      <workItem from="1560994749744" duration="21000" />
+      <workItem from="1560994795970" duration="241000" />
+      <workItem from="1560999155135" duration="20474000" />
+      <workItem from="1561079333782" duration="35988000" />
+      <workItem from="1561120537652" duration="9482000" />
+      <workItem from="1561338994688" duration="3766000" />
+      <workItem from="1561347251468" duration="636000" />
+      <workItem from="1561348165478" duration="19217000" />
+      <workItem from="1561424779557" duration="37183000" />
+      <workItem from="1561511195404" duration="17523000" />
+      <workItem from="1561599165571" duration="58000" />
+      <workItem from="1561599297639" duration="2000" />
+      <workItem from="1561600373057" duration="15099000" />
+      <workItem from="1561623821486" duration="9298000" />
+      <workItem from="1561686285456" duration="18418000" />
+      <workItem from="1561943203910" duration="13605000" />
+      <workItem from="1562029883490" duration="2773000" />
     </task>
     <task id="LOCAL-00022" summary="修改启动失败的问题">
       <created>1555989851178</created>
@@ -536,11 +385,326 @@
       <option name="project" value="LOCAL" />
       <updated>1556075456815</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="优化">
+      <created>1558693958953</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1558693958953</updated>
+    </task>
+    <task id="LOCAL-00027" summary="优化">
+      <created>1558696954194</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1558696954194</updated>
+    </task>
+    <task id="LOCAL-00028" summary="优化">
+      <created>1558700388352</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1558700388352</updated>
+    </task>
+    <task id="LOCAL-00029" summary="0.0">
+      <created>1559046252595</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1559046252595</updated>
+    </task>
+    <task id="LOCAL-00030" summary="0.0">
+      <created>1559047033507</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1559047033507</updated>
+    </task>
+    <task id="LOCAL-00031" summary="0.0">
+      <created>1559050419720</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1559050419720</updated>
+    </task>
+    <task id="LOCAL-00032" summary="0.0">
+      <created>1559050799090</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1559050799090</updated>
+    </task>
+    <task id="LOCAL-00033" summary="0.0">
+      <created>1559097979379</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1559097979379</updated>
+    </task>
+    <task id="LOCAL-00034" summary="0.0">
+      <created>1559099599287</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1559099599287</updated>
+    </task>
+    <task id="LOCAL-00035" summary="0.0">
+      <created>1559102971816</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1559102971817</updated>
+    </task>
+    <task id="LOCAL-00036" summary="0.0">
+      <created>1559109369006</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1559109369006</updated>
+    </task>
+    <task id="LOCAL-00037" summary="0.0">
+      <created>1559114495718</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1559114495718</updated>
+    </task>
+    <task id="LOCAL-00038" summary="0.0">
+      <created>1559122177480</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1559122177480</updated>
+    </task>
+    <task id="LOCAL-00039" summary="0.0">
+      <created>1559127658187</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1559127658187</updated>
+    </task>
+    <task id="LOCAL-00040" summary="完善新增客戶功能">
+      <created>1559184092047</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1559184092047</updated>
+    </task>
+    <task id="LOCAL-00041" summary="0.0">
+      <created>1559214761832</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1559214761832</updated>
+    </task>
+    <task id="LOCAL-00042" summary="0.0">
+      <created>1559298932124</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1559298932124</updated>
+    </task>
+    <task id="LOCAL-00043" summary="0.0">
+      <created>1559530711035</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1559530711035</updated>
+    </task>
+    <task id="LOCAL-00044" summary="0.0">
+      <created>1559551075431</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1559551075431</updated>
+    </task>
+    <task id="LOCAL-00045" summary="0.0">
+      <created>1559555351057</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1559555351057</updated>
+    </task>
+    <task id="LOCAL-00046" summary="0.0">
+      <created>1559559096508</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1559559096509</updated>
+    </task>
+    <task id="LOCAL-00047" summary="0.0">
+      <created>1559561312412</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1559561312412</updated>
+    </task>
+    <task id="LOCAL-00048" summary="0.0">
+      <created>1559628884179</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1559628884179</updated>
+    </task>
+    <task id="LOCAL-00049" summary="新增商事任务管理页面以及优化商事排程的页面，优化下线客户的excel导出">
+      <created>1559641727890</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1559641727890</updated>
+    </task>
+    <task id="LOCAL-00050" summary="新增注销工单，修改服务管理页面问题，增加服务管理搜索功能">
+      <created>1559651317716</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1559651317717</updated>
+    </task>
+    <task id="LOCAL-00051" summary="优化商事排程业务逻辑">
+      <created>1559656497703</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1559656497703</updated>
+    </task>
+    <task id="LOCAL-00052" summary="0.0">
+      <created>1559730670844</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1559730670845</updated>
+    </task>
+    <task id="LOCAL-00053" summary="新增会计外勤管理以及优化会计外勤日程界面">
+      <created>1560156500899</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1560156500899</updated>
+    </task>
+    <task id="LOCAL-00054" summary="优化安排时间和日历点击时间对等">
+      <created>1560163950158</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1560163950158</updated>
+    </task>
+    <task id="LOCAL-00055" summary="add公司合并按钮权限">
+      <created>1560165043763</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1560165043763</updated>
+    </task>
+    <task id="LOCAL-00056" summary="0.0">
+      <created>1560231735661</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1560231735662</updated>
+    </task>
+    <task id="LOCAL-00057" summary="0.0">
+      <created>1560254431283</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1560254431283</updated>
+    </task>
+    <task id="LOCAL-00058" summary="0.0">
+      <created>1560263395369</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1560263395369</updated>
+    </task>
+    <task id="LOCAL-00059" summary="0.0">
+      <created>1560264935404</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1560264935404</updated>
+    </task>
+    <task id="LOCAL-00060" summary="商事排程增加筛选功能">
+      <created>1560492039620</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1560492039621</updated>
+    </task>
+    <task id="LOCAL-00061" summary="优化">
+      <created>1560509232194</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1560509232194</updated>
+    </task>
+    <task id="LOCAL-00062" summary="优化">
+      <created>1560858040801</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1560858040802</updated>
+    </task>
+    <task id="LOCAL-00063" summary="0.0">
+      <created>1560937519280</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1560937519281</updated>
+    </task>
+    <task id="LOCAL-00064" summary="0.0">
+      <created>1561120073436</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1561120073437</updated>
+    </task>
+    <task id="LOCAL-00065" summary="0.0">
+      <created>1561120951179</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1561120951179</updated>
+    </task>
+    <task id="LOCAL-00066" summary="0.0">
+      <created>1561129817452</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1561129817452</updated>
+    </task>
+    <task id="LOCAL-00067" summary="0.0">
+      <created>1561461187521</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1561461187522</updated>
+    </task>
+    <task id="LOCAL-00068" summary="0.0">
+      <created>1561463592348</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1561463592348</updated>
+    </task>
+    <task id="LOCAL-00069" summary="0.0">
+      <created>1561528509233</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1561528509233</updated>
+    </task>
+    <task id="LOCAL-00070" summary="0.0">
+      <created>1561716404289</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1561716404290</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="583572000" />
+    <option name="totallyTimeSpent" value="1225969000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -552,27 +716,29 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="7" />
+    <frame x="-8" y="-8" width="1376" height="784" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28400597" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26276276" />
       <window_info id="Structure" order="1" weight="0.24960506" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="0" />
+      <window_info anchor="bottom" id="Version Control" order="0" weight="0.1399046" />
       <window_info anchor="bottom" id="Docker" order="1" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="2" />
-      <window_info anchor="bottom" id="Find" order="3" />
+      <window_info anchor="bottom" id="Find" order="3" weight="0.6009539" />
       <window_info anchor="bottom" id="Run" order="4" />
       <window_info anchor="bottom" id="Debug" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="8" />
+      <window_info anchor="bottom" id="TODO" order="8" weight="0.3290938" />
       <window_info anchor="bottom" id="版本控制" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.33068362" />
-      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info anchor="bottom" id="找到" order="12" />
-      <window_info anchor="bottom" id="运行" order="13" />
-      <window_info anchor="bottom" id="消息" order="14" />
-      <window_info anchor="bottom" id="调试" order="15" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5007508" side_tool="true" weight="0.42766297" />
+      <window_info anchor="bottom" id="找到" order="11" />
+      <window_info anchor="bottom" id="运行" order="12" />
+      <window_info anchor="bottom" id="消息" order="13" />
+      <window_info anchor="bottom" id="调试" order="14" />
+      <window_info anchor="bottom" id="TypeScript" order="15" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="16" sideWeight="0.49924925" visible="true" weight="0.28616852" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -580,6 +746,46 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -596,387 +802,379 @@
     <MESSAGE value="修改启动失败的问题" />
     <MESSAGE value="修复用户锁定解锁存在的问题" />
     <MESSAGE value="修改build失败可能存在的问题" />
+    <MESSAGE value="完善新增客戶功能" />
+    <MESSAGE value="新增商事任务管理页面以及优化商事排程的页面，优化下线客户的excel导出" />
     <MESSAGE value="新增注销工单，修改服务管理页面问题，增加服务管理搜索功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="新增注销工单，修改服务管理页面问题，增加服务管理搜索功能" />
+    <MESSAGE value="优化商事排程业务逻辑" />
+    <MESSAGE value="新增会计外勤管理以及优化会计外勤日程界面" />
+    <MESSAGE value="优化安排时间和日历点击时间对等" />
+    <MESSAGE value="add公司合并按钮权限" />
+    <MESSAGE value="商事排程增加筛选功能" />
+    <MESSAGE value="优化" />
+    <MESSAGE value="0.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="0.0" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/detail.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/missionCenter/marketTaskList/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3119">
-          <caret line="12" column="36" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
-          <folding />
+        <state relative-caret-position="125">
+          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/libs/utils.js">
+    <entry file="file://$PROJECT_DIR$/src/views/missionCenter/accTaskList/finished.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1333">
+        <state relative-caret-position="293">
+          <caret line="23" column="121" selection-start-line="23" selection-start-column="102" selection-end-line="23" selection-end-column="121" />
           <folding>
-            <element signature="n#!!doc" expanded="false" />
+            <element signature="n#style#0;n#Select#0;n#FormItem#0;n#Col#2;n#Row#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrder.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/order/abOrderApprove/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
-          <folding />
+        <state relative-caret-position="200">
+          <caret line="8" column="32" lean-forward="true" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/expireCustomer/CompanyDetail.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/order/abnormalOrderList/components/aduitLog.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding />
+        <state relative-caret-position="-1275" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/order/abnormalOrderList/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="707">
+          <caret line="333" column="7" lean-forward="true" selection-start-line="333" selection-start-column="7" selection-end-line="333" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/order/orderList/components/productSelect.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-447">
+          <caret line="450" column="22" lean-forward="true" selection-start-line="450" selection-start-column="22" selection-end-line="450" selection-end-column="22" />
+          <folding>
+            <element signature="n#style#0;n#Row#3;n#Card#0;n#Col#1;n#Row#1;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#Row#3;n#Card#0;n#Col#1;n#Row#1;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/order/orderList/orderListIndex.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-8208">
-          <caret line="155" column="26" selection-start-line="155" selection-start-column="11" selection-end-line="155" selection-end-column="26" />
-          <folding />
+        <state relative-caret-position="4239">
+          <caret line="827" column="8" selection-start-line="827" selection-start-column="8" selection-end-line="827" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/fieldManagement/commonfield/commonFiedManagement.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/order/abOrderApprove/common/aduitLog.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5667">
-          <caret line="243" column="27" selection-start-line="243" selection-start-column="16" selection-end-line="243" selection-end-column="27" />
-          <folding />
+        <state relative-caret-position="293">
+          <caret line="76" column="41" selection-start-line="76" selection-start-column="41" selection-end-line="76" selection-end-column="41" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/cluesLibrary/cluesLibraryTable/cluesLibrary_table.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/order/abOrderApprove/approveAbList.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="1212" column="91" selection-start-line="1212" selection-start-column="54" selection-end-line="1212" selection-end-column="91" />
-          <folding />
+        <state relative-caret-position="25">
+          <caret line="382" column="8" selection-start-line="382" selection-start-column="8" selection-end-line="382" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/systemManagement/userManagement/userM_index.vue">
+    <entry file="file://$PROJECT_DIR$/node_modules/babel-loader/lib/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="455" selection-start-line="455" selection-end-line="455" />
-          <folding />
+        <state relative-caret-position="123">
+          <caret line="45" column="9" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/cancelWorkOrder/cancelWorkOrder.vue">
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="1" selection-end-column="9" />
-          <folding>
-            <element signature="e#5358#5399#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="25">
+          <caret line="14374" column="4" selection-start-line="14374" selection-start-column="4" selection-end-line="14374" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/DistributionOfAccounting.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/fieldManagement/attendance/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-247">
-          <caret line="35" column="37" selection-start-line="35" selection-start-column="37" selection-end-line="35" selection-end-column="37" />
-          <folding>
-            <element signature="n#style#0;n#Col#0;n#Row#1;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/arrears.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="459" column="14" selection-start-line="459" selection-start-column="14" selection-end-line="459" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/commercialManagement/myCommonTask/myCommonTask_table.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="41" column="44" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/commercialManagement/myCommonTask/stopWorkOrder.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="589">
-          <caret line="31" column="37" selection-start-line="31" selection-start-column="37" selection-end-line="31" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/fieldManagement/commonfield/accountingCommonfieldManagement_index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="855">
-          <caret line="315" column="30" selection-start-line="315" selection-start-column="30" selection-end-line="315" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package_cover/iview-area/_dist/iview-area.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="54" column="21" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/planManagement/myCommonTask/myCommonTask_table.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1352">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/notbegin.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2570">
-          <caret line="86" column="14" selection-start-line="86" selection-start-column="14" selection-end-line="86" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgency.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="60" column="20" selection-start-line="60" selection-start-column="20" selection-end-line="60" selection-end-column="20" />
-          <folding>
-            <element signature="e#1300#1360#0" expanded="false" />
-            <element signature="e#1861#1923#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="125">
+          <caret line="5" column="27" lean-forward="true" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/fieldManagement/commonfield/commonFieldIndex.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1359">
-          <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
-          <folding />
+        <state relative-caret-position="-975" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/fieldManagement/commonfield/commonFiedManagement.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="103">
+          <caret line="357" column="20" selection-start-line="357" selection-start-column="20" selection-end-line="391" selection-end-column="21" />
+          <folding>
+            <element signature="e#17341#19075#0" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/expireCustomer/expireCustomer.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/customerManagement/customerLog/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="150" column="49" selection-start-line="150" selection-start-column="49" selection-end-line="150" selection-end-column="49" />
-          <folding />
+        <state relative-caret-position="-50">
+          <caret line="155" column="17" lean-forward="true" selection-start-line="155" selection-start-column="17" selection-end-line="155" selection-end-column="17" />
+          <folding>
+            <element signature="n#style#0;n#Row#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/edit/relationPerson/update.vue">
+    <entry file="file://$PROJECT_DIR$/a" />
+    <entry file="file://$PROJECT_DIR$/src/views/missionCenter/customerService/finished.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1181">
-          <caret line="16" column="52" selection-start-line="16" selection-start-column="52" selection-end-line="16" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/edit/upload/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1862">
-          <caret line="16" column="72" selection-start-line="16" selection-start-column="72" selection-end-line="16" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/edit/relationPerson/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2527">
-          <caret line="18" column="37" selection-start-line="18" selection-start-column="37" selection-end-line="18" selection-end-column="37" />
-          <folding />
+        <state relative-caret-position="325">
+          <caret line="358" column="55" lean-forward="true" selection-start-line="358" selection-start-column="55" selection-end-line="358" selection-end-column="55" />
+          <folding>
+            <element signature="n#style#0;n#DatePicker#0;n#FormItem#0;n#Col#2;n#Row#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Input#0;n#FormItem#0;n#Col#1;n#Row#1;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Input#1;n#FormItem#0;n#Col#1;n#Row#1;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Button#1;n#FormItem#0;n#center#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#2;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Page#0;n#Row#2;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#4961#5008#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="131" column="143" selection-start-line="131" selection-start-column="133" selection-end-line="131" selection-end-column="143" />
-          <folding />
+        <state relative-caret-position="50">
+          <caret line="474" column="10" selection-start-line="474" selection-start-column="10" selection-end-line="474" selection-end-column="10" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/systemManagement/serveManagement/index.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/missionCenter/customerService/executing.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="85" selection-start-line="12" selection-start-column="77" selection-end-line="12" selection-end-column="85" />
-          <folding />
+        <state relative-caret-position="100">
+          <caret line="430" column="72" selection-start-line="430" selection-start-column="72" selection-end-line="430" selection-end-column="72" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/edit/edit.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/missionCenter/customerService/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="22" column="57" selection-start-line="22" selection-start-column="57" selection-end-line="22" selection-end-column="57" />
+        <state relative-caret-position="25">
+          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
           <folding>
-            <element signature="n#style#0;n#FormItem#6;n#Form#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#373#408#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/productManagement/productListNew/updateCycleProperty.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/order/abOrderApprove/unApproveAbList.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="86" column="62" selection-start-line="86" selection-start-column="62" selection-end-line="86" selection-end-column="62" />
-          <folding />
+        <state relative-caret-position="6800">
+          <caret line="272" column="12" selection-start-line="272" selection-start-column="12" selection-end-line="298" selection-end-column="41" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/vcs.xml">
+    <entry file="file://$PROJECT_DIR$/src/views/order/abOrderApprove/common/dealAbApprove.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" column="10" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/新版项目初始文档！必看！">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="19" column="3" selection-start-line="19" selection-start-column="3" selection-end-line="19" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/v-charts/lib/line.common.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4500" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/marketplaceManagement/statistics/components/attitude.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
+        <state relative-caret-position="202">
+          <caret line="186" column="26" lean-forward="true" selection-start-line="186" selection-start-column="26" selection-end-line="186" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/router/router.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7725">
-          <caret line="309" column="20" selection-start-line="309" selection-start-column="20" selection-end-line="309" selection-end-column="20" />
+        <state relative-caret-position="86">
+          <caret line="931" column="20" selection-start-line="931" selection-start-column="16" selection-end-line="931" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/marketplaceManagement/statistics/index.vue">
+    <entry file="file://$PROJECT_DIR$/src/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="625">
-          <caret line="25" column="25" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
+        <state relative-caret-position="-2027">
+          <caret line="398" column="33" lean-forward="true" selection-start-line="398" selection-start-column="33" selection-end-line="398" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/marketplaceManagement/statistics/components/classic.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/fieldManagement/v2/legwork.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        <state relative-caret-position="139">
+          <caret line="108" column="19" selection-start-line="108" selection-start-column="19" selection-end-line="108" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/home/account_index/accountIndex.vue">
+    <entry file="file://$PROJECT_DIR$/src/libs/utils.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="34" column="33" selection-start-line="34" selection-start-column="33" selection-end-line="34" selection-end-column="33" />
+        <state relative-caret-position="91">
+          <caret line="88" column="17" lean-forward="true" selection-start-line="88" selection-start-column="17" selection-end-line="88" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/home/account_index/bussinessType.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="800">
-          <caret line="32" column="7" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/home/account_index/totalOutputValue.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="6" column="11" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/home/account_index/offlineStatistical.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" column="10" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/productManagement/productDetail/typeAttrList.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="7" column="9" lean-forward="true" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/productManagement/productDetail/typeTree.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/common.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/productManagement/productDetail/index.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/all.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2200">
-          <caret line="5" column="9" lean-forward="true" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
-        </state>
+        <state relative-caret-position="-3450" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/productManagement/productProcess/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-75" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/productManagement/productListNew/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2550">
-          <caret line="103" column="11" selection-start-line="103" selection-start-column="11" selection-end-line="103" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/productManagement/productListNew/editSKU.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/arrears.vue">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/home/account_index/completion.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="48" column="10" selection-start-line="48" selection-start-column="10" selection-end-line="48" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/ezg-pc-cloud-master/src/views/productManagement/productListNew/productAttr.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="158" column="10" lean-forward="true" selection-start-line="158" selection-start-column="10" selection-end-line="158" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/productManagement/productAnalysis/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-100">
-          <caret line="17" column="14" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/ezg-pc-cloud-master/src/views/productManagement/productAnalysis/components/placeAnalysis.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/bill.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
-          <caret line="28" column="73" lean-forward="true" selection-start-line="28" selection-start-column="73" selection-end-line="28" selection-end-column="73" />
+          <caret line="148" column="61" lean-forward="true" selection-start-line="148" selection-start-column="61" selection-end-line="148" selection-end-column="61" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/productManagement/productAnalysis/components/placeAnalysis.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/billHistroy.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="11" column="61" lean-forward="true" selection-start-line="11" selection-start-column="61" selection-end-line="11" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/exception.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="4" column="37" lean-forward="true" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/followUp.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="4" column="24" lean-forward="true" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/notbegin.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="377" column="60" lean-forward="true" selection-start-line="377" selection-start-column="60" selection-end-line="377" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/servicing.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="874" column="7" lean-forward="true" selection-start-line="874" selection-start-column="7" selection-end-line="874" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/stop.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="2" column="40" lean-forward="true" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/ChangeLog.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="3" column="31" lean-forward="true" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/cheekError.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="3" column="33" lean-forward="true" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/CompanyCancellation.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
-          <caret line="26" column="36" lean-forward="true" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
+          <caret line="5" column="27" lean-forward="true" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/productManagement/productListNew/updateLink.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/CompanyDetail.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1450">
-          <caret line="59" column="4" selection-start-line="59" selection-start-column="4" selection-end-line="59" selection-end-column="4" />
+        <state relative-caret-position="125">
+          <caret line="5" column="27" lean-forward="true" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/productManagement/productListNew/productAttr.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/DistributionOfAccounting.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="175" column="29" lean-forward="true" selection-start-line="175" selection-start-column="29" selection-end-line="175" selection-end-column="29" />
+        <state relative-caret-position="75">
+          <caret line="3" column="32" lean-forward="true" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/OrderDetail.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="5" column="27" lean-forward="true" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/detail.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="58" column="22" lean-forward="true" selection-start-line="58" selection-start-column="22" selection-end-line="58" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/api.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/dll/_dll_iview.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="24" column="209976" selection-start-line="24" selection-start-column="209976" selection-end-line="24" selection-end-column="209976" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/detail.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="56" column="18" selection-start-line="56" selection-start-column="18" selection-end-line="56" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package_cover/iview(作废)/table/table.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2625">
+          <caret line="96" column="11" lean-forward="true" selection-start-line="96" selection-start-column="11" selection-end-line="96" selection-end-column="11" />
+          <folding>
+            <element signature="e#5122#5163#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/missionCenter/marketLegTask/createAccounterTask.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="381" column="44" selection-start-line="381" selection-start-column="44" selection-end-line="381" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgency.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="13" column="29" lean-forward="true" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-225" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="12" column="6" lean-forward="true" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
         </state>
       </provider>
     </entry>
