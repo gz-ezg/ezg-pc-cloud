@@ -365,7 +365,7 @@ export default {
         setTimeout(() => {
           _self.$bus.emit('UPDATE_CUSTOMER', true);
           console.log(res.data.data);
-          // _self.$bus.emit('CREATE_AFTER_EDIT', res.data.data);
+          _self.$bus.emit('CREATE_AFTER_EDIT', res.data.data);
         }, 300);
       }
 

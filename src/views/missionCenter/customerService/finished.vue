@@ -317,7 +317,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.$store.commit('open_gobal_customer_detail_modal', {ID: params.row.customerId});
+                                            this.$store.commit('open_gobal_customer_detail_modal', {ID: params.row.customerid});
                                         }
                                     }
                                 }, '[查看客户]')
