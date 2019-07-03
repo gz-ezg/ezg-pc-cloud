@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import clueApi from '../service';
+// import clueApi from '../service';
 export default {
   data() {
     return {
@@ -70,18 +70,18 @@ export default {
     }
   },
   created() {
-    // let _self = this;
-    // this.$bus.on('OPEN_CREATE_CLUE_TEMPLATE', e => {
-    //   _self.openCreateTemplate = true;
-    // });
+    let _self = this;
+    this.$bus.on('OPEN_CREATE_CLUE_TEMPLATE', e => {
+      _self.openCreateTemplate = true;
+    });
   },
 
-  $Bus: {
-    OPEN_CREATE_CLUE_TEMPLATE(e) {
-      this.openCreateTemplate = e;
-      clueApi.createTemplate();
-    }
-  }
+  // $Bus: {
+  //   OPEN_CREATE_CLUE_TEMPLATE(e) {
+  //     this.openCreateTemplate = e;
+  //     clueApi.postCreateTemplate({id:1});
+  //   }
+  // }
 };
 </script>
 
