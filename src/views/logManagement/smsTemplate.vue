@@ -162,7 +162,7 @@
 
         <FormItem label="关联用户">
           <Select
-            v-model="formValidate.linked_user_json"
+            v-model="formValidate.Edit_linked_user_json"
             placeholder="关联用户"
             filterable
             multiple
@@ -170,7 +170,7 @@
             :remote-method="get_user"
             :loading="userLoading"
           >
-            <Option v-for="item in userList" :key="item.id" :value="item.id" :label="item.realname">
+            <Option v-for="(item, index) in userList" :key="index" :value="item.id" :label="item.realname">
               <span>{{ item.realname }}</span>
               <span style="float:right;color:#ccc">{{ item.departname }}</span>
             </Option>
@@ -248,6 +248,7 @@ export default {
         cron_expression: '',
         template_content: '',
         linked_user_json: [],
+        Edit_linked_user_json: [],
         template_type: 'timing'
       },
       userList: [],
@@ -267,6 +268,7 @@ export default {
         cron_expression: '',
         template_content: '',
         linked_user_json: [],
+        Edit_linked_user_json: [],
         template_type: 'timing'
       };
       this.showEdit && this.get_user();
@@ -298,7 +300,7 @@ export default {
       let success = res => {
         this.detail = res.data.data;
         this.formValidate = res.data.data;
-        this.formValidate.linked_user_json = res.data.data.linked_users.map(v => v.user_id);
+        this.formValidate.Edit_linked_user_json = res.data.data.linked_users.map(v => v.user_id);
         this.userList = res.data.data.linked_users.map(v => ({ id: v.user_id, realname: v.realname }));
         this.Loading = false;
       };
@@ -316,12 +318,12 @@ export default {
     handleEditTemplate() {
       this.editLoading = true;
       let url = `api/system/marketing/template/update`;
-      let { linked_user_json, template_name, template_content } = this.formValidate;
+      let { Edit_linked_user_json, template_name, template_content } = this.formValidate;
       let config = {
         id: this.currentId,
         template_content,
         template_name,
-        linked_user_json: JSON.stringify(linked_user_json)
+        linked_user_json: JSON.stringify(Edit_linked_user_json)
       };
       let success = res => {
         this.editLoading = false;

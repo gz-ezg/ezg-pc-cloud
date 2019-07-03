@@ -3,7 +3,8 @@
     <Row style="margin-bottom:20px">
       <Collapse v-model="search_model">
         <Panel name="1">
-          <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>筛选
+          <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
+          筛选
           <div slot="content" @keydown.enter="Search">
             <Form ref="SearchValidate" :model="SearchValidate" :label-width="130" style="margin-top: 15px">
               <Row :gutter="8" style="height:56px">
@@ -19,7 +20,8 @@
                 </Col>
                 <Col span="8">
                   <FormItem label="结束账期：" prop="followby_realname">
-                    <Input v-model="SearchValidate.begin_end_period" size="small" style="width:40%" placeholder="201807"></Input>-
+                    <Input v-model="SearchValidate.begin_end_period" size="small" style="width:40%" placeholder="201807"></Input>
+                    -
                     <Input v-model="SearchValidate.end_end_period" size="small" style="width:40%" placeholder="201807"></Input>
                   </FormItem>
                 </Col>
@@ -122,7 +124,7 @@
             <Button type="text" @click="fileRemove(item)">移除</Button>
           </center>
         </div>
-        <Upload ref="upload" :before-upload="handleUpload" action>
+        <Upload ref="upload" :before-upload="handleUpload" action="">
           <Button type="ghost" icon="ios-cloud-upload-outline" style="margin:auto">选择文件</Button>
         </Upload>
       </Row>
@@ -205,7 +207,6 @@ export default {
       accout_level_open: false,
       cservicest: '',
       cservicest_map: new Map(),
-      gdsreportMap: new Map([['ybd', '已报道'], ['wbd', '未报道'], ['bybd', '不用报道']]),
       loading: false,
       search_model: '',
       SearchValidate: {
@@ -238,37 +239,27 @@ export default {
       header: [
         {
           title: '对应企业',
-          key: 'CompanyName',
+          key: 'companyname',
           minWidth: 250
+        },
+        {
+          title: '企业经营状态',
+          key: 'managestatusName',
+          width: 120
         },
         {
           title: '产品名称',
           key: 'product',
-          width: 120
-        },
-        {
-          title: '国地税报道',
-          key: 'gdsreport',
-          minWidth: 120
+          minWidth: 180
         },
         {
           title: '服务人员',
-          key: 'server_realname',
+          key: 'realname',
           minWidth: 120
         },
         {
-          title: '市场',
-          key: 'followby_realname',
-          minWidth: 120
-        },
-        {
-          title: '剩余时长',
-          key: 'balance_count',
-          minWidth: 120
-        },
-        {
-          title: '开始税期',
-          key: 'begin_period',
+          title: '服务状态',
+          key: 'service_status',
           minWidth: 120
         },
         {
@@ -279,7 +270,7 @@ export default {
         {
           title: '单价',
           key: 'unit_price',
-          minWidth: 120,
+          minWidth: 160,
           render: (h, params) => {
             let _self = this;
             if (params.index != this.currentIndex) {
@@ -353,16 +344,6 @@ export default {
           }
         },
         {
-          title: '警戒值',
-          key: 'accounter_security_line',
-          minWidth: 120
-        },
-        {
-          title: '累计外勤',
-          key: 'dljz_legwork',
-          minWidth: 120
-        },
-        {
           title: '备注',
           key: 'memo',
           minWidth: 200,
@@ -400,6 +381,91 @@ export default {
           //         return h('span',params.row.memo)
           //     }
           // }
+        },
+        {
+          title: '报税',
+          key: 'baoshui',
+          width: 120,
+          align: 'center',
+          render: (h, params) => {
+            let reg = /^[-+]?\d*$/;
+            if (params.row.baoshui.confirm_date == undefined) {
+              return h('div', [
+                h(
+                  'Button',
+                  {
+                    props: {
+                      type: 'text',
+                      size: 'small'
+                    },
+                    on: {
+                      click: () => {
+                        this.zlwc(params.row.baoshui);
+                      }
+                    }
+                  },
+                  '[ 完成 ]'
+                )
+              ]);
+            } else {
+              return h('div', params.row.baoshui.confirm_date.slice(0, 10));
+            }
+          }
+        },
+        {
+          title: '做账',
+          key: 'zuozhang',
+          align: 'center',
+          width: 120,
+          render: (h, params) => {
+            let reg = /^[-+]?\d*$/;
+            if (params.row.zuozhang.confirm_date == undefined) {
+              return h('div', [
+                h(
+                  'Button',
+                  {
+                    props: {
+                      type: 'text',
+                      size: 'small'
+                    },
+                    on: {
+                      click: () => {
+                        this.zlwc(params.row.zuozhang);
+                      }
+                    }
+                  },
+                  '[ 完成 ]'
+                )
+              ]);
+            } else {
+              return h('div', params.row.zuozhang.confirm_date.slice(0, 10));
+            }
+          }
+        },
+        {
+          title: '客户跟进',
+          key: 'note_kj_flag',
+          minWidth: 120
+        },
+        {
+          title: '警戒值',
+          key: 'accounter_security_line',
+          minWidth: 120
+        },
+        {
+          title: '账务等级',
+          key: 'accountgrade',
+          minWidth: 120
+        },
+        {
+          title: '累计外勤',
+          key: 'dljz_legwork',
+          minWidth: 100
+        },
+        {
+          title: '实名账号',
+          key: 'has_account',
+          minWidth: 120
         },
         {
           title: '操作',
@@ -540,12 +606,10 @@ export default {
       _self.loading = true;
       let config = {
         params: {
-          sortField: 'updatedate',
-          service_type: 'dljz',
           page: _self.page,
           pageSize: _self.pageSize,
-          service_status: 'inservice',
           period: _self.time,
+          sortField: 'updatedate',
           companyname: _self.SearchValidate.CompanyName,
           realname: _self.SearchValidate.server_realname,
           followbyrealname: _self.SearchValidate.followby_realname,
@@ -559,12 +623,12 @@ export default {
       };
 
       try {
-        let { total, rows } = await accountApi.getOrderCycleServiceList(config);
+        let { total, rows } = await accountApi.getOrderCycleMonthServiceList(config);
         this.pageTotal = total;
         this.data = rows.map(item => {
           item.service_status = this.cservicest_map.get(item.service_status);
-          // item.managestatusName = this.managestatus_map.get(item.managestatus);
-          item.gdsreport = this.gdsreportMap.get(item.gdsreport);
+          item.managestatusName = this.managestatus_map.get(item.managestatus);
+          item.note_kj_flag = item.note_kj_flag == 'Y' ? '完成' : '未完成';
           return item;
         });
       } catch (error) {
