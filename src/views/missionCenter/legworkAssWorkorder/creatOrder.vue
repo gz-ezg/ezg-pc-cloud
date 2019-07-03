@@ -259,7 +259,7 @@
                 for(let i = 0; i < _self.newMission.executorId.length; i++){
                     executorNameArray.push(_self.allUserList_map.get(_self.newMission.executorId[i].toString()))
                 }
-                if (_self.newMission.businessId===null){
+                if (_self.newMission.businessId===-999){
                     let url = `api/task/addBusAssApply`
                     let config = {
                         companyId:_self.newMission.companyId,
