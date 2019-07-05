@@ -902,9 +902,9 @@ export default {
     this.$bus.on('CREATE_AFTER_EDIT', e => {
       e.ID = e.id;
       e.customersourceCode = e.customersource;
-      this.selectRow = e;
+      this.selectRowOBj = e;
       setTimeout(() => {
-        this.openEdit = true;
+        this.openEditOne = true;
       }, 300);
     });
   }
