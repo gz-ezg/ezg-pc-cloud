@@ -310,7 +310,7 @@ export default {
                       width: 120,
                       render: (h, params) => {
                         let map = { serverity_overdue: '严重逾期', overdue: '逾期', normal: '正常' };
-                        return h('', map[params.row.workserverstatus]);
+                        return h('div', map[params.row.workserverstatus]);
                       }
                     },
                     {
