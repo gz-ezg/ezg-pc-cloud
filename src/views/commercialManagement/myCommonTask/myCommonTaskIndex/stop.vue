@@ -392,6 +392,15 @@ export default {
                         }
                     },
                     {
+                      title: '工单服务状态',
+                      key: 'workserverstatus',
+                      width: 120,
+                      render: (h, params) => {
+                        let map = { serverity_overdue: '严重逾期', overdue: '逾期', normal: '正常' };
+                        return h('', map[params.row.workserverstatus]);
+                      }
+                    },
+                    {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
