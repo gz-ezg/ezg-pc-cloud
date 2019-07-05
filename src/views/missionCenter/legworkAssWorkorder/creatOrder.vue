@@ -190,6 +190,9 @@
                 this.$Get(url, config, success)
             },
             get_businessId(id){
+                if (!id){
+                    return
+                }
                 let _self = this
                 let url = `api/task/getLegWorkOrderByCompanyId`
                 _self.userLoading = true
@@ -259,11 +262,12 @@
                 for(let i = 0; i < _self.newMission.executorId.length; i++){
                     executorNameArray.push(_self.allUserList_map.get(_self.newMission.executorId[i].toString()))
                 }
-                if (_self.newMission.businessId===-999){
+                if (_self.newMission.businessId=="-999"){
                     let url = `api/task/addBusAssApply`
                     let config = {
                         companyId:_self.newMission.companyId,
                         applyTypeId: _self.newMission.cycleTypeId,
+                        businessId:_self.newMission.businessId,
                         applyContent:_self.newMission.applyContent,
                         expectDate:FULLDateFormat(_self.newMission.planDate),
                         excutorId:_self.newMission.executorId.join(","),
@@ -280,7 +284,7 @@
                     }
                     this.$Post(url, config, success, fail)
                 }
-                if (_self.newMission.businessId){
+                if (_self.newMission.businessId!=="-999"){
                     let url = `api/task/addBusAssApply`
                     let config = {
                         companyId:_self.newMission.companyId,

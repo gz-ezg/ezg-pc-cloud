@@ -406,19 +406,32 @@ export default {
           fixed: 'right',
           width: 90,
           align: 'center',
-          render: (h,params) => {
-            return h('Button',{
-              props: {
-                type: 'primary',
-                size: 'small'
-              },
-              on:{
-                click: () => {
-                  this.receipt(params.row.ID)
-                }
-              }
-            },'[ 领取 ]')
-          }
+          render: (h, params) => {
+                return h('div', [
+                    h('Button', {
+                        props: {
+                            type: 'primary',
+                            size: 'small'
+                        },
+                        on: {
+                            click: () => {
+                                this.receipt(params.row.ID)
+                            }
+                        }
+                    }, '[ 拨打 ]'),
+                    h('Button', {
+                        props: {
+                            type: 'primary',
+                            size: 'small'
+                        },
+                        on: {
+                            click: () => {
+                                this.receipt(params.row.ID)
+                            }
+                        }
+                    }, '[ 领取 ]')
+                ]);
+            }
         }
       ],
       data: [],

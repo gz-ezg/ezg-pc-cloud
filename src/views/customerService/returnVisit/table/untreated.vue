@@ -117,7 +117,7 @@
     import { DateFormat } from '../../../channelManagement/channelCustomer/utils';
 
     export default {
-        props:['hfwtlxMap','departAliasMap','departAlias','hfztMap'],
+        props:['hfwtlxMap','departAliasMap','departAlias','hfztMap','hfwtlx','hfzt'],
         components: {
         },
         data() {
@@ -311,7 +311,7 @@
                     {field:'callbackstatus',title:'回访状态',format:'hfzt'},
                     {field:'server_realname',title:'服务人员'},                                                                   
                     {field:'followby_realname',title:'市场人员'},
-                    {field:'depart',title:'责任部门'},
+                    {field:'depart',title:'责任部门',format:'departAlias'},
                     // {field:'depart',title:'责任部门',format:'departAlias'},
                     {field:'serviceranks',title:'服务评分'},
                     {field:'begin_period',title:'开始税期'},

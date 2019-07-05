@@ -363,6 +363,9 @@
                     // {field:'serviceranks',title:'回访状态',format:'hfzt'},
                     {field:'serviceranks',title:'服务评分'},
                     {field:'realname',title:'市场人员'},
+                    {field:'market_feedback',title:'市场反馈'},
+                    {field:'problem_feedback',title:'问题反馈或建议'},
+                    {field:'server_feedback',title:'服务人员反馈'}
                     // {field:'depart',title:'责任部门',format:'departAlias'},
                     // {field:'serviceranks',title:'服务评分'},
                 ]

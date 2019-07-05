@@ -409,20 +409,37 @@ export default {
                     title: "操作",
                     key: 'action',
                     fixed: 'right',
-                    width: 90,
+                    width: 160,
                     align: 'center',
-                    render: (h,params) => {
-                        return h('Button',{
-                            props: {
-                                type: 'primary',
-                                size: 'small'
-                            },
-                            on:{
-                                click: () => {
-                                this.receipt(params.row.ID)
+                    render: (h, params) => {
+                        console.log(params)
+                        return h('div', [
+                            h('Button', {
+                                props: {
+                                    type: 'primary',
+                                    size: 'small',
+                                },
+                                style:{
+                                    marginRight:'10px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.phone(params.row.full_tel)
+                                    }
                                 }
-                            }
-                        },'[ 领取 ]')
+                            }, '[ 拨打 ]'),
+                            h('Button', {
+                                props: {
+                                    type: 'primary',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.receipt(params.row.ID)
+                                    }
+                                }
+                            }, '[ 领取 ]')
+                        ]);
                     }
                 }
             ],
@@ -672,6 +689,9 @@ export default {
         // },
         close_edit(){
             this.openEdit = false
+        },
+        phone(T) {
+            window.location.href = 'yhhl://call/num=' + T + '&custom_key=123456&';
         },
         //  公海池领取
         receipt(id){
