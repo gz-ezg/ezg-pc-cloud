@@ -38,6 +38,12 @@
                                         </DatePicker>
                                     </FormItem>
                                 </Col>
+                                <Col span="8">
+                                    <FormItem prop="workserverstatus" label="工单服务状态：">
+                                        <Input size="small"  type="text" v-model="formInline.workserverstatus" placeholder="">
+                                        </Input>
+                                    </FormItem>
+                                </Col>
                             </Row>
                             <FormItem>
                                 <Button type="primary" @click="search">搜索</Button>
@@ -137,7 +143,8 @@ export default {
                     companyname:'',
                     servicename:'',
                     product:'',
-                    updatedate:[]
+                    updatedate:[],
+                    workserverstatus:''
                 },
                 //  加载中
                 Sloading:false,
@@ -466,6 +473,7 @@ export default {
                     bupdatedate: DateFormat(_self.formInline.updatedate[0]),
                     eupdatedate: DateFormat(_self.formInline.updatedate[1]),
                     product:_self.formInline.product,
+                    workserverstatus:_self.formInline.workserverstatus,
                     serviceDept:"'BUSSINESS'"                    
                 }
             }

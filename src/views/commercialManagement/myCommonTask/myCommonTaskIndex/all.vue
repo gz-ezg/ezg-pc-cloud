@@ -64,6 +64,12 @@
                                         </Input>
                                     </FormItem>
                                 </Col>
+                                <Col span="8">
+                                    <FormItem prop="workserverstatus" label="工单服务状态：">
+                                        <Input size="small"  type="text" v-model="formInline.workserverstatus" placeholder="">
+                                        </Input>
+                                    </FormItem>
+                                </Col>
                             </Row>
                             <FormItem>
                                 <Button type="primary" @click="search">搜索</Button>
@@ -176,7 +182,8 @@ export default {
                     createdate:[],
                     departname:"",
                     customerName: "",
-                    tel: ""
+                    tel: "",
+                    workserverstatus: '',
                 },
                 //  加载中
                 Sloading:false,
@@ -591,6 +598,7 @@ export default {
                     ecreatedate: DateFormat(_self.formInline.createdate[1]),
                     departname: _self.formInline.departname,
                     customerName: _self.formInline.customerName,
+                    workserverstatus:_self.formInline.workserverstatus,
                     tel: _self.formInline.tel,
                     serviceDept:"'BUSSINESS'",
                     // workOrderStatus:'20'

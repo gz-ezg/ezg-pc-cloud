@@ -28,6 +28,14 @@
                   </FormItem>
                 </Col>
               </Row>
+              <Row :gutter="16">
+                <Col span="8">
+                    <FormItem prop="workserverstatus" label="工单服务状态：">
+                        <Input size="small"  type="text" v-model="formInline.workserverstatus" placeholder="">
+                        </Input>
+                    </FormItem>
+                </Col>
+              </Row>
               <FormItem>
                 <Button type="primary" @click="search">搜索</Button>
                 <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
@@ -160,7 +168,8 @@ export default {
       formInline: {
         companyname: '',
         servicename: '',
-        product: ''
+        product: '',
+        workserverstatus: ''
       },
       //  加载中
       Sloading: false,
@@ -601,6 +610,7 @@ export default {
           companyName: _self.formInline.companyname,
           serviceName: _self.formInline.servicename,
           product: _self.formInline.product,
+          workserverstatus: _self.formInline.workserverstatus,
           serviceDept: "'BUSSINESS'"
         }
       };

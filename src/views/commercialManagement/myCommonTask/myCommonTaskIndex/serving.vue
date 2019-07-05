@@ -415,7 +415,7 @@ export default {
           key: 'workserverstatus',
           width: 120,
           render: (h, params) => {
-            console.log(params.row.workserverstatus)
+            console.log(params.row.workserverstatus);
             let map = { serverity_overdue: '严重逾期', overdue: '逾期', normal: '正常' };
             return h('div', map[params.row.workserverstatus]);
           }
@@ -651,6 +651,7 @@ export default {
           companyName: _self.formInline.companyname,
           serviceName: _self.formInline.servicename,
           product: _self.formInline.product,
+          workserverstatus: _self.formInline.workserverstatus,
           serviceDept: "'BUSSINESS'"
         }
       };
