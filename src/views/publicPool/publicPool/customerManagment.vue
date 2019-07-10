@@ -258,15 +258,15 @@
     <Modal title="发送短信" width="300" v-model="send_email_model" @on-cancel="close_send_email">
       <Form ref="formEmail" :model="formEmail" :rules="ruleValidate">
         <FormItem prop="phone">
-          <Input type="input" v-model="formEmail.phone" placeholder="请输入手机号"></Input>
+          <Input type="input" disabled v-model="formEmail.phone" placeholder="请输入手机号" />
         </FormItem>
         <FormItem prop="content">
-          <Input type="textarea" :rows="6" v-model="formEmail.content" placeholder="请输入短信内容"></Input>
+          <Input type="textarea" :rows="6" v-model="formEmail.content" placeholder="请输入短信内容" />
         </FormItem>
       </Form>
       <div slot="footer">
         <Button type="primary" @click="send_email()" :loading="send_email_loading">发送</Button>
-        <Button type="ghost" @click="send_email_model = true">取消</Button>
+        <Button type="ghost" @click="send_email_model = false">取消</Button>
       </div>
     </Modal>
   </div>
@@ -658,7 +658,7 @@ export default {
         formData.append(key, params[key]);
       });
       function success(res) {
-        console.log('发送成功', res);
+        _self.send_email_model = false;
       }
 
       this.$Post(url, formData, success);

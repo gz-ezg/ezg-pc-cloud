@@ -295,6 +295,22 @@
         <Button type="primary" @click="showHeaderCheckBox = false">关闭</Button>
       </div>
     </Modal>
+
+    <!-- 发送短信弹窗 -->
+    <Modal title="发送短信" width="300" v-model="send_email_model" @on-cancel="close_send_email">
+      <Form ref="formEmail" :model="formEmail" :rules="ruleValidate">
+        <FormItem prop="phone">
+          <Input type="input" disabled v-model="formEmail.phone" placeholder="请输入手机号" />
+        </FormItem>
+        <FormItem prop="content">
+          <Input type="textarea" :rows="6" v-model="formEmail.content" placeholder="请输入短信内容" />
+        </FormItem>
+      </Form>
+      <div slot="footer">
+        <Button type="primary" @click="send_email()" :loading="send_email_loading">发送</Button>
+        <Button type="ghost" @click="send_email_model = false">取消</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -335,6 +351,7 @@ export default {
   data() {
     return {
       headerTemp: [],
+      send_email_model: false,
       headerCheckBox: [
         true,
         true,
@@ -355,6 +372,10 @@ export default {
         true,
         true
       ],
+      formEmail: {
+        phone: '',
+        content: ''
+      },
       showHeaderCheckBox: false,
       openEdit: false,
       openEditOne: false,
@@ -501,6 +522,7 @@ export default {
                   on: {
                     click: function(event) {
                       this.phone(params.row.ID, params.row.TEL);
+                      this.getLoginerMessage(params.row.TEL);
                       event.stopPropagation();
                     }.bind(this)
                   }
@@ -711,12 +733,44 @@ export default {
       this.page = 1;
       this.get_data();
     },
+    getLoginerMessage(phone) {
+      let url = 'api/user/login/detail';
+      let success = resp => {
+        const { mobilephone = '', realname = '' } = resp.data.data.user;
+        this.formEmail.phone = phone;
+        this.formEmail.content = `东家你好，我是刚刚联系您的财税管家${realname}经理(联系电话: ${mobilephone}), 极致财税，用心服务`;
+        // this.send_email(mobilephone, realname);
+        this.send_email_model = true;
+      };
+      this.$Get(url, '', success);
+    },
+
+    send_email() {
+      let _self = this;
+      let url = 'api/system/message/sendMessage';
+
+      const { phone, content } = this.formEmail;
+      let params = {
+        phone,
+        content
+      };
+      const formData = new FormData();
+
+      Object.keys(params).forEach(key => {
+        formData.append(key, params[key]);
+      });
+      function success(res) {
+        _self.send_email_model = false;
+      }
+
+      this.$Post(url, formData, success);
+    },
     onChangeHeaderCheckBox() {
       let headerValue = [];
       this.headerCheckBox.forEach((value, i) => {
         headerValue[i] = value ? this.headerTemp[i] : '';
       });
-      this.header = headerValue.filter(v=>!!v);
+      this.header = headerValue.filter(v => !!v);
       this.showHeaderCheckBox = false;
     },
     handleReset() {
