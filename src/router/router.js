@@ -1431,7 +1431,15 @@ export const appRouter = [
         title: '营销短信模板',
         name: 'smsTemplate',
         component: () =>
-          import(/* webpackChunkName: "internalPushLog" */ '@/views/logManagement/smsTemplate.vue')
+          import(/* webpackChunkName: "internalPushLog" */ '@/views/logManagement/smsTemplate/index.vue')
+      },
+      {
+        access: 11607,
+        path: 'messagPops',
+        title: '消息弹窗',
+        name: 'messagPops',
+        component: () =>
+          import(/* webpackChunkName: "internalPushLog" */ '@/views/logManagement/messagPops/index.vue')
       }
     ]
   },

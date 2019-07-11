@@ -13,11 +13,7 @@ export class Service extends HttpService {
           return console.warn(`${key} is not a string `)
         }
         this[key] = async function(req, loading = false) {
-          if (loading) {
-            // 全局loading
-          }
-          // @ts-ignore
-          let config = { url: apiRoute[module][key] }
+          let config = { url: apiRoute[module][key], loading }
           return key.indexOf('get') == 0
             ? await this.get(req, config)
             : await this.post(req, config)

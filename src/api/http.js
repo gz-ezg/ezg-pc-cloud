@@ -1,5 +1,4 @@
 import axios from 'axios'
-
 import delegate from './interceptors'
 axios.create({
   timeout: 30000
@@ -81,11 +80,15 @@ export class HttpService extends BaseService {
       req,
       config
     })
-
+    // 是否开启全局Loading
+    let loading = config.loading
     try {
+      loading && this.$Spin.show()
       res = await this.request(req)
     } catch (e) {
       res = e
+    } finally {
+      loading && this.$Spin.hide()
     }
     res = await delegate.responseHander(res)
     return res

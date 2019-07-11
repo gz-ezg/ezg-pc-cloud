@@ -299,7 +299,10 @@ export default {
       };
       let success = res => {
         this.detail = res.data.data;
-        this.formValidate = res.data.data;
+        this.formValidate.template_name = res.data.data.template_name;
+        this.formValidate.job_class_name = res.data.data.job_class_name;
+        this.formValidate.cron_expression = res.data.data.cron_expression;
+        this.formValidate.template_content = res.data.data.template_content;
         this.formValidate.Edit_linked_user_json = res.data.data.linked_users.map(v => v.user_id);
         this.userList = res.data.data.linked_users.map(v => ({ id: v.user_id, realname: v.realname }));
         this.Loading = false;
