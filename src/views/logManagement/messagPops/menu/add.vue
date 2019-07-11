@@ -12,7 +12,7 @@
           <Tree ref="tree" :data="treeData" @on-check-change="checkChange" show-checkbox></Tree>
         </FormItem>
         <FormItem label="内容：">
-          <Input v-model="formValidate.content" placeholder="Enter something..." style="width: 300px" />
+          <textarea v-model="formValidate.content" placeholder="Enter something..." style="width:300px" />
         </FormItem>
       </Form>
       <div slot="footer">
