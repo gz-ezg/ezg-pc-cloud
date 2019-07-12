@@ -156,6 +156,7 @@ export default {
                                     },
                                     on: {
                                         click: () => {
+                                          console.log(params.row)
                                             this.$bus.emit("OPEN_COMPANY_UPDATE", params.row)
                                         }
                                     }
@@ -235,7 +236,7 @@ export default {
         },
         open_company_merge(){
             if (this.selectCompany.length==1) {
-                this.$bus.emit("OPEN_COMPANY_MERGE",this.selectCompany.id)
+                this.$bus.emit("OPEN_COMPANY_MERGE",this.selectCompany[0].id)
             }
             if (this.selectCompany.length>1){
                 this.$Message.warning("只能选择一家企业合并")

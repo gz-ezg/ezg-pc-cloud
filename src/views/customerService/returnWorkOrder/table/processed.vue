@@ -113,7 +113,7 @@
     import { DateFormat } from '../../../channelManagement/channelCustomer/utils';
 
     export default {
-        props:['hfwtlxMap','departAliasMap','departAlias','hfztMap'],
+        props:['hfwtlxMap','departAliasMap','departAlias','hfztMap','hfwtlx','hfzt'],
         data() {
             return {
                 loading:false,
@@ -196,7 +196,7 @@
                     },
                     {
                         title: '问题类型',
-                        key: 'calltypeNAME',
+                        key: 'calltypeName',
                         width: 120
                     },
                     {
@@ -231,7 +231,7 @@
                     },
                     {
                         title: '责任部门',
-                        key: 'departNAME',
+                        key: 'departName',
                         width: 120
                     },
                     {
@@ -285,14 +285,14 @@
                 let field = [
                     {field:'name',title:'客户名称'},
                     {field:'companyname',title:'公司名称'},
-                    {field:'product',title:'产品名称'},
+                    {field:'alisname',title:'产品名称'},
                     {field:'calltype',title:'问题类型',format:'hfwtlx'},
                     {field:'createdate',title:'创建时间'},
                     {field:'callbackdate',title:'回访时间'},
                     {field:'callbackstatus',title:'回访状态',format:'hfzt'},
-                    {field:'servicename',title:'服务人员'},                                                                   
-                    {field:'marketername',title:'市场人员'},                                                                     
-                    {field:'depart',title:'责任部门',format:'departAlias'},
+                    {field:'server_realname',title:'服务人员'},
+                    {field:'followby_realname',title:'市场人员'},
+                    {field:'depart',title:'责任部门'},
                     {field:'serviceranks',title:'服务评分'},
                 ]
                 let _self = this

@@ -548,6 +548,6 @@ export default {
 
 <style>
   .ivu-table .demo-table-followdate-warning-row {
-    color: #ff6600;
+    color: #008800;
   }
 </style>

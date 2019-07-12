@@ -73,7 +73,7 @@ export default {
                     {required: true,trigger: 'change',message: '企业来源不能为空'}
                 ],
                 taxtype: [
-                    {required: true,message: '企业纳税类型不能为空', trigger: 'change'}
+                    {required: true,message: '企业纳税类型不能为空', trigger: 'blur'}
                 ],
                 companyarea:[
                     {required: true,message: '企业注册地不能为空', trigger: 'change', type:'array'}

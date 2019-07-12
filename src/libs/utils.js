@@ -83,6 +83,20 @@ export function DateFormatYearMonth(date){
     return [year, month].join('-');
     }
 }
+//YYYYMM
+export function DateFormatYearMonth2(date){
+    if(date==null||date == ''){
+        return ''
+    }else{
+        var d = new Date(date),
+            month = '' + (d.getMonth()),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+
+        return [year, month].join('');
+    }
+}
 
 //简单的数据字典转换
 export function simpleCodeToText(codeValue,textList){

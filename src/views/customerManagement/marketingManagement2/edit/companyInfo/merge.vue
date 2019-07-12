@@ -86,6 +86,7 @@
                 function success(res){
                     _self.$bus.emit("UPDATE_CUSTOMER_NEW",true)
                     _self.newData = []
+                    _self.$Message.success(res.data.msg)
                     _self.openMergeCompany = false
                     _self.idArray  = [{id:'',companyname:""}]
                 }
@@ -98,6 +99,7 @@
             this.$bus.on("OPEN_COMPANY_MERGE",(e)=>{
                 _self.openMergeCompany = true
                 _self.id = e
+                console.log(_self.id)
                 for (let i=0;i<_self.data.length;i++){
                     if (_self.data[i].id!==e){
                         _self.newData.push({id:_self.data[i].id,companyname: _self.data[i].companyname})

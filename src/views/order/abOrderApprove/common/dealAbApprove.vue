@@ -53,6 +53,16 @@
             />
           </FormItem>
         </Row>
+        <Row>
+          <FormItem label="历史审批：" prop="apply_memo">
+            <div class="s">
+              <div v-for="item in historyData" v-if="historyData" class="s1">
+                <div>{{item.realname}}：{{item.audit_memo}}</div>
+                <div class="s2">{{item.audit_date}}</div>
+              </div>
+            </div>
+          </FormItem>
+        </Row>
         <Row :gutter="12" v-if="formValidateDetail.imgs && formValidateDetail.imgs.length">
           <FormItem label="图片">
             <a
@@ -95,11 +105,16 @@ export default {
       disabled: false,
       openAbApproveDeal: false,
       formValidateDetail: {},
+      historyData:[],
+      nameData:[],
+      memoData:[],
+      id:"",
       banlishenpi: {
         agree: "Agree",
         desc: ""
       },
-      submitLoading: false
+      submitLoading: false,
+      data:[]
     };
   },
   methods: {
@@ -113,7 +128,29 @@ export default {
 
       console.log(this.formValidateDetail);
     },
+    get_history_data(){
+      let _self = this
+      let url = `api/order/unusual/workorder/searchWordOrderById`
+      let config = {
+        params: {
+          applyId:_self.id
+        }
+      }
 
+      function success(res){
+        _self.data = res.data.data
+        _self.historyData = res.data.data.items
+        for (let i=0;i<_self.historyData.length;i++){
+          if (_self.historyData[i].audit_memo =="" || _self.historyData[i].audit_memo==null){
+            _self.historyData[i].audit_memo = "审批备注为空"
+          }
+        }
+        console.log(_self.historyData )
+        _self.tableLoading = false
+      }
+
+      this.$Get(url,config,success)
+    },
     //办理审批
     submit() {
       let _self = this;
@@ -130,11 +167,13 @@ export default {
         _self.banlishenpi.agree = "Agree";
         _self.banlishenpi.desc = "";
         _self.submitLoading = false;
+        _self.disabled = false;
         _self.openAbApproveDeal = false;
         _self.$bus.emit("UPDATE_AB_ORDER_DATA", true);
       }
 
-      function fail() {}
+      function fail() {
+      }
 
       this.$Post(url, config, success, fail);
     }
@@ -143,11 +182,39 @@ export default {
     let _self = this;
     this.$bus.on("AB_ORDER_APPROVE_DEAL", e => {
       _self.disabled = false;
+      _self.nameData = []
+      _self.memoData = []
       _self.get_data(e);
+      _self.id = e.applyId
+      _self.get_history_data()
       _self.openAbApproveDeal = true;
     });
   }
 };
 </script>
 
-
+<style>
+  .s{
+    min-height: 32px;
+    vertical-align: bottom;
+    font-size: 12px;
+    border: 1px solid #dddee1;
+    padding: 4px 7px;
+    border-radius: 4px;
+    color: #495060;
+    background-color: #fff;
+    position: relative;
+    cursor: text;
+    font-family: inherit;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+  }
+  .s1{
+    display: flex;
+    justify-content: space-between;
+  }
+  .s2{
+    flex: 0 0 120px;
+    margin-left: 50px;
+  }
+</style>

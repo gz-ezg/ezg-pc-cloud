@@ -117,7 +117,7 @@
     import { DateFormat } from '../../../channelManagement/channelCustomer/utils';
 
     export default {
-        props:['hfwtlxMap','departAliasMap','departAlias','hfztMap'],
+        props:['hfwtlxMap','departAliasMap','departAlias','hfztMap','hfwtlx','hfzt'],
         components: {
         },
         data() {

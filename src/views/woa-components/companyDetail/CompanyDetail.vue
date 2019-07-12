@@ -883,6 +883,7 @@
                 countData:[],
                 total:0,
                 page:1,
+                pageSize:10,
                 notify_ids:'',
                 loading:false,
                 openFinish: true,
@@ -1209,7 +1210,7 @@
                 let url = 'api/user/legwork/companyLegworkListByCompanyId'
                 let config = {
                     params:{
-                        companyId:33014,
+                        companyId:_self.companyId,
                         page:_self.page,
                         pageSize:_self.pageSize
                     }
@@ -1240,7 +1241,7 @@
                 let url = 'api/user/legwork/companyLegworkCountByCompanyId'
                 let config = {
                     params:{
-                        companyId:33014
+                        companyId:_self.companyId
                     }
                 }
 

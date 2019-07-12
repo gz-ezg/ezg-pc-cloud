@@ -2,10 +2,10 @@
     <div>
         <Tabs value="name1">
             <TabPane label="未处理" name="name1">
-                <Untreated :hfwtlxMap="hfwtlx_map" :departAliasMap="return_visit_depart_map" :hfztMap="hfzt_map" :departAlias="return_visit_depart" @edit="open_edit" @show="open_show"></Untreated>
+                <Untreated  :hfwtlx="hfwtlx" :hfzt="hfzt"  :hfwtlxMap="hfwtlx_map" :departAliasMap="return_visit_depart_map" :hfztMap="hfzt_map" :departAlias="return_visit_depart" @edit="open_edit" @show="open_show"></Untreated>
             </TabPane>
             <TabPane label="已处理" name="name2">
-                <processed :hfwtlxMap="hfwtlx_map" :departAliasMap="return_visit_depart_map" :departAlias="return_visit_depart" :hfztMap="hfzt_map" @edit="open_edit" @show="open_show"></processed>
+                <processed :hfwtlx="hfwtlx" :hfzt="hfzt"  :hfwtlxMap="hfwtlx_map" :departAliasMap="return_visit_depart_map" :departAlias="return_visit_depart" :hfztMap="hfzt_map" @edit="open_edit" @show="open_show"></processed>
             </TabPane>
         </Tabs>
         <edit @close="openEdit=false" :data="data" v-if="openEdit" :hfwtlx="hfwtlx" :hfzt="hfzt" :hfwtlxMap="hfwtlx_map" :departAliasMap="return_visit_depart_map" :departAlias="return_visit_depart" :hfztMap="hfzt_map"></edit>

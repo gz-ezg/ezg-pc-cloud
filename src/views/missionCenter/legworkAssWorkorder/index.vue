@@ -102,6 +102,8 @@
         },
         data(){
             return{
+                order:'desc',
+                sortField:"create_date",
                 loading:false,
                 total:0,
                 page:1,
@@ -280,6 +282,8 @@
                 _self.loading = true
                 let config = {
                     params: {
+                        order:_self.order,
+                        sortField:_self.sortField,
                         page:_self.page,
                         pageSize:_self.pageSize,
                         companyName:_self.formValidateSearch.companyName,

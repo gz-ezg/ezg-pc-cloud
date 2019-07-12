@@ -240,12 +240,14 @@
                     // {field:'baseorderid',title:'提示'},
                     {field:'product',title:'产品名称'},
                     {field:'enddate',title:'下线时间'},
+                    {field:'taxperiod',title:'下线税期'},
                     {field:'callbackdate',title:'回访时间'},
                     {field:'servicebegindate',title:'服务开始时间'},
                     {field:'servicer',title:'服务人员'},                                                                   
                     {field:'marketer',title:'市场人员'},                                                                     
                     {field:'reasonforcallback',title:'客户实际下线原因'},
-                    {field:'reasonformarketer',title:'市场通知下线原因'} 
+                    {field:'reasonformarketer',title:'市场通知下线原因'},
+                    {field:'followbusiness',title:'跟进中的业务'} 
                 ]
                 let _self = this
                 let url = `api/customer/auditList`
@@ -253,6 +255,16 @@
                         page: '1',
                         pageSize: '1000000',
                         isAudit: 'Y',
+                        companyname:_self.NformInline.companyname,
+                        customername:_self.NformInline.name,
+                        customertel:_self.NformInline.tel,
+                        productname:_self.NformInline.product,
+                        marketer:_self.NformInline.marketername,
+                        servicer:_self.NformInline.servicename,
+                        bcallbackdate:DateFormat(_self.NformInline.callbackdate[0]),
+                        ecallbackdate:DateFormat(_self.NformInline.callbackdate[1]),
+                        bupdatedate:DateFormat(_self.NformInline.updatedate[0]),
+                        eupdatedate:DateFormat(_self.NformInline.updatedate[1]),
                         export: 'Y',
                         exportField: encodeURI(JSON.stringify(field)),
                 }
@@ -335,10 +347,10 @@
                         bcreatedate: "",
                         ecreatedate: "",
                         companyname:_self.NformInline.companyname,
-						customername:_self.NformInline.name,
-						customertel:_self.NformInline.tel,
-						productname:_self.NformInline.product,
-						marketer:_self.NformInline.marketername,
+                        customername:_self.NformInline.name,
+                        customertel:_self.NformInline.tel,
+                        productname:_self.NformInline.product,
+                        marketer:_self.NformInline.marketername,
                         servicer:_self.NformInline.servicename,
                         bcallbackdate:DateFormat(_self.NformInline.callbackdate[0]),
                         ecallbackdate:DateFormat(_self.NformInline.callbackdate[1]),

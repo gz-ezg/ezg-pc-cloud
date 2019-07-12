@@ -171,12 +171,11 @@
                         </a>
                     </Col>
                 </Row>
-                <Row style="margin-top:40px">
-                    <Button @click="update_detail" type="primary" :disabled="openSubmit" style="margin-left:40px"  :loading="loading" v-if="taskStage=='tesUnstarted'">提交</Button>
-                    <Button @click="delete_task" type="error" style="margin-left:50px" v-if="taskStage=='tesUnstarted'">作废</Button>
-                </Row>
             </div>
             <div slot="footer">
+                <Button @click="edit_detail" type="warning" :disabled="openSubmit"   :loading="loading" v-if="taskStage=='tesUnstarted'">修改</Button>
+                <Button @click="update_detail" type="primary" :disabled="openSubmit"   :loading="loading" v-if="taskStage=='tesUnstarted'">提交</Button>
+                <Button @click="delete_task" type="error"  v-if="taskStage=='tesUnstarted'">作废</Button>
                 <Button @click="openTaskDetail = false" type="primary"  style="margin-left:40px"  :loading="loading" v-if="taskStage=='tesFinished'">关闭</Button>
             </div>
         </Modal>
@@ -347,8 +346,33 @@
                 }
                 this.$Get(url, config, success)
             },
-            update_detail(){
+            edit_detail(){
                 let _self = this
+                let url = `api/task/updateMarketLegworkTask`
+                let config = {
+                    taskId: _self.id,
+                    taskName: _self.data[0].taskName,
+                    sPlanDate:FULLDateFormat(_self.data[0].planDate),
+                    executorId:_self.data[0].executorId,
+                    executorName:_self.data[0].executorName,
+                    companyId:_self.data[0].companyId,
+                    customerId:_self.data[0].customerId,
+                    followResult:_self.data[0].	followResult
+                }
+                function success(res){
+                    _self.$bus.emit("UPDATE_MARKET_TASK_LIST",true)
+                    _self.get_detail(_self.id)
+                    _self.openTaskDetail = false
+                    _self.taskSummary = ""
+                    _self.mission = "Completed"
+                }
+                function fail(){
+
+                }
+                this.$Post(url,config,success,fail)
+            },
+            update_detail(){
+                    let _self = this
                     let url = `api/task/updateMarketLegworkTask`
                     let config = {
                             taskId: _self.id,
