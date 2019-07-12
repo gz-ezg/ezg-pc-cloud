@@ -990,6 +990,26 @@ export const appRouter = [
       }
     ]
   },
+  // {
+  //   access: 11647,
+  //   meta: 11647,
+  //   path: '/accounterManager',
+  //   icon: 'connection-bars',
+  //   name: 'accounterManager_index',
+  //   title: '会计管理（新）',
+  //   component: Main,
+  //   children: [
+  //     {
+  //       access: 11648,
+  //       meta: 11648,
+  //       path: 'proxyAccounterManger',
+  //       title: '代理记账管理（新）',
+  //       name: 'proxyAccounterManger_index',
+  //       component: () =>
+  //           import(/* webpackChunkName: "proxyAccounterManger" */ '@/views/accounterManager/proxyAccounterManger/index.vue')
+  //     },
+  //   ]
+  // },
   {
     access: 11647,
     meta: 11647,
@@ -1451,7 +1471,15 @@ export const appRouter = [
         title: '营销短信模板',
         name: 'smsTemplate',
         component: () =>
-          import(/* webpackChunkName: "internalPushLog" */ '@/views/logManagement/smsTemplate.vue')
+          import(/* webpackChunkName: "internalPushLog" */ '@/views/logManagement/smsTemplate/index.vue')
+      },
+      {
+        access: 11607,
+        path: 'messagPops',
+        title: '消息弹窗',
+        name: 'messagPops',
+        component: () =>
+          import(/* webpackChunkName: "internalPushLog" */ '@/views/logManagement/messagPops/index.vue')
       }
     ]
   },
