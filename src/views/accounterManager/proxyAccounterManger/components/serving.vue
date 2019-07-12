@@ -96,6 +96,7 @@
 </template>
 
 <script>
+    import Clipboard from 'clipboard'
     export default {
         name: "serving",
         data(){
@@ -1327,7 +1328,8 @@
                 this.l = index;
             },
             copy(){
-                alert('复制成功！')
+                let clipboard = new Clipboard('.foo')
+                clipboard
             },
             completed(){
                 alert("完成")
