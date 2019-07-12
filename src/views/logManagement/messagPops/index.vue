@@ -68,7 +68,13 @@
         </Card>
       </Col>
     </Row>
-
+    <Modal width="800px" footer-hide v-model="modal1" title="往期消息回顾" @on-ok="ok" @on-cancel="cancel">
+      <Carousel style="width:100%" dots="none" trigger="click" v-model="value1">
+        <CarouselItem>
+          <div></div>
+        </CarouselItem>
+      </Carousel>
+    </Modal>
     <add-template
       @ok="
         () => {
@@ -79,7 +85,6 @@
       @cancel="handleAdd"
       v-if="isAdd"
     />
-
     <edit-template v-if="isEdit" :id="currentId" @ok="isEdit = false" @cancel="isEdit = false" />
   </div>
 </template>
@@ -88,50 +93,49 @@
 import serviceApi from '../service';
 import AddTemplate from './menu/add.vue';
 import editTemplate from './menu/edit.vue';
+import { listNotify, sendNotify, queryCodes } from '@/api/logManagement';
 
+let typeMap = null;
 export default {
   components: {
     AddTemplate,
-    editTemplate,
+    editTemplate
   },
   data() {
     return {
       loading: false,
+      modal1: false, //测试
+      value1: 0,
       searchModel: { template_name: '' },
       currentId: '',
       tableHeader: [
         {
-          title: '内容',
-          key: 'template_name',
-          minWidth: 250
-        },
-        {
           title: '类型',
-          key: 'createdate',
+          key: 'notify_type_name',
           minWidth: 180
         },
         {
           title: '通知部门',
           width: 180,
-          key: 'updatedate',
+          key: 'notify_departs_name',
           minWidth: 90
         },
         {
           title: '创建时间',
           width: 180,
-          key: 'updatedate',
+          key: 'createdate',
           minWidth: 90
         },
         {
           title: '创建人',
           width: 180,
-          key: 'updatedate',
+          key: 'createby_realname',
           minWidth: 90
         },
         {
           title: '发送状态',
           width: 180,
-          key: 'updatedate',
+          key: 'notify_status',
           minWidth: 90
         },
         {
@@ -148,7 +152,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.deleteTemplate(params);
+                    this.sendMessage(params);
                   }
                 }
               },
@@ -191,18 +195,28 @@ export default {
         page,
         pageSize
       };
-      const resp = await serviceApi.getList(config);
-      this.tableData = resp.rows;
-      this.pageTotal = resp.total;
-      this.loading = false;
+      try {
+        if (!typeMap) {
+          typeMap = await queryCodes('notify_template_type', true);
+        }
+        const resp = await listNotify(config);
+        this.tableData = resp.rows.map(v => {
+          v.notify_type_name = typeMap[v.notify_type];
+          return v;
+        });
+        this.pageTotal = resp.total;
+      } catch (error) {
+      } finally {
+        this.loading = false;
+      }
     },
 
-    async deleteTemplate({ row: { id = '' } }) {
+    async sendMessage({ row: { id = '' } }) {
       this.$Modal.confirm({
         title: '提示',
-        content: '是否删除该模板',
+        content: '是否发送通知',
         onOk: async () => {
-          await serviceApi.del({ id });
+          await sendNotify({ id });
           this.page = 1;
           this.getTableData();
         },
@@ -222,7 +236,7 @@ export default {
       this.getTableData();
     }
   },
-  created() {
+  async created() {
     this.getTableData();
   }
 };

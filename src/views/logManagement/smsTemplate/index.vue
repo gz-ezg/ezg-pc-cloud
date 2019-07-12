@@ -19,12 +19,14 @@
                     </Row>
                     <FormItem>
                       <Button type="primary" @click="search">查询</Button>
+                      <Button type="ghost" style="margin-left:20px" @click="reset">清空</Button>
                     </FormItem>
                   </Form>
                 </div>
               </Panel>
             </Collapse>
           </Row>
+          <com :parent="this" :search-conf="config"></com>
           <Row>
             <ButtonGroup>
               <Button type="primary" icon="search" @click="handleAdd">新增</Button>
@@ -46,8 +48,8 @@
 
             <Page
               size="small"
-              :total="pageTotal"
-              :page-size="pageSize"
+              :total="getListConfig.pageTotal"
+              :page-size="getListConfig.pageSize"
               show-total
               show-sizer
               show-elevator
@@ -81,15 +83,23 @@ import serviceApi from '../service';
 import AddTemplate from './menu/add.vue';
 import editTemplate from './menu/edit.vue';
 import showTemplate from './menu/show.vue';
+import com from './components/index.vue';
 
 export default {
   components: {
     AddTemplate,
     editTemplate,
-    showTemplate
+    showTemplate,
+    com
   },
   data() {
     return {
+      config: [
+        { type: 'input', key: 'template', label: '测试：' },
+        { type: 'time', key: 'cheshi', label: '看一看：' },
+        { type: 'input', key: 'template1', label: '测试：' },
+        { type: 'select', key: 'select', label: '选择器：', option: [{ value: 'key', label: '测试' }] }
+      ],
       loading: false,
       searchModel: { template_name: '' },
       currentId: '',
@@ -133,9 +143,11 @@ export default {
         }
       ],
       tableData: [],
-      page: 1,
+      getListConfig: {
+        page: 1,
+        pageSize: 10
+      },
       pageTotal: '',
-      pageSize: 10,
       isAdd: false,
       isEdit: false,
       isShow: false
@@ -146,6 +158,7 @@ export default {
     handleAdd() {
       this.isAdd = !this.isAdd;
     },
+
     handleEdit() {
       if (!this.currentId) {
         return this.$Message.info('请选择一行进行查看');
@@ -158,15 +171,17 @@ export default {
       }
       this.isShow = !this.isShow;
     },
+
+    reset() {
+      this.$refs['searchModel'].resetFields();
+      this.page = 1;
+      this.pageSize = 10;
+      this.searchModel.template_name = '';
+      this.getTableData();
+    },
     async getTableData() {
       this.loading = true;
-      let {template_name,page,pageSize } = this;
-      let config = {
-        template_name,
-        page,
-        pageSize
-      };
-      const resp = await serviceApi.getList(config);
+      const resp = await serviceApi.getList(this.getListConfig);
       this.tableData = resp.rows;
       this.pageTotal = resp.total;
       this.loading = false;
@@ -187,13 +202,15 @@ export default {
     selectRow({ id }) {
       this.currentId = id;
     },
-    search() {},
+    search() {
+      this.getTableData();
+    },
     pageChange(page) {
-      this.page = page;
+      this.getListConfig.page = page;
       this.getTableData();
     },
     pageSizeChange(pageSize) {
-      this.pageSize = pageSize;
+      this.getListConfig.pageSize = pageSize;
       this.getTableData();
     }
   },

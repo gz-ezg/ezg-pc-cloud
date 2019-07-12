@@ -430,7 +430,7 @@ export default {
     },
     async initWebSocket() {
       const { port, key } = await serviceApi.auth();
-      const wsuri = `ws://192.168.0.224:${port}/wechat/company/notify/${key}`;
+      const wsuri = `ws://192.168.0.220:${port}/wechat/company/notify/${key}`;
       this.websock = new WebSocket(wsuri);
       this.websock.onmessage = this.websocketonmessage;
       this.websock.onopen = this.websocketonopen;
@@ -467,15 +467,15 @@ export default {
     },
     websocketonopen() {
       this.websocketsend('你真帅');
-      console.log(111);
     },
     websocketsend(Data) {
       //数据发送
       this.websock.send(Data);
     },
     websocketonerror() {
-      console.log('链接失败');
-      this.initWebSocket();
+      setTimeout(() => {
+        this.initWebSocket();
+      }, 3000);
     },
     websocketclose(e) {
       console.log('断开连接', e);

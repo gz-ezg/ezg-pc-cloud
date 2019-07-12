@@ -1,100 +1,215 @@
  <template>
   <div>
-    <Modal v-model="show" title="编辑" width="500" @on-cancel="onCancel">
-      <Form ref="formValidate" :model="formValidate" label-position="right" :label-width="130">
-        <FormItem label="模版名称：">
-          <Input v-model="formValidate.template_name" type="text" placeholder="" />
-        </FormItem>
-
-        <FormItem label="模版内容：">
-          <Input v-model="formValidate.template_content" type="textarea" :rows="4" placeholder="Enter something..." />
-        </FormItem>
-
-        <FormItem v-if="formValidate.job_class_name" label="job任务类：">
-          <Input :value="formValidate.job_class_name" readonly type="text" placeholder="" />
-        </FormItem>
-
-        <FormItem v-if="formValidate.cron_expression" label="执行周期cron 表达式">
-          <Input :value="formValidate.cron_expression" readonly type="text" placeholder="" />
-        </FormItem>
-
-        <FormItem label="关联用户">
-          <Select
-            v-model="formValidate.linked_user_json"
-            placeholder="关联用户"
-            filterable
-            multiple
-            remote
-            :remote-method="getUser"
-            :loading="loading"
-          >
-            <Option v-for="item in userList" :key="item.id" :value="item.id" :label="item.realname">
-              <span>{{ item.realname }}</span>
-              <span style="float:right;color:#ccc">{{ item.departname }}</span>
-            </Option>
+    <Modal v-model="show" fullscreen title="新增" width="800" @on-cancel="onCancel">
+      <Form :rules="ruleValidate" ref="formValidate" :model="formValidate" label-position="right" :label-width="60">
+        <FormItem label="类型：">
+          <Select v-model="formValidate.type" style="width:200px">
+            <Option v-for="item in typeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
         </FormItem>
+        <FormItem prop="departName" label="部门：">
+          <Input size="small" readonly style="width:200px" v-model="formValidate.departName" />
+          <Button size="small" type="info" @click="openDepartModal">增加</Button>
+          <Button size="small" type="info" @click="clearDepardId">清空</Button>
+        </FormItem>
+        <FormItem prop="notify_abstract" label="摘要：">
+          <Input size="small" style="width:400px" type="text" v-model="formValidate.notify_abstract" />
+        </FormItem>
+        <FormItem label="内容：">
+          <div class="edit_container">
+            <quill-editor class="editer" v-model="content" :options="editorOption" ref="QuillEditor"> </quill-editor>
+          </div>
+        </FormItem>
+        <Upload
+          :show-upload-list="false"
+          :on-success="handleUploadSuccess"
+          :format="['jpg', 'jpeg', 'png', 'gif']"
+          :max-size="2048"
+          multiple
+          action="api/zuul/system/simple/img/upload"
+        >
+          <Button icon="ios-cloud-upload-outline"></Button>
+        </Upload>
       </Form>
       <div slot="footer">
-        <Button type="primary" :loading="loading" style="margin-left:20px" @click="handleEditTemplate">确定</Button>
+        <Button type="primary" :loading="loading" style="margin-left:20px" @click="handleConfirm('formValidate')">保存</Button>
       </div>
     </Modal>
+
+    <depart-tree v-if="departModal" :index="index" @change-depart="changeDepart" @close="departModal = false"></depart-tree>
   </div>
 </template>
 
 <script>
-import serviceApi, { userApi } from '../../service';
+import { listDepartTree, createNotify } from '@/api/logManagement';
+import { quillEditor } from 'vue-quill-editor';
+import 'quill/dist/quill.core.css';
+import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
+import departTree from './departTree';
+
+const toolbarOptions = [
+  ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+  ['blockquote', 'code-block'],
+
+  [{ header: 1 }, { header: 2 }], // custom button values
+  [{ list: 'ordered' }, { list: 'bullet' }],
+  [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
+  [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
+  [{ direction: 'rtl' }], // text direction
+
+  [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
+  [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+  [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+  [{ font: [] }],
+  [{ align: [] }],
+  ['link', 'image', 'video'],
+  ['clean'] // remove formatting button
+];
 export default {
-  props: ['id'],
+  components: {
+    quillEditor,
+    departTree
+  },
   data() {
     return {
       show: true,
+      departModal: false,
       loading: false,
-      userList: '',
+      content: '',
+      ruleValidate: {
+        departName: [{ required: true, message: '请添加部门' }],
+        notify_abstract: [{ required: true, message: '请填写摘要', trigger: 'blur' }]
+      },
+      editorOption: {
+        modules: {
+          toolbar: {
+            container: toolbarOptions, // 工具栏
+            handlers: {
+              image: function(value) {
+                if (value) {
+                  // 调用iview图片上传
+                  document.querySelector('.ivu-upload .ivu-btn').click();
+                } else {
+                  this.quill.format('image', false);
+                }
+              }
+            }
+          }
+        }
+      },
+      treeData: [],
+      typeList: [
+        {
+          value: 'zxzc',
+          label: '最新政策'
+        },
+        {
+          value: 'gstz',
+          label: '公司通知'
+        },
+        {
+          value: 'xttz',
+          label: '系统通知'
+        },
+        {
+          value: 'fwtz',
+          label: '服务通知'
+        },
+        {
+          value: 'qt',
+          label: '其他'
+        }
+      ],
       formValidate: {
-        template_name: '',
-        template_content: '',
-        job_class_name: '',
-        cron_expression: '',
-        linked_user_json: ''
+        type: 'zxzc',
+        departName: '',
+        notify_abstract: '',
+        notify_departs: []
       }
     };
   },
+  computed: {
+    editor() {
+      return this.$refs.QuillEditor.quill;
+    }
+  },
   methods: {
-    async getUser(query) {
-      let config = query ? { page: 1, pageSize: 10, realname: query } : { page: 1, pageSize: 10 };
-      const resp = await userApi.getList(config);
-      this.userList = resp.rows;
-    },
-    async handleEditTemplate() {
-      try {
-        this.loading = true;
-        this.formValidate.linked_user_json = JSON.stringify(this.formValidate.linked_user_json);
-        this.formValidate.id = this.id;
-        await serviceApi.update(this.formValidate);
-        this.$emit('ok');
-      } catch (error) {
-      } finally {
-        this.loading = false;
+    async handleConfirm(name) {
+      const { notify_departs, notify_abstract, type } = this.formValidate;
+      if (!this.content) {
+        return this.$Message.error('请填写内容');
       }
+      this.$refs[name].validate(async valid => {
+        if (valid) {
+          this.loading = true;
+          try {
+            await createNotify({
+              notify_type: type,
+              notify_abstract,
+              notify_departs: JSON.stringify(notify_departs),
+              notify_content: this.content
+            });
+          } catch (error) {
+            console.log(error);
+          } finally {
+            this.loading = false;
+          }
+        }
+      });
+    },
+    changeDepart(value) {
+      const { departName = '' } = this.formValidate;
+      this.formValidate.notify_departs.push(value.departId);
+      this.formValidate.departName = `${departName} ${departName ? ',' : ''} ${value.departName}`;
+    },
+    clearDepardId() {
+      this.formValidate.notify_departs = [];
+      this.formValidate.departName = '';
     },
     onCancel() {
       this.$emit('cancel');
     },
-    async getDetail() {
-      const resp = await serviceApi.getDetail({ id: this.id });
-      this.formValidate.template_name = resp.template_name;
-      this.formValidate.template_content = resp.template_content;
-      this.formValidate.job_class_name = resp.job_class_name;
-      this.formValidate.cron_expression = resp.cron_expression;
-      this.userList = resp.linked_users.map(v => {
-        return { id: v.user_id, realname: v.realname };
-      });
-      this.formValidate.linked_user_json = this.userList.map(v => v.id);
+    openDepartModal() {
+      this.departModal = !this.departModal;
+    },
+    handleUploadSuccess(res) {
+      // 获取富文本组件实例
+      console.log(res);
+      let path = JSON.parse(res.data).realpath;
+      let quill = this.$refs.QuillEditor.quill;
+      // 如果上传成功
+      if (res) {
+        res = `/api/assets/${path}`;
+        // 获取光标所在位置
+        let length = quill.getSelection().index;
+        // 插入图片，res为服务器返回的图片链接地址
+        quill.insertEmbed(length, 'image', res);
+        // 调整光标到最后
+        quill.setSelection(length + 1);
+      } else {
+        // 提示信息，需引入Message
+        this.$Message.error('图片插入失败');
+      }
     }
   },
-  created() {
-    this.getDetail();
-  }
+  created() {}
 };
 </script>
+
+
+<style lang="less">
+.edit_container {
+  margin-bottom: 40px;
+}
+.editer {
+  height: 300px;
+}
+.submit_btn {
+  text-align: center;
+}
+.ivu-upload {
+  display: none;
+}
+</style>
