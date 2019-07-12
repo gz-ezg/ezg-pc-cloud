@@ -217,8 +217,6 @@
                 mask-closable
                 ok-text="保存"
                 :styles="{top: '10%'}"
-                :loading="loading"
-                @on-ok="ok22('formValidate')"
                 @on-cancel="cancel('formValidate')">
             <Form ref="formValidate" :model="formValidate"  :rules="ruleValidate" :label-width="90">
                 <!-- <p>{{isOldCustomer}}</p> -->
@@ -253,6 +251,9 @@
                     <Input v-model="formValidate.clueMemo" type="textarea" :autosize="{minRows: 2,maxRows: 5}" size="small">></Input>
                 </FormItem>
             </Form>
+            <div slot="footer">
+                <Button type="primary" :loading="loading" style="margin-left:20px" @click="ok22('formValidate')">保存</Button>
+            </div>
         </Modal>
         <Modal
                 v-model="modal22"
@@ -498,7 +499,7 @@ import publicCustomer from './publicCustomer'
                 modal3: false,
                 modal4: false,
                 selectCompany: false,
-                loading: true,
+                loading: false,
                 loading2: true,
                 ruleValidate: {
                     neworold: [
@@ -1398,41 +1399,36 @@ import publicCustomer from './publicCustomer'
             /*************************录入提交验证********************************/
             ok22(name) {
                 let _self = this
-                setTimeout(() => {
-                    this.loading = false;
-                        this.$refs[name].validate((valid) => {
-                            if (valid) {
-                                if (_self.customerlabelGroup != undefined) {
-                                    let labelIds = []
-                                    for (let i = 0; i < _self.customerlabelGroup.length; i++) {
-                                        labelIds.push(_self.customerlabelGroup[i].id)
-                                    }
-                                    _self.formValidate.labelIds = labelIds.toString()
-                                }
-
-                                let url = '/clue/create'
-
-                                function doSuccess(response) {
-                                    _self.modal2 = false
-                                    _self.$Message.success('新增成功!')
-                                    _self.cancel('formValidate')
-                                    _self.getTableData()
-                                }
-                                function otherConditions() {
-                                    _self.$nextTick(() => {
-                                        _self.loading = true;
-                                    });
-                                    _self.$Message.error('新增失败!');
-                                }
-
-                                this.PostData(url, _self.formValidate, doSuccess, otherConditions)
-                            } else {
-                                this.$nextTick(() => {
-                                    this.loading = true;
-                                });
+                this.loading = true;
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        if (_self.customerlabelGroup != undefined) {
+                            let labelIds = []
+                            for (let i = 0; i < _self.customerlabelGroup.length; i++) {
+                                labelIds.push(_self.customerlabelGroup[i].id)
                             }
-                        })
-                }, 2000);
+                            _self.formValidate.labelIds = labelIds.toString()
+                        }
+
+                        let url = '/clue/create'
+
+                        function doSuccess(response) {
+                            _self.modal2 = false
+                            _self.$Message.success('新增成功!')
+                            _self.cancel('formValidate')
+                            _self.getTableData()
+                            _self.loading = false;
+                        }
+                        function otherConditions() {
+                            _self.loading = false;
+                            _self.$Message.error('新增失败!');
+                        }
+
+                        this.PostData(url, _self.formValidate, doSuccess, otherConditions)
+                    } else {
+                      this.loading = false;
+                    }
+                })
             },
 
             // rowSelect(a) {

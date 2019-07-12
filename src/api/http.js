@@ -1,6 +1,6 @@
 import axios from 'axios'
-
 import delegate from './interceptors'
+import iView from 'iview'
 axios.create({
   timeout: 30000
 })
@@ -49,6 +49,7 @@ export class HttpService extends BaseService {
   }
 
   post(data = {}, config) {
+    config.method = 'POST'
     const req = {
       url: this.getUri(config.url),
       method: 'POST',
@@ -61,6 +62,7 @@ export class HttpService extends BaseService {
   }
 
   get(params = {}, config) {
+    config.method = 'GET'
     const req = {
       url: this.getUri(config.url),
       method: 'GET',
@@ -81,13 +83,17 @@ export class HttpService extends BaseService {
       req,
       config
     })
-
+    // 是否开启全局Loading
+    let loading = config.loading
     try {
+      loading && iView.Spin.show()
       res = await this.request(req)
     } catch (e) {
       res = e
+    } finally {
+      loading && iView.Spin.hide()
     }
-    res = await delegate.responseHander(res)
+    res = await delegate.responseHander(res, config)
     return res
   }
 }
