@@ -308,7 +308,10 @@
                     // {field:'depart',title:'责任部门',format:'departAlias'},
                     {field:'serviceranks',title:'服务评分'},
                     {field:'begin_period',title:'开始税期'},
-                    {field:'end_period',title:'结束税期'}, 
+                    {field:'end_period',title:'结束税期'},
+                    {field:'reason',title:'问题反馈或建议'},
+                    {field:'solutionbymarketer',title:'市场反馈'},
+                    {field:'solutionbyservicer',title:'服务部门反馈'}
                 ]
                 let _self = this
                 let url = `api/customer/customerCallbackList`
