@@ -8,6 +8,7 @@
       <change beforePath="$PROJECT_DIR$/src/views/customerService/ordercallback/table/untreated.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customerService/ordercallback/table/untreated.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/customerService/returnVisit/table/processed.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customerService/returnVisit/table/processed.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/customerService/returnVisit/table/untreated.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customerService/returnVisit/table/untreated.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/customerService/returnWorkOrder/table/processed.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customerService/returnWorkOrder/table/processed.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/customerService/returnWorkOrder/table/untreated.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customerService/returnWorkOrder/table/untreated.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -28,11 +29,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/router/router.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="991" column="4" lean-forward="true" selection-start-line="991" selection-start-column="4" selection-end-line="991" selection-end-column="4" />
+            <state relative-caret-position="109">
+              <caret line="992" column="6" lean-forward="true" selection-start-line="992" selection-start-column="6" selection-end-line="992" selection-end-column="6" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#21235#24060#0" />
@@ -41,60 +42,6 @@
                 <element signature="e#25948#27002#0" />
                 <element signature="e#27006#29970#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/customerService/ordercallback/table/untreated.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
-              <caret line="81" column="85" selection-start-line="81" selection-start-column="85" selection-end-line="81" selection-end-column="85" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/customerService/ordercallback/table/processed.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="298" column="63" selection-start-line="298" selection-start-column="63" selection-end-line="298" selection-end-column="63" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/customerService/returnVisit/table/processed.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="254">
-              <caret line="313" column="63" selection-start-line="313" selection-start-column="63" selection-end-line="313" selection-end-column="63" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/views/customerService/returnWorkOrder/table/processed.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="254">
-              <caret line="298" column="63" selection-start-line="298" selection-start-column="63" selection-end-line="298" selection-end-column="63" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/customerService/returnWorkOrder/table/untreated.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="303" column="20" lean-forward="true" selection-start-line="303" selection-start-column="20" selection-end-line="305" selection-end-column="63" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/customerService/returnVisit/table/untreated.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="122">
-              <caret line="81" column="85" selection-start-line="81" selection-start-column="85" selection-end-line="81" selection-end-column="85" />
             </state>
           </provider>
         </entry>
@@ -795,7 +742,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1232391000" />
+    <option name="totallyTimeSpent" value="1232748000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -808,9 +755,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1376" height="784" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6918033" visible="true" weight="0.26276276" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6918033" visible="true" weight="0.26276276" />
       <window_info id="Structure" order="1" weight="0.24960506" />
       <window_info id="Favorites" order="2" sideWeight="0.30819672" side_tool="true" weight="0.26276276" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.1399046" />
@@ -829,7 +775,7 @@
       <window_info anchor="bottom" id="消息" order="13" />
       <window_info anchor="bottom" id="调试" order="14" />
       <window_info anchor="bottom" id="TypeScript" order="15" />
-      <window_info anchor="bottom" id="Terminal" order="16" sideWeight="0.49924925" visible="true" weight="0.4244833" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="16" sideWeight="0.49924925" visible="true" weight="0.4244833" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1228,21 +1174,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/router/router.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="991" column="4" lean-forward="true" selection-start-line="991" selection-start-column="4" selection-end-line="991" selection-end-column="4" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#21235#24060#0" />
-            <element signature="e#24064#24871#0" />
-            <element signature="e#24875#25944#0" />
-            <element signature="e#25948#27002#0" />
-            <element signature="e#27006#29970#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/customerService/returnVisit/table/untreated.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="122">
@@ -1280,8 +1211,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/customerService/returnWorkOrder/table/processed.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="298" column="63" selection-start-line="298" selection-start-column="63" selection-end-line="298" selection-end-column="63" />
+        <state relative-caret-position="204">
+          <caret line="296" column="53" lean-forward="true" selection-start-line="296" selection-start-column="53" selection-end-line="296" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="992" column="6" lean-forward="true" selection-start-line="992" selection-start-column="6" selection-end-line="992" selection-end-column="6" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#21235#24060#0" />
+            <element signature="e#24064#24871#0" />
+            <element signature="e#24875#25944#0" />
+            <element signature="e#25948#27002#0" />
+            <element signature="e#27006#29970#0" />
+          </folding>
         </state>
       </provider>
     </entry>
