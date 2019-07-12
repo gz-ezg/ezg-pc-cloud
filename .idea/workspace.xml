@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/components/serving.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/components/serving.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,9 +23,17 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/package.json">
+        <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/components/serving.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1950" />
+            <state relative-caret-position="183">
+              <caret line="290" column="46" lean-forward="true" selection-start-line="290" selection-start-column="46" selection-end-line="290" selection-end-column="46" />
+              <folding>
+                <element signature="e#6168#6758#0" />
+                <element signature="e#6807#6941#0" />
+                <element signature="e#6963#10462#0" />
+                <element signature="e#10484#13986#0" />
+              </folding>
+            </state>
           </provider>
         </entry>
       </file>
@@ -80,7 +88,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/views/customerManagement/customerAccount/integralUpdate.vue" />
         <option value="$PROJECT_DIR$/src/views/missionCenter/comSchedule/index.vue" />
         <option value="$PROJECT_DIR$/src/views/publicPool/publicPool/customerManagment.vue" />
         <option value="$PROJECT_DIR$/src/views/publicPool/publicPool/commonVue.js" />
@@ -131,6 +138,7 @@
         <option value="$PROJECT_DIR$/src/views/customerService/ordercallback/table/processed.vue" />
         <option value="$PROJECT_DIR$/src/views/customerService/returnVisit/table/processed.vue" />
         <option value="$PROJECT_DIR$/src/views/customerService/returnWorkOrder/table/processed.vue" />
+        <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/components/serving.vue" />
       </list>
     </option>
   </component>
@@ -163,6 +171,36 @@
               <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="accounterManager" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="accounterManager" type="462c0819:PsiDirectoryNode" />
+              <item name="proxyAccounterManger" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="accounterManager" type="462c0819:PsiDirectoryNode" />
+              <item name="proxyAccounterManger" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -695,7 +733,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1234700000" />
+    <option name="totallyTimeSpent" value="1236540000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -708,6 +746,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1376" height="784" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6918033" visible="true" weight="0.26276276" />
       <window_info id="Structure" order="1" weight="0.24960506" />
@@ -805,13 +844,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="0.0" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="14374" column="4" selection-start-line="14374" selection-start-column="4" selection-end-line="14374" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/fieldManagement/attendance/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
@@ -1086,9 +1118,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.1.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/新版项目初始文档！必看！">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="25">
@@ -1181,6 +1210,26 @@
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1950" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.1.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="74" column="26" selection-start-line="74" selection-start-column="26" selection-end-line="74" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/components/serving.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="290" column="46" lean-forward="true" selection-start-line="290" selection-start-column="46" selection-end-line="290" selection-end-column="46" />
+          <folding>
+            <element signature="e#6168#6758#0" />
+            <element signature="e#6807#6941#0" />
+            <element signature="e#6963#10462#0" />
+            <element signature="e#10484#13986#0" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>

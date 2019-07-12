@@ -1329,7 +1329,14 @@
             },
             copy(){
                 let clipboard = new Clipboard('.foo')
-                clipboard
+                console.log(clipboard)
+                clipboard.on('success', e=> {
+                    this.$Message.success("复制成功")
+                });
+                clipboard.on('error', e=> {
+                    this.$Message.error("该网页不允许复制")
+                });
+
             },
             completed(){
                 alert("完成")
