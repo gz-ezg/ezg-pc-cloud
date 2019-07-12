@@ -167,11 +167,13 @@ export default {
         _self.banlishenpi.agree = "Agree";
         _self.banlishenpi.desc = "";
         _self.submitLoading = false;
+        _self.disabled = false;
         _self.openAbApproveDeal = false;
         _self.$bus.emit("UPDATE_AB_ORDER_DATA", true);
       }
 
-      function fail() {}
+      function fail() {
+      }
 
       this.$Post(url, config, success, fail);
     }
