@@ -31,6 +31,9 @@
                     <lock-screen></lock-screen> -->
           <!-- <message-tip v-model="mesCount"></message-tip> -->
           <!-- <theme-switch></theme-switch> -->
+          <div @click="handleMsgCenter" class="header-laba">
+            <img src="../images/laba.png" />
+          </div>
           <div style="height:100%">
             <Button
               size="small"
@@ -123,6 +126,17 @@
     <company-detail v-if="gobalCompanyDetailShow" :companyId="gobalCompanyId"></company-detail>
     <set-finish-time :worderOrderDetail="gobalWorkorderDetail"></set-finish-time>
     <re-login v-if="gobalReloginShow"></re-login>
+
+    <Modal width="800px" footer-hide v-model="msgDetailPopus" title="查看消息" @on-ok="ok" @on-cancel="cancel">
+      <h2 style="text-align:center;">{{ msg.title }}</h2>
+      <div v-html="msg.detail"></div>
+    </Modal>
+
+    <Drawer title="Basic Drawer" :closable="false" v-model="drawerPopus">
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+    </Drawer>
   </div>
 </template>
 <script>
@@ -150,7 +164,10 @@ import reLogin from '@views/woa-components/relogin/index.vue';
 // 以下两个文件由于过大，单独打包
 // import customerDetail from '@views/woa-components/customerDetail2/index.vue'
 // import companyDetail from '@views/woa-components/companyDetail/CompanyDetail.vue'
+
+import { queryCodes } from '@/api/logManagement';
 import { Service } from '@/api/Service.js';
+let typeMap = {};
 let serviceApi = new Service('socket');
 export default {
   components: {
@@ -177,6 +194,11 @@ export default {
   },
   data() {
     return {
+      msg: {
+        title: 'ceshi',
+        detail: '<img />'
+      },
+      drawerPopus: true,
       websock: null,
       systemComplainStatus: true,
       globalRefresh: true,
@@ -188,6 +210,7 @@ export default {
         content: '',
         star: 5
       },
+      msgDetailPopus: false,
       file: [],
       // 是否弹出系统反馈框
       tip: false,
@@ -262,6 +285,7 @@ export default {
     }
   },
   methods: {
+    handleMsgCenter() {},
     close_stystem_complain(e) {
       this.show_stystem_complain = false;
     },
@@ -439,34 +463,35 @@ export default {
     },
     websocketonmessage(e) {
       console.log(e);
-      let abc = e.data;
-      this.$Notice.open({
-        title: e.data,
-        duration: 0,
-        render: h => {
-          return h('span', [
-            `${e.data}`,
-            h(
-              'a',
-              {
-                on: {
-                  click: () => {
-                    console.log('点击事件');
+      try {
+        let msg = JSON.parse(e.data) || {};
+        this.$Notice.open({
+          title: typeMap[msg.notifyType],
+          duration: 0,
+          render: h => {
+            return h('span', [
+              `${msg.msgContent}`,
+              h(
+                'a',
+                {
+                  on: {
+                    click: e => {
+                      console.log('点击事件', e);
+                      this.msgDetailPopus = true;
+                    }
                   }
-                }
-              },
-              '查看消息'
-            )
-          ]);
-        },
-        name: e.data,
-        onClose(e) {
-          console.log(abc);
-        }
-      });
+                },
+                '查看消息'
+              )
+            ]);
+          },
+          name: msg.companyWechatLogId,
+          onClose(e) {}
+        });
+      } catch (error) {}
     },
     websocketonopen() {
-      this.websocketsend('你真帅');
+      this.websocketsend('打开链接');
     },
     websocketsend(Data) {
       //数据发送
@@ -489,9 +514,6 @@ export default {
         this.$store.commit('addOpenSubmenu', pathArr[1].name);
       }
       this.checkTag(to.name);
-      // 页面重新初始化
-      // this.init()
-      // localStorage.currentPageName = to.name;
     },
     lang() {
       util.setCurrentPath(this, this.$route.name); // 在切换语言时用于刷新面包屑
@@ -522,9 +544,10 @@ export default {
     //     });
     // }
   },
-  created() {
+  async created() {
     // 显示打开的页面的列表
     this.$store.commit('setOpenedList');
+    typeMap = await queryCodes('notify_template_type', true);
   }
 };
 </script>
@@ -570,6 +593,15 @@ export default {
   }
   &-content-container {
     position: relative;
+  }
+  .header-laba {
+    position: absolute;
+    top: 20px;
+    left: 50px;
+    img {
+      width: 40px;
+      height: 40px;
+    }
   }
   &-header-con {
     box-sizing: border-box;
@@ -620,6 +652,17 @@ export default {
         box-shadow: -3px 0 15px 3px rgba(0, 0, 0, 0.1);
         z-index: 10;
       }
+    }
+  }
+  .header-laba {
+    position: absolute;
+    top: 10px;
+    left: 60px;
+    cursor: pointer;
+
+    img {
+      height: 40px;
+      width: 40px;
     }
   }
   &-header {

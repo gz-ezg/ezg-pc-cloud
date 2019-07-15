@@ -39,6 +39,7 @@
             <ButtonGroup>
               <Button type="primary" icon="search" @click="handleAdd">录入</Button>
               <Button type="primary" icon="search" @click="handleEdit">编辑</Button>
+              <Button type="primary" icon="search" @click="handleShow">查看</Button>
             </ButtonGroup>
           </Row>
 
@@ -68,13 +69,6 @@
         </Card>
       </Col>
     </Row>
-    <Modal width="800px" footer-hide v-model="modal1" title="往期消息回顾" @on-ok="ok" @on-cancel="cancel">
-      <Carousel style="width:100%" dots="none" trigger="click" v-model="value1">
-        <CarouselItem>
-          <div></div>
-        </CarouselItem>
-      </Carousel>
-    </Modal>
     <add-template
       @ok="
         () => {
@@ -85,7 +79,8 @@
       @cancel="handleAdd"
       v-if="isAdd"
     />
-    <edit-template v-if="isEdit" :id="currentId" @ok="isEdit = false" @cancel="isEdit = false" />
+    <edit-template :row="currentRow" v-if="isEdit" @ok="isEdit = false" @cancel="isEdit = false" />
+    <show-template :row="currentRow" v-if="isShow" @ok="isShow = false" @cancel="isShow = false" />
   </div>
 </template>
 
@@ -93,13 +88,15 @@
 import serviceApi from '../service';
 import AddTemplate from './menu/add.vue';
 import editTemplate from './menu/edit.vue';
+import showTemplate from './menu/show.vue';
 import { listNotify, sendNotify, queryCodes } from '@/api/logManagement';
 
 let typeMap = null;
 export default {
   components: {
     AddTemplate,
-    editTemplate
+    editTemplate,
+    showTemplate
   },
   data() {
     return {
@@ -107,7 +104,7 @@ export default {
       modal1: false, //测试
       value1: 0,
       searchModel: { template_name: '' },
-      currentId: '',
+      currentRow: null,
       tableHeader: [
         {
           title: '类型',
@@ -117,7 +114,7 @@ export default {
         {
           title: '通知部门',
           width: 180,
-          key: 'notify_departs_name',
+          key: 'notify_depart_name',
           minWidth: 90
         },
         {
@@ -136,7 +133,11 @@ export default {
           title: '发送状态',
           width: 180,
           key: 'notify_status',
-          minWidth: 90
+          minWidth: 90,
+          render: (h, params) => {
+            let type = params.row.notify_status == 'sent' ? '已发送' : '待发送';
+            return h('div', type);
+          }
         },
         {
           title: '操作',
@@ -176,13 +177,13 @@ export default {
       this.isAdd = !this.isAdd;
     },
     handleEdit() {
-      if (!this.currentId) {
+      if (!this.currentRow) {
         return this.$Message.info('请选择一行进行查看');
       }
       this.isEdit = !this.isEdit;
     },
     handleShow() {
-      if (!this.currentId) {
+      if (!this.currentRow) {
         return this.$Message.info('请选择一行进行查看');
       }
       this.isShow = !this.isShow;
@@ -223,8 +224,8 @@ export default {
         onCancel: () => {}
       });
     },
-    selectRow({ id }) {
-      this.currentId = id;
+    selectRow(row) {
+      this.currentRow = row;
     },
     search() {},
     pageChange(page) {

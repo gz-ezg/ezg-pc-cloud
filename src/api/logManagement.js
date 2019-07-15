@@ -38,6 +38,7 @@ export function listDepartTree() {
     method: 'get'
   })
 }
+
 export async function queryCodes(query, isMap) {
   let resp = await request({
     url: '/system/tsType/queryTsTypeByGroupCodes',

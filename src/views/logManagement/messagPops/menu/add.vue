@@ -161,6 +161,7 @@ export default {
               notify_departs: JSON.stringify(notify_departs),
               notify_content: this.content
             });
+            this.$emit('cancel');
           } catch (error) {
             console.log(error);
           } finally {
@@ -219,7 +220,7 @@ export default {
     // }
   },
   async created() {
-    this.typeList  = await queryCodes('notify_template_type');
+    this.typeList = await queryCodes('notify_template_type');
   }
 };
 </script>

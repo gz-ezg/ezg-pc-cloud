@@ -3,22 +3,22 @@
     <Modal v-model="show" fullscreen title="编辑" width="800" @on-cancel="onCancel">
       <Form :rules="ruleValidate" ref="formValidate" :model="formValidate" label-position="right" :label-width="60">
         <FormItem label="类型：">
-          <Select v-model="formValidate.type" style="width:200px">
+          <Select readonly v-model="formValidate.type" style="width:200px">
             <Option v-for="item in typeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
         </FormItem>
         <FormItem prop="departName" label="部门：">
           <Input size="small" readonly style="width:200px" v-model="formValidate.departName" />
-          <Button size="small" type="info" @click="openDepartModal">增加</Button>
-          <Button size="small" type="info" @click="clearDepardId">清空</Button>
         </FormItem>
         <FormItem prop="notify_abstract" label="摘要：">
-          <Input size="small" style="width:400px" type="text" v-model="formValidate.notify_abstract" />
+          <Input size="small" readonly style="width:400px" type="text" v-model="formValidate.notify_abstract" />
         </FormItem>
         <FormItem label="内容：">
           <div class="edit_container">
-            <quill-editor class="editer" v-model="content" :options="editorOption" ref="QuillEditor"> </quill-editor>
+            <!-- <quill-editor class="editer" v-model="content" :options="editorOption" ref="QuillEditor"> </quill-editor> -->
+              <div v-html="content"></div>
           </div>
+        
         </FormItem>
         <Upload
           :show-upload-list="false"
