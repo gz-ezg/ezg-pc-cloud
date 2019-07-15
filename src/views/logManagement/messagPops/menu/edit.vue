@@ -101,28 +101,7 @@ export default {
         }
       },
       treeData: [],
-      typeList: [
-        {
-          value: 'zxzc',
-          label: '最新政策'
-        },
-        {
-          value: 'gstz',
-          label: '公司通知'
-        },
-        {
-          value: 'xttz',
-          label: '系统通知'
-        },
-        {
-          value: 'fwtz',
-          label: '服务通知'
-        },
-        {
-          value: 'qt',
-          label: '其他'
-        }
-      ],
+      typeList: [],
       formValidate: {
         type: 'zxzc',
         departName: '',
@@ -197,13 +176,14 @@ export default {
       }
     }
   },
-  created() {
+  async created() {
     let { row } = this;
     this.formValidate.type = row.notify_type;
     this.formValidate.notify_abstract = row.notify_abstract;
     this.formValidate.departName = row.notify_depart_name;
     this.formValidate.notify_departs = row.notify_departs.split(',');
     this.content = row.notify_content;
+    this.typeList = await queryCodes('notify_template_type');
   }
 };
 </script>

@@ -3,7 +3,7 @@
     <Modal v-model="show" fullscreen title="查看" width="800" @on-cancel="onCancel">
       <Form :rules="ruleValidate" ref="formValidate" :model="formValidate" label-position="right" :label-width="60">
         <FormItem label="类型：">
-          <Select readonly v-model="formValidate.type" style="width:200px">
+          <Select disabled v-model="formValidate.type" style="width:200px">
             <Option v-for="item in typeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
         </FormItem>

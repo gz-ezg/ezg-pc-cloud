@@ -12,23 +12,14 @@
                   <Form ref="searchModel" :model="searchModel" :label-width="100">
                     <Row :gutter="16">
                       <Col span="8">
-                        <FormItem label="类型：">
-                          <Input size="small" type="text" v-model="searchModel.template_name" placeholder="" />
-                        </FormItem>
-                      </Col>
-                      <Col span="8">
                         <FormItem label="创建人：">
-                          <Input size="small" type="text" v-model="searchModel.template_name" placeholder="" />
-                        </FormItem>
-                      </Col>
-                      <Col span="8">
-                        <FormItem label="创建时间：">
-                          <Input size="small" type="text" v-model="searchModel.template_name" placeholder="" />
+                          <Input size="small" type="text" v-model="searchModel.createby_realname" placeholder="" />
                         </FormItem>
                       </Col>
                     </Row>
                     <FormItem>
                       <Button type="primary" @click="search">查询</Button>
+                      <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
                     </FormItem>
                   </Form>
                 </div>
@@ -55,6 +46,7 @@
             ></Table>
 
             <Page
+              :current="page"
               size="small"
               :total="pageTotal"
               :page-size="pageSize"
@@ -79,7 +71,7 @@
       @cancel="handleAdd"
       v-if="isAdd"
     />
-    <edit-template :row="currentRow" v-if="isEdit" @ok="isEdit = false" @cancel="isEdit = false" />
+    <edit-template :row="currentRow" v-if="isEdit" @ok="handleEditOk" @cancel="isEdit = false" />
     <show-template :row="currentRow" v-if="isShow" @ok="isShow = false" @cancel="isShow = false" />
   </div>
 </template>
@@ -103,7 +95,7 @@ export default {
       loading: false,
       modal1: false, //测试
       value1: 0,
-      searchModel: { template_name: '' },
+      searchModel: { createby_realname: '' },
       currentRow: null,
       tableHeader: [
         {
@@ -182,19 +174,31 @@ export default {
       }
       this.isEdit = !this.isEdit;
     },
+    handleEditOk() {
+      this.isEdit = !this.isEdit;
+      this.getTableData();
+    },
     handleShow() {
       if (!this.currentRow) {
         return this.$Message.info('请选择一行进行查看');
       }
       this.isShow = !this.isShow;
     },
+    reset() {
+      this.$refs['searchModel'].resetFields();
+      this.page = 1;
+      this.pageSize = 10;
+      this.searchModel = {};
+      this.getTableData();
+    },
     async getTableData() {
       this.loading = true;
-      let { template_name, page, pageSize } = this;
+      let { template_name, page, pageSize, searchModel } = this;
       let config = {
         template_name,
         page,
-        pageSize
+        pageSize,
+        createby_realname: searchModel.createby_realname
       };
       try {
         if (!typeMap) {
@@ -227,7 +231,10 @@ export default {
     selectRow(row) {
       this.currentRow = row;
     },
-    search() {},
+    search() {
+      this.page = 1;
+      this.getTableData();
+    },
     pageChange(page) {
       this.page = page;
       this.getTableData();

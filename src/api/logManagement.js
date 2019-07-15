@@ -45,11 +45,31 @@ export function updateLogStatus(data) {
     data
   })
 }
+
+export function queryWechatCompanyLog(params) {
+  return request({
+    url: '/system/log/queryWechatCompanyLog/list',
+    method: 'get',
+    params
+  })
+}
+export function getNewLogDetail() {
+  return request({
+    url: '/system/log/wechat/company/log/new/detail',
+    method: 'get'
+  })
+}
 export function logDetail(query) {
   return request({
     url: '/system/log/wechat/company/log/detail',
     method: 'get',
     params: query
+  })
+}
+export function getUnreadNum() {
+  return request({
+    url: '/system/log/wechat/company/log/unread/num',
+    method: 'get'
   })
 }
 
