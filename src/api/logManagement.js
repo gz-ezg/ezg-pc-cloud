@@ -38,6 +38,20 @@ export function listDepartTree() {
     method: 'get'
   })
 }
+export function updateLogStatus(data) {
+  return request({
+    url: '/system/log/wechat/company/log/status/update',
+    method: 'post',
+    data
+  })
+}
+export function logDetail(query) {
+  return request({
+    url: '/system/log/wechat/company/log/detail',
+    method: 'get',
+    params: query
+  })
+}
 
 export async function queryCodes(query, isMap) {
   let resp = await request({

@@ -158,7 +158,7 @@ export default {
             await createNotify({
               notify_type: type,
               notify_abstract,
-              notify_departs: JSON.stringify(notify_departs),
+              notify_departs: [...new Set(notify_departs)].join(','),
               notify_content: this.content
             });
             this.$emit('cancel');
@@ -171,9 +171,10 @@ export default {
       });
     },
     changeDepart(value) {
-      const { departName = '' } = this.formValidate;
-      this.formValidate.notify_departs.push(value.departId);
-      this.formValidate.departName = `${departName} ${departName ? ',' : ''} ${value.departName}`;
+      let { departName = '', notify_departs } = this.formValidate;
+
+      this.formValidate.notify_departs = notify_departs.concat(value.departId);
+      this.formValidate.departName = [...new Set(departName.split(',').concat(value.departName))].join(',').replace(/^,/, '');
     },
     clearDepardId() {
       this.formValidate.notify_departs = [];

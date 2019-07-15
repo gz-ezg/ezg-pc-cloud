@@ -127,16 +127,14 @@
     <set-finish-time :worderOrderDetail="gobalWorkorderDetail"></set-finish-time>
     <re-login v-if="gobalReloginShow"></re-login>
 
-    <Modal width="800px" footer-hide v-model="msgDetailPopus" title="查看消息" @on-ok="ok" @on-cancel="cancel">
-      <h2 style="text-align:center;">{{ msg.title }}</h2>
-      <div v-html="msg.detail"></div>
+    <Modal width="800px" v-model="msgDetailPopus" title="消息查看" @on-ok="ok" @on-cancel="cancel">
+      <h3 style="">消息类型：{{ msg.notify_type }}</h3>
+      <div class="msg-content" v-html="msg.msgcontent"></div>
+      <div slot="footer">
+        <div>创建人：{{ msg.realname }}</div>
+        <div>创建时间：{{ msg.senddate }}</div>
+      </div>
     </Modal>
-
-    <Drawer title="Basic Drawer" :closable="false" v-model="drawerPopus">
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-    </Drawer>
   </div>
 </template>
 <script>
@@ -165,7 +163,7 @@ import reLogin from '@views/woa-components/relogin/index.vue';
 // import customerDetail from '@views/woa-components/customerDetail2/index.vue'
 // import companyDetail from '@views/woa-components/companyDetail/CompanyDetail.vue'
 
-import { queryCodes } from '@/api/logManagement';
+import { queryCodes, logDetail } from '@/api/logManagement';
 import { Service } from '@/api/Service.js';
 let typeMap = {};
 let serviceApi = new Service('socket');
@@ -467,7 +465,6 @@ export default {
         let msg = JSON.parse(e.data) || {};
         this.$Notice.open({
           title: typeMap[msg.notifyType],
-          duration: 0,
           render: h => {
             return h('span', [
               `${msg.msgContent}`,
@@ -475,13 +472,16 @@ export default {
                 'a',
                 {
                   on: {
-                    click: e => {
-                      console.log('点击事件', e);
-                      this.msgDetailPopus = true;
+                    click: async e => {
+                      try {
+                        let resp = await logDetail({ id: msg.companyWechatLogId });
+                        this.msg = resp;
+                        this.msgDetailPopus = true;
+                      } catch (error) {}
                     }
                   }
                 },
-                '查看消息'
+                '...查看消息'
               )
             ]);
           },
@@ -562,6 +562,12 @@ export default {
   top: 50%;
   transform: translate(-50%, -50%);
   transition: all 3s;
+}
+.msg-content {
+  img {
+    height: 100%;
+    width: 100%;
+  }
 }
 .main {
   position: absolute;

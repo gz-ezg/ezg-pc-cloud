@@ -47,9 +47,20 @@ export default {
         this.$Message.error('未选择部门！');
         return false;
       }
+
+      let list = temp.filter(v1 => {
+        return !temp.some(v2 => {
+          return v2.ID == v1.parentdepartid;
+        });
+      });
+
       this.$emit('change-depart', {
-        departId: temp[0].ID,
-        departName: temp[0].departname
+        departId: list.map(v => {
+          return v.ID;
+        }),
+        departName: list.map(v => {
+          return v.departname;
+        })
       });
       this.$emit('close');
     },
