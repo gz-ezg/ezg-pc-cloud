@@ -1,24 +1,24 @@
  <template>
   <div>
-    <Modal v-model="show" fullscreen title="录入" width="800" @on-cancel="onCancel">
+    <Modal v-model="show" fullscreen title="查看" width="800" @on-cancel="onCancel">
       <Form :rules="ruleValidate" ref="formValidate" :model="formValidate" label-position="right" :label-width="60">
         <FormItem label="类型：">
-          <Select v-model="formValidate.type" style="width:200px">
+          <Select disabled v-model="formValidate.type" style="width:200px">
             <Option v-for="item in typeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
         </FormItem>
         <FormItem prop="departName" label="部门：">
           <Input size="small" readonly style="width:200px" v-model="formValidate.departName" />
-          <Button size="small" type="info" @click="openDepartModal">增加</Button>
-          <Button size="small" type="info" @click="clearDepardId">清空</Button>
         </FormItem>
         <FormItem prop="notify_abstract" label="摘要：">
-          <Input size="small" style="width:400px" type="text" v-model="formValidate.notify_abstract" />
+          <Input size="small" readonly style="width:400px" type="text" v-model="formValidate.notify_abstract" />
         </FormItem>
         <FormItem label="内容：">
           <div class="edit_container">
-            <quill-editor class="editer" v-model="content" :options="editorOption" ref="QuillEditor"> </quill-editor>
+            <!-- <quill-editor class="editer" v-model="content" :options="editorOption" ref="QuillEditor"> </quill-editor> -->
+              <div v-html="content"></div>
           </div>
+        
         </FormItem>
         <Upload
           :show-upload-list="false"
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { listDepartTree, createNotify, queryCodes } from '@/api/logManagement';
+import { listDepartTree, createNotify, updateNotify } from '@/api/logManagement';
 import { quillEditor } from 'vue-quill-editor';
 import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
@@ -72,6 +72,7 @@ export default {
     quillEditor,
     departTree
   },
+  props: ['row'],
   data() {
     return {
       show: true,
@@ -99,39 +100,29 @@ export default {
           }
         }
       },
-      treeData: [
+      treeData: [],
+      typeList: [
         {
-          title: 'parent 1',
-          expand: true,
-          children: [
-            {
-              title: 'parent 1-1',
-              expand: true,
-              children: [
-                {
-                  title: 'leaf 1-1-1'
-                },
-                {
-                  title: 'leaf 1-1-2'
-                }
-              ]
-            },
-            {
-              title: 'parent 1-2',
-              expand: true,
-              children: [
-                {
-                  title: 'leaf 1-2-1'
-                },
-                {
-                  title: 'leaf 1-2-1'
-                }
-              ]
-            }
-          ]
+          value: 'zxzc',
+          label: '最新政策'
+        },
+        {
+          value: 'gstz',
+          label: '公司通知'
+        },
+        {
+          value: 'xttz',
+          label: '系统通知'
+        },
+        {
+          value: 'fwtz',
+          label: '服务通知'
+        },
+        {
+          value: 'qt',
+          label: '其他'
         }
       ],
-      typeList: [],
       formValidate: {
         type: 'zxzc',
         departName: '',
@@ -155,10 +146,11 @@ export default {
         if (valid) {
           this.loading = true;
           try {
-            await createNotify({
+            await updateNotify({
+              id: this.row.id,
               notify_type: type,
               notify_abstract,
-              notify_departs: [...new Set(notify_departs)].join(','),
+              notify_departs: JSON.stringify(notify_departs),
               notify_content: this.content
             });
             this.$emit('cancel');
@@ -171,10 +163,9 @@ export default {
       });
     },
     changeDepart(value) {
-      let { departName = '', notify_departs } = this.formValidate;
-
-      this.formValidate.notify_departs = notify_departs.concat(value.departId);
-      this.formValidate.departName = [...new Set(departName.split(',').concat(value.departName))].join(',').replace(/^,/, '');
+      const { departName = '' } = this.formValidate;
+      this.formValidate.notify_departs.push(value.departId);
+      this.formValidate.departName = `${departName} ${departName ? '' : ','} ${value.departName}`;
     },
     clearDepardId() {
       this.formValidate.notify_departs = [];
@@ -205,23 +196,14 @@ export default {
         this.$Message.error('图片插入失败');
       }
     }
-    // async handleDepartTree() {
-    //   function tree(arr) {
-    //     return arr.map(v => ({
-    //       id: v.ID,
-    //       title: v.departname,
-    //       children: !!v.children ? tree(v.children) : []
-    //     }));
-    //   }
-    //   try {
-    //     this.treeData = tree(await listDepartTree());
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
   },
-  async created() {
-    this.typeList = await queryCodes('notify_template_type');
+  created() {
+    let { row } = this;
+    this.formValidate.type = row.notify_type;
+    this.formValidate.notify_abstract = row.notify_abstract;
+    this.formValidate.departName = [row.notify_depart_name];
+    this.formValidate.notify_departs = [row.notify_departs];
+    this.content = row.notify_content;
   }
 };
 </script>
@@ -229,9 +211,12 @@ export default {
 
 <style lang="less">
 .edit_container {
-  // padding: 40px;
-  // min-height: 350px;
   margin-bottom: 40px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
 }
 .editer {
   height: 300px;

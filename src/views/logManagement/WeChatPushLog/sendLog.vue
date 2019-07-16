@@ -113,8 +113,7 @@
                 <Row :gutter="16">
                     <Col span="12">
                         <FormItem label="电话号码：">
-                            <Input readonly size="small" type="text" v-model="currentRowData.mobile" placeholder="">
-                            </Input>
+                            <Input readonly size="small" type="text" v-model="currentRowData.mobile" placeholder=""/>
                         </FormItem>
                     </Col>
                 </Row>

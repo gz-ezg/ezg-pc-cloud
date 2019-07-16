@@ -12,23 +12,14 @@
                   <Form ref="searchModel" :model="searchModel" :label-width="100">
                     <Row :gutter="16">
                       <Col span="8">
-                        <FormItem label="类型：">
-                          <Input size="small" type="text" v-model="searchModel.template_name" placeholder="" />
-                        </FormItem>
-                      </Col>
-                      <Col span="8">
                         <FormItem label="创建人：">
-                          <Input size="small" type="text" v-model="searchModel.template_name" placeholder="" />
-                        </FormItem>
-                      </Col>
-                      <Col span="8">
-                        <FormItem label="创建时间：">
-                          <Input size="small" type="text" v-model="searchModel.template_name" placeholder="" />
+                          <Input size="small" type="text" v-model="searchModel.createby_realname" placeholder="" />
                         </FormItem>
                       </Col>
                     </Row>
                     <FormItem>
                       <Button type="primary" @click="search">查询</Button>
+                      <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
                     </FormItem>
                   </Form>
                 </div>
@@ -39,6 +30,7 @@
             <ButtonGroup>
               <Button type="primary" icon="search" @click="handleAdd">录入</Button>
               <Button type="primary" icon="search" @click="handleEdit">编辑</Button>
+              <Button type="primary" icon="search" @click="handleShow">查看</Button>
             </ButtonGroup>
           </Row>
 
@@ -54,6 +46,7 @@
             ></Table>
 
             <Page
+              :current="page"
               size="small"
               :total="pageTotal"
               :page-size="pageSize"
@@ -68,7 +61,6 @@
         </Card>
       </Col>
     </Row>
-
     <add-template
       @ok="
         () => {
@@ -79,8 +71,8 @@
       @cancel="handleAdd"
       v-if="isAdd"
     />
-
-    <edit-template v-if="isEdit" :id="currentId" @ok="isEdit = false" @cancel="isEdit = false" />
+    <edit-template :row="currentRow" v-if="isEdit" @ok="handleEditOk" @cancel="isEdit = false" />
+    <show-template :row="currentRow" v-if="isShow" @ok="isShow = false" @cancel="isShow = false" />
   </div>
 </template>
 
@@ -88,51 +80,56 @@
 import serviceApi from '../service';
 import AddTemplate from './menu/add.vue';
 import editTemplate from './menu/edit.vue';
+import showTemplate from './menu/show.vue';
+import { listNotify, sendNotify, queryCodes } from '@/api/logManagement';
 
+let typeMap = null;
 export default {
   components: {
     AddTemplate,
     editTemplate,
+    showTemplate
   },
   data() {
     return {
       loading: false,
-      searchModel: { template_name: '' },
-      currentId: '',
+      modal1: false, //测试
+      value1: 0,
+      searchModel: { createby_realname: '' },
+      currentRow: null,
       tableHeader: [
         {
-          title: '内容',
-          key: 'template_name',
-          minWidth: 250
-        },
-        {
           title: '类型',
-          key: 'createdate',
+          key: 'notify_type_name',
           minWidth: 180
         },
         {
           title: '通知部门',
           width: 180,
-          key: 'updatedate',
+          key: 'notify_depart_name',
           minWidth: 90
         },
         {
           title: '创建时间',
           width: 180,
-          key: 'updatedate',
+          key: 'createdate',
           minWidth: 90
         },
         {
           title: '创建人',
           width: 180,
-          key: 'updatedate',
+          key: 'createby_realname',
           minWidth: 90
         },
         {
           title: '发送状态',
           width: 180,
-          key: 'updatedate',
-          minWidth: 90
+          key: 'notify_status',
+          minWidth: 90,
+          render: (h, params) => {
+            let type = params.row.notify_status == 'sent' ? '已发送' : '待发送';
+            return h('div', type);
+          }
         },
         {
           title: '操作',
@@ -148,7 +145,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.deleteTemplate(params);
+                    this.sendMessage(params);
                   }
                 }
               },
@@ -172,47 +169,72 @@ export default {
       this.isAdd = !this.isAdd;
     },
     handleEdit() {
-      if (!this.currentId) {
+      if (!this.currentRow) {
         return this.$Message.info('请选择一行进行查看');
       }
       this.isEdit = !this.isEdit;
     },
+    handleEditOk() {
+      this.isEdit = !this.isEdit;
+      this.getTableData();
+    },
     handleShow() {
-      if (!this.currentId) {
+      if (!this.currentRow) {
         return this.$Message.info('请选择一行进行查看');
       }
       this.isShow = !this.isShow;
     },
+    reset() {
+      this.$refs['searchModel'].resetFields();
+      this.page = 1;
+      this.pageSize = 10;
+      this.searchModel = {};
+      this.getTableData();
+    },
     async getTableData() {
       this.loading = true;
-      let { template_name, page, pageSize } = this;
+      let { template_name, page, pageSize, searchModel } = this;
       let config = {
         template_name,
         page,
-        pageSize
+        pageSize,
+        createby_realname: searchModel.createby_realname
       };
-      const resp = await serviceApi.getList(config);
-      this.tableData = resp.rows;
-      this.pageTotal = resp.total;
-      this.loading = false;
+      try {
+        if (!typeMap) {
+          typeMap = await queryCodes('notify_template_type', true);
+        }
+        const resp = await listNotify(config);
+        this.tableData = resp.rows.map(v => {
+          v.notify_type_name = typeMap[v.notify_type];
+          return v;
+        });
+        this.pageTotal = resp.total;
+      } catch (error) {
+      } finally {
+        this.loading = false;
+      }
     },
 
-    async deleteTemplate({ row: { id = '' } }) {
+    async sendMessage({ row: { id = '' } }) {
       this.$Modal.confirm({
         title: '提示',
-        content: '是否删除该模板',
+        content: '是否发送通知',
         onOk: async () => {
-          await serviceApi.del({ id });
+          await sendNotify({ id });
           this.page = 1;
           this.getTableData();
         },
         onCancel: () => {}
       });
     },
-    selectRow({ id }) {
-      this.currentId = id;
+    selectRow(row) {
+      this.currentRow = row;
     },
-    search() {},
+    search() {
+      this.page = 1;
+      this.getTableData();
+    },
     pageChange(page) {
       this.page = page;
       this.getTableData();
@@ -222,7 +244,7 @@ export default {
       this.getTableData();
     }
   },
-  created() {
+  async created() {
     this.getTableData();
   }
 };

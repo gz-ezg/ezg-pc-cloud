@@ -31,6 +31,11 @@
                     <lock-screen></lock-screen> -->
           <!-- <message-tip v-model="mesCount"></message-tip> -->
           <!-- <theme-switch></theme-switch> -->
+          <div @click="handleMsgCenter" class="header-laba">
+            <Badge overflow-count="999" :count="unreadNum">
+              <img src="../images/laba.png" />
+            </Badge>
+          </div>
           <div style="height:100%">
             <Button
               size="small"
@@ -123,6 +128,73 @@
     <company-detail v-if="gobalCompanyDetailShow" :companyId="gobalCompanyId"></company-detail>
     <set-finish-time :worderOrderDetail="gobalWorkorderDetail"></set-finish-time>
     <re-login v-if="gobalReloginShow"></re-login>
+
+    <Modal width="800px" v-model="msgCenterPopus" footer-hide title="消息中心" @on-ok="ok" @on-cancel="cancel">
+      <Row>
+        <ButtonGroup>
+          <Button :type="msgCenterType == 'N' ? 'primary' : ''" @click="getMsgData('N')">
+            未读
+          </Button>
+          <Button :type="msgCenterType == 'Y' ? 'primary' : ''" @click="getMsgData('Y')">
+            已读
+          </Button>
+          <Button :loading="tableloading" @click="handleUpdateStatus" v-if="msgCenterType == 'N'" type="primary">
+            批量读取
+          </Button>
+        </ButtonGroup></Row
+      >
+      <Row style="margin-top: 10px;">
+        <Table
+          @on-row-dblclick="handleShowDetail"
+          @on-select-all="selectMore"
+          highlight-row
+          border
+          
+          @on-select="selectMore"
+          size="small"
+          @on-row-click="selectRow"
+          :loading="tableloading"
+          :columns="tableHeader"
+          :data="tableData"
+        ></Table>
+        <Page
+          size="small"
+          :current="tableConfig.page"
+          :total="pageTotal"
+          :page-size="tableConfig.pageSize"
+          show-total
+          show-elevator
+          @on-change="pageChange"
+          @on-page-size-change="pageSizeChange"
+          style="margin-top: 10px"
+        ></Page>
+      </Row>
+    </Modal>
+
+    <Modal width="800px" v-model="msgDetailPopus" title="消息查看">
+      <h3 style="text-align:center">{{ msg.notify_type }}</h3>
+      <div class="msg-content" v-html="msg.msgcontent"></div>
+      <div slot="footer">
+        <div>创建人：{{ msg.realname }}</div>
+        <div>创建时间：{{ msg.senddate }}</div>
+      </div>
+    </Modal>
+
+    <!-- 往期消息回顾 -->
+    <Modal width="780px" footer-hide v-model="msgHistoryPopus" title="往期消息回顾" @on-ok="ok" @on-cancel="cancel">
+      <div class="msg-history">
+        <Button @click="handleNextLog(msg.previous_id)" class="msg-back" shape="circle">
+          <Icon type="ios-arrow-back"></Icon>
+        </Button>
+        <Button @click="handleNextLog(msg.next_id)" class="msg-forward" shape="circle">
+          <Icon type="ios-arrow-forward"></Icon>
+        </Button>
+        <div class="msg-title">{{ msg.notify_type }}</div>
+        <div class="msg-content" v-html="msg.msgcontent"></div>
+        <div class="msg-footer">创建人：{{ msg.realname }}</div>
+        <div class="msg-footer">创建时间：{{ msg.senddate }}</div>
+      </div>
+    </Modal>
   </div>
 </template>
 <script>
@@ -150,7 +222,18 @@ import reLogin from '@views/woa-components/relogin/index.vue';
 // 以下两个文件由于过大，单独打包
 // import customerDetail from '@views/woa-components/customerDetail2/index.vue'
 // import companyDetail from '@views/woa-components/companyDetail/CompanyDetail.vue'
+
+import {
+  queryCodes,
+  queryWechatCompanyLog,
+  updateLogStatus,
+  logDetail,
+  getUnreadNum,
+  getNewLogDetail,
+  listNotify
+} from '@/api/logManagement';
 import { Service } from '@/api/Service.js';
+let typeMap = {};
 let serviceApi = new Service('socket');
 export default {
   components: {
@@ -177,6 +260,15 @@ export default {
   },
   data() {
     return {
+      msg: {
+        title: 'ceshi',
+        detail: '<img />'
+      },
+      selectData: [],
+      msgCenterType: 'Y',
+      unreadNum: 0,
+      msgHistoryPopus: false,
+      msgCenterPopus: false,
       websock: null,
       systemComplainStatus: true,
       globalRefresh: true,
@@ -188,13 +280,57 @@ export default {
         content: '',
         star: 5
       },
+      msgDetailPopus: false,
       file: [],
       // 是否弹出系统反馈框
       tip: false,
       shrink: false,
       userName: '',
       isFullScreen: false,
-      openedSubmenuArr: this.$store.state.app.openedSubmenuArr
+      openedSubmenuArr: this.$store.state.app.openedSubmenuArr,
+      tableHeader: [
+        {
+          type: 'selection',
+          width: 60,
+          align: 'center'
+        },
+        {
+          title: '模板名称',
+          width: 180,
+          key: 'msgtname',
+          minWidth: 90
+        },
+        {
+          title: '消息内容',
+          width: 180,
+          key: 'msg',
+          minWidth: 90
+        },
+        {
+          title: '手机',
+          key: 'mobile',
+          minWidth: 180
+        },
+        {
+          title: '发送时间',
+          width: 180,
+          key: 'sendDate',
+          minWidth: 90
+        },
+        {
+          title: '接受人',
+          width: 180,
+          key: 'wechatname',
+          minWidth: 90
+        }
+      ],
+      tableData: [],
+      tableConfig: {
+        page: 1,
+        pageSize: 5
+      },
+      pageTotal: '',
+      tableloading: false
     };
   },
   computed: {
@@ -204,6 +340,7 @@ export default {
     pageTagsList() {
       return this.$store.state.app.pageOpenedList; // 打开的页面的页面对象
     },
+
     currentPath() {
       return this.$store.state.app.currentPath; // 当前面包屑数组
     },
@@ -262,6 +399,58 @@ export default {
     }
   },
   methods: {
+    async getMsgData(type) {
+      if (type) {
+        this.tableConfig.page = 1;
+        this.msgCenterType = type;
+        this.tableConfig.read_flag = type;
+      }
+      try {
+        this.tableloading = true;
+        const resp = await queryWechatCompanyLog(this.tableConfig);
+        this.tableData = resp.rows;
+        this.pageTotal = resp.total;
+      } catch (error) {
+      } finally {
+        this.tableloading = false;
+      }
+    },
+    selectMore(value) {
+      console.log(value)
+      this.selectData = value;
+    },
+    handleShowDetail(e) {
+      // this.msg.senddate = e.createdate;
+      // this.msg.realname = e.createby_realname;
+      // this.msg.msgcontent = e.notify_content;
+      // this.msg.notify_type = typeMap[e.notify_type];
+      // this.msgDetailPopus = true;
+    },
+    async handleUpdateStatus() {
+      if (!this.selectData.length) {
+        return this.$Message.info('请选择消息');
+      }
+      try {
+        this.tableloading = true;
+        let config = this.selectData.map(v => v.id).join(',');
+        let resp = await updateLogStatus({ ids: config, read_flag: 'Y' });
+        this.tableConfig.page = 1;
+        this.getMsgData();
+      } catch (error) {
+      } finally {
+        this.tableloading = false;
+        this.selectData = [];
+      }
+    },
+
+    pageChange(e) {
+      this.tableConfig.page = e;
+      this.getMsgData();
+    },
+    handleMsgCenter() {
+      this.msgCenterPopus = true;
+      this.getMsgData('N');
+    },
     close_stystem_complain(e) {
       this.show_stystem_complain = false;
     },
@@ -333,6 +522,10 @@ export default {
     },
     handleSubmenuChange(val) {
       // console.log(val)
+    },
+    async handleNextLog(id) {
+      let resp = await logDetail({ id });
+      this.msg = resp;
     },
     beforePush(name) {
       // if (name === 'accesstest_index') {
@@ -430,7 +623,7 @@ export default {
     },
     async initWebSocket() {
       const { port, key } = await serviceApi.auth();
-      const wsuri = `ws://192.168.0.224:${port}/wechat/company/notify/${key}`;
+      const wsuri = `ws://192.168.0.220:${port}/wechat/company/notify/${key}`;
       this.websock = new WebSocket(wsuri);
       this.websock.onmessage = this.websocketonmessage;
       this.websock.onopen = this.websocketonopen;
@@ -439,43 +632,46 @@ export default {
     },
     websocketonmessage(e) {
       console.log(e);
-      let abc = e.data;
-      this.$Notice.open({
-        title: e.data,
-        duration: 0,
-        render: h => {
-          return h('span', [
-            `${e.data}`,
-            h(
-              'a',
-              {
-                on: {
-                  click: () => {
-                    console.log('点击事件');
+      try {
+        let msg = JSON.parse(e.data) || {};
+        this.$Notice.info({
+          title: typeMap[msg.notifyType],
+          render: h => {
+            return h('span', [
+              `${msg.msgContent}`,
+              h(
+                'a',
+                {
+                  on: {
+                    click: async e => {
+                      try {
+                        let resp = await logDetail({ id: msg.companyWechatLogId });
+                        this.msg = resp;
+                        this.msgDetailPopus = true;
+                      } catch (error) {}
+                    }
                   }
-                }
-              },
-              '查看消息'
-            )
-          ]);
-        },
-        name: e.data,
-        onClose(e) {
-          console.log(abc);
-        }
-      });
+                },
+                '...查看消息'
+              )
+            ]);
+          },
+          name: msg.companyWechatLogId,
+          onClose(e) {}
+        });
+      } catch (error) {}
     },
     websocketonopen() {
-      this.websocketsend('你真帅');
-      console.log(111);
+      this.websocketsend('打开链接');
     },
     websocketsend(Data) {
       //数据发送
       this.websock.send(Data);
     },
     websocketonerror() {
-      console.log('链接失败');
-      this.initWebSocket();
+      setTimeout(() => {
+        this.initWebSocket();
+      }, 3000);
     },
     websocketclose(e) {
       console.log('断开连接', e);
@@ -489,9 +685,6 @@ export default {
         this.$store.commit('addOpenSubmenu', pathArr[1].name);
       }
       this.checkTag(to.name);
-      // 页面重新初始化
-      // this.init()
-      // localStorage.currentPageName = to.name;
     },
     lang() {
       util.setCurrentPath(this, this.$route.name); // 在切换语言时用于刷新面包屑
@@ -522,9 +715,15 @@ export default {
     //     });
     // }
   },
-  created() {
+  async created() {
     // 显示打开的页面的列表
     this.$store.commit('setOpenedList');
+    typeMap = await queryCodes('notify_template_type', true);
+    this.unreadNum = await getUnreadNum();
+    if (this.unreadNum > 0) {
+      this.msg = await getNewLogDetail();
+      this.msgHistoryPopus = true;
+    }
   }
 };
 </script>
@@ -539,6 +738,43 @@ export default {
   top: 50%;
   transform: translate(-50%, -50%);
   transition: all 3s;
+}
+.msg-content {
+  position: relative;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+  img {
+    max-height: 800px;
+    max-width: 800px;
+  }
+}
+.msg-title {
+  text-align: center;
+  font-size: 18px;
+}
+.msg-footer {
+  text-align: right;
+  font-size: 14px;
+  padding-right: 20px;
+}
+.msg-back {
+  position: absolute;
+  top: 50%;
+  opacity: 0.3;
+  width: 40px;
+  height: 40px;
+  left: 20px;
+  z-index: 1;
+}
+.msg-forward {
+  position: absolute;
+  opacity: 0.3;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  right: 20px;
+  z-index: 1;
 }
 .main {
   position: absolute;
@@ -570,6 +806,15 @@ export default {
   }
   &-content-container {
     position: relative;
+  }
+  .header-laba {
+    position: absolute;
+    top: 20px;
+    left: 50px;
+    img {
+      width: 40px;
+      height: 40px;
+    }
   }
   &-header-con {
     box-sizing: border-box;
@@ -622,6 +867,18 @@ export default {
       }
     }
   }
+  .header-laba {
+    position: absolute;
+    top: 10px;
+    left: 60px;
+    cursor: pointer;
+
+    img {
+      height: 40px;
+      width: 40px;
+    }
+  }
+
   &-header {
     height: 60px;
     background: #fff;
@@ -737,6 +994,7 @@ export default {
 .taglist-moving-animation-move {
   transition: transform 0.3s;
 }
+
 .logo-con {
   padding: 8px;
   text-align: center;
