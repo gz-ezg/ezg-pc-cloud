@@ -51,9 +51,10 @@
             <Row :gutter="12">
                 <Col span="12">
                     <FormItem label="区域" prop="businessArea">
-                        <Select v-model="newMission.businessArea" type="text" transfer>
-                            <Option v-for="(item,index) in businessArea" :key="index" :value="item.typecode">{{item.typename}}</Option>
-                        </Select>
+                        <!--<Select v-model="newMission.businessArea" type="text" transfer>-->
+                            <!--<Option v-for="(item,index) in businessArea" :key="index" :value="item.typecode">{{item.typename}}</Option>-->
+                        <!--</Select>-->
+                        <Cascader :data="data" v-model="newMission.businessArea" change-on-select></Cascader>
                     </FormItem>
                 </Col>
                 <Col span="12">
@@ -176,6 +177,7 @@
                 text:"",
                 phraseShow:false,
                 currentId:null,
+                data:[],
                 newMission: {
                     taskName: "",
                     taskContent: "",
@@ -185,7 +187,7 @@
                     taskDesCode: "",
                     taskKind: "",
                     businessPlace:"shuiju",
-                    businessArea:"tianhe",
+                    businessArea:["guangzhouarea","tianhe"],
                     node:"Y",
                     taskStage: "",
                     followResult: "",
@@ -330,7 +332,7 @@
                     taskKind: _self.newMission.taskKind,
                     taskName: _self.newMission.taskName,
                     companyId: _self.newMission.companyId,
-                    taskArea:_self.newMission.businessArea,
+                    taskArea:_self.newMission.businessArea[1],
                     taskPlace:_self.newMission.businessPlace,
                     executorId: _self.newMission.executorId.join(","),
                     businessId:_self.newMission.businessId,
@@ -360,6 +362,7 @@
                 function success(res){
                     _self.createLoading = false
                     _self.openAddMission = false
+                    _self.newMission.businessArea = ["guangzhouarea","tianhe"]
                     _self.$bus.emit("UPDATE_BUSINESS_TASK_LIST_DEMO", res.data.data.id)
                     _self.$bus.emit("RESET_INNERTEXT",true)
                     _self.cancel_task()
@@ -564,9 +567,26 @@
 
                 this.$Get(url, config, success)
             },
+            get_area(){
+                let _self = this
+                let url = `api/system/queryForTreeTypeByGroupCode`
+
+                let config = {
+                    params: {
+                        typeGroupCode:"businessarea"
+                    }
+                }
+
+                function success(res){
+                    _self.data = res.data.data
+                }
+
+                this.$Get(url, config, success)
+            }
         },
         created() {
             let _self = this
+            this.get_area()
             this.get_data_center()
             this.get_all_user()
             this.$bus.on("SCHEDULE_CREATE_BUSINESS_TASK",(e)=>{

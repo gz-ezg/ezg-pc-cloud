@@ -998,8 +998,8 @@
                             // order:_self.order,
                             page:_self.customerPage,
                             pageSize: 10,
-                            // customer_name:_self.SearchValidate.customer_name,
-                            // customer_mobile_phone:_self.SearchValidate.customer_mobile_phone,
+                            name:_self.SearchValidateCustomer.customer_name,
+                            tel:_self.SearchValidateCustomer.customer_mobile_phone,
                             // customerStatus:temp_status,
                             // bUpdatedate:DateFormat(_self.SearchValidate.date[0]),
                             // eUpdatedate:DateFormat(_self.SearchValidate.date[1]),
@@ -1040,6 +1040,7 @@
                             people: [
                                 {
                                     customer_mobile_phone: _data.rows[i].TEL,
+                                    customer_tel: _data.rows[i].fixedPhone,
                                     customer_wechat: _data.rows[i].weixin,
                                     customerqq: _data.rows[i].qq,
                                 }
