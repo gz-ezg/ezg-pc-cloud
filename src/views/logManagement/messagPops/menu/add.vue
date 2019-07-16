@@ -68,6 +68,7 @@ const toolbarOptions = [
   ['clean'] // remove formatting button
 ];
 export default {
+  props: ['typeList'],
   components: {
     quillEditor,
     departTree
@@ -131,7 +132,6 @@ export default {
           ]
         }
       ],
-      typeList: [],
       formValidate: {
         type: 'zxzc',
         departName: '',
@@ -161,7 +161,7 @@ export default {
               notify_departs: [...new Set(notify_departs)].join(','),
               notify_content: this.content
             });
-            this.$emit('cancel');
+            this.$emit('ok');
           } catch (error) {
             console.log(error);
           } finally {
@@ -220,9 +220,7 @@ export default {
     //   }
     // }
   },
-  async created() {
-    this.typeList = await queryCodes('notify_template_type');
-  }
+  async created() {}
 };
 </script>
 
@@ -230,11 +228,11 @@ export default {
 <style lang="less">
 .edit_container {
   // padding: 40px;
-  // min-height: 350px;
+  min-height: 350px;
   margin-bottom: 40px;
 }
 .editer {
-  height: 300px;
+  height: 500px;
 }
 .submit_btn {
   text-align: center;

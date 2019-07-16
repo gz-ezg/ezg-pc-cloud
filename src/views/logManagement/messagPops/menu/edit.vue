@@ -72,7 +72,7 @@ export default {
     quillEditor,
     departTree
   },
-  props: ['row'],
+  props: ['row', 'typeList'],
   data() {
     return {
       show: true,
@@ -183,7 +183,6 @@ export default {
     this.formValidate.departName = row.notify_depart_name;
     this.formValidate.notify_departs = row.notify_departs.split(',');
     this.content = row.notify_content;
-    this.typeList = await queryCodes('notify_template_type');
   }
 };
 </script>
@@ -194,7 +193,7 @@ export default {
   margin-bottom: 40px;
 }
 .editer {
-  height: 300px;
+  height: 280px;
 }
 .submit_btn {
   text-align: center;
