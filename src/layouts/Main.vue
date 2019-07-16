@@ -168,7 +168,7 @@
         <Button v-if="msg.previous_id" @click="handleNextLog(msg.previous_id)" class="msg-back" shape="circle">
           <Icon type="ios-arrow-back"></Icon>
         </Button>
-        <Button v-if="msg.next_id" @click="handleNextLog(msg.next_id)" class="msg-forward" shape="circle">
+        <Button v-if="msg.next_id" @click="handleNextLog(msg.next_id, true)" class="msg-forward" shape="circle">
           <Icon type="ios-arrow-forward"></Icon>
         </Button>
         <Card style="margin:10px 20px;">
@@ -459,7 +459,7 @@ export default {
         this.msg = resp;
       } catch (error) {
       } finally {
-        this.unreadNum = this.unreadNum - 1;
+        this.unreadNum = await getUnreadNum();
         this.spinShow = false;
       }
     },
@@ -600,7 +600,7 @@ export default {
 
       setTimeout(async () => {
         this.unreadNum = await getUnreadNum();
-      }, 500);
+      }, 1000);
     },
     websocketonopen() {
       this.websocketsend('打开链接');
