@@ -161,6 +161,9 @@ export default {
       if (!this.currentRow) {
         return this.$Message.info('请选择一行进行查看');
       }
+      if (this.currentRow.notify_status == 'sent') {
+        return this.$Message.info('该消息不能编辑');
+      }
       this.isEdit = !this.isEdit;
     },
     handleEditOk() {

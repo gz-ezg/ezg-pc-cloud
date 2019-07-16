@@ -132,6 +132,8 @@ export default {
               notify_departs: [...new Set(notify_departs)].join(','),
               notify_content: this.content
             });
+
+            this.$emit('ok');
             this.$emit('cancel');
           } catch (error) {
             console.log(error);

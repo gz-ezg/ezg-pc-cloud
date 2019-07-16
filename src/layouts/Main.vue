@@ -31,7 +31,7 @@
                     <lock-screen></lock-screen> -->
           <!-- <message-tip v-model="mesCount"></message-tip> -->
           <!-- <theme-switch></theme-switch> -->
-          <div @click="msgHistoryPopus = true" class="header-laba">
+          <div @click="handleMsgHistoryPopus" class="header-laba">
             <Badge overflow-count="999" :count="unreadNum">
               <img src="../images/laba.png" />
             </Badge>
@@ -133,6 +133,7 @@
       @on-dlclick="notificationDetail"
       @cancel="msgCenterPopus = false"
       v-if="msgCenterPopus"
+      :parent="this"
     ></notification-center>
 
     <Modal
@@ -164,10 +165,10 @@
         <span>往期消息回顾</span>
       </p>
       <div class="msg-history">
-        <Button v-if="msg.previous_id" @click="handleNextLog(msg.previous_id)" class="msg-back" shape="circle">
+        <Button v-if="msg.next_id" @click="handleNextLog(msg.next_id)" class="msg-back" shape="circle">
           <Icon type="ios-arrow-back"></Icon>
         </Button>
-        <Button v-if="msg.next_id" @click="handleNextLog(msg.next_id)" class="msg-forward" shape="circle">
+        <Button v-if="msg.previous_id" @click="handleNextLog(msg.previous_id)" class="msg-forward" shape="circle">
           <Icon type="ios-arrow-forward"></Icon>
         </Button>
         <Card style="margin:10px 20px;">
@@ -349,6 +350,20 @@ export default {
     isOk(e) {
       this.handleMsgDetail(e);
     },
+    async handleMsgHistoryPopus() {
+      try {
+        let resp = await getNewLogDetail();
+
+        if (!resp) {
+          return (this.msgCenterPopus = true);
+        }
+        this.msg = resp;
+        this.msgHistoryPopus = true;
+        this.unreadNum = this.unreadNum - 1;
+      } catch (error) {
+      } finally {
+      }
+    },
     handleMsgCenter() {
       this.msgCenterPopus = true;
       this.msgHistoryPopus = false;
@@ -444,6 +459,7 @@ export default {
         this.msg = resp;
       } catch (error) {
       } finally {
+        this.unreadNum = await getUnreadNum();
         this.spinShow = false;
       }
     },
@@ -544,6 +560,7 @@ export default {
     async initWebSocket() {
       const { port, key } = await serviceApi.auth();
       const wsuri = `ws://cloud.zgcfo.com:${port}/wechat/company/notify/${key}`;
+      // const wsuri = `ws://192.168.0.220:${port}/wechat/company/notify/${key}`;
       this.websock = new WebSocket(wsuri);
       this.websock.onmessage = this.websocketonmessage;
       this.websock.onopen = this.websocketonopen;
@@ -552,7 +569,6 @@ export default {
     },
     async websocketonmessage(e) {
       try {
-        this.unreadNum = await getUnreadNum();
         let msg = JSON.parse(e.data) || {};
         this.$Notice.info({
           title: typeMap[msg.notifyType],
@@ -566,6 +582,7 @@ export default {
                     click: async e => {
                       try {
                         let resp = await logDetail({ id: msg.companyWechatLogId });
+                        this.unreadNum = await getUnreadNum();
                         this.msg = resp;
                         this.msgDetailPopus = true;
                       } catch (error) {}
@@ -580,6 +597,10 @@ export default {
           onClose(e) {}
         });
       } catch (error) {}
+
+      setTimeout(async () => {
+        this.unreadNum = await getUnreadNum();
+      }, 1000);
     },
     websocketonopen() {
       this.websocketsend('打开链接');
@@ -639,6 +660,7 @@ export default {
       this.unreadNum = await getUnreadNum();
       if (this.unreadNum > 0) {
         this.msg = await getNewLogDetail();
+        this.unreadNum = await getUnreadNum();
         this.msgHistoryPopus = true;
       }
     } catch (error) {}
