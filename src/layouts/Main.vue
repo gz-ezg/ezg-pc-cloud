@@ -559,8 +559,8 @@ export default {
     },
     async initWebSocket() {
       const { port, key } = await serviceApi.auth();
-      const wsuri = `ws://cloud.zgcfo.com:${port}/wechat/company/notify/${key}`;
-      // const wsuri = `ws://192.168.0.220:${port}/wechat/company/notify/${key}`;
+      // const wsuri = `ws://cloud.zgcfo.com:${port}/wechat/company/notify/${key}`;
+      const wsuri = `ws://192.168.0.220:${port}/wechat/company/notify/${key}`;
       this.websock = new WebSocket(wsuri);
       this.websock.onmessage = this.websocketonmessage;
       this.websock.onopen = this.websocketonopen;
@@ -660,7 +660,7 @@ export default {
       this.unreadNum = await getUnreadNum();
       if (this.unreadNum > 0) {
         this.msg = await getNewLogDetail();
-        this.unreadNum = this.unreadNum - 1;
+        this.unreadNum = await getUnreadNum();
         this.msgHistoryPopus = true;
       }
     } catch (error) {}
