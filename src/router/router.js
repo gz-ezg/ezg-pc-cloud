@@ -1028,6 +1028,15 @@ export const appRouter = [
         component: () =>
             import(/* webpackChunkName: "proxyAccounterManger" */ '@/views/accounterManager/proxyAccounterManger/index.vue')
       },
+      {
+        access: 11649,
+        meta: 11649,
+        path: 'serviceUpgradeSuggestion',
+        title: '服务升级意见管理',
+        name: 'serviceUpgradeSuggestion_index',
+        component: () =>
+            import(/* webpackChunkName: "serviceUpgradeSuggestion" */ '@/views/accounterManager/serviceUpgradeSuggestion/index.vue')
+      },
     ]
   },
   {

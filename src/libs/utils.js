@@ -83,7 +83,7 @@ export function DateFormatYearMonth(date){
     return [year, month].join('-');
     }
 }
-//YYYYMM
+//YYYYMM 本月的上个月
 export function DateFormatYearMonth2(date){
     if(date==null||date == ''){
         return ''

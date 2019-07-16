@@ -92,13 +92,27 @@
                     style="margin-top: 10px"
             ></Page>
         </Row>
+        <invoice></invoice>
+        <level></level>
+        <data-management></data-management>
     </Card>
 </template>
 
 <script>
     import Clipboard from 'clipboard'
+    import Invoice from '../serving/InvoiceManagement/index'
+    import {DateFormatYearMonth2} from "../../../../libs/utils";
+    import * as accountApi from './api'
+    import Level from './level/index'
+    import DataManagement from './DataManagement/index'
+
     export default {
         name: "serving",
+        components:{
+            Invoice,
+            Level,
+            DataManagement
+        },
         data(){
             return{
                 search_model: '',
@@ -106,6 +120,7 @@
                 pageTotal: 0,
                 page: 1,
                 pageSize: 10,
+                period:"",
                 currentIndex:-1,
                 currentIndexx:-2,
                 currentIndexxx:-3,
@@ -140,7 +155,7 @@
                 header: [
                     {
                         title: '公司名称',
-                        key: 'a',
+                        key: 'companyname',
                         minWidth: 250
                     },
                     {
@@ -211,15 +226,14 @@
                     },
                     {
                         title: '重要提醒',
-                        key: 'c',
+                        key: 'importantList',
                         minWidth: 180,
                         render: (h, params) => {
-                            if (params.row.c == "" || params.row.c == null) {
+                            if (params.row.importantList == "" || params.row.importantList == null) {
                                 return "";
                             } else {
-                                // console.log(params.row.companynames)
-                                let temp = params.row.c.split(",")
-                                if (temp[0].length > 13) {
+                                let temp = params.row.importantList
+                                if (temp[0].taskContent.length > 13) {
                                     return h("Poptip",{
                                         props: {
                                             trigger: "hover",
@@ -227,7 +241,7 @@
                                             placement: "bottom"
                                         }
                                     },[
-                                        h("span",temp[0].slice(0,13) + "..."),
+                                        h("span",temp[0].taskContent.slice(0,13) + "..."),
                                         h("Icon", {
                                             props: {
                                                 type: "arrow-down-b"
@@ -241,7 +255,7 @@
                                                     style: {
                                                         padding: "4px"
                                                     }
-                                                },"公司名：" + item)
+                                                },"公司名：" + item.taskContent)
                                             ]))
                                         ])
                                     ]);
@@ -252,7 +266,7 @@
                                                 title: "归属公司",
                                                 placement: "bottom"
                                             }},[
-                                            h("span", temp[0]),
+                                            h("span", temp[0].taskContent),
                                             h("Icon", {
                                                 props: {
                                                     type: "arrow-down-b"
@@ -266,7 +280,7 @@
                                                         style: {
                                                             padding: "4px"
                                                         }
-                                                    },"公司名：" + item)
+                                                    },"公司名：" + item.taskContent)
                                                 ]))
                                             ])
                                         ]
@@ -277,7 +291,7 @@
                     },
                     {
                         title: '实名账号',
-                        key: 'd',
+                        key: 'nationalnum',
                         minWidth: 150,
                         render: (h, params) => {
                             let _self = this;
@@ -286,12 +300,6 @@
                                     h(
                                         'span',
                                         {
-                                            props:{
-                                                dataClipboardText:params.row.d
-                                            },
-                                            // domProps: {
-                                            //     innerHTML: 'baz'
-                                            // },
                                             class: {
                                                   foo: true,
                                                   bar: false
@@ -300,16 +308,15 @@
                                                 display: 'inline-block',
                                                 lineHeight: '24px',
                                                 height: '24px',
-                                                width: '40px',
+                                                width: '60px',
                                                 cursor:'pointer'
                                             },
                                             on:{
                                                 click: function() {
-                                                    _self.copy(params.row, params.index);
+                                                    _self.copy(params.row.nationalnum);
                                                 }
                                             }
-                                        },
-                                        params.row.d
+                                        },params.row.nationalnum
                                     ),
                                     h(
                                         'Icon',
@@ -330,7 +337,7 @@
                                 return h('div', [
                                     h('Input', {
                                         props: {
-                                            value: this.data[params.index].d,
+                                            value: this.data[params.index].nationalnum,
                                             size: 'small'
                                         },
                                         style: {
@@ -339,7 +346,7 @@
                                         },
                                         on: {
                                             'on-blur': function(event) {
-                                                _self.data[params.index].d = event.target.value;
+                                                _self.data[params.index].nationalnum = event.target.value;
                                             }
                                         }
                                     }),
@@ -355,8 +362,7 @@
                                             },
                                             on: {
                                                 click: () => {
-                                                    console.log('123');
-                                                    // _self.update_unit_price(params.index);
+                                                    _self.update_nationalnum(params.index);
                                                 }
                                             }
                                         },
@@ -368,24 +374,33 @@
                     },
                     {
                         title: '密码',
-                        key: 'f',
+                        key: 'nationalpsw',
                         minWidth: 150,
                         render: (h, params) => {
                             let _self = this;
-                            console.log(params.index)
                             if (params.index != this.currentIndexx) {
                                 return h('div', [
                                     h(
                                         'span',
                                         {
+                                            class: {
+                                                foo: true,
+                                                bar: false
+                                            },
                                             style: {
                                                 display: 'inline-block',
                                                 lineHeight: '24px',
                                                 height: '24px',
-                                                width: '40px'
+                                                width: '60px',
+                                                cursor:'pointer'
+                                            },
+                                            on:{
+                                                click: function() {
+                                                    _self.copy(params.row.nationalpsw);
+                                                }
                                             }
                                         },
-                                        params.row.f
+                                        params.row.nationalpsw
                                     ),
                                     h(
                                         'Icon',
@@ -406,7 +421,7 @@
                                 return h('div', [
                                     h('Input', {
                                         props: {
-                                            value: this.data[params.index].f,
+                                            value: this.data[params.index].nationalpsw,
                                             size: 'small'
                                         },
                                         style: {
@@ -415,7 +430,7 @@
                                         },
                                         on: {
                                             'on-blur': function(event) {
-                                                _self.data[params.index].f = event.target.value;
+                                                _self.data[params.index].nationalpsw = event.target.value;
                                             }
                                         }
                                     }),
@@ -431,8 +446,7 @@
                                             },
                                             on: {
                                                 click: () => {
-                                                    console.log('123');
-                                                    // _self.update_unit_price(params.index);
+                                                    _self.update_nationalpsw(params.index);
                                                 }
                                             }
                                         },
@@ -444,7 +458,7 @@
                     },
                     {
                         title: '税号',
-                        key: 'g',
+                        key: 'tax_number',
                         minWidth: 150,
                         render: (h, params) => {
                             let _self = this;
@@ -453,14 +467,24 @@
                                     h(
                                         'span',
                                         {
+                                            class: {
+                                                foo: true,
+                                                bar: false
+                                            },
                                             style: {
                                                 display: 'inline-block',
                                                 lineHeight: '24px',
                                                 height: '24px',
-                                                width: '40px'
+                                                width: '60px',
+                                                cursor:'pointer'
+                                            },
+                                            on:{
+                                                click: function() {
+                                                    _self.copy(params.row.tax_number);
+                                                }
                                             }
                                         },
-                                        params.row.g
+                                        params.row.tax_number
                                     ),
                                     h(
                                         'Icon',
@@ -481,7 +505,7 @@
                                 return h('div', [
                                     h('Input', {
                                         props: {
-                                            value: this.data[params.index].g,
+                                            value: this.data[params.index].tax_number,
                                             size: 'small'
                                         },
                                         style: {
@@ -490,7 +514,7 @@
                                         },
                                         on: {
                                             'on-blur': function(event) {
-                                                _self.data[params.index].g = event.target.value;
+                                                _self.data[params.index].tax_number = event.target.value;
                                             }
                                         }
                                     }),
@@ -506,8 +530,7 @@
                                             },
                                             on: {
                                                 click: () => {
-                                                    console.log('123');
-                                                    // _self.update_unit_price(params.index);
+                                                    _self.update_taxnumber(params.index);
                                                 }
                                             }
                                         },
@@ -519,7 +542,7 @@
                     },
                     {
                         title: '个税密码',
-                        key: 'h',
+                        key: 'tax_password',
                         minWidth: 150,
                         render: (h, params) => {
                             let _self = this;
@@ -528,14 +551,24 @@
                                     h(
                                         'span',
                                         {
+                                            class: {
+                                                foo: true,
+                                                bar: false
+                                            },
                                             style: {
                                                 display: 'inline-block',
                                                 lineHeight: '24px',
                                                 height: '24px',
-                                                width: '40px'
+                                                width: '60px',
+                                                cursor:'pointer'
+                                            },
+                                            on:{
+                                                click: function() {
+                                                    _self.copy(params.row.tax_password);
+                                                }
                                             }
                                         },
-                                        params.row.h
+                                        params.row.tax_password
                                     ),
                                     h(
                                         'Icon',
@@ -556,7 +589,7 @@
                                 return h('div', [
                                     h('Input', {
                                         props: {
-                                            value: this.data[params.index].h,
+                                            value: this.data[params.index].tax_password,
                                             size: 'small'
                                         },
                                         style: {
@@ -565,7 +598,7 @@
                                         },
                                         on: {
                                             'on-blur': function(event) {
-                                                _self.data[params.index].h = event.target.value;
+                                                _self.data[params.index].tax_password = event.target.value;
                                             }
                                         }
                                     }),
@@ -581,8 +614,7 @@
                                             },
                                             on: {
                                                 click: () => {
-                                                    console.log('123');
-                                                    // _self.update_unit_price(params.index);
+                                                    _self.update_taxpassword(params.index);
                                                 }
                                             }
                                         },
@@ -594,17 +626,16 @@
                     },
                     {
                         title: '代账类型',
-                        key: 'i',
-                        minWidth: 120
+                        key: 'product',
+                        minWidth: 230
                     },
                     {
                         title: '社保',
-                        key: 'j',
+                        key: 'shebao',
                         minWidth: 150,
                         render: (h, params) => {
                             let _self = this;
-                            console.log(params.index)
-                            if (params.row.j == undefined) {
+                            if (params.row.shebao == undefined) {
                                 return h('div', [
                                     h(
                                         'span',
@@ -631,7 +662,7 @@
                                             },
                                             on: {
                                                 click: () => {
-                                                    this.completed(params.row.j);
+                                                    this.completed(params.row.shebao);
                                                 }
                                             }
                                         },
@@ -639,22 +670,21 @@
                                     )
                                 ]);
                             } else {
-                                return h('div', params.row.j.slice(0, 10));
+                                return h('div', params.row.shebao.slice(0, 10));
                             }
                             }
                     },
                     {
                         title: '做账备注',
-                        key: 'k',
+                        key: 'accountList',
                         minWidth: 120,
                         render: (h, params) => {
                             let _self = this
-                            if (params.row.k == "" || params.row.k == null) {
+                            if (params.row.accountList == "" || params.row.accountList == null) {
                                 return "";
                             } else {
-                                // console.log(params.row.companynames)
-                                let temp = params.row.k.split(",")
-                                if (temp[0].length > 13) {
+                                let temp = params.row.accountList
+                                if (temp[0].taskContent.length > 13) {
                                     return h("Poptip",{
                                         props: {
                                             trigger: "hover",
@@ -662,7 +692,7 @@
                                             placement: "bottom"
                                         }
                                     },[
-                                        h("span",temp[0].slice(0,13) + "..."),
+                                        h("span",temp[0].taskContent.slice(0,13) + "..."),
                                         h("Icon", {
                                             props: {
                                                 type: "arrow-down-b"
@@ -677,7 +707,7 @@
                                                         padding: "4px",
                                                     }
                                                 },[
-                                                    h("span",{},"公司名：" + item),
+                                                    h("span",{},"公司名：" + item.taskContent),
                                                     h("Button",
                                                         {
                                                             props: {
@@ -709,7 +739,7 @@
                                                 title: "归属公司",
                                                 placement: "bottom"
                                             }},[
-                                            h("span", temp[0]),
+                                            h("span", temp[0].taskContent),
                                             h("Icon", {
                                                 props: {
                                                     type: "arrow-down-b"
@@ -724,7 +754,7 @@
                                                             padding: "4px"
                                                         }
                                                     },[
-                                                        h("span",{},"公司名：" + item),
+                                                        h("span",{},"公司名：" + item.taskContent),
                                                         h("Button",
                                                             {
                                                                 props: {
@@ -754,11 +784,10 @@
                     },
                     {
                         title: '产品金额',
-                        key: 'l',
+                        key: 'unit_price',
                         minWidth: 180,
                         render: (h, params) => {
                             let _self = this;
-                            console.log(params.index)
                             if (params.index != this.l) {
                                 return h('div', [
                                     h(
@@ -771,7 +800,7 @@
                                                 width: '40px'
                                             }
                                         },
-                                        params.row.l
+                                        params.row.unit_price
                                     ),
                                     h(
                                         'Button',{
@@ -785,7 +814,7 @@
                                             },
                                             on: {
                                                 click: function() {
-                                                    _self.level(params.row, params.index);
+                                                    _self.level(params.row);
                                                 }
                                             }
                                         },"[升级]"),
@@ -808,7 +837,7 @@
                                 return h('div', [
                                     h('Input', {
                                         props: {
-                                            value: this.data[params.index].l,
+                                            value: this.data[params.index].unit_price,
                                             size: 'small'
                                         },
                                         style: {
@@ -817,7 +846,7 @@
                                         },
                                         on: {
                                             'on-blur': function(event) {
-                                                _self.data[params.index].l = event.target.value;
+                                                _self.data[params.index].unit_price = event.target.value;
                                             }
                                         }
                                     }),
@@ -834,7 +863,7 @@
                                             on: {
                                                 click: () => {
                                                     console.log('123');
-                                                    // _self.update_unit_price(params.index);
+                                                    _self.update_unit_price(params.index);
                                                 }
                                             }
                                         },
@@ -846,16 +875,16 @@
                     },
                     {
                         title: '未完事项',
-                        key: 'm',
+                        key: 'undoList',
                         minWidth: 120,
                         render: (h, params) => {
                             let _self = this
-                            if (params.row.m == "" || params.row.m == null) {
+                            if (params.row.undoList == "" || params.row.undoList == null) {
                                 return "";
                             } else {
                                 // console.log(params.row.companynames)
-                                let temp = params.row.m.split(",")
-                                if (temp[0].length > 13) {
+                                let temp = params.row.undoList
+                                if (temp[0].taskContent.length > 13) {
                                     return h("Poptip",{
                                         props: {
                                             trigger: "hover",
@@ -863,7 +892,7 @@
                                             placement: "bottom"
                                         }
                                     },[
-                                        h("span",temp[0].slice(0,13) + "..."),
+                                        h("span",temp[0].taskContent.slice(0,13) + "..."),
                                         h("Icon", {
                                             props: {
                                                 type: "arrow-down-b"
@@ -878,7 +907,7 @@
                                                             padding: "4px",
                                                         }
                                                     },[
-                                                        h("span",{},"公司名：" + item),
+                                                        h("span",{},"公司名：" + item.taskContent),
                                                         h("Button",
                                                             {
                                                                 props: {
@@ -910,7 +939,7 @@
                                                 title: "归属公司",
                                                 placement: "bottom"
                                             }},[
-                                            h("span", temp[0]),
+                                            h("span", temp[0].taskContent),
                                             h("Icon", {
                                                 props: {
                                                     type: "arrow-down-b"
@@ -925,7 +954,7 @@
                                                             padding: "4px"
                                                         }
                                                     },[
-                                                        h("span",{},"公司名：" + item),
+                                                        h("span",{},"公司名：" + item.taskContent),
                                                         h("Button",
                                                             {
                                                                 props: {
@@ -955,29 +984,29 @@
                     },
                     {
                         title: '剩余外勤',
-                        key: 'n',
+                        key: 'remainder',
                         minWidth: 120
                     },
-                    {
-                        title: '税种状态',
-                        key: 'o',
-                        minWidth: 120
-                    },
+                    // {
+                    //     title: '税种状态',
+                    //     key: 'tax_status',
+                    //     minWidth: 120
+                    // },
                     {
                         title: '市场',
-                        key: 'p',
+                        key: 'followbyrealname',
                         minWidth: 120
                     },
                     {
                         title: '服务会计',
-                        key: 'q',
+                        key: 'realname',
                         minWidth: 120
                     },
-                    {
-                        title: '本月税报结果',
-                        key: 'r',
-                        minWidth: 120
-                    },
+                    // {
+                    //     title: '本月税报结果',
+                    //     key: 'r',
+                    //     minWidth: 120
+                    // },
                     {
                         title: '操作',
                         key: 'action',
@@ -995,7 +1024,7 @@
                                         },
                                         on: {
                                             click: () => {
-                                                this.$store.commit('open_gobal_company_detail_modal', params.row.company_id);
+                                                this.invoice(params.row);
                                             }
                                         }
                                     },
@@ -1025,11 +1054,7 @@
                                         },
                                         on: {
                                             click: () => {
-                                                if (params.row.batchBookId != null) {
-                                                    Bus.$emit('open_yichang_detail', params.row.batchBookId);
-                                                } else {
-                                                    this.$Message.warning('未绑定账本');
-                                                }
+                                                this.data_management(params.row)
                                             }
                                         }
                                     },
@@ -1038,251 +1063,6 @@
                             ]);
                         }
                     },
-                    // {
-                    //     title: '单价',
-                    //     key: 'unit_price',
-                    //     minWidth: 160,
-                    //     render: (h, params) => {
-                    //         let _self = this;
-                    //         if (params.index != this.currentIndex) {
-                    //             return h('div', [
-                    //                 h(
-                    //                     'span',
-                    //                     {
-                    //                         style: {
-                    //                             display: 'inline-block',
-                    //                             lineHeight: '24px',
-                    //                             height: '24px',
-                    //                             width: '40px'
-                    //                         }
-                    //                     },
-                    //                     params.row.unit_price
-                    //                 ),
-                    //                 h(
-                    //                     'Button',
-                    //                     {
-                    //                         props: {
-                    //                             type: 'text',
-                    //                             size: 'small'
-                    //                         },
-                    //                         on: {
-                    //                             click: function() {
-                    //                                 _self.handle_edit_unit_price(params.row, params.index);
-                    //                             }
-                    //                         }
-                    //                     },
-                    //                     '修改'
-                    //                 )
-                    //             ]);
-                    //         } else {
-                    //             return h('div', [
-                    //                 h('Input', {
-                    //                     props: {
-                    //                         value: this.data[params.index].unit_price,
-                    //                         size: 'small'
-                    //                     },
-                    //                     style: {
-                    //                         display: 'inline-block',
-                    //                         width: '60px'
-                    //                     },
-                    //                     on: {
-                    //                         'on-blur': function(event) {
-                    //                             _self.data[params.index].unit_price = event.target.value;
-                    //                         }
-                    //                     }
-                    //                 }),
-                    //                 h(
-                    //                     'Button',
-                    //                     {
-                    //                         props: {
-                    //                             type: 'info',
-                    //                             size: 'small'
-                    //                         },
-                    //                         style: {
-                    //                             display: 'inline-block'
-                    //                         },
-                    //                         on: {
-                    //                             click: () => {
-                    //                                 console.log('123');
-                    //                                 _self.update_unit_price(params.index);
-                    //                             }
-                    //                         }
-                    //                     },
-                    //                     '保存'
-                    //                 )
-                    //             ]);
-                    //         }
-                    //     }
-                    // },
-                    // {
-                    //     title: '备注',
-                    //     key: 'memo',
-                    //     minWidth: 200,
-                    //     render: (h, params) => {
-                    //         return h('div', {
-                    //             domProps: {
-                    //                 innerHTML: params.row.memo
-                    //             }
-                    //         });
-                    //     }
-                    //     // render:(h,params) => {
-                    //     //     if(params.row.memo == ''||params.row.memo == null){
-                    //     //         return ''
-                    //     //     }else if(params.row.memo.length>12){
-                    //     //         return h('Poptip',{
-                    //     //             props:{
-                    //     //                 trigger:'hover',
-                    //     //                 placement:'bottom'
-                    //     //             }
-                    //     //         },[
-                    //     //             h('span',params.row.memo.slice(0,12)+'...'),
-                    //     //             h('Icon', {
-                    //     //                 props: {
-                    //     //                     type: 'arrow-down-b',
-                    //     //                 }
-                    //     //             }),
-                    //     //             h('div',{
-                    //     //                 slot:'content',
-                    //
-                    //     //             },[
-                    //     //                 h('span',params.row.memo)
-                    //     //             ])
-                    //     //         ])
-                    //     //     }else{
-                    //     //         return h('span',params.row.memo)
-                    //     //     }
-                    //     // }
-                    // },
-                    // {
-                    //     title: '报税',
-                    //     key: 'baoshui',
-                    //     width: 120,
-                    //     align: 'center',
-                    //     render: (h, params) => {
-                    //         let reg = /^[-+]?\d*$/;
-                    //         if (params.row.baoshui.confirm_date == undefined) {
-                    //             return h('div', [
-                    //                 h(
-                    //                     'Button',
-                    //                     {
-                    //                         props: {
-                    //                             type: 'text',
-                    //                             size: 'small'
-                    //                         },
-                    //                         on: {
-                    //                             click: () => {
-                    //                                 this.zlwc(params.row.baoshui);
-                    //                             }
-                    //                         }
-                    //                     },
-                    //                     '[ 完成 ]'
-                    //                 )
-                    //             ]);
-                    //         } else {
-                    //             return h('div', params.row.baoshui.confirm_date.slice(0, 10));
-                    //         }
-                    //     }
-                    // },
-                    // {
-                    //     title: '做账',
-                    //     key: 'zuozhang',
-                    //     align: 'center',
-                    //     width: 120,
-                    //     render: (h, params) => {
-                    //         let reg = /^[-+]?\d*$/;
-                    //         if (params.row.zuozhang.confirm_date == undefined) {
-                    //             return h('div', [
-                    //                 h(
-                    //                     'Button',
-                    //                     {
-                    //                         props: {
-                    //                             type: 'text',
-                    //                             size: 'small'
-                    //                         },
-                    //                         on: {
-                    //                             click: () => {
-                    //                                 this.zlwc(params.row.zuozhang);
-                    //                             }
-                    //                         }
-                    //                     },
-                    //                     '[ 完成 ]'
-                    //                 )
-                    //             ]);
-                    //         } else {
-                    //             return h('div', params.row.zuozhang.confirm_date.slice(0, 10));
-                    //         }
-                    //     }
-                    // },
-                    // {
-                    //     title: '客户跟进',
-                    //     key: 'note_kj_flag',
-                    //     minWidth: 120
-                    // },
-                    // {
-                    //     title: '警戒值',
-                    //     key: 'accounter_security_line',
-                    //     minWidth: 120
-                    // },
-                    // {
-                    //     title: '账务等级',
-                    //     key: 'accountgrade',
-                    //     minWidth: 120
-                    // },
-                    // {
-                    //     title: '累计外勤',
-                    //     key: 'dljz_legwork',
-                    //     minWidth: 100
-                    // },
-                    // {
-                    //     title: '实名账号',
-                    //     key: 'has_account',
-                    //     minWidth: 120
-                    // },
-                    // {
-                    //     title: '操作',
-                    //     key: 'action',
-                    //     fixed: 'right',
-                    //     width: 200,
-                    //     align: 'center',
-                    //     render: (h, params) => {
-                    //         return h('div', [
-                    //             h(
-                    //                 'Button',
-                    //                 {
-                    //                     props: {
-                    //                         type: 'text',
-                    //                         size: 'small'
-                    //                     },
-                    //                     on: {
-                    //                         click: () => {
-                    //                             this.$store.commit('open_gobal_company_detail_modal', params.row.company_id);
-                    //                         }
-                    //                     }
-                    //                 },
-                    //                 '[查看公司]'
-                    //             ),
-                    //             h(
-                    //                 'Button',
-                    //                 {
-                    //                     props: {
-                    //                         type: 'text',
-                    //                         size: 'small'
-                    //                     },
-                    //                     on: {
-                    //                         click: () => {
-                    //                             if (params.row.batchBookId != null) {
-                    //                                 Bus.$emit('open_yichang_detail', params.row.batchBookId);
-                    //                             } else {
-                    //                                 this.$Message.warning('未绑定账本');
-                    //                             }
-                    //                         }
-                    //                     }
-                    //                 },
-                    //                 '[查看异常]'
-                    //             )
-                    //         ]);
-                    //     }
-                    // }
                 ]
             }
         },
@@ -1293,14 +1073,26 @@
             pageChange(a) {
                 let _self = this;
                 _self.page = a;
+                _self.get_data()
             },
 
             pageSizeChange(a) {
                 let _self = this;
                 _self.pageSize = a;
+                _self.get_data()
+            },
+            invoice(e){
+                this.$bus.emit("OPEN_INVOICE_PAGE",e)
+            },
+            level(e){
+                this.$bus.emit("OPEN_LEVEL_PAGE",e)
+            },
+            data_management(e){
+                this.$bus.emit("OPEN_DATA_MANAGEMENT",e)
             },
             Search() {
                 this.page = 1;
+                this.get_data()
             },
             handleReset() {
                 this.SearchValidate.CompanyName = '';
@@ -1327,22 +1119,25 @@
             handle_edit_unit_pricel(row,index){
                 this.l = index;
             },
-            copy(){
-                let clipboard = new Clipboard('.foo')
+            copy(prx){
+                let clipboard = new Clipboard('.foo',{
+                    text:()=>{
+                        return prx
+                    }
+                })
                 console.log(clipboard)
                 clipboard.on('success', e=> {
                     this.$Message.success("复制成功")
+                    clipboard.destroy()
                 });
                 clipboard.on('error', e=> {
                     this.$Message.error("该网页不允许复制")
+                    clipboard.destroy()
                 });
 
             },
             completed(){
                 alert("完成")
-            },
-            level(){
-                alert("升级")
             },
             add_important_reminder(){
                 alert("新增重要提醒")
@@ -1371,6 +1166,135 @@
             service_paused(){
                 alert("服务暂停")
             },
+            update_nationalnum(index){
+                let _self = this;
+                _self.loading = true;
+                let url = `api/order/cycle/service/dljz/updateTaxmanagement`;
+                let config = {
+                    companyId:_self.data[index].company_id,
+                    type:"nationalnum",
+                    text:_self.data[index].nationalnum
+                }
+                function success(res){
+                    _self.currentIndex=-1
+                    _self.get_data()
+                }
+
+                function fail(err){
+
+                }
+                this.$Post(url, config, success, fail)
+            },
+            update_nationalpsw(index){
+                let _self = this;
+                _self.loading = true;
+                let url = `api/order/cycle/service/dljz/updateTaxmanagement`;
+                let config = {
+                    companyId:_self.data[index].company_id,
+                    type:"nationalpsw",
+                    text:_self.data[index].nationalpsw
+                }
+                function success(res){
+                    _self.currentIndexx=-1
+                    _self.get_data()
+                }
+
+                function fail(err){
+
+                }
+                this.$Post(url, config, success, fail)
+                },
+            update_taxnumber(index){
+                let _self = this;
+                _self.loading = true;
+                let url = `api/order/cycle/service/dljz/updateTaxmanagement`;
+                let config = {
+                    companyId:_self.data[index].company_id,
+                    type:"taxNumber",
+                    text:_self.data[index].tax_number
+                }
+                function success(res){
+                    _self.currentIndexxx=-1
+                    _self.get_data()
+                }
+
+                function fail(err){
+
+                }
+                this.$Post(url, config, success, fail)
+                },
+            update_taxpassword(index){
+                let _self = this;
+                _self.loading = true;
+                let url = `api/order/cycle/service/dljz/updateTaxmanagement`;
+                let config = {
+                    companyId:_self.data[index].company_id,
+                    type:"taxPassword",
+                    text:_self.data[index].tax_password
+                }
+                function success(res){
+                    _self.currentIndexxxx=-1
+                    _self.get_data()
+                }
+
+                function fail(err){
+
+                }
+                this.$Post(url, config, success, fail)
+                },
+            async update_unit_price(index) {
+                let config = {
+                    workOrderId: this.data[index].cycle_work_order_id,
+                    unitprice: this.data[index].unit_price
+                };
+
+                try {
+                    let { status, data } = await accountApi.workOrderCycleUnitPriceUpdate(config);
+                    if (status) {
+                        (this.l = -5), this.get_data();
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            },
+            get_data(){
+                let _self = this;
+                _self.loading = true;
+                let url = `api/order/cycle/service/dljz/cycleMothList`;
+                let config = {
+                    params: {
+                        page: _self.page,
+                        pageSize: _self.pageSize,
+                        period: _self.period,
+                        sortField: 'updatedate',
+                        companyname: _self.SearchValidate.CompanyName,
+                        realname: _self.SearchValidate.server_realname,
+                        followbyrealname: _self.SearchValidate.followby_realname,
+                        begin_end_period: _self.SearchValidate.begin_end_period,
+                        end_end_period: _self.SearchValidate.end_end_period,
+                        note_kj_flag: _self.SearchValidate.note_kj_flag,
+                        hasEAccount: _self.SearchValidate.etaxStatus == 1 ? 1 : '',
+                        hasEAccountAndWrong: _self.SearchValidate.etaxStatus == 2 ? 1 : '',
+                        hasNotEAccount: _self.SearchValidate.etaxStatus == 3 ? 1 : ''
+                    }
+                }
+                    function success(res){
+                        _self.data = res.data.data.rows
+                        _self.pageTotal = res.data.data.total
+                        _self.loading = false
+                    }
+
+                function fail(err){
+
+                }
+                this.$Get(url, config, success, fail)
+            }
+        },
+        created() {
+            let _self = this
+            let date = new Date()
+            _self.period = DateFormatYearMonth2(date)
+            _self.get_data()
         }
     }
 </script>

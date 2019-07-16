@@ -18,10 +18,10 @@
 </template>
 
 <script>
-    import Notbegin from "./components/notbegin"
-    import Serving from "./components/serving"
-    import Stop from "./components/stop"
-    import All from "./components/all"
+    import Notbegin from "./notbegin/notbegin"
+    import Serving from "./serving/serving"
+    import Stop from "./stop/stop"
+    import All from "./all/all"
     export default {
         name: "index",
         components:{

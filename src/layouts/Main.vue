@@ -498,7 +498,7 @@ export default {
     }
   },
   mounted() {
-    this.initWebSocket();
+    // this.initWebSocket();
 
     // setInterval(() => {
     //   this.websocketsend('定时任务');

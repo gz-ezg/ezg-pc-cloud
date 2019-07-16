@@ -51,9 +51,10 @@
             <Row :gutter="12">
                 <Col span="12">
                     <FormItem label="区域" prop="businessArea">
-                        <Select v-model="newMission.businessArea" type="text" transfer>
-                            <Option v-for="(item,index) in businessArea" :key="index" :value="item.typecode">{{item.typename}}</Option>
-                        </Select>
+                        <!--<Select v-model="newMission.businessArea" type="text" transfer>-->
+                            <!--<Option v-for="(item,index) in businessArea" :key="index" :value="item.typecode">{{item.typename}}</Option>-->
+                        <!--</Select>-->
+                        <Cascader :data="provinceData" change-on-select v-model="newMission.businessArea"></Cascader>
                     </FormItem>
                 </Col>
                 <Col span="12">
@@ -176,6 +177,78 @@
                 text:"",
                 phraseShow:false,
                 currentId:null,
+                provinceData:[{
+                    value: 'beijing',
+                    label: '北京',
+                    children: [
+                        {
+                            value: 'gugong',
+                            label: '故宫'
+                        },
+                        {
+                            value: 'tiantan',
+                            label: '天坛'
+                        },
+                        {
+                            value: 'wangfujing',
+                            label: '王府井'
+                        }
+                    ]
+                },{
+                        value: 'guangzhou',
+                        label: '广州',
+                        children: [
+                            {
+                                value: 'tianhe',
+                                label: '天河'
+                            },
+                            {
+                                value: 'huadu',
+                                label: '花都'
+                            },
+                            {
+                                value: 'baiyun',
+                                label: '白云'
+                            },
+                            {
+                                value: 'haizhu',
+                                label: '海珠'
+                            },
+                            {
+                                value: 'yuexiu',
+                                label: '越秀'
+                            }
+                        ]
+                    },{
+                    value: 'jiangsu',
+                    label: '江苏',
+                    children: [
+                        {
+                            value: 'nanjing',
+                            label: '南京',
+                            children: [
+                                {
+                                    value: 'fuzimiao',
+                                    label: '夫子庙',
+                                }
+                            ]
+                        },
+                        {
+                            value: 'suzhou',
+                            label: '苏州',
+                            children: [
+                                {
+                                    value: 'zhuozhengyuan',
+                                    label: '拙政园',
+                                },
+                                {
+                                    value: 'shizilin',
+                                    label: '狮子林',
+                                }
+                            ]
+                        }
+                    ],
+                }],
                 newMission: {
                     taskName: "",
                     taskContent: "",
@@ -185,7 +258,7 @@
                     taskDesCode: "",
                     taskKind: "",
                     businessPlace:"shuiju",
-                    businessArea:"tianhe",
+                    businessArea:['beijing','gugong'],
                     node:"Y",
                     taskStage: "",
                     followResult: "",
@@ -330,7 +403,7 @@
                     taskKind: _self.newMission.taskKind,
                     taskName: _self.newMission.taskName,
                     companyId: _self.newMission.companyId,
-                    taskArea:_self.newMission.businessArea,
+                    taskArea:_self.newMission.businessArea[1],
                     taskPlace:_self.newMission.businessPlace,
                     executorId: _self.newMission.executorId.join(","),
                     businessId:_self.newMission.businessId,

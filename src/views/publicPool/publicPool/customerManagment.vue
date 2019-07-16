@@ -514,7 +514,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.phone(params.row.full_tel);
+                      this.phone(params.row.full_tel,params.row.companyid);
                       this.getLoginerMessage(params.row.full_tel);
                     }
                   }
@@ -818,8 +818,35 @@ export default {
     close_edit() {
       this.openEdit = false;
     },
-    phone(T) {
+    phone(T,e) {
       window.location.href = 'yhhl://call/num=' + T + '&custom_key=123456&';
+      this.uploadPhoneType(e)
+    },
+    uploadPhoneType(e) {
+      let _self = this;
+      let url = `api/customer/addCustomerContentNote`;
+      let date = new Date();
+      let config = {
+        companyId: e,
+        followUpType: 11,
+        content: '拨打电话，时间为:' + FULLDateFormat(date),
+        attIds: '',
+        customerId: e,
+        finishFlag: '',
+        notifyDate: '',
+        // notifyDate: "2018-10-24 13:00"
+        notify_ids: ''
+      };
+
+      function success(res) {
+        console.log(res);
+      }
+
+      function fail(err) {
+        _self.loading = false;
+      }
+
+      this.$Post(url, config, success, fail);
     },
     //  公海池领取
     receipt(id) {
