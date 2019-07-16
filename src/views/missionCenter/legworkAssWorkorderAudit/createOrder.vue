@@ -35,9 +35,10 @@
                 <Row :gutter="12">
                     <Col span="12">
                         <FormItem label="区域" prop="businessArea">
-                            <Select v-model="newMission.businessArea" type="text" transfer>
-                                <Option v-for="(item,index) in taskArea" :key="index" :value="item.typecode">{{item.typename}}</Option>
-                            </Select>
+                            <!--<Select v-model="newMission.businessArea" type="text" transfer>-->
+                                <!--<Option v-for="(item,index) in taskArea" :key="index" :value="item.typecode">{{item.typename}}</Option>-->
+                            <!--</Select>-->
+                            <Cascader :data="areaList" v-model="newMission.businessArea" change-on-select></Cascader>
                         </FormItem>
                     </Col>
                     <Col span="12">
@@ -97,7 +98,7 @@
             return{
                 newMission:{
                     businessPlace:"shuiju",
-                    businessArea:"tianhe",
+                    businessArea:["guangzhouarea","tianhe"],
                     userId:"",
                     checkMemo:""
                 },
@@ -109,6 +110,7 @@
                 createLoading:false,
                 backLoading:false,
                 data:[],
+                areaList:[],
                 taskArea:[],
                 taskPlace:[],
                 cycleTypeList:[{"typecode":"A","typename":"A类"},{"typecode":"B","typename":"B类"}],
@@ -118,6 +120,22 @@
             }
         },
         methods:{
+            get_area(){
+                let _self = this
+                let url = `api/system/queryForTreeTypeByGroupCode`
+
+                let config = {
+                    params: {
+                        typeGroupCode:"businessarea"
+                    }
+                }
+
+                function success(res){
+                    _self.areaList = res.data.data
+                }
+
+                this.$Get(url, config, success)
+            },
             update_task(){
                 let _self = this
                 _self.createLoading = true
@@ -132,12 +150,13 @@
                     excutorId:_self.newMission.userId,
                     excutorName:executorNameArray[0],
                     checkDate:FULLDateFormat(_self.data[0].expect_date),
-                    taskArea:_self.newMission.businessArea,
+                    taskArea:_self.newMission.businessArea[1],
                     taskPlace:_self.newMission.businessPlace
                 }
                 function success(res){
                     _self.$bus.emit("UPDATE_ORDER_LIST",true)
                     _self.$bus.emit("UPDATE_APPROVE_LIST",true)
+                    _self.newMission.businessArea = ["guangzhouarea","tianhe"]
                     _self.get_data(_self.data[0].id)
                     _self.createLoading = false
                     _self.openAddMission = false
@@ -260,9 +279,10 @@
             this.$bus.on("OPEN_LIST_EDIT", (e)=>{
                 this.openAddMission=true
                 this.get_data_center()
-                    this.get_data(e)
-                    this.get_all_user()
-                    this.get_user()
+                this.get_area()
+                this.get_data(e)
+                this.get_all_user()
+                this.get_user()
             })
         }
     }

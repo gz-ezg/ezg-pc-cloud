@@ -27,7 +27,7 @@
                                 <TabPane label="市场" name="1" v-if="unMarket.length!==0">
                                     <market v-if="showDetail" :data="unMarket"></market>
                                 </TabPane>
-                                <TabPane label="商事" name="2" v-if="unAccount.length!==0">
+                                <TabPane label="商事" name="2" v-if="unBusiness.length!==0">
                                     <business v-if="showDetail" :data="unBusiness"></business>
                                 </TabPane>
                                 <TabPane label="会计" name="3" v-if="unAccount.length!==0">
@@ -231,6 +231,11 @@
                         key: 'task_name',
                         minWidth: 280,
                     },
+                    {
+                        title: '类型',
+                        key: 'datatype',
+                        minWidth: 100,
+                    },
                 ],
                 // taskKind:[],
                 // taskKind_map:new Map(),
@@ -359,12 +364,15 @@
                     for (let i=0;i<res.data.data.length;i++){
                         if (res.data.data[i].datatype==1){
                             _self.account.push({CompanyName:res.data.data[i].CompanyName,serviceranks:res.data.data[i].serviceranks,task_name:res.data.data[i].task_name})
+                            _self.detail[i].datatype = "会计"
                         }
                         if (res.data.data[i].datatype==2){
                             _self.business.push({CompanyName:res.data.data[i].CompanyName,serviceranks:res.data.data[i].serviceranks,task_name:res.data.data[i].task_name})
+                            _self.detail[i].datatype = "商事"
                         }
                         if (res.data.data[i].datatype==3){
                             _self.market.push({CompanyName:res.data.data[i].CompanyName,serviceranks:res.data.data[i].serviceranks,task_name:res.data.data[i].task_name})
+                            _self.detail[i].datatype = "市场"
                         }
                     }
                     console.log(_self.market)

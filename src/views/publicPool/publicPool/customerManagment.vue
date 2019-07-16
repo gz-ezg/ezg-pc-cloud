@@ -280,7 +280,7 @@ import { DateFormat } from '../../../libs/utils';
 
 // import createCustomer from './components/create'
 import editCustomer from './edit/index';
-
+import {FULLDateFormat} from "../../../libs/utils";
 // import changeMarker from './op/change'
 // import changeLog from './op/changeLog'
 import clueLog from './op/clue';
@@ -514,7 +514,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.phone(params.row.full_tel);
+                      this.phone(params.row.full_tel,params.row.ID);
                       this.getLoginerMessage(params.row.full_tel);
                     }
                   }
@@ -818,8 +818,35 @@ export default {
     close_edit() {
       this.openEdit = false;
     },
-    phone(T) {
+    phone(T,i) {
       window.location.href = 'yhhl://call/num=' + T + '&custom_key=123456&';
+      this.uploadPhoneType(i);
+
+    },
+    uploadPhoneType(i) {
+      let _self = this;
+      let url = `api/customer/addCustomerContentNote`;
+      let date = new Date();
+      let config = {
+        followUpType: 11,
+        content: '拨打电话，时间为:' + FULLDateFormat(date),
+        attIds: '',
+        customerId: i,
+        finishFlag: '',
+        notifyDate: '',
+        // notifyDate: "2018-10-24 13:00"
+        notify_ids: ''
+      };
+
+      function success(res) {
+        console.log(res);
+      }
+
+      function fail(err) {
+        _self.loading = false;
+      }
+
+      this.$Post(url, config, success, fail);
     },
     //  公海池领取
     receipt(id) {
