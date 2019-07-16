@@ -3,17 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/layouts/Main.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/layouts/Main.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/libs/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/libs/utils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/components/all.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/components/notbegin.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/components/serving.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/components/stop.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/channelManagement/channelCustomer/channelCustomer_table.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/channelManagement/channelCustomer/channelCustomer_table.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/missionCenter/comSchedule/createSchedule.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/missionCenter/comSchedule/createSchedule.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/publicPool/publicPool/customerManagment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/publicPool/publicPool/customerManagment.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -32,17 +21,7 @@
     <favorites_list name="pubg" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/views/missionCenter/customerService/finishedDetail.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-75">
-              <caret line="284" column="58" lean-forward="true" selection-start-line="284" selection-start-column="58" selection-end-line="284" selection-end-column="58" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -54,7 +33,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>isCycle</find>
       <find>isCycleOne</find>
       <find>get_product_kind</find>
       <find>get_task_name</find>
@@ -81,9 +59,10 @@
       <find>Radio-group</find>
       <find>RadioGroup</find>
       <find>level</find>
-      <find>新</find>
       <find>get_data_center</find>
       <find>资料管理</find>
+      <find>渠道客户</find>
+      <find>新</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -164,7 +143,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -177,31 +155,11 @@
               <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="missionCenter" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="missionCenter" type="462c0819:PsiDirectoryNode" />
-              <item name="customerService" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -246,17 +204,17 @@
     <property name="ts.external.directory.path" value="E:\webstorm\WebStorm 2018.3.5\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\VueProject\pubg" />
+      <recent name="C:\VueProject\pubg\src\views\customerManagement\marketingManagement" />
+      <recent name="C:\VueProject\pubg\src\components" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\ezg\ezg-pc-cloud\src\views\accounterManager\proxyAccounterManger\serving\DataManagement" />
       <recent name="D:\ezg\ezg-pc-cloud\src\views\accounterManager\proxyAccounterManger\serving" />
       <recent name="D:\ezg\ezg-pc-cloud\src\views\accounterManager\proxyAccounterManger\stop" />
       <recent name="D:\ezg\ezg-pc-cloud\src\views\accounterManager\proxyAccounterManger\notbegin" />
       <recent name="D:\ezg\ezg-pc-cloud\src\views\accounterManager\proxyAccounterManger\all" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\VueProject\pubg" />
-      <recent name="C:\VueProject\pubg\src\views\customerManagement\marketingManagement" />
-      <recent name="C:\VueProject\pubg\src\components" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -383,6 +341,7 @@
       <workItem from="1562029883490" duration="6833000" />
       <workItem from="1563153140836" duration="28374000" />
       <workItem from="1563239808220" duration="26707000" />
+      <workItem from="1563283273885" duration="640000" />
     </task>
     <task id="LOCAL-00022" summary="修改启动失败的问题">
       <created>1555989851178</created>
@@ -731,7 +690,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1294670000" />
+    <option name="totallyTimeSpent" value="1296371000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -744,7 +703,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1376" height="784" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6918033" visible="true" weight="0.26276276" />
       <window_info id="Structure" order="1" weight="0.24960506" />
@@ -765,7 +723,7 @@
       <window_info anchor="bottom" id="消息" order="13" />
       <window_info anchor="bottom" id="调试" order="14" />
       <window_info anchor="bottom" id="TypeScript" order="15" />
-      <window_info anchor="bottom" id="Terminal" order="16" sideWeight="0.49924925" visible="true" weight="0.4244833" />
+      <window_info anchor="bottom" id="Terminal" order="16" sideWeight="0.49924925" visible="true" weight="0.41812402" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -884,21 +842,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/channelManagement/channelCustomer/channelCustomer.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="2" column="59" lean-forward="true" selection-start-line="2" selection-start-column="59" selection-end-line="2" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/channelManagement/channelCustomer/channelCustomer_table.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="1024" column="36" lean-forward="true" selection-start-line="1024" selection-start-column="36" selection-end-line="1024" selection-end-column="36" />
-          <folding>
-            <element signature="n#style#0;n#Icon#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#TabPane#1;n#Tabs#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#21914#27394#0" />
-          </folding>
+        <state relative-caret-position="52">
+          <caret line="1039" column="28" selection-start-line="1039" selection-start-column="28" selection-end-line="1039" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -1158,22 +1105,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/router/router.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="1188" column="34" selection-start-line="1188" selection-start-column="34" selection-end-line="1188" selection-end-column="34" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#21235#24060#0" />
-            <element signature="e#24064#24871#0" />
-            <element signature="e#24875#25944#0" />
-            <element signature="e#25948#27002#0" />
-            <element signature="e#27006#29970#0" />
-            <element signature="e#29974#29978#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/handoverResource/resoureList/components/all.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -1218,6 +1149,29 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-75">
           <caret line="284" column="58" lean-forward="true" selection-start-line="284" selection-start-column="58" selection-end-line="284" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/channelManagement/channelCustomer/channelCustomer.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="2" column="15" selection-start-line="2" selection-start-column="15" selection-end-line="2" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4">
+          <caret line="1013" column="18" lean-forward="true" selection-start-line="1013" selection-start-column="18" selection-end-line="1013" selection-end-column="18" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#21235#24060#0" />
+            <element signature="e#24064#24871#0" />
+            <element signature="e#24875#25944#0" />
+            <element signature="e#25948#27002#0" />
+            <element signature="e#27006#29970#0" />
+            <element signature="e#29974#29978#0" />
+          </folding>
         </state>
       </provider>
     </entry>
