@@ -165,10 +165,10 @@
         <span>往期消息回顾</span>
       </p>
       <div class="msg-history">
-        <Button v-if="msg.previous_id" @click="handleNextLog(msg.previous_id)" class="msg-back" shape="circle">
+        <Button v-if="msg.next_id" @click="handleNextLog(msg.next_id)" class="msg-back" shape="circle">
           <Icon type="ios-arrow-back"></Icon>
         </Button>
-        <Button v-if="msg.next_id" @click="handleNextLog(msg.next_id, true)" class="msg-forward" shape="circle">
+        <Button v-if="msg.previous_id" @click="handleNextLog(msg.previous_id)" class="msg-forward" shape="circle">
           <Icon type="ios-arrow-forward"></Icon>
         </Button>
         <Card style="margin:10px 20px;">
@@ -559,8 +559,8 @@ export default {
     },
     async initWebSocket() {
       const { port, key } = await serviceApi.auth();
-      // const wsuri = `ws://cloud.zgcfo.com:${port}/wechat/company/notify/${key}`;
-      const wsuri = `ws://192.168.0.220:${port}/wechat/company/notify/${key}`;
+      const wsuri = `ws://cloud.zgcfo.com:${port}/wechat/company/notify/${key}`;
+      // const wsuri = `ws://192.168.0.220:${port}/wechat/company/notify/${key}`;
       this.websock = new WebSocket(wsuri);
       this.websock.onmessage = this.websocketonmessage;
       this.websock.onopen = this.websocketonopen;
