@@ -550,8 +550,9 @@ export default {
       this.websock.onerror = this.websocketonerror;
       this.websock.onclose = this.websocketclose;
     },
-    websocketonmessage(e) {
+    async websocketonmessage(e) {
       try {
+        this.unreadNum = await getUnreadNum();
         let msg = JSON.parse(e.data) || {};
         this.$Notice.info({
           title: typeMap[msg.notifyType],
@@ -578,8 +579,6 @@ export default {
           name: msg.companyWechatLogId,
           onClose(e) {}
         });
-
-        this.unreadNum = await getUnreadNum();
       } catch (error) {}
     },
     websocketonopen() {
