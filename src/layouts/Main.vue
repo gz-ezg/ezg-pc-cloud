@@ -559,8 +559,8 @@ export default {
     },
     async initWebSocket() {
       const { port, key } = await serviceApi.auth();
-      // const wsuri = `ws://cloud.zgcfo.com:${port}/wechat/company/notify/${key}`;
-      const wsuri = `ws://192.168.0.220:${port}/wechat/company/notify/${key}`;
+      const wsuri = `ws://cloud.zgcfo.com:${port}/wechat/company/notify/${key}`;
+      // const wsuri = `ws://192.168.0.220:${port}/wechat/company/notify/${key}`;
       this.websock = new WebSocket(wsuri);
       this.websock.onmessage = this.websocketonmessage;
       this.websock.onopen = this.websocketonopen;
