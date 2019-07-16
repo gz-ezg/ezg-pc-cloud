@@ -45,9 +45,9 @@
 
 <script>
 import listManage from '../../utils/listManage';
-
-import { queryCodes, listPersonLog, updateLogStatus } from '@/api/logManagement';
+import { queryCodes, listPersonLog, getUnreadNum, updateLogStatus } from '@/api/logManagement';
 export default {
+  props: ['parent'],
   data() {
     return {
       show: true,
@@ -117,7 +117,10 @@ export default {
         this.list.loading = true;
         let config = this.selectData.map(v => v.id).join(',');
         let resp = await updateLogStatus({ ids: config, read_flag: 'Y' });
-        this.list.fetchList(1);
+        this.list.fetchList(1, { read_flag: 'N' });
+        setTimeout(async () => {
+          this.parent.unreadNum = await getUnreadNum();
+        }, 500);
       } catch (error) {
         console.log(error);
       } finally {
