@@ -26,7 +26,6 @@
               </Panel>
             </Collapse>
           </Row>
-          <com :parent="this" :search-conf="config"></com>
           <Row>
             <ButtonGroup>
               <Button type="primary" icon="search" @click="handleAdd">新增</Button>
@@ -83,14 +82,12 @@ import serviceApi from '../service';
 import AddTemplate from './menu/add.vue';
 import editTemplate from './menu/edit.vue';
 import showTemplate from './menu/show.vue';
-import com from './components/index.vue';
 
 export default {
   components: {
     AddTemplate,
     editTemplate,
     showTemplate,
-    com
   },
   data() {
     return {

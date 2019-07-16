@@ -3,100 +3,65 @@
     <Row>
       <Col>
         <Card>
-          <Row style="margin-bottom:10px">
-            <Collapse>
-              <Panel name="1">
-                <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
-                筛选
-                <div slot="content" @keydown.enter="search">
-                  <Form ref="searchModel" :model="searchModel" :label-width="100">
-                    <Row :gutter="16">
-                      <Col span="8">
-                        <FormItem label="创建人：">
-                          <Input size="small" type="text" v-model="searchModel.createby_realname" placeholder="" />
-                        </FormItem>
-                      </Col>
-                    </Row>
-                    <FormItem>
-                      <Button type="primary" @click="search">查询</Button>
-                      <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
-                    </FormItem>
-                  </Form>
-                </div>
-              </Panel>
-            </Collapse>
-          </Row>
+          <filtra @search="list.search($event)" @reset="list.reset()" :config="filtraConfig"></filtra>
           <Row>
             <ButtonGroup>
               <Button type="primary" icon="search" @click="handleAdd">录入</Button>
               <Button type="primary" icon="search" @click="handleEdit">编辑</Button>
-              <Button type="primary" icon="search" @click="handleShow">查看</Button>
+              <!-- <Button type="primary" icon="search" @click="handleShow">查看</Button> -->
             </ButtonGroup>
           </Row>
-
           <Row style="margin-top: 10px;">
             <Table
               highlight-row
               border
               size="small"
               @on-row-click="selectRow"
-              :loading="loading"
+              :loading="list.loading"
               :columns="tableHeader"
-              :data="tableData"
+              :data="list.data"
             ></Table>
 
             <Page
-              :current="page"
+              :current="list.page"
               size="small"
-              :total="pageTotal"
-              :page-size="pageSize"
+              :total="list.total"
+              :page-size="list.pageSize"
               show-total
               show-sizer
               show-elevator
-              @on-change="pageChange"
-              @on-page-size-change="pageSizeChange"
+              @on-change="list.handleSizeChange($event)"
+              @on-page-size-change="list.handlePageSizeChange($event)"
               style="margin-top: 10px"
             ></Page>
           </Row>
         </Card>
       </Col>
     </Row>
-    <add-template
-      @ok="
-        () => {
-          this.handleAdd();
-          this.getTableData();
-        }
-      "
-      @cancel="handleAdd"
-      v-if="isAdd"
-    />
-    <edit-template :row="currentRow" v-if="isEdit" @ok="handleEditOk" @cancel="isEdit = false" />
+    <add-template :type-list="dataDict" @ok="handleAddOk" @cancel="handleAdd" v-if="isAdd" />
+    <edit-template :type-list="dataDict" :row="currentRow" v-if="isEdit" @ok="handleEditOk" @cancel="isEdit = false" />
     <show-template :row="currentRow" v-if="isShow" @ok="isShow = false" @cancel="isShow = false" />
   </div>
 </template>
 
 <script>
-import serviceApi from '../service';
 import AddTemplate from './menu/add.vue';
 import editTemplate from './menu/edit.vue';
 import showTemplate from './menu/show.vue';
+import filtra from '@/components/filtra';
 import { listNotify, sendNotify, queryCodes } from '@/api/logManagement';
-
-let typeMap = null;
+import listManage from '../../../utils/listManage';
 export default {
   components: {
     AddTemplate,
     editTemplate,
-    showTemplate
+    showTemplate,
+    filtra
   },
   data() {
     return {
-      loading: false,
-      modal1: false, //测试
-      value1: 0,
-      searchModel: { createby_realname: '' },
       currentRow: null,
+      list: new listManage({ pageSize: 10 }, listNotify, this.dataHandle),
       tableHeader: [
         {
           title: '类型',
@@ -136,35 +101,59 @@ export default {
           fixed: 'right',
           width: 90,
           render: (h, params) => {
-            return h(
-              'Button',
-              {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                on: {
-                  click: () => {
-                    this.sendMessage(params);
-                  }
-                }
-              },
-              '发送'
-            );
+            let isSent = params.row.notify_status == 'sent';
+            return isSent
+              ? h(
+                  'Button',
+                  {
+                    props: {
+                      size: 'small'
+                    },
+                    on: {
+                      click: () => {
+                        this.currentRow = params.row;
+                        this.handleShow();
+                      }
+                    }
+                  },
+                  '查看'
+                )
+              : h(
+                  'Button',
+                  {
+                    props: {
+                      type: 'primary',
+                      size: 'small'
+                    },
+                    on: {
+                      click: () => {
+                        this.sendMessage(params);
+                      }
+                    }
+                  },
+                  '发送'
+                );
           }
         }
       ],
-      tableData: [],
-      page: 1,
-      pageTotal: '',
-      pageSize: 10,
-      isAdd: false,
+      filtraConfig: [
+        { type: 'input', key: 'createby_realname', label: '创建人' },
+        { type: 'input', key: 'updateby_realname', label: '修改人' },
+        { type: 'date', key: 'createdate', label: '创建时间' }
+      ],
+      dataDict: [],
+      isAtimed: false,
       isEdit: false,
-      isShow: false
+      isShow: false,
+      isAdd: false
     };
   },
 
   methods: {
+    handleAddOk() {
+      this.handleAdd();
+      this.list.reset();
+    },
     handleAdd() {
       this.isAdd = !this.isAdd;
     },
@@ -176,76 +165,40 @@ export default {
     },
     handleEditOk() {
       this.isEdit = !this.isEdit;
-      this.getTableData();
+      this.list.reset();
     },
     handleShow() {
-      if (!this.currentRow) {
-        return this.$Message.info('请选择一行进行查看');
-      }
       this.isShow = !this.isShow;
     },
-    reset() {
-      this.$refs['searchModel'].resetFields();
-      this.page = 1;
-      this.pageSize = 10;
-      this.searchModel = {};
-      this.getTableData();
+    dataHandle(data) {
+      return data.map(v => {
+        v.notify_type_name = this.MAP[v.notify_type];
+        return v;
+      });
     },
-    async getTableData() {
-      this.loading = true;
-      let { template_name, page, pageSize, searchModel } = this;
-      let config = {
-        template_name,
-        page,
-        pageSize,
-        createby_realname: searchModel.createby_realname
-      };
-      try {
-        if (!typeMap) {
-          typeMap = await queryCodes('notify_template_type', true);
-        }
-        const resp = await listNotify(config);
-        this.tableData = resp.rows.map(v => {
-          v.notify_type_name = typeMap[v.notify_type];
-          return v;
-        });
-        this.pageTotal = resp.total;
-      } catch (error) {
-      } finally {
-        this.loading = false;
-      }
-    },
-
     async sendMessage({ row: { id = '' } }) {
       this.$Modal.confirm({
         title: '提示',
         content: '是否发送通知',
         onOk: async () => {
           await sendNotify({ id });
-          this.page = 1;
-          this.getTableData();
+          this.list.fetchList();
         },
         onCancel: () => {}
       });
     },
     selectRow(row) {
       this.currentRow = row;
-    },
-    search() {
-      this.page = 1;
-      this.getTableData();
-    },
-    pageChange(page) {
-      this.page = page;
-      this.getTableData();
-    },
-    pageSizeChange(pageSize) {
-      this.pageSize = pageSize;
-      this.getTableData();
     }
   },
   async created() {
-    this.getTableData();
+    try {
+      let [dataDict, MAP] = await queryCodes('notify_template_type');
+      this.MAP = MAP;
+      this.dataDict = dataDict;
+      this.list.setDefaultConfig({ sortField: 'nt.updatedate' });
+      this.list.fetchList();
+    } catch (error) {}
   }
 };
 </script>

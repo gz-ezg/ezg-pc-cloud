@@ -72,23 +72,33 @@ export function getUnreadNum() {
     method: 'get'
   })
 }
-
-export async function queryCodes(query, isMap) {
-  let resp = await request({
-    url: '/system/tsType/queryTsTypeByGroupCodes',
+export function listPersonLog(query) {
+  return request({
+    url: '/system/log/wechat/company/log/person/list',
     method: 'get',
-    params: { groupCodes: query }
+    params: query
   })
-  if (isMap) {
-    let map = {}
-    resp[query].forEach(v => {
-      map[v.typecode] = v.typename
+}
+
+export const queryCodes = async query => {
+  try {
+    let resp = await request({
+      url: '/system/tsType/queryTsTypeByGroupCodes',
+      method: 'get',
+      params: { groupCodes: query }
     })
-    return map
-  } else {
-    return resp[query].map(v => ({
-      value: v.typecode,
-      label: v.typename
-    }))
+    let TEM = resp[query].map(v => {
+      return {
+        value: v.typecode,
+        label: v.typename
+      }
+    })
+    let MAP = {}
+    resp[query].forEach(v => {
+      MAP[v.typecode] = v.typename
+    })
+    return [TEM, MAP]
+  } catch (error) {
+    console.log(error)
   }
 }

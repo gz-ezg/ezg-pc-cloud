@@ -4,7 +4,7 @@ export default {
   async errHandler(errcode, errmsg, config) {
     if (errcode == '40000') {
       if (config.method == 'POST') {
-        iView.Message.success(errmsg || '执行成功！')
+        // iView.Message.success(errmsg || '执行成功！')
       }
       return true
     } else {

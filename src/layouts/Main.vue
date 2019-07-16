@@ -31,7 +31,7 @@
                     <lock-screen></lock-screen> -->
           <!-- <message-tip v-model="mesCount"></message-tip> -->
           <!-- <theme-switch></theme-switch> -->
-          <div @click="handleMsgCenter" class="header-laba">
+          <div @click="msgHistoryPopus = true" class="header-laba">
             <Badge overflow-count="999" :count="unreadNum">
               <img src="../images/laba.png" />
             </Badge>
@@ -129,70 +129,60 @@
     <set-finish-time :worderOrderDetail="gobalWorkorderDetail"></set-finish-time>
     <re-login v-if="gobalReloginShow"></re-login>
 
-    <Modal width="800px" v-model="msgCenterPopus" footer-hide title="消息中心" @on-ok="ok" @on-cancel="cancel">
-      <Row>
-        <ButtonGroup>
-          <Button :type="msgCenterType == 'N' ? 'primary' : ''" @click="getMsgData('N')">
-            未读
-          </Button>
-          <Button :type="msgCenterType == 'Y' ? 'primary' : ''" @click="getMsgData('Y')">
-            已读
-          </Button>
-          <Button :loading="tableloading" @click="handleUpdateStatus" v-if="msgCenterType == 'N'" type="primary">
-            批量读取
-          </Button>
-        </ButtonGroup></Row
-      >
-      <Row style="margin-top: 10px;">
-        <Table
-          @on-row-dblclick="handleShowDetail"
-          @on-select-all="selectMore"
-          highlight-row
-          border
-          
-          @on-select="selectMore"
-          size="small"
-          @on-row-click="selectRow"
-          :loading="tableloading"
-          :columns="tableHeader"
-          :data="tableData"
-        ></Table>
-        <Page
-          size="small"
-          :current="tableConfig.page"
-          :total="pageTotal"
-          :page-size="tableConfig.pageSize"
-          show-total
-          show-elevator
-          @on-change="pageChange"
-          @on-page-size-change="pageSizeChange"
-          style="margin-top: 10px"
-        ></Page>
-      </Row>
-    </Modal>
+    <notification-center
+      @on-dlclick="notificationDetail"
+      @cancel="msgCenterPopus = false"
+      v-if="msgCenterPopus"
+    ></notification-center>
 
-    <Modal width="800px" v-model="msgDetailPopus" title="消息查看">
-      <h3 style="text-align:center">{{ msg.notify_type }}</h3>
-      <div class="msg-content" v-html="msg.msgcontent"></div>
-      <div slot="footer">
-        <div>创建人：{{ msg.realname }}</div>
-        <div>创建时间：{{ msg.senddate }}</div>
-      </div>
+    <Modal
+      styles="index:1001!important;"
+      class-name="msgDetail"
+      :transfer="false"
+      width="800px"
+      footer-hide
+      v-model="msgDetailPopus"
+      title="消息查看"
+    >
+      <Card style="min-height:400px">
+        <p slot="title">
+          <Icon type="ios-film-outline"></Icon>
+          {{ msg.notify_type }}
+        </p>
+        <a href="#" slot="extra">
+          <Icon type="ios-loop-strong"></Icon>
+          创建人：{{ msg.realname }} /{{ msg.senddate }}
+        </a>
+        <p></p>
+        <div class="edit_container" v-html="msg.msgcontent"></div>
+      </Card>
     </Modal>
-
     <!-- 往期消息回顾 -->
-    <Modal width="780px" footer-hide v-model="msgHistoryPopus" title="往期消息回顾" @on-ok="ok" @on-cancel="cancel">
+    <Modal width="800px" footer-hide v-model="msgHistoryPopus" @on-ok="ok" @on-cancel="cancel">
+      <p slot="header" @click="handleMsgCenter" style="color:#2d8cf0; cursor: pointer;">
+        <Icon type="information-circled"></Icon>
+        <span>往期消息回顾</span>
+      </p>
       <div class="msg-history">
-        <Button @click="handleNextLog(msg.previous_id)" class="msg-back" shape="circle">
+        <Button v-if="msg.previous_id" @click="handleNextLog(msg.previous_id)" class="msg-back" shape="circle">
           <Icon type="ios-arrow-back"></Icon>
         </Button>
-        <Button @click="handleNextLog(msg.next_id)" class="msg-forward" shape="circle">
+        <Button v-if="msg.next_id" @click="handleNextLog(msg.next_id)" class="msg-forward" shape="circle">
           <Icon type="ios-arrow-forward"></Icon>
         </Button>
-        <div class="msg-title">{{ msg.notify_type }}</div>
-        <div class="msg-content" v-html="msg.msgcontent"></div>
-        <div class="msg-footer">创建人：{{ msg.realname }}</div>
-        <div class="msg-footer">创建时间：{{ msg.senddate }}</div>
+        <Card style="margin:10px 20px;">
+          <p slot="title">
+            <Icon type="ios-film-outline"></Icon>
+            {{ msg.notify_type }}
+          </p>
+          <a href="#" slot="extra">
+            <Icon type="ios-loop-strong"></Icon>
+            创建人：{{ msg.realname }} / {{ msg.senddate }}
+          </a>
+          <p></p>
+          <div class="edit_container" v-html="msg.msgcontent"></div>
+        </Card>
+        <Spin size="large" fix v-if="spinShow"></Spin>
       </div>
     </Modal>
   </div>
@@ -223,20 +213,24 @@ import reLogin from '@views/woa-components/relogin/index.vue';
 // import customerDetail from '@views/woa-components/customerDetail2/index.vue'
 // import companyDetail from '@views/woa-components/companyDetail/CompanyDetail.vue'
 
+import NotificationCenter from '@/views/main-components/NotificationCenter.vue';
+
 import {
-  queryCodes,
   queryWechatCompanyLog,
   updateLogStatus,
   logDetail,
   getUnreadNum,
   getNewLogDetail,
+  queryCodes,
   listNotify
 } from '@/api/logManagement';
 import { Service } from '@/api/Service.js';
+
 let typeMap = {};
 let serviceApi = new Service('socket');
 export default {
   components: {
+    NotificationCenter,
     shrinkableMenu,
     tagsPageOpened,
     breadcrumbNav,
@@ -260,12 +254,7 @@ export default {
   },
   data() {
     return {
-      msg: {
-        title: 'ceshi',
-        detail: '<img />'
-      },
-      selectData: [],
-      msgCenterType: 'Y',
+      msg: {},
       unreadNum: 0,
       msgHistoryPopus: false,
       msgCenterPopus: false,
@@ -287,50 +276,8 @@ export default {
       shrink: false,
       userName: '',
       isFullScreen: false,
-      openedSubmenuArr: this.$store.state.app.openedSubmenuArr,
-      tableHeader: [
-        {
-          type: 'selection',
-          width: 60,
-          align: 'center'
-        },
-        {
-          title: '模板名称',
-          width: 180,
-          key: 'msgtname',
-          minWidth: 90
-        },
-        {
-          title: '消息内容',
-          width: 180,
-          key: 'msg',
-          minWidth: 90
-        },
-        {
-          title: '手机',
-          key: 'mobile',
-          minWidth: 180
-        },
-        {
-          title: '发送时间',
-          width: 180,
-          key: 'sendDate',
-          minWidth: 90
-        },
-        {
-          title: '接受人',
-          width: 180,
-          key: 'wechatname',
-          minWidth: 90
-        }
-      ],
-      tableData: [],
-      tableConfig: {
-        page: 1,
-        pageSize: 5
-      },
-      pageTotal: '',
-      tableloading: false
+      spinShow: false,
+      openedSubmenuArr: this.$store.state.app.openedSubmenuArr
     };
   },
   computed: {
@@ -399,57 +346,19 @@ export default {
     }
   },
   methods: {
-    async getMsgData(type) {
-      if (type) {
-        this.tableConfig.page = 1;
-        this.msgCenterType = type;
-        this.tableConfig.read_flag = type;
-      }
-      try {
-        this.tableloading = true;
-        const resp = await queryWechatCompanyLog(this.tableConfig);
-        this.tableData = resp.rows;
-        this.pageTotal = resp.total;
-      } catch (error) {
-      } finally {
-        this.tableloading = false;
-      }
-    },
-    selectMore(value) {
-      console.log(value)
-      this.selectData = value;
-    },
-    handleShowDetail(e) {
-      // this.msg.senddate = e.createdate;
-      // this.msg.realname = e.createby_realname;
-      // this.msg.msgcontent = e.notify_content;
-      // this.msg.notify_type = typeMap[e.notify_type];
-      // this.msgDetailPopus = true;
-    },
-    async handleUpdateStatus() {
-      if (!this.selectData.length) {
-        return this.$Message.info('请选择消息');
-      }
-      try {
-        this.tableloading = true;
-        let config = this.selectData.map(v => v.id).join(',');
-        let resp = await updateLogStatus({ ids: config, read_flag: 'Y' });
-        this.tableConfig.page = 1;
-        this.getMsgData();
-      } catch (error) {
-      } finally {
-        this.tableloading = false;
-        this.selectData = [];
-      }
-    },
-
-    pageChange(e) {
-      this.tableConfig.page = e;
-      this.getMsgData();
+    isOk(e) {
+      this.handleMsgDetail(e);
     },
     handleMsgCenter() {
       this.msgCenterPopus = true;
-      this.getMsgData('N');
+      this.msgHistoryPopus = false;
+    },
+    handleMsgCenterPopus() {
+      this.msgCenterPopus = false;
+    },
+    async handleMsgDetail(e) {
+      this.msg = e;
+      this.msgDetailPopus = true;
     },
     close_stystem_complain(e) {
       this.show_stystem_complain = false;
@@ -509,6 +418,11 @@ export default {
         this.$bus.emit('CHANGE_PASSWORD', { realname: localStorage.getItem('realname'), id: localStorage.getItem('id') });
       }
     },
+    async notificationDetail({ id }) {
+      let resp = await logDetail({ id });
+      this.msg = resp;
+      this.msgDetailPopus = true;
+    },
     checkTag(name) {
       let openpageHasTag = this.pageTagsList.some(item => {
         if (item.name === name) {
@@ -524,8 +438,14 @@ export default {
       // console.log(val)
     },
     async handleNextLog(id) {
-      let resp = await logDetail({ id });
-      this.msg = resp;
+      try {
+        this.spinShow = true;
+        let resp = await logDetail({ id });
+        this.msg = resp;
+      } catch (error) {
+      } finally {
+        this.spinShow = false;
+      }
     },
     beforePush(name) {
       // if (name === 'accesstest_index') {
@@ -623,16 +543,16 @@ export default {
     },
     async initWebSocket() {
       const { port, key } = await serviceApi.auth();
-      const wsuri = `ws://192.168.0.220:${port}/wechat/company/notify/${key}`;
+      const wsuri = `ws://cloud.zgcfo.com:${port}/wechat/company/notify/${key}`;
       this.websock = new WebSocket(wsuri);
       this.websock.onmessage = this.websocketonmessage;
       this.websock.onopen = this.websocketonopen;
       this.websock.onerror = this.websocketonerror;
       this.websock.onclose = this.websocketclose;
     },
-    websocketonmessage(e) {
-      console.log(e);
+    async websocketonmessage(e) {
       try {
+        this.unreadNum = await getUnreadNum();
         let msg = JSON.parse(e.data) || {};
         this.$Notice.info({
           title: typeMap[msg.notifyType],
@@ -691,12 +611,7 @@ export default {
     }
   },
   mounted() {
-    // this.initWebSocket();
-
-    // setInterval(() => {
-    //   this.websocketsend('定时任务');
-    //   console.log('策划师');
-    // }, 2000);
+    this.initWebSocket();
     this.init();
     this.rate_start();
     this.spin_loading = false;
@@ -717,18 +632,27 @@ export default {
   },
   async created() {
     // 显示打开的页面的列表
-    this.$store.commit('setOpenedList');
-    typeMap = await queryCodes('notify_template_type', true);
-    this.unreadNum = await getUnreadNum();
-    if (this.unreadNum > 0) {
-      this.msg = await getNewLogDetail();
-      this.msgHistoryPopus = true;
-    }
+    try {
+      let [, MAP] = await queryCodes('notify_template_type');
+      typeMap = MAP;
+      this.$store.commit('setOpenedList');
+      this.unreadNum = await getUnreadNum();
+      if (this.unreadNum > 0) {
+        this.msg = await getNewLogDetail();
+        this.msgHistoryPopus = true;
+      }
+    } catch (error) {}
   }
 };
 </script>
 
 <style lang="less">
+.msgDetailPopus {
+  z-index: 3000;
+}
+.msgDetail {
+  z-index: 3000 !important;
+}
 .lock-screen-back {
   border-radius: 50%;
   z-index: -1;
@@ -751,7 +675,7 @@ export default {
 }
 .msg-title {
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
 }
 .msg-footer {
   text-align: right;
@@ -761,7 +685,7 @@ export default {
 .msg-back {
   position: absolute;
   top: 50%;
-  opacity: 0.3;
+  opacity: 1;
   width: 40px;
   height: 40px;
   left: 20px;
@@ -769,7 +693,7 @@ export default {
 }
 .msg-forward {
   position: absolute;
-  opacity: 0.3;
+  opacity: 1;
   top: 50%;
   width: 40px;
   height: 40px;
