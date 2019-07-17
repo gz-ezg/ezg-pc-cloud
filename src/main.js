@@ -13,6 +13,7 @@ import '@/locale'
 import VueI18n from 'vue-i18n'
 import util from '@/libs/util'
 import axios from 'axios'
+import request from '@U/request'
 import Cookies from 'js-cookie'
 //  引入自定义主题文件
 // import './my-theme/index.vue.less';
@@ -301,6 +302,30 @@ Vue.prototype.$Post = function(url, config, success, fail) {
       _self.$Message.error('数据异常！')
       console.error(err)
     })
+}
+
+//  获取数据字典
+Vue.prototype.$queryCodes = async query => {
+  try {
+    let resp = await request({
+      url: '/system/tsType/queryTsTypeByGroupCodes',
+      method: 'get',
+      params: { groupCodes: query }
+    })
+    let TEM = resp[query].map(v => {
+      return {
+        value: v.typecode,
+        label: v.typename
+      }
+    })
+    let MAP = {}
+    resp[query].forEach(v => {
+      MAP[v.typecode] = v.typename
+    })
+    return [TEM, MAP]
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 //  获取数据字典

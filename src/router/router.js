@@ -1445,13 +1445,24 @@ export const appRouter = [
         component: () =>
           import(/* webpackChunkName: "internalPushLog" */ '@/views/logManagement/internalPushLog.vue')
       },
+    ]
+  },
+  {
+    access: 11603,
+    meta: 11603,
+    path: '/notificationPush',
+    icon: 'chatbubble-working',
+    name: 'notificationPush',
+    title: '消息推送',
+    component: Main,
+    children: [
       {
         access: 11607,
         path: 'smsTemplate',
         title: '营销短信模板',
         name: 'smsTemplate',
         component: () =>
-          import(/* webpackChunkName: "internalPushLog" */ '@/views/logManagement/smsTemplate/index.vue')
+          import(/* webpackChunkName: "smsTemplate" */ '@/views/notificationPush/smsTemplate/index.vue')
       },
       {
         access: 11607,
@@ -1459,7 +1470,7 @@ export const appRouter = [
         title: '消息弹窗',
         name: 'messagPops',
         component: () =>
-          import(/* webpackChunkName: "internalPushLog" */ '@/views/logManagement/messagPops/index.vue')
+          import(/* webpackChunkName: "smsTemplate" */ '@/views/notificationPush/messagPops/index.vue')
       }
     ]
   },

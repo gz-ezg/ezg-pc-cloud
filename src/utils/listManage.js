@@ -76,14 +76,16 @@ export default class listManage {
     }
   }
   handleSizeChange(size, options) {
+    this.setPage(size)
     this.fetchList(size, options)
   }
 
   handlePageSizeChange(pageSize, options) {
-    console.log(pageSize)
+    this.setPageSize(pageSize)
     this.fetchList(1, { pageSize, ...options })
   }
   handleCurrentChange(currentPage, options) {
+    this.setPage(currentPage)
     this.fetchList(currentPage, options)
   }
 }

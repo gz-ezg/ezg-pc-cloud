@@ -654,7 +654,7 @@ export default {
   async created() {
     // 显示打开的页面的列表
     try {
-      let [, MAP] = await queryCodes('notify_template_type');
+      let [, MAP] = await this.$queryCodes('notify_template_type');
       typeMap = MAP;
       this.$store.commit('setOpenedList');
       this.unreadNum = await getUnreadNum();

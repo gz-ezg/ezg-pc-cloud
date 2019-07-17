@@ -45,7 +45,7 @@
 
 <script>
 import listManage from '../../utils/listManage';
-import { queryCodes, listPersonLog, getUnreadNum, updateLogStatus } from '@/api/logManagement';
+import { listPersonLog, getUnreadNum, updateLogStatus } from '@/api/logManagement';
 export default {
   props: ['parent'],
   data() {
@@ -130,7 +130,7 @@ export default {
     }
   },
   async created() {
-    let [, MAP] = await queryCodes('notify_template_type');
+    let [, MAP] = await this.$queryCodes('notify_template_type');
     this.MAP = MAP;
     this.list.setDefaultConfig({ sortField: 'senddate' });
     this.list.fetchList(1, { read_flag: this.type });

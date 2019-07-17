@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '@U/request'
 
 export function createNotify(data) {
   return request({
@@ -80,25 +80,39 @@ export function listPersonLog(query) {
   })
 }
 
-export const queryCodes = async query => {
-  try {
-    let resp = await request({
-      url: '/system/tsType/queryTsTypeByGroupCodes',
-      method: 'get',
-      params: { groupCodes: query }
-    })
-    let TEM = resp[query].map(v => {
-      return {
-        value: v.typecode,
-        label: v.typename
-      }
-    })
-    let MAP = {}
-    resp[query].forEach(v => {
-      MAP[v.typecode] = v.typename
-    })
-    return [TEM, MAP]
-  } catch (error) {
-    console.log(error)
-  }
+export function markingUpdate(data) {
+  return request({
+    url: '/system/marketing/template/update',
+    method: 'post',
+    data
+  })
+}
+
+export function marketingCreate(data) {
+  return request({
+    url: '/system/marketing/template/create',
+    method: 'post',
+    data
+  })
+}
+export function marketingDetail(query) {
+  return request({
+    url: '/system/marketing/template/detail',
+    method: 'get',
+    params: query
+  })
+}
+export function marketingDel(data) {
+  return request({
+    url: '/system/marketing/template/del',
+    method: 'post',
+    data
+  })
+}
+export function marketingList(query) {
+  return request({
+    url: '/system/marketing/template/list',
+    method: 'get',
+    params: query
+  })
 }
