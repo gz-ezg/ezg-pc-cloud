@@ -26,7 +26,25 @@ let vueFullCalendar = new Promise((resolve, reject)=>{
         });
     })
 
-Promise.all([fullcalendar, iviewArea, vueFullCalendar]).then(()=>{
+//  删除不必要的文件
+let moment = new Promise((resolve, reject)=>{
+    let momentPath = './node_modules/moment/locale'
+    const files = fs.readdirSync(momentPath)
+    files.forEach(function(file, index){
+        let curPath = momentPath + '/' + file;
+        if(file != 'zh-cn.js'){
+            fs.unlinkSync(curPath, function(err){
+                if(err){
+                    throw err;
+                }
+            })
+        }
+    })
+    console.log(chalk.blue('moment/locale 无用文件已删除！'))
+    resolve()
+})
+
+Promise.all([fullcalendar, iviewArea, vueFullCalendar, moment]).then(()=>{
     console.log(chalk.green("文件已经覆盖成功，接下来请执行相关构建命令！"))
 }).catch((err)=>{
     console.log(chalk.red(err))

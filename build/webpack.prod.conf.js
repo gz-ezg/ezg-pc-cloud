@@ -6,8 +6,9 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const progressBarWebpackPlugin  = require("progress-bar-webpack-plugin")
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
-const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
-
+// const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const DropConsoleWebpackPlugin = require('drop-console-webpack-plugin');
 
 const env = require('../config/prod.env')
 
@@ -40,21 +41,25 @@ const webpackConfig = merge(baseConfig, {
   optimization: {
     //  存在部分es6代码，无法执行压缩，可以选择另外一个压缩工具
     minimizer: [
-        new ParallelUglifyPlugin({ // 多进程压缩
-            cacheDir: '.cache/',
-            uglifyES: {
-                output: {
-                    comments: false,
-                    beautify: false
-                },
-                compress: {
-                    warnings: false,
-                    drop_console: true,
-                    collapse_vars: true,
-                    reduce_vars: true
-                }
-            }
-        }),
+      new TerserPlugin({
+        cache: true,
+        parallel: true,
+      })
+        // new ParallelUglifyPlugin({ // 多进程压缩
+        //     cacheDir: '.cache/',
+        //     uglifyES: {
+        //         output: {
+        //             comments: false,
+        //             beautify: false
+        //         },
+        //         compress: {
+        //             warnings: false,
+        //             drop_console: true,
+        //             collapse_vars: true,
+        //             reduce_vars: true
+        //         }
+        //     }
+        // }),
     ]
   },
   plugins: [
@@ -73,7 +78,8 @@ const webpackConfig = merge(baseConfig, {
     //  打包分析
     // new BundleAnalyzerPlugin(),
     //  进度条
-    new progressBarWebpackPlugin()
+    new progressBarWebpackPlugin(),
+    // new DropConsoleWebpackPlugin()
   ]
   //  不提示超过240kb
   // performance: {

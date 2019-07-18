@@ -1,116 +1,51 @@
 <template>
-    <Table :columns="columns10" :data="data9" highlight-row
-        @on-current-change='test'
-    ></Table>
+    <div>
+        <gantt-chart
+            :closable="true"
+            @event-click="eventClick"
+            @icon-close="iconClose"
+            :row="1"
+        >
+            <!-- <div slot="eventBox" slot-scope="x" :style="{'background-color':x.event.bg}" style="white-space:nowrap!important;text-overflow: ellipsis;overflow: hidden;outline: 0 !important">
+                <p>{{x.event.start}}</p>
+                <p>{{x.event.end}}</p>
+                <p>{{x.event.value}}</p>
+                <p>{{x.event.bg}}</p>
+            </div> -->
+            <div slot="hover-box" slot-scope="x">
+                <p>{{x.event.start}}</p>
+                <p>{{x.event.end}}</p>
+                <p>{{x.event.value}}</p>
+                <p>{{x.event.bg}}</p>
+            </div>
+        </gantt-chart>
+
+        <!-- <div style="max-height:48px;overflow-y:scroll">
+            <p>123</p>
+            <p>123</p>
+            <p>123</p>
+            <p>123</p>
+            <p>123</p>
+        </div> -->
+    </div>
 </template>
+
 <script>
-    import expandRow from './t.vue';
-    export default {
-        components: { expandRow },
-        data () {
-            return {
-                columns10: [
-                    {
-                        type: 'expand',
-                        width: 50,
-                        render: (h, params) => {
-                            console.log(params)
-                            return h(expandRow, {
-                                props: {
-                                    row: params.row
-                                }
-                            })
-                        }
-                    },
-                    {
-                        title: 'Name',
-                        key: 'name'
-                    },
-                    {
-                        title: 'Age',
-                        key: 'age'
-                    },
-                    {
-                        title: 'Address',
-                        key: 'address'
-                    }
-                ],
-                data9: [
-                    {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park',
-                        detail:[
-                            {
-                                job: 'Data engineer',
-                                interest: 'badminton',
-                                birthday: '1991-05-14',
-                                book: 'Steve Jobs',
-                                movie: 'The Prestige',
-                                music: 'I Cry'
-                            }
-                        ]
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 25,
-                        address: 'London No. 1 Lake Park',
-                        detail:[
-                            {
-                                job: 'Data Scientist',
-                                interest: 'volleyball',
-                                birthday: '1989-03-18',
-                                book: 'My Struggle',
-                                movie: 'Roman Holiday',
-                                music: 'My Heart Will Go On'
-                            }
-                        ]
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park',
-                        detail:[
-                            {
-                                job: 'Data Product Manager',
-                                interest: 'tennis',
-                                birthday: '1992-01-31',
-                                book: 'Win',
-                                movie: 'Jobs',
-                                music: 'Don’t Cry'
-                            }
-                        ]
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-                        detail:[
-                            {
-                                job: 'Data Analyst',
-                                interest: 'snooker',
-                                birthday: '1988-7-25',
-                                book: 'A Dream in Red Mansions',
-                                movie: 'A Chinese Ghost Story',
-                                music: 'actor'
-                            },
-                            {
-                                job: 'TTT',
-                                interest: 'twst',
-                                birthday: '191511',
-                                book: 'A Disdvog s',
-                                movie: 'A wekmnkbhsdn',
-                                music: 'listen'
-                            }
-                        ]
-                    }
-                ]
-            }
+import ganttChart from '../../woa-components/ganttChart/index'
+
+export default {
+    components: {
+        ganttChart
+    },
+    methods: {
+        eventClick(event, jsEvent){
+            console.log(event)
+            console.log(jsEvent)
         },
-        methods: {
-            test(){
-                console.log(this.data9)
-            }
+        iconClose(event){
+            console.log(event)
         }
     }
+}
 </script>
+

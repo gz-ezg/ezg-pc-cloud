@@ -159,13 +159,13 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    // {
-    //     path: '/test',
-    //     icon: 'alert-circled',
-    //     name: 'test',
-    //     title: 'Test',
-    //     component: Main,
-    //     children: [
+    {
+        path: '/test',
+        icon: 'alert-circled',
+        name: 'test',
+        title: 'Test',
+        component: Main,
+        children: [
     //         // {
     //         //     path: 'test',
     //         //     title: '测试页面',
@@ -173,12 +173,12 @@ export const appRouter = [
     //         //     component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/main.vue')
     //         //     // component: () => import(/* webpackChunkName: "test" */ '@/views/woa-components/filePreview/index.vue')
     //         // },
-    //         // {
-    //         //     path: 'test2',
-    //         //     title: '日程测试',
-    //         //     name: 'test2_index',
-    //         //     component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/test2.vue')
-    //         // },
+            {
+                path: 'test2',
+                title: '日程测试',
+                name: 'test2_index',
+                component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/test8.vue')
+            },
     //         // {
     //         //     path: 'test3',
     //         //     title: '滑动验证码',
@@ -197,20 +197,20 @@ export const appRouter = [
     //         //     name: 'test05_index',
     //         //     component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/test5.vue')
     //         // }
-    //         {
-    //             path: 'test6',
-    //             title: 'iviewTest',
-    //             name: 'test6_index',
-    //             component: () => import('@/views/test/components/test6.vue')
-    //         },
+            {
+                path: 'test6',
+                title: 'iviewTest',
+                name: 'test6_index',
+                component: () => import('@/views/test/components/test6.vue')
+            },
     //         {
     //             path: 'test7',
     //             title: '异常工单审批表',
     //             name: 'test07_index',
     //             component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/abnormalWorkOrder.vue')
     //         }
-    //     ]
-    // },
+        ]
+    },
     {
         access: 6001,
         meta: 6001,
@@ -709,15 +709,15 @@ export const appRouter = [
             //         require(['@/views/commercialManagement/statistical/statistical_index.vue'], resolve);
             //     }
             // },
-            // {
-            //     access: 6037,
-            //     path: 'schedule',
-            //     title: '排程表',
-            //     name: 'schedule',
-            //     component: resolve => {
-            //         require(['@/views/commercialManagement/schedule/schedule2.vue'], resolve);
-            //     }
-            // },
+            {
+                access: 6037,
+                path: 'schedule',
+                title: '排程表',
+                name: 'schedule',
+                component: resolve => {
+                    require(['@/views/commercialManagement/schedule/index.vue'], resolve);
+                }
+            },
             {
                 access: 6038,
                 meta: 6038,
@@ -735,6 +735,14 @@ export const appRouter = [
             //     component: resolve => {
             //         require(['@/views/commercialManagement/rule.vue'], resolve);
             //     }
+            // }
+            // {
+            //     access: 6038,
+            //     meta: 6038,
+            //     path: 'schedule',
+            //     title: '商事排程表',
+            //     name: 'newSchedule',
+            //     component: () => import( /* webpackChunkName: "newSchedule" */ '@/views/commercialManagement/newSchedule/index.vue')
             // }
         ]
     },
