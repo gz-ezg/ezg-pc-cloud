@@ -1551,11 +1551,11 @@ export const appRouter = [
       {
         access: 11607,
         meta: 11607,
-        path: 'stystemLog',
-        title: '系统日志',
-        name: 'stystemLog',
+        path: 'log',
+        title: '日志',
+        name: 'log',
         component: () =>
-          import(/* webpackChunkName: "logManagement" */ '@/views/logManagement/stystemlog/stystemLog.vue')
+          import(/* webpackChunkName: "log" */ '@/views/logManagement/log/index.vue')
       },
       {
         access: 6121,
@@ -1564,7 +1564,7 @@ export const appRouter = [
         title: '消息队列日志',
         name: 'MQ_index',
         component: () =>
-          import(/* webpackChunkName: "logManagement" */ '@/views/logManagement/MQlog/index.vue')
+          import(/* webpackChunkName: "MQlog" */ '@/views/logManagement/MQlog/index.vue')
       },
       {
         access: 6122,
@@ -1573,7 +1573,7 @@ export const appRouter = [
         title: '操作统计',
         name: 'OP_index',
         component: () =>
-          import(/* webpackChunkName: "logManagement" */ '@/views/logManagement/opLog/index.vue')
+          import(/* webpackChunkName: "opLog" */ '@/views/logManagement/opLog/index.vue')
       },
       {
         access: 6123,
@@ -1582,15 +1582,15 @@ export const appRouter = [
         title: '异常统计',
         name: 'frontErrLog_index',
         component: () =>
-          import(/* webpackChunkName: "logManagement" */ '@/views/logManagement/frontErrLog/index.vue')
+          import(/* webpackChunkName: "frontErrLog" */ '@/views/logManagement/frontErrLog/index.vue')
       },
       {
         access: 11608,
-        path: 'systemLog2',
-        title: '日志',
-        name: 'systemLog2',
+        path: 'systemLog',
+        title: '系统日志',
+        name: 'systemLog',
         component: () =>
-          import(/* webpackChunkName: "logManagement" */ '@/views/logManagement/systemLog.vue')
+          import(/* webpackChunkName: "systemLog" */ '@/views/logManagement/systemLog/index.vue')
       }
     ]
   }

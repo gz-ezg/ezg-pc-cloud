@@ -2,8 +2,18 @@ import request from './request'
 import { mergeUrl } from './utils'
 export default class listManage {
   constructor({ pageSize = 10 } = {}, url, dataHandle) {
-    if (!url || typeof url != 'string') {
-      return console.warn('please offer a url for list')
+    if (typeof url == 'function') {
+      this.fetchFunc = url
+    } else if (typeof url == 'string') {
+      this.fetchFunc = query => {
+        return request({
+          url: this.url,
+          method: 'get',
+          params: query
+        })
+      }
+    } else {
+      return console.warn('please offer a url or getlist func for list')
     }
     // 请求接口地址
     this.url = url
@@ -15,14 +25,7 @@ export default class listManage {
     this.total = 0
     // 一页多少条数
     this.pageSize = pageSize
-    // 接口函数
-    this.fetchFunc = query => {
-      return request({
-        url: this.url,
-        method: 'get',
-        params: query
-      })
-    }
+
     // 对返回数据进行处理
     this.dataHandle = dataHandle
     // 表单数据

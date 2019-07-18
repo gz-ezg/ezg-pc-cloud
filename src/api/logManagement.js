@@ -139,3 +139,25 @@ export function sendMessageByExcel(data) {
     data
   })
 }
+export function getLogList(params) {
+  return request({
+    url: '/system/getLogList',
+    method: 'get',
+    params
+  })
+}
+export function mqRequest(params) {
+  return request({
+    url: '/system/mqRequest',
+    method: 'get',
+    params
+  })
+}
+
+export function showMQLogInfo(data) {
+  return request({
+    url: '/system/showMQLogInfo',
+    method: 'post',
+    data
+  })
+}

@@ -19,46 +19,50 @@
 
 <script>
 import listManage from '@U/listManage';
-import filtra from '@C/filtra';
-const url = '/system/fontErrList';
+import { showMQLogInfo } from '@A/logManagement';
+const url = '/system/showMQLogInfo';
 export default {
   data() {
     return {
-      list: new listManage({ pageSize: 10 }, url),
+      list: new listManage({ pageSize: 10 }, showMQLogInfo),
+      createDate: '',
       header: [
         {
-          title: 'router',
-          key: 'name',
-          width: 150
+          title: 'id',
+          key: 'id',
+          minWidth: 90
         },
         {
-          title: 'hook',
-          key: 'hook',
-          width: 150
+          title: '队列名称',
+          key: 'queues',
+          minWidth: 180
         },
         {
-          title: 'err',
-          key: 'err',
-          minWidth: 300
+          title: '状态',
+          key: 'status',
+          minWidth: 120
         },
         {
-          title: 'createdate',
-          key: 'createdate',
-          width: 150
+          title: '内容',
+          key: 'content',
+          minWidth: 500
         },
         {
-          title: 'realname',
-          key: 'realname',
-          width: 150
+          title: '创建时间',
+          key: 'create_date',
+          minWidth: 200
+        },
+        {
+          title: '方法名',
+          key: 'method_name',
+          minWidth: 120
         }
       ]
     };
   },
-  methods: {},
   created() {
-    this.list.setDefaultConfig({ sortField: 'id' });
+    this.list.setDefaultConfig({ sortField: 'id', order: 'desc', status: 'executed' });
     this.list.fetchList();
   }
 };
 </script>
-

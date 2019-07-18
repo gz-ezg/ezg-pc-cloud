@@ -44,14 +44,16 @@
 </template>
 
 <script>
-import listManage from '../../utils/listManage';
-import { listPersonLog, getUnreadNum, updateLogStatus } from '@/api/logManagement';
+import listManage from '@U/listManage';
+import { getUnreadNum, updateLogStatus } from '@A/logManagement';
+
+const url = '/system/log/wechat/company/log/person/list';
 export default {
   props: ['parent'],
   data() {
     return {
       show: true,
-      list: new listManage({ pageSize: 5 }, listPersonLog, this.listDataHander),
+      list: new listManage({ pageSize: 5 }, url, this.listDataHander),
       tableHeader: [
         {
           type: 'selection',
