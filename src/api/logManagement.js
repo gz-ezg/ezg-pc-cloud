@@ -116,3 +116,26 @@ export function marketingList(query) {
     params: query
   })
 }
+
+export function queryWechatTemplatelogList(query) {
+  return request({
+    url: '/system/log/queryWechatTemplatelog/list',
+    method: 'get',
+    params: query
+  })
+}
+export function sendMessage(data) {
+  return request({
+    url: '/system/message/sendMessage',
+    method: 'post',
+    data
+  })
+}
+
+export function sendMessageByExcel(data) {
+  return request({
+    url: '/system/message/sendMessageByExcel',
+    method: 'post',
+    data
+  })
+}

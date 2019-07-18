@@ -64,6 +64,7 @@ import show from './menu/show.vue';
 import { marketingList, marketingDel } from '@A/logManagement';
 import listManage from '@U/listManage';
 
+const url = '/system/marketing/template/list';
 export default {
   components: {
     Add,
@@ -77,7 +78,7 @@ export default {
         { type: 'input', key: 'template_name', label: '模板名称：' },
         { type: 'date', key: 'createdate', label: '创建时间：' }
       ],
-      list: new listManage({ pageSize: 10 }, marketingList),
+      list: new listManage({ pageSize: 10 }, url),
       currentId: '',
       tableHeader: [
         {
@@ -157,7 +158,7 @@ export default {
     }
   },
   created() {
-    this.list.fetchList(1);
+    this.list.fetchList();
   }
 };
 </script>

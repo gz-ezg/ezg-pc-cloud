@@ -49,8 +49,9 @@ import Add from './menu/add.vue';
 import Edit from './menu/edit.vue';
 import Show from './menu/show.vue';
 import listManage from '../../../utils/listManage';
-import { listNotify, sendNotify } from '@A/logManagement';
+import { sendNotify } from '@A/logManagement';
 import filtra from '@C/filtra';
+const url = '/system/notify/template/list';
 export default {
   components: {
     Add,
@@ -61,7 +62,7 @@ export default {
   data() {
     return {
       currentRow: null,
-      list: new listManage({ pageSize: 10 }, listNotify, this.dataHandle),
+      list: new listManage({ pageSize: 10 }, url, this.dataHandle),
       tableHeader: [
         {
           title: '类型',

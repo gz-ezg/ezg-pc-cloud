@@ -36,8 +36,12 @@ service.interceptors.response.use(
     console.log(response) //for debug
     const res = response.data
     const { method } = response.config
+    // return Promise.reject(error)
+    if (res.msgCode == '50000') {
+      return Promise.reject(res)
+    }
     method === 'post' && iview.Message.success(res.msg || '执行成功！')
-    return res.data;
+    return res.data
   },
   error => {
     console.log('err' + error) // for debug
