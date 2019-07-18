@@ -54,15 +54,6 @@ export const page500 = {
 //     }
 // };
 
-// //  文件预览
-// export const previewFile = {
-//     path: '/previewFile/:id',
-//     name: 'previewFile',
-//     component: resolve => {
-//         require(['@/views/woa-components/filePreview/index.vue'], resolve);
-//     }
-// }
-
 // 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
 export const otherRouter = {
   path: '/',
@@ -1510,6 +1501,8 @@ export const appRouter = [
       }
     ]
   },
+
+  //  新改动
   {
     access: 6065,
     meta: 6065,
@@ -1522,23 +1515,25 @@ export const appRouter = [
       {
         access: 6066,
         meta: 6066,
-        path: 'CompanyInformation',
+        path: 'companyMaterial',
         title: '公司资料',
-        name: 'CompanyInformation_index',
+        name: 'companyMaterial',
         component: () =>
-          import(/* webpackChunkName: "CompanyInformation_index" */ '@/views/material-house/companyMaterial/index.vue')
+          import(/* webpackChunkName: "companyMaterial" */ '@/views/materialHouse/companyMaterial/index1.vue')
       },
       {
         access: 6068,
         meta: 6068,
-        path: 'DepartmentInformation',
+        path: 'departMaterial',
         title: '部门资料',
-        name: 'DepartmentInformation_index',
+        name: 'departMaterial',
         component: () =>
-          import(/* webpackChunkName: "DepartmentInformation_index" */ '@/views/material-house/departMaterial/index.vue')
+          import(/* webpackChunkName: "companyMaterial" */ '@/views/materialHouse/departMaterial/index.vue')
       }
     ]
   },
+
+  //  新改动
   {
     access: 6120,
     meta: 6120,
