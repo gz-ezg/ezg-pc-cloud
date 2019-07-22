@@ -1,8 +1,6 @@
 /* eslint-disable */
 import Main from '@/layouts/Main.vue'
-// import 版路由
-// test作为测试页面接口，不部署到生产阶段，路径test也只适用于开发阶段
-// import Test from '@/views/test/App.vue'
+
 // 不作为Main组件的子页面展示的页面单独写，如下
 export const loginRouter = {
   path: '/login',
@@ -34,25 +32,6 @@ export const page500 = {
   component: () =>
     import(/* webpackChunkName: "commonIndex" */ '@/layouts/500.vue')
 }
-
-//  暂时不需要使用的页面
-//  文章预览
-// export const preview = {
-//     path: '/preview',
-//     name: 'preview',
-//     component: resolve => {
-//         require(['@/views/form/article-publish/preview.vue'], resolve);
-//     }
-// };
-
-// //  锁屏
-// export const locking = {
-//     path: '/locking',
-//     name: 'locking',
-//     component: resolve => {
-//         require(['@/views/main-components/lockscreen/components/locking-page.vue'], resolve);
-//     }
-// };
 
 // 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
 export const otherRouter = {
@@ -96,19 +75,6 @@ export const otherRouter = {
       component: () =>
         import(/* webpackChunkName: "marketIndex" */ '@/views/home/market_index/marketIndex.vue')
     },
-    // 待开发，无原型
-    // {
-    //     path: 'auditIndex',
-    //     title: '审计首页',
-    //     name: 'auditIndex_index',
-    //     component: () => import(/* webpackChunkName: "auditIndex" */ '@/views/home/audit_index/auditIndex.vue')
-    // },
-    // {
-    //     path: 'planIndex',
-    //     title: '企划首页',
-    //     name: 'planIndex_index',
-    //     component: () => import(/* webpackChunkName: "planIndex" */ '@/views/home/plan_index/planIndex.vue')
-    // },
     {
       path: 'ownspace',
       title: '个人中心',
@@ -166,59 +132,6 @@ export const otherRouter = {
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-  // 测试分支
-  // {
-  //     path: '/test',
-  //     icon: 'alert-circled',
-  //     name: 'test',
-  //     title: 'Test',
-  //     component: Main,
-  //     children: [
-  //         // {
-  //         //     path: 'test',
-  //         //     title: '测试页面',
-  //         //     name: '富文本编辑器测试',
-  //         //     component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/main.vue')
-  //         //     // component: () => import(/* webpackChunkName: "test" */ '@/views/woa-components/filePreview/index.vue')
-  //         // },
-  //         // {
-  //         //     path: 'test2',
-  //         //     title: '日程测试',
-  //         //     name: 'test2_index',
-  //         //     component: () => import(/* webpackChunkName: "test" */ '@/views/test/components/test2.vue')
-  //         // },
-  //         // {
-  //         //     path: 'test3',
-  //         //     title: '滑动验证码',
-  //         //     name: 'test3_index',
-  //         //     component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/test3.vue')
-  //         // },
-  //         {
-  //             path: 'test4',
-  //             title: 'canvas个人页制作',
-  //             name: 'test4_index',
-  //             component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/test4.vue')
-  //         },
-  //         // {
-  //         //     path: 'test5',
-  //         //     title: 'html2canvas',
-  //         //     name: 'test05_index',
-  //         //     component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/test5.vue')
-  //         // }
-  //         {
-  //             path: 'test6',
-  //             title: 'iviewTest',
-  //             name: 'test6_index',
-  //             component: () => import('@/views/test/components/test6.vue')
-  //         },
-  //         {
-  //             path: 'test7',
-  //             title: '异常工单审批表',
-  //             name: 'test07_index',
-  //             component: () => import( /* webpackChunkName: "test" */ '@/views/test/components/abnormalWorkOrder.vue')
-  //         }
-  //     ]
-  // },
   {
     access: 6001,
     meta: 6001,
@@ -394,24 +307,6 @@ export const appRouter = [
       }
     ]
   },
-  // 计划删除菜单，开发终止
-  // {
-  //     access: 6004,
-  //     path: '/companyManagement',
-  //     icon: 'social-windows',
-  //     name: 'companyManagement',
-  //     title: '企业管理',
-  //     component:Main,
-  //     children:[
-  //         {
-  //             access: 6004,
-  //             path: 'companyManagement',
-  //             title: '企业管理',
-  //             name: 'companyManagement_index',
-  //             component: () => import(/* webpackChunkName: "companyManagement_index" */ '@/views/companyManagement/components/main.vue')
-  //         }
-  //     ]
-  // },
   {
     access: 6110,
     meta: 6110,
@@ -711,23 +606,6 @@ export const appRouter = [
         component: () =>
           import(/* webpackChunkName: "orderApprove_index" */ '@/views/order/orderApprove/index.vue')
       },
-      // 重构版异常工单（已废弃，可以参考；不推荐项目现有写法）
-      // {
-      //     access: 6019,
-      //     meta: 6019,
-      //     path: 'errorWorkOrder',
-      //     title: '异常工单',
-      //     name: 'errorWorkOrder_index',
-      //     component: () => import( /* webpackChunkName: "errorWorkOrder_index" */ '@/views/order/errorWorkOrder/index.vue')
-      // },
-      // {
-      //     access: 6019,
-      //     meta: 6019,
-      //     path: 'errorWorkOrderApprove',
-      //     title: '异常审批',
-      //     name: 'errorWorkOrderApprove_index',
-      //     component: () => import( /* webpackChunkName: "errorWorkOrder_index" */ '@/views/order/errorWorkOrderApprove/index.vue')
-      // },
       {
         access: 6020,
         meta: 6020,
@@ -981,26 +859,6 @@ export const appRouter = [
       }
     ]
   },
-  // {
-  //   access: 11647,
-  //   meta: 11647,
-  //   path: '/accounterManager',
-  //   icon: 'connection-bars',
-  //   name: 'accounterManager_index',
-  //   title: '会计管理（新）',
-  //   component: Main,
-  //   children: [
-  //     {
-  //       access: 11648,
-  //       meta: 11648,
-  //       path: 'proxyAccounterManger',
-  //       title: '代理记账管理（新）',
-  //       name: 'proxyAccounterManger_index',
-  //       component: () =>
-  //           import(/* webpackChunkName: "proxyAccounterManger" */ '@/views/accounterManager/proxyAccounterManger/index.vue')
-  //     },
-  //   ]
-  // },
   {
     access: 11610,
     meta: 11610,
@@ -1103,17 +961,6 @@ export const appRouter = [
         component: () =>
           import(/* webpackChunkName: "clockin_index" */ '@/views/administrationManagement/clockIn/index.vue')
       },
-      // 待开发
-      // {
-      //     access: 6095,
-      //     meta: 6095,
-      //     path: 'marketPerformance',
-      //     title: '市场绩效',
-      //     name:"marketPerformance_index",
-      //     component: resolve => {
-      //         require(['@/views/administrationManagement/marketPerformance/index.vue'], resolve);
-      //     }
-      // },
       {
         access: 6096,
         meta: 6096,
@@ -1595,10 +1442,7 @@ export const appRouter = [
 export const routers = [
   loginRouter,
   otherRouter,
-  // preview,
-  // locking,
   ...appRouter,
-  // previewFile,
   page500,
   page403,
   page404

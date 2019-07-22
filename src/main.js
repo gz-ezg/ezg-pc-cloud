@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Vue from 'vue'
 import iView from 'iview'
-import { router } from './router/index'
+import { router } from './permission'
 import { appRouter } from './router/router'
 import 'iview/dist/styles/iview.css'
 import store from './store'
@@ -11,7 +11,6 @@ import VueBus from './plugins/vue-bus'
 import vueBus from './libs/bus'
 import '@/locale'
 import VueI18n from 'vue-i18n'
-import util from '@/libs/util'
 import axios from 'axios'
 import request from '@U/request'
 import Cookies from 'js-cookie'
@@ -25,41 +24,11 @@ if (process.env.NODE_ENV == 'development') {
   Vue.config.devtools = true
 }
 
-//  异常上报机制(废弃)
-// import Raven from 'raven-js';
-// import RavenVue from 'raven-js/plugins/vue';
-
-//  测试库版
-// console.log(process)
-// if(process.env.NODE_ENV == 'jenkins' ){
-//     Raven
-//         .config('http://f2091129504342718fd23e9de52bdd84@sentry.roderickt1an.cn/1')
-//         .addPlugin(RavenVue, Vue)
-//         .install();
-//     }
-
 Vue.use(VueI18n)
 Vue.use(iView)
 Vue.use(VueBus)
 Vue.use(vueBus)
 Vue.use(iviewArea)
-
-//  全局混入
-// Vue.mixin({
-//     data(){
-//         return {
-//             globalRefresh: true
-//         }
-//     },
-//     method:{
-//         global_refresh(){
-
-//         }
-//     },
-//     created(){
-//         // console.log(this.$options.name)
-//     }
-//   })
 
 axios.defaults.baseURL = '/'
 //  axios 拦截器
@@ -120,45 +89,6 @@ axios.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-// console.log(process.env)
-//  异常监控及上传 （废弃）
-//  上传待接口完成后实现
-// console.log(process.env)
-// if(process.env.NODE_ENV == 'jenkins' ){
-//     Vue.config.errorHandler = function(err, vm, info) {
-//         Raven.captureException(err)
-//     }
-//   }
-//     // handle error
-//     // `info` 是 Vue 特定的错误信息，比如错误所在的生命周期钩子
-//     // 只在 2.2.0+ 可用
-//     // console.log("errorHandler - start")
-//     // console.log(router.history.current.name)
-//     // console.log(info)
-//     console.log(err)
-
-//     let _self = this
-//     let url = 'api/system/saveFontErrMsg'
-//     let config = {
-//         name: router.history.current.name,
-//         hook: info,
-//         page: "",
-//         err: err.toString()
-//     }
-//     // console.log(config)
-
-//     axios.post(url, config).then(function(res){
-//         if(res.data.msgCode == "40000"){
-//             console.log("上报成功")
-//         }else{
-//             console.log(res)
-//         }
-//     }).catch(function(err){
-//         console.log(err)
-//     })
-
-//   }
-
 // 按钮采集
 Vue.prototype.$ButtonCollect = function(name) {
   let _self = this
@@ -353,9 +283,6 @@ Vue.prototype.$GetDataCenter = function(params, finish) {
     })
 }
 
-//  此项作废，改由axios拦截器负责
-//  代码仍存留，需要清除
-//  判断是否登录及权限值
 Vue.prototype.$backToLogin = function(res) {
   if (res.data.msgCode == '50003') {
     this.$Message.warning('对不起，您还未登陆！即将回到登陆页面！')
@@ -456,50 +383,6 @@ Vue.prototype.PostData = function(url, data, doSuccess, otherConditions) {
   })
 }
 
-//  路由跳转之前检查是否有权限访问该页面
-router.beforeEach((to, from, next) => {
-  // console.log()
-  if (
-    to.name == 'login' ||
-    to.name == 'home_index' ||
-    JSON.stringify(to.meta) == '{}'
-  ) {
-  } else {
-    let url = 'api/system/addGather'
-
-    let config = {
-      params: {
-        code: to.name
-      }
-    }
-
-    axios
-      .get(url, config)
-      .then(function(res) {})
-      .catch(function(err) {
-        console.log(err)
-      })
-  }
-  let temp = JSON.parse(localStorage.getItem('access_array'))
-
-  if (JSON.stringify(to.meta) == '{}') {
-    next()
-  } else {
-    let flag = false
-    for (let i = 0; i < temp.length; i++) {
-      if (to.meta == temp[i]) {
-        next()
-        flag = true
-      }
-    }
-    if (flag == false) {
-      router.push({
-        name: 'error-403'
-      })
-    }
-  }
-})
-
 new Vue({
   el: '#app',
   router: router,
@@ -514,16 +397,6 @@ new Vue({
     // 显示打开的页面的列表
     this.$store.commit('setOpenedList')
     this.$store.commit('initCachepage')
-    // 权限菜单过滤相关
-    //  记录，在这里为什么要调一次获取菜单的请求呢？？
-    /**
-     * ???
-     * ???
-     * 2018年9月22日21:44:11
-     */
-    // this.$store.commit('updateMenulist');
-    // iview-admin检查更新
-    // util.checkUpdate(this); // util中未配置
   },
   created() {
     let tagsList = []
@@ -534,6 +407,7 @@ new Vue({
         tagsList.push(...item.children)
       }
     })
+    console.log(tagsList)
     this.$store.commit('setTagsList', tagsList)
   }
 })

@@ -37,3 +37,10 @@ export function getButtonList(params) {
     params
   })
 }
+export function addGather(params) {
+  return request({
+    url: '/system/addGather',
+    method: 'get',
+    params
+  })
+}

@@ -106,6 +106,7 @@ const app = {
                 }
             });
             state.menuList = menuList;
+            console.log(menuList)
             // console.log(menuList)
         },
         changeMenuTheme (state, theme) {
@@ -135,6 +136,7 @@ const app = {
             });
         },
         initCachepage (state) {
+          console.log('ceshi')
             // if (localStorage.cachePage) {
             //     state.cachePage = JSON.parse(localStorage.cachePage);
             // }

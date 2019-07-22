@@ -3,7 +3,6 @@
     <Row>
       <ButtonGroup style="float:left">
         <Button type="primary" icon="information-circled" @click="showdetail">查看</Button>
-        <Button type="primary" icon="ios-color-wand-outline" @click="reply">回复</Button>
       </ButtonGroup>
     </Row>
     <Row style="margin-top: 10px;">
@@ -12,7 +11,7 @@
         highlight-row
         size="small"
         :columns="header"
-        :data="data"
+        :data="list.data"
         @on-current-change="save_current_row"
         @on-row-dblclick="showdetail"
       ></Table>
@@ -23,23 +22,26 @@
         show-total
         show-sizer
         show-elevator
-        @on-change="pageChange"
+        @on-change="list.handleSizeChange"
         style="margin-top: 10px"
       ></Page>
     </Row>
-
-
-    <Modal title="查看详情" v-model="openDetail" width="600">
+    <Modal title="查看详情" v-model="openDetail" width="600" :transfer="false">
       <Form :label-width="100">
         <Row :gutter="16">
           <Col span="24">
-            <FormItem prop="companyName" label="评价人：">
-              <Input type="text" v-model="current_row.realname" readonly> </Input>
+            <FormItem prop="replycontent" label="回复内容：">
+              <Input type="textarea" v-model="current_row.replycontent" readonly> </Input>
             </FormItem>
           </Col>
           <Col span="24">
-            <FormItem prop="companyName" label="反馈与意见：">
-              <Input type="textarea" v-model="current_row.suggestion" readonly> </Input>
+            <FormItem prop="replyname" label="回复人：">
+              <Input type="text" v-model="current_row.replyname" readonly> </Input>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem prop="replytime" label="回复时间：">
+              <Input type="text" v-model="current_row.replytime" readonly> </Input>
             </FormItem>
           </Col>
         </Row>
@@ -48,38 +50,12 @@
         <Button type="ghost" @click="close_detail">关闭</Button>
       </div>
     </Modal>
-    
-    <Modal title="回复" v-model="openReply" width="600">
-      <Form :label-width="100">
-        <Row :gutter="16">
-          <Col span="24">
-            <FormItem prop="realname" label="评价人：">
-              <Input type="text" v-model="current_row.realname" readonly> </Input>
-            </FormItem>
-          </Col>
-          <Col span="24">
-            <FormItem prop="suggestion" label="反馈与意见：">
-              <Input type="textarea" v-model="current_row.suggestion" readonly> </Input>
-            </FormItem>
-          </Col>
-          <Col span="24">
-            <FormItem prop="replycontent" label="回复内容：">
-              <Input type="textarea" v-model="replycontent"> </Input>
-            </FormItem>
-          </Col>
-        </Row>
-      </Form>
-      <div slot="footer">
-        <Button type="primary" @click="submit_reply" :loading="button_loading">提交</Button>
-        <Button type="ghost" @click="close_reply">关闭</Button>
-      </div>
-    </Modal>
   </Card>
 </template>
 
 <script>
 export default {
-  name: 'complainAndAdvice_index',
+  name: 'complainReply_index',
   data() {
     return {
       button_loading: false,
@@ -89,23 +65,28 @@ export default {
       search: '',
       header: [
         {
-          title: '系统评价得分',
-          key: 'score',
-          minWidth: 150
-        },
-        {
           title: '意见或建议',
           key: 'suggestion',
           minWidth: 300
         },
         {
-          title: '评价时间',
-          key: 'createdate',
+          title: '回复内容',
+          key: 'replycontent',
+          minWidth: 300
+        },
+        {
+          title: '回复时间',
+          key: 'replytime',
+          minWidth: 150
+        },
+        {
+          title: '回复人',
+          key: 'replyname',
           minWidth: 150
         },
         {
           title: '评价人',
-          key: 'realname',
+          key: 'feedbackname',
           minWidth: 150
         }
       ],
@@ -118,12 +99,12 @@ export default {
   methods: {
     getData() {
       let _self = this;
-      let url = `api/system/systemFeedbackList`;
+      let url = `api/system/replyList`;
       let config = {
         params: {
           page: _self.page,
           pageSize: 10,
-          sortField: 'createdate'
+          sortField: 'replytime'
         }
       };
 
