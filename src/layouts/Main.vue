@@ -352,6 +352,7 @@ export default {
     },
     async handleMsgHistoryPopus() {
       try {
+        this.unreadNum = await getUnreadNum();
         let resp = await getNewLogDetail();
 
         if (!resp) {
@@ -359,7 +360,6 @@ export default {
         }
         this.msg = resp;
         this.msgHistoryPopus = true;
-        this.unreadNum = this.unreadNum - 1;
       } catch (error) {
       } finally {
       }
@@ -612,7 +612,7 @@ export default {
     websocketonerror() {
       setTimeout(() => {
         this.initWebSocket();
-      }, 3000);
+      }, 300000);
     },
     websocketclose(e) {
       console.log('断开连接', e);

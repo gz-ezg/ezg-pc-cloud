@@ -132,6 +132,7 @@ export default {
   async created() {
     let [, MAP] = await queryCodes('notify_template_type');
     this.MAP = MAP;
+    this.list.setDefaultConfig({ sortField: 'senddate' });
     this.list.fetchList(1, { read_flag: this.type });
   }
 };
