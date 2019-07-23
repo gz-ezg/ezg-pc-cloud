@@ -696,7 +696,6 @@
                             if (!params.row.shebao){
                                 return ""
                             }
-                            let _self = this;
                             if (params.row.shebao.confirm_date == undefined) {
                                 return h('div', [
                                     h(
@@ -724,7 +723,7 @@
                                             },
                                             on: {
                                                 click: () => {
-                                                    this.completed(params.row.shebao);
+                                                    this.sb(params.row.shebao);
                                                 }
                                             }
                                         },
@@ -1380,6 +1379,20 @@
                     clipboard.destroy()
                 });
 
+            },
+            sb(sb){
+                let _self = this;
+                let url = `api/order/cycle/month/service/item/finish`;
+                let formdata = new FormData();
+                formdata.append('monthServiceItemId',sb);
+                function success(res){
+                    _self.get_data()
+                }
+
+                function fail(err){
+
+                }
+                this.$Post(url, formdata, success, fail)
             },
             completed(id){
                 let _self = this;
