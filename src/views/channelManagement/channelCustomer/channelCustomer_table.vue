@@ -926,7 +926,6 @@
 
                 function doSuccess(response) {
                     let _data = response.data.data
-
                     _self.pageTotal = _data.total
                     _self.data2 = []
 
@@ -1009,7 +1008,6 @@
 
                 function doSuccess(response) {
                     let _data = response.data.data
-
                     _self.customerTotal = _data.total
                     _self.customerData = []
 
@@ -1043,6 +1041,8 @@
                                     customer_tel: _data.rows[i].fixedPhone,
                                     customer_wechat: _data.rows[i].weixin,
                                     customerqq: _data.rows[i].qq,
+                                    customer_tel: _data.rows[i].fixedPhone,
+
                                 }
                             ]
                         })

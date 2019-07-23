@@ -1011,6 +1011,35 @@ export const appRouter = [
   //   ]
   // },
   {
+    access: 11647,
+    meta: 11647,
+    path: '/accounterManager',
+    icon: 'connection-bars',
+    name: 'accounterManager_index',
+    title: '会计管理（新）',
+    component: Main,
+    children: [
+      {
+        access: 11648,
+        meta: 11648,
+        path: 'proxyAccounterManger',
+        title: '代理记账管理（新）',
+        name: 'proxyAccounterManger_index',
+        component: () =>
+            import(/* webpackChunkName: "proxyAccounterManger" */ '@/views/accounterManager/proxyAccounterManger/index.vue')
+      },
+      {
+        access: 11649,
+        meta: 11649,
+        path: 'serviceUpgradeSuggestion',
+        title: '服务升级意见管理',
+        name: 'serviceUpgradeSuggestion_index',
+        component: () =>
+            import(/* webpackChunkName: "serviceUpgradeSuggestion" */ '@/views/accounterManager/serviceUpgradeSuggestion/index.vue')
+      },
+    ]
+  },
+  {
     access: 11610,
     meta: 11610,
     path: '/etax',

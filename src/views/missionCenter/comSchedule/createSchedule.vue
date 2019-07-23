@@ -54,7 +54,11 @@
                         <!--<Select v-model="newMission.businessArea" type="text" transfer>-->
                             <!--<Option v-for="(item,index) in businessArea" :key="index" :value="item.typecode">{{item.typename}}</Option>-->
                         <!--</Select>-->
+<<<<<<< HEAD
                         <Cascader :data="data" v-model="newMission.businessArea" change-on-select></Cascader>
+=======
+                        <Cascader :data="provinceData" change-on-select v-model="newMission.businessArea"></Cascader>
+>>>>>>> lyc
                     </FormItem>
                 </Col>
                 <Col span="12">
@@ -177,7 +181,82 @@
                 text:"",
                 phraseShow:false,
                 currentId:null,
+<<<<<<< HEAD
                 data:[],
+=======
+                provinceData:[{
+                    value: 'beijing',
+                    label: '北京',
+                    children: [
+                        {
+                            value: 'gugong',
+                            label: '故宫'
+                        },
+                        {
+                            value: 'tiantan',
+                            label: '天坛'
+                        },
+                        {
+                            value: 'wangfujing',
+                            label: '王府井'
+                        }
+                    ]
+                },{
+                        value: 'guangzhou',
+                        label: '广州',
+                        children: [
+                            {
+                                value: 'tianhe',
+                                label: '天河'
+                            },
+                            {
+                                value: 'huadu',
+                                label: '花都'
+                            },
+                            {
+                                value: 'baiyun',
+                                label: '白云'
+                            },
+                            {
+                                value: 'haizhu',
+                                label: '海珠'
+                            },
+                            {
+                                value: 'yuexiu',
+                                label: '越秀'
+                            }
+                        ]
+                    },{
+                    value: 'jiangsu',
+                    label: '江苏',
+                    children: [
+                        {
+                            value: 'nanjing',
+                            label: '南京',
+                            children: [
+                                {
+                                    value: 'fuzimiao',
+                                    label: '夫子庙',
+                                }
+                            ]
+                        },
+                        {
+                            value: 'suzhou',
+                            label: '苏州',
+                            children: [
+                                {
+                                    value: 'zhuozhengyuan',
+                                    label: '拙政园',
+                                },
+                                {
+                                    value: 'shizilin',
+                                    label: '狮子林',
+                                }
+                            ]
+                        }
+                    ],
+                }],
+>>>>>>> lyc
                 newMission: {
                     taskName: "",
                     taskContent: "",
@@ -187,7 +266,11 @@
                     taskDesCode: "",
                     taskKind: "",
                     businessPlace:"shuiju",
+<<<<<<< HEAD
                     businessArea:["guangzhouarea","tianhe"],
+=======
+                    businessArea:['beijing','gugong'],
+>>>>>>> lyc
                     node:"Y",
                     taskStage: "",
                     followResult: "",

@@ -292,7 +292,7 @@
                     {field:'callbackstatus',title:'回访状态',format:'hfzt'},
                     {field:'server_realname',title:'服务人员'},
                     {field:'followby_realname',title:'市场人员'},
-                    {field:'depart',title:'责任部门',format:'departAlias'},
+                    {field:'depart',title:'责任部门'},
                     {field:'serviceranks',title:'服务评分'},
                     {field:'reason',title:'问题反馈或建议'},
                     {field:'solutionbymarketer',title:'市场反馈'},

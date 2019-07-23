@@ -18,7 +18,7 @@ module.exports = {
     "dev-222":{
         proxyTable: {
             '/api': {
-                target: 'http://192.168.0.222:9000',
+                target: 'http://192.168.2.86:9000',
                 pathRewrite: {
                   '^/api': ''
                 },
@@ -44,7 +44,7 @@ module.exports = {
     "dev-225":{
         proxyTable: {
             '/api': {
-                target: 'http://192.168.0.225:9000',
+                target: 'http://192.168.2.89:9000',
                 pathRewrite: {
                   '^/api': ''
                 },

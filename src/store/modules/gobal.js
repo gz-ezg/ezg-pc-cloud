@@ -17,12 +17,17 @@ const gobal = {
             id: ""
         },
         gobalSetFinishTime: false,
-        gobalReloginShow: false
+        gobalReloginShow: false,
+        gobalCompanyPageId: ''
 
     },
     mutations: {
         open_gobal_relogin_modal(state){
             state.gobalReloginShow = true
+        },
+
+        setPageId(state,id){
+            state.gobalCompanyPageId = id;
         },
         close_gobal_relogin_modal(state){
             state.gobalReloginShow = false
@@ -41,7 +46,7 @@ const gobal = {
         close_gobal_work_order_detail_modal(state){
             state.gobalWorkorderDetailShow = false
         },
-        open_gobal_company_detail_modal(state, companyId){
+        open_gobal_company_detail_modal(state,companyId){
             state.gobalCompanyDetailShow = true
             state.gobalCompanyId = companyId
         },
