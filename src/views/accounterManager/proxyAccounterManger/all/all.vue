@@ -29,7 +29,13 @@
                             <Row :gutter="8" style="height:56px">
                                 <Col span="8">
                                     <FormItem label="部门：" prop="departname">
-                                        <Input v-model="SearchValidate.departname" size="small"></Input>
+                                        <Select v-model="SearchValidate.departname" size="small" transfer @on-change="get_data()">
+                                            <Option value="广州会计1组">广州会计1组</Option>
+                                            <Option value="深圳会计部">深圳会计部</Option>
+                                            <Option value="东莞会计部">东莞会计部</Option>
+                                            <Option value="郑州会计部">郑州会计部</Option>
+                                            <Option value="兰州会计部">兰州会计部</Option>
+                                        </Select>
                                     </FormItem>
                                 </Col>
                                 <!--<Col span="8">-->
@@ -632,8 +638,8 @@
                 this.SearchValidate.followby_realname = '';
                 this.SearchValidate.begin_end_period = '';
                 this.SearchValidate.end_end_period = '';
-                this.SearchValidate.note_kj_flag = '';
-                this.SearchValidate.etaxStatus = '';
+                this.SearchValidate.departname = "";
+                this.current_row = ""
                 this.Search();
             },
             downloadExcel(){
