@@ -164,17 +164,17 @@
                         <Row :gutter="16" style="margin-bottom: 10px">
                             <Col span="8">
                                 <FormItem prop="assets_tatol" label="资产总额：" style="margin-bottom:5px">
-                                    <Input type="text" size="small" style="width: 80px;padding-right: 15px" v-model="companyInfoo.assets_tatol" :readonly="readonly"></Input>万元
+                                    <Input type="number" size="small" style="width: 120px;padding-right: 15px" v-model="companyInfoo.assets_tatol" :readonly="readonly"></Input>万元
                                 </FormItem>
                             </Col>
                             <Col span="8">
                                 <FormItem prop="annual_income" label="年收入或预计年收入：" style="margin-bottom:5px">
-                                    <Input size="small" style="width: 80px;padding-right: 15px" v-model="companyInfoo.annual_income" :readonly="readonly"></Input>元
+                                    <Input type="number" size="small" style="width: 120px;padding-right: 15px" v-model="companyInfoo.annual_income" :readonly="readonly"></Input>元
                                 </FormItem>
                             </Col>
                             <Col span="8">
                                 <FormItem prop="average_tax_burden" label="增值税、所得税平均税负：" style="margin-bottom:5px">
-                                    <Input size="small" v-model="companyInfoo.average_tax_burden" :readonly="readonly"></Input>
+                                    <Input type="number" size="small" v-model="companyInfoo.average_tax_burden" :readonly="readonly"></Input>
                                 </FormItem>
                             </Col>
                         </Row>

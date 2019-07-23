@@ -1,6 +1,66 @@
 <template>
     <div>
         <Card style="min-width:800px">
+            <Row style="margin-bottom:20px">
+                <Collapse v-model="search_model">
+                    <Panel name="1">
+                        <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
+                        筛选
+                        <div slot="content" @keydown.enter="Search">
+                            <Form ref="SearchValidate" :model="SearchValidate" :label-width="130" style="margin-top: 15px">
+                                <Row :gutter="8" style="height:56px">
+                                    <Col span="8">
+                                        <FormItem label="企业名称：" prop="CompanyName">
+                                            <Input v-model="SearchValidate.CompanyName" size="small"></Input>
+                                        </FormItem>
+                                    </Col>
+                                    <Col span="8">
+                                        <FormItem label="服务会计：" prop="server_realname">
+                                            <Input v-model="SearchValidate.server_realname" size="small"></Input>
+                                        </FormItem>
+                                    </Col>
+                                    <Col span="8">
+                                        <FormItem label="结束账期：" prop="followby_realname">
+                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="SearchValidate.date" style="width:100%" size="small"></DatePicker>
+                                        </FormItem>
+                                    </Col>
+                                </Row>
+                                <Row :gutter="8" style="height:56px">
+                                    <Col span="8">
+                                        <FormItem label="市场人员：" prop="departname">
+                                            <Input v-model="SearchValidate.followbyName" size="small" >
+                                            </Input>
+                                        </FormItem>
+                                    </Col>
+                                    <!--<Col span="8">-->
+                                    <!--<FormItem label="客户跟进：" prop="note_kj_flag">-->
+                                    <!--<Select v-model="SearchValidate.note_kj_flag" size="small" style="width:100%">-->
+                                    <!--<Option value="Y">完成</Option>-->
+                                    <!--<Option value="N">未完成</Option>-->
+                                    <!--</Select>-->
+                                    <!--</FormItem>-->
+                                    <!--</Col>-->
+                                    <!--<Col span="8">-->
+                                    <!--<FormItem label="电子税务局状态：" prop="etaxStatus">-->
+                                    <!--<Select v-model="SearchValidate.etaxStatus" size="small" style="width:100%">-->
+                                    <!--<Option :value="1">账号正常</Option>-->
+                                    <!--<Option :value="2">账号异常</Option>-->
+                                    <!--<Option :value="3">无账号</Option>-->
+                                    <!--</Select>-->
+                                    <!--</FormItem>-->
+                                    <!--</Col>-->
+                                </Row>
+                                <center>
+                                    <FormItem>
+                                        <Button type="primary" @click="Search">搜索</Button>
+                                        <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
+                                    </FormItem>
+                                </center>
+                            </Form>
+                        </div>
+                    </Panel>
+                </Collapse>
+            </Row>
             <Row style="margin-top: 10px;">
                 <Table
                         :loading="loading"
@@ -25,6 +85,8 @@
 </template>
 
 <script>
+    import {DateFormat} from "../../../libs/utils";
+
     export default {
         name: "index",
         data(){
@@ -34,17 +96,16 @@
                 total:1000,
                 page:1,
                 pageSize:10,
-                formValidateSearch: {
-                    ordercode: "",
-                    companyName: "",
-                    creatorName: "",
-                    customertel: "",
-                    payDir: "",
-                    date: [],
-                    crealname: "",
-                    frealname: "",
-                    paytime: [],
-                    customerCreateTime: []
+                SearchValidate: {
+                    date:[],
+                    CompanyName: '',
+                    server_realname: '',
+                    begin_end_period: '',
+                    end_end_period: '',
+                    departname:'',
+                    followbyName:""
+                    // note_kj_flag: '',
+                    // etaxStatus: ''
                 },
                 header:[
                     {
@@ -89,6 +150,19 @@
                 this.pageSize = e
                 this.get_data()
             },
+            Search(){
+                this.page = 1
+                this.get_data()
+            },
+            handleReset(){
+                this.$refs["SearchValidate"].resetFields()
+                this.SearchValidate.date = []
+                this.SearchValidate.CompanyName=null
+                this.SearchValidate.server_realname = null
+                this.SearchValidate.followbyName=""
+                this.get_data()
+            },
+
             get_data(){
                 let _self = this;
                 _self.loading = true;
@@ -96,7 +170,12 @@
                 let config = {
                     params:{
                         page:_self.page,
-                        pageSize:_self.pageSize
+                        pageSize:_self.pageSize,
+                        companyName:_self.SearchValidate.CompanyName,
+                        followbyName:_self.SearchValidate.followbyName,
+                        serverName:_self.SearchValidate.server_realname,
+                        beginDate:DateFormat(_self.SearchValidate.date[0]),
+                        endDate:DateFormat(_self.SearchValidate.date[1])
                     }
                 }
                 function success(res){

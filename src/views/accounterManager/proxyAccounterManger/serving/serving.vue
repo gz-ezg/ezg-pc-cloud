@@ -249,7 +249,21 @@
                         render: (h, params) => {
                             let _self = this
                             if (params.row.importantList == "" || params.row.importantList == null) {
-                                return "";
+                                return h("div",{
+                                    style: {
+                                        //     display: 'inline-block',
+                                        //     lineHeight: '24px',
+                                        //     height: '24px',
+                                        cursor:'pointer',
+                                        minWidth:'20px'
+                                        //     color:'#0162f4'
+                                    },
+                                    on:{
+                                        click: function() {
+                                            _self.open_import_list(params.row);
+                                        }
+                                    }
+                                },"无")
                             } else {
                                 let temp = JSON.parse(params.row.importantList)
                                 if (temp[0].taskContent.length > 13) {
