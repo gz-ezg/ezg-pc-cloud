@@ -1,6 +1,5 @@
 <template>
     <Modal
-            :transfer="false"
             title="升级意见"
             v-model="openLevelTask"
             width="500"
@@ -52,6 +51,7 @@
             }
         },
         created() {
+            this.$bus.off("OPEN_LEVEL_PAGE",true)
             this.$bus.on("OPEN_LEVEL_PAGE",(e)=>{
                 this.openLevelTask = true
                 this.Id = e.cycle_service_record_id

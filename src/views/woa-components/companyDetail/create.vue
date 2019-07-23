@@ -3,7 +3,8 @@
         <Modal
             v-model="openRelationCreate"
             title="新增联系人"
-            :transfer="false"
+            width="800"
+            :mask-closable="false"
         >
             <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
                 <FormItem label="姓名" prop="name" >

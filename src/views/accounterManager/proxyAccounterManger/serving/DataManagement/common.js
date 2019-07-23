@@ -349,13 +349,13 @@ export default {
         // if(localStorage.getItem('id')==10059){
         //     this.header.push(this.adminHeader)
         // }
-        this.get_data_center().then(
-            () => {
-                if(localStorage.getItem('id')==10059){
-                    this.header.push(this.adminHeader)
-                }
-                _self.get_data()
-            }
-        )
+        // this.get_data_center().then(
+        //     () => {
+        //         if(localStorage.getItem('id')==10059){
+        //             this.header.push(this.adminHeader)
+        //         }
+        //         _self.get_data()
+        //     }
+        // )
     }
 }

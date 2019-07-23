@@ -72,6 +72,7 @@
         <Row style="margin-top: 10px;">
             <Table
                     @on-current-change="selectRow"
+                    :row-class-name="row_class_name"
                     :loading="loading"
                     ref="selection"
                     highlight-row
@@ -94,7 +95,15 @@
         </Row>
         <invoice></invoice>
         <level></level>
+        <Creat></Creat>
+        <creat-memo></creat-memo>
+        <creat-undo></creat-undo>
+        <change></change>
+        <log></log>
+        <field></field>
+        <list></list>
         <data-management></data-management>
+        <follow-up :company="current_row" v-if="openFollowUp" @close="openFollowUp = false"></follow-up>
     </Card>
 </template>
 
@@ -105,13 +114,29 @@
     import * as accountApi from './api'
     import Level from './level/index'
     import DataManagement from './DataManagement/index'
-
+    import Creat from './ButtonComponents/creat'
+    import CreatMemo from './ButtonComponents/accountNote/creat'
+    import CreatUndo from './ButtonComponents/unfinishedThings/creat'
+    import Change from './ButtonComponents/changeAccounting/index'
+    import Bus from '../../../../components/bus'
+    import FollowUp from './ButtonComponents/serviceDetails/index'
+    import Log from './ButtonComponents/changeLog/index'
+    import Field from './fieldDetail/index'
+    import List from './importRemindList/index'
     export default {
         name: "serving",
         components:{
             Invoice,
             Level,
-            DataManagement
+            DataManagement,
+            Creat,
+            CreatMemo,
+            CreatUndo,
+            Change,
+            FollowUp,
+            Log,
+            Field,
+            List
         },
         data(){
             return{
@@ -121,11 +146,20 @@
                 page: 1,
                 pageSize: 10,
                 period:"",
+                taskSummary:"",
+                openFollowUp:false,
+                current_row:"",
                 currentIndex:-1,
                 currentIndexx:-2,
                 currentIndexxx:-3,
                 currentIndexxxx:-4,
                 l:-5,
+                cservicest:[],
+                TaxDeclareStatus:[],
+                TaxCompleteStatus:[],
+                cservicest_map:new Map(),
+                TaxDeclareStatus_map:new Map(),
+                TaxCompleteStatus_map:new Map(),
                 SearchValidate: {
                     CompanyName: '',
                     server_realname: '',
@@ -135,23 +169,7 @@
                     note_kj_flag: '',
                     etaxStatus: ''
                 },
-                data:[{ 'a':"厉害了我的哥公司",
-                        'b':"申报税种",
-                        'c':"重要提醒",
-                        'd':"aalyc",
-                        'f':"bblyc",
-                        'g':"ezglyc",
-                        'h':"ezglycc",
-                        'i':"代账类型",
-                        'j':undefined,
-                        'k':"做账备注",
-                        'l':288,
-                        'm':"未完事项",
-                        'n':5,
-                        'o':"税种状态",
-                        'p':"市场",
-                        'q':"李晓音",
-                        'r':"成功"}],
+                data:[],
                 header: [
                     {
                         title: '公司名称',
@@ -160,19 +178,19 @@
                     },
                     {
                         title: '申报税种',
-                        key: 'b',
-                        width: 120,
+                        key: 'tax_type',
+                        width: 180,
                         render: (h, params) => {
-                            if (params.row.b == "" || params.row.b == null) {
+                            if (params.row.tax_type == "" || params.row.tax_type == null) {
                                 return "";
                             } else {
                                 // console.log(params.row.companynames)
-                                let temp = params.row.b.split(",")
+                                let temp = params.row.tax_type.split(",")
                                 if (temp[0].length > 13) {
                                     return h("Poptip",{
                                         props: {
                                             trigger: "hover",
-                                            title: "归属公司",
+                                            title: "申报税种",
                                             placement: "bottom"
                                         }
                                     },[
@@ -190,7 +208,7 @@
                                                     style: {
                                                         padding: "4px"
                                                     }
-                                                },"公司名：" + item)
+                                                },"税种：" + item)
                                             ]))
                                         ])
                                     ]);
@@ -198,7 +216,7 @@
                                     return h("Poptip",{
                                             props: {
                                                 trigger: "hover",
-                                                title: "归属公司",
+                                                title: "申报税种",
                                                 placement: "bottom"
                                             }},[
                                             h("span", temp[0]),
@@ -215,7 +233,7 @@
                                                         style: {
                                                             padding: "4px"
                                                         }
-                                                    },"公司名：" + item)
+                                                    },"税种：" + item)
                                                 ]))
                                             ])
                                         ]
@@ -227,21 +245,35 @@
                     {
                         title: '重要提醒',
                         key: 'importantList',
-                        minWidth: 180,
+                        minWidth: 220,
                         render: (h, params) => {
+                            let _self = this
                             if (params.row.importantList == "" || params.row.importantList == null) {
                                 return "";
                             } else {
-                                let temp = params.row.importantList
+                                let temp = JSON.parse(params.row.importantList)
                                 if (temp[0].taskContent.length > 13) {
                                     return h("Poptip",{
                                         props: {
                                             trigger: "hover",
-                                            title: "归属公司",
+                                            title: "提醒项",
                                             placement: "bottom"
                                         }
                                     },[
-                                        h("span",temp[0].taskContent.slice(0,13) + "..."),
+                                        h("span",{
+                                            style: {
+                                            //     display: 'inline-block',
+                                            //     lineHeight: '24px',
+                                            //     height: '24px',
+                                                cursor:'pointer',
+                                            //     color:'#0162f4'
+                                            },
+                                            on:{
+                                                click: function() {
+                                                    _self.open_import_list(params.row);
+                                                }
+                                            }
+                                        },temp[0].taskContent.slice(0,13) + "..."),
                                         h("Icon", {
                                             props: {
                                                 type: "arrow-down-b"
@@ -255,7 +287,7 @@
                                                     style: {
                                                         padding: "4px"
                                                     }
-                                                },"公司名：" + item.taskContent)
+                                                },"重要提醒：" + item.taskContent)
                                             ]))
                                         ])
                                     ]);
@@ -263,10 +295,23 @@
                                     return h("Poptip",{
                                             props: {
                                                 trigger: "hover",
-                                                title: "归属公司",
+                                                title: "提醒项",
                                                 placement: "bottom"
                                             }},[
-                                            h("span", temp[0].taskContent),
+                                            h("span",{
+                                                style: {
+                                                //     display: 'inline-block',
+                                                //     lineHeight: '24px',
+                                                //     height: '24px',
+                                                    cursor:'pointer',
+                                                //     color:'#0162f4'
+                                                },
+                                                on:{
+                                                    click: function() {
+                                                        _self.open_import_list(params.row);
+                                                    }
+                                                }
+                                            }, temp[0].taskContent),
                                             h("Icon", {
                                                 props: {
                                                     type: "arrow-down-b"
@@ -280,7 +325,7 @@
                                                         style: {
                                                             padding: "4px"
                                                         }
-                                                    },"公司名：" + item.taskContent)
+                                                    },"重要提醒：" + item.taskContent)
                                                 ]))
                                             ])
                                         ]
@@ -634,8 +679,11 @@
                         key: 'shebao',
                         minWidth: 150,
                         render: (h, params) => {
+                            if (!params.row.shebao){
+                                return ""
+                            }
                             let _self = this;
-                            if (params.row.shebao == undefined) {
+                            if (params.row.shebao.confirm_date == undefined) {
                                 return h('div', [
                                     h(
                                         'span',
@@ -670,7 +718,7 @@
                                     )
                                 ]);
                             } else {
-                                return h('div', params.row.shebao.slice(0, 10));
+                                return h('div', params.row.shebao.confirm_date.slice(0, 10));
                             }
                             }
                     },
@@ -683,101 +731,173 @@
                             if (params.row.accountList == "" || params.row.accountList == null) {
                                 return "";
                             } else {
-                                let temp = params.row.accountList
+                                let temp = JSON.parse(params.row.accountList)
                                 if (temp[0].taskContent.length > 13) {
-                                    return h("Poptip",{
-                                        props: {
-                                            trigger: "hover",
-                                            title: "归属公司",
-                                            placement: "bottom"
-                                        }
-                                    },[
-                                        h("span",temp[0].taskContent.slice(0,13) + "..."),
-                                        h("Icon", {
-                                            props: {
-                                                type: "arrow-down-b"
-                                            }
-                                        }),
-                                        h("div",{
-                                            slot: "content"
-                                        },[
-                                            h("ul",temp.map(item => [
-                                                h("li", {
-                                                    style: {
-                                                        padding: "4px",
-                                                    }
-                                                },[
-                                                    h("span",{},"公司名：" + item.taskContent),
-                                                    h("Button",
-                                                        {
-                                                            props: {
-                                                                type: 'primary',
-                                                                size: 'small'
-                                                            },
-                                                            style:{
-                                                                marginTop:'-3px',
-                                                                marginLeft:'15px'
-                                                            },
-                                                            on: {
-                                                                click: function() {
-                                                                    _self.completed(params.row, params.index);
-                                                                }
-                                                            },
-                                                        },
-                                                        "完成"
-                                                    )
-                                                    ]
-                                                )
-
-                                            ]))
-                                        ])
-                                    ]);
-                                } else {
-                                    return h("Poptip",{
-                                            props: {
-                                                trigger: "hover",
-                                                title: "归属公司",
-                                                placement: "bottom"
-                                            }},[
-                                            h("span", temp[0].taskContent),
-                                            h("Icon", {
+                                         {
+                                            return h("Poptip",{
                                                 props: {
-                                                    type: "arrow-down-b"
+                                                    trigger: "hover",
+                                                    title: "备注项",
+                                                    placement: "bottom"
                                                 }
-                                            }),
-                                            h("div", {
-                                                slot: "content"
                                             },[
-                                                h("ul",temp.map(item => [h("li",
-                                                    {
-                                                        style: {
-                                                            padding: "4px"
+                                                h("span",temp[0].taskContent.slice(0,13) + "..."),
+                                                h("Icon", {
+                                                    props: {
+                                                        type: "arrow-down-b"
+                                                    }
+                                                }),
+                                                h("div",{
+                                                    slot: "content"
+                                                },[
+                                                    h("ul",temp.map(item =>{
+                                                        if (temp[i].taskStage =="tesUnstarted") {
+                                                            return [
+                                                                h("li", {
+                                                                        style: {
+                                                                            padding: "4px",
+                                                                        }
+                                                                    },[
+                                                                        h("span",{},"备注名：" + item.taskContent),
+                                                                        h("Button",
+                                                                            {
+                                                                                props: {
+                                                                                    type: 'primary',
+                                                                                    size: 'small',
+                                                                                },
+                                                                                style:{
+                                                                                    marginTop:'-3px',
+                                                                                    marginLeft:'15px'
+                                                                                },
+                                                                                on: {
+                                                                                    click: function() {
+                                                                                        _self.completed(item.taskId);
+                                                                                    }
+                                                                                },
+                                                                            },
+                                                                            "完成"
+                                                                        )
+                                                                    ]
+                                                                )
+
+                                                            ]
                                                         }
+                                                        if (item.taskStage=="tesFinished"){
+                                                                return [h("li",
+                                                                    {
+                                                                        style: {
+                                                                            padding: "4px"
+                                                                        }
+                                                                    },[
+                                                                        h("span",{},"备注名：" + item.taskContent),
+                                                                        h("span",
+                                                                            {
+                                                                                // props: {
+                                                                                //     type: 'primary',
+                                                                                //     size: 'small',
+                                                                                // },
+                                                                                style:{
+                                                                                    // marginTop:'-3px',
+                                                                                    marginLeft:'15px',
+                                                                                    color:'rgb(160 191 124)'
+                                                                                },
+                                                                                // on: {
+                                                                                //     click: function() {
+                                                                                //         _self.completed(item.taskId);
+                                                                                //     }
+                                                                                // },
+                                                                            },
+                                                                            "已完成"
+                                                                        )
+                                                                    ])
+                                                                ]
+                                                            }
+                                                    }
+                                                    ))
+                                                ])
+                                            ]);
+                                        }
+                                } else {
+                                            return h("Poptip",{
+                                                    props: {
+                                                        trigger: "hover",
+                                                        title: "备注项",
+                                                        placement: "bottom"
+                                                    }},[
+                                                    h("span", temp[0].taskContent),
+                                                    h("Icon", {
+                                                        props: {
+                                                            type: "arrow-down-b"
+                                                        }
+                                                    }),
+                                                    h("div", {
+                                                        slot: "content"
                                                     },[
-                                                        h("span",{},"公司名：" + item.taskContent),
-                                                        h("Button",
-                                                            {
-                                                                props: {
-                                                                    type: 'primary',
-                                                                    size: 'small'
-                                                                },
-                                                                style:{
-                                                                    marginTop:'-3px',
-                                                                    marginLeft:'15px'
-                                                                },
-                                                                on: {
-                                                                    click: function() {
-                                                                        _self.completed(params.row, params.index);
-                                                                    }
-                                                                },
-                                                            },
-                                                            "完成"
-                                                        )
+                                                        h("ul",temp.map(item =>{
+                                                            if (item.taskStage=="tesUnstarted"){
+                                                                return [h("li",
+                                                                    {
+                                                                        style: {
+                                                                            padding: "4px"
+                                                                        }
+                                                                    },[
+                                                                        h("span",{},"备注名：" + item.taskContent),
+                                                                        h("Button",
+                                                                            {
+                                                                                props: {
+                                                                                    type: 'primary',
+                                                                                    size: 'small',
+                                                                                },
+                                                                                style:{
+                                                                                    marginTop:'-3px',
+                                                                                    marginLeft:'15px'
+                                                                                },
+                                                                                on: {
+                                                                                    click: function() {
+                                                                                        _self.completed(item.taskId);
+                                                                                    }
+                                                                                },
+                                                                            },
+                                                                            "完成"
+                                                                        )
+                                                                    ])
+                                                                ]
+                                                            }
+                                                            if (item.taskStage=="tesFinished"){
+                                                                return [h("li",
+                                                                    {
+                                                                        style: {
+                                                                            padding: "4px"
+                                                                        }
+                                                                    },[
+                                                                        h("span",{},"备注名：" + item.taskContent),
+                                                                        h("span",
+                                                                            {
+                                                                                // props: {
+                                                                                //     type: 'primary',
+                                                                                //     size: 'small',
+                                                                                // },
+                                                                                style:{
+                                                                                    // marginTop:'-3px',
+                                                                                    marginLeft:'15px',
+                                                                                    color:'rgb(160 191 124)'
+                                                                                },
+                                                                                // on: {
+                                                                                //     click: function() {
+                                                                                //         _self.completed(item.taskId);
+                                                                                //     }
+                                                                                // },
+                                                                            },
+                                                                            "已完成"
+                                                                        )
+                                                                    ])
+                                                                ]
+                                                            }
+                                                            }
+                                                        ))
                                                     ])
-                                                ]))
-                                            ])
-                                        ]
-                                    );
+                                                ]
+                                            );
                                 }
                             }
                         }
@@ -882,61 +1002,97 @@
                             if (params.row.undoList == "" || params.row.undoList == null) {
                                 return "";
                             } else {
-                                // console.log(params.row.companynames)
-                                let temp = params.row.undoList
+                                let temp = JSON.parse(params.row.undoList)
                                 if (temp[0].taskContent.length > 13) {
-                                    return h("Poptip",{
-                                        props: {
-                                            trigger: "hover",
-                                            title: "归属公司",
-                                            placement: "bottom"
-                                        }
-                                    },[
-                                        h("span",temp[0].taskContent.slice(0,13) + "..."),
-                                        h("Icon", {
+                                    {
+                                        return h("Poptip",{
                                             props: {
-                                                type: "arrow-down-b"
+                                                trigger: "hover",
+                                                title: "备注项",
+                                                placement: "bottom"
                                             }
-                                        }),
-                                        h("div",{
-                                            slot: "content"
                                         },[
-                                            h("ul",temp.map(item => [
-                                                h("li", {
-                                                        style: {
-                                                            padding: "4px",
-                                                        }
-                                                    },[
-                                                        h("span",{},"公司名：" + item.taskContent),
-                                                        h("Button",
-                                                            {
-                                                                props: {
-                                                                    type: 'primary',
-                                                                    size: 'small'
-                                                                },
-                                                                style:{
-                                                                    marginTop:'-3px',
-                                                                    marginLeft:'15px'
-                                                                },
-                                                                on: {
-                                                                    click: function() {
-                                                                        _self.completed(params.row, params.index);
-                                                                    }
-                                                                },
-                                                            },
-                                                            "完成"
-                                                        )
-                                                    ]
-                                                )
+                                            h("span",temp[0].taskContent.slice(0,13) + "..."),
+                                            h("Icon", {
+                                                props: {
+                                                    type: "arrow-down-b"
+                                                }
+                                            }),
+                                            h("div",{
+                                                slot: "content"
+                                            },[
+                                                h("ul",temp.map(item =>{
+                                                        if (temp[i].taskStage =="tesUnstarted") {
+                                                            return [
+                                                                h("li", {
+                                                                        style: {
+                                                                            padding: "4px",
+                                                                        }
+                                                                    },[
+                                                                        h("span",{},"备注名：" + item.taskContent),
+                                                                        h("Button",
+                                                                            {
+                                                                                props: {
+                                                                                    type: 'primary',
+                                                                                    size: 'small',
+                                                                                },
+                                                                                style:{
+                                                                                    marginTop:'-3px',
+                                                                                    marginLeft:'15px'
+                                                                                },
+                                                                                on: {
+                                                                                    click: function() {
+                                                                                        _self.completed(item.taskId);
+                                                                                    }
+                                                                                },
+                                                                            },
+                                                                            "完成"
+                                                                        )
+                                                                    ]
+                                                                )
 
-                                            ]))
-                                        ])
-                                    ]);
+                                                            ]
+                                                        }
+                                                        if (item.taskStage=="tesFinished"){
+                                                            return [h("li",
+                                                                {
+                                                                    style: {
+                                                                        padding: "4px"
+                                                                    }
+                                                                },[
+                                                                    h("span",{},"备注名：" + item.taskContent),
+                                                                    h("span",
+                                                                        {
+                                                                            // props: {
+                                                                            //     type: 'primary',
+                                                                            //     size: 'small',
+                                                                            // },
+                                                                            style:{
+                                                                                // marginTop:'-3px',
+                                                                                marginLeft:'15px',
+                                                                                color:'rgb(160 191 124)'
+                                                                            },
+                                                                            // on: {
+                                                                            //     click: function() {
+                                                                            //         _self.completed(item.taskId);
+                                                                            //     }
+                                                                            // },
+                                                                        },
+                                                                        "已完成"
+                                                                    )
+                                                                ])
+                                                            ]
+                                                        }
+                                                    }
+                                                ))
+                                            ])
+                                        ]);
+                                    }
                                 } else {
                                     return h("Poptip",{
                                             props: {
                                                 trigger: "hover",
-                                                title: "归属公司",
+                                                title: "备注项",
                                                 placement: "bottom"
                                             }},[
                                             h("span", temp[0].taskContent),
@@ -948,33 +1104,68 @@
                                             h("div", {
                                                 slot: "content"
                                             },[
-                                                h("ul",temp.map(item => [h("li",
-                                                    {
-                                                        style: {
-                                                            padding: "4px"
-                                                        }
-                                                    },[
-                                                        h("span",{},"公司名：" + item.taskContent),
-                                                        h("Button",
-                                                            {
-                                                                props: {
-                                                                    type: 'primary',
-                                                                    size: 'small'
-                                                                },
-                                                                style:{
-                                                                    marginTop:'-3px',
-                                                                    marginLeft:'15px'
-                                                                },
-                                                                on: {
-                                                                    click: function() {
-                                                                        _self.completed(params.row, params.index);
+                                                h("ul",temp.map(item =>{
+                                                        if (item.taskStage=="tesUnstarted"){
+                                                            return [h("li",
+                                                                {
+                                                                    style: {
+                                                                        padding: "4px"
                                                                     }
-                                                                },
-                                                            },
-                                                            "完成"
-                                                        )
-                                                    ])
-                                                ]))
+                                                                },[
+                                                                    h("span",{},"备注名：" + item.taskContent),
+                                                                    h("Button",
+                                                                        {
+                                                                            props: {
+                                                                                type: 'primary',
+                                                                                size: 'small',
+                                                                            },
+                                                                            style:{
+                                                                                marginTop:'-3px',
+                                                                                marginLeft:'15px'
+                                                                            },
+                                                                            on: {
+                                                                                click: function() {
+                                                                                    _self.completed(item.taskId);
+                                                                                }
+                                                                            },
+                                                                        },
+                                                                        "完成"
+                                                                    )
+                                                                ])
+                                                            ]
+                                                        }
+                                                        if (item.taskStage=="tesFinished"){
+                                                            return [h("li",
+                                                                {
+                                                                    style: {
+                                                                        padding: "4px"
+                                                                    }
+                                                                },[
+                                                                    h("span",{},"备注名：" + item.taskContent),
+                                                                    h("span",
+                                                                        {
+                                                                            // props: {
+                                                                            //     type: 'primary',
+                                                                            //     size: 'small',
+                                                                            // },
+                                                                            style:{
+                                                                                // marginTop:'-3px',
+                                                                                marginLeft:'15px',
+                                                                                color:'rgb(160 191 124)'
+                                                                            },
+                                                                            // on: {
+                                                                            //     click: function() {
+                                                                            //         _self.completed(item.taskId);
+                                                                            //     }
+                                                                            // },
+                                                                        },
+                                                                        "已完成"
+                                                                    )
+                                                                ])
+                                                            ]
+                                                        }
+                                                    }
+                                                ))
                                             ])
                                         ]
                                     );
@@ -985,13 +1176,35 @@
                     {
                         title: '剩余外勤',
                         key: 'remainder',
+                        minWidth: 120,
+                        render: (h, params) => {
+                            let _self = this;
+                            return h('div', [
+                                h(
+                                    'span',
+                                    {
+                                        style: {
+                                            display: 'inline-block',
+                                            lineHeight: '24px',
+                                            height: '24px',
+                                            cursor:'pointer',
+                                            color:'#0162f4'
+                                        },
+                                        on:{
+                                            click: function() {
+                                                _self.field(params.row);
+                                            }
+                                        }
+                                    },params.row.remainder
+                                )])
+                        }
+
+                    },
+                    {
+                        title: '税种状态',
+                        key: 'tax_status',
                         minWidth: 120
                     },
-                    // {
-                    //     title: '税种状态',
-                    //     key: 'tax_status',
-                    //     minWidth: 120
-                    // },
                     {
                         title: '市场',
                         key: 'followbyrealname',
@@ -1002,11 +1215,16 @@
                         key: 'realname',
                         minWidth: 120
                     },
-                    // {
-                    //     title: '本月税报结果',
-                    //     key: 'r',
-                    //     minWidth: 120
-                    // },
+                    {
+                        title: '服务状态',
+                        key: 'service_status',
+                        minWidth: 120
+                    },
+                    {
+                        title: '本月税报结果',
+                        key: 'tax_result',
+                        minWidth: 120
+                    },
                     {
                         title: '操作',
                         key: 'action',
@@ -1075,11 +1293,17 @@
                 _self.page = a;
                 _self.get_data()
             },
-
             pageSizeChange(a) {
                 let _self = this;
                 _self.pageSize = a;
                 _self.get_data()
+            },
+            row_class_name(row, index) {
+                if (row.balance_count <= 3) {
+                    return 'demo-table-followdate-warning-row';
+                } else {
+                    return '';
+                }
             },
             invoice(e){
                 this.$bus.emit("OPEN_INVOICE_PAGE",e)
@@ -1119,6 +1343,12 @@
             handle_edit_unit_pricel(row,index){
                 this.l = index;
             },
+            field(e){
+                this.$bus.emit("OPEN_FIELD_DETAIL",e)
+            },
+            open_import_list(e){
+                this.$bus.emit("OPEN_IMPORT_LIST",e)
+            },
             copy(prx){
                 let clipboard = new Clipboard('.foo',{
                     text:()=>{
@@ -1136,35 +1366,248 @@
                 });
 
             },
-            completed(){
-                alert("完成")
+            completed(id){
+                let _self = this;
+                _self.comLoading = true;
+                let url = `api/order/cycle/service/dljz/fininshTask`;
+                let config = {
+                    params:{
+                        taskId:id,
+                        taskSummary:_self.taskSummary,
+                        mission:"Completed"
+                    }
+                }
+                function success(res){
+                    _self.comLoading = false
+                    _self.get_data()
+                }
+
+                function fail(err){
+
+                }
+                this.$Get(url, config, success, fail)
             },
             add_important_reminder(){
-                alert("新增重要提醒")
+                if (this.current_row=="" || this.current_row==null) {
+                    this.$Message.warning("请选择一行进行操作")
+                }else{
+                    this.$bus.emit("OPEN_ADD_IMPORTANT_REMINDER",this.current_row)
+                }
             },
             add_account_note(){
-                alert("新增做账备注")
+                if (this.current_row=="" || this.current_row==null) {
+                    this.$Message.warning("请选择一行进行操作")
+                }else {
+                    this.$bus.emit("OPEN_ADD_ACCOUNT_NOTE", this.current_row)
+                }
             },
             add_unfinished_things(){
-                alert("新增未完事项")
+                if (this.current_row=="" || this.current_row==null) {
+                    this.$Message.warning("请选择一行进行操作")
+                }else {
+                    this.$bus.emit("OPEN_ADD_UNFINISHED_THINGS", this.current_row)
+                }
             },
             change_accounting(){
-                alert("变更会计")
+                let _self = this;
+
+                if (_self.current_row == '' || _self.current_row == undefined) {
+                    this.$Message.warning('请选择要变更会计的项目');
+                } else {
+                    _self.current_row.workordermemo = _self.current_row.memo;
+                    _self.current_row.followby_realname = _self.current_row.followbyrealname;
+                    _self.current_row.CompanyName = _self.current_row.companyname;
+                    Bus.$emit('CHANGE_ACCOUNTING', _self.current_row);
+                }
             },
             service_detail(){
-                alert("服务详情")
+                let _self = this;
+                if (_self.current_row == '' || _self.current_row == null) {
+                    _self.$Message.warning('请选择要查看的服务详情！');
+                } else {
+                    // _self.$bus.emit('open_booking_follow',_self.current_row)
+                    this.openFollowUp = true;
+                }
             },
             open_acc_change_log(){
-                alert("会计变更日志")
+                let _self = this;
+
+                if (!_self.current_row) {
+                    this.$Message.warning('请选择要查看的项目！');
+                } else {
+                    _self.$bus.emit('OPEN_ACC_CHANGE_LOG', _self.current_row.cycle_service_record_id);
+                }
             },
             downloadExcel(){
-                alert("导出excel")
+                let field = [
+                    {
+                        field: 'companyname',
+                        title: '公司名称',
+                    },
+                    {
+                        field: 'tax_type',
+                        title: '申报税种'
+                    },
+                    {
+                        field: 'importEx',
+                        title: '重要提醒'
+                    },
+                    {
+                        field: 'nationalnum',
+                        title: '实名账号'
+                    },
+                    {
+                        field: 'nationalpsw',
+                        title: '密码'
+                    },
+                    {
+                        field: 'tax_number',
+                        title: '税号'
+                    },
+                    {
+                        field: 'tax_password',
+                        title: '个税密码'
+                    },
+                    {
+                        field: 'product',
+                        title: '代账类型'
+                    },
+                    {
+                        field: 'begin_period',
+                        title: '开始税期'
+                    },
+                    {
+                        field: 'end_period',
+                        title: '结束税期'
+                    },
+                    {
+                        field: 'shebao',
+                        title: '社保'
+                    },
+                    {
+                        field: 'accountEx',
+                        title: '做账备注'
+                    },
+                    {
+                        field: 'unit_price',
+                        title: '产品金额'
+                    },
+                    {
+                        field: 'undoEx',
+                        title: '未完事项'
+                    },
+                    {
+                        field: 'remainder',
+                        title: '剩余外勤'
+                    },
+                    {
+                        field: 'tax_status',
+                        title: '税种状态',
+                        format:'TaxCompleteStatus'
+                    },
+                    {
+                        field: 'followbyrealname',
+                        title: '市场'
+                    },
+                    {
+                        field: 'realname',
+                        title: '服务会计'
+                    },
+                    {
+                        field: 'service_status',
+                        title: '服务状态',
+                        format:'cservicest'
+                    },
+                    {
+                        field: 'tax_result',
+                        title: '本月税报结果',
+                        format:'TaxDeclareStatus'
+                    },
+                ];
+                let _self = this;
+                let url = `api/order/cycle/service/dljz/cycleMothList`;
+                let config = {
+                    page: '1',
+                    pageSize: '100000',
+                    period: _self.period,
+                    companyname: _self.SearchValidate.CompanyName,
+                    realname: _self.SearchValidate.server_realname,
+                    sortField: 'unit_price',
+                    followbyrealname: _self.SearchValidate.followby_realname,
+                    begin_end_period: _self.SearchValidate.begin_end_period,
+                    end_end_period: _self.SearchValidate.end_end_period,
+                    note_kj_flag: _self.SearchValidate.note_kj_flag,
+                    hasEAccount: _self.SearchValidate.etaxStatus == 1 ? 1 : '',
+                    hasEAccountAndWrong: _self.SearchValidate.etaxStatus == 2 ? 1 : '',
+                    hasNotEAccount: _self.SearchValidate.etaxStatus == 3 ? 1 : '',
+                    export: 'Y',
+                    exportField: encodeURI(JSON.stringify(field))
+                };
+                let toExcel = this.$MergeURL(url, config);
+                window.open(toExcel);
             },
             service_offline(){
-                alert("服务下线")
+                let _self = this;
+                console.log(_self.current_row)
+                if (_self.current_row.service_status=="已终止") {
+                    _self.$Message.warning("服务已下线")
+                    return
+                }
+                if (_self.current_row) {
+                    this.$Modal.confirm({
+                        title: '提示信息',
+                        content: '<p>您确定下线服务吗</p>',
+                        onOk: async () => {
+                            let config = {
+                                id: _self.current_row.cycle_service_record_id,
+                                serviceStatus: 'stop'
+                            };
+                            try {
+                                let { status, data } = await accountApi.cycleServiceRecordUpdate(config);
+                                if (status) {
+                                    _self.page = 1;
+                                    _self.get_data();
+                                }
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        },
+                        onCancel: () => {}
+                    });
+                } else {
+                    _self.$Message.warning('请选择要下线服务的工单！');
+                }
             },
             service_paused(){
-                alert("服务暂停")
+                let _self = this;
+                if (_self.current_row.service_status=="异常") {
+                    _self.$Message.warning("服务已暂停")
+                    return
+                }
+                if (_self.current_row) {
+                    this.$Modal.confirm({
+                        title: '提示信息',
+                        content: '<p>您确定暂停服务吗</p>',
+                        onOk: async () => {
+                            let config = {
+                                id: _self.current_row.cycle_service_record_id,
+                                serviceStatus: 'exception'
+                            };
+                            try {
+                                let { status, data } = await accountApi.cycleServiceRecordUpdate(config);
+                                if (status) {
+                                    _self.page = 1;
+                                    _self.get_data();
+                                }
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        },
+                        onCancel: () => {}
+                    });
+                } else {
+                    _self.$Message.warning('请选择要暂停服务的工单！');
+                }
             },
             update_nationalnum(index){
                 let _self = this;
@@ -1266,7 +1709,7 @@
                         page: _self.page,
                         pageSize: _self.pageSize,
                         period: _self.period,
-                        sortField: 'updatedate',
+                        sortField: 'unit_price',
                         companyname: _self.SearchValidate.CompanyName,
                         realname: _self.SearchValidate.server_realname,
                         followbyrealname: _self.SearchValidate.followby_realname,
@@ -1280,6 +1723,15 @@
                 }
                     function success(res){
                         _self.data = res.data.data.rows
+                        _self.data = res.data.data.rows.map(item => {
+                            item.service_status = _self.cservicest_map.get(item.service_status);
+                            item.tax_status = _self.TaxCompleteStatus_map.get(item.tax_status)
+                            item.tax_result = _self.TaxDeclareStatus_map.get(item.tax_result);
+                            item.remainder = item.remainder == null ? '0': item.remainder;
+                            // item.managestatusName = this.managestatus_map.get(item.managestatus);
+                            // item.note_kj_flag = item.note_kj_flag == 'Y' ? '完成' : '未完成';
+                            return item;
+                        });
                         _self.pageTotal = res.data.data.total
                         _self.loading = false
                     }
@@ -1288,17 +1740,47 @@
 
                 }
                 this.$Get(url, config, success, fail)
-            }
+            },
+            async get_data_center() {
+                let params = 'cservicest,managestatus,financialLevel,TaxDeclareStatus,TaxCompleteStatus';
+                try {
+                    let { cservicest, managestatus, financialLevel,TaxDeclareStatus,TaxCompleteStatus } = await accountApi.getDictionary(params);
+                    this.cservicest = cservicest;
+                    this.cservicest_map = this.$array2map(this.cservicest);
+                    this.managestatus = managestatus;
+                    this.managestatus_map = this.$array2map(managestatus);
+                    this.financialLevel = financialLevel;
+                    this.TaxDeclareStatus = TaxDeclareStatus
+                    this.TaxDeclareStatus_map = this.$array2map(TaxDeclareStatus)
+                    this.TaxCompleteStatus = TaxCompleteStatus
+                    this.TaxCompleteStatus_map = this.$array2map(TaxCompleteStatus)
+                } catch (error) {
+                    console.log(error);
+                }
+                // console.log(this.managestatus_map)
+            },
         },
         created() {
             let _self = this
             let date = new Date()
             _self.period = DateFormatYearMonth2(date)
             _self.get_data()
+            _self.get_data_center()
+            _self.$bus.off("UPDATE_INDEX",true)
+            _self.$bus.on("UPDATE_INDEX",(e)=>{
+                _self.get_data()
+                _self.current_row = ""
+            })
+            Bus.$on('UPDATE_INDEX',e=>{
+                _self.get_data()
+                _self.current_row = ""
+            })
         }
     }
 </script>
 
 <style>
-
+    .ivu-table .demo-table-followdate-warning-row {
+        color: rgb(226 17 0);
+    }
 </style>

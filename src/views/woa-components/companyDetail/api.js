@@ -1,4 +1,4 @@
-import {AjaxGet, AjaxDic, AjaxPost} from '../../../../api/index'
+import {AjaxGet, AjaxDic, AjaxPost} from '../../../api/index'
 
 function workOrderCycleUnitPriceUpdate(config, success, fail){
     let url = 'order/work/order/cycle/unitprice/update'
@@ -81,7 +81,7 @@ function cycleServiceRecordUpdate(config, success, fail){
 }
 
 function orderCycleMonthServiceList(config, success, fail){
-    let url = 'order/cycle/service/dljz/cycleMothList'
+    let url = 'order/cycle/month/service/list'
     return new Promise((resolve, reject)=>{
         resolve(AjaxGet(url, config, success, fail))
     }).catch((err)=>{

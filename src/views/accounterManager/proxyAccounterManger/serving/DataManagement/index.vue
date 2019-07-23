@@ -3,7 +3,6 @@
             title="资料管理"
             v-model="openDetailMission"
             width="1000"
-            :transfer="false"
             :mask-closable="false"
             class-name="vertical-top-modal"
     >
@@ -91,15 +90,23 @@
                     <Button type="warning" @click="confirm_logout" long :loading="logoutLoading" :disabled="disabled">注销</Button>
                 </div>
             </Modal>
+            <file-log :customer_f_s_a="customer_file_s_map"></file-log>
+            <update :customer_f_s_a="customer_file_s"></update>
         </Card>
     </Modal>
 </template>
 
 <script>
     import common from './common.js'
+    import FileLog from './file_log'
+    import Update from './update_file'
     export default {
         name: "index",
         mixins: [common],
+        components:{
+            FileLog,
+            Update
+        },
         data(){
             return{
                 openDetailMission:false
@@ -108,8 +115,18 @@
         created(){
             this.$bus.on("OPEN_DATA_MANAGEMENT",(e)=>{
                 this.companyId = e.company_id
-                this.get_data()
+                this.get_data_center().then(
+                    () => {
+                        if(localStorage.getItem('id')==10059){
+                            this.header.push(this.adminHeader)
+                        }
+                        this.get_data()
+                    }
+                )
                 this.openDetailMission = true
+            })
+            this.$bus.on("update",e=>{
+                this.get_data()
             })
         }
     }

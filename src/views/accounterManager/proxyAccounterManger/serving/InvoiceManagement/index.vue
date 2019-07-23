@@ -185,7 +185,12 @@
             this.$bus.on("OPEN_INVOICE_PAGE",(e)=>{
                 this.openInvoiceMission = true
                 this.companyId = e.company_id
-                this.companyName = e.companyname
+                if (e.companyname) {
+                    this.companyName = e.companyname
+                }
+                if (e.CompanyName) {
+                    this.companyName = e.CompanyName
+                }
                 this.get_data_center()
                 this.get_data()
             })

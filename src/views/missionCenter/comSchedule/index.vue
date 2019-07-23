@@ -340,6 +340,7 @@
                         page: 1,
                         pageSize: 1000,
                         businessKind:"businessKind",
+                        sortField:"plan_date",
                         task_stage:_self.taskStage,
                         executor_id:_self.executor_id,
                         mission:_self.mission,
