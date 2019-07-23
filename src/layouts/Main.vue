@@ -635,16 +635,7 @@ export default {
     }
   },
   mounted() {
-<<<<<<< HEAD
     this.initWebSocket();
-=======
-    // this.initWebSocket();
-
-    // setInterval(() => {
-    //   this.websocketsend('定时任务');
-    //   console.log('策划师');
-    // }, 2000);
->>>>>>> lyc
     this.init();
     this.rate_start();
     this.spin_loading = false;

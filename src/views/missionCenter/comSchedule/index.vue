@@ -340,11 +340,7 @@
                         page: 1,
                         pageSize: 1000,
                         businessKind:"businessKind",
-<<<<<<< HEAD
                         sortField: "plan_date",
-=======
-                        sortField:"plan_date",
->>>>>>> lyc
                         task_stage:_self.taskStage,
                         executor_id:_self.executor_id,
                         mission:_self.mission,
