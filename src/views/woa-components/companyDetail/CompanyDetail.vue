@@ -164,17 +164,17 @@
                         <Row :gutter="16" style="margin-bottom: 10px">
                             <Col span="8">
                                 <FormItem prop="assets_tatol" label="资产总额：" style="margin-bottom:5px">
-                                    <Input type="text" size="small" style="width: 80px;padding-right: 15px" v-model="companyInfoo.assets_tatol"></Input>万元
+                                    <Input type="text" size="small" style="width: 80px;padding-right: 15px" v-model="companyInfoo.assets_tatol" :readonly="readonly"></Input>万元
                                 </FormItem>
                             </Col>
                             <Col span="8">
                                 <FormItem prop="annual_income" label="年收入或预计年收入：" style="margin-bottom:5px">
-                                    <Input size="small" style="width: 80px;padding-right: 15px" v-model="companyInfoo.annual_income"></Input>元
+                                    <Input size="small" style="width: 80px;padding-right: 15px" v-model="companyInfoo.annual_income" :readonly="readonly"></Input>元
                                 </FormItem>
                             </Col>
                             <Col span="8">
                                 <FormItem prop="average_tax_burden" label="增值税、所得税平均税负：" style="margin-bottom:5px">
-                                    <Input size="small" v-model="companyInfoo.average_tax_burden"></Input>
+                                    <Input size="small" v-model="companyInfoo.average_tax_burden" :readonly="readonly"></Input>
                                 </FormItem>
                             </Col>
                         </Row>
@@ -201,7 +201,7 @@
                         </Row>
                         <Row style="margin-bottom: 10px">
                             <FormItem prop="business_description" style="margin-bottom:5px">
-                                <Input v-model="companyInfoo.business_description" type="textarea" :autosize="{minRows: 3,maxRows: 7}" style="width: 600px" placeholder="对企业的主营业务、客户群体、获利能力进行描述，从票据、资金、实物（劳务）三流的来去向进行分析；画图现三流"></Input>
+                                <Input v-model="companyInfoo.business_description" type="textarea" :autosize="{minRows: 3,maxRows: 7}" :readonly="readonly" style="width: 600px" placeholder="对企业的主营业务、客户群体、获利能力进行描述，从票据、资金、实物（劳务）三流的来去向进行分析；画图现三流"></Input>
                             </FormItem>
                         </Row>
                         <Row style="margin-bottom: 10px">
@@ -234,7 +234,7 @@
                         </Row>
                         <Row style="margin-bottom: 10px">
                             <FormItem prop="related_filing_matters"  style="margin-bottom:5px">
-                                <Input v-model="companyInfoo.related_filing_matters" type="textarea" :autosize="{minRows: 3,maxRows: 7}" style="width: 600px" placeholder="如是高新，是否享受所得税15%；是否已完成中小科技型企业备案；如是双软，是否已完成两免三减半的备案"></Input>
+                                <Input :readonly="readonly" v-model="companyInfoo.related_filing_matters" type="textarea" :autosize="{minRows: 3,maxRows: 7}" style="width: 600px" placeholder="如是高新，是否享受所得税15%；是否已完成中小科技型企业备案；如是双软，是否已完成两免三减半的备案"></Input>
                             </FormItem>
                         </Row>
                         <Row style="margin-bottom: 10px">
@@ -267,7 +267,7 @@
                         </Row>
                         <Row style="margin-bottom: 10px">
                             <FormItem prop="financial_handover"  style="margin-bottom:5px">
-                                <Input v-model="companyInfoo.financial_handover" type="textarea" :autosize="{minRows: 3,maxRows: 7}" style="width: 600px" placeholder="如是高新，是否享受所得税15%；是否已完成中小科技型企业备案；如是双软，是否已完成两免三减半的备案"></Input>
+                                <Input :readonly="readonly" v-model="companyInfoo.financial_handover" type="textarea" :autosize="{minRows: 3,maxRows: 7}" style="width: 600px" placeholder="如是高新，是否享受所得税15%；是否已完成中小科技型企业备案；如是双软，是否已完成两免三减半的备案"></Input>
                             </FormItem>
                         </Row>
                         <Row :gutter="12" style="margin-bottom: 10px">
@@ -280,7 +280,7 @@
                             </Col>
                             <Col span="8">
                                 <FormItem prop="channel_risk_one" label="该渠道存在风险：" style="margin-bottom:5px">
-                                    <Input size="small" v-model="companyInfoo.channel_risk_one"></Input>
+                                    <Input size="small" v-model="companyInfoo.channel_risk_one" :readonly="readonly"></Input>
                                 </FormItem>
                             </Col>
                         </Row>
@@ -294,31 +294,31 @@
                             </Col>
                             <Col span="8">
                                 <FormItem prop="channel_risk_two" label="该渠道存在风险：" style="margin-bottom:5px">
-                                    <Input size="small" v-model="companyInfoo.channel_risk_two"></Input>
+                                    <Input size="small" v-model="companyInfoo.channel_risk_two" :readonly="readonly"></Input>
                                 </FormItem>
                             </Col>
                         </Row>
                         <Row :gutter="12" style="margin-bottom: 10px">
                             <Col span="8">
                                 <FormItem prop="customer_scale_type" label="主要客户规模及类型：" style="margin-bottom:5px">
-                                    <Input size="small" v-model="companyInfoo.customer_scale_type"></Input>
+                                    <Input size="small" v-model="companyInfoo.customer_scale_type" :readonly="readonly"></Input>
                                 </FormItem>
                             </Col>
                             <Col span="8">
                                 <FormItem prop="three_description_one" label="三流描述：" style="margin-bottom:5px">
-                                    <Input size="small" v-model="companyInfoo.three_description_one"></Input>
+                                    <Input size="small" v-model="companyInfoo.three_description_one" :readonly="readonly"></Input>
                                 </FormItem>
                             </Col>
                         </Row>
                         <Row :gutter="12" style="margin-bottom: 10px">
                             <Col span="8">
                                 <FormItem prop="supplier_scale_type" label="主要供应商规模及类型：" style="margin-bottom:5px">
-                                    <Input size="small" v-model="companyInfoo.supplier_scale_type"></Input>
+                                    <Input size="small" v-model="companyInfoo.supplier_scale_type" :readonly="readonly"></Input>
                                 </FormItem>
                             </Col>
                             <Col span="8">
                                 <FormItem prop="three_description_two" label="三流描述：" style="margin-bottom:5px">
-                                    <Input size="small" v-model="companyInfoo.three_description_two"></Input>
+                                    <Input size="small" v-model="companyInfoo.three_description_two" :readonly="readonly"></Input>
                                 </FormItem>
                             </Col>
                         </Row>
@@ -329,7 +329,7 @@
                         </Row>
                         <Row style="margin-bottom: 10px">
                             <FormItem prop="company_point_service"  style="margin-bottom:5px">
-                                <Input v-model="companyInfoo.company_point_service" type="textarea" :autosize="{minRows: 3,maxRows: 7}" style="width: 600px" placeholder="详细描述企业服务特征"></Input>
+                                <Input :readonly="readonly" v-model="companyInfoo.company_point_service" type="textarea" :autosize="{minRows: 3,maxRows: 7}" style="width: 600px" placeholder="详细描述企业服务特征"></Input>
                             </FormItem>
                         </Row>
                         <Row style="margin-top: 30px;margin-left: 1000px">
@@ -1196,6 +1196,7 @@
                 total:0,
                 page:1,
                 pageSize:10,
+                readonly:"",
                 notify_ids:'',
                 realationPersonTitle:"",
                 industry_category:[],
@@ -1921,6 +1922,48 @@
                 console.log(this.pageId)
                 if (this.pageId){
                     this.openTab = "name1"
+                    this.ruleValidate = {
+                        industry_type: [
+                            { required: true, message: '请选择行业类别', trigger: 'change' }
+                        ],
+                            company_type: [
+                            { required: true, message: '请选择企业类别', trigger: 'change' }
+                        ],
+                            assets_tatol: [
+                            { required: true, message: '不能为空', trigger: 'blur' }
+                        ],
+                            annual_income: [
+                            { required: true, message: '不能为空', trigger: 'blur' }
+                        ],
+                            average_tax_burden: [
+                            { required: true, message: '不能为空', trigger: 'blur' },
+                        ],
+                            industry_tax_policy: [
+                            { required: true, message: '请选择行业税收政策', trigger: 'change' }
+                        ],
+                            applicable_tax_rate: [
+                            { required: true, message: '请选择上年适用税率', trigger: 'change' }
+                        ],
+                            business_description: [
+                            { required: true, message: '请输入经营描述', trigger: 'blur' }
+                        ],
+                            hightech_doublesoft: [
+                            { required: true, message: '请选择', trigger: 'change' }
+                        ],
+                            related_filing_matters: [
+                            { required: true, message: '请输入相关事项备案', trigger: 'blur' }
+                        ],
+                            customer_service_standard: [
+                            { required: true, message: '请选择', trigger: 'change' }
+                        ],
+                            financial_handover: [
+                            { required: true, message: '请输入提示或告知书', trigger: 'blur' }
+                        ],
+                    }
+                    this.readonly = false
+                }else{
+                    this.readonly = true
+                    this.ruleValidate = ""
                 }
             },
             submitTax(name){

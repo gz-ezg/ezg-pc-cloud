@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/woa-components/companyDetail/CompanyDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/woa-components/companyDetail/CompanyDetail.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -52,13 +49,67 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="194">
-              <caret line="641" column="37" lean-forward="true" selection-start-line="641" selection-start-column="37" selection-end-line="641" selection-end-column="37" />
+              <caret line="644" column="28" lean-forward="true" selection-start-line="644" selection-start-column="28" selection-end-line="644" selection-end-column="28" />
               <folding>
                 <element signature="n#style#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/views/woa-components/companyDetail/CompanyDetail.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="175">
+              <caret line="338" column="23" lean-forward="true" selection-start-line="338" selection-start-column="23" selection-end-line="338" selection-end-column="23" />
+              <folding>
+                <element signature="n#TabPane#0;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#style#0;n#Row#0;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Row#1;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Input#0;n#FormItem#0;n#Col#0;n#Row#1;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Input#0;n#FormItem#0;n#Col#1;n#Row#1;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Row#2;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Row#3;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Row#4;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#FormItem#0;n#Row#4;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Row#5;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#FormItem#0;n#Row#5;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Row#6;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Radio#1;n#Radio-group#0;n#FormItem#0;n#Row#6;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Radio#2;n#Radio-group#0;n#FormItem#0;n#Row#6;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Radio#3;n#Radio-group#0;n#FormItem#0;n#Row#6;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Row#7;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Row#8;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Row#9;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Row#10;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Row#11;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#FormItem#0;n#Row#11;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Row#12;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#FormItem#0;n#Row#12;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Row#13;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Row#14;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Row#15;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Row#16;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Row#17;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#FormItem#0;n#Row#17;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Row#18;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#FormItem#0;n#Row#18;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Input#0;n#FormItem#0;n#Row#18;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Row#19;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#TabPane#2;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#TabPane#3;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#TabPane#4;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#style#0;n#Row#0;n#Form#2;n#TabPane#5;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Col#0;n#Row#0;n#Form#2;n#TabPane#5;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Page#0;n#FormItem#0;n#Col#1;n#Row#0;n#Form#2;n#TabPane#5;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#Modal#1;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#Modal#2;n#div#0;n#template#0;n#!!top" />
+                <element signature="e#77594#79351#0" />
+                <element signature="e#99673#101622#0" />
               </folding>
             </state>
           </provider>
@@ -162,10 +213,10 @@
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/serving.vue" />
         <option value="$PROJECT_DIR$/src/layouts/Main.vue" />
         <option value="$PROJECT_DIR$/src/store/modules/gobal.js" />
-        <option value="$PROJECT_DIR$/src/views/woa-components/companyDetail/CompanyDetail.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue" />
+        <option value="$PROJECT_DIR$/src/views/woa-components/companyDetail/CompanyDetail.vue" />
       </list>
     </option>
   </component>
@@ -209,24 +260,15 @@
               <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="accounterManager" type="462c0819:PsiDirectoryNode" />
+              <item name="woa-components" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="accounterManager" type="462c0819:PsiDirectoryNode" />
-              <item name="proxyAccounterManger" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="accounterManager" type="462c0819:PsiDirectoryNode" />
-              <item name="proxyAccounterManger" type="462c0819:PsiDirectoryNode" />
-              <item name="all" type="462c0819:PsiDirectoryNode" />
+              <item name="woa-components" type="462c0819:PsiDirectoryNode" />
+              <item name="companyDetail" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -419,7 +461,7 @@
       <workItem from="1563411082499" duration="35629000" />
       <workItem from="1563757635369" duration="32579000" />
       <workItem from="1563847756539" duration="19867000" />
-      <workItem from="1563873668135" duration="1439000" />
+      <workItem from="1563873668135" duration="2617000" />
     </task>
     <task id="LOCAL-00022" summary="修改启动失败的问题">
       <created>1555989851178</created>
@@ -768,7 +810,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1414673000" />
+    <option name="totallyTimeSpent" value="1415851000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -1232,80 +1274,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/woa-components/companyDetail/CompanyDetail.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="2190" column="9" lean-forward="true" selection-start-line="2190" selection-start-column="9" selection-end-line="2190" selection-end-column="9" />
-          <folding>
-            <element signature="n#TabPane#0;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#Row#0;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#Row#0;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#Row#1;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Input#0;n#FormItem#0;n#Col#0;n#Row#1;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Input#0;n#FormItem#0;n#Col#1;n#Row#1;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#2;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#3;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#4;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#FormItem#0;n#Row#4;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#5;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#FormItem#0;n#Row#5;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#6;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Radio#1;n#Radio-group#0;n#FormItem#0;n#Row#6;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Radio#2;n#Radio-group#0;n#FormItem#0;n#Row#6;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Radio#3;n#Radio-group#0;n#FormItem#0;n#Row#6;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#7;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#8;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#9;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#10;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#11;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#FormItem#0;n#Row#11;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#12;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#FormItem#0;n#Row#12;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#13;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#14;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#15;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#16;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#17;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#FormItem#0;n#Row#17;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#18;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#FormItem#0;n#Row#18;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Input#0;n#FormItem#0;n#Row#18;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#19;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#TabPane#2;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#TabPane#3;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#TabPane#4;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#Row#0;n#Form#2;n#TabPane#5;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Col#0;n#Row#0;n#Form#2;n#TabPane#5;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Page#0;n#FormItem#0;n#Col#1;n#Row#0;n#Form#2;n#TabPane#5;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#Modal#1;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#Modal#2;n#div#0;n#template#0;n#!!top" />
-            <element signature="e#70636#70690#0" expanded="true" />
-            <element signature="e#73180#73838#0" />
-            <element signature="e#73898#74583#0" />
-            <element signature="e#76059#76161#0" />
-            <element signature="e#76189#76371#0" />
-            <element signature="e#76347#76448#0" />
-            <element signature="e#76532#76635#0" />
-            <element signature="e#76667#76887#0" />
-            <element signature="e#76915#77032#0" />
-            <element signature="e#77060#77177#0" />
-            <element signature="e#77205#77400#0" />
-            <element signature="e#77207#77314#0" />
-            <element signature="e#77351#77452#0" />
-            <element signature="e#77502#77607#0" />
-            <element signature="e#77652#77757#0" />
-            <element signature="e#85878#86665#0" />
-            <element signature="e#86690#87476#0" />
-            <element signature="e#87500#88679#0" />
-            <element signature="e#88709#89268#0" />
-            <element signature="e#89307#89637#0" />
-            <element signature="e#89664#90418#0" />
-            <element signature="e#90981#91493#0" />
-            <element signature="e#105017#105275#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/missionCenter/comSchedule/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="146">
@@ -1378,9 +1346,61 @@
     <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="194">
-          <caret line="641" column="37" lean-forward="true" selection-start-line="641" selection-start-column="37" selection-end-line="641" selection-end-column="37" />
+          <caret line="644" column="28" lean-forward="true" selection-start-line="644" selection-start-column="28" selection-end-line="644" selection-end-column="28" />
           <folding>
             <element signature="n#style#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/woa-components/companyDetail/CompanyDetail.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="338" column="23" lean-forward="true" selection-start-line="338" selection-start-column="23" selection-end-line="338" selection-end-column="23" />
+          <folding>
+            <element signature="n#TabPane#0;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#Row#0;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#1;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Input#0;n#FormItem#0;n#Col#0;n#Row#1;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Input#0;n#FormItem#0;n#Col#1;n#Row#1;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#2;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#3;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#4;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#FormItem#0;n#Row#4;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#5;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#FormItem#0;n#Row#5;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#6;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Radio#1;n#Radio-group#0;n#FormItem#0;n#Row#6;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Radio#2;n#Radio-group#0;n#FormItem#0;n#Row#6;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Radio#3;n#Radio-group#0;n#FormItem#0;n#Row#6;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#7;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#8;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#9;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#10;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#11;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#FormItem#0;n#Row#11;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#12;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#FormItem#0;n#Row#12;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#13;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#14;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#15;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#16;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#17;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#FormItem#0;n#Row#17;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#18;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#FormItem#0;n#Row#18;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Input#0;n#FormItem#0;n#Row#18;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#19;n#Form#0;n#TabPane#1;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#TabPane#2;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#TabPane#3;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#TabPane#4;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#Row#0;n#Form#2;n#TabPane#5;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Col#0;n#Row#0;n#Form#2;n#TabPane#5;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Page#0;n#FormItem#0;n#Col#1;n#Row#0;n#Form#2;n#TabPane#5;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#Modal#1;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#Modal#2;n#div#0;n#template#0;n#!!top" />
+            <element signature="e#77594#79351#0" />
+            <element signature="e#99673#101622#0" />
           </folding>
         </state>
       </provider>
