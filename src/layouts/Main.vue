@@ -123,9 +123,9 @@
     <field-list-by-company-id></field-list-by-company-id>
     <aduit-log></aduit-log>
 
-    <customer-detail v-if="gobalCustomerDetailShow" :customer="gobalCustomer"></customer-detail>
+    <customer-detail v-if="gobalCustomerDetailShow"  :customer="gobalCustomer"></customer-detail>
     <work-order-detail v-if="gobalWorkorderDetailShow" :workOrderId="gobalworkOrderId"></work-order-detail>
-    <company-detail v-if="gobalCompanyDetailShow" :companyId="gobalCompanyId"></company-detail>
+    <company-detail v-if="gobalCompanyDetailShow" :pageId="gobalCompanyPageId" :companyId="gobalCompanyId"></company-detail>
     <set-finish-time :worderOrderDetail="gobalWorkorderDetail"></set-finish-time>
     <re-login v-if="gobalReloginShow"></re-login>
 
@@ -331,6 +331,9 @@ export default {
     },
     gobalCompanyDetailShow() {
       return this.$store.state.gobal.gobalCompanyDetailShow;
+    },
+    gobalCompanyPageId() {
+      return this.$store.state.gobal.gobalCompanyPageId;
     },
     gobalCompanyId() {
       return this.$store.state.gobal.gobalCompanyId;

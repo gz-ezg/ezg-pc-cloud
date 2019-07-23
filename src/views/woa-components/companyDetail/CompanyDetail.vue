@@ -3,8 +3,9 @@
         <Modal
                 v-model="openCompanyDetail"
                 title="公司详情"
-                width="850"
+                width="1100"
                 @on-cancel="cancel"
+                :transfer="false"
         >
         <Spin fix size="large" v-if="spinShow"></Spin>
             <Tabs v-model="openTab">
@@ -122,74 +123,217 @@
                     </Row>
                 </TabPane>
                 <TabPane label="企业信息" name="name1">
-                    <Form ref="companyInfo" :model="companyInfo" :label-width="120">
-                        <Row :gutter="16">
-                            <Col span="1" style="visibility:hidden">1</Col>
-                            <Col span="10">
-                                <FormItem prop="companyname" label="公司名称：" style="margin-bottom:5px">
-                                    {{companyInfo.companyname}}
+                    <Form ref="companyInfoo" :model="companyInfoo" :label-width="180" :rules="ruleValidate">
+                        <Row :gutter="16" style="margin-bottom: 10px">
+                            <Col span="8">
+                                <FormItem prop="CompanyName" label="公司名称：" style="margin-bottom:5px">
+                                    {{companyInfoo.CompanyName}}
                                 </FormItem>
                             </Col>
-                            <Col span="10">
-                                <FormItem prop="NAME" label="归属客户：" style="margin-bottom:5px">
-                                    {{companyInfo.NAME}}
+                            <Col span="8">
+                                <FormItem prop="industry_type" label="行业类别：" style="margin-bottom:5px">
+                                    <Select  type="text" size="small" v-model="companyInfoo.industry_type" transfer>
+                                        <Option v-for="(item,index) in industry_category" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                    </Select>
+                                </FormItem>
+                            </Col>
+                            <Col span="8">
+                                <FormItem prop="company_type" label="企业类别：" style="margin-bottom:5px">
+                                    <Select  type="text" size="small" v-model="companyInfoo.company_type" transfer>
+                                        <Option v-for="(item,index) in enterprise_type" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                    </Select>
+                                </FormItem>
+                            </Col>
+                        </Row >
+                        <!--<Row :gutter="16">-->
+                            <!--<Col span="1" style="visibility:hidden">1</Col>-->
+                            <!--<Col span="10">-->
+                                <!--<FormItem prop="companyname" label="客户等级：" style="margin-bottom:5px">-->
+                                    <!--{{companyInfo.customer_importlevel}}-->
+                                <!--</FormItem>-->
+                            <!--</Col>-->
+                        <!--</Row>-->
+                        <!--<Row :gutter="24">-->
+                            <!--<Col span="1" style="visibility:hidden">1</Col>-->
+                            <!--<Col span="20">-->
+                                <!--<FormItem prop="serviceaddress" label="服务地址：" style="margin-bottom:5px">-->
+                                    <!--{{companyInfo.serviceaddress}}-->
+                                <!--</FormItem>-->
+                            <!--</Col>-->
+                        <!--</Row>-->
+                        <Row :gutter="16" style="margin-bottom: 10px">
+                            <Col span="8">
+                                <FormItem prop="assets_tatol" label="资产总额：" style="margin-bottom:5px">
+                                    <Input type="text" size="small" style="width: 80px;padding-right: 15px" v-model="companyInfoo.assets_tatol"></Input>万元
+                                </FormItem>
+                            </Col>
+                            <Col span="8">
+                                <FormItem prop="annual_income" label="年收入或预计年收入：" style="margin-bottom:5px">
+                                    <Input size="small" style="width: 80px;padding-right: 15px" v-model="companyInfoo.annual_income"></Input>元
+                                </FormItem>
+                            </Col>
+                            <Col span="8">
+                                <FormItem prop="average_tax_burden" label="增值税、所得税平均税负：" style="margin-bottom:5px">
+                                    <Input size="small" v-model="companyInfoo.average_tax_burden"></Input>
                                 </FormItem>
                             </Col>
                         </Row>
-                        <Row :gutter="16">
-                            <Col span="1" style="visibility:hidden">1</Col>
-                            <Col span="10">
-                                <FormItem prop="companyname" label="客户等级：" style="margin-bottom:5px">
-                                    {{companyInfo.customer_importlevel}}
+                        <Row :gutter="16" style="margin-bottom: 10px">
+                            <Col span="8">
+                                <FormItem prop="industry_tax_policy" label="行业税收政策：" style="margin-bottom:5px">
+                                    <Select  type="text" size="small" transfer v-model="companyInfoo.industry_tax_policy">
+                                        <Option v-for="(item,index) in tax_policy" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                    </Select>
+                                </FormItem>
+                            </Col>
+                            <Col span="8">
+                                <FormItem prop="applicable_tax_rate" label="上年适用税率（应列则列）：" style="margin-bottom:5px">
+                                    <Select  type="text" size="small" transfer v-model="companyInfoo.applicable_tax_rate">
+                                        <Option v-for="(item,index) in tax_policy" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                    </Select>
                                 </FormItem>
                             </Col>
                         </Row>
-                        <Row :gutter="24">
-                            <Col span="1" style="visibility:hidden">1</Col>
-                            <Col span="20">
-                                <FormItem prop="serviceaddress" label="服务地址：" style="margin-bottom:5px">
-                                    {{companyInfo.serviceaddress}}
+                        <Row style="margin-bottom: 10px">
+                            <FormItem style="margin-bottom:5px">
+                                <div>经营描述：</div>
+                            </FormItem>
+                        </Row>
+                        <Row style="margin-bottom: 10px">
+                            <FormItem prop="business_description" style="margin-bottom:5px">
+                                <Input v-model="companyInfoo.business_description" type="textarea" :autosize="{minRows: 3,maxRows: 7}" style="width: 600px" placeholder="对企业的主营业务、客户群体、获利能力进行描述，从票据、资金、实物（劳务）三流的来去向进行分析；画图现三流"></Input>
+                            </FormItem>
+                        </Row>
+                        <Row style="margin-bottom: 10px">
+                            <FormItem  style="margin-bottom:5px">
+                                <div>是否高薪及双软：</div>
+                            </FormItem>
+                        </Row>
+                        <Row style="margin-bottom: 10px">
+                            <FormItem prop="hightech_doublesoft" style="margin-bottom:5px">
+                                <Radio-group v-model="companyInfoo.hightech_doublesoft">
+                                    <Radio label="not">
+                                        <span>否</span>
+                                    </Radio>
+                                    <Radio label="gx" style="margin-left: 20px">
+                                        <span>高薪</span>
+                                    </Radio>
+                                    <Radio label="sr" style="margin-left: 20px">
+                                        <span>双软</span>
+                                    </Radio>
+                                    <Radio label="gx+sr" style="margin-left: 20px">
+                                        <span>高薪+双软</span>
+                                    </Radio>
+                                </Radio-group>
+                            </FormItem>
+                        </Row>
+                        <Row style="margin-bottom: 10px">
+                            <FormItem style="margin-bottom:5px">
+                                <div>相关事项备案：</div>
+                            </FormItem>
+                        </Row>
+                        <Row style="margin-bottom: 10px">
+                            <FormItem prop="related_filing_matters"  style="margin-bottom:5px">
+                                <Input v-model="companyInfoo.related_filing_matters" type="textarea" :autosize="{minRows: 3,maxRows: 7}" style="width: 600px" placeholder="如是高新，是否享受所得税15%；是否已完成中小科技型企业备案；如是双软，是否已完成两免三减半的备案"></Input>
+                            </FormItem>
+                        </Row>
+                        <Row style="margin-bottom: 10px">
+                            <FormItem style="margin-bottom:5px">
+                                <div>客户服务标准：</div>
+                            </FormItem>
+                        </Row>
+                        <Row style="margin-bottom: 10px">
+                            <FormItem prop="customer_service_standard"  style="margin-bottom:5px">
+                                <Radio-group v-model="companyInfoo.customer_service_standard">
+                                    <Radio label="ptdzbz">
+                                        <span>普通代账标准</span>
+                                    </Radio>
+                                    <Radio label="gxdzbz" style="margin-left: 20px">
+                                        <span>高薪代账标准</span>
+                                    </Radio>
+                                    <Radio label="jjdjfwb" style="margin-left: 20px">
+                                        <span>加计抵减服务包</span>
+                                    </Radio>
+                                    <Radio label="kjdjjxz" style="margin-left: 20px">
+                                        <span>会计到家精细账</span>
+                                    </Radio>
+                                </Radio-group>
+                            </FormItem>
+                        </Row>
+                        <Row style="margin-bottom: 10px">
+                            <FormItem  style="margin-bottom:5px">
+                               <div>财务交接风险点提示及风险告知书：</div>
+                            </FormItem>
+                        </Row>
+                        <Row style="margin-bottom: 10px">
+                            <FormItem prop="financial_handover"  style="margin-bottom:5px">
+                                <Input v-model="companyInfoo.financial_handover" type="textarea" :autosize="{minRows: 3,maxRows: 7}" style="width: 600px" placeholder="如是高新，是否享受所得税15%；是否已完成中小科技型企业备案；如是双软，是否已完成两免三减半的备案"></Input>
+                            </FormItem>
+                        </Row>
+                        <Row :gutter="12" style="margin-bottom: 10px">
+                            <Col span="8">
+                                <FormItem prop="income_channel_one" label="主要收入渠道1：" style="margin-bottom:5px">
+                                    <Select  type="text" size="small" transfer v-model="companyInfoo.income_channel_one">
+                                        <Option v-for="(item,index) in zysrqd" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                    </Select>
+                                </FormItem>
+                            </Col>
+                            <Col span="8">
+                                <FormItem prop="channel_risk_one" label="该渠道存在风险：" style="margin-bottom:5px">
+                                    <Input size="small" v-model="companyInfoo.channel_risk_one"></Input>
                                 </FormItem>
                             </Col>
                         </Row>
-                        <Row :gutter="16">
-                            <Col span="1" style="visibility:hidden">1</Col>
-                            <Col span="10">
-                                <FormItem prop="TEL" label="客户电话：" style="margin-bottom:5px">
-                                    {{companyInfo.TEL}}
+                        <Row :gutter="12" style="margin-bottom: 10px">
+                            <Col span="8">
+                                <FormItem prop="income_channel_two" label="主要收入渠道2：" style="margin-bottom:5px" >
+                                    <Select  type="text" size="small" transfer v-model="companyInfoo.income_channel_two">
+                                        <Option v-for="(item,index) in zysrqd" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                    </Select>
                                 </FormItem>
                             </Col>
-                            <Col span="10">
-                                <FormItem prop="cluesource" label="企业来源：" style="margin-bottom:5px">
-                                    {{companyInfo.cluesource}}
-                                </FormItem>
-                            </Col>
-                        </Row>
-                        <Row :gutter="16">
-                            <Col span="1" style="visibility:hidden">1</Col>
-                            <Col span="10">
-                                <FormItem prop="enterprisestatus" label="企业状态：" style="margin-bottom:5px">
-                                    {{companyInfo.enterprisestatus}}
-                                </FormItem>
-                            </Col>
-                            <Col span="10">
-                                <FormItem prop="importlevel" label="重要等级：" style="margin-bottom:5px">
-                                    {{companyInfo.importlevel}}
+                            <Col span="8">
+                                <FormItem prop="channel_risk_two" label="该渠道存在风险：" style="margin-bottom:5px">
+                                    <Input size="small" v-model="companyInfoo.channel_risk_two"></Input>
                                 </FormItem>
                             </Col>
                         </Row>
-                        <Row :gutter="16">
-                            <Col span="1" style="visibility:hidden">1</Col>
-                            <Col span="10">
-                                <FormItem prop="financelevel" label="年度纳税评级：" style="margin-bottom:5px">
-                                    {{companyInfo.financelevel}}
+                        <Row :gutter="12" style="margin-bottom: 10px">
+                            <Col span="8">
+                                <FormItem prop="customer_scale_type" label="主要客户规模及类型：" style="margin-bottom:5px">
+                                    <Input size="small" v-model="companyInfoo.customer_scale_type"></Input>
                                 </FormItem>
                             </Col>
-                            <Col span="10">
-                                <FormItem prop="transactiontype" label="企业交易状态：" style="margin-bottom:5px">
-                                    {{companyInfo.transactiontype}}
+                            <Col span="8">
+                                <FormItem prop="three_description_one" label="三流描述：" style="margin-bottom:5px">
+                                    <Input size="small" v-model="companyInfoo.three_description_one"></Input>
                                 </FormItem>
                             </Col>
+                        </Row>
+                        <Row :gutter="12" style="margin-bottom: 10px">
+                            <Col span="8">
+                                <FormItem prop="supplier_scale_type" label="主要供应商规模及类型：" style="margin-bottom:5px">
+                                    <Input size="small" v-model="companyInfoo.supplier_scale_type"></Input>
+                                </FormItem>
+                            </Col>
+                            <Col span="8">
+                                <FormItem prop="three_description_two" label="三流描述：" style="margin-bottom:5px">
+                                    <Input size="small" v-model="companyInfoo.three_description_two"></Input>
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <Row style="margin-bottom: 10px">
+                            <FormItem  style="margin-bottom:5px">
+                                <div>企业痛点及服务指引：</div>
+                            </FormItem>
+                        </Row>
+                        <Row style="margin-bottom: 10px">
+                            <FormItem prop="company_point_service"  style="margin-bottom:5px">
+                                <Input v-model="companyInfoo.company_point_service" type="textarea" :autosize="{minRows: 3,maxRows: 7}" style="width: 600px" placeholder="详细描述企业服务特征"></Input>
+                            </FormItem>
+                        </Row>
+                        <Row style="margin-top: 30px;margin-left: 1000px">
+                            <Button type="primary" @click="update_company_detail('companyInfoo')" v-if="pageId">提交</Button>
                         </Row>
                         <!-- <Row :gutter="16">
                             <Col span="1" style="visibility:hidden">1</Col>
@@ -230,19 +374,19 @@
                                 </FormItem>
                             </Col>
                         </Row> -->
-                        <Row :gutter="16">
-                            <Col span="1" style="visibility:hidden">1</Col>
-                            <Col span="10">
-                                <FormItem prop="type" label="企业纳税类型：" style="margin-bottom:5px">
-                                    {{companyInfo.type}}
-                                </FormItem>
-                            </Col>
-                            <Col span="10">
-                                <FormItem prop="accountgrade" label="账务等级：" style="margin-bottom:5px">
-                                    {{companyInfo.accountgrade}}
-                                </FormItem>
-                            </Col>
-                        </Row>
+                        <!--<Row :gutter="16">-->
+                            <!--<Col span="1" style="visibility:hidden">1</Col>-->
+                            <!--<Col span="10">-->
+                                <!--<FormItem prop="type" label="企业纳税类型：" style="margin-bottom:5px">-->
+                                    <!--{{companyInfo.type}}-->
+                                <!--</FormItem>-->
+                            <!--</Col>-->
+                            <!--<Col span="10">-->
+                                <!--<FormItem prop="accountgrade" label="账务等级：" style="margin-bottom:5px">-->
+                                    <!--{{companyInfo.accountgrade}}-->
+                                <!--</FormItem>-->
+                            <!--</Col>-->
+                        <!--</Row>-->
                         <!-- <Row :gutter="16">
                             <Col span="1" style="visibility:hidden">1</Col>
                             <Col span="10">
@@ -269,12 +413,12 @@
                                 </FormItem>
                             </Col>
                         </Row> -->
-                        <Row>
-                            <Col span="1" style="visibility:hidden">1</Col>
-                            <FormItem prop="c" style="margin-bottom:5px">
-                                <div slot="label">相关资料：</div>
-                            </FormItem>
-                        </Row>
+                        <!--<Row>-->
+                            <!--<Col span="1" style="visibility:hidden">1</Col>-->
+                            <!--<FormItem prop="c" style="margin-bottom:5px">-->
+                                <!--<div slot="label">相关资料：</div>-->
+                            <!--</FormItem>-->
+                        <!--</Row>-->
                     </Form>
                 </TabPane>
                 <TabPane label="主体信息" name="name2">
@@ -461,20 +605,76 @@
                     </Row>
                 </TabPane> -->
                 <TabPane label="相关联系人" name="name5">
+                    <Card>
+                        <Row style="margin-top: 10px;margin-left:10px">
+                        <Form ref="relation" :model="realationPersonTitle" :label-width="100">
+                            <Row :gutter="16">
+                                <Col span="8">
+                                    <FormItem prop="companyname" label="公司名称：" style="margin-bottom:5px">
+                                        {{realationPersonTitle.CompanyName}}
+                                    </FormItem>
+                                </Col>
+                                <Col span="8">
+                                    <FormItem prop="companyname" label="客户名称：" style="margin-bottom:5px">
+                                        {{realationPersonTitle.NAME}}
+                                    </FormItem>
+                                </Col>
+                                <Col span="8">
+                                    <FormItem prop="companyname" label="电话：" style="margin-bottom:5px">
+                                        {{realationPersonTitle.TEL}}
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row :gutter="16">
+                                <Col span="8">
+                                    <FormItem prop="companyname" label="固话：" style="margin-bottom:5px">
+                                        {{realationPersonTitle.fixedPhone}}
+                                    </FormItem>
+                                </Col>
+                                <Col span="8">
+                                    <FormItem prop="companyname" label="QQ：" style="margin-bottom:5px">
+                                        {{realationPersonTitle.qq}}
+                                    </FormItem>
+                                </Col>
+                                <Col span="8">
+                                    <FormItem prop="companyname" label="微信：" style="margin-bottom:5px">
+                                        {{realationPersonTitle.weixin}}
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row :gutter="16">
+                                <Col span="8">
+                                    <FormItem prop="companyname" label="邮箱：" style="margin-bottom:5px">
+                                        {{realationPersonTitle.email}}
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                        </Form>
+                    </Row>
+                    </Card>
+                    <Card title="相关联系人">
+                        <Row>
+                            <ButtonGroup>
+                                <Button type="primary" icon="ios-color-wand-outline" @click="add_relation">新增联系人</Button>
+                            </ButtonGroup>
+                        </Row>
+                        <create @update="getData()" :customerId="companyInfo.customerid"></create>
+                        <Row style="margin-top: 10px;margin-left:10px">
+                            <Table
+                                    ref="selection"
+                                    highlight-row
+                                    size="small"
+                                    :columns="realationPersonHeader"
+                                    :data="realationPerson"></Table>
+                        </Row>
+                    </Card>
                     <!-- <Row style="margin-left:10px">
                         <ButtonGroup>
                             <Button type="primary" icon="information-circled" @click="fpkj">添加</Button>
                             <Button type="primary" icon="ios-color-wand-outline" @click="ckbgrz">删除</Button>
                         </ButtonGroup>
                     </Row> -->
-                    <Row style="margin-top: 10px;margin-left:10px">
-                        <Table
-                                ref="selection"
-                                highlight-row
-                                size="small"
-                                :columns="realationPersonHeader"
-                                :data="realationPerson"></Table>
-                    </Row>
+
                 </TabPane>
                 <!-- <TabPane label="公司变更明细" name="name6">
                     <Row style="margin-top: 10px;margin-left:10px">
@@ -486,21 +686,21 @@
                                 :data="companyChangeDetail"></Table>
                     </Row>
                 </TabPane> -->
-                <TabPane label="税种管理" name="name7">
+                <TabPane label="企业税局信息管理" name="name7">
                     <Row>
                         <Button type="primary" style="margin-bottom:20px" @click="editTax" v-if="isEditTax">编辑</Button>
                         <Button type="primary" style="margin-bottom:20px" @click="submitTax('taxManagement')" v-if="!isEditTax" :loading="submit_ing">提交</Button>                        
                     </Row>
                     <Form ref="taxManagement" :model="taxManagement" :rules="ruleTaxManagement" :label-width="120">
-                        <Row :gutter="16">
-                            <Col span="1" style="visibility:hidden">1</Col>
-                            <Col span="11">
-                                <FormItem prop="companytype" label="账务等级：" style="margin-bottom:5px">
-                                    <Select transfer v-model="taxManagement.companytype" placeholder="" disabled>
-                                        <Option v-for="item in financialLevel" :value="item.typecode" :key="item.id">{{item.typename}}</Option>                                   
-                                    </Select>
-                                </FormItem>
-                            </Col>
+                        <!--<Row :gutter="16">-->
+                            <!--<Col span="1" style="visibility:hidden">1</Col>-->
+                            <!--<Col span="11">-->
+                                <!--<FormItem prop="companytype" label="账务等级：" style="margin-bottom:5px">-->
+                                    <!--<Select transfer v-model="taxManagement.companytype" placeholder="" disabled>-->
+                                        <!--<Option v-for="item in financialLevel" :value="item.typecode" :key="item.id">{{item.typename}}</Option>                                   -->
+                                    <!--</Select>-->
+                                <!--</FormItem>-->
+                            <!--</Col>-->
                             <!-- <Col span="11">
                                 <FormItem prop="importlevel" label="企业等级：" style="margin-bottom:5px">
                                     <Select transfer v-model="taxManagement.importlevel" placeholder="" disabled>
@@ -508,26 +708,26 @@
                                     </Select>
                                 </FormItem>
                             </Col> -->
-                        </Row>
-                        <Row :gutter="16">
-                            <Col span="1" style="visibility:hidden">1</Col>                            
-                            <Col span="11">
-                                <FormItem prop="nationaltax" label="国税税种：" style="margin-bottom:5px">
-                                    <Select transfer v-model="taxManagement.nationaltax" placeholder="" :disabled="isEditTax">
-                                        <Option value="Y">已核</Option>
-                                        <Option value="N">未核</Option>                                        
-                                    </Select>
-                                </FormItem>
-                            </Col>
-                            <Col span="11">
-                                <FormItem prop="Localtax" label="地税税种：" style="margin-bottom:5px">
-                                    <Select transfer v-model="taxManagement.Localtax" placeholder="" :disabled="isEditTax">
-                                        <Option value="Y">已核</Option>
-                                        <Option value="N">未核</Option>                                        
-                                    </Select>
-                                </FormItem>
-                            </Col>
-                        </Row>
+                        <!--</Row>-->
+                        <!--<Row :gutter="16">-->
+                            <!--<Col span="1" style="visibility:hidden">1</Col>                            -->
+                            <!--<Col span="11">-->
+                                <!--<FormItem prop="nationaltax" label="国税税种：" style="margin-bottom:5px">-->
+                                    <!--<Select transfer v-model="taxManagement.nationaltax" placeholder="" :disabled="isEditTax">-->
+                                        <!--<Option value="Y">已核</Option>-->
+                                        <!--<Option value="N">未核</Option>                                        -->
+                                    <!--</Select>-->
+                                <!--</FormItem>-->
+                            <!--</Col>-->
+                            <!--<Col span="11">-->
+                                <!--<FormItem prop="Localtax" label="地税税种：" style="margin-bottom:5px">-->
+                                    <!--<Select transfer v-model="taxManagement.Localtax" placeholder="" :disabled="isEditTax">-->
+                                        <!--<Option value="Y">已核</Option>-->
+                                        <!--<Option value="N">未核</Option>                                        -->
+                                    <!--</Select>-->
+                                <!--</FormItem>-->
+                            <!--</Col>-->
+                        <!--</Row>-->
                         <Row :gutter="16" style="margin-bottom:16px">
                             <Col span="1" style="visibility:hidden">1</Col>
                             <Col span="11">
@@ -552,12 +752,51 @@
                                     </Select>
                                 </FormItem>
                             </Col>
+                            <!--<Col span="11">-->
+                                <!--<FormItem prop="validflag" label="有效性：" style="margin-bottom:5px">-->
+                                    <!--<Select transfer v-model="taxManagement.validflag" placeholder="" :disabled="isEditTax">-->
+                                        <!--<Option value="Y">有效</Option>-->
+                                        <!--<Option value="N">无效</Option>-->
+                                    <!--</Select>-->
+                                <!--</FormItem>-->
+                            <!--</Col>-->
+                        </Row>
+                        <Row :gutter="16" style="margin-bottom:16px">
+                            <Col span="1" style="visibility:hidden">1</Col>
                             <Col span="11">
-                                <FormItem prop="validflag" label="有效性：" style="margin-bottom:5px">
-                                    <Select transfer v-model="taxManagement.validflag" placeholder="" :disabled="isEditTax">
-                                        <Option value="Y">有效</Option>
-                                        <Option value="N">无效</Option>
-                                    </Select>
+                                <FormItem prop="nationalnum" label="税号：" style="margin-bottom:5px">
+                                    <Input type="text" v-model="taxManagement.tax_number"  :disabled="isEditTax">
+                                    </Input>
+                                </FormItem>
+                            </Col>
+                            <Col span="11">
+                                <FormItem prop="nationalpsw" label="个税密码：" style="margin-bottom:5px">
+                                    <Input type="text" v-model="taxManagement.tax_password"  :disabled="isEditTax">
+                                    </Input>
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <Row :gutter="16" style="margin-bottom:16px">
+                            <Col span="1" style="visibility:hidden">1</Col>
+                            <Col span="11">
+                                <FormItem prop="nationalnum" label="税控盘密码：" style="margin-bottom:5px">
+                                    <Input type="text" v-model="taxManagement.taxdisk_password"  :disabled="isEditTax">
+                                    </Input>
+                                </FormItem>
+                            </Col>
+                            <Col span="11">
+                                <FormItem prop="nationalpsw" label="CA密码：" style="margin-bottom:5px">
+                                    <Input type="text" v-model="taxManagement.ca_password"  :disabled="isEditTax">
+                                    </Input>
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <Row :gutter="16" style="margin-bottom:16px">
+                            <Col span="1" style="visibility:hidden">1</Col>
+                            <Col span="11">
+                                <FormItem prop="nationalnum" label="红盾网密码：" style="margin-bottom:5px">
+                                    <Input type="text" v-model="taxManagement.redshield_password"  :disabled="isEditTax">
+                                    </Input>
                                 </FormItem>
                             </Col>
                         </Row>
@@ -591,154 +830,213 @@
                                 </FormItem>
                             </Col>
                         </Row> -->
-                        <Row :gutter="16">
-                            <Col span="1" style="visibility:hidden">1</Col>                            
-                            <Col span="11">
-                                <FormItem prop="addedvaluetax" label="增值税：" style="margin-bottom:5px">
-                                    <Select transfer v-model="taxManagement.addedvaluetax" placeholder="" :disabled="isEditTax">
-                                        <Option value="Y">需申报</Option>
-                                        <Option value="N">未申报</Option>                                        
-                                    </Select>
-                                </FormItem>
-                            </Col>
-                            <Col span="11">
-                                <FormItem prop="supertax" label="附加税：" style="margin-bottom:5px">
-                                    <Select transfer v-model="taxManagement.supertax" placeholder="" :disabled="isEditTax">
-                                        <Option value="Y">需申报</Option>
-                                        <Option value="N">未申报</Option>                                        
-                                    </Select>
-                                </FormItem>
-                            </Col>
-                        </Row>
-                        <Row :gutter="16">
-                            <Col span="1" style="visibility:hidden">1</Col>                            
-                            <Col span="11">
-                                <FormItem prop="Incometax" label="所得税：" style="margin-bottom:5px">
-                                    <Select transfer v-model="taxManagement.Incometax" placeholder="" :disabled="isEditTax">
-                                        <Option value="Y">需申报</Option>
-                                        <Option value="N">未申报</Option>                                        
-                                    </Select>
-                                </FormItem>
-                            </Col>
-                            <Col span="11">
-                                <FormItem prop="boxtax" label="个税：" style="margin-bottom:5px">
-                                    <Select transfer v-model="taxManagement.boxtax" placeholder="" :disabled="isEditTax">
-                                        <Option value="Y">需申报</Option>
-                                        <Option value="N">未申报</Option>                                        
-                                    </Select>
-                                </FormItem>
-                            </Col>
-                        </Row>
-                        <Row :gutter="16">
-                            <Col span="12" style="visibility:hidden">1</Col>                            
-                            </Col>
-                            <Col span="11">
-                                <FormItem prop="Stamptax" label="印花税：" style="margin-bottom:5px">
-                                    <Select transfer v-model="taxManagement.Stamptax" placeholder="" :disabled="isEditTax">
-                                        <Option value="Y">需申报</Option>
-                                        <Option value="N">未申报</Option>                                        
-                                    </Select>
-                                </FormItem>
-                            </Col>
-                        </Row>
-                        <Row :gutter="16">
-                            <Col span="12" style="visibility:hidden">1</Col>                            
-                            <!-- <Col span="11" style="visibility:hidden"> -->
-                            <!-- </Col> -->
-                            <Col span="11">
-                                <FormItem prop="socialsecurity" label="社保：" style="margin-bottom:5px">
-                                    <Select transfer v-model="taxManagement.socialsecurity" placeholder="" :disabled="isEditTax">
-                                        <Option value="Y">需申报</Option>
-                                        <Option value="N">未申报</Option>                                        
-                                    </Select>
-                                </FormItem>
-                            </Col>
-                        </Row>
-                        <Row :gutter="16">
-                            <Col span="1" style="visibility:hidden">1</Col>                            
-                            <Col span="11">
-                                <FormItem prop="Providentfund" label="公积金：" style="margin-bottom:5px">
-                                    <Select transfer v-model="taxManagement.Providentfund" placeholder="" :disabled="isEditTax">
-                                        <Option value="Y">需申报</Option>
-                                        <Option value="N">不需申报</Option>                                        
-                                    </Select>
-                                </FormItem>
-                            </Col>
-                            <Col span="11">
-                                <FormItem prop="taxdisk" label="税控盘：" style="margin-bottom:5px">
-                                    <Select transfer v-model="taxManagement.taxdisk" placeholder="" :disabled="isEditTax">
-                                        <Option value="Y">有</Option>
-                                        <Option value="N">无</Option>                                        
-                                    </Select>
-                                </FormItem>
-                            </Col>
-                        </Row>
-                        <Row :gutter="16">
-                            <Col span="1" style="visibility:hidden">1</Col>                            
-                            <Col span="11">
-                                <FormItem prop="Providentfundnum" label="公积金账户名：" style="margin-bottom:5px">
-                                    <Input type="text" v-model="taxManagement.Providentfundnum" placeholder="" disabled>
-                             
-                                    </Input>
-                                </FormItem>
-                            </Col>
-                            <Col span="11">
-                                <FormItem prop="Providentfundpsw" label="公积金密码：" style="margin-bottom:5px">
-                                    <Input type="text" v-model="taxManagement.Providentfundpsw" placeholder="" disabled>
-                                      
-                                    </Input>
-                                </FormItem>
-                            </Col>
-                        </Row>
-                        <Row :gutter="16">
-                            <Col span="1" style="visibility:hidden">1</Col>                            
-                            <Col span="11">
-                                <FormItem prop="socialsecuritypsw" label="社保密码：" style="margin-bottom:5px">
-                                    <Input type="text" v-model="taxManagement.socialsecuritypsw" placeholder="" disabled>
-                                     
-                                    </Input>
+                        <!--<Row :gutter="16">-->
+                            <!--<Col span="1" style="visibility:hidden">1</Col>                            -->
+                            <!--<Col span="11">-->
+                                <!--<FormItem prop="addedvaluetax" label="增值税：" style="margin-bottom:5px">-->
+                                    <!--<Select transfer v-model="taxManagement.addedvaluetax" placeholder="" :disabled="isEditTax">-->
+                                        <!--<Option value="Y">需申报</Option>-->
+                                        <!--<Option value="N">未申报</Option>                                        -->
+                                    <!--</Select>-->
+                                <!--</FormItem>-->
+                            <!--</Col>-->
+                            <!--<Col span="11">-->
+                                <!--<FormItem prop="supertax" label="附加税：" style="margin-bottom:5px">-->
+                                    <!--<Select transfer v-model="taxManagement.supertax" placeholder="" :disabled="isEditTax">-->
+                                        <!--<Option value="Y">需申报</Option>-->
+                                        <!--<Option value="N">未申报</Option>                                        -->
+                                    <!--</Select>-->
+                                <!--</FormItem>-->
+                            <!--</Col>-->
+                        <!--</Row>-->
+                        <!--<Row :gutter="16">-->
+                            <!--<Col span="1" style="visibility:hidden">1</Col>                            -->
+                            <!--<Col span="11">-->
+                                <!--<FormItem prop="Incometax" label="所得税：" style="margin-bottom:5px">-->
+                                    <!--<Select transfer v-model="taxManagement.Incometax" placeholder="" :disabled="isEditTax">-->
+                                        <!--<Option value="Y">需申报</Option>-->
+                                        <!--<Option value="N">未申报</Option>                                        -->
+                                    <!--</Select>-->
+                                <!--</FormItem>-->
+                            <!--</Col>-->
+                            <!--<Col span="11">-->
+                                <!--<FormItem prop="boxtax" label="个税：" style="margin-bottom:5px">-->
+                                    <!--<Select transfer v-model="taxManagement.boxtax" placeholder="" :disabled="isEditTax">-->
+                                        <!--<Option value="Y">需申报</Option>-->
+                                        <!--<Option value="N">未申报</Option>                                        -->
+                                    <!--</Select>-->
+                                <!--</FormItem>-->
+                            <!--</Col>-->
+                        <!--</Row>-->
+                        <!--<Row :gutter="16">-->
+                            <!--<Col span="12" style="visibility:hidden">1-->
+                            <!--</Col>                            -->
+                            <!---->
+                            <!--<Col span="11">-->
+                                <!--<FormItem prop="Stamptax" label="印花税：" style="margin-bottom:5px">-->
+                                    <!--<Select transfer v-model="taxManagement.Stamptax" placeholder="" :disabled="isEditTax">-->
+                                        <!--<Option value="Y">需申报</Option>-->
+                                        <!--<Option value="N">未申报</Option>                                        -->
+                                    <!--</Select>-->
+                                <!--</FormItem>-->
+                            <!--</Col>-->
+                        <!--</Row>-->
+                        <!--<Row :gutter="16">-->
+                            <!--<Col span="12" style="visibility:hidden">1</Col>                            -->
+                            <!--&lt;!&ndash; <Col span="11" style="visibility:hidden"> &ndash;&gt;-->
+                            <!--&lt;!&ndash; </Col> &ndash;&gt;-->
+                            <!--<Col span="11">-->
+                                <!--<FormItem prop="socialsecurity" label="社保：" style="margin-bottom:5px">-->
+                                    <!--<Select transfer v-model="taxManagement.socialsecurity" placeholder="" :disabled="isEditTax">-->
+                                        <!--<Option value="Y">需申报</Option>-->
+                                        <!--<Option value="N">未申报</Option>                                        -->
+                                    <!--</Select>-->
+                                <!--</FormItem>-->
+                            <!--</Col>-->
+                        <!--</Row>-->
+                        <!--<Row :gutter="16">-->
+                            <!--<Col span="1" style="visibility:hidden">1</Col>                            -->
+                            <!--<Col span="11">-->
+                                <!--<FormItem prop="Providentfund" label="公积金：" style="margin-bottom:5px">-->
+                                    <!--<Select transfer v-model="taxManagement.Providentfund" placeholder="" :disabled="isEditTax">-->
+                                        <!--<Option value="Y">需申报</Option>-->
+                                        <!--<Option value="N">不需申报</Option>                                        -->
+                                    <!--</Select>-->
+                                <!--</FormItem>-->
+                            <!--</Col>-->
+                            <!--<Col span="11">-->
+                                <!--<FormItem prop="taxdisk" label="税控盘：" style="margin-bottom:5px">-->
+                                    <!--<Select transfer v-model="taxManagement.taxdisk" placeholder="" :disabled="isEditTax">-->
+                                        <!--<Option value="Y">有</Option>-->
+                                        <!--<Option value="N">无</Option>                                        -->
+                                    <!--</Select>-->
+                                <!--</FormItem>-->
+                            <!--</Col>-->
+                        <!--</Row>-->
+                        <!--<Row :gutter="16">-->
+                            <!--<Col span="1" style="visibility:hidden">1</Col>                            -->
+                            <!--<Col span="11">-->
+                                <!--<FormItem prop="Providentfundnum" label="公积金账户名：" style="margin-bottom:5px">-->
+                                    <!--<Input type="text" v-model="taxManagement.Providentfundnum" placeholder="" disabled>-->
+                             <!---->
+                                    <!--</Input>-->
+                                <!--</FormItem>-->
+                            <!--</Col>-->
+                            <!--<Col span="11">-->
+                                <!--<FormItem prop="Providentfundpsw" label="公积金密码：" style="margin-bottom:5px">-->
+                                    <!--<Input type="text" v-model="taxManagement.Providentfundpsw" placeholder="" disabled>-->
+                                      <!---->
+                                    <!--</Input>-->
+                                <!--</FormItem>-->
+                            <!--</Col>-->
+                        <!--</Row>-->
+                        <!--<Row :gutter="16">-->
+                            <!--<Col span="1" style="visibility:hidden">1</Col>                            -->
+                            <!--<Col span="11">-->
+                                <!--<FormItem prop="socialsecuritypsw" label="社保密码：" style="margin-bottom:5px">-->
+                                    <!--<Input type="text" v-model="taxManagement.socialsecuritypsw" placeholder="" disabled>-->
+                                     <!---->
+                                    <!--</Input>-->
+                                <!--</FormItem>-->
+                            <!--</Col>-->
+                        <!--</Row>-->
+                    </Form>
+                    <Form ref="taxManagement" :model="tmData" :rules="tmData" :label-width="120">
+                    <Row style="margin-top: 10px;">
+                        <Col span="1" style="visibility:hidden">1</Col>
+                        <Col span="22">
+                            <FormItem prop="nationalnum" label="当月申报税种：" style="margin-bottom:5px">
+                                <Table
+                                        :loading="loading1"
+                                        ref="selection"
+                                        highlight-row
+                                        size="small"
+                                        :columns="header"
+                                        :data="tmData"
+                                ></Table>
+                                <Page
+                                        size="small"
+                                        :total="pageTotal1"
+                                        show-total
+                                        show-sizer
+                                        show-elevator
+                                        @on-change="pageChange1"
+                                        @on-page-size-change="pageSizeChange1"
+                                        :current.sync="page1"
+                                        placement="top"
+                                        style="margin-top: 10px"
+                                ></Page>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    </Form>
+                    <Form ref="taxManagement" :model="tmData" :rules="tmData" :label-width="120">
+                        <Row style="margin-top: 10px;">
+                            <Col span="1" style="visibility:hidden">1</Col>
+                            <Col span="22">
+                                <FormItem prop="nationalnum" label="历史逾期情况：" style="margin-bottom:5px">
+                                    <Table
+                                            :loading="loading2"
+                                            ref="selection"
+                                            highlight-row
+                                            size="small"
+                                            :columns="header2"
+                                            :data="tnData"
+                                    ></Table>
+                                    <Page
+                                            size="small"
+                                            :total="pageTotal2"
+                                            show-total
+                                            show-sizer
+                                            show-elevator
+                                            @on-change="pageChange2"
+                                            @on-page-size-change="pageSizeChange2"
+                                            :current.sync="page2"
+                                            placement="top"
+                                            style="margin-top: 10px"
+                                    ></Page>
                                 </FormItem>
                             </Col>
                         </Row>
                     </Form>
                 </TabPane>
-                <TabPane label="外勤详情" name="name9">
-                    <Row style="margin-top: 10px; display: flex; justify-content: space-between" :gutter="12">
-                        <Col span="6">
-                            <Card>
-                                <p slot="title" style="text-align: center">服务期内总外勤</p>
-                                <p style="text-align: center;font-weight: 700;font-size: 14px">A类：{{countData.aCount}}个</p>
-                                <p style="text-align: center;font-weight: 700;font-size: 14px">B类：{{countData.bCount}}个</p>
-                            </Card>
-                        </Col>
-                        <Col span="6">
-                            <Card>
-                                <p slot="title" style="text-align: center">剩余外勤</p>
-                                <p style="text-align: center;font-weight: 700;font-size: 14px">A类：{{countData.remainderA}}个</p>
-                                <p style="text-align: center;font-weight: 700;font-size: 14px">B类：{{countData.remainderB}}个</p>
-                            </Card>
-                        </Col>
-                    </Row>
-                    <Row style="margin-top: 10px;">
-                        <Table
-                                :loading="loading"
-                                highlight-row
-                                size="small"
-                                border
-                                :columns="header"
-                                :data="data"></Table>
-                        <Page
-                                size="small"
-                                :total="total"
-                                show-total
-                                show-sizer
-                                show-elevator
-                                :current.sync="page"
-                                @on-change="pageChange"
-                                @on-page-size-change="pageSizeChange"
-                                style="margin-top: 10px"></Page>
-                    </Row>
-                </TabPane>
+                <!--<TabPane label="外勤详情" name="name9">-->
+                    <!--<Row style="margin-top: 10px; display: flex; justify-content: space-between" :gutter="12">-->
+                        <!--<Col span="6">-->
+                            <!--<Card>-->
+                                <!--<p slot="title" style="text-align: center">服务期内总外勤</p>-->
+                                <!--<p style="text-align: center;font-weight: 700;font-size: 14px">A类：{{countData.aCount}}个</p>-->
+                                <!--<p style="text-align: center;font-weight: 700;font-size: 14px">B类：{{countData.bCount}}个</p>-->
+                            <!--</Card>-->
+                        <!--</Col>-->
+                        <!--<Col span="6">-->
+                            <!--<Card>-->
+                                <!--<p slot="title" style="text-align: center">剩余外勤</p>-->
+                                <!--<p style="text-align: center;font-weight: 700;font-size: 14px">A类：{{countData.remainderA}}个</p>-->
+                                <!--<p style="text-align: center;font-weight: 700;font-size: 14px">B类：{{countData.remainderB}}个</p>-->
+                            <!--</Card>-->
+                        <!--</Col>-->
+                    <!--</Row>-->
+                    <!--<Row style="margin-top: 10px;">-->
+                        <!--<Table-->
+                                <!--:loading="loading"-->
+                                <!--highlight-row-->
+                                <!--size="small"-->
+                                <!--border-->
+                                <!--:columns="header"-->
+                                <!--:data="data"></Table>-->
+                        <!--<Page-->
+                                <!--size="small"-->
+                                <!--:total="total"-->
+                                <!--show-total-->
+                                <!--show-sizer-->
+                                <!--show-elevator-->
+                                <!--:current.sync="page"-->
+                                <!--@on-change="pageChange"-->
+                                <!--@on-page-size-change="pageSizeChange"-->
+                                <!--style="margin-top: 10px"></Page>-->
+                    <!--</Row>-->
+                <!--</TabPane>-->
             </Tabs>
             <div slot="footer"></div>
         </Modal>
@@ -787,8 +1085,6 @@
                 title="新增跟进"
                 width="700"
                 @on-cancel="canceladdContent">
-                                      
-                </Row>
                 <Form ref="addDetailContent" :model="addDetailContent" :label-width="120">
                     <Row :gutter="16">
                         <Col span="1" style="visibility:hidden">1</Col>
@@ -864,14 +1160,20 @@
     // import { yasuo } from '../../../libs/img_beforeUpload.js'
     import { yasuo } from '../../../libs/img_beforeUpload'
     import { DateFormat } from '../../../libs/utils.js'
-
+    import Create from './create'
 
 
     export default {
         props: {
             companyId: {
                 type: [String, Number]
+            },
+            pageId: {
+                type: [String, Number]
             }
+        },
+        components:{
+            Create
         },
         data(){
             return {
@@ -880,11 +1182,28 @@
                 userData: [],
                 user: [],
                 data:[],
+                loading1:false,
+                loading2:false,
+                page1:1,
+                page2:1,
+                pageSize2:10,
+                pageSize1:10,
+                pageTotal2:"",
+                pageTotal1:"",
                 countData:[],
+                tmData:[],
+                tnData:[],
                 total:0,
                 page:1,
                 pageSize:10,
                 notify_ids:'',
+                realationPersonTitle:"",
+                industry_category:[],
+                enterprise_type:[],
+                tax_policy:[],
+                sfgxjsr:[],
+                kffwbz:[],
+                zysrqd:[],
                 loading:false,
                 openFinish: true,
                 etax_account_type: [],
@@ -1003,6 +1322,67 @@
                         { required: true, message: '必填项！', trigger: 'change' }
                     ]
                 },
+                companyInfoo:{
+                    industry_type:"",
+                    company_type:"",
+                    assets_tatol:"",
+                    annual_income:"",
+                    average_tax_burden:"",
+                    industry_tax_policy:"",
+                    applicable_tax_rate:"",
+                    business_description:"",
+                    hightech_doublesoft:"",
+                    related_filing_matters:"",
+                    customer_service_standard:"",
+                    financial_handover:"",
+                    income_channel_one:"",
+                    channel_risk_one:"",
+                    income_channel_two:"",
+                    channel_risk_two:"",
+                    customer_scale_type:"",
+                    three_description_one:"",
+                    supplier_scale_type:"",
+                    three_description_two:"",
+                    company_point_service:"",
+                },
+                ruleValidate: {
+                    industry_type: [
+                        { required: true, message: '请选择行业类别', trigger: 'change' }
+                    ],
+                    company_type: [
+                        { required: true, message: '请选择企业类别', trigger: 'change' }
+                    ],
+                    assets_tatol: [
+                        { required: true, message: '不能为空', trigger: 'blur' }
+                    ],
+                    annual_income: [
+                        { required: true, message: '不能为空', trigger: 'blur' }
+                    ],
+                    average_tax_burden: [
+                        { required: true, message: '不能为空', trigger: 'blur' },
+                    ],
+                    industry_tax_policy: [
+                        { required: true, message: '请选择行业税收政策', trigger: 'change' }
+                    ],
+                    applicable_tax_rate: [
+                        { required: true, message: '请选择上年适用税率', trigger: 'change' }
+                    ],
+                    business_description: [
+                        { required: true, message: '请输入经营描述', trigger: 'blur' }
+                    ],
+                    hightech_doublesoft: [
+                        { required: true, message: '请选择', trigger: 'change' }
+                    ],
+                    related_filing_matters: [
+                        { required: true, message: '请输入相关事项备案', trigger: 'blur' }
+                    ],
+                    customer_service_standard: [
+                        { required: true, message: '请选择', trigger: 'change' }
+                    ],
+                    financial_handover: [
+                        { required: true, message: '请输入提示或告知书', trigger: 'blur' }
+                    ],
+                },
                 dynamic:[],
                 workOrder:[],
                 workOrderHeader: [
@@ -1059,18 +1439,45 @@
                 ],
                 realationPersonHeader: [
                     {
-                        title: '联系人名称',
+                        title: '姓名',
                         key: 'name',
+                        minWidth: 120
                     },
                     {
-                        title: '联系方式',
+                        title: '电话',
                         key: 'tel',
+                        minWidth: 120
+                    },
+                    {
+                        title: 'qq',
+                        key: 'qq',
+                        minWidth: 120
+                    },
+                    {
+                        title: '微信',
+                        key: 'weChat',
+                        minWidth: 120
+                    },
+                    {
+                        title: '邮箱',
+                        key: 'email',
+                        minWidth: 120
+                    },
+                    {
+                        title: '职位',
+                        key: 'jobPlace',
+                        minWidth: 120
+                    },
+                    {
+                        title: '发送消息',
+                        key: 'sendMsgFlag',
+                        minWidth: 120
                     },
                     {
                         title: '备注',
                         key: 'memo',
                         minWidth: 120
-                    }
+                    },
                 ],
                 companyChangeDetailHeader: [
                     {
@@ -1192,7 +1599,41 @@
                     }
                 }
             ],
-        
+                header:[
+                    {
+                        title:'税种',
+                        key:'subject',
+                        minWidth:160
+                    },
+                    {
+                        title:'申报时间',
+                        key:'bs_date',
+                        minWidth:160
+                    },
+                    {
+                        title:'申报结果',
+                        key:'finish_status',
+                        minWidth:160
+                    },
+                ],
+                header2:[
+                    {
+                        title:'税种',
+                        key:'subject',
+                        minWidth:160
+                    },
+                    {
+                        title:'申报时间',
+                        key:'bs_date',
+                        minWidth:160
+                    },
+                    {
+                        title:'申报结果',
+                        key:'finish_status',
+                        minWidth:160
+                    },
+                ],
+
         }
         },
         methods: {
@@ -1203,6 +1644,72 @@
             pageSizeChange(e){
                 this.pageSize = e
                 this.get_data()
+            },
+            pageChange1(e){
+                this.page1 = e
+                this.get_data1()
+            },
+            pageSizeChange1(e){
+                this.pageSize1 = e
+                this.get_data1()
+            },
+            pageChange2(e){
+                this.page2 = e
+                this.get_data2()
+            },
+            pageSizeChange2(e){
+                this.pageSize2 = e
+                this.get_data2()
+            },
+            add_relation(){
+                console.log("123")
+                this.$bus.emit("CREATE_CUSTOMER_RELATION", true)
+            },
+            get_data1(){
+                let _self = this
+                _self.loading1 = true
+                let url = 'api/customer/company/getThisMothTaxBycompanyId'
+                let config = {
+                    params:{
+                        companyId:_self.companyId,
+                        page:_self.page1,
+                        pageSize:_self.pageSize1
+                    }
+                }
+
+                function success(res){
+                    console.log(res.data.data)
+                    if (res.data.data) {
+                        _self.tmData= res.data.data.rows
+                        _self.pageTotal1 = res.data.data.total
+                        _self.loading1 = false
+                    }
+                }
+
+                this.$Get(url, config ,success)
+            },
+            get_data2(){
+                let _self = this
+                _self.loading2 = true
+                let url = 'api/customer/company/getHistoryTaxBycompanyId'
+                let config = {
+                    params:{
+                        companyId:_self.companyId,
+                        page:_self.page2,
+                        pageSize:_self.pageSize2
+                    }
+                }
+
+                function success(res){
+                    console.log(res.data.data)
+                    if (res.data.data) {
+                        _self.tnData= res.data.data.rows
+                        _self.pageTotal2 = res.data.data.total
+                        _self.loading2 = false
+                    }
+                }
+
+                this.$Get(url, config ,success)
             },
             get_data(){
                 let _self = this
@@ -1285,6 +1792,50 @@
                 }
                 this.$Get(url,config,success)
             },
+            update_company_detail(name){
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        let _self = this
+                        let url = `api/order/cycle/service/dljz/updateCompanyInfo`
+                        let config = {
+                            companyId: _self.companyId,
+                            id:_self.companyInfoo.id,
+                            companyType: _self.companyInfoo.company_type,
+                            industryType: _self.companyInfoo.industry_type,
+                            assetsTatol: _self.companyInfoo.assets_tatol,
+                            annualIncome: _self.companyInfoo.annual_income,
+                            averageTaxBurden: _self.companyInfoo.average_tax_burden,
+                            industryTaxPolicy: _self.companyInfoo.industry_tax_policy,
+                            applicableTaxRate: _self.companyInfoo.applicable_tax_rate,
+                            businessDescription: _self.companyInfoo.business_description,
+                            hightechDoublesoft: _self.companyInfoo.hightech_doublesoft,
+                            relatedFilingMatters: _self.companyInfoo.related_filing_matters,
+                            customerServiceStandard: _self.companyInfoo.customer_service_standard,
+                            financialHandover: _self.companyInfoo.financial_handover,
+                            incomeChannelOne: _self.companyInfoo.income_channel_one,
+                            channelRiskOne: _self.companyInfoo.channel_risk_one,
+                            incomeChannelTwo: _self.companyInfoo.income_channel_two,
+                            channelRiskTwo: _self.companyInfoo.channel_risk_two,
+                            customerScaleType: _self.companyInfoo.customer_scale_type,
+                            threeDescriptionOne: _self.companyInfoo.three_description_one,
+                            supplierScaleType: _self.companyInfoo.supplier_scale_type,
+                            threeDescriptionTwo: _self.companyInfoo.three_description_two,
+                            companyPointService: _self.companyInfoo.company_point_service
+                        }
+
+                        function success(res) {
+                            _self.begin_service()
+                        }
+
+                        function fail(err) {
+
+                        }
+                        this.$Post(url, config, success, fail)
+                    }else {
+                        this.$Message.error('请填写必选项!');
+                    }
+                })
+            },
             update_customer_flag(row, status){
                 console.log(row)
                 let _self = this
@@ -1304,6 +1855,26 @@
 
                 this.$Post(url, config, success, fail)
             },
+            begin_service() {
+                let _self = this
+                let url = `api/order/cycle/service/record/update`
+                let config = {
+                    id: _self.pageId,
+                    serviceStatus: 'inservice'
+                }
+
+                function success(res){
+                    _self.$bus.emit("UPDATE_INDEX",true)
+                    _self.getData()
+                    _self.cancel()
+                }
+
+                function fail(err){
+
+                }
+
+                this.$Post(url, config, success, fail)
+            },
             fpkj(){},
             ckbgrz(){},
             getData() {
@@ -1313,7 +1884,7 @@
                 let config = {
                     params:{
                         id:_self.companyId,
-                        detailTypes:"basic,main,workOrder,taxManagement,customerRecord,dynamic"
+                        detailTypes:"basic,main,workOrder,taxManagement,customerRecord,dynamic,companyInfo"
                     }
                 }
                 _self.detail = true
@@ -1324,6 +1895,8 @@
                     _self.taxManagement = res.data.data.taxManagement.length != 0 ? res.data.data.taxManagement[0] : {}
                     _self.followUpData = res.data.data.customerRecord
                     _self.realationPerson = res.data.data.dynamic
+                    _self.realationPersonTitle = res.data.data.customer.length != 0 ? res.data.data.customer[0] : {}
+                    _self.companyInfoo = res.data.data.companyInfo.length != 0 ? res.data.data.companyInfo[0] : {}
                     _self.spinShow = false
                 }
 
@@ -1338,10 +1911,17 @@
             cancel () {
                 // this.detail = false
                 this.openTab = "name8"
+                this.$store.state.gobal.gobalCompanyPageId = ""
                 this.$store.commit("close_gobal_company_detail_modal")
             },
             editTax(){
                 this.isEditTax = !this.isEditTax
+            },
+            changeTab(){
+                console.log(this.pageId)
+                if (this.pageId){
+                    this.openTab = "name1"
+                }
             },
             submitTax(name){
                 this.$refs[name].validate((valid) => {
@@ -1358,6 +1938,11 @@
                             Localtax:_self.taxManagement.Localtax,
                             nationalnum:_self.taxManagement.nationalnum.replace(/\s+/g,""),
                             nationalpsw:_self.taxManagement.nationalpsw.replace(/\s+/g,""),
+                            taxNumber:_self.taxManagement.tax_number,
+                            taxPassword:_self.taxManagement.tax_password,
+                            taxdiskPassword:_self.taxManagement.taxdisk_password,
+                            caPassword:_self.taxManagement.ca_password,
+                            redshieldPassword:_self.taxManagement.redshield_password,
                             Localnum:_self.taxManagement.Localnum,
                             Localpsw:_self.taxManagement.Localpsw,
                             addedvaluetax:_self.taxManagement.addedvaluetax,
@@ -1559,19 +2144,45 @@
                 }else{
                     _self.followupshow = true
                 }
-            }
+            },
+            get_data_center(){
+                let params = "industry_category,enterprise_type,tax_policy,sfgxjsr,kffwbz,zysrqd"
+
+                let _self = this
+
+                function success(res){
+                    _self.industry_category = res.data.data.industry_category
+                    _self.enterprise_type = res.data.data.enterprise_type
+                    _self.tax_policy = res.data.data.tax_policy
+                    _self.sfgxjsr = res.data.data.sfgxjsr
+                    _self.kffwbz = res.data.data.kffwbz
+                    _self.zysrqd = res.data.data.zysrqd
+                    _self.industry_category_map = _self.$array2map(_self.industry_category)
+                    _self.enterprise_type_map = _self.$array2map(_self.enterprise_type)
+                    _self.tax_policy_map = _self.$array2map(_self.tax_policy)
+                    _self.sfgxjsr_map = _self.$array2map(_self.sfgxjsr)
+                    _self.kffwbz_map = _self.$array2map(_self.kffwbz)
+                    _self.zysrqd_map = _self.$array2map(_self.zysrqd)
+                }
+                this.$GetDataCenter(params, success)
+            },
 
         },
         created(){
             this.getUserData()
+            this.changeTab()
         },
         mounted(){
-            var _self = this
+            this.get_data_center()
             this.getRole()
             this.GetFollowUpType()   
             this.getData()
             this.get_data()
+            this.get_data1()
+            this.get_data2()
             this.get_count_data()
+            //TODO
+            // this.$store.gobalCompanyPageId
         },
         beforeDestroy () {
             // this.$bus.off(['VueBusTest'])

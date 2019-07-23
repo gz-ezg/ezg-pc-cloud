@@ -364,6 +364,7 @@
                     _self.get_detail(_self.id)
                     _self.openTaskDetail = false
                     _self.taskSummary = ""
+                    _self.mission = "Completed"
                 }
                 function fail(){
 
