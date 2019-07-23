@@ -824,11 +824,12 @@
                                     h('Input', {
                                         props: {
                                             value: this.data[params.index].unit_price,
-                                            size: 'small'
+                                            size: 'small',
+                                            type:'number'
                                         },
                                         style: {
                                             display: 'inline-block',
-                                            width: '60px'
+                                            width: '100px'
                                         },
                                         on: {
                                             'on-blur': function(event) {
