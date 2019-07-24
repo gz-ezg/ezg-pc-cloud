@@ -5,11 +5,12 @@
             width="800"
             :mask-closable="false"
     >
-        <Form ref="newMission" :model="newMission" :label-width="80" style="margin-left:50px;margin-right:50px">
+        <div @click="hidePhrase">
+            <Form ref="newMission" :model="newMission" :label-width="80" style="margin-left:50px;margin-right:50px">
             <div class="sp">
                 <new-edit-div v-model="newMission.taskName"></new-edit-div>
                 <div class="spz">
-                    <div class="spzz" @click="showPhrase"><Icon type="android-chat" ></Icon></div>
+                    <div class="spzz" @click.stop="showPhrase"><Icon type="android-chat" ></Icon></div>
                 </div>
             </div>
             <div v-show="phraseShow" class="ssz">
@@ -129,6 +130,7 @@
                 </CheckboxGroup>
             </FormItem> -->
         </Form>
+        </div>
         <div slot="footer">
             <Button @click="create_task" type="primary" :loading="createLoading">发布</Button>
             <Button @click="cancel_task" type="ghost">清空</Button>
@@ -252,6 +254,11 @@
                     this.phraseShow=true
                 }
                 this.get_phrase_list()
+            },
+            hidePhrase(){
+                if (this.phraseShow===true){
+                    this.phraseShow=false
+                }
             },
             get_phrase_list(){
                 let _self = this

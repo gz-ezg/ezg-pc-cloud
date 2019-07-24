@@ -109,7 +109,7 @@ export default {
     data(){
         return{
             //  提交操作
-            connectPlan: "f_to_f",
+            connectPlan: "f_t_f",
             trackingNumber: "",
             outType: "customer",
             otherName: "",

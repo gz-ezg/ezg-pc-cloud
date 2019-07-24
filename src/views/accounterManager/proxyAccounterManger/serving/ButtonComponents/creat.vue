@@ -1,42 +1,44 @@
 <template>
-    <Modal
-            title="新建重要提醒"
-            v-model="openAddMission"
-            width="800"
-            :mask-closable="false"
-    >
-        <Form ref="newMission" :model="newMission" :label-width="80" style="margin-left:50px;margin-right:50px">
-            <div class="sp">
-                <new-edit-div v-model="newMission.taskName"></new-edit-div>
-                <div class="spz">
-                    <div class="spzz" @click="showPhrase"><Icon type="android-chat" ></Icon></div>
-                </div>
-            </div>
-            <div v-show="phraseShow" class="ssz">
-                <Card>
-                    <div class="sszz" v-for="(item,index) in phraseList" @click="giveData(item)" :loading="phraseLoading">
-                        <div class="ssz1">{{item.quick_content}}</div>
-                        <div class="ssz2" @click.stop="editable(item.quick_content,item.id)"><Icon type="edit" ></Icon></div>
-                        <div class="ssz3" @click.stop="selectArr(item.id)"><Icon type="close" ></Icon></div>
+        <Modal
+                title="新建重要提醒"
+                v-model="openAddMission"
+                width="800"
+                :mask-closable="false"
+        >
+            <div @click="hidePhrase">
+                <Form ref="newMission" :model="newMission" :label-width="80" style="margin-left:50px;margin-right:50px">
+                <div class="sp">
+                    <new-edit-div v-model="newMission.taskName"></new-edit-div>
+                    <div class="spz">
+                        <div class="spzz" @click.stop="showPhrase"><Icon type="android-chat" ></Icon></div>
                     </div>
-                    <div class="sszz1" @click="add_schtask"><h4>+添加</h4></div>
-                </Card>
+                </div>
+                <div v-show="phraseShow" class="ssz">
+                    <Card>
+                        <div class="sszz" v-for="(item,index) in phraseList" @click="giveData(item)" :loading="phraseLoading">
+                            <div class="ssz1">{{item.quick_content}}</div>
+                            <div class="ssz2" @click.stop="editable(item.quick_content,item.id)"><Icon type="edit" ></Icon></div>
+                            <div class="ssz3" @click.stop="selectArr(item.id)"><Icon type="close" ></Icon></div>
+                        </div>
+                        <div class="sszz1" @click="add_schtask"><h4>+添加</h4></div>
+                    </Card>
+                </div>
+                <Row :gutter="12">
+                    <Col span="12">
+                        <FormItem label="代办于" prop="planDate">
+                            <DatePicker format="yyyy-MM-dd HH:mm:ss" type="datetime" v-model="newMission.planDate" style="width:100%"></DatePicker>
+                        </FormItem>
+                    </Col>
+                </Row>
+            </Form>
             </div>
-            <Row :gutter="12">
-                <Col span="12">
-                    <FormItem label="代办于" prop="planDate">
-                        <DatePicker type="datetime" v-model="newMission.planDate" style="width:100%"></DatePicker>
-                    </FormItem>
-                </Col>
-            </Row>
-        </Form>
-        <div slot="footer">
-            <Button @click="create_task" type="primary" :loading="loading">发布</Button>
-            <Button @click="cancel_task" type="ghost">清空</Button>
-        </div>
-        <add></add>
-        <amend></amend>
-    </Modal>
+            <div slot="footer">
+                <Button @click="create_task" type="primary" :loading="loading">发布</Button>
+                <Button @click="cancel_task" type="ghost">清空</Button>
+            </div>
+            <add></add>
+            <amend></amend>
+        </Modal>
 </template>
 
 <script>
@@ -44,6 +46,7 @@
     import Add from './add'
     import Amend from './amend'
     import {FixFULLDateFormat} from "../../../../../libs/utils";
+    import {FULLDateFormat} from "../../../../../libs/utils";
 
     export default {
         name: "creat",
@@ -78,7 +81,7 @@
                     companyId:_self.companyId,
                     taskKind: "tkRemImport",
                     taskName:_self.newMission.taskName,
-                    sPlanDate:_self.newMission.planDate
+                    sPlanDate:FULLDateFormat(_self.newMission.planDate)
                 }
                 function success(res){
                     _self.loading = false
@@ -96,6 +99,11 @@
                     this.phraseShow=false
                 } else {
                     this.phraseShow=true
+                }
+            },
+            hidePhrase(){
+                if (this.phraseShow===true){
+                    this.phraseShow=false
                 }
             },
             get_phrase_list(){
@@ -142,7 +150,7 @@
                     _self.get_phrase_list()
                 }
                 this.$Get(url, config, success)
-            },
+            }
         },
         created() {
             this.$bus.off("OPEN_ADD_IMPORTANT_REMINDER",true)
@@ -151,8 +159,8 @@
                 this.companyId = e.company_id
                 this.openAddMission=true
                 this.newMission.taskName = ""
-                let date = new Date()
-                this.newMission.planDate = FixFULLDateFormat(date)
+                this.newMission.planDate =FixFULLDateFormat()
+                console.log(this.newMission.planDate)
             })
             this.$bus.off("UPDATE_IMPORT_PHRASE_LIST",true)
             this.$bus.on("UPDATE_IMPORT_PHRASE_LIST",(e)=>{

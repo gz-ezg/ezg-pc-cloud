@@ -70,7 +70,6 @@
         <Row style="margin-top: 10px;">
             <Table
                     @on-current-change="selectRow"
-                    :row-class-name="row_class_name"
                     :loading="loading"
                     ref="selection"
                     highlight-row

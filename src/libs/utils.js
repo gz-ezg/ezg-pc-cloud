@@ -126,8 +126,8 @@ export function DateDifference(faultDate,completeTime){
 }
 
 //  YYYY-MM-DD 08:00:00
-export function FixFULLDateFormat(date){
-    var d = new Date(date),
+export function FixFULLDateFormat(){
+    var d = new Date(),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
         year = d.getFullYear();
