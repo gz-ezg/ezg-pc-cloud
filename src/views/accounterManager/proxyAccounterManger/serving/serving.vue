@@ -173,8 +173,9 @@
                 header: [
                     {
                         title: '公司名称',
+                        fixed: 'left',
                         key: 'companyname',
-                        minWidth: 250
+                        minWidth: 220
                     },
                     {
                         title: '申报税种',
