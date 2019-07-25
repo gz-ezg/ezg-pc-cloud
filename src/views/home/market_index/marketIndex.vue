@@ -838,6 +838,10 @@ export default {
     }
   },
   created() {
+    // 眼睛哥要求直接访问弹起报价的页面
+    if (this.$route.query.baojia) {
+      this.openCal();
+    }
     let _self = this;
     // console.log(this.$route.path)
     _self.get_clue_number();
