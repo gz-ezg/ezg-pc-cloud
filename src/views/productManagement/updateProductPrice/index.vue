@@ -215,7 +215,11 @@ export default {
 
       let config = {
         productId: _self.$route.params.id,
-        propertys: _self.typeArray.join(','),
+        propertys: _self.typeArray
+          .filter(v => {
+            return !!v;
+          })
+          .join(','),
         doaprice: _self.doaprice,
         dbaseprice: _self.dbaseprice,
         areaPrices: JSON.stringify(areaPrices),
