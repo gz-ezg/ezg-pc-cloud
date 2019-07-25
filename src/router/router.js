@@ -306,7 +306,7 @@ export const appRouter = [
         access: 11632,
         meta: 11632,
         path: 'accounterLegTask',
-        title: '会计外勤任务',
+        title: '会计任务',
         name: 'accounterLegTask_index',
         component: () =>
           import(/* webpackChunkName: "accounterLegTask_index" */ '@/views/missionCenter/accounterLegTask/index.vue')

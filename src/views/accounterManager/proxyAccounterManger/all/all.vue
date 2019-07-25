@@ -29,7 +29,13 @@
                             <Row :gutter="8" style="height:56px">
                                 <Col span="8">
                                     <FormItem label="部门：" prop="departname">
-                                        <Input v-model="SearchValidate.departname" size="small"></Input>
+                                        <Select v-model="SearchValidate.departname" size="small" transfer @on-change="get_data()">
+                                            <Option value="广州会计1组">广州会计1组</Option>
+                                            <Option value="深圳会计部">深圳会计部</Option>
+                                            <Option value="东莞会计部">东莞会计部</Option>
+                                            <Option value="郑州会计部">郑州会计部</Option>
+                                            <Option value="兰州会计部">兰州会计部</Option>
+                                        </Select>
                                     </FormItem>
                                 </Col>
                                 <!--<Col span="8">-->
@@ -64,7 +70,6 @@
         <Row style="margin-top: 10px;">
             <Table
                     @on-current-change="selectRow"
-                    :row-class-name="row_class_name"
                     :loading="loading"
                     ref="selection"
                     highlight-row
@@ -195,7 +200,21 @@
                         render: (h, params) => {
                             let _self = this
                             if (params.row.importantList == "" || params.row.importantList == null) {
-                                return "";
+                                return h("div",{
+                                    style: {
+                                        //     display: 'inline-block',
+                                        //     lineHeight: '24px',
+                                        //     height: '24px',
+                                        cursor:'pointer',
+                                        minWidth:'20px'
+                                        //     color:'#0162f4'
+                                    },
+                                    on:{
+                                        click: function() {
+                                            _self.open_import_list(params.row);
+                                        }
+                                    }
+                                },"无");
                             } else {
                                 let temp = JSON.parse(params.row.importantList)
                                 if (temp[0].taskContent.length > 13) {
@@ -632,8 +651,8 @@
                 this.SearchValidate.followby_realname = '';
                 this.SearchValidate.begin_end_period = '';
                 this.SearchValidate.end_end_period = '';
-                this.SearchValidate.note_kj_flag = '';
-                this.SearchValidate.etaxStatus = '';
+                this.SearchValidate.departname = "";
+                this.current_row = ""
                 this.Search();
             },
             downloadExcel(){

@@ -72,7 +72,6 @@
         <Row style="margin-top: 10px;">
             <Table
                     @on-current-change="selectRow"
-                    :row-class-name="row_class_name"
                     :loading="loading"
                     ref="selection"
                     highlight-row
@@ -173,8 +172,9 @@
                 header: [
                     {
                         title: '公司名称',
+                        fixed: 'left',
                         key: 'companyname',
-                        minWidth: 250
+                        minWidth: 220
                     },
                     {
                         title: '申报税种',
@@ -249,7 +249,21 @@
                         render: (h, params) => {
                             let _self = this
                             if (params.row.importantList == "" || params.row.importantList == null) {
-                                return "";
+                                return h("div",{
+                                    style: {
+                                        //     display: 'inline-block',
+                                        //     lineHeight: '24px',
+                                        //     height: '24px',
+                                        cursor:'pointer',
+                                        width:'33px'
+                                        //     color:'#0162f4'
+                                    },
+                                    on:{
+                                        click: function() {
+                                            _self.open_import_list(params.row);
+                                        }
+                                    }
+                                },"无")
                             } else {
                                 let temp = JSON.parse(params.row.importantList)
                                 if (temp[0].taskContent.length > 13) {
@@ -682,7 +696,6 @@
                             if (!params.row.shebao){
                                 return ""
                             }
-                            let _self = this;
                             if (params.row.shebao.confirm_date == undefined) {
                                 return h('div', [
                                     h(
@@ -710,7 +723,7 @@
                                             },
                                             on: {
                                                 click: () => {
-                                                    this.completed(params.row.shebao);
+                                                    this.sb(params.row.shebao);
                                                 }
                                             }
                                         },
@@ -958,11 +971,12 @@
                                     h('Input', {
                                         props: {
                                             value: this.data[params.index].unit_price,
-                                            size: 'small'
+                                            size: 'small',
+                                            type:'number'
                                         },
                                         style: {
                                             display: 'inline-block',
-                                            width: '60px'
+                                            width: '100px'
                                         },
                                         on: {
                                             'on-blur': function(event) {
@@ -1365,6 +1379,20 @@
                     clipboard.destroy()
                 });
 
+            },
+            sb(sb){
+                let _self = this;
+                let url = `api/order/cycle/month/service/item/finish`;
+                let formdata = new FormData();
+                formdata.append('monthServiceItemId',sb);
+                function success(res){
+                    _self.get_data()
+                }
+
+                function fail(err){
+
+                }
+                this.$Post(url, formdata, success, fail)
             },
             completed(id){
                 let _self = this;
