@@ -7,7 +7,7 @@
     >
         <Form ref="newMission" :label-width="80" style="margin-left:50px;margin-right:50px">
             <div class="sp">
-                <Input type="textarea" v-model="content" :autosize="{minRows: 5,maxRows: 8}" placeholder="请填写产品说明......"></Input>
+                <Input type="textarea" v-model="data.remark" :autosize="{minRows: 5,maxRows: 8}" placeholder="请填写产品说明......"></Input>
             </div>
         </Form>
         <div slot="footer">
@@ -27,30 +27,49 @@
                 content: "",
                 loading: false,
                 SKU: "",
-                product: ""
+                product: "",
+                data:[]
             }
         },
         methods:{
             add_manual(){
-                // let _self = this;
-                // _self.loading = true;
-                // let url = `api/order/cycle/service/dljz/createCompanyOpinion`;
-                // let config = {
-                //     companyId:_self.companyId,
-                //     cycleServiceRecordId:_self.Id,
-                //     opinion:_self.content
-                // }
-                // function success(res){
-                //     _self.openLevelTask = false
-                // }
-                //
-                // function fail(err){
-                //
-                // }
-                // this.$Post(url, config, success, fail)
+                let _self = this;
+                _self.loading = true;
+                let url = `api/product/sku/createProductSkuRemark`;
+                let config = {
+                    id:_self.SKU,
+                    tags:_self.data.remark,
+
+                }
+                function success(res){
+                    _self.openManualTask = false
+                    _self.loading = false
+                }
+
+                function fail(err){
+
+                }
+                this.$Post(url, config, success, fail)
+            },
+            get_data(){
+                let _self = this;
+                let url = `api/product/sku/getProductRemarkBySkuId`;
+                let config = {
+                    params:{
+                        id:_self.SKU
+                    }
+                }
+                function success(res){
+                    _self.data = res.data.data
+                }
+
+                function fail(err){
+
+                }
+                this.$Get(url, config, success, fail)
             },
             empty(){
-                this.content = ""
+                this.data.remark = ""
             }
         },
         created() {
@@ -59,7 +78,8 @@
                 this.openManualTask = true
                 this.SKU = e
                 this.product = p
-                this.title = this.product + "产品使用说明"
+                this.title = this.product + "使用说明"
+                this.get_data()
             })
         }
     }

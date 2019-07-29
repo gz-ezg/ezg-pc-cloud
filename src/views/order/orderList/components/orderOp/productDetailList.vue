@@ -274,7 +274,7 @@
 import * as orderApi from "../../api";
 import { DateFormat, DateFormatYearMonth } from "../../../../../libs/utils.js";
 export default {
-  props: ["productList", "isDisabled", "orderDetail", "pageFlag", "id"],
+  props: ["productList", "isDisabled", "orderDetail", "pageFlag", "id","productListOne"],
   inject: ["cancel_order"],
   data() {
     return {
@@ -282,6 +282,7 @@ export default {
       companyId: "",
       departServerObj: [],
       serverList: [],
+      flag:0,
       operatorId: localStorage.getItem("id"),
       ruleValidate: {
         productnumber: [
@@ -373,7 +374,30 @@ export default {
       });
     },
     removeItem(index) {
-      this.productList.splice(index, 1);
+      let _self = this
+      _self.productList.splice(index, 1);
+      _self.$bus.emit("REMOVE_ITEM",_self.productList)
+      // _self.productListOne = []
+      // console.log(_self.productList)
+      if (_self.productList.length==0){
+        _self.productListOne = []
+      } else {
+        let a = [_self.productList[0]]
+        for (let i=0;i<_self.productList.length;i++) {
+          let b = _self.productList[i]
+          let repeat =false;
+          for (let j=0;j<a.length;j++) {
+            if (b.productid == a[j].productid){
+              repeat = true
+              break
+            }
+          }
+          if (!repeat){
+            a.push(b)
+          }
+        }
+        _self.productListOne = a
+      }
       this.departChange();
       this.computer_paynumber();
     },
@@ -451,6 +475,7 @@ export default {
     });
     this.$bus.off("ADD_PRODUCT_DETAIL_LIST", true);
     this.$bus.on("ADD_PRODUCT_DETAIL_LIST", e => {
+      this.flag = 0
       e.givethenumber = 0;
       if (e.departid) {
         e.departid = parseInt(e.departid);
@@ -458,9 +483,21 @@ export default {
       if (e.defaultdepartalias == "PLAN") {
         e.receipt_type = "quota";
       }
+      if (_self.productList.length!==0){
+        for (let i=0;i<_self.productList.length;i++){
+          if (_self.productList[i].productid===e.productid) {
+            this.flag = 1
+          }
+        }
+      }
 
       _self.productList.push(e);
-      console.log(_self.productList)
+
+      if (this.flag!==1){
+        _self.productListOne.push(e)
+        console.log(_self.productListOne)
+      }
+      // console.log(_self.productList)
       // e.selectServer = e.realname;
 
       _self.departChange();
