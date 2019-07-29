@@ -156,24 +156,46 @@
               </Col>
             </Row>
 
-            <!-- <Row :gutter="16">
-              <div v-for="(depart,index) of departServerObj">
-                <Col span="8">
-                  <FormItem label="服务部门:">{{depart.departName}}</FormItem>
-                </Col>
-                <Col span="15">
-                  <FormItem label="服务人员:">
-                    <Select v-model="depart.serverId">
-                      <Option
-                        v-for="item of depart.serverList"
-                        :key="item.userId"
-                        :value="item.userId"
-                      >{{item.realname +"【"+item.flag+"】"}}</Option>
-                    </Select>
-                  </FormItem>
-                </Col>
-              </div>
-            </Row> -->
+            <Row :gutter="16" v-if="orderItemOne.length!==0">
+              <Col span="23">
+              <Row><h3 style="margin-bottom: 10px;margin-left: 10px">下单一点通</h3></Row>
+              <Row>
+                  <Collapse v-model="search_model">
+                      <Panel  v-for="(item,index) in orderItemOne" :key="index" style="font-weight: bold">
+                      <Icon type="ios-analytics" style="margin-left:20px;margin-right:5px"></Icon>
+                      {{item.product}}
+                      <div slot="content">
+                        <Form ref="SearchValidate"  :label-width="0" style="margin-top: 15px">
+                          <center>
+                            <FormItem>
+                              {{item.remark}}
+                            </FormItem>
+                          </center>
+                        </Form>
+                      </div>
+                    </Panel>
+                  </Collapse>
+              </Row>
+              </Col>
+            </Row>
+            <!--<Row :gutter="16">-->
+              <!--<div v-for="(depart,index) of departServerObj">-->
+                <!--<Col span="8">-->
+                  <!--<FormItem label="服务部门:">{{depart.departName}}</FormItem>-->
+                <!--</Col>-->
+                <!--<Col span="15">-->
+                  <!--<FormItem label="服务人员:">-->
+                    <!--<Select v-model="depart.serverId">-->
+                      <!--<Option-->
+                        <!--v-for="item of depart.serverList"-->
+                        <!--:key="item.userId"-->
+                        <!--:value="item.userId"-->
+                      <!--&gt;{{item.realname +"【"+item.flag+"】"}}</Option>-->
+                    <!--</Select>-->
+                  <!--</FormItem>-->
+                <!--</Col>-->
+              <!--</div>-->
+            <!--</Row>-->
           </Form>
           <!-- <Row v-if="orderItem.length">
 					    <Table
@@ -193,6 +215,7 @@
           <product-detail-list
             v-if="openCreateOrderDetail"
             :productList="orderItem"
+            :productListOne="orderItemOne"
             :isDisabled="isDisabled"
             :pageFlag="pageFlag"
           ></product-detail-list>
@@ -229,6 +252,7 @@ export default {
   computed: {},
   data() {
     return {
+      search_model:"0",
       pageFlag: "createOrder",
       isDisabled: false,
       openServiceItem: false,
@@ -240,6 +264,7 @@ export default {
       orderCode: "",
       productItem: "",
       orderItem: [],
+      orderItemOne:[],
       departJsonArray: [],
       departServerObj: [],
       departChangeCountFlag: 0
@@ -417,6 +442,7 @@ export default {
     this.$bus.off("OPEN_ORDERLIST_ADD", true);
     this.$bus.on("OPEN_ORDERLIST_ADD", e => {
       this.orderItem = [];
+      this.orderItemOne = []
       this.openCreateOrderDetail = true;
     });
     this.$bus.on("SET_ORDER_DETAIL", e => {
@@ -560,6 +586,30 @@ export default {
 
       console.log(_self.departServerObj);
     });
+    this.$bus.off("REMOVE_ITEM",true)
+    this.$bus.on("REMOVE_ITEM",e => {
+      console.log(e)
+      if (e.length==0){
+        this.orderItemOne = []
+      } else {
+        let a = [e[0]]
+        console.log(a)
+        for (let i=0;i<e.length;i++) {
+          let b = e[i]
+          let repeat =false;
+          for (let j=0;j<a.length;j++) {
+            if (b.productid == a[j].productid){
+              repeat = true
+              break
+            }
+          }
+          if (!repeat){
+            a.push(b)
+          }
+        }
+        this.orderItemOne = a
+      }
+    })
   }
 };
 </script>
