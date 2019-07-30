@@ -117,16 +117,25 @@
                 style="margin-top: 20px"
                 @click="analysis"
         >分析</Button>
+        <Button
+                type="warning"
+                icon="bag"
+                size="large"
+                style="margin-top: 20px"
+                @click="product_manual"
+        >产品说明</Button>
       </Row>
     </Card>
     <update-link v-if="openUpdateLink" :skuId="SKU" :product="product" @update="openUpdateLink= false"></update-link>
-		<update-cycle-property v-if="openCycleProperty" :skuId="SKU" @update="openCycleProperty= false"></update-cycle-property>
+    <update-cycle-property v-if="openCycleProperty" :skuId="SKU" @update="openCycleProperty= false"></update-cycle-property>
+    <manual></manual>
   </div>
 </template>
 
 <script>
 import updateLink from './updateLink'
 import updateCycleProperty from './updateCycleProperty'
+import Manual from './productManual'
 export default {
   props: {
     product: {
@@ -135,7 +144,8 @@ export default {
   },
   components: {
     updateLink,
-		updateCycleProperty
+    updateCycleProperty,
+    Manual
   },
   data() {
     return {
@@ -174,6 +184,14 @@ export default {
         this.$Message.error("请先选择要分析的选项！");
       }
       event.stopPropagation()
+    },
+    product_manual(){
+      console.log(this.product.product)
+      if (this.SKU) {
+        this.$bus.emit("OPEN_PRODUCT_MANUAL",this.SKU,this.product.product)
+      } else {
+        this.$Message.error("请先选择要说明的选项！");
+      }
     },
     //  生成产品详情
     select_product() {

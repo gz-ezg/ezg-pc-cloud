@@ -85,7 +85,6 @@
         </Card>
         <create-schedule></create-schedule>
         <detail-schedule-task></detail-schedule-task>
-
         </div>
         <div v-if="showFilter">
             <div class="filter">
@@ -291,6 +290,7 @@
             },
             //  关闭右键菜单
             close_right_menu(){
+                console.log("123")
                 this.right_click_show = false
                 this.showFilter = false
             },
