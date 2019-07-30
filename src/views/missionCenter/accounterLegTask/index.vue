@@ -421,6 +421,11 @@
                         if (_self.events_temp[i].taskStage=="tesFinished" && _self.events_temp[i].mission=="Completed") {
                             _self.events_temp[i].color = "#AEDD81"
                         }
+                        if (_self.events_temp[i].taskKind=="tkRemImport" || _self.events_temp[i].taskKind=="tkRemUndo" || _self.events_temp[i].taskKind=="tkRemAccMemo"){
+                            if (_self.events_temp[i].taskStage=="tesFinished"){
+                                _self.events_temp[i].color = "#AEDD81"
+                            }
+                        }
                         if (_self.events_temp[i].taskStage=="tesUnstarted") {
                             _self.events_temp[i].color = "#00CCFF"
                         }

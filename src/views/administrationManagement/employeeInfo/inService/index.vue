@@ -58,15 +58,11 @@
         </Row>
         <Row>
             <ButtonGroup>
-                <Button type="primary" icon="ios-color-wand-outline" @click="add_important_reminder">新增重要提醒</Button>
-                <Button type="primary" icon="information-circled" @click="add_account_note">新增做账备注</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="add_unfinished_things">新增未完事项</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="change_accounting">变更会计</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="service_detail">服务详情</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="open_acc_change_log">会计变更日志</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="add">录入</Button>
+                <Button type="primary" icon="information-circled" @click="show">查看</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="edit">修改</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="service_offline">服务下线</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="service_paused">暂停服务</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="import_excel">导入Excel</Button>
             </ButtonGroup>
         </Row>
         <Row style="margin-top: 10px;">
@@ -132,6 +128,21 @@
                 _self.pageSize = a;
                 _self.get_data()
             },
+            add(){
+
+            },
+            show(){
+
+            },
+            edit(){
+
+            },
+            downloadExcel(){
+
+            },
+            import_excel(){
+
+            }
         }
     }
 </script>
