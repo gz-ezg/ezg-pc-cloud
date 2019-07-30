@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0">
-      <change beforePath="$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/detailAccounterLegTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/detailAccounterLegTask.vue" afterDir="false" />
-    </list>
+    <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -510,7 +508,7 @@
       <workItem from="1564104719245" duration="18928000" />
       <workItem from="1564363751796" duration="743000" />
       <workItem from="1564383662700" duration="1893000" />
-      <workItem from="1564449558175" duration="9299000" />
+      <workItem from="1564449558175" duration="9604000" />
     </task>
     <task id="LOCAL-00022" summary="修改启动失败的问题">
       <created>1555989851178</created>
@@ -859,7 +857,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1499915000" />
+    <option name="totallyTimeSpent" value="1500220000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -872,7 +870,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1376" height="784" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6918033" visible="true" weight="0.26426426" />
       <window_info id="Structure" order="1" weight="0.24960506" />
