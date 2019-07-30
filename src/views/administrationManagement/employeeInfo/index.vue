@@ -1,5 +1,5 @@
 <template>
-    <Card>
+    <div>
         <Tabs value="name1" v-if="loading">
             <TabPane label="在职" name="name1">
                 <inservice></inservice>
@@ -8,12 +8,19 @@
                 <leave></leave>
             </TabPane>
         </Tabs>
-    </Card>
+    </div>
 </template>
 
 <script>
+    import Inservice from './inService/index'
+    import Leave from './leave/index'
+
     export default {
         name: "index",
+        components:{
+            Inservice,
+            Leave
+        },
         data(){
             return{
                 loading: true

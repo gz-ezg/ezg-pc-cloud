@@ -1,6 +1,6 @@
 <template>
     <Modal
-            title="新建会计外勤任务"
+            title="新建会计任务"
             v-model="openAddMission"
             width="800"
             :mask-closable="false"
