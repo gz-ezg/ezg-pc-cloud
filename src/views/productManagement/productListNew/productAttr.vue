@@ -186,11 +186,11 @@ export default {
       event.stopPropagation()
     },
     product_manual(){
-      console.log(this.product.product)
-      if (this.SKU) {
-        this.$bus.emit("OPEN_PRODUCT_MANUAL",this.SKU,this.product.product)
+      console.log(this.product.id)
+      if (this.product.id) {
+        this.$bus.emit("OPEN_PRODUCT_MANUAL",this.product.id,this.product.product)
       } else {
-        this.$Message.error("请先选择要说明的选项！");
+        this.$Message.error("请先选择要说明的产品！");
       }
     },
     //  生成产品详情

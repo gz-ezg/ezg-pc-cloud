@@ -26,7 +26,7 @@
                 openManualTask: false,
                 content: "",
                 loading: false,
-                SKU: "",
+                productId: "",
                 product: "",
                 data:[]
             }
@@ -35,9 +35,9 @@
             add_manual(){
                 let _self = this;
                 _self.loading = true;
-                let url = `api/product/sku/createProductSkuRemark`;
+                let url = `api/product/createProductRemark`;
                 let config = {
-                    id:_self.SKU,
+                    id:_self.productId,
                     tags:_self.data.remark,
 
                 }
@@ -53,10 +53,10 @@
             },
             get_data(){
                 let _self = this;
-                let url = `api/product/sku/getProductRemarkBySkuId`;
+                let url = `api/product/getProductRemarkById`;
                 let config = {
                     params:{
-                        id:_self.SKU
+                        id:_self.productId
                     }
                 }
                 function success(res){
@@ -76,7 +76,7 @@
             this.$bus.off("OPEN_PRODUCT_MANUAL", true)
             this.$bus.on("OPEN_PRODUCT_MANUAL", (e, p) => {
                 this.openManualTask = true
-                this.SKU = e
+                this.productId = e
                 this.product = p
                 this.title = this.product + "使用说明"
                 this.get_data()

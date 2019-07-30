@@ -1160,7 +1160,16 @@ export const appRouter = [
         name: 'resumeManagement_index',
         component: () =>
           import(/* webpackChunkName: "resumeManagement_index" */ '@/views/administrationManagement/resumeManagement/index.vue')
-      }
+      },
+      // {
+      //   access: 11650,
+      //   meta: 11650,
+      //   path: 'employeeInfo',
+      //   title: '员工信息',
+      //   name: 'employeeInfo_index',
+      //   component: () =>
+      //     import(/* webpackChunkName: "employeeInfo_index" */ '@/views/administrationManagement/employeeInfo/index.vue')
+      // },
     ]
   },
   {

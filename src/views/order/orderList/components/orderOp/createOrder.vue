@@ -167,7 +167,7 @@
                       <div slot="content">
                         <Form ref="SearchValidate"  :label-width="0" style="margin-top: 15px">
                           <center>
-                            <FormItem>
+                            <FormItem style="font-weight: bold;word-wrap: break-word;word-break: break-all">
                               {{item.remark}}
                             </FormItem>
                           </center>
