@@ -159,6 +159,7 @@
                 currentIndexOne:"",
                 currentIndexTwo:"",
                 taskKind:"",
+                taskType:"",
                 roleCode:"",
                 teamList:[],
                 companyLoading:false,
@@ -223,22 +224,27 @@
                 this.currentIndex = index
                 if (index==0) {
                     this.taskKind = ""
+                    this.taskType = ""
                     this.get_data()
                 }
                 if (index==1){
-                    this.taskKind = "tkLegAcc"
+                    this.taskKind = ""
+                    this.taskType = "tkLegAcc"
                     this.get_data()
                 }
                 if (index==2){
                     this.taskKind = "tkRemImport"
+                    this.taskType = ""
                     this.get_data()
                 }
                 if (index==3){
                     this.taskKind = "tkRemAccMemo"
+                    this.taskType = ""
                     this.get_data()
                 }
                 if (index==4){
                     this.taskKind = "tkRemUndo"
+                    this.taskType = ""
                     this.get_data()
                 }
             },
@@ -278,6 +284,7 @@
                 this.newMission.personName = ""
                 this.taskKind = ""
                 this.taskStage = ""
+                this.taskType = ""
                 this.mission = ""
                 this.executor_id = ""
                 this.get_data()
@@ -388,6 +395,7 @@
                         pageSize: 1000,
                         accountKind:"accountKind",
                         sortField: "plan_date",
+                        task_type:_self.taskType,
                         task_kind:_self.taskKind,
                         task_stage:_self.taskStage,
                         executor_id:_self.executor_id,

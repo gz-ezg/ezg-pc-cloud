@@ -1,12 +1,12 @@
 <template>
     <div>
         <Modal
-            v-model="openShowOrderDetail"
-            title="查看订单"
-            :mask-closable="false"                
-            width="100"
-            @on-visible-change="modal_status_change"
-        >
+				v-model="openShowOrderDetail"
+				title="查看订单"
+				:mask-closable="false"
+				width="100"
+				@on-visible-change="modal_status_change"
+		>
 		<Row>
 			<Col span="10">
 				<Form ref="orderDetail" :model="orderDetail" :label-width="100" :rules="orderDetailRule">
@@ -137,8 +137,8 @@
 			</Col>
         </Row>    
 			<div slot="footer">
-                <Button @click="openShowOrderDetail = false">关闭</Button>
-            </div>
+			<Button @click="openShowOrderDetail = false">关闭</Button>
+		</div>
         </Modal>
         <service-item @close="close_item" v-if="openServiceItem" :id="orderDetail.companyid" :readonly="false"></service-item>
         <relate-order :id="orderId" :pageFlag="pageFlag"></relate-order>

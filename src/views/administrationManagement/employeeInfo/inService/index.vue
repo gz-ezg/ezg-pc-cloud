@@ -7,36 +7,113 @@
                     筛选
                     <div slot="content" @keydown.enter="Search">
                         <Form ref="SearchValidate" :model="SearchValidate" :label-width="130" style="margin-top: 15px">
-                            <Row :gutter="8" style="height:56px">
-                                <Col span="8">
-                                    <FormItem label="企业名称：" prop="CompanyName">
+                            <Row  style="height:56px">
+                                <Col span="6">
+                                    <FormItem label="姓名：" prop="CompanyName">
                                         <Input v-model="SearchValidate.CompanyName" size="small"></Input>
                                     </FormItem>
                                 </Col>
-                                <Col span="8">
-                                    <FormItem label="服务人员：" prop="server_realname">
+                                <Col span="6">
+                                    <FormItem label="入职时间：" prop="server_realname">
                                         <Input v-model="SearchValidate.server_realname" size="small"></Input>
                                     </FormItem>
                                 </Col>
-                                <Col span="8">
-                                    <FormItem label="结束账期：" prop="followby_realname">
+                                <Col span="6">
+                                    <FormItem label="性别：" prop="followby_realname">
+                                        <Input v-model="SearchValidate.begin_end_period" size="small" style="width:40%" placeholder="201807"></Input>
+                                        -
+                                        <Input v-model="SearchValidate.end_end_period" size="small" style="width:40%" placeholder="201807"></Input>
+                                    </FormItem>
+                                </Col>
+                                <Col span="6">
+                                    <FormItem label="是否员工手册：" prop="followby_realname">
                                         <Input v-model="SearchValidate.begin_end_period" size="small" style="width:40%" placeholder="201807"></Input>
                                         -
                                         <Input v-model="SearchValidate.end_end_period" size="small" style="width:40%" placeholder="201807"></Input>
                                     </FormItem>
                                 </Col>
                             </Row>
-                            <Row :gutter="8" style="height:56px">
-                                <Col span="8">
-                                    <FormItem label="客户跟进：" prop="note_kj_flag">
+                            <Row  style="height:56px">
+                                <Col span="6">
+                                    <FormItem label="转正时间：" prop="note_kj_flag">
                                         <Select v-model="SearchValidate.note_kj_flag" size="small" style="width:100%">
                                             <Option value="Y">完成</Option>
                                             <Option value="N">未完成</Option>
                                         </Select>
                                     </FormItem>
                                 </Col>
-                                <Col span="8">
-                                    <FormItem label="电子税务局状态：" prop="etaxStatus">
+                                <Col span="6">
+                                    <FormItem label="出生年月：" prop="etaxStatus">
+                                        <Select v-model="SearchValidate.etaxStatus" size="small" style="width:100%">
+                                            <Option :value="1">账号正常</Option>
+                                            <Option :value="2">账号异常</Option>
+                                            <Option :value="3">无账号</Option>
+                                        </Select>
+                                    </FormItem>
+                                </Col>
+                                <Col span="6">
+                                    <FormItem label="最高学历：" prop="note_kj_flag">
+                                        <Select v-model="SearchValidate.note_kj_flag" size="small" style="width:100%">
+                                            <Option value="Y">完成</Option>
+                                            <Option value="N">未完成</Option>
+                                        </Select>
+                                    </FormItem>
+                                </Col>
+                                <Col span="6">
+                                    <FormItem label="所在省份：" prop="note_kj_flag">
+                                        <Select v-model="SearchValidate.note_kj_flag" size="small" style="width:100%">
+                                            <Option value="Y">完成</Option>
+                                            <Option value="N">未完成</Option>
+                                        </Select>
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row  style="height:56px">
+                            <Col span="6">
+                                <FormItem label="部门：" prop="note_kj_flag">
+                                    <Select v-model="SearchValidate.note_kj_flag" size="small" style="width:100%">
+                                        <Option value="Y">完成</Option>
+                                        <Option value="N">未完成</Option>
+                                    </Select>
+                                </FormItem>
+                            </Col>
+                            <Col span="6">
+                                <FormItem label="职位：" prop="etaxStatus">
+                                    <Select v-model="SearchValidate.etaxStatus" size="small" style="width:100%">
+                                        <Option :value="1">账号正常</Option>
+                                        <Option :value="2">账号异常</Option>
+                                        <Option :value="3">无账号</Option>
+                                    </Select>
+                                </FormItem>
+                            </Col>
+                            <Col span="6">
+                                <FormItem label="是否劳动合同：" prop="note_kj_flag">
+                                    <Select v-model="SearchValidate.note_kj_flag" size="small" style="width:100%">
+                                        <Option value="Y">完成</Option>
+                                        <Option value="N">未完成</Option>
+                                    </Select>
+                                </FormItem>
+                            </Col>
+                            <Col span="6">
+                                <FormItem label="是否试用：" prop="note_kj_flag">
+                                    <Select v-model="SearchValidate.note_kj_flag" size="small" style="width:100%">
+                                        <Option value="Y">完成</Option>
+                                        <Option value="N">未完成</Option>
+                                    </Select>
+                                </FormItem>
+                            </Col>
+                        </Row>
+                            <Row  style="height:56px">
+                                <Col span="6">
+                                    <FormItem label="入职年月数：" prop="note_kj_flag">
+                                        <Select v-model="SearchValidate.note_kj_flag" size="small" style="width:100%">
+                                            <Option value="Y">完成</Option>
+                                            <Option value="N">未完成</Option>
+                                        </Select>
+                                    </FormItem>
+                                </Col>
+                                <Col span="6">
+                                    <FormItem label="婚姻状况：" prop="etaxStatus">
                                         <Select v-model="SearchValidate.etaxStatus" size="small" style="width:100%">
                                             <Option :value="1">账号正常</Option>
                                             <Option :value="2">账号异常</Option>
@@ -88,12 +165,17 @@
                     style="margin-top: 10px"
             ></Page>
         </Row>
+        <info></info>
     </Card>
 </template>
 
 <script>
+    import Info from '../common/detail'
     export default {
         name: "index",
+        components:{
+            Info
+        },
         data(){
             return{
                 search_model: '',
@@ -111,12 +193,87 @@
                     note_kj_flag: '',
                     etaxStatus: ''
                 },
-                data:[],
+                data:[{name:"vn"}],
+                header: [
+                    {
+                        title: '姓名',
+                        key: 'name',
+                        minWidth: 220
+                    },
+                    {
+                        title: '部门',
+                        key: 'tax_type',
+                        width: 180,
+                    },
+                    {
+                        title: '职位',
+                        key: 'importantList',
+                        minWidth: 220,
+                    },
+                    {
+                        title: '学历',
+                        key: 'nationalnum',
+                        minWidth: 150,
+                    },
+                    {
+                        title: '毕业年份',
+                        key: 'nationalpsw',
+                        minWidth: 150,
+                    },
+                    {
+                        title: '毕业院校',
+                        key: 'tax_number',
+                        minWidth: 150,
+                    },
+                    {
+                        title: '入职时间',
+                        key: 'tax_password',
+                        minWidth: 150,
+                    },
+                    {
+                        title: '联系方式',
+                        key: 'product',
+                        minWidth: 230
+                    },
+                    {
+                        title: '操作',
+                        key: 'action',
+                        fixed: 'right',
+                        width: 150,
+                        align: 'center',
+                        render: (h, params) => {
+                            return h('div', [
+                                h(
+                                    'Button',
+                                    {
+                                        props: {
+                                            type: 'text',
+                                            size: 'small'
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.invoice(params.row);
+                                            }
+                                        }
+                                    },
+                                    '[确定离职]'
+                                )
+                            ]);
+                        }
+                    },
+                ]
             }
         },
         methods:{
             selectRow(e) {
                 this.current_row = e;
+            },
+            Search() {
+                this.page = 1;
+                this.get_data()
+            },
+            handleReset(){
+
             },
             pageChange(a) {
                 let _self = this;
@@ -129,18 +286,21 @@
                 _self.get_data()
             },
             add(){
-
+                this.$bus.emit("ADD_EMPLOY_INFO",true)
             },
             show(){
-
+                this.$bus.emit("SHOW_EMPLOY_INFO",true)
             },
             edit(){
-
+                this.$bus.emit("EDIT_EMPLOY_INFO",true)
             },
             downloadExcel(){
 
             },
             import_excel(){
+
+            },
+            invoice(){
 
             }
         }
