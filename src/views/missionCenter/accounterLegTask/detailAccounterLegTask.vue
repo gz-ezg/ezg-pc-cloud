@@ -2,7 +2,7 @@
     <div>
         <Modal
                 v-model="openTaskDetail"
-                title="会计外勤任务详情"
+                :title="title"
                 width="450"
 
                 class-name="vertical-center-modal"
@@ -198,6 +198,7 @@
                 businessArea:[],
                 businessPlace:[],
                 data:[],
+                title:"",
                 fieldDetail:[],
                 abtypeList:[{"typecode":"A","typename":"A类"},{"typecode":"B","typename":"B类"}],
                 typeList:[],
@@ -624,6 +625,7 @@
                 _self.id = e.taskId
                 console.log(e.taskId)
                 _self.taskKindName = e.taskKindName
+                _self.title = e.taskKindName+"详情"
                 _self.legId= e.legId
                 if (e.legId){
                     _self.get_field_detail(e.legId)

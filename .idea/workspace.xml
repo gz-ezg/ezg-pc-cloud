@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/administrationManagement/employeeInfo/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/administrationManagement/employeeInfo/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/createAccounterTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/createAccounterTask.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/detailAccounterLegTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/detailAccounterLegTask.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -44,17 +42,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/createAccounterTask.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="10" column="23" lean-forward="true" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+            <state relative-caret-position="125">
+              <caret line="5" column="34" lean-forward="true" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/newEditDiv.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="125">
+              <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/newEditDiv.vue">
+        <entry file="file://$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/detailAccounterLegTask.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="6" column="33" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
+            <state relative-caret-position="132">
+              <caret line="627" column="48" selection-start-line="627" selection-start-column="48" selection-end-line="627" selection-end-column="48" />
             </state>
           </provider>
         </entry>
@@ -172,7 +179,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/DataManagement/common.js" />
         <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/DistributionOfAccounting.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/ButtonComponents/changeAccounting/index.html" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/ButtonComponents/changeAccounting/index.vue" />
@@ -223,6 +229,7 @@
         <option value="$PROJECT_DIR$/src/router/router.js" />
         <option value="$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/createAccounterTask.vue" />
         <option value="$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/newEditDiv.vue" />
+        <option value="$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/detailAccounterLegTask.vue" />
       </list>
     </option>
   </component>
@@ -503,7 +510,7 @@
       <workItem from="1564104719245" duration="18928000" />
       <workItem from="1564363751796" duration="743000" />
       <workItem from="1564383662700" duration="1893000" />
-      <workItem from="1564449558175" duration="8913000" />
+      <workItem from="1564449558175" duration="9299000" />
     </task>
     <task id="LOCAL-00022" summary="修改启动失败的问题">
       <created>1555989851178</created>
@@ -852,7 +859,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1499529000" />
+    <option name="totallyTimeSpent" value="1499915000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -867,7 +874,7 @@
     <frame x="-8" y="-8" width="1376" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6918033" visible="true" weight="0.26426426" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6918033" visible="true" weight="0.26426426" />
       <window_info id="Structure" order="1" weight="0.24960506" />
       <window_info id="Favorites" order="2" sideWeight="0.30819672" side_tool="true" weight="0.26276276" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.1399046" />
@@ -886,7 +893,7 @@
       <window_info anchor="bottom" id="消息" order="13" />
       <window_info anchor="bottom" id="调试" order="14" />
       <window_info anchor="bottom" id="TypeScript" order="15" />
-      <window_info anchor="bottom" id="Terminal" order="16" sideWeight="0.49924925" visible="true" weight="0.47058824" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="16" sideWeight="0.49924925" visible="true" weight="0.47058824" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -988,13 +995,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="0.0" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/views/publicPool/publicPool/customerManagment.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9549">
-          <caret line="516" column="58" selection-start-line="516" selection-start-column="58" selection-end-line="516" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/notbegin.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="400">
@@ -1498,15 +1498,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/createAccounterTask.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="10" column="23" lean-forward="true" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+        <state relative-caret-position="125">
+          <caret line="5" column="34" lean-forward="true" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/newEditDiv.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="6" column="33" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
+        <state relative-caret-position="125">
+          <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/detailAccounterLegTask.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="627" column="48" selection-start-line="627" selection-start-column="48" selection-end-line="627" selection-end-column="48" />
         </state>
       </provider>
     </entry>
