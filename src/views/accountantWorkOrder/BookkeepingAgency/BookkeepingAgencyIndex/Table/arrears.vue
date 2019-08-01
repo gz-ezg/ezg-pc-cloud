@@ -61,7 +61,7 @@
             <ButtonGroup>
                 <!-- <Button type="primary" icon="information-circled" @click="scbd">时长变动日志</Button> -->
                 <Button type="primary" icon="ios-color-wand-outline" @click="ksfw" v-permission="['bookkeepingAgency.stop']">停止服务</Button>
-                <Button type="primary" icon="information-circled" @click="fpkj">变更会计</Button>
+                <Button type="primary" icon="information-circled" v-permission="['accounterManager.share']" @click="fpkj">变更会计</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="zlwc" v-if="zl">资料完成</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="zzwc" v-if="zz">做账完成</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="bswc" v-if="bs">报税完成</Button>
