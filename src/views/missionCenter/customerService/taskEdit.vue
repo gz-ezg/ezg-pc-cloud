@@ -1,6 +1,6 @@
 <template>
     <Modal
-            title="查看详情"
+            title="任务完结"
             v-model="openAddMission"
             width="800"
             :mask-closable="false"
@@ -328,6 +328,11 @@
                         key: 'task_name',
                         minWidth: 280,
                     },
+                    {
+                        title: '类型',
+                        key: 'datatype',
+                        minWidth: 100,
+                    },
                 ],
                 // taskKind:[],
                 // taskKind_map:new Map(),
@@ -537,12 +542,16 @@
                     for (let i=0;i<res.data.data.length;i++){
                         if (res.data.data[i].datatype==1){
                             _self.account.push({CompanyName:res.data.data[i].CompanyName,serviceranks:res.data.data[i].serviceranks,task_name:res.data.data[i].task_name,callbackId:res.data.data[i].callbackId})
+                            _self.detail[i].datatype = "会计"
                         }
+
                         if (res.data.data[i].datatype==2){
                             _self.business.push({CompanyName:res.data.data[i].CompanyName,serviceranks:res.data.data[i].serviceranks,task_name:res.data.data[i].task_name,callbackId:res.data.data[i].callbackId})
+                            _self.detail[i].datatype = "商事"
                         }
                         if (res.data.data[i].datatype==3){
                             _self.market.push({CompanyName:res.data.data[i].CompanyName,serviceranks:res.data.data[i].serviceranks,task_name:res.data.data[i].task_name,callbackId:res.data.data[i].callbackId})
+                            _self.detail[i].datatype = "市场"
                         }
                     }
                     console.log(_self.market)
