@@ -7,10 +7,11 @@
         <Tag color="yellow" type="border">点击左侧产品即可查看价格！</Tag>
       </div>
       <Row class="productDetail-title" style="margin-bottom:20px">
-        <p id="product_name">{{product.product}}</p>
+        <p id="product_name">{{ product.product }}</p>
         <p class="productDetail-title-price">
-          <span>￥
-            <strong id="product_price">{{productPrice}}</strong>
+          <span
+            >￥
+            <strong id="product_price">{{ productPrice }}</strong>
           </span>
           <!-- <InputNumber style="margin-left:20px;width:120px" :min="0" v-model="newPrice" v-if="isAdmin"></InputNumber><Button style="margin-left:10px" v-if="isAdmin" type="warning">修改价格</Button>  -->
         </p>
@@ -18,124 +19,94 @@
       </Row>
       <Row class="type-select" v-if="selectProduct.id == 100 && changeArea">
         <!-- <Row v-for="(item, index.vue) in queryProperty" :key="index.vue" class="type-select"> -->
-        <p>{{queryProperty[0].name}}</p>
+        <p>{{ queryProperty[0].name }}</p>
         <RadioGroup
           v-model="selectProperty[0]"
           type="button"
           size="large"
-          @on-change="property_change;selectProperty[1]='';productPrice=0;SKU=''"
+          @on-change="
+            property_change;
+            selectProperty[1] = '';
+            productPrice = 0;
+            SKU = '';
+          "
         >
-          <Radio
-            v-for="(type, index2) in queryProperty[0].children"
-            :label="type.pvId"
-            :key="index2"
-          >{{type.propertyValue}}</Radio>
+          <Radio v-for="(type, index2) in queryProperty[0].children" :label="type.pvId" :key="index2">{{
+            type.propertyValue
+          }}</Radio>
         </RadioGroup>
-        <p v-if="selectProperty[0]==310">{{queryProperty[2].name}}</p>
+        <p v-if="selectProperty[0] == 310">{{ queryProperty[2].name }}</p>
         <RadioGroup
           v-model="selectProperty[1]"
           type="button"
           size="large"
-          v-if="selectProperty[0]==310"
+          v-if="selectProperty[0] == 310"
           @on-change="property_change"
         >
-          <Radio
-            v-for="(type, index) in queryProperty[2].children"
-            :label="type.pvId"
-            :key="index"
-          >{{type.propertyValue}}</Radio>
+          <Radio v-for="(type, index) in queryProperty[2].children" :label="type.pvId" :key="index">{{
+            type.propertyValue
+          }}</Radio>
         </RadioGroup>
-        <p v-if="selectProperty[0]!=310">{{queryProperty[1].name}}</p>
+        <p v-if="selectProperty[0] != 310">{{ queryProperty[1].name }}</p>
         <RadioGroup
           v-model="selectProperty[1]"
           type="button"
           size="large"
           @on-change="property_change"
-          v-if="selectProperty[0]!=310"
+          v-if="selectProperty[0] != 310"
         >
-          <Radio
-            v-for="(type, index) in queryProperty[1].children"
-            :label="type.pvId"
-            :key="index"
-          >{{type.propertyValue}}</Radio>
+          <Radio v-for="(type, index) in queryProperty[1].children" :label="type.pvId" :key="index">{{
+            type.propertyValue
+          }}</Radio>
         </RadioGroup>
         <!-- </Row> -->
       </Row>
-      <Row
-        v-if="selectProduct.id != 100"
-        v-for="(item, index) in queryProperty"
-        :key="index"
-        class="type-select"
-      >
-        <p>{{item.name}}</p>
-        <RadioGroup
-          v-model="selectProperty[index]"
-          type="button"
-          size="large"
-          @on-change="property_change"
-        >
-          <Radio
-            v-for="(type, index2) in item.children"
-            :label="type.pvId"
-            :key="index2"
-          >{{type.propertyValue}}</Radio>
+      <Row v-if="selectProduct.id != 100" v-for="(item, index) in queryProperty" :key="index" class="type-select">
+        <p>{{ item.name }}</p>
+        <RadioGroup v-model="selectProperty[index]" type="button" size="large" @on-change="property_change">
+          <Radio v-for="(type, index2) in item.children" :label="type.pvId" :key="index2">{{ type.propertyValue }}</Radio>
         </RadioGroup>
       </Row>
       <Row style="margin-top:20px">
         <p style="font-size:16px;padding-bottom:16px">地区</p>
         <Col span="10">
-          <al-cascader v-model="areaCode" data-type="code" level="2" @on-change="area_change"/>
+          <al-cascader v-model="areaCode" data-type="code" level="2" @on-change="area_change" />
         </Col>
       </Row>
       <Row>
+        <Button  type="error" icon="bag" size="large" style="margin-top: 20px" @click="open_flow_img">查看流程图</Button>
         <Button
-          type="error"
-          icon="bag"
-          size="large"
-          style="margin-top: 20px"
-          @click="open_flow_img"
-        >查看流程图</Button>
-        <Button
+          v-permission="['product.modifyWorkFlow']"
           type="error"
           icon="bag"
           size="large"
           style="margin-top: 20px"
           @click="openUpdateLink = true"
-        >修改流程图</Button>
-				<Button
-				  type="error"
-				  icon="bag"
-				  size="large"
-				  style="margin-top: 20px"
-					v-if="iscycle==='Y'?true:false"
-				  @click="openCycleProperty = true"
-				>修改周期性属性</Button>
+          >修改流程图</Button
+        >
         <Button
-                type="warning"
-                icon="bag"
-                size="large"
-                style="margin-top: 20px"
-                @click="analysis"
-        >分析</Button>
-        <Button
-                type="warning"
-                icon="bag"
-                size="large"
-                style="margin-top: 20px"
-                @click="product_manual"
-        >产品说明</Button>
+          type="error"
+          icon="bag"
+          size="large"
+          style="margin-top: 20px"
+          v-if="iscycle === 'Y' ? true : false"
+          @click="openCycleProperty = true"
+          >修改周期性属性</Button
+        >
+        <Button type="warning" icon="bag" size="large" style="margin-top: 20px" @click="analysis">分析</Button>
+        <Button type="warning" icon="bag" size="large" style="margin-top: 20px" @click="product_manual">产品说明</Button>
       </Row>
     </Card>
-    <update-link v-if="openUpdateLink" :skuId="SKU" :product="product" @update="openUpdateLink= false"></update-link>
-    <update-cycle-property v-if="openCycleProperty" :skuId="SKU" @update="openCycleProperty= false"></update-cycle-property>
+    <update-link v-if="openUpdateLink" :skuId="SKU" :product="product" @update="openUpdateLink = false"></update-link>
+    <update-cycle-property v-if="openCycleProperty" :skuId="SKU" @update="openCycleProperty = false"></update-cycle-property>
     <manual></manual>
   </div>
 </template>
 
 <script>
-import updateLink from './updateLink'
-import updateCycleProperty from './updateCycleProperty'
-import Manual from './productManual'
+import updateLink from './updateLink';
+import updateCycleProperty from './updateCycleProperty';
+import Manual from './productManual';
 export default {
   props: {
     product: {
@@ -150,20 +121,20 @@ export default {
   data() {
     return {
       openUpdateLink: false,
-			openCycleProperty:false,
+      openCycleProperty: false,
       changeArea: false,
       sideLoading: false,
       productPrice: 0,
-      areaCode: ["440000", "440100", "440103"],
-      SKU: "",
+      areaCode: ['440000', '440100', '440103'],
+      SKU: '',
       orderAddProduct: false,
-      selectProduct: "",
+      selectProduct: '',
       //  产品的相关属性
       queryProperty: [],
       producSku: [],
       selectProperty: [],
       newPrice: 0,
-			iscycle:""
+      iscycle: ''
     };
   },
   watch: {
@@ -175,31 +146,31 @@ export default {
     }
   },
   methods: {
-    analysis(event){
+    analysis(event) {
       if (this.SKU) {
-      this.$router.push({
-        path: '/productAnalysis?skuid=' + this.SKU
-      })
+        this.$router.push({
+          path: '/productAnalysis?skuid=' + this.SKU
+        });
       } else {
-        this.$Message.error("请先选择要分析的选项！");
+        this.$Message.error('请先选择要分析的选项！');
       }
-      event.stopPropagation()
+      event.stopPropagation();
     },
-    product_manual(){
-      console.log(this.product.id)
+    product_manual() {
+      console.log(this.product.id);
       if (this.product.id) {
-        this.$bus.emit("OPEN_PRODUCT_MANUAL",this.product.id,this.product.product)
+        this.$bus.emit('OPEN_PRODUCT_MANUAL', this.product.id, this.product.product);
       } else {
-        this.$Message.error("请先选择要说明的产品！");
+        this.$Message.error('请先选择要说明的产品！');
       }
     },
     //  生成产品详情
     select_product() {
-      if (this.product.id == "14") {
-        this.$Message.error("对不起，该产品已经不允许操作！");
+      if (this.product.id == '14') {
+        this.$Message.error('对不起，该产品已经不允许操作！');
         return false;
       }
-      this.SKU = "";
+      this.SKU = '';
       this.sideLoading = true;
       this.selectProduct = this.product;
       this.productPrice = 0;
@@ -207,7 +178,7 @@ export default {
       this.selectProperty = [];
       this.get_queryProperty();
       this.get_product_sku();
-			this.iscycle = this.product.iscycle
+      this.iscycle = this.product.iscycle;
     },
     //  获取产品子属性
     get_queryProperty() {
@@ -257,7 +228,7 @@ export default {
       function success(res) {
         _self.producSku = res.data.data;
         try {
-          let temp = _self.producSku[0].linkPropertys.split(",");
+          let temp = _self.producSku[0].linkPropertys.split(',');
           if (temp.length == 1) {
             _self.selectProperty.push(parseInt(temp[0]));
             _self.property_change();
@@ -279,13 +250,13 @@ export default {
     find_sku() {
       let _self = this;
       return new Promise(function(resolve, reject) {
-        _self.SKU = "";
-        let len = _self.producSku[0].linkPropertys.split(",").length;
+        _self.SKU = '';
+        let len = _self.producSku[0].linkPropertys.split(',').length;
         if (_self.selectProperty.length == len) {
           let arr = [];
-          let total = _self.selectProperty.join(",");
+          let total = _self.selectProperty.join(',');
           for (let i = 0; i < _self.producSku.length; i++) {
-            arr = _self.producSku[i].linkPropertys.split(",");
+            arr = _self.producSku[i].linkPropertys.split(',');
             let flag = _self.find_array(arr, total);
             if (flag) {
               _self.SKU = _self.producSku[i].id;
@@ -298,7 +269,7 @@ export default {
     },
     //  数组比较
     find_array(cur, params) {
-      params = params.split(",");
+      params = params.split(',');
       if (cur.length == params.length) {
         let len = cur.length;
         let flag = 0;
@@ -357,7 +328,7 @@ export default {
     //  产品操作
     add_product() {
       let _self = this;
-      let url = "/api/order/queryItemDetail";
+      let url = '/api/order/queryItemDetail';
 
       let config = {
         params: {
@@ -369,8 +340,8 @@ export default {
       function success(res) {
         _self.detail = res.data.data[0];
         // console.log(_self.detail)
-        if (res.data.data[0].iscycle == "Y") {
-          let url2 = "api/order/cycle/service/record/budget/period";
+        if (res.data.data[0].iscycle == 'Y') {
+          let url2 = 'api/order/cycle/service/record/budget/period';
           let config2 = {
             params: {
               productId: _self.selectProduct.id,
@@ -380,13 +351,13 @@ export default {
 
           function success2(re) {
             _self.detail.servicestartdate = re.data.data;
-            _self.$bus.emit("ADD_PRODUCT", _self.detail);
+            _self.$bus.emit('ADD_PRODUCT', _self.detail);
             _self.productListShow = false;
           }
 
           _self.$Get(url2, config2, success2);
         } else {
-          _self.$bus.emit("ADD_PRODUCT", _self.detail);
+          _self.$bus.emit('ADD_PRODUCT', _self.detail);
           _self.productListShow = false;
         }
       }
@@ -395,14 +366,12 @@ export default {
     },
     //  产品流程图
     open_flow_img() {
-      window.open(
-        "/api/dataCenter/activiti/getInputStreamBySkuId?skuId=" + this.SKU
-      );
+      window.open('/api/dataCenter/activiti/getInputStreamBySkuId?skuId=' + this.SKU);
     },
     //  限制某项产品
     rowClassName(row, index) {
-      if (row.id == "14") {
-        return "disabled-row";
+      if (row.id == '14') {
+        return 'disabled-row';
       }
     },
     //  修改流程图
@@ -412,10 +381,10 @@ export default {
     edit_product_price() {
       let _self = this;
       this.$router.push({
-        name: "updateProductPrice",
+        name: 'updateProductPrice',
         params: {
           skuId: _self.SKU
-        },
+        }
         // query: {
         //     name: "1234",
         //     children: 12345
@@ -425,7 +394,7 @@ export default {
   },
   computed: {
     isAdmin() {
-      if (localStorage.getItem("id") == "10059") {
+      if (localStorage.getItem('id') == '10059') {
         return true;
       } else {
         return false;

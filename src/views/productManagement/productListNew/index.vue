@@ -31,8 +31,8 @@
                 </Collapse>
             <Row style="margin-top: 10px">
                 <ButtonGroup>
-                    <Button @click="create" type="primary">新增产品</Button>
-					<Button @click="openEditSKU" type="primary">修改SKU权重</Button>
+                    <Button v-permission="['product.add']"  @click="create" type="primary">新增产品</Button>
+					<Button v-permission="['product.modifyWeigth']" @click="openEditSKU" type="primary">修改SKU权重</Button>
                 </ButtonGroup>
             </Row>
             <Row style="margin-top: 10px;">
@@ -133,6 +133,7 @@ export default {
                                 props:{
                                     type: "primary",
                                     size: "small",
+                                    "v-permission":['product.edit']
                                 },
                                 style:{
                                     marginRight: "5px"
@@ -150,6 +151,7 @@ export default {
                                 props:{
                                     type: "info",
                                     size: "small",
+                                    "v-permission":['product.modifyPrice']
                                 },
                                 style:{
                                     marginRight: "5px"
