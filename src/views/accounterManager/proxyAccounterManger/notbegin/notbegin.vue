@@ -139,6 +139,7 @@
                 header:[
                     {
                         title: '公司名称',
+                        fixed: 'left',
                         key: 'CompanyName',
                         minWidth: 250
                     },
@@ -1080,7 +1081,6 @@
                     {
                         title: '操作',
                         key: 'action',
-                        fixed: 'right',
                         width: 250,
                         align: 'center',
                         render: (h, params) => {

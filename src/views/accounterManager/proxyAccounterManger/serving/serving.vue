@@ -1242,7 +1242,6 @@
                     {
                         title: '操作',
                         key: 'action',
-                        fixed: 'right',
                         width: 250,
                         align: 'center',
                         render: (h, params) => {
