@@ -303,6 +303,27 @@ Vue.prototype.$Post = function(url, config, success, fail) {
     })
 }
 
+//没有提示的请求
+Vue.prototype.$post = function(url, config, success, fail) {
+  let _self = this
+  this.$http
+      .post(url, config)
+      .then(function(res) {
+        if (res.data.msgCode == '40000') {
+          success(res)
+        } else {
+          _self.$Message.error(res.data.msg)
+          fail(res)
+          console.warn(res)
+        }
+      })
+      .catch(function(err) {
+        fail(err)
+        _self.$Message.error('数据异常！')
+        console.error(err)
+      })
+}
+
 //  获取数据字典
 Vue.prototype.$GetDataCenter = function(params, finish) {
   let _self = this

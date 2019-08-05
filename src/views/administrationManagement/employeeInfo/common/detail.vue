@@ -606,7 +606,7 @@
                         reject()
                     }
 
-                    this.$Post(url, formdata, success, fail);
+                    this.$post(url, formdata, success, fail);
                 })
 
                 _self.loading = true;

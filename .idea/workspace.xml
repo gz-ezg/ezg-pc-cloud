@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0">
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/serving.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/serving.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/administrationManagement/employeeInfo/common/detail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/administrationManagement/employeeInfo/common/detail.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -28,8 +27,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/administrationManagement/employeeInfo/common/detail.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8875">
-              <caret line="651" column="36" lean-forward="true" selection-start-line="651" selection-start-column="36" selection-end-line="651" selection-end-column="36" />
+            <state relative-caret-position="195">
+              <caret line="606" column="21" lean-forward="true" selection-start-line="606" selection-start-column="21" selection-end-line="606" selection-end-column="21" />
               <folding>
                 <element signature="n#Col#0;n#Row#0;n#Form#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
                 <element signature="n#style#0;n#DatePicker#0;n#FormItem#0;n#Col#2;n#Row#0;n#Form#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -37,206 +36,39 @@
                 <element signature="n#Row#2;n#Form#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
                 <element signature="n#Row#4;n#Form#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
                 <element signature="n#style#0;n#a#0;n#span#0;n#FormItem#0;n#Col#0;n#Row#5;n#Form#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#1;n#FormItem#0;n#Col#0;n#Row#8;n#Form#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#div#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
-                <element signature="e#17316#17616#0" />
-                <element signature="e#17654#18116#0" />
-                <element signature="e#18970#21358#0" />
-                <element signature="e#23460#23492#0" />
-                <element signature="e#24414#25737#0" />
-                <element signature="e#25770#26367#0" />
-                <element signature="e#26395#27242#0" />
-                <element signature="e#27270#27409#0" />
                 <element signature="e#31550#32282#0" />
-                <element signature="e#29167#29899#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/administrationManagement/employeeInfo/inService/index.vue">
+        <entry file="file://$PROJECT_DIR$/src/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1641">
-              <caret line="67" column="111" selection-start-line="67" selection-start-column="111" selection-end-line="67" selection-end-column="111" />
-              <folding>
-                <element signature="n#style#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#Icon#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#Row#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#Select#0;n#FormItem#0;n#Col#2;n#Row#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#Row#1;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#Row#2;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#Row#3;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#Button#1;n#FormItem#0;n#center#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#Row#1;n#Card#0;n#template#0;n#!!top" />
-                <element signature="n#style#0;n#Row#2;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#13013#13313#0" />
-                <element signature="e#13340#13424#0" />
-                <element signature="e#13447#13525#0" />
-                <element signature="e#13552#14196#0" />
-                <element signature="e#14224#14338#0" />
-                <element signature="e#14370#14488#0" />
-                <element signature="e#14507#14577#0" />
-                <element signature="e#14597#14871#0" />
-                <element signature="e#14891#15115#0" />
-                <element signature="e#15226#15791#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/serving.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="174" column="24" selection-start-line="174" selection-start-column="24" selection-end-line="174" selection-end-column="38" />
-              <folding>
-                <element signature="n#style#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#Icon#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#Row#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#Button#1;n#FormItem#0;n#center#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#Row#1;n#Card#0;n#template#0;n#!!top" />
-                <element signature="n#style#0;n#Row#2;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#Row#2;n#Card#0;n#template#0;n#!!top" />
-                <element signature="e#7642#7937#0" />
-                <element signature="e#8215#11740#0" />
-                <element signature="e#11762#17748#0" />
-                <element signature="e#17770#22112#0" />
-                <element signature="e#22134#26503#0" />
-                <element signature="e#26525#30889#0" />
-                <element signature="e#30911#35291#0" />
-                <element signature="e#35313#35453#0" />
-                <element signature="e#35475#37770#0" />
-                <element signature="e#37792#51531#0" />
-                <element signature="e#51553#56347#0" />
-                <element signature="e#56369#69487#0" />
-                <element signature="e#69509#70709#0" />
-                <element signature="e#70731#70874#0" />
-                <element signature="e#70896#71043#0" />
-                <element signature="e#71065#71206#0" />
-                <element signature="e#71228#71375#0" />
-                <element signature="e#71397#71542#0" />
-                <element signature="e#71564#74130#0" />
-                <element signature="e#71806#74108#0" />
-                <element signature="e#80287#84245#0" />
-                <element signature="e#84276#85608#0" />
-                <element signature="e#85638#86927#0" />
-                <element signature="e#86966#87582#0" />
-                <element signature="e#87621#88242#0" />
-                <element signature="e#88279#88898#0" />
-                <element signature="e#88937#89561#0" />
-                <element signature="e#89606#90127#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="122">
-              <caret line="1053" column="20" selection-start-line="1053" selection-start-column="20" selection-end-line="1053" selection-end-column="20" />
-              <folding>
-                <element signature="e#6774#6918#0" />
-                <element signature="e#6940#12963#0" />
-                <element signature="e#12985#12989#0" />
-                <element signature="e#31520#31660#0" />
-                <element signature="e#31682#44812#0" />
-                <element signature="e#44834#46721#0" />
-                <element signature="e#46743#59861#0" />
-                <element signature="e#59883#61087#0" />
-                <element signature="e#61109#62313#0" />
-                <element signature="e#62335#62339#0" />
-                <element signature="e#62705#65271#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
-              <caret line="1080" column="20" selection-start-line="1080" selection-start-column="20" selection-end-line="1080" selection-end-column="20" />
-              <folding>
-                <element signature="e#6922#7066#0" />
-                <element signature="e#7088#13110#0" />
-                <element signature="e#13132#17461#0" />
-                <element signature="e#17483#21852#0" />
-                <element signature="e#21874#26238#0" />
-                <element signature="e#26260#30640#0" />
-                <element signature="e#30662#30802#0" />
-                <element signature="e#30824#43954#0" />
-                <element signature="e#43976#48770#0" />
-                <element signature="e#48792#61910#0" />
-                <element signature="e#61932#63132#0" />
-                <element signature="e#63154#63302#0" />
-                <element signature="e#63324#63472#0" />
-                <element signature="e#63494#66060#0" />
-              </folding>
+            <state relative-caret-position="212">
+              <caret line="315" column="19" lean-forward="true" selection-start-line="315" selection-start-column="19" selection-end-line="315" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue">
+        <entry file="file://$PROJECT_DIR$/src/views/administrationManagement/employeeInfo/inService/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="151">
-              <caret line="557" column="38" selection-start-line="557" selection-start-column="38" selection-end-line="557" selection-end-column="38" />
-              <folding>
-                <element signature="e#6181#6325#0" />
-                <element signature="e#6347#9872#0" />
-                <element signature="e#9894#15916#0" />
-                <element signature="e#15938#16083#0" />
-                <element signature="e#16105#16248#0" />
-                <element signature="e#16270#16412#0" />
-                <element signature="e#16434#16580#0" />
-                <element signature="e#16602#16742#0" />
-                <element signature="e#16764#19108#0" />
-                <element signature="e#19130#23023#0" />
-                <element signature="e#23045#23189#0" />
-                <element signature="e#23211#27164#0" />
-                <element signature="e#27186#27329#0" />
-                <element signature="e#27351#27494#0" />
-                <element signature="e#27516#27664#0" />
-                <element signature="e#27686#27834#0" />
-                <element signature="e#27856#28003#0" />
-                <element signature="e#28025#28170#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/administrationManagement/employeeInfo/leave/index.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="127" column="20" selection-start-line="127" selection-start-column="20" selection-end-line="127" selection-end-column="43" />
+            <state relative-caret-position="287">
+              <caret line="66" column="48" selection-start-line="66" selection-start-column="48" selection-end-line="66" selection-end-column="48" />
               <folding>
                 <element signature="n#style#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#Icon#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#Row#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#Select#0;n#FormItem#0;n#Col#2;n#Row#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#Select#0;n#FormItem#0;n#Col#2;n#Row#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" />
                 <element signature="n#style#0;n#Row#1;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#Row#2;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#Row#3;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#Button#1;n#FormItem#0;n#center#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#ButtonGroup#0;n#Row#1;n#Card#0;n#template#0;n#!!top" />
+                <element signature="n#Row#1;n#Card#0;n#template#0;n#!!top" />
                 <element signature="n#style#0;n#Row#2;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#11725#11729#0" />
-                <element signature="e#13019#13319#0" />
-                <element signature="e#13346#13430#0" />
-                <element signature="e#13453#13531#0" />
-                <element signature="e#13558#14202#0" />
-                <element signature="e#14230#14344#0" />
-                <element signature="e#14376#14494#0" />
-                <element signature="e#14513#14583#0" />
-                <element signature="e#14603#14877#0" />
-                <element signature="e#14897#15121#0" />
-                <element signature="e#18927#19492#0" />
               </folding>
             </state>
           </provider>
@@ -293,7 +125,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/ButtonComponents/serviceDetails/index.vue" />
         <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/ChangeLog.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/ButtonComponents/changeLog/index.vue" />
         <option value="$PROJECT_DIR$/config/config.js" />
@@ -339,11 +170,12 @@
         <option value="$PROJECT_DIR$/src/views/order/abnormalOrderList/components/abOrderOp/addAbOrder.vue" />
         <option value="$PROJECT_DIR$/src/views/administrationManagement/employeeInfo/leave/index.vue" />
         <option value="$PROJECT_DIR$/src/views/administrationManagement/employeeInfo/inService/index.vue" />
-        <option value="$PROJECT_DIR$/src/views/administrationManagement/employeeInfo/common/detail.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/serving.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue" />
+        <option value="$PROJECT_DIR$/src/main.js" />
+        <option value="$PROJECT_DIR$/src/views/administrationManagement/employeeInfo/common/detail.vue" />
       </list>
     </option>
   </component>
@@ -364,7 +196,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -383,34 +214,11 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="accounterManager" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="accounterManager" type="462c0819:PsiDirectoryNode" />
-              <item name="proxyAccounterManger" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="accounterManager" type="462c0819:PsiDirectoryNode" />
-              <item name="proxyAccounterManger" type="462c0819:PsiDirectoryNode" />
-              <item name="all" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -608,7 +416,8 @@
       <workItem from="1564535861293" duration="21036000" />
       <workItem from="1564563808806" duration="7450000" />
       <workItem from="1564620996300" duration="30024000" />
-      <workItem from="1564707878273" duration="19782000" />
+      <workItem from="1564707878273" duration="20586000" />
+      <workItem from="1564968496228" duration="1993000" />
     </task>
     <task id="LOCAL-00022" summary="修改启动失败的问题">
       <created>1555989851178</created>
@@ -957,7 +766,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1595570000" />
+    <option name="totallyTimeSpent" value="1598367000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -970,9 +779,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1376" height="784" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6918033" visible="true" weight="0.26426426" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6918033" visible="true" weight="0.26426426" />
       <window_info id="Structure" order="1" weight="0.24960506" />
       <window_info id="Favorites" order="2" sideWeight="0.30819672" side_tool="true" weight="0.26276276" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.1399046" />
@@ -991,7 +799,7 @@
       <window_info anchor="bottom" id="消息" order="13" />
       <window_info anchor="bottom" id="调试" order="14" />
       <window_info anchor="bottom" id="TypeScript" order="15" />
-      <window_info anchor="bottom" id="Terminal" order="16" sideWeight="0.49924925" visible="true" weight="0.45151034" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="16" sideWeight="0.49924925" visible="true" weight="0.45151034" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1093,17 +901,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="0.0" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/views/order/orderList/components/productSelect.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1934">
-          <caret line="415" column="8" selection-start-line="415" selection-start-column="8" selection-end-line="415" selection-end-column="8" />
-          <folding>
-            <element signature="e#16439#16598#0" />
-            <element signature="e#16665#16834#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/iview/dist/iview.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="25">
@@ -1425,65 +1222,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/administrationManagement/employeeInfo/leave/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="127" column="20" selection-start-line="127" selection-start-column="20" selection-end-line="127" selection-end-column="43" />
-          <folding>
-            <element signature="n#style#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Icon#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Select#0;n#FormItem#0;n#Col#2;n#Row#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#Select#0;n#FormItem#0;n#Col#2;n#Row#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#Row#1;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#2;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#3;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Button#1;n#FormItem#0;n#center#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#ButtonGroup#0;n#Row#1;n#Card#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#Row#2;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#11725#11729#0" />
-            <element signature="e#13019#13319#0" />
-            <element signature="e#13346#13430#0" />
-            <element signature="e#13453#13531#0" />
-            <element signature="e#13558#14202#0" />
-            <element signature="e#14230#14344#0" />
-            <element signature="e#14376#14494#0" />
-            <element signature="e#14513#14583#0" />
-            <element signature="e#14603#14877#0" />
-            <element signature="e#14897#15121#0" />
-            <element signature="e#18927#19492#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/administrationManagement/employeeInfo/common/detail.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8875">
-          <caret line="651" column="36" lean-forward="true" selection-start-line="651" selection-start-column="36" selection-end-line="651" selection-end-column="36" />
-          <folding>
-            <element signature="n#Col#0;n#Row#0;n#Form#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#DatePicker#0;n#FormItem#0;n#Col#2;n#Row#0;n#Form#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#Row#1;n#Form#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#Row#2;n#Form#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#Row#4;n#Form#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#a#0;n#span#0;n#FormItem#0;n#Col#0;n#Row#5;n#Form#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#FormItem#0;n#Col#0;n#Row#8;n#Form#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="e#17316#17616#0" />
-            <element signature="e#17654#18116#0" />
-            <element signature="e#18970#21358#0" />
-            <element signature="e#23460#23492#0" />
-            <element signature="e#24414#25737#0" />
-            <element signature="e#25770#26367#0" />
-            <element signature="e#26395#27242#0" />
-            <element signature="e#27270#27409#0" />
-            <element signature="e#31550#32282#0" />
-            <element signature="e#29167#29899#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/router/router.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="792">
@@ -1500,33 +1238,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/administrationManagement/employeeInfo/inService/index.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/administrationManagement/employeeInfo/leave/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1641">
-          <caret line="67" column="111" selection-start-line="67" selection-start-column="111" selection-end-line="67" selection-end-column="111" />
+        <state relative-caret-position="2950">
+          <caret line="127" column="20" selection-start-line="127" selection-start-column="20" selection-end-line="127" selection-end-column="43" />
           <folding>
             <element signature="n#style#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#Icon#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#Row#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#Select#0;n#FormItem#0;n#Col#2;n#Row#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#Select#0;n#FormItem#0;n#Col#2;n#Row#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" />
             <element signature="n#style#0;n#Row#1;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#Row#2;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#Row#3;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#Button#1;n#FormItem#0;n#center#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#Row#1;n#Card#0;n#template#0;n#!!top" />
+            <element signature="n#ButtonGroup#0;n#Row#1;n#Card#0;n#template#0;n#!!top" />
             <element signature="n#style#0;n#Row#2;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#13013#13313#0" />
-            <element signature="e#13340#13424#0" />
-            <element signature="e#13447#13525#0" />
-            <element signature="e#13552#14196#0" />
-            <element signature="e#14224#14338#0" />
-            <element signature="e#14370#14488#0" />
-            <element signature="e#14507#14577#0" />
-            <element signature="e#14597#14871#0" />
-            <element signature="e#14891#15115#0" />
-            <element signature="e#15226#15791#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1950">
+          <caret line="597" column="31" selection-start-line="597" selection-start-column="31" selection-end-line="597" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="1080" column="20" selection-start-line="1080" selection-start-column="20" selection-end-line="1080" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="1053" column="20" selection-start-line="1053" selection-start-column="20" selection-end-line="1053" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -1560,86 +1310,50 @@
             <element signature="e#71065#71206#0" />
             <element signature="e#71228#71375#0" />
             <element signature="e#71397#71542#0" />
-            <element signature="e#71564#74130#0" />
-            <element signature="e#71806#74108#0" />
-            <element signature="e#80287#84245#0" />
-            <element signature="e#84276#85608#0" />
-            <element signature="e#85638#86927#0" />
-            <element signature="e#86966#87582#0" />
-            <element signature="e#87621#88242#0" />
-            <element signature="e#88279#88898#0" />
-            <element signature="e#88937#89561#0" />
-            <element signature="e#89606#90127#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue">
+    <entry file="file://$PROJECT_DIR$/src/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="1053" column="20" selection-start-line="1053" selection-start-column="20" selection-end-line="1053" selection-end-column="20" />
+        <state relative-caret-position="212">
+          <caret line="315" column="19" lean-forward="true" selection-start-line="315" selection-start-column="19" selection-end-line="315" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/administrationManagement/employeeInfo/common/detail.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="606" column="21" lean-forward="true" selection-start-line="606" selection-start-column="21" selection-end-line="606" selection-end-column="21" />
           <folding>
-            <element signature="e#6774#6918#0" />
-            <element signature="e#6940#12963#0" />
-            <element signature="e#12985#12989#0" />
-            <element signature="e#31520#31660#0" />
-            <element signature="e#31682#44812#0" />
-            <element signature="e#44834#46721#0" />
-            <element signature="e#46743#59861#0" />
-            <element signature="e#59883#61087#0" />
-            <element signature="e#61109#62313#0" />
-            <element signature="e#62335#62339#0" />
-            <element signature="e#62705#65271#0" />
+            <element signature="n#Col#0;n#Row#0;n#Form#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#DatePicker#0;n#FormItem#0;n#Col#2;n#Row#0;n#Form#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#Row#1;n#Form#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#Row#2;n#Form#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#Row#4;n#Form#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#a#0;n#span#0;n#FormItem#0;n#Col#0;n#Row#5;n#Form#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#div#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="e#31550#32282#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue">
+    <entry file="file://$PROJECT_DIR$/src/views/administrationManagement/employeeInfo/inService/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="1080" column="20" selection-start-line="1080" selection-start-column="20" selection-end-line="1080" selection-end-column="20" />
+        <state relative-caret-position="287">
+          <caret line="66" column="48" selection-start-line="66" selection-start-column="48" selection-end-line="66" selection-end-column="48" />
           <folding>
-            <element signature="e#6922#7066#0" />
-            <element signature="e#7088#13110#0" />
-            <element signature="e#13132#17461#0" />
-            <element signature="e#17483#21852#0" />
-            <element signature="e#21874#26238#0" />
-            <element signature="e#26260#30640#0" />
-            <element signature="e#30662#30802#0" />
-            <element signature="e#30824#43954#0" />
-            <element signature="e#43976#48770#0" />
-            <element signature="e#48792#61910#0" />
-            <element signature="e#61932#63132#0" />
-            <element signature="e#63154#63302#0" />
-            <element signature="e#63324#63472#0" />
-            <element signature="e#63494#66060#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="557" column="38" selection-start-line="557" selection-start-column="38" selection-end-line="557" selection-end-column="38" />
-          <folding>
-            <element signature="e#6181#6325#0" />
-            <element signature="e#6347#9872#0" />
-            <element signature="e#9894#15916#0" />
-            <element signature="e#15938#16083#0" />
-            <element signature="e#16105#16248#0" />
-            <element signature="e#16270#16412#0" />
-            <element signature="e#16434#16580#0" />
-            <element signature="e#16602#16742#0" />
-            <element signature="e#16764#19108#0" />
-            <element signature="e#19130#23023#0" />
-            <element signature="e#23045#23189#0" />
-            <element signature="e#23211#27164#0" />
-            <element signature="e#27186#27329#0" />
-            <element signature="e#27351#27494#0" />
-            <element signature="e#27516#27664#0" />
-            <element signature="e#27686#27834#0" />
-            <element signature="e#27856#28003#0" />
-            <element signature="e#28025#28170#0" />
+            <element signature="n#style#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Icon#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Select#0;n#FormItem#0;n#Col#2;n#Row#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#1;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#2;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Row#3;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Button#1;n#FormItem#0;n#center#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#Row#1;n#Card#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#Row#2;n#Card#0;n#template#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
