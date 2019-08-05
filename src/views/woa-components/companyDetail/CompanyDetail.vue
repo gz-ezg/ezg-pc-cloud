@@ -270,6 +270,33 @@
                                 <Input :readonly="readonly" v-model="companyInfoo.financial_handover" type="textarea" :autosize="{minRows: 3,maxRows: 7}" style="width: 600px" placeholder="如是高新，是否享受所得税15%；是否已完成中小科技型企业备案；如是双软，是否已完成两免三减半的备案"></Input>
                             </FormItem>
                         </Row>
+                        <Row style="margin-bottom: 10px" v-if="pageId">
+                            <FormItem style="margin-bottom:5px">
+                                <div>产品规模：</div>
+                            </FormItem>
+                        </Row>
+                        <Row style="margin-bottom: 10px" v-if="pageId">
+                            <FormItem prop="ifMatch"  style="margin-bottom:5px">
+                                <Radio-group v-model="ifMatch">
+                                    <Radio label="Y">
+                                        <span>相符</span>
+                                    </Radio>
+                                    <Radio label="N" style="margin-left: 20px">
+                                        <span>不符</span>
+                                    </Radio>
+                                </Radio-group>
+                            </FormItem>
+                        </Row>
+                        <Row style="margin-bottom: 10px" v-if="pageId">
+                            <FormItem  style="margin-bottom:5px">
+                                <div>服务备注：</div>
+                            </FormItem>
+                        </Row>
+                        <Row style="margin-bottom: 10px" v-if="pageId">
+                            <FormItem  style="margin-bottom:5px">
+                                <Input :readonly="readonly" v-model="serviceDemo" type="textarea" :autosize="{minRows: 3,maxRows: 7}" style="width: 600px" placeholder="请输入......"></Input>
+                            </FormItem>
+                        </Row>
                         <Row :gutter="12" style="margin-bottom: 10px">
                             <Col span="8">
                                 <FormItem prop="income_channel_one" label="主要收入渠道1：" style="margin-bottom:5px">
@@ -1170,7 +1197,13 @@
             },
             pageId: {
                 type: [String, Number]
-            }
+            },
+            ifMatch: {
+                type: [String, Number]
+            },
+            serviceDemo: {
+                type: [String, Number]
+            },
         },
         components:{
             Create
@@ -1378,6 +1411,9 @@
                         { required: true, message: '请输入相关事项备案', trigger: 'blur' }
                     ],
                     customer_service_standard: [
+                        { required: true, message: '请选择', trigger: 'change' }
+                    ],
+                    ifMatch:[
                         { required: true, message: '请选择', trigger: 'change' }
                     ],
                     financial_handover: [
@@ -1794,6 +1830,10 @@
                 this.$Get(url,config,success)
             },
             update_company_detail(name){
+                if (!this.ifMatch) {
+                    this.$Message.warning("请选择产品规模")
+                    return
+                }
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         let _self = this
@@ -1801,6 +1841,9 @@
                         let config = {
                             companyId: _self.companyId,
                             id:_self.companyInfoo.id,
+                            recordId:_self.pageId,
+                            ifMatch:_self.ifMatch,
+                            serviceDemo:_self.serviceDemo,
                             companyType: _self.companyInfoo.company_type,
                             industryType: _self.companyInfoo.industry_type,
                             assetsTatol: _self.companyInfoo.assets_tatol,
@@ -1913,6 +1956,8 @@
                 // this.detail = false
                 this.openTab = "name8"
                 this.$store.state.gobal.gobalCompanyPageId = ""
+                this.$store.state.gobal.gobalCompanyIfMatch = ""
+                this.$store.state.gobal.gobalCompanyServiceDemo = ""
                 this.$store.commit("close_gobal_company_detail_modal")
             },
             editTax(){

@@ -1245,6 +1245,8 @@
                     console.log(this.current_row.id)
                     this.$store.commit('setPageId', this.current_row.id)
                     this.$store.commit('open_gobal_company_detail_modal', this.current_row.company_id)
+                    this.$store.commit('setIfMatch', this.current_row.if_match)
+                    this.$store.commit('setServiceDemo', this.current_row.service_memo)
                 }
             },
             add_important_reminder(){

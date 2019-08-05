@@ -29,6 +29,12 @@ const gobal = {
         setPageId(state,id){
             state.gobalCompanyPageId = id;
         },
+        setIfMatch(state,ifMatch){
+            state.gobalCompanyIfMatch = ifMatch
+        },
+        setServiceDemo(state,serviceDemo){
+            state.gobalCompanyServiceDemo = serviceDemo
+        },
         close_gobal_relogin_modal(state){
             state.gobalReloginShow = false
         },

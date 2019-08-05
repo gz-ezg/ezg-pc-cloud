@@ -125,7 +125,7 @@
 
     <customer-detail v-if="gobalCustomerDetailShow"  :customer="gobalCustomer"></customer-detail>
     <work-order-detail v-if="gobalWorkorderDetailShow" :workOrderId="gobalworkOrderId"></work-order-detail>
-    <company-detail v-if="gobalCompanyDetailShow" :pageId="gobalCompanyPageId" :companyId="gobalCompanyId"></company-detail>
+    <company-detail v-if="gobalCompanyDetailShow" :pageId="gobalCompanyPageId" :companyId="gobalCompanyId" :ifMatch="gobalCompanyIfMatch" :serviceDemo="gobalCompanyServiceDemo"></company-detail>
     <set-finish-time :worderOrderDetail="gobalWorkorderDetail"></set-finish-time>
     <re-login v-if="gobalReloginShow"></re-login>
 
@@ -334,6 +334,12 @@ export default {
     },
     gobalCompanyPageId() {
       return this.$store.state.gobal.gobalCompanyPageId;
+    },
+    gobalCompanyIfMatch() {
+      return this.$store.state.gobal.gobalCompanyIfMatch;
+    },
+    gobalCompanyServiceDemo() {
+      return this.$store.state.gobal.gobalCompanyServiceDemo;
     },
     gobalCompanyId() {
       return this.$store.state.gobal.gobalCompanyId;

@@ -116,6 +116,7 @@
                 order:'desc',
                 sortField:"begin_time",
                 currentRow: {},
+                currentIndex:"",
                 loading: true,
                 page: 1,
                 pageSize: 10,
@@ -147,7 +148,68 @@
                     {
                         title: "任务名称",
                         key: 'task_name',
-                        minWidth: 100
+                        minWidth: 220,
+                        render: (h, params) => {
+                            if (params.row.task_name == "" || params.row.task_name == null) {
+                                return "";
+                            } else {
+                                // console.log(params.row.companynames)
+                                let temp = params.row.task_name.split(",")
+                                if (temp[0].length > 13) {
+                                    return h("Poptip",{
+                                        props: {
+                                            trigger: "hover",
+                                            title: "任务名称",
+                                            placement: "bottom"
+                                        }
+                                    },[
+                                        h("span",temp[0].slice(0,13) + "..."),
+                                        h("Icon", {
+                                            props: {
+                                                type: "arrow-down-b"
+                                            }
+                                        }),
+                                        h("div",{
+                                            slot: "content"
+                                        },[
+                                            h("ul",temp.map(item => [
+                                                h("li", {
+                                                    style: {
+                                                        padding: "4px"
+                                                    }
+                                                },"名称：" + item)
+                                            ]))
+                                        ])
+                                    ]);
+                                } else {
+                                    return h("Poptip",{
+                                            props: {
+                                                trigger: "hover",
+                                                title: "任务名称",
+                                                placement: "bottom"
+                                            }},[
+                                            h("span", temp[0]),
+                                            h("Icon", {
+                                                props: {
+                                                    type: "arrow-down-b"
+                                                }
+                                            }),
+                                            h("div", {
+                                                slot: "content"
+                                            },[
+                                                h("ul",temp.map(item => [h("li",
+                                                    {
+                                                        style: {
+                                                            padding: "4px"
+                                                        }
+                                                    },"名称：" + item)
+                                                ]))
+                                            ])
+                                        ]
+                                    );
+                                }
+                            }
+                        }
                     },
                     {
                         title: "任务类型",
@@ -186,7 +248,53 @@
                     {
                         title: '总结',
                         key: 'finish_memo',
-                        minWidth: 90
+                        minWidth: 250,
+                        render: (h, params) => {
+                            if (params.row.finish_memo == "" || params.row.finish_memo == null) {
+                                return "";
+                            } else {
+                                // console.log(params.row.companynames)
+                                let temp = params.row.finish_memo
+                                if (temp.length > 10) {
+                                    if (params.index != this.currentIndex){
+                                        return h("div",{
+                                        },[
+                                            h("span",{
+                                                style:{
+                                                    display: 'inline-block',
+                                                }
+                                            },temp.slice(0,10) + "..."),
+                                            h("Button", {
+                                                props:{
+                                                    type:'text',
+                                                    display: 'inline-block',
+                                                },
+                                                style: {
+                                                    color:'rgb(45,140,240)',
+                                                },
+                                                on:{
+                                                    click: () => {
+                                                       this.change(params.row,params.index)
+                                                    }
+                                                }
+                                            },"点击展开")
+                                        ]);
+                                    } else {
+                                        return h("div",{
+                                        },[
+                                            h("span",temp)
+                                        ]);
+                                    }
+
+                                } else {
+                                    return h("div",{
+                                            },[
+                                            h("span", temp)
+                                        ]
+                                    );
+                                }
+                            }
+                        }
                     },
                     {
                         title: '操作',
@@ -287,7 +395,9 @@
             },
             select_row(e){
                 this.currentRow = e;
-                console.log(e);
+            },
+            change(row,index){
+                this.currentIndex= index;
             },
             download_excel(){
                 let field = [
