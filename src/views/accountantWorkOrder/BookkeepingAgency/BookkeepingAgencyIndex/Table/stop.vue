@@ -59,7 +59,7 @@
             </Row>
         <Row>
             <ButtonGroup>
-                <Button type="primary" icon="ios-color-wand-outline" @click="start_service">开始服务</Button>
+                <Button type="primary" icon="ios-color-wand-outline"  v-permission="['accounterManager.startService']" @click="start_service">开始服务</Button>
                 <Button type="primary" icon="information-circled" v-permission="['accounterManager.share']" @click="fpkj">变更会计</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
             </ButtonGroup>

@@ -66,8 +66,8 @@
         <Button type="primary" icon="ios-color-wand-outline" @click="openFollow">服务详情</Button>
         <Button type="primary" icon="ios-color-wand-outline" @click="openFieldByCompanyId">外勤详情</Button>
         <Button type="primary" icon="ios-color-wand-outline" @click="open_change_log">变更日志</Button>
-        <Button type="primary" icon="ios-color-wand-outline" @click="update_service">同步月服务记录</Button>
-        <Button type="primary" icon="ios-color-wand-outline" @click="update_etax_info">更新税务信息</Button>
+        <Button type="primary" icon="ios-color-wand-outline" v-permission="['accounterManager.syncMonthServiceRecord']" @click="update_service">同步月服务记录</Button>
+        <Button type="primary" icon="ios-color-wand-outline" v-permission="['accounterManager.updateTaxInfo']"  @click="update_etax_info">更新税务信息</Button>
         <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
         <Button type="primary" icon="ios-color-wand-outline" @click="open_bill">票据属性</Button>
         <Button type="primary" icon="ios-color-wand-outline" @click="open_bill_histroy">历史票据</Button>

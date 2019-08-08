@@ -67,7 +67,7 @@
             </Row>
         <Row>
             <ButtonGroup>
-                <Button type="primary" icon="ios-color-wand-outline" @click="ksfw" v-permission="['bookkeepingAgency.stop']">开始服务</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="ksfw" v-permission="['bookkeepingAgency.startService']">开始服务</Button>
                 <Button type="primary" icon="information-circled" v-permission="['accounterManager.share']" @click="fpkj">变更会计</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="openFieldByCompanyId">外勤详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
