@@ -772,7 +772,25 @@ export const appRouter = [
         name: 'abOrderApprove_index',
         component: () =>
           import(/* webpackChunkName: "abOrderApprove_index" */ '@/views/order/abOrderApprove/index.vue')
-      }
+      },
+      {
+        access: 11602,
+        meta: 11602,
+        path: 'arrearsOrder',
+        title: '欠费单',
+        name: 'arrearsOrder_index',
+        component: () =>
+          import(/* webpackChunkName: "arrearsOrder_index" */ '@/views/order/arrearsOrder/index.vue')
+      },
+      {
+        access: 11602,
+        meta: 11602,
+        path: 'arrearsOrderApprove',
+        title: '欠费单审批',
+        name: 'arrearsOrderApprove_index',
+        component: () =>
+          import(/* webpackChunkName: "arrearsOrderApprove_index" */ '@/views/order/arrearsOrderApprove/index.vue')
+      },
       // {
       //     access:6020,
       //     path: 'orderLog',

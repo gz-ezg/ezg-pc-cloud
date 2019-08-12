@@ -6,9 +6,10 @@
           <filtra @search="list.search($event)" @reset="list.reset()" :config="filtraConfig"></filtra>
           <Row>
             <ButtonGroup>
-              <Button type="primary" icon="search" @click="handleAdd">录入</Button>
+              <Button type="primary" icon="search" @click="handleAdd">新增</Button>
               <Button type="primary" icon="search" @click="handleEdit">编辑</Button>
-              <!-- <Button type="primary" icon="search" @click="handleShow">查看</Button> -->
+              <Button type="primary" icon="search" @click="handleShow">查看</Button>
+              <Button type="primary" icon="search" @click="handleDelete">删除</Button>
             </ButtonGroup>
           </Row>
           <Row style="margin-top: 10px;">
@@ -38,102 +39,90 @@
         </Card>
       </Col>
     </Row>
-    <add-template :type-list="dataDict" @ok="handleAddOk" @cancel="handleAdd" v-if="isAdd" />
+    <add-template @ok="handleAddOk" @cancel="handleAdd" v-if="isAdd" />
     <edit-template :type-list="dataDict" :row="currentRow" v-if="isEdit" @ok="handleEditOk" @cancel="isEdit = false" />
     <show-template :row="currentRow" v-if="isShow" @ok="isShow = false" @cancel="isShow = false" />
   </div>
 </template>
 
 <script>
-import AddTemplate from './menu/add.vue';
-import editTemplate from './menu/edit.vue';
-import showTemplate from './menu/show.vue';
+import AddTemplate from './Menu/Add.vue';
+// import editTemplate from './menu/edit.vue';
+// import showTemplate from './menu/show.vue';
 import filtra from '@/components/filtra';
-import { listNotify, sendNotify, queryCodes } from '@/api/logManagement';
+// import { listNotify, sendNotify, queryCodes } from '@/api/logManagement';
+import { oweOrderList, deleteOweOrder } from '../../../api/order';
 import listManage from '../../../utils/listManage';
 export default {
   components: {
     AddTemplate,
-    editTemplate,
-    showTemplate,
+    // editTemplate,
+    // showTemplate,
     filtra
   },
   data() {
     return {
       currentRow: null,
-      list: new listManage({ pageSize: 10 }, listNotify, this.dataHandle),
+      list: new listManage({ pageSize: 10 }, oweOrderList, this.dataHandle),
       tableHeader: [
         {
-          title: '类型',
-          key: 'notify_type_name',
+          title: '欠费单号',
+          key: 'owe_code',
           minWidth: 180
         },
         {
-          title: '通知部门',
+          title: '公司名称',
           width: 180,
-          key: 'notify_depart_name',
+          key: 'companyname',
           minWidth: 90
         },
         {
-          title: '创建时间',
+          title: '客户名称',
           width: 180,
-          key: 'createdate',
+          key: 'customer',
+          minWidth: 90
+        },
+        {
+          title: '客户电话',
+          width: 180,
+          key: 'TEL',
+          minWidth: 90
+        },
+        {
+          title: '代账产品',
+          width: 180,
+          key: 'skuname',
+          minWidth: 90
+        },
+        {
+          title: '剩余时长',
+          width: 180,
+          key: 'diff',
+          minWidth: 90
+        },
+        {
+          title: '结束税期',
+          width: 180,
+          key: 'late_period',
+          minWidth: 90
+        },
+        {
+          title: '流程状态',
+          width: 180,
+          key: 'process_type',
+          minWidth: 90
+        },
+        {
+          title: '申请备注',
+          width: 180,
+          key: 'apply_memo',
           minWidth: 90
         },
         {
           title: '创建人',
           width: 180,
-          key: 'createby_realname',
+          key: 'createName',
           minWidth: 90
-        },
-        {
-          title: '发送状态',
-          width: 180,
-          key: 'notify_status',
-          minWidth: 90,
-          render: (h, params) => {
-            let type = params.row.notify_status == 'sent' ? '已发送' : '待发送';
-            return h('div', type);
-          }
-        },
-        {
-          title: '操作',
-          fixed: 'right',
-          width: 90,
-          render: (h, params) => {
-            let isSent = params.row.notify_status == 'sent';
-            return isSent
-              ? h(
-                  'Button',
-                  {
-                    props: {
-                      size: 'small'
-                    },
-                    on: {
-                      click: () => {
-                        this.currentRow = params.row;
-                        this.handleShow();
-                      }
-                    }
-                  },
-                  '查看'
-                )
-              : h(
-                  'Button',
-                  {
-                    props: {
-                      type: 'primary',
-                      size: 'small'
-                    },
-                    on: {
-                      click: () => {
-                        this.sendMessage(params);
-                      }
-                    }
-                  },
-                  '发送'
-                );
-          }
         }
       ],
       filtraConfig: [
@@ -157,7 +146,6 @@ export default {
     handleAdd() {
       this.isAdd = !this.isAdd;
     },
-
     handleEdit() {
       if (!this.currentRow) {
         return this.$Message.info('请选择一行进行查看');
@@ -167,45 +155,37 @@ export default {
       }
       this.isEdit = !this.isEdit;
     },
-
     handleEditOk() {
       this.isEdit = !this.isEdit;
       this.list.reset();
     },
-
     handleShow() {
       this.isShow = !this.isShow;
     },
-
     dataHandle(data) {
-      return data.map(v => {
-        v.notify_type_name = this.MAP[v.notify_type];
-        return v;
-      });
+      return data;
     },
+    selectRow(row) {
 
-    async sendMessage({ row: { id = '' } }) {
+      this.currentRow = row;
+    },
+    handleDelete() {
+      if (!this.currentRow) {
+        return this.$Message.info('请选择一行进行查看');
+      }
       this.$Modal.confirm({
         title: '提示',
-        content: '是否发送通知',
+        content: '是否删除',
         onOk: async () => {
-          await sendNotify({ id });
+          await deleteOweOrder({ applyId: this.currentRow.id });
           this.list.fetchList();
         },
         onCancel: () => {}
       });
-    },
-
-    selectRow(row) {
-      this.currentRow = row;
     }
   },
   async created() {
     try {
-      let [dataDict, MAP] = await queryCodes('notify_template_type');
-      this.MAP = MAP;
-      this.dataDict = dataDict;
-      this.list.setDefaultConfig({ sortField: 'nt.updatedate' });
       this.list.fetchList();
     } catch (error) {}
   }
