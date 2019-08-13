@@ -1170,6 +1170,15 @@ export const appRouter = [
         component: () =>
           import(/* webpackChunkName: "employeeInfo_index" */ '@/views/administrationManagement/employeeInfo/index.vue')
       },
+      {
+        access: 11651,
+        meta: 11651,
+        path: 'addManager',
+        title: '地址报价单',
+        name: 'addManager_index',
+        component: () =>
+          import(/* webpackChunkName: "addManager_index" */ '@/views/administrationManagement/addManager/index.vue')
+      },
     ]
   },
   {

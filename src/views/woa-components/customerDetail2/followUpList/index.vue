@@ -1,8 +1,37 @@
 <template>
-    <div>
+    <div @click="showSearch=false">
         <Row style="height:24px">
-            <Row>
+            <Row style="height: 65px">
                 <!-- <Button name="marketingManagement_index_followUp_add" type="primary" shape="circle" icon="plus" @click="open_create_followUp">新增</Button> -->
+                <Button type="primary" shape="circle" icon="search" @click.stop="searchShow">筛选</Button>
+                <div class="search" @click.stop="showSearch=true">
+                    <Card style="margin-left: 15px" v-show="showSearch">
+                        <Form ref="formValidate" :model="formValidate" :label-width="80" style="margin-top: 15px">
+                            <Row :gutter="16" style="height:56px">
+                                <Col>
+                                    <FormItem label="企业名称：" prop="companyName">
+                                        <Input v-model="formValidate.companyName" size="small"></Input>
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <FormItem label="跟进人员：" prop="serverName">
+                                        <Input v-model="formValidate.serverName" size="small"></Input>
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Center>
+                                    <Button type="primary" name="marketingManagement_index_edit_search" @click.stop="Search" >搜索</Button>
+                                    <Button type="ghost" name="marketingManagement_index_edit_reset" @click.stop="handleReset"  style="margin-left: 8px"
+                                    >重置</Button
+                                    >
+                                </Center>
+                            </Row>
+                        </Form>
+                    </Card>
+                </div>
                 <Checkbox v-model="single" style="float:right" @on-change="get_data(customer.ID)">只看市场跟进</Checkbox>
             </Row>
         </Row>
@@ -157,6 +186,12 @@ export default {
     data(){
         return{
             //  当前打开的评论
+            search_model:"",
+            formValidate:{
+                companyName: "",
+                serverName: ""
+            },
+            showSearch:false,
             currentIndex: -1,
             pinglun: [],
             markert_follow_up_type: [],
@@ -171,6 +206,18 @@ export default {
         }
     },
     methods: {
+        Search(){
+            this.get_data(this.customer.ID)
+        },
+        handleReset(){
+            this.$refs["formValidate"].resetFields()
+            this.formValidate.companyName=null
+            this.formValidate.serverName=null
+            this.get_data(this.customer.ID)
+        },
+        searchShow(){
+            this.showSearch  = !this.showSearch
+        },
         get_data_center(){
             let parmas = "markert_follow_up_type,market_status"
             let _self = this
@@ -194,13 +241,17 @@ export default {
                 config = {
                     params :{
                         customerId: e,
-                        followUpType: "11,12,13,14,15"
+                        followUpType: "11,12,13,14,15",
+                        companyName: _self.formValidate.companyName,
+                        serverName: _self.formValidate.serverName
                     }
                 }
             }else{
                 config = {
                     params :{
                         customerId: e,
+                        companyName: _self.formValidate.companyName,
+                        serverName: _self.formValidate.serverName
                     }
                 }
             }
@@ -359,4 +410,9 @@ export default {
 
 <style>
     @import '../../../../styles/component.css';
+    .search{
+        position: absolute;
+        display: inline-block;
+        z-index: 100;
+    }
 </style>

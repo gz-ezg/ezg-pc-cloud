@@ -116,7 +116,7 @@
                 order:'desc',
                 sortField:"begin_time",
                 currentRow: {},
-                currentIndex:"",
+                currentIndex:-1,
                 loading: true,
                 page: 1,
                 pageSize: 10,

@@ -39,12 +39,12 @@
                         </Panel>
                         <Panel name="followUp">
                             客户跟进记录
-                            <p slot="content">
+                            <div slot="content">
                                 <follow 
                                     v-if="openPanel[0] == 'followUp'"
                                     :customer="customer"
                                 ></follow>
-                            </p>
+                            </div>
                         </Panel>
                         <Panel name="order">
                             订单详情

@@ -288,19 +288,19 @@
             handleReset(){
                 this.SearchValidate = {
                     name:"",
-                        inductionDate:"",
-                        sex:"",
-                        ifEmployeeHandbook:"",
-                        positiveDate:"",
-                        birthday:"",
-                        provinceId:"",
-                        cityId:"",
-                        departId:"",
-                        position:"",
-                        ifLaborContract:"",
-                        ifTrial:"",
-                        maritalStatus:"",
-                        inductionMoth:""
+                    inductionDate:"",
+                    sex:"",
+                    ifEmployeeHandbook:"",
+                    positiveDate:"",
+                    birthday:"",
+                    provinceId:"",
+                    cityId:"",
+                    departId:"",
+                    position:"",
+                    ifLaborContract:"",
+                    ifTrial:"",
+                    maritalStatus:"",
+                    inductionMoth:""
                 }
                 this.get_data()
             },

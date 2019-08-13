@@ -492,6 +492,14 @@ export default {
       }
 
       _self.productList.push(e);
+      _self.productList = _self.productList.map(item=>{
+        if (!item.type_a_count) {
+          item.type_a_count = 0
+        }
+        if (!item.type_b_count) {
+          item.type_b_count = 0
+        }
+      })
 
       if (this.flag!==1){
         _self.productListOne.push(e)
