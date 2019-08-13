@@ -1,6 +1,6 @@
 <template>
     <Card>
-        <Row style="margin-bottom:20px"e>
+        <Row style="margin-bottom:20px">
             <Collapse v-model="search_model">
                 <Panel name="1">
                     <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
@@ -132,16 +132,16 @@
                 pageSize: 10,
                 current_row:"",
                 currentIndex:-1,
-                area:[],
-                addrProperty:[],
-                kpType:[],
-                businessTaxStatus:[],
-                sfYn:[],
-                area_map:new Map(),
-                addrProperty_map:new Map(),
-                kpType_map:new Map(),
-                businessTaxStatus_map:new Map(),
-                sfYn_map:new Map(),
+                gzbusinessarea:[],
+                addr_property:[],
+                kp_type:[],
+                business_tax_status:[],
+                sf_yn:[],
+                gzbusinessarea_map:new Map(),
+                addr_property_map:new Map(),
+                kp_type_map:new Map(),
+                business_tax_status_map:new Map(),
+                sf_yn_map:new Map(),
                 SearchValidate: {
                     area:"",
                     place:"",
@@ -152,6 +152,7 @@
                     taxStatus:"",
                     businessStatus:""
                 },
+                data:[],
                 header: [
                     {
                         title: '地区',
@@ -159,7 +160,7 @@
                         minWidth: 120,
                         render:(h,params)=>{
                             let _self = this
-                            return h('div',{},_self.area_map.get(params.row.area))
+                            return h('div',{},_self.gzbusinessarea_map.get(params.row.area))
                         }
                     },
                     {
@@ -173,7 +174,7 @@
                         minWidth: 120,
                         render:(h,params)=>{
                             let _self = this
-                            return h('div',{},_self.addrProperty_map.get(params.row.addr_property))
+                            return h('div',{},_self.addr_property_map.get(params.row.addr_property))
                         }
                     },
                     {
@@ -182,7 +183,7 @@
                         minWidth: 100,
                         render:(h,params)=>{
                             let _self = this
-                            return h('div',{},_self.kpType_map.get(params.row.invoice_type))
+                            return h('div',{},_self.kp_type_map.get(params.row.invoice_type))
                         }
                     },
                     {
@@ -196,7 +197,7 @@
                         minWidth: 70,
                         render:(h,params)=>{
                             let _self = this
-                            return h('div',{},_self.sfYn_map.get(params.row.can_invoice))
+                            return h('div',{},_self.sf_yn_map.get(params.row.can_invoice))
                         }
                     },
                     {
@@ -205,7 +206,7 @@
                         minWidth: 70,
                         render:(h,params)=>{
                             let _self = this
-                            return h('div',{},_self.sfYn_map.get(params.row.can_check))
+                            return h('div',{},_self.sf_yn_map.get(params.row.can_check))
                         }
                     },
                     {
@@ -214,7 +215,7 @@
                         minWidth: 90,
                         render:(h,params)=>{
                             let _self = this
-                            return h('div',{},_self.businessTaxStatus_map.get(params.row.tax_status))
+                            return h('div',{},_self.business_tax_status_map.get(params.row.tax_status))
                         }
                     },
                     {
@@ -223,7 +224,7 @@
                         minWidth: 90,
                         render:(h,params)=>{
                             let _self = this
-                            return h('div',{},_self.businessTaxStatus_map.get(params.row.business_status))
+                            return h('div',{},_self.business_tax_status_map.get(params.row.business_status))
                         }
                     },
                     {
@@ -337,15 +338,15 @@
             },
             downloadExcel(){
                 let field = [
-                    {field:'area',title:'地区',format:'area'},
+                    {field:'area',title:'地区',format:'gzbusinessarea'},
                     {field:'place',title:'地址'},
                     {field:'price',title:'价格'},
-                    {field:'invoice_type',title:'开票类型',format:'kpType'},
-                    {field:'addr_property',title:'地址属性',format:'addrProperty'},
-                    {field:'can_invoice',title:'可开',format:'sfYn'},
-                    {field:'can_check',title:'可查',format:'sfYn'},
-                    {field:'tax_status',title:'工商情况',format:'businessTaxStatus'},
-                    {field:'business_status',title:'税务情况',format:'businessTaxStatus'},
+                    {field:'invoice_type',title:'开票类型',format:'kp_type'},
+                    {field:'addr_property',title:'地址属性',format:'addr_property'},
+                    {field:'can_invoice',title:'可开',format:'sf_yn'},
+                    {field:'can_check',title:'可查',format:'sf_yn'},
+                    {field:'tax_status',title:'工商情况',format:'business_tax_status'},
+                    {field:'business_status',title:'税务情况',format:'business_tax_status'},
                     {field:'memo',title:'备注'},
                 ]
                 let _self = this
@@ -388,11 +389,7 @@
                 }
 
                 function success(res){
-                    _self.data = res.data.data.rows.map(item => {
-                        item.tax_status = item.tax_status.toLocaleLowerCase()
-                        item.business_status = item.business_status.toLocaleLowerCase()
-                        return item;
-                    });
+                    _self.data = res.data.data.rows
                     _self.pageTotal = res.data.data.total
                     _self.loading = false
                 }
@@ -407,16 +404,16 @@
                 let params = "gzbusinessarea,gzbusinessplace,addr_property,kp_type,business_tax_status,sf_yn"
                 let _self = this
                 function success(res){
-                    _self.area = res.data.data.gzbusinessarea
-                    _self.addrProperty = res.data.data.addr_property
-                    _self.kpType = res.data.data.kp_type
-                    _self.businessTaxStatus = res.data.data.business_tax_status
-                    _self.sfYn = res.data.data.sf_yn
-                    _self.area_map = _self.$array2map(_self.area)
-                    _self.addrProperty_map = _self.$array2map(_self.addrProperty)
-                    _self.kpType_map = _self.$array2map(_self.kpType)
-                    _self.businessTaxStatus_map = _self.$array2map(_self.businessTaxStatus)
-                    _self.sfYn_map = _self.$array2map(_self.sfYn)
+                    _self.gzbusinessarea = res.data.data.gzbusinessarea
+                    _self.addr_property = res.data.data.addr_property
+                    _self.kp_type = res.data.data.kp_type
+                    _self.business_tax_status = res.data.data.business_tax_status
+                    _self.sf_yn = res.data.data.sf_yn
+                    _self.gzbusinessarea_map = _self.$array2map(_self.gzbusinessarea)
+                    _self.addr_property_map = _self.$array2map(_self.addr_property)
+                    _self.kp_type_map = _self.$array2map(_self.kp_type)
+                    _self.business_tax_status_map = _self.$array2map(_self.business_tax_status)
+                    _self.sf_yn_map = _self.$array2map(_self.sf_yn)
                 }
                 this.$GetDataCenter(params, success)
             },
