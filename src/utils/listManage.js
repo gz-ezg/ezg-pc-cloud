@@ -1,5 +1,22 @@
+import request from './request'
+import { mergeUrl } from './utils'
 export default class listManage {
-  constructor({ pageSize = 10 } = {}, fetchFunc, dataHandle) {
+  constructor({ pageSize = 10 } = {}, url, dataHandle) {
+    if (typeof url == 'function') {
+      this.fetchFunc = url
+    } else if (typeof url == 'string') {
+      this.fetchFunc = query => {
+        return request({
+          url: this.url,
+          method: 'get',
+          params: query
+        })
+      }
+    } else {
+      return console.warn('please offer a url or getlist func for list')
+    }
+    // 请求接口地址
+    this.url = url
     // loading 状态
     this.loading = false
     // 当前页
@@ -8,8 +25,7 @@ export default class listManage {
     this.total = 0
     // 一页多少条数
     this.pageSize = pageSize
-    // 接口函数
-    this.fetchFunc = fetchFunc
+
     // 对返回数据进行处理
     this.dataHandle = dataHandle
     // 表单数据
@@ -76,14 +92,26 @@ export default class listManage {
     }
   }
   handleSizeChange(size, options) {
+    this.setPage(size)
     this.fetchList(size, options)
   }
 
   handlePageSizeChange(pageSize, options) {
-    console.log(pageSize)
+    this.setPageSize(pageSize)
     this.fetchList(1, { pageSize, ...options })
   }
   handleCurrentChange(currentPage, options) {
+    this.setPage(currentPage)
     this.fetchList(currentPage, options)
+  }
+  downloadExcel(excelField, pageSize) {
+    let config = {
+      ...this.searchConfig,
+      page: this.page,
+      pageSize: pageSize || 1000000,
+      exportField: encodeURI(JSON.stringify(excelField)),
+      export: 'Y'
+    }
+    window.open('/api' + mergeUrl(this.url, config))
   }
 }

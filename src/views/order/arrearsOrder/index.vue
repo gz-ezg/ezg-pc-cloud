@@ -1,69 +1,35 @@
  <template>
   <div>
-    <Row>
-      <Col>
-        <Card>
-          <filtra @search="list.search($event)" @reset="list.reset()" :config="filtraConfig"></filtra>
-          <Row>
-            <ButtonGroup>
-              <Button type="primary" icon="search" @click="handleAdd">新增</Button>
-              <Button type="primary" icon="search" @click="handleEdit">编辑</Button>
-              <Button type="primary" icon="search" @click="handleShow">查看</Button>
-              <Button type="primary" icon="search" @click="handleDelete">删除</Button>
-            </ButtonGroup>
-          </Row>
-          <Row style="margin-top: 10px;">
-            <Table
-              highlight-row
-              border
-              size="small"
-              @on-row-click="selectRow"
-              :loading="list.loading"
-              :columns="tableHeader"
-              :data="list.data"
-            ></Table>
-
-            <Page
-              :current="list.page"
-              size="small"
-              :total="list.total"
-              :page-size="list.pageSize"
-              show-total
-              show-sizer
-              show-elevator
-              @on-change="list.handleSizeChange($event)"
-              @on-page-size-change="list.handlePageSizeChange($event)"
-              style="margin-top: 10px"
-            ></Page>
-          </Row>
-        </Card>
-      </Col>
-    </Row>
-    <add-template @ok="handleAddOk" @cancel="handleAdd" v-if="isAdd" />
+    <Card>
+      <x-table ref="table" url="/order/oweOrder/list" :handler="dataHandle" :header="tableHeader" :config="filtraConfig">
+        <Row>
+          <ButtonGroup>
+            <Button type="primary" icon="search" @click="handleAdd">新增</Button>
+            <Button type="primary" icon="search" @click="handleEdit">编辑</Button>
+            <Button type="primary" icon="search" @click="handleShow">查看</Button>
+            <Button type="primary" icon="search" @click="handleDelete">删除</Button>
+          </ButtonGroup>
+        </Row>
+      </x-table>
+    </Card>
+    <!-- <add-template @ok="handleAddOk" @cancel="handleAdd" v-if="isAdd" />
     <edit-template :type-list="dataDict" :row="currentRow" v-if="isEdit" @ok="handleEditOk" @cancel="isEdit = false" />
-    <show-template :row="currentRow" v-if="isShow" @ok="isShow = false" @cancel="isShow = false" />
+    <show-template :row="currentRow" v-if="isShow" @ok="isShow = false" @cancel="isShow = false" /> -->
   </div>
 </template>
 
 <script>
+import xTable from '@C/xTable';
 import AddTemplate from './Menu/Add.vue';
-// import editTemplate from './menu/edit.vue';
-// import showTemplate from './menu/show.vue';
-import filtra from '@/components/filtra';
-// import { listNotify, sendNotify, queryCodes } from '@/api/logManagement';
-import { oweOrderList, deleteOweOrder } from '../../../api/order';
-import listManage from '../../../utils/listManage';
+import { deleteOweOrder } from '../../../api/order';
 export default {
   components: {
     AddTemplate,
-    // editTemplate,
-    // showTemplate,
-    filtra
+    xTable
   },
   data() {
     return {
       currentRow: null,
-      list: new listManage({ pageSize: 10 }, oweOrderList, this.dataHandle),
       tableHeader: [
         {
           title: '欠费单号',
@@ -144,6 +110,7 @@ export default {
       this.list.reset();
     },
     handleAdd() {
+      console.log(this.$refs.table);
       this.isAdd = !this.isAdd;
     },
     handleEdit() {
@@ -166,7 +133,6 @@ export default {
       return data;
     },
     selectRow(row) {
-
       this.currentRow = row;
     },
     handleDelete() {
@@ -184,10 +150,6 @@ export default {
       });
     }
   },
-  async created() {
-    try {
-      this.list.fetchList();
-    } catch (error) {}
-  }
+  async created() {}
 };
 </script>

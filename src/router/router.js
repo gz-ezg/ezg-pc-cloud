@@ -1467,31 +1467,31 @@ export const appRouter = [
       }
     ]
   },
-  //  是否对内容迁移待定
+  //修改完成 
   {
     access: 11603,
     meta: 11603,
-    path: '/messageLog',
+    path: '/notificationPush',
     icon: 'chatbubble-working',
-    name: 'messageLog',
+    name: 'notificationPush',
     title: '消息推送',
     component: Main,
     children: [
-      {
-        access: 11604,
-        path: 'WeChatPushLog',
-        title: '微信推送客户日志',
-        name: 'WeChatPushLog',
-        component: () =>
-          import(/* webpackChunkName: "WeChatPushLog" */ '@/views/logManagement/WeChatPushLog/log_index.vue')
-      },
       {
         access: 11605,
         path: 'smsSendLog',
         title: '短信发送日志',
         name: 'smsSendLog',
         component: () =>
-          import(/* webpackChunkName: "smsSendLog" */ '@/views/logManagement/smsSendLog.vue')
+          import(/* webpackChunkName: "smsSendLog" */ '@/views/notificationPush/smsSendLog/index.vue')
+      },
+      {
+        access: 11604,
+        path: 'WeChatPushLog',
+        title: '微信推送客户日志',
+        name: 'WeChatPushLog',
+        component: () =>
+          import(/* webpackChunkName: "WeChatPushLog" */ '@/views/notificationPush/weChatPushLog/index.vue')
       },
       {
         access: 11606,
@@ -1499,7 +1499,7 @@ export const appRouter = [
         title: '微信内部推送日志',
         name: 'internalPushLog',
         component: () =>
-          import(/* webpackChunkName: "internalPushLog" */ '@/views/logManagement/internalPushLog.vue')
+          import(/* webpackChunkName: "internalPushLog" */ '@/views/notificationPush/internalPushLog/index.vue')
       },
       {
         access: 11607,
@@ -1507,7 +1507,7 @@ export const appRouter = [
         title: '营销短信模板',
         name: 'smsTemplate',
         component: () =>
-          import(/* webpackChunkName: "internalPushLog" */ '@/views/logManagement/smsTemplate/index.vue')
+          import(/* webpackChunkName: "smsTemplate" */ '@/views/notificationPush/smsTemplate/index.vue')
       },
       {
         access: 11607,
@@ -1515,10 +1515,10 @@ export const appRouter = [
         title: '消息弹窗',
         name: 'messagPops',
         component: () =>
-          import(/* webpackChunkName: "internalPushLog" */ '@/views/logManagement/messagPops/index.vue')
+          import(/* webpackChunkName: "messagPops" */ '@/views/notificationPush/messagPops/index.vue')
       }
     ]
-  },
+  },  
   {
     access: 6103,
     meta: 6103,

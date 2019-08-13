@@ -1,42 +1,15 @@
  <template>
   <div>
-    <Row>
-      <Col>
-        <Card>
-          <filtra @search="list.search($event)" @reset="list.reset()" :config="filtraConfig"></filtra>
-          <Row>
-            <ButtonGroup>
-              <Button type="primary" icon="search" @click="handleApprove">办理审批</Button>
-              <Button type="primary" icon="search" @click="list.fetchList()">刷新</Button>
-            </ButtonGroup>
-          </Row>
-          <Row style="margin-top: 10px;">
-            <Table
-              highlight-row
-              border
-              size="small"
-              @on-row-click="selectRow"
-              :loading="list.loading"
-              :columns="tableHeader"
-              :data="list.data"
-            ></Table>
-
-            <Page
-              :current="list.page"
-              size="small"
-              :total="list.total"
-              :page-size="list.pageSize"
-              show-total
-              show-sizer
-              show-elevator
-              @on-change="list.handleSizeChange($event)"
-              @on-page-size-change="list.handlePageSizeChange($event)"
-              style="margin-top: 10px"
-            ></Page>
-          </Row>
-        </Card>
-      </Col>
-    </Row>
+    <Card>
+      <x-table ref="table" :url="url" :list-query="query" :header="tableHeader" :config="filtraConfig">
+        <Row>
+          <ButtonGroup>
+            <Button type="primary" icon="search" @click="onApprove">办理审批</Button>
+            <Button type="primary" icon="search" @click="onRefresh">刷新</Button>
+          </ButtonGroup>
+        </Row>
+      </x-table>
+    </Card>
 
     <show-template :row="currentRow" v-if="showDetailPopups" @ok="showDetailPopups = false" @cancel="showDetailPopups = false" />
     <approve v-if="dealApprovePopups" :row="currentRow" />
@@ -44,24 +17,19 @@
 </template>
 
 <script>
-// import AddTemplate from './menu/add.vue';
-// import editTemplate from './menu/edit.vue';
+import xTable from '@C/xTable';
 import DetailTemplate from './Menu/Detail.vue';
 import Approve from './Menu/Approve.vue';
-import filtra from '@/components/filtra';
-import { auditList } from '../../../../api/order';
-import listManage from '../../../../utils/listManage';
 export default {
   components: {
-    // AddTemplate,
     Approve,
     DetailTemplate,
-    filtra
+    xTable
   },
   data() {
     return {
+      url: '/order/oweOrder/auditList',
       currentRow: null,
-      list: new listManage({ pageSize: 10 }, auditList, this.dataHandle),
       tableHeader: [
         {
           title: '欠费单号',
@@ -157,7 +125,11 @@ export default {
         { type: 'date', key: 'createdate', label: '创建时间' }
       ],
       showDetailPopups: false,
-      dealApprovePopups: false
+      dealApprovePopups: false,
+      list: null,
+      query: {
+        isAudit: 'N'
+      }
     };
   },
 
@@ -165,14 +137,6 @@ export default {
     handleAddOk() {
       this.handleAdd();
       this.list.reset();
-    },
-    handleApprove() {
-      if (!this.currentRow) {
-        return this.$Message.info('请选择一行进行审批');
-      }
-      console.log(this.currentRow);
-      this.dealApprovePopups = !this.dealApprovePopups;
-      console.log(this.dealApprovePopups);
     },
     handleEdit() {
       if (!this.currentRow) {
@@ -190,18 +154,21 @@ export default {
     handleShow() {
       this.showDetailPopups = !this.showDetailPopups;
     },
-    dataHandle(data) {
-      return data;
-    },
     selectRow(row) {
       this.currentRow = row;
+    },
+    onApprove() {
+      if (!this.currentRow) {
+        return this.$Message.info('请选择一行进行审批');
+      }
+      console.log(this.currentRow);
+      this.dealApprovePopups = !this.dealApprovePopups;
+      console.log(this.dealApprovePopups);
+    },
+    onRefresh() {
+      this.$refs.table.list.fetchList();
     }
   },
-  async created() {
-    try {
-      this.list.setDefaultConfig({ isAudit: 'N' });
-      this.list.fetchList();
-    } catch (error) {}
-  }
+  async created() {}
 };
 </script>

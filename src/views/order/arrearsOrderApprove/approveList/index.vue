@@ -1,62 +1,33 @@
  <template>
   <div>
-    <Row>
-      <Col>
-        <Card>
-          <filtra @search="list.search($event)" @reset="list.reset()" :config="filtraConfig"></filtra>
-          <Row>
-            <ButtonGroup>
-              <Button type="primary" icon="search" @click="handleExport">导出Excel</Button>
-              <Button type="primary" icon="search" @click="list.fetchList()">刷新</Button>
-            </ButtonGroup>
-          </Row>
-          <Row style="margin-top: 10px;">
-            <Table
-              highlight-row
-              border
-              size="small"
-              @on-row-click="selectRow"
-              :loading="list.loading"
-              :columns="tableHeader"
-              :data="list.data"
-            ></Table>
-
-            <Page
-              :current="list.page"
-              size="small"
-              :total="list.total"
-              :page-size="list.pageSize"
-              show-total
-              show-sizer
-              show-elevator
-              @on-change="list.handleSizeChange($event)"
-              @on-page-size-change="list.handlePageSizeChange($event)"
-              style="margin-top: 10px"
-            ></Page>
-          </Row>
-        </Card>
-      </Col>
-    </Row>
-
+    <Card>
+      <x-table ref="table" :url="url" :list-query="query" :header="tableHeader" :config="filtraConfig">
+        <Row>
+          <ButtonGroup>
+            <Button type="primary" icon="search" @click="onExport">导出Excel</Button>
+            <Button type="primary" icon="search" @click="onRefresh">刷新</Button>
+          </ButtonGroup>
+        </Row>
+      </x-table>
+    </Card>
     <aduit-log v-if="showHistoryPopup"></aduit-log>
   </div>
 </template>
 
 <script>
-import filtra from '@/components/filtra';
+import xTable from '@C/xTable';
 import AduitLog from './Menu/aduitLog.vue';
-import { auditList } from '../../../../api/order';
-import listManage from '../../../../utils/listManage';
+
 export default {
   components: {
-    filtra,
+    xTable,
     AduitLog
   },
   data() {
     return {
       currentRow: null,
+      url: '/order/oweOrder/auditList',
       showHistoryPopup: false,
-      list: new listManage({ pageSize: 10 }, auditList),
       tableHeader: [
         {
           title: '欠费单号',
@@ -150,20 +121,21 @@ export default {
         { type: 'input', key: 'createby_realname', label: '创建人' },
         { type: 'input', key: 'updateby_realname', label: '修改人' },
         { type: 'date', key: 'createdate', label: '创建时间' }
-      ]
+      ],
+      query: {
+        isAudit: 'Y'
+      }
     };
   },
 
   methods: {
     handleShow() {
       this.showHistoryPopup = !this.showHistoryPopup;
+    },
+    onExport() {},
+    onRefresh() {
+      this.$refs.table.list.fetchList();
     }
-  },
-  async created() {
-    try {
-      this.list.setDefaultConfig({ isAudit: 'Y' });
-      this.list.fetchList();
-    } catch (error) {}
   }
 };
 </script>
