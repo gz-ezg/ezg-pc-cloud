@@ -112,7 +112,7 @@
                     style="margin-top: 10px"
             ></Page>
         </Row>
-        <info :area="area" :addrProperty="addrProperty" :kpType="kpType" :businessTaxStatus="businessTaxStatus" :sfYn="sfYn"></info>
+        <info :gzbusinessarea="gzbusinessarea" :addr_property="addr_property" :kp_type="kp_type" :business_tax_status="business_tax_status" :sf_yn="sf_yn"></info>
     </Card>
 </template>
 
