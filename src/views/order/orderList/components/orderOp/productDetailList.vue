@@ -499,6 +499,7 @@ export default {
         if (!item.type_b_count) {
           item.type_b_count = 0
         }
+        return item
       })
 
       if (this.flag!==1){
