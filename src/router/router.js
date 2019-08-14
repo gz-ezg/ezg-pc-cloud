@@ -27,6 +27,7 @@ export const page403 = {
     import(/* webpackChunkName: "commonIndex" */ '@/layouts/403.vue')
 }
 
+
 export const page500 = {
   path: '/500',
   meta: {},
@@ -35,6 +36,13 @@ export const page500 = {
     import(/* webpackChunkName: "commonIndex" */ '@/layouts/500.vue')
 }
 
+export const arrearageCenter = {
+  path: '/arrearageCenter',
+  meta: {},
+  name: 'arrearageCenter',
+  component: () =>
+    import(/* webpackChunkName: "commonIndex" */ '@/views/arrearageCenter/index.vue')
+}
 //  暂时不需要使用的页面
 //  文章预览
 // export const preview = {
@@ -1660,6 +1668,7 @@ export const routers = [
   // locking,
   ...appRouter,
   // previewFile,
+  arrearageCenter,
   page500,
   page403,
   page404

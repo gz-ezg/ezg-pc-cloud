@@ -1,53 +1,85 @@
- <template>
+<template>
   <div>
-    <Modal v-model="show" title="查看" width="800" footer-hide @on-cancel="onCancel">
-      <Card>
-        <p slot="title">
-          <Icon type="ios-film-outline"></Icon>
-          {{ msg.notify_type_name }}
-        </p>
-        <a href="#" slot="extra">
-          <Icon type="ios-loop-strong"></Icon>
-          创建人：{{ msg.createby_realname }} {{ msg.createdate }}
-        </a>
-        <p>通知部门：{{ msg.notify_depart_name }}</p>
-        <p>内容：</p>
-        <div class="edit_container" v-html="msg.notify_content"></div>
-      </Card>
+    <Modal title="查看" :value="true" width="80" @on-cancel="onClose">
+      <Form ref="abnormalOrderDetail" :model="detail" :rules="ruleInline" :label-width="100">
+        <Row :gutter="16">
+          <Col span="8">
+            <FormItem label="企业名称">
+              <Input size="small" v-model="detail.companyname" readonly />
+            </FormItem>
+          </Col>
+          <Col span="8">
+            <FormItem label="联系人">
+              <Input size="small" readonly v-model="detail.customer" />
+            </FormItem>
+          </Col>
+          <Col span="8">
+            <FormItem label="联系电话">
+              <Input size="small" v-model="detail.TEL" readonly />
+            </FormItem>
+          </Col>
+        </Row>
+        <Row :gutter="16">
+          <FormItem label="产品选择" prop="product">
+             <Input size="small" v-model="detail.alisname" readonly />
+          </FormItem>
+        </Row>
+        <Row :gutter="16">
+          <Col span="12">
+            <FormItem label="结束税期" prop="productContent">
+              <Input type="text" readonly size="small" style="width: 200px" v-model="detail.late_period" />
+            </FormItem>
+          </Col>
+          <Col span="12"
+            <FormItem label="剩余时长" prop="productContent">
+              <Input type="text" readonly size="small" style="width: 50px" v-model="detail.diff" />个月
+            </FormItem>
+          </Col>
+        </Row>
+        <Row :gutter="16">
+          <FormItem label="服务会计">
+            <Input type="text" size="small" readonly style="width: 200px" v-model="detail.serverName" />
+          </FormItem>
+        </Row>
+        <Row :gutter="16">
+          <FormItem label="跟进销售">
+            <Input type="text" size="small" readonly style="width: 200px" v-model="detail.followby" />
+          </FormItem>
+        </Row>
+        <Row :gutter="16">
+          <FormItem label="服务备注">
+            <Input type="textarea" :rows="4" readonly size="small" v-model="detail.memo" />
+          </FormItem>
+        </Row>
+        <Row :gutter="16">
+          <Col>
+            <FormItem label="欠费申请备注" prop="reason">
+              <Input type="textarea" :rows="4" readonly size="small" v-model="detail.apply_memo" />
+            </FormItem>
+          </Col>
+        </Row>
+      </Form>
+      <div slot="footer">
+        <Button type="ghost" @click="onClose">关闭</Button>
+      </div>
     </Modal>
+
   </div>
 </template>
 
 <script>
 export default {
-  props: ['row'],
+  props: { detail: { type: Object, default: () => ({ companyName: '' }) } },
   data() {
-    return {
-      show: true,
-      content: ''
-    };
+    return {};
   },
   methods: {
-    onCancel() {
+    onClose() {
       this.$emit('cancel');
     }
   },
   created() {
-    let { row } = this;
-    console.log(row);
-    this.msg = row;
+    console.log(this.detail);
   }
 };
 </script>
-
-
-<style lang="less">
-.edit_container {
-  margin-bottom: 20px;
-
-  img {
-    width: 100%;
-    height: 100%;
-  }
-}
-</style>

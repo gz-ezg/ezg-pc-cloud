@@ -1,206 +1,130 @@
- <template>
+<template>
   <div>
-    <Modal v-model="show" fullscreen title="编辑" width="800" @on-cancel="onCancel">
-      <Form :rules="ruleValidate" ref="formValidate" :model="formValidate" label-position="right" :label-width="60">
-        <FormItem label="类型：">
-          <Select v-model="formValidate.type" style="width:200px">
-            <Option v-for="item in typeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-          </Select>
-        </FormItem>
-        <FormItem prop="departName" label="部门：">
-          <Input size="small" readonly style="width:200px" v-model="formValidate.departName" />
-          <Button size="small" type="info" @click="openDepartModal">增加</Button>
-          <Button size="small" type="info" @click="clearDepardId">清空</Button>
-        </FormItem>
-        <FormItem prop="notify_abstract" label="摘要：">
-          <Input size="small" style="width:400px" type="text" v-model="formValidate.notify_abstract" />
-        </FormItem>
-        <FormItem label="内容：">
-          <div class="edit_container">
-            <quill-editor class="editer" v-model="content" :options="editorOption" ref="QuillEditor"> </quill-editor>
-          </div>
-        </FormItem>
-        <Upload
-          :show-upload-list="false"
-          :on-success="handleUploadSuccess"
-          :format="['jpg', 'jpeg', 'png', 'gif']"
-          :max-size="2048"
-          multiple
-          action="api/zuul/system/simple/img/upload"
-        >
-          <Button icon="ios-cloud-upload-outline"></Button>
-        </Upload>
+    <Modal title="新增异常工单" :value="true" width="80" @on-cancel="onClose">
+      <Form ref="abnormalOrderDetail" :model="form" :rules="ruleInline" :label-width="100">
+        <Row :gutter="16">
+          <Col span="8">
+            <FormItem label="企业名称">
+              <Input size="small" v-model="form.companyname" @on-focus="onSelectCompany" readonly />
+            </FormItem>
+          </Col>
+          <Col span="8">
+            <FormItem label="联系人">
+              <Input size="small" readonly v-model="form.customer" />
+            </FormItem>
+          </Col>
+          <Col span="8">
+            <FormItem label="联系电话">
+              <Input size="small" v-model="form.TEL" readonly />
+            </FormItem>
+          </Col>
+        </Row>
+        <Row :gutter="16">
+          <FormItem label="产品选择" prop="product">
+             <Input size="small" v-model="form.alisname" readonly />
+          </FormItem>
+        </Row>
+        <Row :gutter="16">
+          <Col span="12">
+            <FormItem label="结束税期" prop="productContent">
+              <Input type="text" readonly size="small" style="width: 200px" v-model="form.late_period" />
+            </FormItem>
+          </Col>
+          <Col span="12"
+            <FormItem label="剩余时长" prop="productContent">
+              <Input type="text" readonly size="small" style="width: 50px" v-model="form.diff" />个月
+            </FormItem>
+          </Col>
+        </Row>
+        <Row :gutter="16">
+          <FormItem label="服务会计">
+            <Input type="text" size="small" readonly style="width: 200px" v-model="form.serverName" />
+          </FormItem>
+        </Row>
+        <Row :gutter="16">
+          <FormItem label="跟进销售">
+            <Input type="text" size="small" readonly style="width: 200px" v-model="form.followby" />
+          </FormItem>
+        </Row>
+        <Row :gutter="16">
+          <FormItem label="服务备注">
+            <Input type="textarea" :rows="4" readonly size="small" v-model="form.service_memo" />
+          </FormItem>
+        </Row>
+        <Row :gutter="16">
+          <Col>
+            <FormItem label="延后税期" prop="reason">
+              <DatePicker @on-change="onDateChange" type="month" :options="dateOptions" placeholder="选择延后税期" style="width: 200px"></DatePicker>
+            </FormItem>
+          </Col>
+        </Row>
+        <Row :gutter="16">
+          <Col>
+            <FormItem label="欠费申请备注" prop="reason">
+              <Input type="textarea" :rows="4" size="small" v-model="form.apply_memo" />
+            </FormItem>
+          </Col>
+        </Row>
       </Form>
       <div slot="footer">
-        <Button type="primary" :loading="loading" style="margin-left:20px" @click="handleConfirm('formValidate')">保存</Button>
+        <Button type="primary" :loading="loading" @click="hanldeSubmit">创建</Button>
+        <Button type="ghost" @click="onClose">关闭</Button>
       </div>
     </Modal>
-
-    <depart-tree v-if="departModal" :index="index" @change-depart="changeDepart" @close="departModal = false"></depart-tree>
   </div>
 </template>
 
 <script>
-import { listDepartTree, createNotify, updateNotify } from '@/api/logManagement';
-import { quillEditor } from 'vue-quill-editor';
-import 'quill/dist/quill.core.css';
-import 'quill/dist/quill.snow.css';
-import 'quill/dist/quill.bubble.css';
-import departTree from './departTree';
+import { updateOweOrder } from '../../../../api/order';
 
-const toolbarOptions = [
-  ['bold', 'italic', 'underline', 'strike'], // toggled buttons
-  ['blockquote', 'code-block'],
-
-  [{ header: 1 }, { header: 2 }], // custom button values
-  [{ list: 'ordered' }, { list: 'bullet' }],
-  [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
-  [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
-  [{ direction: 'rtl' }], // text direction
-
-  [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
-  [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
-  [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-  [{ font: [] }],
-  [{ align: [] }],
-  ['link', 'image', 'video'],
-  ['clean'] // remove formatting button
-];
 export default {
-  components: {
-    quillEditor,
-    departTree
-  },
-  props: ['row', 'typeList'],
+  props: { detail: Object },
   data() {
     return {
-      show: true,
-      departModal: false,
+      form: {
+        apply_memo: '',
+        period: ''
+      },
       loading: false,
-      content: '',
-      ruleValidate: {
-        departName: [{ required: true, message: '请添加部门' }],
-        notify_abstract: [{ required: true, message: '请填写摘要', trigger: 'blur' }]
-      },
-      editorOption: {
-        modules: {
-          toolbar: {
-            container: toolbarOptions, // 工具栏
-            handlers: {
-              image: function(value) {
-                if (value) {
-                  // 调用iview图片上传
-                  document.querySelector('.ivu-upload .ivu-btn').click();
-                } else {
-                  this.quill.format('image', false);
-                }
-              }
-            }
-          }
-        }
-      },
-      treeData: [],
-      typeList: [],
-      formValidate: {
-        type: 'zxzc',
-        departName: '',
-        notify_abstract: '',
-        notify_departs: []
+      dateOptions: {
+        disabledDate: this.checkMonth
       }
     };
   },
-  computed: {
-    editor() {
-      return this.$refs.QuillEditor.quill;
-    }
-  },
   methods: {
-    async handleConfirm(name) {
-      const { notify_departs, notify_abstract, type } = this.formValidate;
-      if (!this.content) {
-        return this.$Message.error('请填写内容');
-      }
-      this.$refs[name].validate(async valid => {
-        if (valid) {
-          this.loading = true;
-          try {
-            await updateNotify({
-              id: this.row.id,
-              notify_type: type,
-              notify_abstract,
-              notify_departs: [...new Set(notify_departs)].join(','),
-              notify_content: this.content
-            });
-
-            this.$emit('ok');
-            this.$emit('cancel');
-          } catch (error) {
-            console.log(error);
-          } finally {
-            this.loading = false;
-          }
+    async hanldeSubmit() {
+      try {
+        this.loading = true;
+        const { company_id, apply_memo, period, cycle_service_record_id } = this.form;
+        if (!period || !apply_memo) {
+          this.$Message.info('请完善信息');
         }
-      });
-    },
-    changeDepart(value) {
-      let { departName = '', notify_departs } = this.formValidate;
-      this.formValidate.notify_departs = notify_departs.concat(value.departId);
-      this.formValidate.departName = [...new Set(departName.split(',').concat(value.departName))].join(',').replace(/^,/, '');
-    },
-    clearDepardId() {
-      this.formValidate.notify_departs = [];
-      this.formValidate.departName = '';
-    },
-    onCancel() {
-      this.$emit('cancel');
-    },
-    openDepartModal() {
-      this.departModal = !this.departModal;
-    },
-    handleUploadSuccess(res) {
-      // 获取富文本组件实例
-      console.log(res);
-      let path = JSON.parse(res.data).realpath;
-      let quill = this.$refs.QuillEditor.quill;
-      // 如果上传成功
-      if (res) {
-        res = `/api/assets/${path}`;
-        // 获取光标所在位置
-        let length = quill.getSelection().index;
-        // 插入图片，res为服务器返回的图片链接地址
-        quill.insertEmbed(length, 'image', res);
-        // 调整光标到最后
-        quill.setSelection(length + 1);
-      } else {
-        // 提示信息，需引入Message
-        this.$Message.error('图片插入失败');
+        await updateOweOrder({
+          companyId: company_id,
+          cycleServiceRecordId: cycle_service_record_id,
+          latePeriod: period,
+          applyMemo: apply_memo
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.loading = false;
       }
+    },
+    checkMonth(data) {
+      let period = this.form.late_period.toString();
+      let between = data.getFullYear() * 12 + data.getMonth() - period.substr(0, 4) * 12 - period.substr(4) * 1;
+      return !(0 <= between && between < 3);
+    },
+    onDateChange(e) {
+      this.form.period = e.replace(/-/, '');
+    },
+    onClose(e) {
+      this.$emit('cancel');
     }
   },
-  async created() {
-    let { row } = this;
-    this.formValidate.type = row.notify_type;
-    this.formValidate.notify_abstract = row.notify_abstract;
-    this.formValidate.departName = row.notify_depart_name;
-    this.formValidate.notify_departs = row.notify_departs.split(',');
-    this.content = row.notify_content;
+  created() {
+    this.form = { ...this.detail };
   }
 };
 </script>
-
-
-<style lang="less">
-.edit_container {
-  margin-bottom: 40px;
-}
-.editer {
-  height: 280px;
-}
-.submit_btn {
-  text-align: center;
-}
-.ivu-upload {
-  display: none;
-}
-</style>

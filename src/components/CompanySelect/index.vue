@@ -4,7 +4,7 @@
       <Row :gutter="16">
         <Col span="8">
           <Input v-model="searchCompany" placeholder="输入公司名称搜索" @on-enter="get_data">
-            <Button slot="append" icon="ios-search" @click="get_data"></Button>
+            <Button slot="append" icon="ios-search" @click="getData"></Button>
           </Input>
         </Col>
       </Row>
@@ -85,7 +85,7 @@ export default {
     },
     pageChange(e) {
       this.page = e;
-      this.get_data();
+      this.getData();
     },
     rowSelect(e) {
       this.$emit('company-change', e);

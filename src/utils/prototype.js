@@ -100,7 +100,7 @@ export const vessel = {
   },
   Post(url, config, success, fail) {
     let _self = this
-    this.$http
+    axios
       .post(url, config)
       .then(function(res) {
         if (res.data.msgCode == '40000') {
@@ -152,7 +152,7 @@ export const vessel = {
     }
     let url = `api/system/tsType/queryTsTypeByGroupCodes`
 
-    this.$http
+    axios
       .get(url, config)
       .then(function(res) {
         if (res.data.msgCode == '40000') {

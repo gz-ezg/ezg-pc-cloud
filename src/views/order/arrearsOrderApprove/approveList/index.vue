@@ -10,7 +10,7 @@
         </Row>
       </x-table>
     </Card>
-    <aduit-log v-if="showHistoryPopup"></aduit-log>
+    <aduit-log :id="currentId" v-if="showHistoryPopup" @cancel="showHistoryPopup = false"></aduit-log>
   </div>
 </template>
 
@@ -25,7 +25,7 @@ export default {
   },
   data() {
     return {
-      currentRow: null,
+      currentId: '',
       url: '/order/oweOrder/auditList',
       showHistoryPopup: false,
       tableHeader: [
@@ -107,7 +107,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.currentRow = params.row;
+                    this.currentId = params.row.id;
                     this.handleShow();
                   }
                 }
@@ -122,6 +122,7 @@ export default {
         { type: 'input', key: 'updateby_realname', label: '修改人' },
         { type: 'date', key: 'createdate', label: '创建时间' }
       ],
+      execlConfig: [{}],
       query: {
         isAudit: 'Y'
       }
@@ -130,9 +131,11 @@ export default {
 
   methods: {
     handleShow() {
-      this.showHistoryPopup = !this.showHistoryPopup;
+      this.showHistoryPopup = true;
     },
-    onExport() {},
+    onExport() {
+      this.$refs.table.list.downloadExcel(this.execlConfig);
+    },
     onRefresh() {
       this.$refs.table.list.fetchList();
     }

@@ -1,83 +1,76 @@
 <template>
   <div>
-    <Modal title="新增异常工单" :value="true" width="80" @on-cancel="close">
-      <Form ref="abnormalOrderDetail" :model="detail" :rules="ruleInline" :label-width="100">
+    <Modal title="新增欠费单" :value="true" width="80" @on-cancel="onClose">
+      <Form ref="abnormalOrderDetail" :model="form" :rules="ruleInline" :label-width="100">
         <Row :gutter="16">
           <Col span="8">
-            <FormItem label="企业名称" prop="companyName">
-              <Input size="small" v-model="detail.companyName" @on-focus="onSelectCompany" readonly />
+            <FormItem label="企业名称">
+              <Input size="small" v-model="form.companyName" @on-focus="onSelectCompany" readonly />
             </FormItem>
           </Col>
           <Col span="8">
-            <FormItem label="联系人" prop="linkname">
-              <Input size="small" readonly v-model="detail.linkname" @on-focus="onSelectCompany" />
+            <FormItem label="联系人">
+              <Input size="small" readonly v-model="form.linkname" @on-focus="onSelectCompany" />
             </FormItem>
           </Col>
           <Col span="8">
-            <FormItem label="联系电话" prop="linkTel">
-              <Input size="small" v-model="detail.linkTel" @on-focus="onSelectCompany" readonly />
+            <FormItem label="联系电话">
+              <Input size="small" v-model="form.linkTel" @on-focus="onSelectCompany" readonly />
             </FormItem>
           </Col>
         </Row>
         <Row :gutter="16">
-          <Col>
-            <FormItem label="产品选择" prop="product">
-              <Select v-model="detail.product" style="width:200px">
-                <Option v-for="item in productList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-              </Select>
-            </FormItem>
-          </Col>
+          <FormItem label="产品选择" prop="product">
+            <Select @on-change="onProductChange" v-model="form.product" style="width:200px">
+              <Option v-for="item in productList" :value="item.id" :key="item.id">{{ item.skuname }}</Option>
+            </Select>
+          </FormItem>
         </Row>
         <Row :gutter="16">
           <Col span="12">
             <FormItem label="结束税期" prop="productContent">
-              <Input type="text" size="small" style="width: 200px" v-model="detail.end_period" />
+              <Input type="text" readonly size="small" style="width: 200px" v-model="form.end_period" />
             </FormItem>
           </Col>
           <Col span="12"
-            >剩余时长 <span style="margin:0 10px;color:red">{{ detail.diff }}</span
-            >个月
-          </Col>
-        </Row>
-        <Row :gutter="16">
-          <Col>
-            <FormItem label="服务会计" prop="reason">
-              <Input type="text" size="small" style="width: 200px" v-model="detail.serverName" />
+            <FormItem label="剩余时长" prop="productContent">
+              <Input type="text" readonly size="small" style="width: 50px" v-model="form.diff" />个月
             </FormItem>
           </Col>
         </Row>
         <Row :gutter="16">
-          <Col>
-            <FormItem label="跟进销售" prop="reason">
-              <Input type="text" size="small" style="width: 200px" v-model="detail.followby" />
-            </FormItem>
-          </Col>
+          <FormItem label="服务会计">
+            <Input type="text" size="small" readonly style="width: 200px" v-model="form.serverName" />
+          </FormItem>
         </Row>
         <Row :gutter="16">
-          <Col>
-            <FormItem label="服务备注" prop="reason">
-              <Input type="textarea" :rows="4" size="small" v-model="detail.reason" />
-            </FormItem>
-          </Col>
+          <FormItem label="跟进销售">
+            <Input type="text" size="small" readonly style="width: 200px" v-model="form.followby" />
+          </FormItem>
+        </Row>
+        <Row :gutter="16">
+          <FormItem label="服务备注">
+            <Input type="textarea" :rows="4" readonly size="small" v-model="form.service_memo" />
+          </FormItem>
         </Row>
         <Row :gutter="16">
           <Col>
             <FormItem label="延后税期" prop="reason">
-              <DatePicker type="date" placeholder="Select date" style="width: 200px"></DatePicker>
+              <DatePicker @on-change="onDatePickerChange" type="month" :options="dateOptions" placeholder="选择延后税期" style="width: 200px"></DatePicker>
             </FormItem>
           </Col>
         </Row>
         <Row :gutter="16">
           <Col>
             <FormItem label="欠费申请备注" prop="reason">
-              <Input type="textarea" :rows="4" size="small" v-model="detail.reason" />
+              <Input type="textarea" :rows="4" size="small" v-model="form.applyMemo" />
             </FormItem>
           </Col>
         </Row>
       </Form>
       <div slot="footer">
-        <Button type="primary" @click="hanldeSubmit">创建</Button>
-        <Button type="ghost" @click="close">关闭</Button>
+        <Button type="primary" :loading="loading" @click="hanldeSubmit">创建</Button>
+        <Button type="ghost" @click="onClose">关闭</Button>
       </div>
     </Modal>
 
@@ -97,8 +90,8 @@ export default {
   data() {
     return {
       selectCompanyPopus: false,
-      detail: {
-        companyId: '',
+      loading: false,
+      form: {
         companyName: '',
         linkname: '',
         linkTel: '',
@@ -106,45 +99,67 @@ export default {
         diff: '',
         followby: '',
         serverName: ''
+      },
+      productList: [],
+      dateOptions: {
+        disabledDate: this.checkMonth
       }
-      // ruleInline: {
-      //   companyName: [{ required: true, message: '请选择！', trigger: 'change' }],
-      //   linkname: [{ required: true, message: '请选择！', trigger: 'change' }],
-      //   linkTel: [{ required: true, message: '请选择！', trigger: 'change' }],
-      //   type: [{ required: true, message: '请选择！', trigger: 'change' }],
-      //   productContent: [{ required: true, message: '不能为空！', trigger: 'change' }],
-      //   reason: [{ required: true, message: '不能为空！', trigger: 'change' }]
-      // }
     };
   },
   methods: {
     onSelectCompany() {
       this.selectCompanyPopus = !this.selectCompanyPopus;
     },
-
+    onDatePickerChange(e) {
+      this.end_period = e.replace(/-/, '');
+    },
+    onProductChange(e) {
+      this.from = Object.assign(
+        {},
+        this.form,
+        this.productList.find(v => {
+          return v.id == e;
+        })
+      );
+    },
     settingCompany({ companyname, customerName, customerTel, id }) {
-      this.detail.companyName = companyname;
-      this.detail.linkname = customerName;
-      this.detail.linkTel = customerTel;
+      this.form.companyName = companyname;
+      this.form.linkname = customerName;
+      this.form.linkTel = customerTel;
 
       this.onSelectCompany();
       this.getOweOrderList(id);
     },
     async hanldeSubmit() {
-      await createOweOrder({ companyId: '35581', cycleServiceRecordId: '194', latePeriod: '201907', applyMemo: '测试' });
+      const { company_id, applyMemo, id, end_period } = this.form;
+      if (!applyMemo || !end_period) {
+        return this.$Message.info('请完善信息');
+      }
+      try {
+        this.loading = true;
+        await createOweOrder({ companyId: company_id, cycleServiceRecordId: id, latePeriod: end_period, applyMemo });
+        this.$emit('ok');
+      } catch (error) {
+      } finally {
+        this.loading = false;
+      }
     },
     async getOweOrderList(companyId) {
       try {
         let resp = await oweOrderListByCompanyId({ companyId: 34247 });
-        this.detail.serverName = resp[0].serverName;
-        this.detail.followby = resp[0].followby;
-        this.detail.end_period = resp[0].end_period;
-        this.detail.diff = resp[0].diff;
-        console.log(resp);
+        this.productList = resp;
+        this.form = Object.assign(this.form, resp[0]);
+        this.form.product = resp[0].id;
+        console.log(this.form);
       } catch (error) {}
     },
-    close(e) {
-      this.selectCompanyPopus = false;
+    checkMonth(data) {
+      let period = this.form.end_period.toString();
+      let between = data.getFullYear() * 12 + data.getMonth() - period.substr(0, 4) * 12 - period.substr(4) * 1;
+      return !(0 <= between && between < 3);
+    },
+    onClose(e) {
+      this.$emit('cancel');
     }
   },
   created() {}

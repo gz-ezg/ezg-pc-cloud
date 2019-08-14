@@ -1,7 +1,7 @@
  <template>
   <div>
     <Card>
-      <x-table ref="table" :url="url" :list-query="query" :header="tableHeader" :config="filtraConfig">
+      <x-table ref="table" :url="url" @select="selectRow" :list-query="query" :header="tableHeader" :config="filtraConfig">
         <Row>
           <ButtonGroup>
             <Button type="primary" icon="search" @click="onApprove">办理审批</Button>
@@ -11,8 +11,13 @@
       </x-table>
     </Card>
 
-    <show-template :row="currentRow" v-if="showDetailPopups" @ok="showDetailPopups = false" @cancel="showDetailPopups = false" />
-    <approve v-if="dealApprovePopups" :row="currentRow" />
+    <detail-template
+      :detail="currentRow"
+      v-if="showDetailPopups"
+      @ok="showDetailPopups = false"
+      @cancel="showDetailPopups = false"
+    />
+    <approve v-if="dealApprovePopups" :row="currentRow" @ok="onApproveOk" @cancel="dealApprovePopups = false" />
   </div>
 </template>
 
@@ -20,6 +25,7 @@
 import xTable from '@C/xTable';
 import DetailTemplate from './Menu/Detail.vue';
 import Approve from './Menu/Approve.vue';
+
 export default {
   components: {
     Approve,
@@ -105,7 +111,8 @@ export default {
               'Button',
               {
                 props: {
-                  size: 'small'
+                  size: 'small',
+                  type: 'primary'
                 },
                 on: {
                   click: () => {
@@ -134,25 +141,13 @@ export default {
   },
 
   methods: {
-    handleAddOk() {
-      this.handleAdd();
-      this.list.reset();
+    onApproveOk() {
+      this.dealApprovePopups = false;
+      this.$refs.table.list.fetchList();
     },
-    handleEdit() {
-      if (!this.currentRow) {
-        return this.$Message.info('请选择一行进行查看');
-      }
-      if (this.currentRow.notify_status == 'sent') {
-        return this.$Message.info('该消息不能编辑');
-      }
-      this.isEdit = !this.isEdit;
-    },
-    handleEditOk() {
-      this.isEdit = !this.isEdit;
-      this.list.reset();
-    },
+
     handleShow() {
-      this.showDetailPopups = !this.showDetailPopups;
+      this.showDetailPopups = true;
     },
     selectRow(row) {
       this.currentRow = row;
@@ -161,9 +156,7 @@ export default {
       if (!this.currentRow) {
         return this.$Message.info('请选择一行进行审批');
       }
-      console.log(this.currentRow);
-      this.dealApprovePopups = !this.dealApprovePopups;
-      console.log(this.dealApprovePopups);
+      this.dealApprovePopups = true;
     },
     onRefresh() {
       this.$refs.table.list.fetchList();

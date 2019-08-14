@@ -43,13 +43,13 @@
         </Row>
         <Row>
           <FormItem label="历史审批：">
-            <div v-if="historyData" class="s">
+            <div v-if="historyData.length" class="s">
               <div v-for="(item, index) in historyData" :key="index" class="s1">
                 <div>{{ item.realname }}：{{ item.audit_memo }}</div>
                 <div class="s2">{{ item.audit_date }}</div>
               </div>
             </div>
-            <div>
+            <div v-else>
               无
             </div>
           </FormItem>
@@ -57,14 +57,16 @@
       </Form>
       <Tabs>
         <TabPane label="任务处理" icon="clipboard">
-          <FormItem label="审批备注">
-            <Input v-model="detail.memo" type="textarea" />
-          </FormItem>
+          <Form :label-width="120">
+            <FormItem label="审批备注">
+              <Input v-model="detail.memo" type="textarea" />
+            </FormItem>
+          </Form>
         </TabPane>
       </Tabs>
       <div slot="footer">
-        <Button type="primary" @click="handleAgree" :loading="loading">同意</Button>
-        <Button type="primary" @click="handleReject" :loading="loading">驳回</Button>
+        <Button type="primary" @click="handleSubmit('Agree')" :loading="loading">同意</Button>
+        <Button @click="handleSubmit('Reject')" :loading="loading">驳回</Button>
       </div>
     </Modal>
   </div>
@@ -78,7 +80,6 @@ export default {
     return {
       historyData: [],
       applyId: '',
-      // auditStatus: '',Agree或Reject
       loading: false,
       detail: {
         companyname: '',
@@ -90,18 +91,26 @@ export default {
   },
   methods: {
     async getHistoryData() {
-      await auditListByApplyId({ applyId: this.detail.id });
+      this.historyData = await auditListByApplyId({ applyId: this.detail.id });
     },
     //办理审批
-    handleAgree() {
-      const { id: applyId } = this.detail;
-      audit({ applyId, auditStatus: 'Agree', memo: '测试' });
-    },
-
-    handleReject() {}
+    async handleSubmit(type) {
+      const { id: applyId, memo } = this.detail;
+      if (!memo) {
+        return this.$Message.info('请填写审批备注');
+      }
+      try {
+        this.loading = true;
+        await audit({ applyId, auditStatus: type, memo });
+        this.$emit('ok');
+      } catch (error) {
+      } finally {
+        this.loading = false;
+      }
+    }
   },
   created() {
-    this.detail = JSON.parse(JSON.stringify(this.row));
+    this.detail = { ...this.detail, ...this.row };
     this.getHistoryData();
   }
 };

@@ -1,34 +1,4 @@
-<style lang="less">
-.login {
-  width: 100%;
-  height: 100%;
-  background-image: url('https://file.iviewui.com/iview-admin/login_bg.jpg');
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  &-con {
-    position: absolute;
-    right: 160px;
-    top: 50%;
-    transform: translateY(-60%);
-    width: 300px;
-    &-header {
-      font-size: 16px;
-      font-weight: 300;
-      text-align: center;
-      padding: 30px 0;
-    }
-    .form-con {
-      padding: 10px 0 0;
-    }
-    .login-tip {
-      font-size: 10px;
-      text-align: center;
-      color: #c3c3c3;
-    }
-  }
-}
-</style>
+
 
 <template>
   <div class="login" @keydown.enter="handleSubmit">
@@ -76,7 +46,6 @@
 
 <script>
 import Cookies from 'js-cookie';
-import { oweOrderListByFollowby } from '../api/order';
 
 export default {
   data() {
@@ -113,7 +82,7 @@ export default {
         if (valid) {
           let url = 'api/user/login/';
           function success(response) {
-            _self.loading = true;
+            _self.loading = false;
             if (_self.isSave == true) {
               Cookies.set('7user', _self.form.userName, { expires: 7 });
               Cookies.set('7password', _self.form.password, { expires: 7 });
@@ -130,7 +99,7 @@ export default {
             localStorage.setItem('id', response.data.data.user.id);
             localStorage.setItem('companyname', '');
             _self.getUserRole(response.data.data.user.id);
-            _self.checkOweOrderList(response.data.data.user.id);
+            // _self.checkOweOrderList(response.data.data.user.id);
             //  此处需要写一个promise.all
           }
           function fail(response) {
@@ -151,12 +120,14 @@ export default {
               _self.getImg();
             }
           }
+          console.log(this.$Post);
           this.$Post(url, _submit, success, fail);
+        } else {
+          this.loading = false;
         }
       });
     },
     getInterfaceItem(re) {
-      let _self = this;
       let url = 'api/menu/getInterfaceItemByUserId';
 
       let config = {
@@ -164,45 +135,34 @@ export default {
           userId: re
         }
       };
-      // 跳过登录校验
-      // Cookies.set('access', '1,2');
-      // Cookies.set('operations', '1,2');
-
-      function success(re) {
+      const success = re => {
         Cookies.set('access', re.data.data.interfaces.join());
-        // alert(JSON.stringify(re.data.data.interfaces))
         localStorage.setItem('access_array', JSON.stringify(re.data.data.interfaces));
         Cookies.set('operations', re.data.data.operations.join());
-        //  确保菜单重新生成，防止菜单组件被缓存 ====>
-        // window.location.reload();
         setTimeout(() => {
-          _self.$router.push({
+          this.$router.push({
             name: 'home_index'
           });
         }, 0);
-      }
+      };
 
       this.$Get(url, config, success);
     },
+
     getImg() {
       let date = new Date();
-      // let img = document.getElementById("randCodeImage");
-      // img.src = '/api/user/createImg?a=' + date.getTime();
       this.yzm_url = '/api/user/createImg?a=' + date.getTime();
     },
 
     keyDown(e) {
-      let _self = this;
-
       if (e.code == 'Enter') {
-        _self.handleSubmit();
+        this.handleSubmit();
       }
     },
+
     getUserRole(e) {
       let _self = this;
-
       let url = `api/user/checkUserRoleByUserId`;
-
       let config = {
         params: {
           userId: e
@@ -239,7 +199,6 @@ export default {
             localStorage.setItem('Main_Role', 'other');
           }
         }
-
         let str = JSON.stringify(temp);
         localStorage.setItem('Role', str);
       }
@@ -247,7 +206,6 @@ export default {
       this.$Get(url, config, success);
     },
     sso_login(userName, timeStamp, token) {
-      console.log(userName, timeStamp, token);
       let _self = this;
       let url = 'api/user/ssoLogin';
 
@@ -298,80 +256,49 @@ export default {
     //  修改验证码
     change_yzm() {
       this.getImg();
-    },
-
-    // async checkOweOrderList(id) {
-    //   await oweOrderListByFollowby({ id });
-    // }
+    }
   },
   mounted() {
-    let _self = this;
     if (Cookies.get('7issave')) {
       this.isSave = JSON.parse(Cookies.get('7issave'));
       if (Cookies.get('7user') && this.isSave) {
-        _self.form.userName = Cookies.get('7user');
-        _self.form.password = Cookies.get('7password');
-        _self.handleSubmit();
+        this.form.userName = Cookies.get('7user');
+        this.form.password = Cookies.get('7password');
+        this.handleSubmit();
       }
     }
-
-    // $('#randCodeImage').click(function () {
-    //     let date = new Date();
-    //     let img = document.getElementById("randCodeImage");
-    //     img.src = '/api/user/createImg?a=' + date.getTime();
-    // });
-
-    // let _self = this
-    // let temp = location.href
-    // //  sso登录（已注释）
-    // params = temp.split("?")
-    // // console.log(params)
-    //     if(params.length>1){
-    //         let config = params[1].split("&")
-    //         // _self.get_sso_params(config).then(function(res){
-    //         //     console.log(res)
-    //         //     _self.sso_login(res[0], res[1], res[2])
-    //         // })
-    //         if(config.length == 3){
-
-    //             // try {
-    //                 this.sso = false
-    //                 let userName = config[0].split("=")[1]
-    //                 let timeStamp = config[1].split("=")[1]
-    //                 let token = config[2].split("=")[1]
-    //                 console.log(userName, timeStamp, token)
-    //                 console.log("SSO登录！")
-    //                 // _self.sso_login(userName, timeStamp, token)
-    //                 setTimeout(function(){
-    //                     _self.sso_login(userName, timeStamp, token)
-    //                 },0)
-    //             // } catch (error) {
-    //             //     // console.log(error)
-    //             //     _self.$Message.error(error)
-    //             // }
-    //         }
-    //         console.log(config)
-    //     }else{
-    //         this.sso = true
-    //         console.log("正常登录！")
-    //     }
-    // let user = Cookies.get('user')
-    // let password = Cookies.get('password')
-    // // console.log(user)
-    // // console.log(password)
-    // if(user == undefined || user == "" || password == undefined || password == ""){
-    //     // console.log('7天免登陆失效！')
-    // }else{
-    //     _self.form.userName = user
-    //     _self.form.password = password
-    //     _self.handleSubmit()
-    // }
-  },
-  created() {
-    let _self = this;
   }
 };
 </script>
 
-<style>
+<style lang="less">
+.login {
+  width: 100%;
+  height: 100%;
+  background-image: url('https://file.iviewui.com/iview-admin/login_bg.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  &-con {
+    position: absolute;
+    right: 160px;
+    top: 50%;
+    transform: translateY(-60%);
+    width: 300px;
+    &-header {
+      font-size: 16px;
+      font-weight: 300;
+      text-align: center;
+      padding: 30px 0;
+    }
+    .form-con {
+      padding: 10px 0 0;
+    }
+    .login-tip {
+      font-size: 10px;
+      text-align: center;
+      color: #c3c3c3;
+    }
+  }
+}
 </style>

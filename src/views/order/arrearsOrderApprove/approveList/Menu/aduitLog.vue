@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Modal id="top" ref="log" :value="true" title="查看审批备注" width="70%" @on-cancel="cancel">
+    <Modal :value="true" title="查看审批备注" width="70%" @on-cancel="onClose">
       <Table border :loading="loading" :columns="header" :data="data" size="small"></Table>
       <div slot="footer"></div>
     </Modal>
@@ -8,31 +8,39 @@
 </template>
 
 <script>
-import { DateFormat } from '../../../../../libs/utils.js';
-import listManage from '../../../../../utils/listManage';
+import { auditListByApplyId } from '../../../../../api/order';
 export default {
+  props: { id: String },
   data() {
     return {
-      list: new listManage({ pageSize: 10 }, auditList),
+      loading: false,
       header: [
         {
           title: '审批情况',
-          key: 'record',
+          key: 'audit_status',
+          render(
+            h,
+            {
+              row: { audit_status }
+            }
+          ) {
+            return h('div', audit_status == 'Agree' ? '同意' : '驳回');
+          },
           minWidth: 100
         },
         {
           title: '审批备注',
-          key: 'recordDesc',
+          key: 'audit_memo',
           minWidth: 200
         },
         {
           title: '审批时间',
-          key: 'createDate',
+          key: 'audit_date',
           minWidth: 150
         },
         {
           title: '创建人',
-          key: 'auditName',
+          key: 'realname',
           minWidth: 120
         }
       ],
@@ -40,42 +48,13 @@ export default {
     };
   },
   methods: {
-    get_data(e) {
-      console.log(e);
-      if (e.row._info) {
-        let b;
-        let a = e.row._info.split('_&_');
-        for (let i = 0; i < a.length; i++) {
-          b = a[i].split('``');
-          console.log(b);
-          if (b[1] == '1' || b[1] == 'Agree') {
-            b[1] = '同意';
-          }
-          if (b[1] == '0' || b[1] == 'Reject') {
-            b[1] = '不同意';
-          }
-          this.data.push({
-            auditName: b[0],
-            record: b[1],
-            createDate: DateFormat(b[2]),
-            recordDesc: b[3]
-          });
-        }
-        // console.log(this.data)
-      }
-    },
-    cancel() {
-      this.data = [];
+    onClose() {
+      this.$emit('cancel');
     }
   },
-  created() {
-    let _self = this;
-    this.$bus.off('ORDER_AB_APPROVELIST_LOG', true);
-    this.$bus.on('ORDER_AB_APPROVELIST_LOG', e => {
-      console.log(e);
-      _self.get_data(e);
-      _self.opencheckMemo = true;
-    });
+  async created() {
+    this.data = await auditListByApplyId({ applyId: this.id });
+    console.log(this.data);
   }
 };
 </script>

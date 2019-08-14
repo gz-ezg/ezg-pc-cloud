@@ -1,5 +1,12 @@
 import request from '@/utils/request'
 
+export function getCycleMonthInfoBycompanyId(params) {
+  return request({
+    url: '/order/cycle/company/getCycleMonthInfoBycompanyId',
+    method: 'get',
+    params
+  })
+}
 export function oweOrderList(params) {
   return request({
     url: '/order/oweOrder/list',

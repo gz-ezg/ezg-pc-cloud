@@ -39,6 +39,7 @@ service.interceptors.response.use(
       response.data.msgCode == '50000' &&
       response.config.url != 'api/legwork/apiLoginByWechatCode'
     ) {
+      iview.Message.error(response.data.msg)
       let config = {
         name: 'cloud',
         page: response.config.url,

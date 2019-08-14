@@ -1,34 +1,41 @@
  <template>
   <div>
     <Card>
-      <x-table ref="table" url="/order/oweOrder/list" :handler="dataHandle" :header="tableHeader" :config="filtraConfig">
+      <x-table ref="table" :url="url" @select="selectRow" :header="tableHeader" :config="filtraConfig">
         <Row>
           <ButtonGroup>
-            <Button type="primary" icon="search" @click="handleAdd">新增</Button>
-            <Button type="primary" icon="search" @click="handleEdit">编辑</Button>
-            <Button type="primary" icon="search" @click="handleShow">查看</Button>
-            <Button type="primary" icon="search" @click="handleDelete">删除</Button>
+            <Button type="primary" icon="search" @click="onAdd">新增</Button>
+            <Button type="primary" icon="search" @click="onEdit">编辑</Button>
+            <Button type="primary" icon="search" @click="onShow">查看</Button>
+            <Button type="primary" icon="search" @click="onDelete">删除</Button>
           </ButtonGroup>
         </Row>
       </x-table>
     </Card>
-    <!-- <add-template @ok="handleAddOk" @cancel="handleAdd" v-if="isAdd" />
-    <edit-template :type-list="dataDict" :row="currentRow" v-if="isEdit" @ok="handleEditOk" @cancel="isEdit = false" />
-    <show-template :row="currentRow" v-if="isShow" @ok="isShow = false" @cancel="isShow = false" /> -->
+    <!-- 新增 -->
+    <add-template @ok="onAddOk" @cancel="addPopup = false" v-if="addPopup" />
+    <!--编辑 -->
+    <edit-template :detail="currentRow" v-if="editPopup" @ok="onEditOk" @cancel="editPopup = false" />
+    <show-template :detail="currentRow" v-if="showPopup" @ok="showPopup = false" @cancel="showPopup = false" />
   </div>
 </template>
 
 <script>
 import xTable from '@C/xTable';
 import AddTemplate from './Menu/Add.vue';
-import { deleteOweOrder } from '../../../api/order';
+import ShowTemplate from './Menu/Show.vue';
+import EditTemplate from './Menu/Edit.vue';
+import { deleteOweOrder } from '@A/order';
 export default {
   components: {
     AddTemplate,
+    ShowTemplate,
+    EditTemplate,
     xTable
   },
   data() {
     return {
+      url: '/order/oweOrder/list',
       currentRow: null,
       tableHeader: [
         {
@@ -96,46 +103,42 @@ export default {
         { type: 'input', key: 'updateby_realname', label: '修改人' },
         { type: 'date', key: 'createdate', label: '创建时间' }
       ],
-      dataDict: [],
-      isAtimed: false,
-      isEdit: false,
-      isShow: false,
-      isAdd: false
+      addPopup: false,
+      showPopup: false,
+      editPopup: false
     };
   },
 
   methods: {
-    handleAddOk() {
-      this.handleAdd();
-      this.list.reset();
+    onAdd() {
+      this.addPopup = true;
     },
-    handleAdd() {
-      console.log(this.$refs.table);
-      this.isAdd = !this.isAdd;
+    onAddOk() {
+      this.addPopup = false;
+      this.$refs.table.list.fetchList();
     },
-    handleEdit() {
+
+    onEdit() {
       if (!this.currentRow) {
         return this.$Message.info('请选择一行进行查看');
       }
-      if (this.currentRow.notify_status == 'sent') {
-        return this.$Message.info('该消息不能编辑');
+      this.editPopup = true;
+    },
+    onEditOk() {
+      this.editPopup = false;
+      this.$refs.table.list.fetchList();
+    },
+    onShow() {
+      if (!this.currentRow) {
+        return this.$Message.info('请选择一行进行查看');
       }
-      this.isEdit = !this.isEdit;
+      this.showPopup = true;
     },
-    handleEditOk() {
-      this.isEdit = !this.isEdit;
-      this.list.reset();
-    },
-    handleShow() {
-      this.isShow = !this.isShow;
-    },
-    dataHandle(data) {
-      return data;
-    },
+
     selectRow(row) {
       this.currentRow = row;
     },
-    handleDelete() {
+    onDelete() {
       if (!this.currentRow) {
         return this.$Message.info('请选择一行进行查看');
       }
@@ -144,7 +147,7 @@ export default {
         content: '是否删除',
         onOk: async () => {
           await deleteOweOrder({ applyId: this.currentRow.id });
-          this.list.fetchList();
+          this.$refs.table.list.fetchList();
         },
         onCancel: () => {}
       });
