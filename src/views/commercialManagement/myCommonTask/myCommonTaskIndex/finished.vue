@@ -429,16 +429,10 @@ export default {
                 let field = [
                     // {field:'workOrderStatus',title:'工单状态',format:'workOrderStatus'},                    
                     {field:'companyname',title:'公司名称'},
-                    {field:'baseorderid',title:'提示'},
-                    {field:'departname',title:'服务部门'},
-                    {field:'product',title:'产品全称'},
-                    {field:'CurrentProcess',title:'目前进度'},
-                    {field:'nextprocess',title:'下个进度'},
-                    {field:'ServiceStart',title:'服务开始时间'},
-                    {field:'CreateDate',title:'创建时间'},                                                                   
-                    {field:'UpdateDate',title:'实际完成时间'},                                                                     
+                    {field:'paynumber',title:'收款金额'},
+                    {field:'product',title:'完成事项'},
+                    {field:'UpdateDate',title:'完成时间'},
                     {field:'servername',title:'服务人员'},
-                    {field:'followname',title:'跟进人'} 
                 ]
                 let _self = this
                 let url = `api/order/workOrderList`

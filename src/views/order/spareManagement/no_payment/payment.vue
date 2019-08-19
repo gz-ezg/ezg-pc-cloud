@@ -80,7 +80,7 @@
                 <Button type="primary" icon="edit" :loading="backup_loading" @click="reback">驳回</Button>
             </div>
         </Modal>
-        <AddPayment></AddPayment>
+        <AddPayment :formValidate="formValidate"></AddPayment>
         <EditPayment></EditPayment>
     </div>
 </template>

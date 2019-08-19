@@ -11,7 +11,7 @@
                                 <Col span="8">
                                     <FormItem label="地区：" prop="CompanyName">
                                         <Select v-model="SearchValidate.area" size="small" type="text" transfer>
-                                            <Option v-for="(item,index) in area" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                            <Option v-for="(item,index) in gzbusinessarea" :key="index" :value="item.typecode">{{item.typename}}</Option>
                                         </Select>
                                     </FormItem>
                                 </Col>
@@ -23,7 +23,7 @@
                                 <Col span="8">
                                     <FormItem label="开票类型：" prop="followby_realname">
                                         <Select v-model="SearchValidate.kpType" size="small" type="text" transfer>
-                                            <Option v-for="(item,index) in kpType" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                            <Option v-for="(item,index) in kp_type" :key="index" :value="item.typecode">{{item.typename}}</Option>
                                         </Select>
                                     </FormItem>
                                 </Col>
@@ -32,21 +32,21 @@
                                 <Col span="8">
                                     <FormItem label="地址属性：" prop="note_kj_flag">
                                         <Select v-model="SearchValidate.addrProperty" size="small" type="text" transfer>
-                                            <Option v-for="(item,index) in addrProperty" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                            <Option v-for="(item,index) in addr_property" :key="index" :value="item.typecode">{{item.typename}}</Option>
                                         </Select>
                                     </FormItem>
                                 </Col>
                                 <Col span="8">
                                     <FormItem label="可开：" prop="etaxStatus">
                                         <Select v-model="SearchValidate.canInvoice" size="small" type="text" transfer>
-                                            <Option v-for="(item,index) in sfYn" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                            <Option v-for="(item,index) in sf_yn" :key="index" :value="item.typecode">{{item.typename}}</Option>
                                         </Select>
                                     </FormItem>
                                 </Col>
                                 <Col span="8">
                                     <FormItem label="可查：" prop="etaxStatus">
                                         <Select v-model="SearchValidate.canCheck" size="small" type="text" transfer>
-                                            <Option v-for="(item,index) in sfYn" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                            <Option v-for="(item,index) in sf_yn" :key="index" :value="item.typecode">{{item.typename}}</Option>
                                         </Select>
                                     </FormItem>
                                 </Col>
@@ -55,14 +55,14 @@
                                 <Col span="8">
                                     <FormItem label="工商情况：" prop="note_kj_flag">
                                         <Select v-model="SearchValidate.taxStatus" size="small" type="text" transfer>
-                                            <Option v-for="(item,index) in businessTaxStatus" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                            <Option v-for="(item,index) in business_tax_status" :key="index" :value="item.typecode">{{item.typename}}</Option>
                                         </Select>
                                     </FormItem>
                                 </Col>
                                 <Col span="8">
                                     <FormItem label="税务情况：" prop="etaxStatus">
                                         <Select v-model="SearchValidate.businessStatus" size="small" type="text" transfer>
-                                            <Option v-for="(item,index) in businessTaxStatus" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                            <Option v-for="(item,index) in business_tax_status" :key="index" :value="item.typecode">{{item.typename}}</Option>
                                         </Select>
                                     </FormItem>
                                 </Col>

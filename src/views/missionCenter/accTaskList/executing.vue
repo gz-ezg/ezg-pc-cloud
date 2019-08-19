@@ -78,6 +78,8 @@
                 loading:false,
                 total:0,
                 page:1,
+                idTmr:"",
+                tableHeader:["公司名称","任务","服务内容","执行人","任务类型","执行时间"],
                 data:[],
                 taskKind:[],
                 taskKind_map:new Map(),

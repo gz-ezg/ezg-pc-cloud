@@ -3,20 +3,32 @@
         <Modal
             v-model="add_pay"
             title="添加收款记录"
-            width="340"
+            width="360"
             @on-visible-change="handleReset('payment')"
         >
             <Form ref="payment" :model="payment" :rules="rulepayment" :label-width="80">
-                <FormItem label="缴费金额" prop="transcationamount">
-                    <Input v-model="payment.transcationamount" placeholder="" style="width:200px"></Input>
-                </FormItem>
                 <FormItem label="缴费方式" prop="paydir">
-                    <Select transfer v-model="payment.paydir" placeholder="" style="width:200px">
+                    <Select transfer v-model="payment.paydir" placeholder="" @on-change="reset_money">
                         <Option v-for="item in pay_type_label" :key="item.id" :value="item.typecode">{{item.typename}}</Option>
                     </Select>
                 </FormItem>
+                <FormItem label="缴费金额" prop="transcationamount" v-if="payment.paydir!=='zhye'">
+                    <Input type="number" v-model="payment.transcationamount" placeholder="" ></Input>
+                </FormItem>
+                <Row v-if="payment.paydir=='zhye'">
+                    <Col span="14">
+                        <FormItem label="缴费金额" prop="money">
+                            <Input type="number" v-model="payment.money" placeholder="" ></Input>
+                        </FormItem>
+                    </Col>
+                    <Col span="10">
+                        <FormItem label="剩余余额：">
+                            {{formValidate.account_amount}}
+                        </FormItem>
+                    </Col>
+                </Row>
                 <FormItem prop="transcationtime" label="缴费日期">
-                        <DatePicker type="date" placeholder="" v-model="payment.transcationtime" style="width:200px"></DatePicker>
+                        <DatePicker type="date" placeholder="" v-model="payment.transcationtime"></DatePicker>
                 </FormItem>
                 <FormItem>
                     <Button type="primary" @click="handleSubmit('payment')">新增</Button>
@@ -32,11 +44,19 @@
 import Bus from '../bus'
 import {DateFormat} from '../utils'
 export default {
+    props:["formValidate"],
     data(){
         //  两位小数的验证实现
         const Num = (rule, value, callback) =>{
             if(!/^[0-9]+(.[0-9]{1,2})?$/.test(value)) {
                 callback('请输入规范的数字');
+            }else{
+                callback()
+            };
+        }
+        const compare = (rule, value, callback) =>{
+            if(value>this.formValidate.account_amount) {
+                callback('所交余款超出余额！');
             }else{
                 callback()
             };
@@ -52,16 +72,20 @@ export default {
             payment:{
                 transcationamount:'',
                 transcationtime:'',
-                paydir:''
+                paydir:'',
+                money:''
             },
             // 表单验证规则
             rulepayment:{
                 transcationamount: [
                         { required: true, message: '请输入付款金额', trigger: 'blur' },
-                        // { validator: Num, trigger: 'blur' }
                 ],
                 paydir: [
                         { required: true, message: '请选择付款方式', trigger: 'change' }
+                ],
+                money: [
+                    { required: true, message: '请输入付款金额', trigger: 'blur' },
+                    { validator: compare, message: '所交余款超出余额！', trigger: 'blur' }
                 ],
                 transcationtime: [
                         { required: true, type: 'date', message: '请输入日期', trigger: 'change' }
@@ -74,6 +98,10 @@ export default {
     },
     methods:{
         //  初始化
+        reset_money(){
+            this.payment.money=""
+            this.payment.transcationamount=""
+        },
         init(){
             this.GetLabelList()
             this.$bus.on('add_pay', (e) => {
@@ -111,7 +139,8 @@ export default {
                         'balanceid':_that.current_orderId,
                         'paydir':_that.payment.paydir,
                         'transcationtime':DateFormat(_that.payment.transcationtime),
-                        'transcationamount':_that.payment.transcationamount
+                        'transcationamount':_that.payment.transcationamount?_that.payment.transcationamount:0,
+                        'accountBalance':_that.payment.money?_that.payment.money:0
                     }
                     console.log(params)
                     this.$http.post(url, params).then(function(res){

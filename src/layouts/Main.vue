@@ -585,20 +585,20 @@ export default {
             return h('span', [
               `${msg.msgContent}`,
               h(
-                'a',
-                {
-                  on: {
-                    click: async e => {
-                      try {
-                        let resp = await logDetail({ id: msg.companyWechatLogId });
-                        this.unreadNum = await getUnreadNum();
-                        this.msg = resp;
-                        this.msgDetailPopus = true;
-                      } catch (error) {}
-                    }
-                  }
-                },
-                '...查看消息'
+                      'a',
+                      {
+                        on: {
+                          click: async e => {
+                            try {
+                              let resp = await logDetail({ id: msg.companyWechatLogId });
+                              this.unreadNum = await getUnreadNum();
+                              this.msg = resp;
+                              this.msgDetailPopus = true;
+                            } catch (error) {}
+                          }
+                        }
+                      },
+                      '...查看消息'
               )
             ]);
           },

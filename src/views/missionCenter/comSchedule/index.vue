@@ -108,6 +108,26 @@
                 </Form>
             </div>
         </div>
+        <table style="display: none" id="tableExcel" width="100%" border="1" cellspacing="0" cellpadding="0">
+            <tr>
+                <td style="text-align: center;height: 50px;font-weight: bold;font-size: 20px" :colspan="tableHeader.length" align="center" v-if="flag=='agendaDay'">{{YMD}}商事外勤统计表</td>
+                <td style="text-align: center;height: 50px;font-weight: bold;font-size: 20px" :colspan="tableHeader.length" align="center" v-if="flag=='agendaWeek'">{{WEEK[0]}}至{{WEEK[1]}}商事外勤统计表</td>
+                <td style="text-align: center;height: 50px;font-weight: bold;font-size: 20px" :colspan="tableHeader.length" align="center" v-if="flag=='month'">{{YM}}商事外勤统计表</td>
+            </tr>
+            <tr >
+                <td style="text-align: center;height: 50px;font-size: 16px" v-for="(item,index) in tableHeader" :key="index">{{item}}</td>
+            </tr>
+            <tr v-for="(item,index) in data2" :key="index" style="font-size: 14px;height: 30px">
+                <td>{{item.executorName}}</td>
+                <td>{{item.taskKindName}}</td>
+                <td>{{item.workFlowStatus}}</td>
+                <td>{{item.Area}}</td>
+                <td>{{item.depart}}</td>
+                <td>{{item.taskName}}</td>
+                <td>{{item.companyName}}</td>
+                <td>{{item.planDate}}</td>
+            </tr>
+        </table>
     </div>
 </template>
 
@@ -115,7 +135,7 @@
     import { zh } from 'vuejs-datepicker/dist/locale/index'
     import Datepicker from 'vuejs-datepicker';
     import { FullCalendar } from 'vue-full-calendar'
-    import {DateFormat} from "../../../libs/utils";
+    import {DateFormat,DateFormatYearMonth} from "../../../libs/utils";
     import 'fullcalendar/dist/locale/zh-cn'
     import CreateSchedule from './createSchedule'
     import DetailScheduleTask from './detailScheduleTask'
@@ -130,6 +150,13 @@
         data(){
             return{
                 load:false,
+                idTmr:"",
+                flag:"month",
+                YMD:"",
+                YM:"",
+                WEEK:[],
+                data2:[],
+                tableHeader:["姓名","产品类别","正常节点","区域","地点","事件","企业","执行时间"],
                 personList:["全部","符东","张威雄","王碧心","梁宝愿","潘美珊"],
                 statusList:["全部","未完成","成功","失败"],
                 executor_id:"",
@@ -161,7 +188,7 @@
                 header:{
                     left:   'prev,next today',
                     center: 'title',
-                    right:  'filter,month,agendaDay',
+                    right:  'downLoad,filter,month,agendaWeek,agendaDay',
                 },
                 config:{
                     locale: 'zh-cn',
@@ -182,7 +209,35 @@
                                 this.showFilter=!this.showFilter
                                 event.stopPropagation()
                             }.bind(this)
-                        }
+                        },
+                        downLoad:{
+                            text:"导出",
+                            click:function () {
+                                this.downLoad('tableExcel','商事外勤统计表')
+                                event.stopPropagation()
+                            }.bind(this)
+                        },
+                        month:{
+                            text:"月",
+                            click:function () {
+                                this.flag = "month"
+                                this.$refs.calendar.fireMethod('changeView','month')
+                            }.bind(this)
+                        },
+                        agendaWeek:{
+                            text:"周",
+                            click:function () {
+                                this.flag = "agendaWeek"
+                                this.$refs.calendar.fireMethod('changeView','agendaWeek')
+                            }.bind(this)
+                        },
+                        agendaDay:{
+                            text:"日",
+                            click:function () {
+                                this.flag = "agendaDay"
+                                this.$refs.calendar.fireMethod('changeView','agendaDay')
+                            }.bind(this)
+                        },
                     }
                 },
                 events:[
@@ -205,6 +260,102 @@
 
         },
         methods:{
+            downLoad(tableid,name){
+                this.getDate()
+                this.down_data(tableid,name)
+            },
+            download(tableid,name){
+
+                if(this.getExplorer()=='ie')
+                {
+                    var curTbl = document.getElementById(tableid);
+                    var oXL = new ActiveXObject("Excel.Application");
+                    var oWB = oXL.Workbooks.Add();
+                    var xlsheet = oWB.Worksheets(1);
+                    var sel = document.body.createTextRange();
+                    sel.moveToElementText(curTbl);
+                    sel.select();
+                    sel.execCommand("Copy");
+                    xlsheet.Paste();
+                    oXL.Visible = true;
+
+                    try {
+                        var fname = oXL.Application.GetSaveAsFilename("Excel.xls", "Excel Spreadsheets (*.xls), *.xls");
+                    } catch (e) {
+                        print("Nested catch caught " + e);
+                    } finally {
+                        oWB.SaveAs(fname);
+                        oWB.Close(savechanges = false);
+                        oXL.Quit();
+                        oXL = null;
+                        this.idTmr = window.setInterval("this.Cleanup();", 1);
+                    }
+
+                }
+                else
+                {
+
+                    this.tableToExcel(tableid,name)()
+                }
+            },
+            getExplorer() {
+                let explorer = window.navigator.userAgent ;
+                //ie
+                if (explorer.indexOf("MSIE") >= 0) {
+                    return 'ie';
+                }
+                //firefox
+                else if (explorer.indexOf("Firefox") >= 0) {
+                    return 'Firefox';
+                }
+                //Chrome
+                else if(explorer.indexOf("Chrome") >= 0){
+                    return 'Chrome';
+                }
+                //Opera
+                else if(explorer.indexOf("Opera") >= 0){
+                    return 'Opera';
+                }
+                //Safari
+                else if(explorer.indexOf("Safari") >= 0){
+                    return 'Safari';
+                }
+            },
+            Cleanup() {
+                window.clearInterval(this.idTmr);
+                CollectGarbage();
+            },
+            tableToExcel(tableId,realname) {
+                var table = tableId
+                var name = realname
+                var uri = 'data:application/vnd.ms-excel;base64,',
+                    template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"' +
+                        'xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>'
+                        + '<x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets>'
+                        + '</x:ExcelWorkbook></xml><![endif]-->' +
+                        ' <style type="text/css">' +
+                        'table td {' +
+                        ' text-align: left;' +
+                        'color: #000000;' +
+                        ' }' +
+                        '</style>' +
+                        '</head><body ><table class="excelTable">{table}</table></body></html>',
+                    base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) },
+                    format = function(s, c) {
+                        return s.replace(/{(\w+)}/g,
+                            function(m, p) { return c[p]; }) }
+                return function() {
+                    if (!table.nodeType) table = document.getElementById(table)
+                    var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+                    var a = document.createElement('a')
+                    a.href = uri + base64(format(template, ctx))
+                    a.download = name+'.xls';//这里是关键所在,当点击之后,设置a标签的属性,这样就可以更改标签的标题了
+                    var evt = document.createEvent("MouseEvents");
+                    evt.initEvent("click", false, false);
+                    a.dispatchEvent(evt);
+                }
+            },
+
             showItem(item,index){
                 this.currentIndex = index
                 this.executor_id = item.id
@@ -254,14 +405,9 @@
                 let dateTemp = DateFormat(date)
                 this.get_onedate_data(dateTemp)
             },
-            next() {
-                //  通过这个函数调用calendar中的方法，
-                //  方法名，参数
-                this.$refs.calendar.fireMethod('getEventSources')
-            },
             change_date(e){
                 let date = DateFormat(e)
-                // console.log(date)
+                console.log(date)
                 // this.local_date = e.toLocaleDateString().replace(new RegExp("/",'g'),"-")
 
 
@@ -290,7 +436,6 @@
             },
             //  关闭右键菜单
             close_right_menu(){
-                console.log("123")
                 this.right_click_show = false
                 this.showFilter = false
             },
@@ -305,7 +450,6 @@
                 this.top = jsEvent.clientY
                 this.left = jsEvent.clientX
                 this.hover_local = event
-                console.log(this.hover_local)
             },
             get_date(){
                 //  获取当前日期
@@ -313,6 +457,21 @@
                 // console.log(this.$refs.calendar.fireMethod('getDate'))
                 // 更改到指定日期
                 this.$refs.calendar.fireMethod('changeView', 'agendaDay', '2017-06-01')
+            },
+            getDate(){
+                //  获取当前日期
+                // fireMethod 调用内置方法$(this.$el).fullCalendar(...options)
+                this.YMD = DateFormat(this.$refs.calendar.fireMethod('getDate')._d)
+                let date = new Date(DateFormat(this.$refs.calendar.fireMethod('getDate')._d))
+                let bweek = DateFormat(this.$refs.calendar.fireMethod('getDate')._d)
+                let a =new Date(date.getTime()+24*60*60*1000*6)
+                let eweek = DateFormat(a)
+                this.WEEK = []
+                this.WEEK.push(bweek,eweek)
+                this.YM = DateFormatYearMonth(this.$refs.calendar.fireMethod('getDate')._d)
+                console.log(this.WEEK)
+                // 更改到指定日期
+                // this.$refs.calendar.fireMethod('changeView', 'agendaDay', '2017-06-01')
             },
             get_executor_list(){
                 let _self = this
@@ -403,6 +562,135 @@
 
                 this.$Get(url, config, success, fail)
             },
+            down_data(tableid,name){
+                let _self = this
+                if (_self.flag == "month"){
+                    let url = 'api/task/getLegWorklist'
+                    let config = {
+                        params:{
+                            page: 1,
+                            pageSize: 1000,
+                            businessKind:"businessKind",
+                            sortField: "plan_date",
+                            task_stage:_self.taskStage,
+                            executor_id:_self.executor_id,
+                            month_date:_self.YM,
+                            mission:_self.mission,
+                            task_area:_self.newMission.businessArea
+                        }
+                    }
+
+                    function success(res){
+                        _self.data2 = res.data.data.rows
+                        console.log(_self.data2 )
+                        for(let i = 0;i<_self.data2.length;i++){
+                            _self.data2[i].Area = _self.businessArea_map.get(  _self.data2[i].taskArea)
+                            _self.data2[i].depart = _self.businessPlace_map.get(_self.data2[i].taskPlace)
+                            if(_self.data2[i].workFlowStatus=='Y'){
+                                _self.data2[i].workFlowStatus='是'
+                            }
+                            if(_self.data2[i].workFlowStatus=='N'){
+                                _self.data2[i].workFlowStatus='否'
+                            }
+                        }
+                        setTimeout(()=>{
+                            _self.download(tableid,name)
+                        },1000)
+
+
+                    }
+
+                    function fail(err){
+                    }
+
+                    this.$Get(url, config, success, fail)
+                }
+                if (_self.flag == "agendaWeek") {
+                    let url = 'api/task/getLegWorklist'
+                    let config = {
+                        params:{
+                            page: 1,
+                            pageSize: 1000,
+                            businessKind:"businessKind",
+                            sortField: "plan_date",
+                            task_stage:_self.taskStage,
+                            executor_id:_self.executor_id,
+                            bweek_date:_self.WEEK[0],
+                            eweek_date:_self.WEEK[1],
+                            mission:_self.mission,
+                            task_area:_self.newMission.businessArea
+                        }
+                    }
+
+                    function success(res){
+                        _self.data2 = res.data.data.rows
+                        console.log(_self.data2 )
+                        for(let i = 0;i<_self.data2.length;i++){
+                            _self.data2[i].Area = _self.businessArea_map.get(  _self.data2[i].taskArea)
+                            _self.data2[i].depart = _self.businessPlace_map.get(_self.data2[i].taskPlace)
+                            if(_self.data2[i].workFlowStatus=='Y'){
+                                _self.data2[i].workFlowStatus='是'
+                            }
+                            if(_self.data2[i].workFlowStatus=='N'){
+                                _self.data2[i].workFlowStatus='否'
+                            }
+                        }
+                        setTimeout(()=>{
+                            _self.download(tableid,name)
+                        },1000)
+
+
+                    }
+
+                    function fail(err){
+                    }
+
+                    this.$Get(url, config, success, fail)
+                }
+                if (_self.flag == "agendaDay") {
+                    let url = 'api/task/getLegWorklist'
+                    let config = {
+                        params:{
+                            page: 1,
+                            pageSize: 1000,
+                            businessKind:"businessKind",
+                            sortField: "plan_date",
+                            task_stage:_self.taskStage,
+                            executor_id:_self.executor_id,
+                            bweek_date:_self.YMD,
+                            eweek_date:_self.YMD,
+                            mission:_self.mission,
+                            task_area:_self.newMission.businessArea
+                        }
+                    }
+
+                    function success(res){
+                        _self.data2 = res.data.data.rows
+                        console.log(_self.data2 )
+                        for(let i = 0;i<_self.data2.length;i++){
+                            _self.data2[i].Area = _self.businessArea_map.get(  _self.data2[i].taskArea)
+                            _self.data2[i].depart = _self.businessPlace_map.get(_self.data2[i].taskPlace)
+                            if(_self.data2[i].workFlowStatus=='Y'){
+                                _self.data2[i].workFlowStatus='是'
+                            }
+                            if(_self.data2[i].workFlowStatus=='N'){
+                                _self.data2[i].workFlowStatus='否'
+                            }
+                        }
+                        setTimeout(()=>{
+                            _self.download(tableid,name)
+                        },1000)
+
+
+                    }
+
+                    function fail(err){
+                    }
+
+                    this.$Get(url, config, success, fail)
+                }
+
+            },
             get_data_center(){
                 let params = "gzbusinessarea,gzbusinessplace"
                 let _self = this
@@ -426,7 +714,7 @@
                         pageSize: 1000,
                         day: e,
                         sortField: "plan_date",
-                        task_kind:"tkLegBus"
+                        businessKind:"businessKind",
                     }
                 }
 
@@ -438,6 +726,7 @@
                     // }
 
                     _self.oneData = res.data.data.rows
+                    console.log(_self.oneData)
                 }
 
                 function fail(err){

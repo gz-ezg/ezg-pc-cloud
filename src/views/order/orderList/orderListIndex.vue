@@ -574,11 +574,15 @@ export default {
                 customertel:    _self.formValidateSearch.customertel,
                 crealname:    _self.formValidateSearch.crealname,
                 frealname:    _self.formValidateSearch.frealname,
+                productname:_self.formValidateSearch.productname,
                 payDir:    _self.formValidateSearch.payDir,
                 bcreatedate:DateFormat(_self.formValidateSearch.date[0]),
                 ecreatedate:DateFormat(_self.formValidateSearch.date[1]),
                 bpaytime: DateFormat(_self.formValidateSearch.paytime[0]),
                 epaytime: DateFormat(_self.formValidateSearch.paytime[1]),
+                sumField:'paynumber,realnumber,neednumber',
+                customer_bcreatedate:DateFormat(_self.formValidateSearch.customerCreateTime[0]),
+                customer_ecreatedate:DateFormat(_self.formValidateSearch.customerCreateTime[1]),
                 export: 'Y',
                 exportField: encodeURI(JSON.stringify(field))
             }

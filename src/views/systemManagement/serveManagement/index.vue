@@ -53,29 +53,31 @@
 				筛选
 				<div slot="content" @keydown.enter="search">
 					<Form ref="formValidate" :model="formValidate" :label-width="120" style="margin-top: 15px">
-						<Row :gutter="20" style="height:56px">
-						    <Col span="5">
+						<Row style="height:56px">
+						    <Col span="8">
 								<FormItem label="用户名称：" prop="realname" style="width: 300px;">
 								<Input v-model="formValidate.realname" size="small"></Input>
 							</FormItem>
 							</Col>
-                            <Col span="5">
+                            <Col span="8">
                             <FormItem label="部门名称：" prop="departname" style="width: 300px;">
                                 <Input v-model="formValidate.departname" size="small"></Input>
                             </FormItem>
                             </Col>
-							<Col span="5">
+							<Col span="8">
 							<FormItem label="岗位：" prop="post" style="width: 300px;">
 									<Cascader trigger="hover" :data="company_post" v-model="formValidate.post" size="small" style="margin-top:5px;width:100%"></Cascader>
 							</FormItem>
 							</Col>
-							<Col span="5">
-							<FormItem label="是否接单：" prop="order_receiving" style="width: 300px;">
-								<Select transfer v-model="formValidate.order_receiving" size="small" @on-change="search" style="width:100%">
-									<Option value="Y">是</Option>
-									<Option value="N">否</Option>
-								</Select>
-							</FormItem>
+						</Row>
+						<Row>
+							<Col span="8">
+								<FormItem label="是否接单：" prop="order_receiving" style="width: 300px;">
+									<Select transfer v-model="formValidate.order_receiving" size="small" @on-change="search" style="width:100%">
+										<Option value="Y">是</Option>
+										<Option value="N">否</Option>
+									</Select>
+								</FormItem>
 							</Col>
 						</Row>
 						<center>
