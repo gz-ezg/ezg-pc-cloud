@@ -79,8 +79,8 @@
 </template>
 
 <script>
-import companySelect from '@/components/companySelect';
-import { oweOrderListByCompanyId, createOweOrder } from '../../../../api/order';
+import companySelect from '@C/companySelect';
+import { oweOrderListByCompanyId, createOweOrder } from '@A/order';
 
 export default {
   name: 'arrearsOrder_index',
