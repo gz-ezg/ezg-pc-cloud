@@ -169,12 +169,12 @@
                 provinceData:[],
                 departData:[],
                 applyPosition:[],
-                employeesStatus:[],
-                maritalStatus:[],
+                employees_status:[],
+                marital_status:[],
                 sf01:[],
                 applyPosition_map:new Map(),
-                employeesStatus_map:new Map(),
-                maritalStatus_map:new Map(),
+                employees_status_map:new Map(),
+                marital_status_map:new Map(),
                 sf01_map:new Map(),
                 SearchValidate: {
                     name:"",
@@ -288,19 +288,19 @@
             handleReset(){
                 this.SearchValidate = {
                     name:"",
-                        inductionDate:"",
-                        sex:"",
-                        ifEmployeeHandbook:"",
-                        positiveDate:"",
-                        birthday:"",
-                        provinceId:"",
-                        cityId:"",
-                        departId:"",
-                        position:"",
-                        ifLaborContract:"",
-                        ifTrial:"",
-                        maritalStatus:"",
-                        inductionMoth:""
+                    inductionDate:"",
+                    sex:"",
+                    ifEmployeeHandbook:"",
+                    positiveDate:"",
+                    birthday:"",
+                    provinceId:"",
+                    cityId:"",
+                    departId:"",
+                    position:"",
+                    ifLaborContract:"",
+                    ifTrial:"",
+                    maritalStatus:"",
+                    inductionMoth:""
                 }
                 this.get_data()
             },
@@ -347,14 +347,14 @@
                     {field:'if_labor_contract',title:'是否劳动合同',format:'sf01'},
                     {field:'trial_salary',title:'试用底薪'},
                     // {field:'serviceranks',title:'回访状态',format:'hfzt'},
-                    {field:'marital_status',title:'婚姻状况',format:'maritalStatus'},
+                    {field:'marital_status',title:'婚姻状况',format:'marital_status'},
                     {field:'bank_account',title:'银行账户'},
                     {field:'bank_address',title:'开户行地址'},
                     {field:'if_trial',title:'是否试用',format:'sf01'},
                     {field:'trial_performance',title:'试用绩效'},
                     {field:'positive_performance',title:'转正绩效'},
                     // {field:'depart',title:'责任部门',format:'departAlias'},
-                    {field:'employees_status',title:'员工状态',format:'employeesStatus'},
+                    {field:'employees_status',title:'员工状态',format:'employees_status'},
                     {field:'highest_education',title:'最高学历'},
                     {field:'inductionMonth',title:'入职年月数'},
                     {field:'departname',title:'部门'},
@@ -503,12 +503,12 @@
 
                 function success(res) {
                     _self.applyPosition = res.data.data.applyPosition
-                    _self.employeesStatus = res.data.data.employees_status
-                    _self.maritalStatus = res.data.data.marital_status
+                    _self.employees_status = res.data.data.employees_status
+                    _self.marital_status = res.data.data.marital_status
                     _self.sf01 = res.data.data.sf01
                     _self.applyPosition_map = _self.$array2map(_self.applyPosition)
-                    _self.employeesStatus_map = _self.$array2map(_self.employeesStatus)
-                    _self.maritalStatus_map = _self.$array2map(_self.maritalStatus)
+                    _self.employees_status_map = _self.$array2map(_self.employees_status)
+                    _self.marital_status_map = _self.$array2map(_self.marital_status)
                     _self.sf01_map = _self.$array2map(_self.sf01)
                 }
 

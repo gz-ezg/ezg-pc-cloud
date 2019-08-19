@@ -1196,6 +1196,15 @@ export const appRouter = [
         component: () =>
           import(/* webpackChunkName: "employeeInfo_index" */ '@/views/administrationManagement/employeeInfo/index.vue')
       },
+      {
+        access: 11651,
+        meta: 11651,
+        path: 'addManager',
+        title: '地址报价单',
+        name: 'addManager_index',
+        component: () =>
+          import(/* webpackChunkName: "addManager_index" */ '@/views/administrationManagement/addManager/index.vue')
+      },
     ]
   },
   {
@@ -1320,7 +1329,25 @@ export const appRouter = [
         name: 'publicPool_index',
         component: () =>
           import(/* webpackChunkName: "publicPool_index" */ '@/views/publicPool/publicPool')
-      }
+      },
+      // {
+      //   access: 11654,
+      //   meta: 11654,
+      //   path: 'gamesetting',
+      //   title: '活动设置',
+      //   name: 'gamesetting_index',
+      //   component: () =>
+      //       import(/* webpackChunkName: "gamesetting_index" */ '@/views/publicPool/gamesetting/index')
+      // },
+      // {
+      //   access: 11655,
+      //   meta: 11655,
+      //   path: 'publicgame',
+      //   title: '公海池活动',
+      //   name: 'publicgame_index',
+      //   component: () =>
+      //       import(/* webpackChunkName: "publicgame_index" */ '@/views/publicPool/publicgame/index')
+      // },
     ]
   },
   {

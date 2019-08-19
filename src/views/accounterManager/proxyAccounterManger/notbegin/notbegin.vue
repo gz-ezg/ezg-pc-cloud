@@ -1242,11 +1242,15 @@
                 if (this.current_row=="" || this.current_row==null) {
                     this.$Message.warning("请选择一行进行操作")
                 }else{
-                    console.log(this.current_row.id)
-                    this.$store.commit('setPageId', this.current_row.id)
-                    this.$store.commit('open_gobal_company_detail_modal', this.current_row.company_id)
-                    this.$store.commit('setIfMatch', this.current_row.if_match)
-                    this.$store.commit('setServiceDemo', this.current_row.service_memo)
+                    if(this.current_row.gdsreport!=='ybd'){
+                        this.$Message.warning("国地税未报到，无法开始服务！")
+                    }else{
+                        this.$store.commit('setPageId', this.current_row.id)
+                        this.$store.commit('open_gobal_company_detail_modal', this.current_row.company_id)
+                        this.$store.commit('setIfMatch', this.current_row.if_match)
+                        this.$store.commit('setServiceDemo', this.current_row.service_memo)
+                    }
+
                 }
             },
             add_important_reminder(){

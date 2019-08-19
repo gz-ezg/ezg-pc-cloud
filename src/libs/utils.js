@@ -142,3 +142,25 @@ export function FixFULLDateFormat(){
     // if (seconds.length < 2) seconds = '0' + seconds;
     return [year, month, day].join('-')+' '+ [hour,miniutes,seconds].join(':');
 }
+
+//深拷贝
+export function deepCopy(obj) {
+    if (obj && typeof obj ==='object') {
+        let result = Array.isArray(obj)?[]:{}
+        for (let key in obj) {
+            if (obj.hasOwnProperty(key)){
+                if (obj[key] && typeof obj[key] ==='object'){
+                    result[key] = deepCopy(obj[key])
+                } else {
+                    result[key] = obj[key]
+                }
+            }
+        }
+        return result
+    } else {
+        console.log("深拷贝对象类型不对！！！！！！！！！")
+        return
+    }
+    
+
+}

@@ -1183,7 +1183,10 @@
                 if (this.current_row=="" || this.current_row==null) {
                     this.$Message.warning("请选择一行进行操作")
                 }else{
+                    this.$store.commit('setPageId', this.current_row.id)
                     this.$store.commit('open_gobal_company_detail_modal', this.current_row.company_id)
+                    this.$store.commit('setIfMatch', this.current_row.if_match)
+                    this.$store.commit('setServiceDemo', this.current_row.service_memo)
                 }
             },
             add_important_reminder(){
