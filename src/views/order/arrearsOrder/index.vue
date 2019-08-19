@@ -99,8 +99,10 @@ export default {
         }
       ],
       filtraConfig: [
-        { type: 'input', key: 'createby_realname', label: '创建人' },
-        { type: 'input', key: 'updateby_realname', label: '修改人' },
+        { type: 'input', key: 'conpanyName', label: '公司' },
+        { type: 'input', key: 'customerName', label: '客户' },
+        { type: 'input', key: 'tel', label: '联系方式' },
+        { type: 'input', key: 'realname', label: '创建人' },
         { type: 'date', key: 'createdate', label: '创建时间' }
       ],
       addPopup: false,

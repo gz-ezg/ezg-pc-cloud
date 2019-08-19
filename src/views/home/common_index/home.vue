@@ -47,6 +47,7 @@ import dataSourcePie from './dataSourcePie.vue';
 import visiteVolume from './visiteVolume.vue';
 import serviceRequests from './serviceRequests.vue';
 import { oweOrderListByFollowby } from '@A/order';
+import store from '@/store';
 export default {
   name: 'home',
   components: {
@@ -91,18 +92,22 @@ export default {
       default:
     }
   },
+  // 强制选择下线单操作
   async beforeRouteEnter(to, from, next) {
     // 判断有没有存在下线客户
+    let resp = [];
     try {
       let id = localStorage.getItem('id');
-      const resp = await oweOrderListByFollowby({ id });
-      if (resp.length) {
-        next('/arrearageCenter');
-      }
+      resp = await oweOrderListByFollowby({ id });
     } catch (error) {
       console.log(error);
     } finally {
-      next();
+      console.log(store)
+      if (resp.length && store.state.gobal.gobalIsForceLock) {
+        next('/arrearageCenter');
+      } else {
+        next();
+      }
     }
   }
 };

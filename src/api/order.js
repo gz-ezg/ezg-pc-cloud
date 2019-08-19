@@ -72,3 +72,24 @@ export function oweOrderListByFollowby(params) {
   })
 }
 
+export function orderDetail(params) {
+  return request({
+    url: `/order/detail/${params}`,
+    method: 'get'
+  })
+}
+
+export function accountDetail(params) {
+  return request({
+    url: `customer/account/detail`,
+    method: 'get',
+    params
+  })
+}
+export function orderCreate(data) {
+  return request({
+    url: `order/create`,
+    method: 'post',
+    data
+  })
+}

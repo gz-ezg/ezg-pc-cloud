@@ -118,11 +118,22 @@ export default {
         }
       ],
       filtraConfig: [
-        { type: 'input', key: 'createby_realname', label: '创建人' },
-        { type: 'input', key: 'updateby_realname', label: '修改人' },
+        { type: 'input', key: 'conpanyName', label: '公司' },
+        { type: 'input', key: 'customerName', label: '客户' },
+        { type: 'input', key: 'tel', label: '联系方式' },
+        { type: 'input', key: 'realname', label: '创建人' },
         { type: 'date', key: 'createdate', label: '创建时间' }
       ],
-      execlConfig: [{}],
+      execlConfig: [
+        { field: 'owe_code', title: '欠费单号' },
+        { field: 'companyname', title: '公司名称' },
+        { field: 'customer', title: '客户名称' },
+        { field: 'TEL', title: '客户电话' },
+        { field: 'alisname', title: '产品内容' },
+        { field: 'apply_memo', title: '申请备注' },
+        { field: 'createName', title: '创建人' },
+        { field: 'createdate', title: '创建时间' }
+      ],
       query: {
         isAudit: 'Y'
       }

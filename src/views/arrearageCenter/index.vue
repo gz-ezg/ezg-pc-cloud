@@ -2,6 +2,10 @@
   <div class="page">
     <Card style="width:520px;margin-bottom:100px">
       <p slot="title">请选择</p>
+      <Button type="primary" slot="extra" @click.prevent="onExit">
+        <Icon type="ios-loop-strong"></Icon>
+        关闭
+      </Button>
       <Row>
         <Col :span="14">
           <Select @on-change="onSelectChange" v-model="companyId">
@@ -28,7 +32,7 @@
     </Card>
     <Arrearage :order="currentCompany" v-if="arrearagePopup" @ok="onCreateOk" @cancel="arrearagePopup = false"></Arrearage>
     <Offline :order="currentCompany" v-if="offlinePopup" @ok="onCreateOk" @cancel="offlinePopup = false" />
-    <Renew :order="currentCompany" v-if="renewPopup" @ok="onCreateOk" @cancel="renewPopup = false" />
+    <Renew :order-id="companyId" v-if="renewPopup" @ok="onCreateOk" @cancel="renewPopup = false" />
   </div>
 </template>
 
@@ -64,6 +68,10 @@ export default {
     },
     onRenew() {
       this.renewPopup = true;
+    },
+    onExit() {
+      this.$store.commit('setForceLock', false);
+      this.$router.push('/');
     },
     onCreateOk() {
       // 判断是否还有公司，没有则跳转到首页

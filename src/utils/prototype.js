@@ -120,13 +120,16 @@ export const vessel = {
         console.error(err)
       })
   },
-  async queryCodes(query) {
+  async queryCodes(query, boolean = false) {
     try {
       let resp = await request({
         url: '/system/tsType/queryTsTypeByGroupCodes',
         method: 'get',
         params: { groupCodes: query }
       })
+      if (boolean) {
+        return resp[query]
+      }
       let TEM = resp[query].map(v => {
         return {
           value: v.typecode,
