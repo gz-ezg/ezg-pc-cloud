@@ -24,20 +24,6 @@ import iviewArea from 'iview-area'
 if (process.env.NODE_ENV == 'development') {
   Vue.config.devtools = true
 }
-
-//  异常上报机制(废弃)
-// import Raven from 'raven-js';
-// import RavenVue from 'raven-js/plugins/vue';
-
-//  测试库版
-// console.log(process)
-// if(process.env.NODE_ENV == 'jenkins' ){
-//     Raven
-//         .config('http://f2091129504342718fd23e9de52bdd84@sentry.roderickt1an.cn/1')
-//         .addPlugin(RavenVue, Vue)
-//         .install();
-//     }
-
 Vue.use(VueI18n)
 Vue.use(iView)
 Vue.use(VueBus)

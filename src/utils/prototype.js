@@ -169,7 +169,7 @@ export const vessel = {
         _self.$Message.error('网络异常！')
       })
   },
-
+  http: axios,
   backToLogin(res) {
     if (res.data.msgCode == '50003') {
       this.$Message.warning('对不起，您还未登陆！即将回到登陆页面！')
