@@ -27,6 +27,7 @@ export const page403 = {
     import(/* webpackChunkName: "commonIndex" */ '@/layouts/403.vue')
 }
 
+
 export const page500 = {
   path: '/500',
   meta: {},
@@ -35,6 +36,13 @@ export const page500 = {
     import(/* webpackChunkName: "commonIndex" */ '@/layouts/500.vue')
 }
 
+export const arrearageCenter = {
+  path: '/arrearageCenter',
+  meta: {},
+  name: 'arrearageCenter',
+  component: () =>
+    import(/* webpackChunkName: "commonIndex" */ '@/views/arrearageCenter/index.vue')
+}
 //  暂时不需要使用的页面
 //  文章预览
 // export const preview = {
@@ -772,7 +780,25 @@ export const appRouter = [
         name: 'abOrderApprove_index',
         component: () =>
           import(/* webpackChunkName: "abOrderApprove_index" */ '@/views/order/abOrderApprove/index.vue')
-      }
+      },
+      {
+        access: 11602,
+        meta: 11602,
+        path: 'arrearsOrder',
+        title: '欠费单',
+        name: 'arrearsOrder_index',
+        component: () =>
+          import(/* webpackChunkName: "arrearsOrder_index" */ '@/views/order/arrearsOrder/index.vue')
+      },
+      {
+        access: 11602,
+        meta: 11602,
+        path: 'arrearsOrderApprove',
+        title: '欠费单审批',
+        name: 'arrearsOrderApprove_index',
+        component: () =>
+          import(/* webpackChunkName: "arrearsOrderApprove_index" */ '@/views/order/arrearsOrderApprove/index.vue')
+      },
       // {
       //     access:6020,
       //     path: 'orderLog',
@@ -1476,31 +1502,31 @@ export const appRouter = [
       }
     ]
   },
-  //  是否对内容迁移待定
+  //修改完成 
   {
     access: 11603,
     meta: 11603,
-    path: '/messageLog',
+    path: '/notificationPush',
     icon: 'chatbubble-working',
-    name: 'messageLog',
+    name: 'notificationPush',
     title: '消息推送',
     component: Main,
     children: [
-      {
-        access: 11604,
-        path: 'WeChatPushLog',
-        title: '微信推送客户日志',
-        name: 'WeChatPushLog',
-        component: () =>
-          import(/* webpackChunkName: "WeChatPushLog" */ '@/views/logManagement/WeChatPushLog/log_index.vue')
-      },
       {
         access: 11605,
         path: 'smsSendLog',
         title: '短信发送日志',
         name: 'smsSendLog',
         component: () =>
-          import(/* webpackChunkName: "smsSendLog" */ '@/views/logManagement/smsSendLog.vue')
+          import(/* webpackChunkName: "smsSendLog" */ '@/views/notificationPush/smsSendLog/index.vue')
+      },
+      {
+        access: 11604,
+        path: 'WeChatPushLog',
+        title: '微信推送客户日志',
+        name: 'WeChatPushLog',
+        component: () =>
+          import(/* webpackChunkName: "WeChatPushLog" */ '@/views/notificationPush/weChatPushLog/index.vue')
       },
       {
         access: 11606,
@@ -1508,7 +1534,7 @@ export const appRouter = [
         title: '微信内部推送日志',
         name: 'internalPushLog',
         component: () =>
-          import(/* webpackChunkName: "internalPushLog" */ '@/views/logManagement/internalPushLog.vue')
+          import(/* webpackChunkName: "internalPushLog" */ '@/views/notificationPush/internalPushLog/index.vue')
       },
       {
         access: 11607,
@@ -1516,7 +1542,7 @@ export const appRouter = [
         title: '营销短信模板',
         name: 'smsTemplate',
         component: () =>
-          import(/* webpackChunkName: "internalPushLog" */ '@/views/logManagement/smsTemplate/index.vue')
+          import(/* webpackChunkName: "smsTemplate" */ '@/views/notificationPush/smsTemplate/index.vue')
       },
       {
         access: 11607,
@@ -1524,10 +1550,10 @@ export const appRouter = [
         title: '消息弹窗',
         name: 'messagPops',
         component: () =>
-          import(/* webpackChunkName: "internalPushLog" */ '@/views/logManagement/messagPops/index.vue')
+          import(/* webpackChunkName: "messagPops" */ '@/views/notificationPush/messagPops/index.vue')
       }
     ]
-  },
+  },  
   {
     access: 6103,
     meta: 6103,
@@ -1669,6 +1695,7 @@ export const routers = [
   // locking,
   ...appRouter,
   // previewFile,
+  arrearageCenter,
   page500,
   page403,
   page404

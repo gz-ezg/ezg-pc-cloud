@@ -1,67 +1,48 @@
  <template>
   <div>
-    <Row>
-      <Col>
-        <Card>
-          <filtra @search="list.search($event)" @reset="list.reset()" :config="filtraConfig"></filtra>
-          <Row>
-            <ButtonGroup>
-              <Button type="primary" icon="search" @click="handleAdd">录入</Button>
-              <Button type="primary" icon="search" @click="handleEdit">编辑</Button>
-              <!-- <Button type="primary" icon="search" @click="handleShow">查看</Button> -->
-            </ButtonGroup>
-          </Row>
-          <Row style="margin-top: 10px;">
-            <Table
-              highlight-row
-              border
-              size="small"
-              @on-row-click="selectRow"
-              :loading="list.loading"
-              :columns="tableHeader"
-              :data="list.data"
-            ></Table>
+    <Card>
+      <x-table
+        ref="table"
+        :url="url"
+        list-query="query"
+        :handler="dataHandle"
+        :header="tableHeader"
+        :config="filtraConfig"
+        @select="selectRow"
+      >
+        <Row>
+          <ButtonGroup>
+            <Button type="primary" icon="search" @click="handleAdd">录入</Button>
+            <Button type="primary" icon="search" @click="handleEdit">编辑</Button>
+          </ButtonGroup>
+        </Row>
+      </x-table>
+    </Card>
 
-            <Page
-              :current="list.page"
-              size="small"
-              :total="list.total"
-              :page-size="list.pageSize"
-              show-total
-              show-sizer
-              show-elevator
-              @on-change="list.handleSizeChange($event)"
-              @on-page-size-change="list.handlePageSizeChange($event)"
-              style="margin-top: 10px"
-            ></Page>
-          </Row>
-        </Card>
-      </Col>
-    </Row>
-    <add-template :type-list="dataDict" @ok="handleAddOk" @cancel="handleAdd" v-if="isAdd" />
-    <edit-template :type-list="dataDict" :row="currentRow" v-if="isEdit" @ok="handleEditOk" @cancel="isEdit = false" />
-    <show-template :row="currentRow" v-if="isShow" @ok="isShow = false" @cancel="isShow = false" />
+    <add v-if="isAdd" :type-list="DDIC_notify_template_type" @ok="handleAddOk" @cancel="handleAdd" />
+    <edit v-if="isEdit" :type-list="DDIC_notify_template_type" :row="currentRow" @ok="handleEditOk" @cancel="isEdit = false" />
+    <show v-if="isShow" :row="DDIC_notify_template_type" @ok="isShow = false" @cancel="isShow = false" />
   </div>
 </template>
 
 <script>
-import AddTemplate from './menu/add.vue';
-import editTemplate from './menu/edit.vue';
-import showTemplate from './menu/show.vue';
-import filtra from '@/components/filtra';
-import { listNotify, sendNotify, queryCodes } from '@/api/logManagement';
-import listManage from '../../../utils/listManage';
+import Add from './Menu/add.vue';
+import Edit from './Menu/edit.vue';
+import Show from './Menu/show.vue';
+import { sendNotify } from '@A/logManagement';
+import xTable from '@C/xTable';
+
 export default {
   components: {
-    AddTemplate,
-    editTemplate,
-    showTemplate,
-    filtra
+    Add,
+    Edit,
+    Show,
+    xTable
   },
   data() {
     return {
+      url: '/system/notify/template/list',
       currentRow: null,
-      list: new listManage({ pageSize: 10 }, listNotify, this.dataHandle),
       tableHeader: [
         {
           title: '类型',
@@ -141,8 +122,8 @@ export default {
         { type: 'input', key: 'updateby_realname', label: '修改人' },
         { type: 'date', key: 'createdate', label: '创建时间' }
       ],
-      dataDict: [],
-      isAtimed: false,
+      query: { sortField: 'nt.updatedate' },
+      DDIC_notify_template_type: [],
       isEdit: false,
       isShow: false,
       isAdd: false
@@ -157,7 +138,6 @@ export default {
     handleAdd() {
       this.isAdd = !this.isAdd;
     },
-
     handleEdit() {
       if (!this.currentRow) {
         return this.$Message.info('请选择一行进行查看');
@@ -167,23 +147,19 @@ export default {
       }
       this.isEdit = !this.isEdit;
     },
-
     handleEditOk() {
       this.isEdit = !this.isEdit;
       this.list.reset();
     },
-
     handleShow() {
       this.isShow = !this.isShow;
     },
-
     dataHandle(data) {
       return data.map(v => {
-        v.notify_type_name = this.MAP[v.notify_type];
+        v.notify_type_name = this.MAP_notify_template_type[v.notify_type];
         return v;
       });
     },
-
     async sendMessage({ row: { id = '' } }) {
       this.$Modal.confirm({
         title: '提示',
@@ -195,19 +171,18 @@ export default {
         onCancel: () => {}
       });
     },
-
     selectRow(row) {
       this.currentRow = row;
     }
   },
   async created() {
     try {
-      let [dataDict, MAP] = await queryCodes('notify_template_type');
-      this.MAP = MAP;
-      this.dataDict = dataDict;
-      this.list.setDefaultConfig({ sortField: 'nt.updatedate' });
-      this.list.fetchList();
-    } catch (error) {}
+      let [dataDict, MAP] = await this.$queryCodes('notify_template_type');
+      this.MAP_notify_template_type = MAP;
+      this.DDIC_notify_template_type = dataDict;
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 </script>

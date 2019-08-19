@@ -1,5 +1,6 @@
 import axios from 'axios'
 import iview from 'iview'
+import Cookies from 'js-cookie'
 
 // create an axios instance
 const service = axios.create({
@@ -33,14 +34,43 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
-    console.log(response) //for debug
-    const res = response.data
-    const { method } = response.config
-    method === 'post' && iview.Message.success(res.msg || '执行成功！')
-    return res.data;
+    // 接口错误上报
+    if (
+      response.data.msgCode == '50000' &&
+      response.config.url != 'api/legwork/apiLoginByWechatCode'
+    ) {
+      iview.Message.error(response.data.msg)
+      let config = {
+        name: 'cloud',
+        page: response.config.url,
+        err: JSON.stringify(response)
+      }
+      axios.post('api/system/saveFontErrMsg', config)
+    }
+    if (response.data.msgCode == '50003' && Cookies.get('user') != '') {
+      iView.Message.warning('对不起，您还未登陆！')
+      iView.Message.destroy()
+      //只有post求情失败才打开重新登录窗口
+      Cookies.set('user', '')
+      Cookies.set('password', '')
+      setTimeout(() => {
+        router.push({
+          name: 'login'
+        })
+      }, 800)
+    }
+    if (response.data.msgCode == '60000') {
+      iView.Message.warning('对不起，您没有权限访问该页面！')
+      // iView.Message.destroy()
+      setTimeout(() => {
+        router.push({
+          name: 'home_index'
+        })
+      }, 500)
+    }
+    return response.data.data
   },
   error => {
-    console.log('err' + error) // for debug
     iview.Message.error(error.errmsg || '请求出错！')
     return Promise.reject(error)
   }
