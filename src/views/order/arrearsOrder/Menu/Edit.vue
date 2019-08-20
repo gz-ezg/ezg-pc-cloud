@@ -27,7 +27,7 @@
         <Row :gutter="16">
           <Col span="12">
             <FormItem label="结束税期" prop="productContent">
-              <Input type="text" readonly size="small" style="width: 200px" v-model="form.late_period" />
+              <Input type="text" readonly size="small" style="width: 200px" v-model="form.end_period" />
             </FormItem>
           </Col>
           <Col span="12"
@@ -54,7 +54,7 @@
         <Row :gutter="16">
           <Col>
             <FormItem label="延后税期" prop="reason">
-              <DatePicker @on-change="onDateChange" type="month" :options="dateOptions" placeholder="选择延后税期" style="width: 200px"></DatePicker>
+              <DatePicker :value="form.late_period" @on-change="onDateChange" type="month" :options="dateOptions" placeholder="选择延后税期" style="width: 200px"></DatePicker>
             </FormItem>
           </Col>
         </Row>

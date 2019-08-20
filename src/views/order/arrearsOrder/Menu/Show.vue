@@ -27,7 +27,7 @@
         <Row :gutter="16">
           <Col span="12">
             <FormItem label="结束税期" prop="productContent">
-              <Input type="text" readonly size="small" style="width: 200px" v-model="detail.late_period" />
+              <Input type="text" readonly size="small" style="width: 200px" v-model="detail.end_period" />
             </FormItem>
           </Col>
           <Col span="12"
@@ -35,6 +35,11 @@
               <Input type="text" readonly size="small" style="width: 50px" v-model="detail.diff" />个月
             </FormItem>
           </Col>
+        </Row>
+        <Row :gutter="16">
+          <FormItem label="延后税期">
+            <Input type="text" size="small" readonly style="width: 200px" v-model="detail.late_period" />
+          </FormItem>
         </Row>
         <Row :gutter="16">
           <FormItem label="服务会计">
