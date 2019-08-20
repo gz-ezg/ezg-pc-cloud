@@ -221,6 +221,7 @@
       </Row>
       <Row style="margin-top: 10px;">
         <Table
+          ref="table"
           size="small"
           :columns="header"
           :data="data"
@@ -667,6 +668,8 @@ export default {
     hanldeSelectMore() {
       if (this.canSelectMore) {
         this.header.shift();
+        this.$refs['table'].selectAll(false);
+        this.selectRow = [];
       } else {
         this.header.unshift({
           title: '#',
