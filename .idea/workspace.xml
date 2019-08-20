@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/layouts/Main.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/layouts/Main.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/administrationManagement/addManager/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/administrationManagement/addManager/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/commercialManagement/myCommonTask/myCommonTaskIndex/finished.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/commercialManagement/myCommonTask/myCommonTaskIndex/finished.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/missionCenter/accTaskList/executing.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/missionCenter/accTaskList/executing.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/missionCenter/comSchedule/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/missionCenter/comSchedule/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/order/orderList/orderListIndex.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/order/orderList/orderListIndex.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/order/spareManagement/no_payment/add_payment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/order/spareManagement/no_payment/add_payment.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/order/spareManagement/no_payment/payment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/order/spareManagement/no_payment/payment.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/systemManagement/serveManagement/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/systemManagement/serveManagement/index.vue" afterDir="false" />
-    </list>
+    <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -53,20 +40,43 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1125" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build.backup/config.js">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build.backup/webpack.base.conf.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="185" column="5" lean-forward="true" selection-start-line="185" selection-start-column="5" selection-end-line="185" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/build/webpack.base.conf.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="320">
+              <caret line="192" column="9" lean-forward="true" selection-start-line="192" selection-start-column="9" selection-end-line="192" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/router/router.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="117">
-              <caret line="1303" column="24" lean-forward="true" selection-start-line="1303" selection-start-column="24" selection-end-line="1303" selection-end-column="24" />
+            <state relative-caret-position="67">
+              <caret line="1219" column="21" lean-forward="true" selection-start-line="1219" selection-start-column="21" selection-end-line="1219" selection-end-column="21" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <element signature="e#33079#33341#0" />
-                <element signature="e#33349#33666#0" />
-                <element signature="e#33674#33940#0" />
-                <element signature="e#33948#33954#0" />
-                <element signature="e#34302#34604#0" />
-                <element signature="e#34612#34900#0" />
-                <element signature="e#35375#36255#0" />
               </folding>
             </state>
           </provider>
@@ -427,7 +437,7 @@
       <workItem from="1565831404423" duration="20330000" />
       <workItem from="1565919570908" duration="12139000" />
       <workItem from="1566177007679" duration="622000" />
-      <workItem from="1566181179087" duration="8842000" />
+      <workItem from="1566181179087" duration="10492000" />
     </task>
     <task id="LOCAL-00022" summary="修改启动失败的问题">
       <created>1555989851178</created>
@@ -776,7 +786,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1772964000" />
+    <option name="totallyTimeSpent" value="1774614000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -789,7 +799,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1376" height="784" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6918033" visible="true" weight="0.2635135" />
       <window_info id="Structure" order="1" weight="0.24960506" />
@@ -810,7 +819,7 @@
       <window_info anchor="bottom" id="消息" order="13" />
       <window_info anchor="bottom" id="调试" order="14" />
       <window_info anchor="bottom" id="TypeScript" order="15" weight="0.3290938" />
-      <window_info anchor="bottom" id="Terminal" order="16" sideWeight="0.49924925" visible="true" weight="0.3974563" />
+      <window_info anchor="bottom" id="Terminal" order="16" sideWeight="0.49924925" visible="true" weight="0.55802864" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -912,40 +921,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="0.0" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/styles/component.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/test/components/test5.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="351" column="1" selection-start-line="351" selection-start-column="1" selection-end-line="351" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/edit/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="46" column="34" lean-forward="true" selection-start-line="46" selection-start-column="34" selection-end-line="46" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/edit/followUpList/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6725">
-          <caret line="418" column="4" selection-start-line="418" selection-start-column="4" selection-end-line="422" selection-end-column="5" />
-          <folding>
-            <element signature="n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#Card#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Form#0;n#Card#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Row#0;n#Form#0;n#Card#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Button#1;n#Center#0;n#Row#2;n#Form#0;n#Card#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Timeline#0;n#Scroll#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#TimelineItem#0;n#div#0;n#Timeline#0;n#Scroll#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#center#0;n#div#0;n#div#0;n#Timeline#0;n#Scroll#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/woa-components/customerDetail2/followUpList/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8725">
@@ -1380,6 +1355,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="67">
+          <caret line="1219" column="21" lean-forward="true" selection-start-line="1219" selection-start-column="21" selection-end-line="1219" selection-end-column="21" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/missionCenter/comSchedule/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -1398,20 +1383,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/router/router.js">
+    <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="1303" column="24" lean-forward="true" selection-start-line="1303" selection-start-column="24" selection-end-line="1303" selection-end-column="24" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#33079#33341#0" />
-            <element signature="e#33349#33666#0" />
-            <element signature="e#33674#33940#0" />
-            <element signature="e#33948#33954#0" />
-            <element signature="e#34302#34604#0" />
-            <element signature="e#34612#34900#0" />
-            <element signature="e#35375#36255#0" />
-          </folding>
+        <state relative-caret-position="-1125" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.backup/config.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.backup/webpack.base.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="185" column="5" lean-forward="true" selection-start-line="185" selection-start-column="5" selection-end-line="185" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/webpack.base.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="192" column="9" lean-forward="true" selection-start-line="192" selection-start-column="9" selection-end-line="192" selection-end-column="9" />
         </state>
       </provider>
     </entry>
