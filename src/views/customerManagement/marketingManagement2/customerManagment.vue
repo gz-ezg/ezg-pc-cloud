@@ -151,6 +151,7 @@
       </Row>
       <Row>
         <ButtonGroup>
+          <Button type="primary" icon="plus" @click="hanldeSelectMore">{{ canSelectMore ? '取消多选' : '多选' }}</Button>
           <Button
             type="primary"
             name="marketingManagement_index_edit_add"
@@ -383,11 +384,6 @@ export default {
       openEditOne: false,
       search_model: '',
       header: [
-        {
-          title: '#',
-          type: 'selection',
-          width: 60
-        },
         {
           title: '姓名',
           key: 'NAME',
@@ -629,10 +625,11 @@ export default {
         order: 'desc',
         sortField: 'updatedate'
       },
-      row:'',
+      row: '',
       selectRowOBj: '',
       //  模态框控制
-      createCustomerStatus: false
+      createCustomerStatus: false,
+      canSelectMore: false
     };
   },
   methods: {
@@ -666,6 +663,18 @@ export default {
       }
 
       this.$Post(url, config, success, fail);
+    },
+    hanldeSelectMore() {
+      if (this.canSelectMore) {
+        this.header.shift();
+      } else {
+        this.header.unshift({
+          title: '#',
+          type: 'selection',
+          width: 60
+        });
+      }
+      this.canSelectMore = !this.canSelectMore;
     },
     //  下载
     download_excel() {
@@ -789,7 +798,7 @@ export default {
     get_data() {
       let _self = this;
       let url = `api/customer/list`;
-      this.selectRow = '';
+      this.selectRow = [];
       _self.tableLoading = true;
 
       var config = {
@@ -867,9 +876,9 @@ export default {
       this.page = 1;
       this.get_data();
     },
-    selectrow(e){
-      this.row = e
-      console.log(this.row)
+    selectrow(e) {
+      this.row = e;
+      console.log(this.row);
     },
     select_change(e) {
       this.selectRow = e;
@@ -892,10 +901,14 @@ export default {
       }
     },
     open_edit() {
+      if (this.canSelectMore) {
+        this.hanldeSelectMore();
+      }
+
       if (this.row) {
         this.openEdit = true;
-      } else{
-        this.$Message.warning("请点击一行进行选择！")
+      } else {
+        this.$Message.warning('请点击一行进行选择！');
       }
     },
     open_edit_one() {
