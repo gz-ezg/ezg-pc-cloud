@@ -33,7 +33,7 @@
             <Upload
                 ref="upload"
                 name="files"
-                action="api/activiti/uploadBpmnInputStream"
+                action="api/dataCenter/activiti/uploadBpmnInputStream"
                 :show-upload-list="false"
                 :on-success="handleUpload"
             >

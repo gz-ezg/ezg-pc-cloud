@@ -163,7 +163,7 @@ export default {
             reasonformarketer: form.reasonformarketer,
             hasReturned: form.has_returned,
             hasArrears: form.has_arrears,
-            cycleServiceRecordId: order.id
+            cycleServiceRecordId: order.cycle_record_id
           };
           await createCustomerEnd(config);
           this.$emit('ok');

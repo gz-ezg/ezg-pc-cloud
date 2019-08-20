@@ -101,10 +101,10 @@ export default {
     async hanldeSubmit() {
       try {
         this.loading = true;
-        const { company_id, id } = this.order;
+        const { company_id, cycle_record_id } = this.order;
         await createOweOrder({
           companyId: company_id,
-          cycleServiceRecordId: id,
+          cycleServiceRecordId: cycle_record_id,
           latePeriod: this.latePeriod,
           applyMemo: this.applyMemo
         });
