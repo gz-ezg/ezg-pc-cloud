@@ -74,16 +74,15 @@
       </div>
     </Modal>
 
-    <company-select v-if="selectCompanyPopus" @company-change="settingCompany"></company-select>
+    <companySelect v-if="selectCompanyPopus" @company-change="settingCompany"/>
   </div>
 </template>
 
 <script>
-import companySelect from '@/components/companySelect';
-import { oweOrderListByCompanyId, createOweOrder } from '../../../../api/order';
+import { oweOrderListByCompanyId, createOweOrder } from '@A/order';
+import companySelect from '../components/index.vue';
 
 export default {
-  name: 'arrearsOrder_index',
   components: {
     companySelect
   },
