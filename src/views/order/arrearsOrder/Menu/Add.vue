@@ -5,17 +5,17 @@
         <Row :gutter="16">
           <Col span="8">
             <FormItem label="企业名称">
-              <Input size="small" v-model="form.companyName" @on-focus="onSelectCompany" readonly />
+              <Input  v-model="form.companyName" @on-focus="onSelectCompany" readonly />
             </FormItem>
           </Col>
           <Col span="8">
             <FormItem label="联系人">
-              <Input size="small" readonly v-model="form.linkname" @on-focus="onSelectCompany" />
+              <Input  readonly v-model="form.linkname" @on-focus="onSelectCompany" />
             </FormItem>
           </Col>
           <Col span="8">
             <FormItem label="联系电话">
-              <Input size="small" v-model="form.linkTel" @on-focus="onSelectCompany" readonly />
+              <Input  v-model="form.linkTel" @on-focus="onSelectCompany" readonly />
             </FormItem>
           </Col>
         </Row>
@@ -29,28 +29,28 @@
         <Row :gutter="16">
           <Col span="12">
             <FormItem label="结束税期" prop="productContent">
-              <Input type="text" readonly size="small" style="width: 200px" v-model="form.end_period" />
+              <Input type="text" readonly  style="width: 200px" v-model="form.end_period" />
             </FormItem>
           </Col>
           <Col span="12"
             <FormItem label="剩余时长" prop="productContent">
-              <Input type="text" readonly size="small" style="width: 50px" v-model="form.diff" />个月
+              <Input type="text" readonly  style="width: 50px" v-model="form.diff" /><span>个月</span>
             </FormItem>
           </Col>
         </Row>
         <Row :gutter="16">
           <FormItem label="服务会计">
-            <Input type="text" size="small" readonly style="width: 200px" v-model="form.serverName" />
+            <Input type="text"  readonly style="width: 200px" v-model="form.serverName" />
           </FormItem>
         </Row>
         <Row :gutter="16">
           <FormItem label="跟进销售">
-            <Input type="text" size="small" readonly style="width: 200px" v-model="form.followby" />
+            <Input type="text"  readonly style="width: 200px" v-model="form.followby" />
           </FormItem>
         </Row>
         <Row :gutter="16">
           <FormItem label="服务备注">
-            <Input type="textarea" :rows="4" readonly size="small" v-model="form.service_memo" />
+            <Input type="textarea" :rows="4" readonly  v-model="form.service_memo" />
           </FormItem>
         </Row>
         <Row :gutter="16">
@@ -63,7 +63,7 @@
         <Row :gutter="16">
           <Col>
             <FormItem label="欠费申请备注" prop="reason">
-              <Input type="textarea" :rows="4" size="small" v-model="form.applyMemo" />
+              <Input type="textarea" :rows="4"  v-model="form.applyMemo" />
             </FormItem>
           </Col>
         </Row>

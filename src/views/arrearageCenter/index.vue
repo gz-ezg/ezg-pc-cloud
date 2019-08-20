@@ -32,7 +32,7 @@
     </Card>
     <Arrearage :order="currentCompany" v-if="arrearagePopup" @ok="onCreateOk" @cancel="arrearagePopup = false"></Arrearage>
     <Offline :order="currentCompany" v-if="offlinePopup" @ok="onCreateOk" @cancel="offlinePopup = false" />
-    <Renew :order-id="companyId" v-if="renewPopup" @ok="onCreateOk" @cancel="renewPopup = false" />
+    <Renew :order="currentCompany" v-if="renewPopup" @ok="onCreateOk" @cancel="renewPopup = false" />
   </div>
 </template>
 
