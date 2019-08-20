@@ -124,7 +124,11 @@ export default {
       if (!this.currentRow) {
         return this.$Message.info('请选择一行进行查看');
       }
-      this.editPopup = true;
+      if (this.currentRow.current_process == 'zg') {
+        this.editPopup = true;
+      } else {
+        return this.$Message.warning('当前订单状态不允许编辑！');
+      }
     },
     onEditOk() {
       this.editPopup = false;

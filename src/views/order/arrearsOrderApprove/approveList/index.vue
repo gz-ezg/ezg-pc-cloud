@@ -91,7 +91,7 @@ export default {
         {
           title: '创建时间',
           width: 180,
-          key: 'createby_realname',
+          key: 'createdate',
           minWidth: 90
         },
         {

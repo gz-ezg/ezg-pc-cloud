@@ -145,7 +145,7 @@ export default {
     },
     async getOweOrderList(companyId) {
       try {
-        let resp = await oweOrderListByCompanyId({ companyId: 34247 });
+        let resp = await oweOrderListByCompanyId({ companyId });
         this.productList = resp;
         this.form = Object.assign(this.form, resp[0]);
         this.form.product = resp[0].id;

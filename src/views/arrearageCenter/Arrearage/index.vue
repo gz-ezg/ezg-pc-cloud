@@ -99,6 +99,9 @@ export default {
   },
   methods: {
     async hanldeSubmit() {
+      if (!this.applyMemo || !this.latePeriod) {
+        return this.$Message.info('请完善信息');
+      }
       try {
         this.loading = true;
         const { company_id, cycle_record_id } = this.order;
