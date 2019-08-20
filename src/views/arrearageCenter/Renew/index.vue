@@ -114,7 +114,7 @@ import { DateFormat } from '@U/utils';
 import abOrderSelect from './abOrderSelect';
 
 export default {
-  props: ['orderId'],
+  props: ['order'],
   components: {
     productDetailList,
     abOrderSelect
@@ -164,7 +164,9 @@ export default {
       });
     },
     async getData() {
-      this.orderDetail = await orderDetail(this.orderId);
+      const { id, sku_id } = this.order;
+      this.orderDetail = await orderDetail(id);
+      this.orderDetail.items = this.orderDetail.items.filter(v => v.skuid == sku_id);
       this.payDirs = await this.$queryCodes('payDirs', true);
     },
     async getBalance(id) {
@@ -185,6 +187,7 @@ export default {
   },
 
   created() {
+    console.log(this.order);
     this.getData();
   }
 };
