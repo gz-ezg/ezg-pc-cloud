@@ -223,6 +223,8 @@
           size="small"
           :columns="header"
           :data="data"
+          highlight-row
+          @on-current-change="selectrow"
           @on-selection-change="select_change"
           :row-class-name="row_class_name"
           @on-row-dblclick="get_row"
@@ -263,7 +265,7 @@
     <Qcode></Qcode>
     <del-customer></del-customer>
     <edit-customer
-      :customer="selectRow[0]"
+      :customer="row"
       @close-edit="close_edit"
       v-if="openEdit"
       :cluesources="cluesources"
@@ -627,6 +629,7 @@ export default {
         order: 'desc',
         sortField: 'updatedate'
       },
+      row:'',
       selectRowOBj: '',
       //  模态框控制
       createCustomerStatus: false
@@ -864,6 +867,10 @@ export default {
       this.page = 1;
       this.get_data();
     },
+    selectrow(e){
+      this.row = e
+      console.log(this.row)
+    },
     select_change(e) {
       this.selectRow = e;
       console.log(this.selectRow);
@@ -885,14 +892,10 @@ export default {
       }
     },
     open_edit() {
-      if (this.selectRow.length == 1) {
+      if (this.row) {
         this.openEdit = true;
-      }
-      if (this.selectRow.length > 1) {
-        this.$Message.warning('只能选择一行!');
-      }
-      if (this.selectRow.length == 0) {
-        this.$Message.warning('请选择一行!');
+      } else{
+        this.$Message.warning("请点击一行进行选择！")
       }
     },
     open_edit_one() {

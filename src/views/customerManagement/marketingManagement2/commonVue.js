@@ -55,25 +55,25 @@ export default {
         check_select(e){
             console.log(e)
             if( e=='OPEN_CODE'|| e=='OPEN_CHANGE_LOG'|| e=='OPEN_CUSTOMER_LOG'|| e=='OPEN_CUSTOMER_FIELD_LOG'|| e=='OPEN_CUSTOMER_CLUE_LOG'){
-                if (this.selectRow.length==1){
-                    this.$bus.emit(e,this.selectRow[0])
-                }
-                if (this.selectRow.length>1){
-                    this.$Message.warning("只能选择一行！")
+                if (this.row){
+                    this.$bus.emit(e,this.row)
+                } else{
+                    this.$Message.warning("请点击一行进行选择！")
                 }
             }
             if (e=='DELETE_CUSTOMER') {
                 if (this.selectRow.length!==0){
                     this.$bus.emit(e,this.selectRow)
+                }else {
+                    this.$Message.warning("请选择需要操作的客户！")
                 }
             }
             if (e=='CUSTOMER_CHANGE_MARKETER'){
                 if (this.selectRow.length!==0){
                     this.$bus.emit(e,this.selectRow)
+                }else {
+                    this.$Message.warning("请选择需要操作的客户！")
                 }
-            }
-            if(this.selectRow.length==0 ){
-                this.$Message.warning("请选择需要操作的客户！")
             }
         },
     },
