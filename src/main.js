@@ -67,7 +67,26 @@ Vue.prototype.GetData = function(
     }
   })
 }
+//  方法废弃
+Vue.prototype.PostData = function(url, data, doSuccess, otherConditions) {
+  let _self = this
 
+  this.$http({
+    method: 'post',
+    url: '/api' + url,
+    data: data,
+    headers: { 'Content-Type': 'application/json' }
+  }).then(function(response) {
+    if (response.data.msgCode == '40000') {
+      doSuccess(response)
+    } else if (response.data.msgCode == '50003') {
+    } else if (response.data.msgCode == '60000') {
+      _self.$Message.error('抱歉，您没有权限')
+    } else {
+      otherConditions(response)
+    }
+  })
+}
 axios.defaults.baseURL = '/'
 //  axios 拦截器
 axios.interceptors.response.use(
