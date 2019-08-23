@@ -56,7 +56,7 @@
         <Row :gutter="16">
           <Col>
             <FormItem label="延后税期" prop="reason">
-              <DatePicker @on-change="onDatePickerChange" type="month" :options="dateOptions" placeholder="选择延后税期" style="width: 200px"></DatePicker>
+              <DatePicker :value="form.late_period" @on-change="onDatePickerChange" type="month" :options="dateOptions" placeholder="选择延后税期" style="width: 200px"></DatePicker>
             </FormItem>
           </Col>
         </Row>
@@ -97,7 +97,8 @@ export default {
         end_period: '',
         diff: '',
         followby: '',
-        serverName: ''
+        serverName: '',
+        late_period: ''
       },
       productList: [],
       dateOptions: {
@@ -110,10 +111,10 @@ export default {
       this.selectCompanyPopus = !this.selectCompanyPopus;
     },
     onDatePickerChange(e) {
-      this.end_period = e.replace(/-/, '');
+      this.form.late_period = e.replace(/-/, '');
     },
     onProductChange(e) {
-      this.from = Object.assign(
+      this.form = Object.assign(
         {},
         this.form,
         this.productList.find(v => {
@@ -130,13 +131,13 @@ export default {
       this.getOweOrderList(id);
     },
     async hanldeSubmit() {
-      const { company_id, applyMemo, id, end_period } = this.form;
-      if (!applyMemo || !end_period) {
+      const { company_id, applyMemo, id, late_period } = this.form;
+      if (!applyMemo || !late_period) {
         return this.$Message.info('请完善信息');
       }
       try {
         this.loading = true;
-        await createOweOrder({ companyId: company_id, cycleServiceRecordId: id, latePeriod: end_period, applyMemo });
+        await createOweOrder({ companyId: company_id, cycleServiceRecordId: id, latePeriod: late_period, applyMemo });
         this.$emit('ok');
       } catch (error) {
       } finally {
