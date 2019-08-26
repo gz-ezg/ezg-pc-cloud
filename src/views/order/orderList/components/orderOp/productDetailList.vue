@@ -272,7 +272,7 @@
 import * as orderApi from '../../api';
 import { DateFormat, DateFormatYearMonth, nowDateFormatYearMonth } from '../../../../../libs/utils.js';
 export default {
-  props: ['productList', 'isDisabled', 'orderDetail', 'pageFlag', 'id', 'productListOne'],
+  props: ['productList', 'isDisabled', 'orderDetail', 'pageFlag', 'id', 'productListOne', 'createdate'],
   inject: ['cancel_order'],
   data() {
     return {
@@ -309,7 +309,7 @@ export default {
   },
   methods: {
     checkMonth(data) {
-      let product = this.servicestartdate;
+      let product = this.createdate;
       let period = null;
       period = product ? nowDateFormatYearMonth(product) : nowDateFormatYearMonth();
       let between = data.getFullYear() * 12 + data.getMonth() - period.substr(0, 4) * 12 - period.substr(4) * 1;
