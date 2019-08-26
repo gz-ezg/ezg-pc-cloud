@@ -25,7 +25,7 @@
                     <FormItem label="销售金额￥" prop="paynumber">
                       <Input
                         class="input-call"
-                        @on-change="computerPaynumber()"
+                        @on-change="computerPaynumber(item)"
                         v-model="item.paynumber"
                         :value="item.paynumber"
                         size="small"
@@ -173,14 +173,16 @@ export default {
       if (!item.unitprice) {
         item.unitprice = item.oaprice;
       }
-      item.paynumber = item.productnumber * item.unitprice;
-      this.computerPaynumber();
+      item.paynumber = item.productnumber * item.oaprice;
+      this.computerPaynumber(item);
     },
-    computerPaynumber() {
+    computerPaynumber(item) {
       let temp = 0;
       for (let i = 0; i < this.productList.length; i++) {
         temp = parseFloat(temp) + parseFloat(this.productList[i].paynumber);
       }
+
+      item.unitprice = parseFloat(item.paynumber) / parseFloat(item.productnumber);
       let paynumber = parseFloat(temp);
       let realnumber = parseFloat(temp);
       this.$emit('payNumChange', {

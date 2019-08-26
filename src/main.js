@@ -30,7 +30,63 @@ Vue.use(VueBus)
 Vue.use(vueBus)
 Vue.use(iviewArea)
 Vue.use(proto)
+//  获取数据GetData方法
+//  方法废弃
+Vue.prototype.GetData = function(
+  url,
+  doSuccess,
+  otherConditions = function(err) {
+    console.log(err)
+  }
+) {
+  let _self = this
 
+  this.$http.get('/api' + url).then(function(response) {
+    if (response.data.msgCode == '40000') {
+      doSuccess(response)
+    } else if (response.data.msgCode == '50003') {
+      _self.$Message.error('抱歉，您还未登录，即将前往登录页面')
+      Cookies.set('user', '')
+      Cookies.set('password', '')
+      setTimeout(() => {
+        _self.$store.commit('logout', this)
+        _self.$store.commit('clearOpenedSubmenu')
+        _self.$store.commit('clearAllTags')
+        _self.$http.get('/api/user/logOut').then(function(response) {
+          if (response.data.msgCode == '40000') {
+            _self.$router.push({
+              name: 'login'
+            })
+          }
+        })
+      }, 2000)
+    } else if (response.data.msgCode == '60000') {
+      _self.$Message.error('抱歉，您没有权限')
+    } else {
+      otherConditions(response)
+    }
+  })
+}
+//  方法废弃
+Vue.prototype.PostData = function(url, data, doSuccess, otherConditions) {
+  let _self = this
+
+  this.$http({
+    method: 'post',
+    url: '/api' + url,
+    data: data,
+    headers: { 'Content-Type': 'application/json' }
+  }).then(function(response) {
+    if (response.data.msgCode == '40000') {
+      doSuccess(response)
+    } else if (response.data.msgCode == '50003') {
+    } else if (response.data.msgCode == '60000') {
+      _self.$Message.error('抱歉，您没有权限')
+    } else {
+      otherConditions(response)
+    }
+  })
+}
 axios.defaults.baseURL = '/'
 //  axios 拦截器
 axios.interceptors.response.use(
@@ -87,7 +143,6 @@ axios.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
 
 //  路由跳转之前检查是否有权限访问该页面
 router.beforeEach((to, from, next) => {

@@ -41,7 +41,7 @@
         <Row :gutter="16">
           <Col span="10">
             <FormItem prop="servicebegindate" label="服务开始时间">
-              <Input size="small" v-model="service_begin_time" readonly />
+              <Input size="small" v-model="detail.service_begin_time" readonly />
             </FormItem>
           </Col>
           <Col span="10">
@@ -102,6 +102,13 @@
             </FormItem>
           </Col>
         </Row>
+        <Row :gutter="16">
+          <Col span="20">
+            <FormItem prop="followbusiness" label="跟进中的业务">
+              <Input size="small" v-model="form.followbusiness" type="textarea" :autosize="{ minRows: 2, maxRows: 5 }" />
+            </FormItem>
+          </Col>
+        </Row>
       </Form>
       <div slot="footer">
         <Button type="primary" @click="handleSubmit" :loading="loading">新增</Button>
@@ -123,6 +130,7 @@ export default {
   data() {
     return {
       loading: false,
+      detail: {},
       form: {
         reasonformarketer: '',
         reasonforcallback: '',
@@ -134,8 +142,7 @@ export default {
         taxperiod: [{ required: true, message: '必选项！', trigger: 'change', type: 'date' }],
         enddate: [{ required: true, message: '必选项！', trigger: 'change', type: 'date' }],
         reasonformarketer: [{ required: true, message: '必选项！', trigger: 'blur' }]
-      },
-      service_begin_time: ''
+      }
     };
   },
 
@@ -143,30 +150,39 @@ export default {
     const { company_id: companyId = '' } = this.order;
     if (companyId) {
       const resp = await getCycleMonthInfoBycompanyId({ companyId });
-      this.service_begin_time = resp[0].service_begin_time;
+      this.detail = resp[0];
     }
   },
   methods: {
     handleSubmit() {
       this.$refs['form'].validate(async valid => {
         if (valid) {
-          const { order, form, service_begin_time } = this;
+          const { order, form, service_begin_time, detail } = this;
+
           let config = {
             companyid: order.company_id,
-            productid: order.productid,
-            servicer: order.servicer,
-            marketer: order.marketer,
+            productid: detail.product_id,
+            servicer: detail.serviceId,
+            marketer: detail.marketerId,
             enddate: DateFormat(form.enddate),
-            servicebegindate: service_begin_time && service_begin_time.substr(0, 10),
+            servicebegindate: detail.service_begin_time,
+            reasonformarketer: form.reasonformarketer,
+            reasonforcallback: form.reasonforcallback,
             endreason: form.endreason,
             taxperiod: DateFormat(form.taxperiod),
-            reasonformarketer: form.reasonformarketer,
+            followbusiness: form.followbusiness,
             hasReturned: form.has_returned,
             hasArrears: form.has_arrears,
-            cycleServiceRecordId: order.id
+            cycleServiceRecordId: detail.cycleServiceRecordId
           };
-          await createCustomerEnd(config);
-          this.$emit('ok');
+          try {
+            this.loading = true;
+            await createCustomerEnd(config);
+            this.$emit('ok');
+          } catch (error) {
+          } finally {
+            this.loading = false;
+          }
         } else {
         }
       });

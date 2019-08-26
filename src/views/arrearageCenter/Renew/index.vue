@@ -100,7 +100,7 @@
       <Row> </Row>
       <div slot="footer">
         <Button type="primary" @click="onSumbit" name="order_edit" :loading="loading">确定</Button>
-        <Button type="ghost">关闭</Button>
+        <Button type="ghost" @click="onClose">关闭</Button>
       </div>
     </Modal>
     <ab-order-select @aborder-change="settingAborder" :id="orderDetail.companyid"></ab-order-select>

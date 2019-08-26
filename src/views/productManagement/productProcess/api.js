@@ -10,7 +10,7 @@ function getActivitiTaskProcessList(config, success, fail){
 }
 
 function postActivitiuploadBpmnInputStream(config, success, fail){
-    let url = 'activiti/uploadBpmnInputStream'
+    let url = 'dataCenter/activiti/uploadBpmnInputStream'
     return new Promise((resolve, reject)=>{
         resolve(AjaxPost(url, config, success, fail))
     }).catch((err)=>{

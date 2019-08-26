@@ -1,23 +1,26 @@
 <template>
   <div class="test">
-    <div v-for="(item,index) of productList" :key="index">
+    <div v-for="(item, index) of productList" :key="index">
       <div>
         <h3
           style="display: flex; justify-content: space-between;align-items: center; padding: 5px; margin-top: 10px; background: #f8f8f9;border: 1px solid #dddee1;border-bottom: none"
         >
-          <span>{{item.product}}</span>
-          <Button
-            v-if="pageFlag =='createOrder' || pageFlag =='editOrder'"
-            type="error"
-            size="small"
-            @click="removeItem(index)"
-          >删除</Button>
+          <span>{{ item.product }}</span>
+          <Button v-if="pageFlag == 'createOrder' || pageFlag == 'editOrder'" type="error" size="small" @click="removeItem(index)"
+            >删除</Button
+          >
           <Button
             type="error"
-            v-if="pageFlag =='showOrder' && (operatorId ==10059 || operatorId == 10182) && item.deleteflag !=5 && orderDetail.orderstatus == 'approval_finish'"
+            v-if="
+              pageFlag == 'showOrder' &&
+                (operatorId == 10059 || operatorId == 10182) &&
+                item.deleteflag != 5 &&
+                orderDetail.orderstatus == 'approval_finish'
+            "
             size="small"
             @click="refundItem(index)"
-          >退款</Button>
+            >退款</Button
+          >
         </h3>
         <Card>
           <Form label-position="left" ref="formValidate" :rules="ruleValidate">
@@ -27,26 +30,18 @@
                   <div v-html="item.propertys"></div>
                   <div>
                     产品价格:
-                    <span>{{item.oaprice}}</span>
+                    <span>{{ item.oaprice }}</span>
                   </div>
                   <div v-if="item.iscycle != 'N'">
                     月单价:
-                    <span>{{item.unitprice}}</span>
+                    <span>{{ item.unitprice }}</span>
                   </div>
 
-                  <div v-if="!isDisabled && item.defaultdepartalias=='PLAN'">
-                    <Button
-                      :type="!isPlan[index]?'error':''"
-                      size="small"
-                      @click="changePayMethod(index)"
-                    >定额</Button>
-                    <Button
-                      :type="isPlan[index]?'error':''"
-                      size="small"
-                      @click="changePayMethod(index)"
-                    >比例</Button>
+                  <div v-if="!isDisabled && item.defaultdepartalias == 'PLAN'">
+                    <Button :type="!isPlan[index] ? 'error' : ''" size="small" @click="changePayMethod(index)">定额</Button>
+                    <Button :type="isPlan[index] ? 'error' : ''" size="small" @click="changePayMethod(index)">比例</Button>
                   </div>
-                  <div v-if="!isDisabled&&!isPlan[index]">
+                  <div v-if="!isDisabled && !isPlan[index]">
                     <FormItem label="销售金额￥" prop="paynumber">
                       <Input
                         class="input-call"
@@ -73,7 +68,7 @@
                     </FormItem>
                   </div>
 
-                  <div v-if="!isDisabled&&isPlan[index]">
+                  <div v-if="!isDisabled && isPlan[index]">
                     <FormItem label="销售比例 " prop="receipt_proportion">
                       <Input
                         class="input-call"
@@ -83,10 +78,11 @@
                         size="small"
                         style="width:100px"
                         :disabled="isDisabled"
-                      ></Input>%
+                      ></Input
+                      >%
                     </FormItem>
                   </div>
-                  <div v-if="isDisabled&&item.receipt_type == 'proportion'">
+                  <div v-if="isDisabled && item.receipt_type == 'proportion'">
                     <FormItem label="销售比例 " prop="receipt_proportion">
                       <Input
                         class="input-call"
@@ -96,7 +92,8 @@
                         size="small"
                         style="width:100px"
                         :disabled="isDisabled"
-                      ></Input>%
+                      ></Input
+                      >%
                     </FormItem>
                   </div>
                 </div>
@@ -124,7 +121,7 @@
                     <Col span="12">
                       <FormItem label="服务部门" prop="departid">
                         <Select
-                          v-if="pageFlag =='createOrder' || pageFlag =='editOrder'"
+                          v-if="pageFlag == 'createOrder' || pageFlag == 'editOrder'"
                           style="width:120px"
                           size="small"
                           @on-change="departChange($event, index)"
@@ -133,12 +130,13 @@
                         >
                           <Option
                             :value="parseInt(departItem.type)"
-                            v-for="departItem of JSON.parse(item.servicedeparts) "
+                            v-for="departItem of JSON.parse(item.servicedeparts)"
                             :key="departItem.departCode"
-                          >{{departItem.text}}</Option>
+                            >{{ departItem.text }}</Option
+                          >
                         </Select>
                         <Input
-                          v-if="pageFlag =='showOrder' || pageFlag =='amendOrder'"
+                          v-if="pageFlag == 'showOrder' || pageFlag == 'amendOrder'"
                           :disabled="isDisabled"
                           v-model="item.departname"
                           style="width:120px"
@@ -151,20 +149,15 @@
                   <Row>
                     <Col span="12">
                       <FormItem style="margin-left: 10px" label=" 服务人员：">
-                        <div
-                          v-if="pageFlag =='createOrder' || pageFlag =='editOrder'"
-                          style="display:inline-block"
-                        >
+                        <div v-if="pageFlag == 'createOrder' || pageFlag == 'editOrder'" style="display:inline-block">
                           <Select v-model="item.selectServer">
-                            <Option
-                              v-for="item in serverList[index]"
-                              :key="item.userId"
-                              :value="item"
-                            >{{item.realname +"【"+item.flag+"】"}}</Option>
+                            <Option v-for="item in serverList[index]" :key="item.userId" :value="item">{{
+                              item.realname + '【' + item.flag + '】'
+                            }}</Option>
                           </Select>
                         </div>
                         <Input
-                          v-if="pageFlag =='showOrder' || pageFlag =='amendOrder'"
+                          v-if="pageFlag == 'showOrder' || pageFlag == 'amendOrder'"
                           :disabled="isDisabled"
                           v-model="item.realname"
                           style="width:140px"
@@ -173,12 +166,12 @@
                         />
                       </FormItem>
                     </Col>
-                    <Col v-if="item.defaultdepartalias=='PLAN'" span="12">
+                    <Col v-if="item.defaultdepartalias == 'PLAN'" span="12">
                       <FormItem label="申报年份" prop="declare_year">
                         <DatePicker
                           type="year"
                           format="yyyy"
-                          @on-change="item.declare_year=$event"
+                          @on-change="item.declare_year = $event"
                           v-model="item.declare_year"
                           :disabled="isDisabled"
                           placeholder="选择年份"
@@ -200,15 +193,18 @@
                           value="0"
                           size="small"
                           style="width:80px"
-                        ></InputNumber>月
+                        ></InputNumber
+                        >月
                       </FormItem>
                     </Col>
-                    <Col v-if="item.iscycle !='N'" span="12">
+                    <Col v-if="item.iscycle != 'N'" span="12">
                       <FormItem label="开始税期" prop="servicestartdate">
                         <DatePicker
+                          v-if="item.iscycle != 'N'"
                           class="input-me"
                           :disabled="isDisabled"
                           type="month"
+                          :options="dateOptions"
                           v-model="item.servicestartdate"
                           placeholder="选择月份"
                           style="width:120px"
@@ -228,7 +224,8 @@
                           v-model="item.type_a_count"
                           size="small"
                           style="width:80px"
-                        ></InputNumber>次
+                        ></InputNumber
+                        >次
                       </FormItem>
                     </Col>
                     <Col span="10" v-if="item.iscycle === 'Y' && item.product != '会计到家'">
@@ -241,7 +238,8 @@
                           v-model="item.type_b_count"
                           size="small"
                           style="width:80px"
-                        ></InputNumber>次
+                        ></InputNumber
+                        >次
                       </FormItem>
                     </Col>
                   </Row>
@@ -271,40 +269,60 @@
 </template>
 
 <script>
-import * as orderApi from "../../api";
-import { DateFormat, DateFormatYearMonth } from "../../../../../libs/utils.js";
+import * as orderApi from '../../api';
+import { DateFormat, DateFormatYearMonth } from '../../../../../libs/utils.js';
 export default {
-  props: ["productList", "isDisabled", "orderDetail", "pageFlag", "id","productListOne"],
-  inject: ["cancel_order"],
+  props: ['productList', 'isDisabled', 'orderDetail', 'pageFlag', 'id', 'productListOne'],
+  inject: ['cancel_order'],
   data() {
     return {
       isPlan: {},
-      companyId: "",
+      companyId: '',
       departServerObj: [],
       serverList: [],
-      flag:0,
-      operatorId: localStorage.getItem("id"),
+      flag: 0,
+      dateOptions: {
+        disabledDate: this.checkMonth
+      },
+      operatorId: localStorage.getItem('id'),
       ruleValidate: {
         productnumber: [
           {
             required: true,
-            message: "请输入整数",
-            trigger: "blur",
-            type: "integer"
+            message: '请输入整数',
+            trigger: 'blur',
+            type: 'integer'
           }
         ],
         declare_year: [
           {
             required: true,
-            message: ".",
-            trigger: "change",
-            type: "date"
+            message: '.',
+            trigger: 'change',
+            type: 'date'
           }
         ]
       }
     };
   },
   methods: {
+    checkMonth(data) {
+      let product = this.productList.find(v => !!v.servicestartdate);
+      let period = '';
+      if (product) {
+        period = product.servicestartdate;
+        if (typeof period == 'string') {
+          period = period.substr(0, 4) * 12 + period.substr(4) * 1;
+        } else {
+          period = period.getFullYear() * 12 + period.getMonth() + 1;
+        }
+      } else {
+        let date = new Date();
+        period = date.getFullYear() * 12 + date.getMonth();
+      }
+      let between = data.getFullYear() * 12 + data.getMonth() - period;
+      return -2 > between;
+    },
     async handleGetService(e, index) {
       let url = `api/product/server/list`;
       let config;
@@ -342,10 +360,10 @@ export default {
         [i]: !this.isPlan[i]
       });
       if (this.isPlan[i]) {
-        this.productList[i].receipt_type = "proportion";
+        this.productList[i].receipt_type = 'proportion';
         this.productList[i].paynumber = 0;
       } else {
-        this.productList[i].receipt_type = "quota";
+        this.productList[i].receipt_type = 'quota';
         this.productList[i].receipt_proportion = 0;
       }
       this.computer_paynumber();
@@ -368,35 +386,35 @@ export default {
       }
       let paynumber = parseFloat(temp);
       let realnumber = parseFloat(temp);
-      this.$bus.emit("SET_PAYNUMBER", {
+      this.$bus.emit('SET_PAYNUMBER', {
         paynumber: paynumber,
         realnumber: realnumber
       });
     },
     removeItem(index) {
-      let _self = this
+      let _self = this;
       _self.productList.splice(index, 1);
-      _self.$bus.emit("REMOVE_ITEM",_self.productList)
+      _self.$bus.emit('REMOVE_ITEM', _self.productList);
       // _self.productListOne = []
       // console.log(_self.productList)
-      if (_self.productList.length==0){
-        _self.productListOne = []
+      if (_self.productList.length == 0) {
+        _self.productListOne = [];
       } else {
-        let a = [_self.productList[0]]
-        for (let i=0;i<_self.productList.length;i++) {
-          let b = _self.productList[i]
-          let repeat =false;
-          for (let j=0;j<a.length;j++) {
-            if (b.productid == a[j].productid){
-              repeat = true
-              break
+        let a = [_self.productList[0]];
+        for (let i = 0; i < _self.productList.length; i++) {
+          let b = _self.productList[i];
+          let repeat = false;
+          for (let j = 0; j < a.length; j++) {
+            if (b.productid == a[j].productid) {
+              repeat = true;
+              break;
             }
           }
-          if (!repeat){
-            a.push(b)
+          if (!repeat) {
+            a.push(b);
           }
         }
-        _self.productListOne = a
+        _self.productListOne = a;
       }
       this.departChange();
       this.computer_paynumber();
@@ -435,8 +453,7 @@ export default {
       let success = res => {
         try {
           this.serverList.splice(index, 1, res.data.data);
-          this.productList[index].selectServer =
-            (this.serverList[index].length && this.serverList[index][0]) || {};
+          this.productList[index].selectServer = (this.serverList[index].length && this.serverList[index][0]) || {};
         } catch (error) {}
       };
       function fail() {}
@@ -446,10 +463,10 @@ export default {
     refundItem(index) {
       let _self = this;
       this.$Modal.confirm({
-        title: "您确定要对该订单项退款吗？",
+        title: '您确定要对该订单项退款吗？',
         content: _self.productList[index].propertys,
         onOk: () => {
-          _self.$bus.$emit("CANCEL_ORDER", {
+          _self.$bus.$emit('CANCEL_ORDER', {
             id: _self.orderDetail.id,
             itemid: _self.productList[index].itemid
           });
@@ -460,69 +477,70 @@ export default {
   },
 
   beforeCreate() {
-    this.$bus.off("PRODUCT_LIST_EDIT", true);
+    this.$bus.off('PRODUCT_LIST_EDIT', true);
   },
   created() {
     let _self = this;
+    console.log(this.productList);
     this.productList.forEach((e, i) => {
-      if (e.defaultdepartalias == "PLAN") {
-        e.receipt_type = "quota";
+      if (e.defaultdepartalias == 'PLAN') {
+        e.receipt_type = 'quota';
       }
     });
 
     this.serverList = this.productList.map(v => {
       return v.serverList;
     });
-    this.$bus.off("ADD_PRODUCT_DETAIL_LIST", true);
-    this.$bus.on("ADD_PRODUCT_DETAIL_LIST", e => {
-      this.flag = 0
+    this.$bus.off('ADD_PRODUCT_DETAIL_LIST', true);
+    this.$bus.on('ADD_PRODUCT_DETAIL_LIST', e => {
+      this.flag = 0;
       e.givethenumber = 0;
       if (e.departid) {
         e.departid = parseInt(e.departid);
       }
-      if (e.defaultdepartalias == "PLAN") {
-        e.receipt_type = "quota";
+      if (e.defaultdepartalias == 'PLAN') {
+        e.receipt_type = 'quota';
       }
-      if (_self.productList.length!==0){
-        for (let i=0;i<_self.productList.length;i++){
-          if (_self.productList[i].productid===e.productid) {
-            this.flag = 1
+      if (_self.productList.length !== 0) {
+        for (let i = 0; i < _self.productList.length; i++) {
+          if (_self.productList[i].productid === e.productid) {
+            this.flag = 1;
           }
         }
       }
 
       _self.productList.push(e);
-      _self.productList = _self.productList.map(item=>{
+      _self.productList = _self.productList.map(item => {
         if (!item.type_a_count) {
-          item.type_a_count = 0
+          item.type_a_count = 0;
         }
         if (!item.type_b_count) {
-          item.type_b_count = 0
+          item.type_b_count = 0;
         }
-        return item
-      })
+        return item;
+      });
 
-      if (this.flag!==1){
-        _self.productListOne.push(e)
-        console.log(_self.productListOne)
+      if (this.flag !== 1) {
+        _self.productListOne.push(e);
+        console.log(_self.productListOne);
       }
       // console.log(_self.productList)
       // e.selectServer = e.realname;
 
       _self.departChange();
       _self.computer_paynumber();
-      _self.changeServerPerson("", _self.productList.length - 1);
+      _self.changeServerPerson('', _self.productList.length - 1);
     });
 
-    _self.$bus.off("PRODUCT_LIST_EDIT");
-    _self.$bus.on("PRODUCT_LIST_EDIT", e => {
-      console.log("PRODUCT_LIST_EDIT");
+    _self.$bus.off('PRODUCT_LIST_EDIT');
+    _self.$bus.on('PRODUCT_LIST_EDIT', e => {
+      console.log('PRODUCT_LIST_EDIT');
       for (let i = 0; i < e.orderItem.length; i++) {
         _self.handleGetService(e, i);
       }
     });
-    _self.$bus.off("OPEN_ORDER_PRODUCT_LIST", true);
-    _self.$bus.on("OPEN_ORDER_PRODUCT_LIST", e => {
+    _self.$bus.off('OPEN_ORDER_PRODUCT_LIST', true);
+    _self.$bus.on('OPEN_ORDER_PRODUCT_LIST', e => {
       _self.companyId = e;
     });
   }

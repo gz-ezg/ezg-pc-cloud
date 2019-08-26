@@ -3,8 +3,10 @@
     <Modal :value="true" title="选择公司" width="80%">
       <Row :gutter="16">
         <Col span="8">
-          <Input v-model="searchCompany" placeholder="输入公司名称搜索" @on-enter="get_data" />
-          <Button slot="append" icon="ios-search" @click="getData"></Button>
+          <Input v-model="searchCompany" placeholder="输入公司名称搜索" @on-enter="getData" />
+        </Col>
+        <Col span="4">
+          <Button icon="ios-search" @click="getData">搜索</Button>
         </Col>
       </Row>
       <Table
@@ -87,6 +89,7 @@ export default {
       this.getData();
     },
     rowSelect(e) {
+      console.log('ceshi', e);
       this.$emit('company-change', e);
       this.$emit('close');
     }

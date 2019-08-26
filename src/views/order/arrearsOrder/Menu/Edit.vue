@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Modal title="新增异常工单" :value="true" width="80" @on-cancel="onClose">
+    <Modal title="修改异常工单" :value="true" width="80" @on-cancel="onClose">
       <Form ref="abnormalOrderDetail" :model="form" :rules="ruleInline" :label-width="100">
         <Row :gutter="16">
           <Col span="8">
@@ -27,7 +27,7 @@
         <Row :gutter="16">
           <Col span="12">
             <FormItem label="结束税期" prop="productContent">
-              <Input type="text" readonly size="small" style="width: 200px" v-model="form.late_period" />
+              <Input type="text" readonly size="small" style="width: 200px" v-model="form.end_period" />
             </FormItem>
           </Col>
           <Col span="12"
@@ -54,7 +54,7 @@
         <Row :gutter="16">
           <Col>
             <FormItem label="延后税期" prop="reason">
-              <DatePicker @on-change="onDateChange" type="month" :options="dateOptions" placeholder="选择延后税期" style="width: 200px"></DatePicker>
+              <DatePicker :value="form.late_period" @on-change="onDateChange" type="month" :options="dateOptions" placeholder="选择延后税期" style="width: 200px"></DatePicker>
             </FormItem>
           </Col>
         </Row>
@@ -67,7 +67,7 @@
         </Row>
       </Form>
       <div slot="footer">
-        <Button type="primary" :loading="loading" @click="hanldeSubmit">创建</Button>
+        <Button type="primary" :loading="loading" @click="hanldeSubmit">修改</Button>
         <Button type="ghost" @click="onClose">关闭</Button>
       </div>
     </Modal>
@@ -97,14 +97,16 @@ export default {
         this.loading = true;
         const { company_id, apply_memo, period, cycle_service_record_id } = this.form;
         if (!period || !apply_memo) {
-          this.$Message.info('请完善信息');
+          return this.$Message.info('请完善信息');
         }
         await updateOweOrder({
+          id: this.detail.id,
           companyId: company_id,
           cycleServiceRecordId: cycle_service_record_id,
           latePeriod: period,
           applyMemo: apply_memo
         });
+        this.$emit('ok');
       } catch (error) {
         console.log(error);
       } finally {
@@ -112,7 +114,7 @@ export default {
       }
     },
     checkMonth(data) {
-      let period = this.form.late_period.toString();
+      let period = this.form.end_period.toString();
       let between = data.getFullYear() * 12 + data.getMonth() - period.substr(0, 4) * 12 - period.substr(4) * 1;
       return !(0 <= between && between < 3);
     },

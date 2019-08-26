@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Modal :value="true" title="办理审批" width="100%">
+    <Modal :value="true" title="办理审批" width="100%" @on-cancel="onClose">
       <Form :model="detail" :label-width="100">
         <Row :gutter="16">
           <Col span="8">
@@ -27,6 +27,11 @@
           </Col>
           <Col span="8">
             <FormItem label="结束税期" prop="realname">
+              <Input size="small" v-model="detail.end_period" readonly />
+            </FormItem>
+          </Col>
+          <Col span="8">
+            <FormItem label="延后税期" prop="realname">
               <Input size="small" v-model="detail.late_period" readonly />
             </FormItem>
           </Col>
@@ -92,6 +97,9 @@ export default {
   methods: {
     async getHistoryData() {
       this.historyData = await auditListByApplyId({ applyId: this.detail.id });
+    },
+    onClose() {
+      this.$emit('cancel');
     },
     //办理审批
     async handleSubmit(type) {

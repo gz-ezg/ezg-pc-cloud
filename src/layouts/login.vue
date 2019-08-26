@@ -46,6 +46,8 @@
 
 <script>
 import Cookies from 'js-cookie';
+import { async } from 'q';
+import { oweOrderListByFollowby } from '@A/order';
 
 export default {
   data() {
@@ -135,15 +137,27 @@ export default {
           userId: re
         }
       };
-      const success = re => {
+      const success = async re => {
         Cookies.set('access', re.data.data.interfaces.join());
         localStorage.setItem('access_array', JSON.stringify(re.data.data.interfaces));
         Cookies.set('operations', re.data.data.operations.join());
-        setTimeout(() => {
-          this.$router.push({
-            name: 'home_index'
-          });
-        }, 0);
+
+        // 登录判断
+        let resp = [];
+        try {
+          let id = localStorage.getItem('id');
+          resp = await oweOrderListByFollowby({ id });
+        } catch (error) {
+          console.log(error);
+        } finally {
+          if (resp.length) {
+            this.$router.push('/arrearageCenter');
+          } else {
+            this.$router.push({
+              name: 'home_index'
+            });
+          }
+        }
       };
 
       this.$Get(url, config, success);

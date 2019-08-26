@@ -124,7 +124,11 @@ export default {
       if (!this.currentRow) {
         return this.$Message.info('请选择一行进行查看');
       }
-      this.editPopup = true;
+      if (this.currentRow.current_process == 'zg') {
+        this.editPopup = true;
+      } else {
+        return this.$Message.warning('当前订单状态不允许编辑！');
+      }
     },
     onEditOk() {
       this.editPopup = false;
@@ -144,15 +148,20 @@ export default {
       if (!this.currentRow) {
         return this.$Message.info('请选择一行进行查看');
       }
-      this.$Modal.confirm({
-        title: '提示',
-        content: '是否删除',
-        onOk: async () => {
-          await deleteOweOrder({ applyId: this.currentRow.id });
-          this.$refs.table.list.fetchList();
-        },
-        onCancel: () => {}
-      });
+
+      if (this.currentRow.current_process === 'zg') {
+        this.$Modal.confirm({
+          title: '提示',
+          content: '是否删除',
+          onOk: async () => {
+            await deleteOweOrder({ applyId: this.currentRow.id });
+            this.$refs.table.list.fetchList();
+          },
+          onCancel: () => {}
+        });
+      } else {
+        return this.$Message.warning('当前订单状态不允许删除！');
+      }
     }
   },
   async created() {}
