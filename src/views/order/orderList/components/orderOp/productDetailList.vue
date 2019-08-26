@@ -270,7 +270,7 @@
 
 <script>
 import * as orderApi from '../../api';
-import { DateFormat, DateFormatYearMonth } from '../../../../../libs/utils.js';
+import { DateFormat, DateFormatYearMonth, nowDateFormatYearMonth } from '../../../../../libs/utils.js';
 export default {
   props: ['productList', 'isDisabled', 'orderDetail', 'pageFlag', 'id', 'productListOne'],
   inject: ['cancel_order'],
@@ -281,9 +281,11 @@ export default {
       departServerObj: [],
       serverList: [],
       flag: 0,
+
       dateOptions: {
         disabledDate: this.checkMonth
       },
+      servicestartdate: '',
       operatorId: localStorage.getItem('id'),
       ruleValidate: {
         productnumber: [
@@ -307,21 +309,11 @@ export default {
   },
   methods: {
     checkMonth(data) {
-      let product = this.productList.find(v => !!v.servicestartdate);
-      let period = '';
-      if (product) {
-        period = product.servicestartdate;
-        if (typeof period == 'string') {
-          period = period.substr(0, 4) * 12 + period.substr(4) * 1;
-        } else {
-          period = period.getFullYear() * 12 + period.getMonth() + 1;
-        }
-      } else {
-        let date = new Date();
-        period = date.getFullYear() * 12 + date.getMonth();
-      }
-      let between = data.getFullYear() * 12 + data.getMonth() - period;
-      return -2 > between;
+      let product = this.servicestartdate;
+      let period = null;
+      period = product ? nowDateFormatYearMonth(product) : nowDateFormatYearMonth();
+      let between = data.getFullYear() * 12 + data.getMonth() - period.substr(0, 4) * 12 - period.substr(4) * 1;
+      return -3 >= between;
     },
     async handleGetService(e, index) {
       let url = `api/product/server/list`;
@@ -481,7 +473,6 @@ export default {
   },
   created() {
     let _self = this;
-    console.log(this.productList);
     this.productList.forEach((e, i) => {
       if (e.defaultdepartalias == 'PLAN') {
         e.receipt_type = 'quota';
@@ -493,6 +484,9 @@ export default {
     });
     this.$bus.off('ADD_PRODUCT_DETAIL_LIST', true);
     this.$bus.on('ADD_PRODUCT_DETAIL_LIST', e => {
+      if (e.servicestartdate) {
+        this.servicestartdate = e.servicestartdate;
+      }
       this.flag = 0;
       e.givethenumber = 0;
       if (e.departid) {
