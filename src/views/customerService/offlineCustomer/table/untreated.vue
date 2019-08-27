@@ -103,338 +103,345 @@
 </template>
 
 <script>
-    import Bus from '../../../../components/bus'
-    import { DateFormat } from '../../../../libs/utils.js'
+import Bus from '../../../../components/bus';
+import { DateFormat } from '../../../../libs/utils.js';
 
-    export default {
-        components: {
+export default {
+  components: {},
+  data() {
+    return {
+      NformInline: {
+        companyname: '',
+        name: '',
+        tel: '',
+        product: '',
+        marketername: '',
+        servicename: '',
+        date: []
+      },
+      loading: false,
+      search_model: '',
+      isExamine: false,
+      modal: false,
+      pageTotal: new Number(),
+      page: 1,
+      pageSize: 10,
+      row: {},
+      customerid: [],
+      data: [],
+      header: [
+        {
+          title: '公司名称',
+          key: 'CompanyName',
+          width: 300
         },
-        data() {
-            return {
-                NformInline:{
-                    companyname:"",
-                    name:"",
-                    tel:"",
-                    product:"",
-                    marketername:"",
-                    servicename:"",
-                    date:[]
+        {
+          title: '客户名称',
+          key: 'name',
+          width: 120
+        },
+        {
+          title: '客户手机',
+          key: 'TEL',
+          width: 120
+        },
+        {
+          title: '产品名称',
+          key: 'product',
+          width: 150
+        },
+        {
+          title: '创建时间',
+          key: 'createdate',
+          width: 130
+        },
+        {
+          title: '服务人员',
+          key: 'servicer',
+          width: 120
+        },
+        {
+          title: '市场人员',
+          key: 'marketer',
+          width: 120
+        },
+        {
+          title: '结束时间',
+          key: 'enddate',
+          width: 160
+        },
+        {
+          title: '服务开始时间',
+          key: 'servicebegindate',
+          width: 160
+        },
+        {
+          title: '流程状态',
+          key: 'process_type',
+          width: 120
+        },
+        {
+          title: '操作',
+          key: 'action',
+          fixed: 'right',
+          width: 300,
+          align: 'center',
+          render: (h, params) => {
+            return h('div', [
+              h(
+                'Button',
+                {
+                  props: {
+                    type: 'text',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      this.$store.commit('open_gobal_customer_detail_modal', { ID: params.row.customerid });
+                      // Bus.$emit('Open_customer_detail',params.row.customerid)
+                      // this.customerDetail(params)
+                    }
+                  }
                 },
-                loading: false,
-                search_model:"",
-                isExamine: false,
-                modal: false,
-                pageTotal: new Number(),
-                page: 1,
-                pageSize: 10,
-                row: {},
-                customerid: [],
-                data: [],
-                header: [
-                    {
-                        title: '公司名称',
-                        key: 'CompanyName',
-                        width: 300
-                    },
-                    {
-                        title: '客户名称',
-                        key: 'name',
-                        width: 120
-                    },
-                    {
-                        title: '客户手机',
-                        key: 'TEL',
-                        width: 120
-                    },
-                    {
-                        title: '产品名称',
-                        key: 'product',
-                        width: 150
-                    },
-                    {
-                        title: '创建时间',
-                        key: 'createdate',
-                        width: 130
-                    },
-                    {
-                        title: '服务人员',
-                        key: 'servicer',
-                        width: 120
-                    },
-                    {
-                        title: '市场人员',
-                        key: 'marketer',
-                        width: 120
-                    },
-                    {
-                        title: '结束时间',
-                        key: 'enddate',
-                        width: 160
-                    },
-                    {
-                        title: '服务开始时间',
-                        key: 'servicebegindate',
-                        width: 160
-                    },
-                    {
-                        title: '流程状态',
-                        key: 'process_type',
-                        width: 120
-                    },
-                    {
-                        title: '操作',
-                        key: 'action',
-                        fixed: 'right',
-                        width: 300,
-                        align: 'center',
-                        render: (h, params) => {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.$store.commit('open_gobal_customer_detail_modal', {ID: params.row.customerid});                                            
-                                            // Bus.$emit('Open_customer_detail',params.row.customerid)
-                                            // this.customerDetail(params)
-                                        }
-                                    }
-                                }, '[查看客户]'),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            // Bus.$emit('openCompanyDetail',params.row.companyid)
-                                            this.$store.commit("open_gobal_company_detail_modal", params.row.companyid)
-                                            // Bus.$emit('detail', params)
-                                        }
-                                    }
-                                }, '[查看企业]'),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            // console.log(params.row.id)
-                                            this.$bus.emit('OPEN_LOG',params.row.id)
-                                        }
-                                    }
-                                }, '[审批记录]'),
-                            ]);
-                        }
+                '[查看客户]'
+              ),
+              h(
+                'Button',
+                {
+                  props: {
+                    type: 'text',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      // Bus.$emit('openCompanyDetail',params.row.companyid)
+                      this.$store.commit('open_gobal_company_detail_modal', params.row.companyid);
+                      // Bus.$emit('detail', params)
                     }
-                ]
-            }
-        },
-        methods: {
-            downExcel(){
-                let field = [
-                    {field:'name',title:'客户名称'},
-                    {field:'CompanyName',title:'公司名称'},
-                    // {field:'baseorderid',title:'提示'},
-                    {field:'product',title:'产品名称'},
-                    {field:'enddate',title:'下线时间'},
-                    {field:'taxperiod',title:'下线税期'},
-                    {field:'servicebegindate',title:'服务开始时间'},
-                    {field:'servicer',title:'服务人员'},                                                                   
-                    {field:'marketer',title:'市场人员'},                                                                     
-                    {field:'reasonforcallback',title:'客户实际下线原因'},
-                    {field:'reasonformarketer',title:'市场通知下线原因'},
-                    {field:'followbusiness',title:'跟进中的业务'}
-                ]
-                let _self = this
-                let url = `api/customer/customerEndList`
-                let config = {
-                        page: '1',
-                        pageSize: '1000000',
-                        status:"N",
-                        export: 'Y',
-                        exportField: encodeURI(JSON.stringify(field)),
-                        companyname: _self.NformInline.companyname,
-                        customername:_self.NformInline.name,
-                        customertel:_self.NformInline.tel,
-                        productname:_self.NformInline.product,
-                        marketer:_self.NformInline.marketername,
-                        servicer:_self.NformInline.servicename,
-                        bcreatedate: DateFormat(_self.NformInline.date[0]),
-                        ecreatedate: DateFormat(_self.NformInline.date[1])
-                }
-                let toExcel = this.$MergeURL(url, config)
-                // console.log(toExcel)
-                window.open(toExcel)
-            },
-            cancel() {
-                var _self = this
-                _self.customerid = []
-                _self.isExamine = false
-            },
-            search(){
-                this.page = 1
-                this.getData()
-            },
-            reset(){
-                this.page = 1
-                this.NformInline.companyname = ""
-                this.NformInline.name = ""
-                this.NformInline.tel = ""
-                this.NformInline.product = ""
-                this.NformInline.marketername = ""
-                this.NformInline.servicename = ""
-                this.NformInline.date = []
-                this.getData()
-            },
-            customerDetail(a) {
-                let _self = this
-                // console.log(a.row.customerid)
-                _self.customerid[0] = a.row.customerid
-                // console.log(_self.customerid[0])
-                _self.isExamine = true
-                _self.modal = true
-            },
-
-            add() {
-                let _self = this
-
-                _self.row.type = 'add'
-                // Bus.$emit('add', _self.row)
-                _self.$bus.emit("OPEN_OFFLINE_ADD",true)
-            },
-
-            edit() {
-                let _self = this
-                console.log(_self.row)
-                if (_self.row.id == null ) {
-                    _self.$Message.warning('请选择要查看的项目')
-                } else if(_self.row.current_process != 'kf'){
-                    _self.$Message.warning('当前流程状态不允许此操作')
-                } else {
-                    _self.row.type  = 'edit'
-                    // Bus.$emit('add', _self.row)
-                    _self.$bus.emit("OPEN_OFFLINE_UPDATE",_self.row)
-                }
-            },
-
-            check() {
-                let _self = this
-
-                if (_self.row.id == null) {
-                    _self.$Message.warning('请选择要查看的项目')
-                } else {
-                    _self.$bus.emit('OPEN_OFFLINE_SHOW', _self.row)
-                }
-            },
-            //删除下线数据
-            del() {
-                let _self = this
-                if(_self.row.id == null){
-                    _self.$Message.warning('请先选择一行！')
-                } else {
-                    let url = `api/customer/delete`
-                    let config = {
-                        params: {
-                            applyId: _self.row.id
-                        }
+                  }
+                },
+                '[查看企业]'
+              ),
+              h(
+                'Button',
+                {
+                  props: {
+                    type: 'text',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      // console.log(params.row.id)
+                      this.$bus.emit('OPEN_LOG', params.row.id);
                     }
-                    function success(res){
-                        // console.log(res)
-                        _self.$Message.success('删除成功')
-                        _self.getData()
-                    }
-                    
-                    _self.$Get(url,config,success)
-                }
-            },
-
-            getData() {
-                let _self = this
-                // let url = '/customer/customerEndList?sortField=id&page=' + _self.page + '&status=N&pageSize=' + _self.pageSize + '&companyname=' + _self.NformInline.companyname + '&customername=' + _self.NformInline.name + '&customertel=' + _self.NformInline.tel + '&productname=' + _self.NformInline.product + '&marketer=' + _self.NformInline.marketername + '&servicer=' + _self.NformInline.servicename 
-                let url = `api/customer/customerEndList`
-                let config = {
-                    params: {
-                        sortField: 'id',
-                        page: _self.page,
-                        pageSize: _self.pageSize,
-                        status: 'N',
-                        companyname: _self.NformInline.companyname,
-                        customername: _self.NformInline.name,
-                        customertel: _self.NformInline.tel,
-                        productname: _self.NformInline.product,
-                        marketer: _self.NformInline.marketername,
-                        servicer: _self.NformInline.servicename,
-                        bcreatedate: DateFormat(_self.NformInline.date[0]),
-                        ecreatedate: DateFormat(_self.NformInline.date[1])
-                    }
-                }
-                _self.row = {}
-                _self.loading = true
-                function doSuccess(res) {
-                    console.log(res.data.data)
-                    let _data = res.data.data
-
-                    _self.pageTotal = _data.total
-                    _self.data = _data.rows
-                    
-                    for(let i = 0;i<_self.data.length;i++){
-                        _self.data[i].company_id = _self.data[i].companyid                        
-                        if(_self.data[i].enddate == null ||_self.data[i].enddate == ""){
-
-                        }else{
-                            _self.data[i].enddate = _self.data[i].enddate.slice(0,10)
-                        }
-
-                        if(_self.data[i].createdate == null ||_self.data[i].createdate == ""){
-
-                        }else{
-                            _self.data[i].createdate = _self.data[i].createdate.slice(0,10)
-                        }
-
-                        if(_self.data[i].servicebegindate == null ||_self.data[i].servicebegindate == ""){
-
-                        }else{
-                            _self.data[i].servicebegindate = _self.data[i].servicebegindate.slice(0,10)
-                        }
-                    }
-                    _self.loading = false
-                }
-
-                // this.GetData(url, doSuccess)
-                this.$Get(url,config,doSuccess)
-            },
-
-            pageChange(a) {
-                let _self = this
-
-                _self.page = a
-                _self.getData()
-            },
-
-            pageSizeChange(a) {
-                let _self = this
-
-                _self.pageSize = a
-                _self.getData()
-            },
-
-            selectrow(a) {
-                this.row = a
-            }
-        },
-        mounted() {
-            this.getData()
-        },
-        created () {
-            let _self = this
-            Bus.$on('updateofflinecustomer',(e)=>{
-                _self.getData()
-            })
-            
+                  }
+                },
+                '[审批记录]'
+              )
+            ]);
+          }
         }
+      ]
+    };
+  },
+  methods: {
+    downExcel() {
+      let field = [
+        { field: 'name', title: '客户名称' },
+        { field: 'CompanyName', title: '公司名称' },
+        // {field:'baseorderid',title:'提示'},
+        { field: 'product', title: '产品名称' },
+        { field: 'enddate', title: '下线时间' },
+        { field: 'taxperiod', title: '下线税期' },
+        { field: 'servicebegindate', title: '服务开始时间' },
+        { field: 'servicer', title: '服务人员' },
+        { field: 'marketer', title: '市场人员' },
+        { field: 'reasonforcallback', title: '客户实际下线原因' },
+        { field: 'reasonformarketer', title: '市场通知下线原因' },
+        { field: 'followbusiness', title: '跟进中的业务' }
+      ];
+      let _self = this;
+      let url = `api/customer/customerEndList`;
+      let config = {
+        page: '1',
+        pageSize: '1000000',
+        status: 'N',
+        export: 'Y',
+        exportField: encodeURI(JSON.stringify(field)),
+        companyname: _self.NformInline.companyname,
+        customername: _self.NformInline.name,
+        customertel: _self.NformInline.tel,
+        productname: _self.NformInline.product,
+        marketer: _self.NformInline.marketername,
+        servicer: _self.NformInline.servicename,
+        bcreatedate: DateFormat(_self.NformInline.date[0]),
+        ecreatedate: DateFormat(_self.NformInline.date[1])
+      };
+      let toExcel = this.$MergeURL(url, config);
+      // console.log(toExcel)
+      window.open(toExcel);
+    },
+    cancel() {
+      var _self = this;
+      _self.customerid = [];
+      _self.isExamine = false;
+    },
+    search() {
+      this.page = 1;
+      this.getData();
+    },
+    reset() {
+      this.page = 1;
+      this.NformInline.companyname = '';
+      this.NformInline.name = '';
+      this.NformInline.tel = '';
+      this.NformInline.product = '';
+      this.NformInline.marketername = '';
+      this.NformInline.servicename = '';
+      this.NformInline.date = [];
+      this.getData();
+    },
+    customerDetail(a) {
+      let _self = this;
+      // console.log(a.row.customerid)
+      _self.customerid[0] = a.row.customerid;
+      // console.log(_self.customerid[0])
+      _self.isExamine = true;
+      _self.modal = true;
+    },
+
+    add() {
+      let _self = this;
+
+      _self.row.type = 'add';
+      // Bus.$emit('add', _self.row)
+      _self.$bus.emit('OPEN_OFFLINE_ADD', true);
+    },
+
+    edit() {
+      let _self = this;
+      console.log(_self.row);
+      if (_self.row.id == null) {
+        _self.$Message.warning('请选择要查看的项目');
+      } else if (_self.row.current_process !== 'kf') {
+        _self.$Message.warning('当前流程状态不允许此操作');
+      } else {
+        _self.row.type = 'edit';
+        // Bus.$emit('add', _self.row)
+        _self.$bus.emit('OPEN_OFFLINE_UPDATE', _self.row);
+      }
+    },
+
+    check() {
+      let _self = this;
+
+      if (_self.row.id == null) {
+        _self.$Message.warning('请选择要查看的项目');
+      } else {
+        _self.$bus.emit('OPEN_OFFLINE_SHOW', _self.row);
+      }
+    },
+    //删除下线数据
+    del() {
+      let _self = this;
+      if (_self.row.id == null) {
+        _self.$Message.warning('请先选择一行！');
+      } else {
+        let url = `api/customer/delete`;
+        let config = {
+          params: {
+            applyId: _self.row.id
+          }
+        };
+        function success(res) {
+          // console.log(res)
+          _self.$Message.success('删除成功');
+          _self.getData();
+        }
+
+        _self.$Get(url, config, success);
+      }
+    },
+
+    getData() {
+      let _self = this;
+      // let url = '/customer/customerEndList?sortField=id&page=' + _self.page + '&status=N&pageSize=' + _self.pageSize + '&companyname=' + _self.NformInline.companyname + '&customername=' + _self.NformInline.name + '&customertel=' + _self.NformInline.tel + '&productname=' + _self.NformInline.product + '&marketer=' + _self.NformInline.marketername + '&servicer=' + _self.NformInline.servicename
+      let url = `api/customer/customerEndList`;
+      let config = {
+        params: {
+          sortField: 'id',
+          page: _self.page,
+          pageSize: _self.pageSize,
+          status: 'N',
+          companyname: _self.NformInline.companyname,
+          customername: _self.NformInline.name,
+          customertel: _self.NformInline.tel,
+          productname: _self.NformInline.product,
+          marketer: _self.NformInline.marketername,
+          servicer: _self.NformInline.servicename,
+          bcreatedate: DateFormat(_self.NformInline.date[0]),
+          ecreatedate: DateFormat(_self.NformInline.date[1])
+        }
+      };
+      _self.row = {};
+      _self.loading = true;
+      function doSuccess(res) {
+        console.log(res.data.data);
+        let _data = res.data.data;
+
+        _self.pageTotal = _data.total;
+        _self.data = _data.rows;
+
+        for (let i = 0; i < _self.data.length; i++) {
+          _self.data[i].company_id = _self.data[i].companyid;
+          if (_self.data[i].enddate == null || _self.data[i].enddate == '') {
+          } else {
+            _self.data[i].enddate = _self.data[i].enddate.slice(0, 10);
+          }
+
+          if (_self.data[i].createdate == null || _self.data[i].createdate == '') {
+          } else {
+            _self.data[i].createdate = _self.data[i].createdate.slice(0, 10);
+          }
+
+          if (_self.data[i].servicebegindate == null || _self.data[i].servicebegindate == '') {
+          } else {
+            _self.data[i].servicebegindate = _self.data[i].servicebegindate.slice(0, 10);
+          }
+        }
+        _self.loading = false;
+      }
+
+      // this.GetData(url, doSuccess)
+      this.$Get(url, config, doSuccess);
+    },
+
+    pageChange(a) {
+      let _self = this;
+
+      _self.page = a;
+      _self.getData();
+    },
+
+    pageSizeChange(a) {
+      let _self = this;
+
+      _self.pageSize = a;
+      _self.getData();
+    },
+
+    selectrow(a) {
+      this.row = a;
     }
+  },
+  mounted() {
+    this.getData();
+  },
+  created() {
+    let _self = this;
+    Bus.$on('updateofflinecustomer', e => {
+      _self.getData();
+    });
+  }
+};
 </script>

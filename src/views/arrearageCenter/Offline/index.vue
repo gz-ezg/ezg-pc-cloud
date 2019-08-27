@@ -40,57 +40,84 @@
         </Row>
         <Row :gutter="16">
           <Col span="10">
-            <FormItem prop="servicebegindate" label="服务开始时间">
-              <Input size="small" v-model="detail.service_begin_time" readonly />
+            <FormItem prop="servicestartdate" label="订单开始税期">
+              <DatePicker type="month" v-model="detail.servicestartdate" style="width:100%" size="small" readonly></DatePicker>
+            </FormItem>
+          </Col>
+          <Col span="6">
+            <FormItem label="服务总月份">
+              <Input size="small" :value="detail.productnumber * 1 + detail.give_the_number * 1 || ''" readonly />
+            </FormItem>
+          </Col>
+          <Col v-if="detail.unitPrice" span="6">
+            <p style="padding-top:8px">
+              月单价: <span style="color:red">{{ detail.unitPrice }}</span>
+            </p>
+          </Col>
+        </Row>
+        <Row :gutter="16">
+          <Col span="10">
+            <FormItem prop="begin_period" label="工单开始税期">
+              <DatePicker type="month" v-model="detail.begin_period" style="width:100%" size="small" readonly></DatePicker>
             </FormItem>
           </Col>
           <Col span="10">
-            <FormItem prop="enddate" label="下线时间">
-              <DatePicker type="date" v-model="form.enddate" style="width: 100%" size="small"></DatePicker>
+            <FormItem prop="end_period" label="工单结束税期">
+              <DatePicker type="month" v-model="detail.end_period" style="width: 100%" size="small" readonly></DatePicker>
             </FormItem>
           </Col>
         </Row>
         <Row :gutter="16">
           <Col span="10">
+            <FormItem prop="account_begin_time" label="服务开始时间">
+              <DatePicker type="date" v-model="detail.account_begin_time" style="width:100%" size="small" readonly></DatePicker>
+            </FormItem>
+          </Col>
+        </Row>
+        <Divider type="vertical" />
+        <Row :gutter="16">
+          <Col span="10">
             <FormItem prop="taxperiod" label="下线税期">
-              <DatePicker type="month" v-model="form.taxperiod" style="width: 100%" size="small"></DatePicker>
+              <DatePicker
+                :options="dateOptions"
+                type="month"
+                v-model="form.taxperiod"
+                style="width: 100%"
+                size="small"
+                @on-change="onTaxperiodChange"
+              ></DatePicker>
+            </FormItem>
+          </Col>
+        </Row>
+        <Row :gutter="16">
+          <Col span="10">
+            <FormItem prop="endreason" label="下线类型">
+              <Select v-model="detail.endreason" style="width:100%" size="small">
+                <template v-for="(item, index) in codemap">
+                  <Option :key="index" :value="item.typecode">{{ item.typename }}</Option>
+                </template>
+              </Select>
+            </FormItem>
+          </Col></Row
+        >
+        <Row v-if="detail.money" :gutter="16">
+          <Col span="10">
+            <FormItem label="欠费金额">
+              <Input size="small" :value="detail.money" readonly />
             </FormItem>
           </Col>
           <Col span="10">
-            <FormItem prop="endreason" label="客户类别">
-              <Select v-model="form.endreason" style="width:100%" size="small">
-                <Option value="gszr">公司转让</Option>
-                <Option value="qysj">企业升级</Option>
-                <Option value="kjb">会计部</Option>
-                <Option value="scb">市场部</Option>
-                <Option value="hth">换同行</Option>
-                <Option value="zx">注销</Option>
-                <Option value="qt">其他</Option>
+            <FormItem label="欠费补缴方式">
+              <Select v-model="detail.payType" style="width:100%" size="small">
+                <Option value="payForSelf">自费</Option>
+                <Option value="payForSalary">薪资扣除</Option>
               </Select>
             </FormItem>
           </Col>
         </Row>
         <Row :gutter="16">
-          <Col span="10">
-            <FormItem prop="" label="是否需退款">
-              <RadioGroup v-model="form.has_returned">
-                <Radio label="Y">是</Radio>
-                <Radio label="N">否</Radio>
-              </RadioGroup>
-            </FormItem>
-          </Col>
-          <Col span="10">
-            <FormItem prop="" label="是否有欠费">
-              <RadioGroup v-model="form.has_arrears">
-                <Radio label="Y">是</Radio>
-                <Radio label="N">否</Radio>
-              </RadioGroup>
-            </FormItem>
-          </Col>
-        </Row>
-        <Row :gutter="16">
           <Col span="20">
-            <FormItem prop="reasonformarketer" label="市场通知下线原因">
+            <FormItem prop="reasonformarketer" label="通知下线原因">
               <Input size="small" v-model="form.reasonformarketer" type="textarea" :autosize="{ minRows: 2, maxRows: 5 }" />
             </FormItem>
           </Col>
@@ -122,6 +149,7 @@
 import { getCycleMonthInfoBycompanyId } from '@A/order';
 import { createCustomerEnd } from '@A/customer';
 import { DateFormat } from '@U/utils';
+import { nowDateFormatYearMonth } from '../../../libs/utils';
 
 export default {
   props: {
@@ -129,14 +157,13 @@ export default {
   },
   data() {
     return {
+      codemap: [],
       loading: false,
       detail: {},
       form: {
         reasonformarketer: '',
         reasonforcallback: '',
-        memo: '',
-        has_returned: 'N',
-        has_arrears: 'N'
+        memo: ''
       },
       rule: {
         taxperiod: [{ required: true, message: '必选项！', trigger: 'change', type: 'date' }],
@@ -151,28 +178,41 @@ export default {
     if (companyId) {
       const resp = await getCycleMonthInfoBycompanyId({ companyId });
       this.detail = resp[0];
+      this.codemap = await this.$queryCodes('endreason', true);
     }
   },
   methods: {
+    onTaxperiodChange(e) {
+      const { end_period, unitPrice } = this.detail;
+      if (!end_period) {
+        return;
+      }
+      let period = nowDateFormatYearMonth(end_period);
+
+      let between = e.substr(0, 4) * 12 + e.substr(5) * 1 - period.substr(0, 4) * 12 - period.substr(4) * 1;
+      if (between > 0) {
+        this.detail.money = unitPrice ? unitPrice * between : '';
+      } else {
+        this.detail.money = 0;
+      }
+    },
     handleSubmit() {
       this.$refs['form'].validate(async valid => {
         if (valid) {
-          const { order, form, service_begin_time, detail } = this;
+          const { order, form, detail } = this;
 
           let config = {
             companyid: order.company_id,
             productid: detail.product_id,
             servicer: detail.serviceId,
             marketer: detail.marketerId,
-            enddate: DateFormat(form.enddate),
-            servicebegindate: detail.service_begin_time,
             reasonformarketer: form.reasonformarketer,
             reasonforcallback: form.reasonforcallback,
             endreason: form.endreason,
+            money: detail.money,
+            payType: detail.payType,
             taxperiod: DateFormat(form.taxperiod),
             followbusiness: form.followbusiness,
-            hasReturned: form.has_returned,
-            hasArrears: form.has_arrears,
             cycleServiceRecordId: detail.cycleServiceRecordId
           };
           try {

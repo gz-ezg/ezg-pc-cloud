@@ -81,10 +81,8 @@ export default {
         }
       };
       let resp = await userApi.queryPropertyByProductId(config);
-      console.log(resp);
+      
       this.filterArr = resp.reduce((arr, v) => [...arr, ...v.children], []).map(v => ({ value: v.pvId, label: v.propertyValue }));
-      console.log(this.filterArr);
-
       let configs = this.header[1];
       configs.filters = this.filterArr;
       this.header.splice(1, configs);
