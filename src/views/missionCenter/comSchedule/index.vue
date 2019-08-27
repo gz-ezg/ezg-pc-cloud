@@ -126,6 +126,10 @@
                 <td>{{item.taskName}}</td>
                 <td>{{item.companyName}}</td>
                 <td>{{item.planDate}}</td>
+                <td v-if="item.taskStage=='tesFinished' && item.mission=='Completed'">成功</td>
+                <td v-if="item.taskStage=='tesFinished' && item.mission=='Failed'">失败</td>
+                <td v-if="item.taskStage=='tesUnstarted'">未完成</td>
+                <td v-if="item.mission=='Failed'">{{item.taskSummary}}</td>
             </tr>
         </table>
     </div>
@@ -156,7 +160,7 @@
                 YM:"",
                 WEEK:[],
                 data2:[],
-                tableHeader:["姓名","产品类别","正常节点","区域","地点","事件","企业","执行时间"],
+                tableHeader:["姓名","产品类别","正常节点","区域","地点","事件","企业","执行时间","状态"],
                 personList:["全部","符东","张威雄","王碧心","梁宝愿","潘美珊"],
                 statusList:["全部","未完成","成功","失败"],
                 executor_id:"",
@@ -733,6 +737,7 @@
                 }
 
                 this.$Get(url, config, success, fail)
+
             },
         },
         created() {

@@ -10,7 +10,7 @@
                 <Form ref="detail" :model="detail" :label-width="100" :rules="detailRule">
                     <Row>
                         <Col span="12">
-                            <FormItem label="地区：" prop="area">
+                            <FormItem label="广州市区：" prop="area">
                                 <Select v-model="detail.area" size="small" type="text" transfer :disabled="readonly">
                                     <Option v-for="(item,index) in gzbusinessarea" :key="index" :value="item.typecode">{{item.typename}}</Option>
                                 </Select>
@@ -19,64 +19,27 @@
                     </Row>
                     <Row>
                         <Col>
-                            <FormItem label="地址属性：" prop="addr_property">
-                                <Radio-group v-model="detail.addr_property">
-                                    <Radio v-for="(item,index) in addr_property" :key="index" :label="item.typecode" :disabled="readonly" style="margin-left: 20px">
-                                        <span>{{item.typename}}</span>
-                                    </Radio>
-                                </Radio-group>
+                            <FormItem label="具体地址：" prop="place">
+                                <Input v-model="detail.place" size="small" :readonly="readonly" type="textarea" :autosize="{minRows: 3,maxRows: 7}" placeholder="请输入......"/>
                             </FormItem>
                         </Col>
                     </Row>
+                    <!--<Row>-->
+                        <!--<Col>-->
+                            <!--<FormItem label="地址类型：" prop="addr_property">-->
+                                <!--<Radio-group v-model="detail.addr_property">-->
+                                    <!--<Radio v-for="(item,index) in addr_property" :key="index" :label="item.typecode" :disabled="readonly" style="margin-left: 20px">-->
+                                        <!--<span>{{item.typename}}</span>-->
+                                    <!--</Radio>-->
+                                <!--</Radio-group>-->
+                            <!--</FormItem>-->
+                        <!--</Col>-->
+                    <!--</Row>-->
                     <Row>
                         <Col>
-                            <FormItem label="开票类型：" prop="invoice_type">
+                            <FormItem label="地址类型：" prop="invoice_type">
                                 <Radio-group v-model="detail.invoice_type">
                                     <Radio v-for="(item,index) in kp_type" :key="index" :label="item.typecode" style="margin-left: 20px" :disabled="readonly">
-                                        <span>{{item.typename}}</span>
-                                    </Radio>
-                                </Radio-group>
-                            </FormItem>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <FormItem label="可开：" prop="can_invoice">
-                                <Radio-group v-model="detail.can_invoice">
-                                    <Radio v-for="(item,index) in sf_yn" :key="index" :label="item.typecode" style="margin-left: 20px" :disabled="readonly">
-                                        <span>{{item.typename}}</span>
-                                    </Radio>
-                                </Radio-group>
-                            </FormItem>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <FormItem label="可查：" prop="can_check">
-                                <Radio-group v-model="detail.can_check">
-                                    <Radio v-for="(item,index) in sf_yn" :key="index" :label="item.typecode" style="margin-left: 20px" :disabled="readonly">
-                                        <span>{{item.typename}}</span>
-                                    </Radio>
-                                </Radio-group>
-                            </FormItem>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <FormItem label="工商情况：" prop="tax_status">
-                                <Radio-group v-model="detail.tax_status">
-                                    <Radio v-for="(item,index) in business_tax_status" :key="index" :label="item.typecode" style="margin-left: 20px" :disabled="readonly">
-                                        <span>{{item.typename}}</span>
-                                    </Radio>
-                                </Radio-group>
-                            </FormItem>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <FormItem label="税务情况：" prop="business_status">
-                                <Radio-group v-model="detail.business_status">
-                                    <Radio v-for="(item,index) in business_tax_status" :key="index" :label="item.typecode" style="margin-left: 20px" :disabled="readonly">
                                         <span>{{item.typename}}</span>
                                     </Radio>
                                 </Radio-group>
@@ -92,18 +55,72 @@
                     </Row>
                     <Row>
                         <Col>
-                            <FormItem label="地址：" prop="place">
-                                <Input v-model="detail.place" size="small" :readonly="readonly"/>
+                            <FormItem label="可开：" prop="can_invoice">
+                                <Radio-group v-model="detail.can_invoice">
+                                    <!--<Radio v-for="(item,index) in sf_yn" :key="index" :label="item.typecode" style="margin-left: 20px" :disabled="readonly">-->
+                                        <!--<span>{{item.typename}}</span>-->
+                                    <!--</Radio>-->
+                                    <Radio label="Y" style="margin-left: 20px" :disabled="readonly">
+                                        <span style="font-size: 14px;font-weight: bold;color:#26A65B ">√</span>
+                                    </Radio>
+                                    <Radio label="N" style="margin-left: 20px" :disabled="readonly">
+                                        <span style="font-size: 14px;font-weight: bold;color:red;">×</span>
+                                    </Radio>
+                                </Radio-group>
                             </FormItem>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <FormItem label="备注：" prop="memo">
-                                <Input v-model="detail.memo" :readonly="readonly"  type="textarea" :autosize="{minRows: 3,maxRows: 7}" placeholder="请输入......"></Input>
+                            <FormItem label="可查：" prop="can_check">
+                                <Radio-group v-model="detail.can_check">
+                                    <!--<Radio v-for="(item,index) in sf_yn" :key="index" :label="item.typecode" style="margin-left: 20px" :disabled="readonly">-->
+                                        <!--<span>{{item.typename}}</span>-->
+                                    <!--</Radio>-->
+                                    <Radio label="Y" style="margin-left: 20px" :disabled="readonly">
+                                        <span style="font-size: 14px;font-weight: bold;color:#26A65B;">√</span>
+                                    </Radio>
+                                    <Radio label="N" style="margin-left: 20px" :disabled="readonly">
+                                        <span style="font-size: 14px;font-weight: bold;color:red;">×</span>
+                                    </Radio>
+                                </Radio-group>
                             </FormItem>
                         </Col>
                     </Row>
+                    <Row>
+                        <Col>
+                            <FormItem label="是否新注册：" prop="if_new_register">
+                                <Select v-model="detail.if_new_register" size="small" style="width:150px" type="text" transfer :disabled="readonly">
+                                    <Option v-for="(item,index) in sf_yn" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                </Select>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <FormItem label="工商情况：" prop="tax_status">
+                                <Select v-model="detail.tax_status" size="small" style="width:150px" type="text" transfer :disabled="readonly">
+                                    <Option v-for="(item,index) in business_tax_status" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                </Select>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <FormItem label="税务情况：" prop="business_status">
+                                <Select v-model="detail.business_status" size="small" style="width:150px" type="text" transfer :disabled="readonly">
+                                    <Option v-for="(item,index) in business_tax_status" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                </Select>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <!--<Row>-->
+                        <!--<Col>-->
+                            <!--<FormItem label="备注：" prop="memo">-->
+                                <!--<Input v-model="detail.memo" :readonly="readonly"  type="textarea" :autosize="{minRows: 3,maxRows: 7}" placeholder="请输入......"></Input>-->
+                            <!--</FormItem>-->
+                        <!--</Col>-->
+                    <!--</Row>-->
                 </Form>
             </Row>
         <div slot="footer">
@@ -136,6 +153,7 @@
                     can_check :"",
                     tax_status :"",
                     business_status:"" ,
+                    if_new_register:"",
                     price:"",
                     place:"",
                     memo:"",
@@ -179,6 +197,7 @@
                     area: _self.detail.area,
                     place:_self.detail.place,
                     price:_self.detail.price,
+                    ifNewRegister:_self.detail.if_new_register,
                     invoiceType:_self.detail.invoice_type,
                     addrProperty:_self.detail.addr_property,
                     canInvoice:_self.detail.can_invoice,
@@ -211,6 +230,7 @@
                     invoiceType:_self.detail.invoice_type,
                     addrProperty:_self.detail.addr_property,
                     canInvoice:_self.detail.can_invoice,
+                    ifNewRegister:_self.detail.if_new_register,
                     canCheck:_self.detail.can_check,
                     taxStatus:_self.detail.tax_status,
                     businessStatus:_self.detail.business_status,
@@ -234,6 +254,7 @@
                     addr_property:"",
                     invoice_type :"",
                     can_invoice:"",
+                    if_new_register:"",
                     can_check :"",
                     tax_status :"",
                     business_status:"" ,
@@ -258,8 +279,9 @@
                     invoice_type :"xgm_addr",
                     can_invoice:"N",
                     can_check :"N",
-                    tax_status :"normal",
-                    business_status:"normal" ,
+                    if_new_register:"N",
+                    tax_status :"Normal",
+                    business_status:"Normal" ,
                     price:"",
                     memo:"",
                 }
