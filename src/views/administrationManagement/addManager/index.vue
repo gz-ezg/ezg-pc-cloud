@@ -12,7 +12,7 @@
                                 <Col span="8">
                                     <FormItem label="地区：" prop="CompanyName">
                                         <Select v-model="SearchValidate.area" size="small" type="text" transfer>
-                                            <Option v-for="(item,index) in gzbusinessarea" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                            <Option v-for="(item,index) in gzaddrarea" :key="index" :value="item.typecode">{{item.typename}}</Option>
                                         </Select>
                                     </FormItem>
                                 </Col>
@@ -111,7 +111,7 @@
                     style="margin-top: 10px"
             ></Page>
         </Row>
-        <info :gzbusinessarea="gzbusinessarea" :addr_property="addr_property" :kp_type="kp_type" :business_tax_status="business_tax_status" :sf_yn="sf_yn"></info>
+        <info :gzbusinessarea="gzaddrarea" :addr_property="addr_property" :kp_type="kp_type" :business_tax_status="business_tax_status" :sf_yn="sf_yn"></info>
     </Card>
     </div>
 </template>
@@ -133,12 +133,12 @@
                 pageSize: 10,
                 current_row:"",
                 currentIndex:-1,
-                gzbusinessarea:[],
+                gzaddrarea:[],
                 addr_property:[],
                 kp_type:[],
                 business_tax_status:[],
                 sf_yn:[],
-                gzbusinessarea_map:new Map(),
+                gzaddrarea_map:new Map(),
                 addr_property_map:new Map(),
                 kp_type_map:new Map(),
                 business_tax_status_map:new Map(),
@@ -163,7 +163,7 @@
                         minWidth: 120,
                         render:(h,params)=>{
                             let _self = this
-                            return h('div',{},_self.gzbusinessarea_map.get(params.row.AREA))
+                            return h('div',{},_self.gzaddrarea_map.get(params.row.AREA))
                         }
                     },
                     {
@@ -968,138 +968,22 @@
 
                 function success(res){
                     _self.data = res.data.data.rows
-                    let a=[],b=[],c=[],d=[],e=[],f=[],g=[],h=[],i1=[],j=[],k=[],l=[],m=[],n=[],o=[],p=[]
-                    let obj={}, obj1={},obj2={},obj3={},obj4={},obj5={},obj6={},obj7={},obj8={},obj9={},obj10={},obj11={},obj12={},obj13={},obj14={},obj15 = {}
-                    for (let i=0;i<_self.data.length;i++) {
-                        if (_self.data[i].area=='nanhai') {
-                            a.push(_self.data[i])
+                    let totalList = res.data.data.rows;
+                    let temp = [];
+                    totalList.forEach(v1 => {
+                        let flag = false;
+                        temp.forEach((v2, i) => {
+                            if (v2.AREA == v1.area) {
+                                flag = true;
+                                temp[i].list.push(v1);
+                            }
+                        });
+                        if (!flag) {
+                            temp = [...temp, { AREA: v1.area, list: [v1] }];
                         }
-                        if (_self.data[i].area=='sanshui') {
-                            b.push(_self.data[i])
-                        }
-                        if (_self.data[i].area=='gaoming') {
-                            c.push(_self.data[i])
-                        }
-                        if (_self.data[i].area=='shunde') {
-                            d.push(_self.data[i])
-                        }
-                        if (_self.data[i].area=='chancheng') {
-                            e.push(_self.data[i])
-                        }
-                        if (_self.data[i].area=='tianhe') {
-                            f.push(_self.data[i])
-                        }
-                        if (_self.data[i].area=='yuexiu') {
-                            g.push(_self.data[i])
-                        }
-                        if (_self.data[i].area=='liwan') {
-                            h.push(_self.data[i])
-                        }
-                        if (_self.data[i].area=='zengcheng') {
-                            i1.push(_self.data[i])
-                        }
-                        if (_self.data[i].area=='panyu') {
-                            j.push(_self.data[i])
-                        }
-                        if (_self.data[i].area=='huadou') {
-                            k.push(_self.data[i])
-                        }
-                        if (_self.data[i].area=='conghua') {
-                            l.push(_self.data[i])
-                        }
-                        if (_self.data[i].area=='huangpu') {
-                            m.push(_self.data[i])
-                        }
-                        if (_self.data[i].area=='baiyun') {
-                            n.push(_self.data[i])
-                        }
-                        if (_self.data[i].area=='haizhu') {
-                            o.push(_self.data[i])
-                        }
-                        if (_self.data[i].area=='nansha') {
-                            p.push(_self.data[i])
-                        }
-                    }
-                    if (a.length){
-                        obj.AREA = 'nanhai'
-                        obj.list = a
-                        _self.data1.push(obj)
-                    }
-                    if (b.length){
-                        obj1.AREA = 'sanshui'
-                        obj1.list = b
-                        _self.data1.push(obj1)
-                    }
-                    if (c.length){
-                        obj2.AREA = 'gaoming'
-                        obj2.list = c
-                        _self.data1.push(obj2)
-                    }
-                    if (d.length){
-                        obj3.AREA = 'shunde'
-                        obj3.list = d
-                        _self.data1.push(obj3)
-                    }
-                    if (e.length){
-                        obj4.AREA = 'chancheng'
-                        obj4.list = e
-                        _self.data1.push(obj4)
-                    }
-                    if (f.length){
-                        obj5.AREA = 'tianhe'
-                        obj5.list = f
-                        _self.data1.push(obj5)
-                    }
-                    if (g.length){
-                        obj6.AREA = 'yuexiu'
-                        obj6.list = g
-                        _self.data1.push(obj6)
-                    }
-                    if (h.length){
-                        obj7.AREA = 'liwan'
-                        obj7.list = h
-                        _self.data1.push(obj7)
-                    }
-                    if (i1.length){
-                        obj8.AREA = 'zengcheng'
-                        obj8.list = i1
-                        _self.data1.push(obj8)
-                    }
-                    if (j.length){
-                        obj9.AREA = 'panyu'
-                        obj9.list = j
-                        _self.data1.push(obj9)
-                    }
-                    if (k.length){
-                        obj10.AREA = 'huadou'
-                        obj10.list = k
-                        _self.data1.push(obj10)
-                    }
-                    if (l.length){
-                        obj11.AREA = 'conghua'
-                        obj11.list = l
-                        _self.data1.push(obj11)
-                    }
-                    if (m.length){
-                        obj12.AREA = 'huangpu'
-                        obj12.list = m
-                        _self.data1.push(obj12)
-                    }
-                    if (n.length){
-                        obj13.AREA = 'baiyun'
-                        obj13.list = n
-                        _self.data1.push(obj13)
-                    }
-                    if (o.length){
-                        obj14.AREA = 'haizhu'
-                        obj14.list = o
-                        _self.data1.push(obj14)
-                    }
-                    if (p.length){
-                        obj15.AREA = 'nansha'
-                        obj15.list = p
-                        _self.data1.push(obj15)
-                    }
+                    });
+                    _self.data1 = temp
+                    console.log(_self.data1)
                     _self.pageTotal = res.data.data.total
                     _self.loading = false
                 }
@@ -1111,15 +995,15 @@
                 this.$Get(url, config, success, fail)
             },
             get_data_center(){
-                let params = "gzbusinessarea,gzbusinessplace,addr_property,kp_type,business_tax_status,sf_yn"
+                let params = "gzaddrarea,gzbusinessplace,addr_property,kp_type,business_tax_status,sf_yn"
                 let _self = this
                 function success(res){
-                    _self.gzbusinessarea = res.data.data.gzbusinessarea
+                    _self.gzaddrarea = res.data.data.gzaddrarea
                     _self.addr_property = res.data.data.addr_property
                     _self.kp_type = res.data.data.kp_type
                     _self.business_tax_status = res.data.data.business_tax_status
                     _self.sf_yn = res.data.data.sf_yn
-                    _self.gzbusinessarea_map = _self.$array2map(_self.gzbusinessarea)
+                    _self.gzaddrarea_map = _self.$array2map(_self.gzaddrarea)
                     _self.addr_property_map = _self.$array2map(_self.addr_property)
                     _self.kp_type_map = _self.$array2map(_self.kp_type)
                     _self.business_tax_status_map = _self.$array2map(_self.business_tax_status)
