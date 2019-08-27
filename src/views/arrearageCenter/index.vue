@@ -57,7 +57,8 @@ export default {
       currentCompany: null,
       arrearagePopup: false,
       offlinePopup: false,
-      renewPopup: false
+      renewPopup: false,
+      clickExit: false
     };
   },
   methods: {
@@ -72,6 +73,7 @@ export default {
     },
     onExit() {
       this.$store.commit('setForceLock', false);
+      this.clickExit = true;
       this.$router.push('/');
     },
     onCreateOk() {
@@ -103,8 +105,10 @@ export default {
     this.handleGetList();
   },
   beforeRouteLeave(to, from, next) {
-    if (this.companyList.length) {
-      console.log('路由离开时');
+    console.log('路由离开时');
+    if (this.clickExit) {
+      next();
+    } else if (this.companyList.length) {
       next('/arrearageCenter');
     }
   }
