@@ -92,7 +92,7 @@
         <Row :gutter="16">
           <Col span="10">
             <FormItem prop="endreason" label="下线类型">
-              <Select v-model="detail.endreason" style="width:100%" size="small">
+              <Select v-model="form.endreason" style="width:100%" size="small">
                 <template v-for="(item, index) in codemap">
                   <Option :key="index" :value="item.typecode">{{ item.typename }}</Option>
                 </template>
