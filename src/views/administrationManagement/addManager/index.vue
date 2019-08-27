@@ -1,5 +1,6 @@
 <template>
-    <Card>
+    <div @click="changeIndex">
+        <Card>
         <Row style="margin-bottom:20px">
             <Collapse v-model="search_model">
                 <Panel name="1">
@@ -21,7 +22,7 @@
                                     </FormItem>
                                 </Col>
                                 <Col span="8">
-                                    <FormItem label="开票类型：" prop="followby_realname">
+                                    <FormItem label="地址类型：" prop="followby_realname">
                                         <Select v-model="SearchValidate.kpType" size="small" type="text" transfer>
                                             <Option v-for="(item,index) in kp_type" :key="index" :value="item.typecode">{{item.typename}}</Option>
                                         </Select>
@@ -29,13 +30,13 @@
                                 </Col>
                             </Row>
                             <Row :gutter="8" style="height:56px">
-                                <Col span="8">
-                                    <FormItem label="地址属性：" prop="note_kj_flag">
-                                        <Select v-model="SearchValidate.addrProperty" size="small" type="text" transfer>
-                                            <Option v-for="(item,index) in addr_property" :key="index" :value="item.typecode">{{item.typename}}</Option>
-                                        </Select>
-                                    </FormItem>
-                                </Col>
+                                <!--<Col span="8">-->
+                                    <!--<FormItem label="地址属性：" prop="note_kj_flag">-->
+                                        <!--<Select v-model="SearchValidate.addrProperty" size="small" type="text" transfer>-->
+                                            <!--<Option v-for="(item,index) in addr_property" :key="index" :value="item.typecode">{{item.typename}}</Option>-->
+                                        <!--</Select>-->
+                                    <!--</FormItem>-->
+                                <!--</Col>-->
                                 <Col span="8">
                                     <FormItem label="可开：" prop="etaxStatus">
                                         <Select v-model="SearchValidate.canInvoice" size="small" type="text" transfer>
@@ -50,8 +51,6 @@
                                         </Select>
                                     </FormItem>
                                 </Col>
-                            </Row>
-                            <Row :gutter="8" style="height:56px">
                                 <Col span="8">
                                     <FormItem label="工商情况：" prop="note_kj_flag">
                                         <Select v-model="SearchValidate.taxStatus" size="small" type="text" transfer>
@@ -59,6 +58,9 @@
                                         </Select>
                                     </FormItem>
                                 </Col>
+                            </Row>
+                            <Row :gutter="8" style="height:56px">
+
                                 <Col span="8">
                                     <FormItem label="税务情况：" prop="etaxStatus">
                                         <Select v-model="SearchValidate.businessStatus" size="small" type="text" transfer>
@@ -80,24 +82,21 @@
         </Row>
         <Row>
             <ButtonGroup>
-                <Button type="primary" icon="ios-color-wand-outline" @click="add">新增</Button>
+                <Button v-permission="['addManager_index.add']" type="primary" icon="ios-color-wand-outline" @click="add">新增</Button>
                 <Button type="primary" icon="information-circled" @click="show">查看</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="edit">修改</Button>
+                <Button v-permission="['addManager_index.edit']" type="primary" icon="ios-color-wand-outline" @click="edit">修改</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
                 <!--<Button type="primary" icon="ios-color-wand-outline" @click="import_excel">导入Excel</Button>-->
             </ButtonGroup>
         </Row>
         <Row style="margin-top: 10px;">
             <Table
-                    @on-current-change="selectRow"
-                    @on-row-dblclick="show"
                     border
                     :loading="loading"
                     ref="selection"
-                    highlight-row
                     size="small"
                     :columns="header"
-                    :data="data"
+                    :data="data1"
             ></Table>
             <Page
                     size="small"
@@ -114,6 +113,7 @@
         </Row>
         <info :gzbusinessarea="gzbusinessarea" :addr_property="addr_property" :kp_type="kp_type" :business_tax_status="business_tax_status" :sf_yn="sf_yn"></info>
     </Card>
+    </div>
 </template>
 
 <script>
@@ -129,6 +129,7 @@
                 loading: false,
                 pageTotal: 0,
                 page: 1,
+                currentIndex1:"",
                 pageSize: 10,
                 current_row:"",
                 currentIndex:-1,
@@ -153,133 +154,699 @@
                     businessStatus:""
                 },
                 data:[],
+                data1:[],
                 header: [
                     {
                         title: '地区',
-                        key: 'area',
+                        key: 'AREA',
+                        align:'center',
                         minWidth: 120,
                         render:(h,params)=>{
                             let _self = this
-                            return h('div',{},_self.gzbusinessarea_map.get(params.row.area))
+                            return h('div',{},_self.gzbusinessarea_map.get(params.row.AREA))
                         }
                     },
                     {
                         title: '具体位置',
-                        key: 'place',
-                        width: 180
-                    },
-                    {
-                        title: '地址属性',
-                        key: 'addr_property',
-                        minWidth: 120,
-                        render:(h,params)=>{
-                            let _self = this
-                            return h('div',{},_self.addr_property_map.get(params.row.addr_property))
+                        key: 'list',
+                        align:'center',
+                        width: 180,
+                        render: (h, params) => {
+                            return h('div', {
+                                    'class':{
+                                        subCol:true,
+                                    }
+                            }, [
+                                h('ul', this.data1[params.index].list.map(item => {
+                                    if (item.place){
+                                        let a = item.place
+                                        if (item.place) {
+                                            if (a.length > 11) {
+                                                return h('li', {
+                                                    'class':{
+                                                        a:item.id==this.currentIndex1?true:false
+                                                    },
+                                                    on:{
+                                                        click: (e)=>{
+                                                            this.changeClass(item)
+                                                            window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                        },
+                                                        dblclick:(e) =>{
+                                                            this.show()
+                                                            window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                        }
+                                                    }
+                                                }, a.slice(0,11)+'...')
+                                            }else {
+                                                return h('li', {
+                                                    'class':{
+                                                        a:item.id==this.currentIndex1?true:false
+                                                    },
+                                                    on:{
+                                                        click: (e)=>{
+                                                            this.changeClass(item)
+                                                            window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                        },
+                                                        dblclick:(e) =>{
+                                                            this.show()
+                                                            window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                        }
+                                                    }
+                                                }, a)
+                                            }
+                                        }
+                                    } else {
+                                        return h('li',{
+                                            'class':{
+                                                a:item.id==this.currentIndex1?true:false
+                                            },
+                                            on:{
+                                                click: (e)=>{
+                                                    this.changeClass(item)
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                },
+                                                dblclick:(e) =>{
+                                                    this.show()
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                }
+                                            }
+                                        },[
+                                            h('span',{},'--')
+                                        ])
+                                    }
+                                }))
+                            ]);
                         }
                     },
+                    // {
+                    //     title: '地址类型',
+                    //     key: 'list',
+                    //     align:'center',
+                    //     minWidth: 120,
+                    //     render: (h, params) => {
+                    //         return h('div', {
+                    //             attrs: {
+                    //                 class:'subCol'
+                    //             },
+                    //         }, [
+                    //             h('ul', this.data1[params.index].list.map(item => {
+                    //                 return h('li', {
+                    //                     'class':{
+                    //                         a:item.id==this.currentIndex1?true:false
+                    //                     },
+                    //                     on:{
+                    //                         click: (e)=>{
+                    //                             this.changeClass(item)
+                    //                             window.event? window.event.cancelBubble = true : e.stopPropagation()
+                    //                         },
+                    //                         dblclick:(e) =>{
+                    //                             this.show()
+                    //                             window.event? window.event.cancelBubble = true : e.stopPropagation()
+                    //                         }
+                    //                     }
+                    //                 }, this.addr_property_map.get(item.addr_property))
+                    //             }))
+                    //         ]);
+                    //     }
+                    // },
                     {
-                        title: '开票类型',
-                        key: 'invoice_type',
+                        title: '地址类型',
+                        key: 'list',
+                        align:'center',
                         minWidth: 100,
-                        render:(h,params)=>{
-                            let _self = this
-                            return h('div',{},_self.kp_type_map.get(params.row.invoice_type))
+                        render: (h, params) => {
+                            return h('div', {
+                                attrs: {
+                                    class:'subCol'
+                                },
+                            }, [
+                                h('ul', this.data1[params.index].list.map(item => {
+                                    if (item.invoice_type){
+                                        return h('li', {
+                                            'class':{
+                                                a:item.id==this.currentIndex1?true:false
+                                            },
+                                            on:{
+                                                click: (e)=>{
+                                                    this.changeClass(item)
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                },
+                                                dblclick:(e) =>{
+                                                    this.show()
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                }
+                                            }
+                                        }, this.kp_type_map.get(item.invoice_type))
+                                    } else {
+                                        return h('li',{
+                                            'class':{
+                                                a:item.id==this.currentIndex1?true:false
+                                            },
+                                            on:{
+                                                click: (e)=>{
+                                                    this.changeClass(item)
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                },
+                                                dblclick:(e) =>{
+                                                    this.show()
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                }
+                                            }
+                                        },[
+                                            h('span',{},'--')
+                                        ])
+                                    }
+                                }))
+                            ]);
                         }
                     },
                     {
                         title: '价格',
-                        key: 'price',
-                        minWidth: 90
+                        key: 'list',
+                        align:'center',
+                        minWidth: 90,
+                        render: (h, params) => {
+                            return h('div', {
+                                attrs: {
+                                    class:'subCol'
+                                },
+                            }, [
+                                h('ul', this.data1[params.index].list.map(item => {
+                                    if (item.price){
+                                        return h('li', {
+                                            'class':{
+                                                a:item.id==this.currentIndex1?true:false
+                                            },
+                                            on:{
+                                                click: (e)=>{
+                                                    this.changeClass(item)
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                },
+                                                dblclick:(e) =>{
+                                                    this.show()
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                }
+                                            }
+                                        },item.price)
+                                    } else {
+                                        return h('li',{
+                                            'class':{
+                                                a:item.id==this.currentIndex1?true:false
+                                            },
+                                            on:{
+                                                click: (e)=>{
+                                                    this.changeClass(item)
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                },
+                                                dblclick:(e) =>{
+                                                    this.show()
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                }
+                                            }
+                                        },[
+                                            h('span',{},'--')
+                                        ])
+                                    }
+                                }))
+                            ]);
+                        }
                     },
                     {
                         title: '可开',
-                        key: 'can_invoice',
+                        key: 'list',
+                        align:'center',
                         minWidth: 70,
-                        render:(h,params)=>{
-                            let _self = this
-                            return h('div',{},_self.sf_yn_map.get(params.row.can_invoice))
+                        render: (h, params) => {
+                            return h('div', {
+                                attrs: {
+                                    class:'subCol'
+                                },
+                            }, [
+                                h('ul', this.data1[params.index].list.map(item => {
+                                    if (item.can_invoice){
+                                        if (item.can_invoice=='Y'){
+                                            return h('li', {
+                                                'class':{
+                                                    a:item.id==this.currentIndex1?true:false
+                                                },
+                                                style:{
+                                                    fontWeight: "bold",
+                                                    color:"#26A65B"
+                                                },
+                                                on:{
+                                                    click: (e)=>{
+                                                        this.changeClass(item)
+                                                        window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                    },
+                                                    dblclick:(e) =>{
+                                                        this.show()
+                                                        window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                    }
+                                                }
+                                            }, '√')
+                                        }
+                                        if (item.can_invoice=='N'){
+                                            return h('li', {
+                                                'class':{
+                                                    a:item.id==this.currentIndex1?true:false
+                                                },
+                                                style:{
+                                                    fontWeight: "bold",
+                                                    color:"red"
+                                                },
+                                                on:{
+                                                    click: (e)=>{
+                                                        this.changeClass(item)
+                                                        window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                    },
+                                                    dblclick:(e) =>{
+                                                        this.show()
+                                                        window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                    }
+                                                }
+                                            }, '×')
+                                        }
+                                    } else {
+                                        return h('li',{
+                                            'class':{
+                                                a:item.id==this.currentIndex1?true:false
+                                            },
+                                            on:{
+                                                click: (e)=>{
+                                                    this.changeClass(item)
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                },
+                                                dblclick:(e) =>{
+                                                    this.show()
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                }
+                                            }
+                                        },[
+                                            h('span',{},'--')
+                                        ])
+                                    }
+                                }))
+                            ]);
                         }
                     },
                     {
                         title: '可查',
-                        key: 'can_check',
+                        key: 'list',
+                        align:'center',
                         minWidth: 70,
-                        render:(h,params)=>{
-                            let _self = this
-                            return h('div',{},_self.sf_yn_map.get(params.row.can_check))
+                        render: (h, params) => {
+                            return h('div', {
+                                attrs: {
+                                    class:'subCol'
+                                },
+                            }, [
+                                h('ul', this.data1[params.index].list.map(item => {
+                                    if (item.can_check){
+                                        if (item.can_check=='Y'){
+                                            return h('li', {
+                                                'class':{
+                                                    a:item.id==this.currentIndex1?true:false
+                                                },
+                                                style:{
+                                                    fontWeight: "bold",
+                                                    color:"#26A65B"
+                                                },
+                                                on:{
+                                                    click: (e)=>{
+                                                        this.changeClass(item)
+                                                        window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                    },
+                                                    dblclick:(e) =>{
+                                                        this.show()
+                                                        window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                    }
+                                                }
+                                            }, '√')
+                                        }
+                                        if (item.can_check=='N'){
+                                            return h('li', {
+                                                'class':{
+                                                    a:item.id==this.currentIndex1?true:false
+                                                },
+                                                style:{
+                                                    fontWeight: "bold",
+                                                    color:"red"
+                                                },
+                                                on:{
+                                                    click: (e)=>{
+                                                        this.changeClass(item)
+                                                        window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                    },
+                                                    dblclick:(e) =>{
+                                                        this.show()
+                                                        window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                    }
+                                                }
+                                            }, '×')
+                                        }
+                                    } else {
+                                        return h('li',{
+                                            'class':{
+                                                a:item.id==this.currentIndex1?true:false
+                                            },
+                                            on:{
+                                                click: (e)=>{
+                                                    this.changeClass(item)
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                },
+                                                dblclick:(e) =>{
+                                                    this.show()
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                }
+                                            }
+                                        },[
+                                            h('span',{},'--')
+                                        ])
+                                    }
+                                }))
+                            ]);
+                        }
+                    },
+                    {
+                        title: '新注册',
+                        key: 'list',
+                        align:'center',
+                        minWidth: 70,
+                        render: (h, params) => {
+                            return h('div', {
+                                attrs: {
+                                    class:'subCol'
+                                },
+                            }, [
+                                h('ul', this.data1[params.index].list.map(item => {
+                                    if (item.if_new_register){
+                                        return h('li', {
+                                            'class':{
+                                                a:item.id==this.currentIndex1?true:false
+                                            },
+                                            on:{
+                                                click: (e)=>{
+                                                    this.changeClass(item)
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                },
+                                                dblclick:(e) =>{
+                                                    this.show()
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                }
+                                            }
+                                        }, this.sf_yn_map.get(item.if_new_register))
+                                    } else {
+                                        return h('li',{
+                                            'class':{
+                                                a:item.id==this.currentIndex1?true:false
+                                            },
+                                            on:{
+                                                click: (e)=>{
+                                                    this.changeClass(item)
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                },
+                                                dblclick:(e) =>{
+                                                    this.show()
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                }
+                                            }
+                                        },[
+                                            h('span',{},'--')
+                                        ])
+                                    }
+                                }))
+                            ]);
                         }
                     },
                     {
                         title: '工商情况',
-                        key: 'tax_status',
+                        key: 'list',
+                        align:'center',
                         minWidth: 90,
-                        render:(h,params)=>{
-                            let _self = this
-                            return h('div',{},_self.business_tax_status_map.get(params.row.tax_status))
+                        render: (h, params) => {
+                            return h('div', {
+                                attrs: {
+                                    class:'subCol'
+                                },
+                            }, [
+                                h('ul', this.data1[params.index].list.map(item => {
+                                    if (item.tax_status){
+                                        return h('li', {
+                                            'class':{
+                                                a:item.id==this.currentIndex1?true:false
+                                            },
+                                            on:{
+                                                click: (e)=>{
+                                                    this.changeClass(item)
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                },
+                                                dblclick:(e) =>{
+                                                    this.show()
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                }
+                                            }
+                                        }, this.business_tax_status_map.get(item.tax_status))
+                                    } else {
+                                        return h('li',{
+                                            'class':{
+                                                a:item.id==this.currentIndex1?true:false
+                                            },
+                                            on:{
+                                                click: (e)=>{
+                                                    this.changeClass(item)
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                },
+                                                dblclick:(e) =>{
+                                                    this.show()
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                }
+                                            }
+                                        },[
+                                            h('span',{},'--')
+                                        ])
+                                    }
+                                }))
+                            ]);
                         }
                     },
                     {
                         title: '税务情况',
-                        key: 'business_status',
+                        key: 'list',
+                        align:'center',
                         minWidth: 90,
-                        render:(h,params)=>{
-                            let _self = this
-                            return h('div',{},_self.business_tax_status_map.get(params.row.business_status))
-                        }
-                    },
-                    {
-                        title: '备注',
-                        key: 'memo',
-                        width: 250,
                         render: (h, params) => {
-                            if (params.row.memo == "" || params.row.memo == null) {
-                                return "";
-                            } else {
-                                // console.log(params.row.companynames)
-                                let temp = params.row.memo
-                                console.log(temp.length)
-                                if (temp.length > 10) {
-                                    if (params.index != this.currentIndex){
-                                        console.log("123")
-                                        return h("div",{
-                                        },[
-                                            h("span",{
-                                                style:{
-                                                    display: 'inline-block',
-                                                }
-                                            },temp.slice(0,10) + "..."),
-                                            h("Button", {
-                                                props:{
-                                                    type:'text',
-                                                    display: 'inline-block',
+                            return h('div', {
+                                attrs: {
+                                    class:'subCol'
+                                },
+                            }, [
+                                h('ul', this.data1[params.index].list.map(item => {
+                                    if (item.business_status){
+                                        return h('li', {
+                                            'class':{
+                                                a:item.id==this.currentIndex1?true:false
+                                            },
+                                            on:{
+                                                click: (e)=>{
+                                                    this.changeClass(item)
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
                                                 },
-                                                style: {
-                                                    color:'rgb(45,140,240)',
-                                                },
-                                                on:{
-                                                    click: () => {
-                                                        this.change(params.row,params.index)
-                                                    }
+                                                dblclick:(e) =>{
+                                                    this.show()
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
                                                 }
-                                            },"点击展开")
-                                        ]);
+                                            }
+                                        }, this.business_tax_status_map.get(item.business_status))
                                     } else {
-                                        return h("div",{
+                                        return h('li',{
+                                            'class':{
+                                                a:item.id==this.currentIndex1?true:false
+                                            },
+                                            on:{
+                                                click: (e)=>{
+                                                    this.changeClass(item)
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                },
+                                                dblclick:(e) =>{
+                                                    this.show()
+                                                    window.event? window.event.cancelBubble = true : e.stopPropagation()
+                                                }
+                                            }
                                         },[
-                                            h("span",temp)
-                                        ]);
+                                            h('span',{},'--')
+                                        ])
                                     }
-
-                                } else {
-                                    return h("div",{
-                                        },[
-                                            h("span", temp)
-                                        ]
-                                    );
-                                }
-                            }
+                                }))
+                            ]);
                         }
                     },
+                    // {
+                    //     title: '备注',
+                    //     key: 'list',
+                    //     align:'center',
+                    //     minWidth: 250,
+                    //     // render: (h, params) => {
+                    //     //     if (params.row.memo == "" || params.row.memo == null) {
+                    //     //         return "";
+                    //     //     } else {
+                    //     //         // console.log(params.row.companynames)
+                    //     //         let temp = params.row.memo
+                    //     //         if (temp.length > 10) {
+                    //     //             if (params.index != this.currentIndex){
+                    //     //                 return h("div",{
+                    //     //                 },[
+                    //     //                     h("span",{
+                    //     //                         style:{
+                    //     //                             display: 'inline-block',
+                    //     //                         }
+                    //     //                     },temp.slice(0,10) + "..."),
+                    //     //                     h("Button", {
+                    //     //                         props:{
+                    //     //                             type:'text',
+                    //     //                             display: 'inline-block',
+                    //     //                         },
+                    //     //                         style: {
+                    //     //                             color:'rgb(45,140,240)',
+                    //     //                         },
+                    //     //                         on:{
+                    //     //                             click: () => {
+                    //     //                                 this.change(params.row,params.index)
+                    //     //                             }
+                    //     //                         }
+                    //     //                     },"点击展开")
+                    //     //                 ]);
+                    //     //             } else {
+                    //     //                 return h("div",{
+                    //     //                 },[
+                    //     //                     h("span",temp)
+                    //     //                 ]);
+                    //     //             }
+                    //     //
+                    //     //         } else {
+                    //     //             return h("div",{
+                    //     //                 },[
+                    //     //                     h("span", temp)
+                    //     //                 ]
+                    //     //             );
+                    //     //         }
+                    //     //     }
+                    //     // }
+                    //     render: (h, params) => {
+                    //             return h('div', {
+                    //                 attrs: {
+                    //                     class:'subCol'
+                    //                 },
+                    //             }, [
+                    //                 h('ul', this.data1[params.index].list.map((item,index) => {
+                    //                     let a = item.memo
+                    //                     if (item.memo){
+                    //                         if (a.length > 18){
+                    //                             if (item.id != this.currentIndex){
+                    //                                 return h("li",{
+                    //                                     'class':{
+                    //                                         a:item.id==this.currentIndex1?true:false
+                    //                                     },
+                    //                                     on:{
+                    //                                         click: (e)=>{
+                    //                                             this.changeClass(item)
+                    //                                             window.event? window.event.cancelBubble = true : e.stopPropagation();
+                    //                                         },
+                    //                                         dblclick:(e) =>{
+                    //                                             this.show()
+                    //                                             window.event? window.event.cancelBubble = true : e.stopPropagation()
+                    //                                         }
+                    //                                     }
+                    //                                 },[
+                    //                                     h("span",{
+                    //                                         style:{
+                    //                                             display: 'inline-block',
+                    //                                         }
+                    //                                     },item.memo.slice(0,18) + "..."),
+                    //                                     // h("Button", {
+                    //                                     //     props:{
+                    //                                     //         type:'text',
+                    //                                     //         display: 'inline-block',
+                    //                                     //     },
+                    //                                     //     style: {
+                    //                                     //         color:'rgb(45,140,240)',
+                    //                                     //         padding:'0',
+                    //                                     //         lineHeight: '0'
+                    //                                     //     },
+                    //                                     //     on:{
+                    //                                     //         click: (e) => {
+                    //                                     //             this.change(item)
+                    //                                     //             window.event? window.event.cancelBubble = true : e.stopPropagation();
+                    //                                     //         }
+                    //                                     //     }
+                    //                                     // },"点击展开")
+                    //                                 ]);
+                    //                             }else {
+                    //                                 return h("li",{
+                    //                                     'class':{
+                    //                                         a:item.id==this.currentIndex1?true:false
+                    //                                     },
+                    //                                     on:{
+                    //                                         click: (e)=>{
+                    //                                             this.changeClass(item)
+                    //                                             window.event? window.event.cancelBubble = true : e.stopPropagation()
+                    //                                         },
+                    //                                         dblclick:(e) =>{
+                    //                                             this.show()
+                    //                                             window.event? window.event.cancelBubble = true : e.stopPropagation()
+                    //                                         }
+                    //                                     }
+                    //                                 },[
+                    //                                     h("span",{
+                    //                                     },item.memo)
+                    //                                 ]);
+                    //                             }
+                    //                         } else {
+                    //                             return h("li",{
+                    //                                 'class':{
+                    //                                     a:item.id==this.currentIndex1?true:false
+                    //                                 },
+                    //                                 on:{
+                    //                                     click: (e)=>{
+                    //                                         this.changeClass(item)
+                    //                                         window.event? window.event.cancelBubble = true : e.stopPropagation()
+                    //                                     },
+                    //                                     dblclick:(e) =>{
+                    //                                         this.show()
+                    //                                         window.event? window.event.cancelBubble = true : e.stopPropagation()
+                    //                                     }
+                    //                                 }
+                    //                                 },[
+                    //                                     h("span", {
+                    //                                     },item.memo)
+                    //                                 ]
+                    //                             );
+                    //                         }
+                    //                     } else {
+                    //                         return h("li",{
+                    //                             'class':{
+                    //                                 a:item.id==this.currentIndex1?true:false
+                    //                             },
+                    //                             on:{
+                    //                                 click: (e)=>{
+                    //                                     this.changeClass(item)
+                    //                                     window.event? window.event.cancelBubble = true : e.stopPropagation()
+                    //                                 },
+                    //                                 dblclick:(e) =>{
+                    //                                     this.show()
+                    //                                     window.event? window.event.cancelBubble = true : e.stopPropagation()
+                    //                                 }
+                    //                             }
+                    //                             },[
+                    //                                 h("span", "--")
+                    //                             ]
+                    //                         );
+                    //                     }
+                    //
+                    //                 }))
+                    //             ]);
+                    //
+                    //     }
+                    // },
                 ]
             }
         },
@@ -315,8 +882,15 @@
                 }
                 this.get_data()
             },
-            change(row,index){
-                this.currentIndex= index;
+            change(i){
+                this.currentIndex= i.id;
+            },
+            changeClass(i){
+                this.current_row = i
+                this.currentIndex1 = i.id
+            },
+            changeIndex(){
+                this.currentIndex = -1
             },
             add(){
                 this.$bus.emit("ADD_MANAGER_INFO",this.current_row)
@@ -371,7 +945,11 @@
             },
             get_data(){
                 let _self = this;
+                _self.data1 = []
                 _self.loading = true;
+                this.current_row = ""
+                this.currentIndex1 = -1
+                this.currentIndex = -1
                 let url = `api/system/addrPrice/list`;
                 let config = {
                     params: {
@@ -390,6 +968,138 @@
 
                 function success(res){
                     _self.data = res.data.data.rows
+                    let a=[],b=[],c=[],d=[],e=[],f=[],g=[],h=[],i1=[],j=[],k=[],l=[],m=[],n=[],o=[],p=[]
+                    let obj={}, obj1={},obj2={},obj3={},obj4={},obj5={},obj6={},obj7={},obj8={},obj9={},obj10={},obj11={},obj12={},obj13={},obj14={},obj15 = {}
+                    for (let i=0;i<_self.data.length;i++) {
+                        if (_self.data[i].area=='nanhai') {
+                            a.push(_self.data[i])
+                        }
+                        if (_self.data[i].area=='sanshui') {
+                            b.push(_self.data[i])
+                        }
+                        if (_self.data[i].area=='gaoming') {
+                            c.push(_self.data[i])
+                        }
+                        if (_self.data[i].area=='shunde') {
+                            d.push(_self.data[i])
+                        }
+                        if (_self.data[i].area=='chancheng') {
+                            e.push(_self.data[i])
+                        }
+                        if (_self.data[i].area=='tianhe') {
+                            f.push(_self.data[i])
+                        }
+                        if (_self.data[i].area=='yuexiu') {
+                            g.push(_self.data[i])
+                        }
+                        if (_self.data[i].area=='liwan') {
+                            h.push(_self.data[i])
+                        }
+                        if (_self.data[i].area=='zengcheng') {
+                            i1.push(_self.data[i])
+                        }
+                        if (_self.data[i].area=='panyu') {
+                            j.push(_self.data[i])
+                        }
+                        if (_self.data[i].area=='huadou') {
+                            k.push(_self.data[i])
+                        }
+                        if (_self.data[i].area=='conghua') {
+                            l.push(_self.data[i])
+                        }
+                        if (_self.data[i].area=='huangpu') {
+                            m.push(_self.data[i])
+                        }
+                        if (_self.data[i].area=='baiyun') {
+                            n.push(_self.data[i])
+                        }
+                        if (_self.data[i].area=='haizhu') {
+                            o.push(_self.data[i])
+                        }
+                        if (_self.data[i].area=='nansha') {
+                            p.push(_self.data[i])
+                        }
+                    }
+                    if (a.length){
+                        obj.AREA = 'nanhai'
+                        obj.list = a
+                        _self.data1.push(obj)
+                    }
+                    if (b.length){
+                        obj1.AREA = 'sanshui'
+                        obj1.list = b
+                        _self.data1.push(obj1)
+                    }
+                    if (c.length){
+                        obj2.AREA = 'gaoming'
+                        obj2.list = c
+                        _self.data1.push(obj2)
+                    }
+                    if (d.length){
+                        obj3.AREA = 'shunde'
+                        obj3.list = d
+                        _self.data1.push(obj3)
+                    }
+                    if (e.length){
+                        obj4.AREA = 'chancheng'
+                        obj4.list = e
+                        _self.data1.push(obj4)
+                    }
+                    if (f.length){
+                        obj5.AREA = 'tianhe'
+                        obj5.list = f
+                        _self.data1.push(obj5)
+                    }
+                    if (g.length){
+                        obj6.AREA = 'yuexiu'
+                        obj6.list = g
+                        _self.data1.push(obj6)
+                    }
+                    if (h.length){
+                        obj7.AREA = 'liwan'
+                        obj7.list = h
+                        _self.data1.push(obj7)
+                    }
+                    if (i1.length){
+                        obj8.AREA = 'zengcheng'
+                        obj8.list = i1
+                        _self.data1.push(obj8)
+                    }
+                    if (j.length){
+                        obj9.AREA = 'panyu'
+                        obj9.list = j
+                        _self.data1.push(obj9)
+                    }
+                    if (k.length){
+                        obj10.AREA = 'huadou'
+                        obj10.list = k
+                        _self.data1.push(obj10)
+                    }
+                    if (l.length){
+                        obj11.AREA = 'conghua'
+                        obj11.list = l
+                        _self.data1.push(obj11)
+                    }
+                    if (m.length){
+                        obj12.AREA = 'huangpu'
+                        obj12.list = m
+                        _self.data1.push(obj12)
+                    }
+                    if (n.length){
+                        obj13.AREA = 'baiyun'
+                        obj13.list = n
+                        _self.data1.push(obj13)
+                    }
+                    if (o.length){
+                        obj14.AREA = 'haizhu'
+                        obj14.list = o
+                        _self.data1.push(obj14)
+                    }
+                    if (p.length){
+                        obj15.AREA = 'nansha'
+                        obj15.list = p
+                        _self.data1.push(obj15)
+                    }
                     _self.pageTotal = res.data.data.total
                     _self.loading = false
                 }
@@ -423,7 +1133,6 @@
             this.get_data()
             this.$bus.off("UPDATE_MANAGER_INFO",true)
             this.$bus.on("UPDATE_MANAGER_INFO",e=>{
-                this.current_row = ""
                 this.get_data()
             })
         }
@@ -431,5 +1140,19 @@
 </script>
 
 <style>
-
+    .subCol>ul>li{
+        margin:0 -18px;
+        list-style:none;
+        text-Align: center;
+        padding: 9px;
+        display: block;
+        border-bottom:1px solid #e9eaec;
+        overflow-x: hidden;
+    }
+    .subCol>ul>li:last-child {
+        border-bottom: none
+    }
+    .a{
+        background-color: rgb(235,247,25);
+    }
 </style>
