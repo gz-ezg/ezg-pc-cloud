@@ -101,6 +101,12 @@ export default {
   },
   created() {
     this.handleGetList();
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.companyList.length) {
+      console.log('路由离开时');
+      next('/arrearageCenter');
+    }
   }
 };
 </script>
