@@ -181,7 +181,7 @@
         </TabPane>
       </Tabs>
       <div slot="footer">
-        <Button type="primary" @click="submit('Agree')" :loading="loading">提交</Button>
+        <Button type="primary" @click="submit('Agree')" :loading="loading">同意</Button>
         <Button @click="submit('Reject')" :loading="loading">驳回</Button>
       </div>
     </Modal>
@@ -256,7 +256,7 @@ export default {
       function success(res) {
         _self.data = res.data.data;
         for (let i = 0; i < res.data.data.length; i++) {
-          _self.data[i].auditStatus = _self.data[i].auditStatus == 'Agree' ? '同意' : '驳回';
+          _self.data[i].auditStatus = _self.data[i].audit_status == 'Agree' ? '同意' : '驳回';
         }
       }
       this.$Get(url, config, success);
