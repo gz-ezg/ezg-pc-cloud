@@ -216,6 +216,7 @@ export default {
     _self.$bus.on('OPEN_DETAIL', e => {
       _self.$refs['task_message'].resetFields();
       _self.isOpenDetail = true;
+      _self.task_message = e;
       _self.task_message.company = e.CompanyName;
       if (e.product == null || e.product == '') {
         _self.task_message.product = '.';

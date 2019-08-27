@@ -92,7 +92,7 @@
         <Row :gutter="16">
           <Col span="10">
             <FormItem prop="endreason" label="下线类型">
-              <Select v-model="detail.endreason" style="width:100%" size="small">
+              <Select v-model="form.endreason" style="width:100%" size="small">
                 <template v-for="(item, index) in codemap">
                   <Option :key="index" :value="item.typecode">{{ item.typename }}</Option>
                 </template>
@@ -100,10 +100,10 @@
             </FormItem>
           </Col></Row
         >
-        <Row v-if="detail.money" :gutter="16">
+        <Row v-if="money" :gutter="16">
           <Col span="10">
             <FormItem label="欠费金额">
-              <Input size="small" :value="detail.money" readonly />
+              <Input size="small" :value="money" readonly />
             </FormItem>
           </Col>
           <Col span="10">
@@ -159,12 +159,16 @@ export default {
     return {
       codemap: [],
       loading: false,
-      detail: {},
+      detail: { money: '' },
       form: {
         reasonformarketer: '',
         reasonforcallback: '',
         memo: ''
       },
+      dateOptions: {
+        disabledDate: this.checkMonth
+      },
+      money: '',
       rule: {
         taxperiod: [{ required: true, message: '必选项！', trigger: 'change', type: 'date' }],
         enddate: [{ required: true, message: '必选项！', trigger: 'change', type: 'date' }],
@@ -182,6 +186,11 @@ export default {
     }
   },
   methods: {
+    checkMonth(data) {
+      let period = nowDateFormatYearMonth();
+      let between = data.getFullYear() * 12 + data.getMonth() - period.substr(0, 4) * 12 - period.substr(4) * 1;
+      return -3 >= between;
+    },
     onTaxperiodChange(e) {
       const { end_period, unitPrice } = this.detail;
       if (!end_period) {
@@ -190,11 +199,13 @@ export default {
       let period = nowDateFormatYearMonth(end_period);
 
       let between = e.substr(0, 4) * 12 + e.substr(5) * 1 - period.substr(0, 4) * 12 - period.substr(4) * 1;
+
       if (between > 0) {
-        this.detail.money = unitPrice ? unitPrice * between : '';
+        this.money = unitPrice ? unitPrice * between : '';
       } else {
-        this.detail.money = 0;
+        this.money = 0;
       }
+      console.log(this.money);
     },
     handleSubmit() {
       this.$refs['form'].validate(async valid => {
@@ -209,7 +220,7 @@ export default {
             reasonformarketer: form.reasonformarketer,
             reasonforcallback: form.reasonforcallback,
             endreason: form.endreason,
-            money: detail.money,
+            money: this.money,
             payType: detail.payType,
             taxperiod: DateFormat(form.taxperiod),
             followbusiness: form.followbusiness,
