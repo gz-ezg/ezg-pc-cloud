@@ -102,9 +102,8 @@
           <Col span="10">
             <FormItem label="欠费补缴方式">
               <Select v-model="task_message.pay_type" style="width:100%" size="small" disabled>
-                <Option value="gszr">公司转让</Option>
-                <Option value="qysj">企业升级</Option>
-                <Option value="kjb">会计部</Option>
+                <Option value="payForSelf">自费</Option>
+                <Option value="payForSalary">薪资扣除</Option>
               </Select>
             </FormItem>
           </Col>

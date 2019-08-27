@@ -328,6 +328,7 @@ export default {
           page: _self.page,
           pageSize: _self.pageSize,
           isAudit: 'N',
+          sortField: 'id',
           createName: '',
           bcreatedate: '',
           ecreatedate: '',
