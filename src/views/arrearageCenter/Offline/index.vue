@@ -165,6 +165,9 @@ export default {
         reasonforcallback: '',
         memo: ''
       },
+      dateOptions: {
+        disabledDate: this.checkMonth
+      },
       money: '',
       rule: {
         taxperiod: [{ required: true, message: '必选项！', trigger: 'change', type: 'date' }],
@@ -183,6 +186,11 @@ export default {
     }
   },
   methods: {
+    checkMonth(data) {
+      let period = nowDateFormatYearMonth();
+      let between = data.getFullYear() * 12 + data.getMonth() - period.substr(0, 4) * 12 - period.substr(4) * 1;
+      return -3 >= between;
+    },
     onTaxperiodChange(e) {
       const { end_period, unitPrice } = this.detail;
       if (!end_period) {
