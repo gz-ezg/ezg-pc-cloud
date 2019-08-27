@@ -1,51 +1,32 @@
 <template>
   <div>
-    <Modal
-      title="编辑订单"
-      v-model="openEditOrderDetail"
-      width="100"
-      @on-visible-change="modal_status_change"
-    >
+    <Modal title="编辑订单" v-model="openEditOrderDetail" width="100" @on-visible-change="modal_status_change">
       <Row>
         <Col span="10">
           <Form ref="orderDetail" :model="orderDetail" :label-width="100" :rules="orderDetailRule">
             <Row :gutter="16">
               <Col span="12">
                 <FormItem label="归属公司" prop="CompanyName">
-                  <Input
-                    size="small"
-                    v-model="orderDetail.CompanyName"
-                    @on-focus="open_company"
-                    readonly
-                  />
+                  <Input size="small" v-model="orderDetail.CompanyName" @on-focus="open_company" readonly />
                 </FormItem>
               </Col>
               <Col span="11">
                 <FormItem label="归属客户" prop="name">
-                  <Input size="small" v-model="orderDetail.name" @on-focus="open_company" readonly/>
+                  <Input size="small" v-model="orderDetail.name" @on-focus="open_company" readonly />
                 </FormItem>
               </Col>
             </Row>
             <Row :gutter="16">
               <Col span="12">
                 <FormItem label="缴费时间" prop="payTime">
-                  <DatePicker
-                    size="small"
-                    type="date"
-                    style="width: 100%"
-                    v-model="orderDetail.payTime"
-                  ></DatePicker>
+                  <DatePicker size="small" type="date" style="width: 100%" v-model="orderDetail.payTime"></DatePicker>
                 </FormItem>
               </Col>
 
               <Col span="11">
                 <FormItem label="缴费渠道" prop="paydir">
                   <Select transfer v-model="orderDetail.paydir" style="width:100%" size="small">
-                    <Option
-                      v-for="(item, index) in payDirs"
-                      :key="index"
-                      :value="item.typecode"
-                    >{{item.typename}}</Option>
+                    <Option v-for="(item, index) in payDirs" :key="index" :value="item.typecode">{{ item.typename }}</Option>
                   </Select>
                 </FormItem>
               </Col>
@@ -54,12 +35,12 @@
             <Row :gutter="16">
               <Col span="12">
                 <FormItem label="订单总价" prop="paynumber">
-                  <Input size="small" v-model="orderDetail.paynumber" number readonly/>
+                  <Input size="small" v-model="orderDetail.paynumber" number readonly />
                 </FormItem>
               </Col>
               <Col span="11">
                 <FormItem label="已付款" prop="realnumber">
-                  <Input size="small" v-model="orderDetail.realnumber" number/>
+                  <Input size="small" v-model="orderDetail.realnumber" number />
                 </FormItem>
               </Col>
             </Row>
@@ -88,19 +69,9 @@
               <Col span="24">
                 <FormItem label="异常工单号">
                   <div style="display:inline-block">
-                    <Input size="small" v-model="unusualCode" readonly style="width:60%"/>
-                    <Button
-                      type="info"
-                      size="small"
-                      v-if="unusualCode.trim() == ''"
-                      @click="open_abOrder"
-                    >选择</Button>
-                    <Button
-                      type="info"
-                      size="small"
-                      v-if="unusualCode.trim() != ''"
-                      @click="open_relateOrder"
-                    >查看</Button>
+                    <Input size="small" v-model="unusualCode" readonly style="width:60%" />
+                    <Button type="info" size="small" v-if="unusualCode.trim() == ''" @click="open_abOrder">选择</Button>
+                    <Button type="info" size="small" v-if="unusualCode.trim() != ''" @click="open_relateOrder">查看</Button>
                   </div>
                 </FormItem>
               </Col>
@@ -110,19 +81,16 @@
               <Col span="24">
                 <FormItem label="使用余额" prop="usebalance">
                   <div style="display:inline-block">
-                    <Input size="small" v-model="orderDetail.usebalance" style="width:40%" number/>
+                    <Input size="small" v-model="orderDetail.usebalance" style="width:40%" number />
                     <Button
                       type="info"
                       size="small"
                       @click="get_balance('create', orderDetail.customerid)"
                       :disabled="checkBalance"
-                    >查询</Button>
-                    <span
-                      style="line-height:24px;height:24px;display:inline-block;margin-left:10px"
-                    >可用余额：</span>
-                    <span
-                      style="line-height:24px;height:24px;display:inline-block"
-                    >{{allUseBalance}}</span>
+                      >查询</Button
+                    >
+                    <span style="line-height:24px;height:24px;display:inline-block;margin-left:10px">可用余额：</span>
+                    <span style="line-height:24px;height:24px;display:inline-block">{{ allUseBalance }}</span>
                   </div>
                 </FormItem>
               </Col>
@@ -153,28 +121,23 @@
                 <FormItem label="新增产品">
                   <Button type="primary" icon="plus" @click="open_product_list">新增</Button>
                   <!-- <Button type="primary" icon="plus" @click="removeRows()">删除</Button> -->
-                  <Button
-                    type="primary"
-                    icon="plus"
-                    @click="open_service_item"
-                    v-if="showAccountHomeItem"
-                  >查看会计到家服务项</Button>
+                  <Button type="primary" icon="plus" @click="open_service_item" v-if="showAccountHomeItem"
+                    >查看会计到家服务项</Button
+                  >
                 </FormItem>
               </Col>
             </Row>
             <Row :gutter="16">
-              <div v-for="(depart,index) of departServerObj">
+              <div v-for="(depart, index) of departServerObj">
                 <Col span="8">
-                  <FormItem label="服务部门:">{{depart.departName}}</FormItem>
+                  <FormItem label="服务部门:">{{ depart.departName }}</FormItem>
                 </Col>
                 <Col span="15">
                   <FormItem label="服务人员:">
                     <Select v-model="depart.serverId">
-                      <Option
-                        v-for="item of depart.serverList"
-                        :key="item.userId"
-                        :value="item.userId"
-                      >{{item.realname +"【"+item.flag+"】"}}</Option>
+                      <Option v-for="item of depart.serverList" :key="item.userId" :value="item.userId">{{
+                        item.realname + '【' + item.flag + '】'
+                      }}</Option>
                     </Select>
                   </FormItem>
                 </Col>
@@ -190,6 +153,7 @@
             :productList="orderItem"
             :isDisabled="isDisabled"
             :pageFlag="pageFlag"
+            :createdate="orderDetail.createdate"
             :id="orderDetail.companyid"
           ></product-detail-list>
         </Col>
@@ -217,14 +181,14 @@
 </template>
 
 <script>
-import relateOrder from "../relateOrder";
-import abOrderChange from "../abOrderChange";
-import serviceItem from "../accountHomeTree";
-import commonSetting from "./comonSetting.js";
-import { DateFormat } from "../../../../../libs/utils.js";
-import * as orderApi from "../../api";
-import productDetailList from "./productDetailList";
-import { constants } from "crypto";
+import relateOrder from '../relateOrder';
+import abOrderChange from '../abOrderChange';
+import serviceItem from '../accountHomeTree';
+import commonSetting from './comonSetting.js';
+import { DateFormat } from '../../../../../libs/utils.js';
+import * as orderApi from '../../api';
+import productDetailList from './productDetailList';
+import { constants } from 'crypto';
 
 export default {
   mixins: [commonSetting],
@@ -238,13 +202,13 @@ export default {
   data() {
     return {
       isDisabled: false,
-      applyId: "",
-      orderId: "",
-      unusualCode: "",
+      applyId: '',
+      orderId: '',
+      unusualCode: '',
       openEditOrderDetail: false,
       loading: false,
       openServiceItem: false,
-      pageFlag: "editOrder",
+      pageFlag: 'editOrder',
       departServerObj: [],
       departChangeCountFlag: 0
     };
@@ -263,16 +227,16 @@ export default {
       }
       function fail() {}
       _self.$Post(url, config, success, fail);
-      _self.orderId = "";
-      _self.applyId = "";
-      _self.orderCode = "";
+      _self.orderId = '';
+      _self.applyId = '';
+      _self.orderCode = '';
     },
     //打开对应的异常工单列表
     open_abOrder() {
-      this.$bus.emit("CHANGE_ABORDER", true);
+      this.$bus.emit('CHANGE_ABORDER', true);
     },
     open_relateOrder() {
-      this.$bus.emit("RELATE_ABORDER_" + this.pageFlag);
+      this.$bus.emit('RELATE_ABORDER_' + this.pageFlag);
     },
     //  选择对应异常工单后回调
     setting_aborder(e) {
@@ -291,7 +255,7 @@ export default {
       };
       function success(res) {
         console.log(res.data.data);
-        _self.unusualCode = "";
+        _self.unusualCode = '';
         if (res.data.data) {
           if (res.data.data.unusual_code) {
             _self.unusualCode = res.data.data.unusual_code;
@@ -313,14 +277,14 @@ export default {
     edit() {
       // this.open_product_list();
       let _self = this;
-      _self.$ButtonCollect("order_edit");
+      _self.$ButtonCollect('order_edit');
       _self.loading = true;
-      this.$refs["orderDetail"].validate(async valid => {
+      this.$refs['orderDetail'].validate(async valid => {
         if (valid) {
           // let url = `api/order/update`
           // console.log(_self.orderDetail.payTime)
           let departParamObj = [];
-          console.log("_self", _self);
+          console.log('_self', _self);
           // for (let j = 0; j < _self.departServerObj.length; j++) {
           //   departParamObj.push({
           //     departId: _self.departServerObj[j].departId,
@@ -331,25 +295,18 @@ export default {
           for (let j = 0; j < _self.orderItem.length; j++) {
             departParamObj.push({
               departId: _self.orderItem[j].departid,
-              serverId:
-                (_self.orderItem[j].selectServer &&
-                  _self.orderItem[j].selectServer.userId) ||
-                ""
+              serverId: (_self.orderItem[j].selectServer && _self.orderItem[j].selectServer.userId) || ''
             });
           }
           let order = JSON.parse(JSON.stringify(_self.orderItem));
           for (let i = 0; i < order.length; i++) {
-            order[i].servicedeparts = "";
+            order[i].servicedeparts = '';
             order[i].servicestartdate = DateFormat(order[i].servicestartdate);
-            order[i].serverId =
-              (order[i].selectServer && order[i].selectServer.userId) || "";
-            order[i].realname =
-              (order[i].selectServer && order[i].selectServer.realname) || "";
+            order[i].serverId = (order[i].selectServer && order[i].selectServer.userId) || '';
+            order[i].realname = (order[i].selectServer && order[i].selectServer.realname) || '';
 
             if (order[i].declare_year) {
-              order[i].declare_year = new Date(
-                order[i].declare_year
-              ).getFullYear();
+              order[i].declare_year = new Date(order[i].declare_year).getFullYear();
             }
           }
           let config = {
@@ -362,7 +319,7 @@ export default {
             orderPayNumber: _self.orderDetail.realnumber,
             orderitems: JSON.stringify(order),
             usebalance: _self.orderDetail.usebalance,
-            serviceStartDate: ""
+            serviceStartDate: ''
           };
           try {
             let { status, data } = await orderApi.orderUpdate(config);
@@ -373,7 +330,7 @@ export default {
               setTimeout(() => {
                 _self.loading = false;
                 _self.openEditOrderDetail = false;
-                _self.$bus.emit("UPDATE_ORDER_LIST", true);
+                _self.$bus.emit('UPDATE_ORDER_LIST', true);
                 this.departServerObj = [];
               }, 500);
             }
@@ -395,34 +352,34 @@ export default {
     },
     open_product_list() {
       if (this.orderDetail.companyid) {
-        this.$bus.emit("OPEN_ORDER_PRODUCT_LIST", this.orderDetail.companyid,this.orderItem);
+        this.$bus.emit('OPEN_ORDER_PRODUCT_LIST', this.orderDetail.companyid, this.orderItem);
       } else {
-        this.$Message.warning("请先选择公司！");
+        this.$Message.warning('请先选择公司！');
       }
     }
   },
 
   created() {
     let _self = this;
-    this.$bus.on("SET_PAYNUMBER", e => {
+    this.$bus.on('SET_PAYNUMBER', e => {
       _self.orderDetail.paynumber = e.paynumber;
       _self.orderDetail.realnumber = e.realnumber;
     });
-    this.$bus.off("OPEN_ORDERLIST_EDIT", true);
-    this.$bus.on("OPEN_ORDERLIST_EDIT", e => {
+    this.$bus.off('OPEN_ORDERLIST_EDIT', true);
+    this.$bus.on('OPEN_ORDERLIST_EDIT', e => {
       this.checkBalance = false;
       this.get_data(e, callback);
       this.orderId = e;
       this.get_ab_worker_id();
       this.openEditOrderDetail = true;
       function callback() {
-        console.log("callback");
-        _self.$bus.emit("PRODUCT_LIST_EDIT", _self);
+        console.log('callback');
+        _self.$bus.emit('PRODUCT_LIST_EDIT', _self);
         _self.departServerObj = _self.orderDetail.departJson;
       }
     });
-    this.$bus.off("DEPART_CHANGE_" + this.pageFlag, true);
-    this.$bus.on("DEPART_CHANGE_" + this.pageFlag, e => {
+    this.$bus.off('DEPART_CHANGE_' + this.pageFlag, true);
+    this.$bus.on('DEPART_CHANGE_' + this.pageFlag, e => {
       _self.departChangeCountFlag += 1;
       let countFlag = _self.departChangeCountFlag;
       let newRows = [];
@@ -515,7 +472,7 @@ export default {
 
       // console.log(_self.departServerObj);
     });
-    this.$bus.emit("OPEN_ORDER_PRODUCT_LIST", this.orderDetail.companyid);
+    this.$bus.emit('OPEN_ORDER_PRODUCT_LIST', this.orderDetail.companyid);
   }
 };
 </script>
