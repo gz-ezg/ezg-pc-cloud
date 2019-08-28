@@ -118,6 +118,8 @@ export default {
       next();
     } else if (this.companyList.length) {
       next(false);
+    } else {
+      next();
     }
   }
 };
