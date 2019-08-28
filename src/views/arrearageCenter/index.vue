@@ -74,7 +74,9 @@ export default {
     },
     onExit() {
       this.clickExit = true;
-      this.$router.push('/');
+      this.$router.push({
+        name: 'home_index'
+      });
     },
     onCreateOk() {
       // 判断是否还有公司，没有则跳转到首页
@@ -89,7 +91,6 @@ export default {
     // 判断关闭按钮是否关闭
     async handleClickButton() {
       const resp = await getSystemParamByKey({ paramKey: 'force_popup_window_filter_users' });
-      console.log(resp);
       if (!resp) {
         return;
       }
@@ -102,29 +103,49 @@ export default {
         let id = localStorage.getItem('id');
         const resp = await oweOrderListByFollowby({ id });
         if (!resp.length) {
-          this.$store.commit('closeForePopus');
-          return this.$router.push({ name: 'home_index' });
+          localStorage.setItem('arrearList', '');
+          this.companyList = [];
+          this.$router.push({ name: 'home_index' });
+        } else {
+          this.companyList = resp;
+          this.currentCompany = resp[0];
+          this.companyId = resp[0].id;
         }
-        this.companyList = resp;
-        this.currentCompany = resp[0];
-        this.companyId = resp[0].id;
       } catch (error) {
-        console.log(error);
+        this.$router.push({
+          name: 'home_index'
+        });
+      }
+    },
+    loadList() {
+      try {
+        let resp = localStorage.getItem('arrearList');
+        if (resp) {
+          resp = JSON.parse(resp);
+          this.companyList = resp;
+          this.currentCompany = resp[0];
+          this.companyId = resp[0].id;
+        } else {
+          this.handleGetList();
+        }
+      } catch (error) {
+        this.$router.push({
+          name: 'home_index'
+        });
       }
     }
   },
   created() {
     this.handleClickButton();
-    this.handleGetList();
+    this.loadList();
   },
   beforeRouteLeave(to, from, next) {
-    if (this.clickExit) {
-      this.$store.commit('closeForePopus');
+    console.log(!this.companyList.length);
+    if (this.clickExit || !this.companyList.length) {
+      localStorage.setItem('arrearList', '');
       next();
-    } else if (this.companyList.length) {
-      next(false);
     } else {
-      next();
+      next(false);
     }
   }
 };

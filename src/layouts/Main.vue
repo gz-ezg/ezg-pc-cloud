@@ -681,10 +681,11 @@ export default {
     } catch (error) {}
   },
   beforeRouteEnter(to, from, next) {
-    next(vm => {
-      let flag = vm.$store.state.app.isForePopus;
-      flag ? next('/arrearageCenter') : next();
-    });
+    if (localStorage.getItem('arrearList')) {
+      next('/arrearageCenter');
+    } else {
+      next();
+    }
   }
 };
 </script>

@@ -151,6 +151,7 @@ export default {
           console.log(error);
         } finally {
           if (resp.length) {
+            localStorage.setItem('arrearList', JSON.stringify(resp));
             this.$router.push('/arrearageCenter');
           } else {
             this.$router.push({
