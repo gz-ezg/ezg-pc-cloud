@@ -2,7 +2,7 @@
   <div class="page">
     <Card style="width:520px;margin-bottom:100px">
       <p slot="title">请选择</p>
-      <Button type="primary" slot="extra" @click.prevent="onExit">
+      <Button :class="isCloseButton ? 'hide ' : ''" type="primary" slot="extra" @click.prevent="onExit">
         <Icon type="ios-loop-strong"></Icon>
         关闭
       </Button>
@@ -40,7 +40,7 @@
 
 
 <script>
-import { oweOrderListByFollowby } from '@A/order';
+import { oweOrderListByFollowby, getSystemParamByKey } from '@A/order';
 import Arrearage from './Arrearage';
 import Offline from './Offline';
 import Renew from './Renew';
@@ -58,7 +58,8 @@ export default {
       arrearagePopup: false,
       offlinePopup: false,
       renewPopup: false,
-      clickExit: false
+      clickExit: false,
+      isCloseButton: false
     };
   },
   methods: {
@@ -72,7 +73,6 @@ export default {
       this.renewPopup = true;
     },
     onExit() {
-      this.$store.commit('setForceLock', false);
       this.clickExit = true;
       this.$router.push('/');
     },
@@ -86,11 +86,18 @@ export default {
     onSelectChange(e) {
       this.currentCompany = this.companyList.find(v => v.id == e);
     },
+    // 判断关闭按钮是否关闭
+    async handleClickButton() {
+      const resp = await getSystemParamByKey({ paramKey: 'force_popup_window' });
+      this.isCloseButton = resp == 'Y' ? true : false;
+      console.log(this.isCloseButton);
+    },
     async handleGetList() {
       try {
         let id = localStorage.getItem('id');
         const resp = await oweOrderListByFollowby({ id });
         if (!resp.length) {
+          this.$store.commit('closeForePopus');
           return this.$router.push({ name: 'home_index' });
         }
         this.companyList = resp;
@@ -102,14 +109,17 @@ export default {
     }
   },
   created() {
+    this.handleClickButton();
     this.handleGetList();
   },
   beforeRouteLeave(to, from, next) {
-    console.log('路由离开时');
     if (this.clickExit) {
+      this.$store.commit('closeForePopus');
       next();
     } else if (this.companyList.length) {
-      next('/arrearageCenter');
+      next(false);
+    } else {
+      next();
     }
   }
 };
@@ -141,5 +151,8 @@ export default {
   margin: 24px 0;
   clear: both;
   background: #e8eaec;
+}
+.hide {
+  display: none;
 }
 </style>

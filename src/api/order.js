@@ -93,3 +93,10 @@ export function orderCreate(data) {
     data
   })
 }
+export function getSystemParamByKey(params) {
+  return request({
+    url: `system/getSystemParamByKey`,
+    method: 'get',
+    params
+  })
+}
