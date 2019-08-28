@@ -685,52 +685,6 @@
                     //     key: 'list',
                     //     align:'center',
                     //     minWidth: 250,
-                    //     // render: (h, params) => {
-                    //     //     if (params.row.memo == "" || params.row.memo == null) {
-                    //     //         return "";
-                    //     //     } else {
-                    //     //         // console.log(params.row.companynames)
-                    //     //         let temp = params.row.memo
-                    //     //         if (temp.length > 10) {
-                    //     //             if (params.index != this.currentIndex){
-                    //     //                 return h("div",{
-                    //     //                 },[
-                    //     //                     h("span",{
-                    //     //                         style:{
-                    //     //                             display: 'inline-block',
-                    //     //                         }
-                    //     //                     },temp.slice(0,10) + "..."),
-                    //     //                     h("Button", {
-                    //     //                         props:{
-                    //     //                             type:'text',
-                    //     //                             display: 'inline-block',
-                    //     //                         },
-                    //     //                         style: {
-                    //     //                             color:'rgb(45,140,240)',
-                    //     //                         },
-                    //     //                         on:{
-                    //     //                             click: () => {
-                    //     //                                 this.change(params.row,params.index)
-                    //     //                             }
-                    //     //                         }
-                    //     //                     },"点击展开")
-                    //     //                 ]);
-                    //     //             } else {
-                    //     //                 return h("div",{
-                    //     //                 },[
-                    //     //                     h("span",temp)
-                    //     //                 ]);
-                    //     //             }
-                    //     //
-                    //     //         } else {
-                    //     //             return h("div",{
-                    //     //                 },[
-                    //     //                     h("span", temp)
-                    //     //                 ]
-                    //     //             );
-                    //     //         }
-                    //     //     }
-                    //     // }
                     //     render: (h, params) => {
                     //             return h('div', {
                     //                 attrs: {
@@ -968,20 +922,43 @@
 
                 function success(res){
                     _self.data = res.data.data.rows
-                    let totalList = res.data.data.rows;
-                    let temp = [];
-                    totalList.forEach(v1 => {
-                        let flag = false;
-                        temp.forEach((v2, i) => {
-                            if (v2.AREA == v1.area) {
-                                flag = true;
-                                temp[i].list.push(v1);
-                            }
-                        });
-                        if (!flag) {
-                            temp = [...temp, { AREA: v1.area, list: [v1] }];
-                        }
-                    });
+                    // let totalList = res.data.data.rows;
+
+                    let temp = res.data.data.rows.reduce((acc,v,i)=>{
+                        let index = acc.findIndex(v1=>v1.AREA===v.area)
+                        index !== -1 ? acc[index].list.push(v): acc.push({AREA:v.area,list:[v]})
+                        return acc;
+                        //     第二种方法
+                        //     console.log(JSON.parse(JSON.stringify(acc)),i)
+                        //     if (!acc.length) {
+                        //         acc.push({AREA:v.area,list:[v]})
+                        //         return acc
+                        //     }
+                        //     if (acc[acc.length-1].AREA===v.area) {
+                        //         acc[acc.length-1].list.push(v)
+                        //         return acc
+                        //     }
+                        //     if (acc[acc.length-1].AREA!==v.area){
+                        //         acc.push({AREA:v.area,list:[v]})
+                        //         return acc
+                        //     }
+                        // console.log(acc.length)
+                        // return acc
+                    },[])
+                    // 第三种方法
+                    // let temp = [];
+                    // totalList.forEach(v1 => {
+                    //     let flag = false;
+                    //     temp.forEach((v2, i) => {
+                    //         if (v2.AREA == v1.area) {
+                    //             flag = true;
+                    //             temp[i].list.push(v1);
+                    //         }
+                    //     });
+                    //     if (!flag) {
+                    //         temp = [...temp, { AREA: v1.area, list: [v1] }];
+                    //     }
+                    // });
                     _self.data1 = temp
                     console.log(_self.data1)
                     _self.pageTotal = res.data.data.total
@@ -1039,20 +1016,4 @@
     .a{
         background-color: rgb(235,247,25);
     }
-</style>
-.subCol > ul > li {
-  margin: 0 -18px;
-  list-style: none;
-  text-align: center;
-  padding: 9px;
-  display: block;
-  border-bottom: 1px solid #e9eaec;
-  overflow-x: hidden;
-}
-.subCol > ul > li:last-child {
-  border-bottom: none;
-}
-.a {
-  background-color: rgb(235, 247, 25);
-}
 </style>
