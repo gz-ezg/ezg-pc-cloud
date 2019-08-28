@@ -123,9 +123,15 @@
     <field-list-by-company-id></field-list-by-company-id>
     <aduit-log></aduit-log>
 
-    <customer-detail v-if="gobalCustomerDetailShow"  :customer="gobalCustomer"></customer-detail>
+    <customer-detail v-if="gobalCustomerDetailShow" :customer="gobalCustomer"></customer-detail>
     <work-order-detail v-if="gobalWorkorderDetailShow" :workOrderId="gobalworkOrderId"></work-order-detail>
-    <company-detail v-if="gobalCompanyDetailShow" :pageId="gobalCompanyPageId" :companyId="gobalCompanyId" :ifMatch="gobalCompanyIfMatch" :serviceDemo="gobalCompanyServiceDemo"></company-detail>
+    <company-detail
+      v-if="gobalCompanyDetailShow"
+      :pageId="gobalCompanyPageId"
+      :companyId="gobalCompanyId"
+      :ifMatch="gobalCompanyIfMatch"
+      :serviceDemo="gobalCompanyServiceDemo"
+    ></company-detail>
     <set-finish-time :worderOrderDetail="gobalWorkorderDetail"></set-finish-time>
     <re-login v-if="gobalReloginShow"></re-login>
 
@@ -585,20 +591,20 @@ export default {
             return h('span', [
               `${msg.msgContent}`,
               h(
-                      'a',
-                      {
-                        on: {
-                          click: async e => {
-                            try {
-                              let resp = await logDetail({ id: msg.companyWechatLogId });
-                              this.unreadNum = await getUnreadNum();
-                              this.msg = resp;
-                              this.msgDetailPopus = true;
-                            } catch (error) {}
-                          }
-                        }
-                      },
-                      '...查看消息'
+                'a',
+                {
+                  on: {
+                    click: async e => {
+                      try {
+                        let resp = await logDetail({ id: msg.companyWechatLogId });
+                        this.unreadNum = await getUnreadNum();
+                        this.msg = resp;
+                        this.msgDetailPopus = true;
+                      } catch (error) {}
+                    }
+                  }
+                },
+                '...查看消息'
               )
             ]);
           },
@@ -673,6 +679,12 @@ export default {
         this.msgHistoryPopus = true;
       }
     } catch (error) {}
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      let flag = vm.$store.state.app.isForePopus;
+      flag ? next('/arrearageCenter') : next();
+    });
   }
 };
 </script>
