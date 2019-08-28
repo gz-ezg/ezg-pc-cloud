@@ -59,7 +59,7 @@ export default {
       offlinePopup: false,
       renewPopup: false,
       clickExit: false,
-      isCloseButton: false
+      isCloseButton: true
     };
   },
   methods: {
@@ -88,9 +88,14 @@ export default {
     },
     // 判断关闭按钮是否关闭
     async handleClickButton() {
-      const resp = await getSystemParamByKey({ paramKey: 'force_popup_window' });
-      this.isCloseButton = resp == 'Y' ? true : false;
-      console.log(this.isCloseButton);
+      const resp = await getSystemParamByKey({ paramKey: 'force_popup_window_filter_users' });
+      console.log(resp);
+      if (!resp) {
+        return;
+      }
+      if (resp == '-1' || resp.split(',').includes(localStorage.getItem('id'))) {
+        this.isCloseButton = false;
+      }
     },
     async handleGetList() {
       try {
