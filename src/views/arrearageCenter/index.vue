@@ -2,7 +2,7 @@
   <div class="page">
     <Card style="width:520px;margin-bottom:100px">
       <p slot="title">请选择</p>
-      <Button type="primary" slot="extra" @click.prevent="onExit">
+      <Button v-if="!isCloseButton" type="primary" slot="extra" @click.prevent="onExit">
         <Icon type="ios-loop-strong"></Icon>
         关闭
       </Button>
@@ -40,7 +40,7 @@
 
 
 <script>
-import { oweOrderListByFollowby } from '@A/order';
+import { oweOrderListByFollowby, getSystemParamByKey } from '@A/order';
 import Arrearage from './Arrearage';
 import Offline from './Offline';
 import Renew from './Renew';
@@ -58,7 +58,8 @@ export default {
       arrearagePopup: false,
       offlinePopup: false,
       renewPopup: false,
-      clickExit: false
+      clickExit: false,
+      isCloseButton: false
     };
   },
   methods: {
@@ -86,6 +87,11 @@ export default {
     onSelectChange(e) {
       this.currentCompany = this.companyList.find(v => v.id == e);
     },
+    // 判断关闭按钮是否关闭
+    async handleClickButton() {
+      const resp = await getSystemParamByKey({ paramKey: 'force_popup_window' });
+      this.isCloseButton = resp == 'Y' ? true : false;
+    },
     async handleGetList() {
       try {
         let id = localStorage.getItem('id');
@@ -102,6 +108,7 @@ export default {
     }
   },
   created() {
+    this.handleClickButton();
     this.handleGetList();
   },
   beforeRouteLeave(to, from, next) {
@@ -111,6 +118,7 @@ export default {
     } else if (this.companyList.length) {
       next('/arrearageCenter');
     }
+    next();
   }
 };
 </script>
