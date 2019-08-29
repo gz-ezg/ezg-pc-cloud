@@ -145,6 +145,11 @@ export default {
     async onSumbit() {
       this.$refs['orderDetail'].validate(async valid => {
         const { orderDetail } = this;
+        let orderitems = JSON.parse(JSON.stringify(orderDetail.items)).map(v => {
+          v.servicestartdate = DateFormat(v.servicestartdate);
+          return v;
+        });
+
         let config = {
           id: orderDetail.id,
           payDir: orderDetail.paydir,
@@ -153,7 +158,7 @@ export default {
           companyId: orderDetail.companyid,
           isornotkp: orderDetail.isornotkp,
           orderPayNumber: orderDetail.realnumber,
-          orderitems: JSON.stringify(orderDetail.items),
+          orderitems: JSON.stringify(orderitems),
           usebalance: orderDetail.usebalance,
           serviceStartDate: ''
         };
