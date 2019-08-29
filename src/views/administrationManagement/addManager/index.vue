@@ -866,16 +866,15 @@
             },
             downloadExcel(){
                 let field = [
-                    {field:'area',title:'地区',format:'gzbusinessarea'},
+                    {field:'area',title:'地区',format:'gzaddrarea'},
                     {field:'place',title:'地址'},
                     {field:'price',title:'价格'},
-                    {field:'invoice_type',title:'开票类型',format:'kp_type'},
-                    {field:'addr_property',title:'地址属性',format:'addr_property'},
+                    {field:'invoice_type',title:'地址类型',format:'kp_type'},
                     {field:'can_invoice',title:'可开',format:'sf_yn'},
                     {field:'can_check',title:'可查',format:'sf_yn'},
+                    {field:'if_new_register',title:'新注册',format:'sf_yn'},
                     {field:'tax_status',title:'工商情况',format:'business_tax_status'},
                     {field:'business_status',title:'税务情况',format:'business_tax_status'},
-                    {field:'memo',title:'备注'},
                 ]
                 let _self = this
                 let url = `api/system/addrPrice/list`
@@ -923,7 +922,6 @@
                 function success(res){
                     _self.data = res.data.data.rows
                     // let totalList = res.data.data.rows;
-
                     let temp = res.data.data.rows.reduce((acc,v,i)=>{
                         let index = acc.findIndex(v1=>v1.AREA===v.area)
                         index !== -1 ? acc[index].list.push(v): acc.push({AREA:v.area,list:[v]})
