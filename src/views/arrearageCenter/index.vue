@@ -107,7 +107,7 @@ export default {
           this.companyList = [];
           this.$router.push({ name: 'home_index' });
         } else {
-          this.companyList = resp;
+          this.companyList = this.handleDiff(resp);
           this.currentCompany = resp[0];
           this.companyId = resp[0].id;
         }
@@ -117,12 +117,22 @@ export default {
         });
       }
     },
+    // 业务代码
+    handleDiff(list) {
+      let temp = list.filter(v => v.diff <= 1);
+      if (temp.length == 0) {
+        this.isCloseButton = false;
+        return list;
+      } else {
+        return temp;
+      }
+    },
     loadList() {
       try {
         let resp = localStorage.getItem('arrearList');
         if (resp) {
           resp = JSON.parse(resp);
-          this.companyList = resp;
+          this.companyList = this.handleDiff(resp);
           this.currentCompany = resp[0];
           this.companyId = resp[0].id;
         } else {
@@ -140,7 +150,6 @@ export default {
     this.loadList();
   },
   beforeRouteLeave(to, from, next) {
-    console.log(!this.companyList.length);
     if (this.clickExit || !this.companyList.length) {
       localStorage.setItem('arrearList', '');
       next();
