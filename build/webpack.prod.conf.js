@@ -12,7 +12,6 @@ const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 const env = require('../config/prod.env')
 
   console.log("processEnv:" + process.env.OWN_SPACE)
-
 const webpackConfig = merge(baseConfig, {
   mode: 'production',
   // devtool: 'source-map',

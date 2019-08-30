@@ -80,7 +80,8 @@
                       <FormItem label="开始税期" prop="servicestartdate">
                         <DatePicker
                           class="input-me"
-                          :disabled="true"
+                          disabled
+                          readonly
                           type="month"
                           v-model="item.servicestartdate"
                           placeholder="选择月份"

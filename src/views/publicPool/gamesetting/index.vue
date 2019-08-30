@@ -52,12 +52,9 @@
                 page: 1,
                 pageSize: 10,
                 current_row:"",
-                data:[
-                    {content:"发放1000客户资源",planDate:"2019-08-13",count:1000,range:"市场一部--市场四部",status:"未导入",createName:"vn",createDate:"2019-08-13 12:02:06"},
-                    {content:"发放1000客户资源",planDate:"2019-08-13",count:1000,range:"市场一部--市场四部",status:"已导入",createName:"vn",createDate:"2019-08-13 12:02:06"},
-                    {content:"发放1000客户资源",planDate:"2019-08-13",count:1000,range:"市场一部--市场四部",status:"活动中",createName:"vn",createDate:"2019-08-13 12:02:06"},
-                    {content:"发放1000客户资源",planDate:"2019-08-13",count:1000,range:"市场一部--市场四部",status:"已结束",createName:"vn",createDate:"2019-08-13 12:02:06"}
-                    ],
+                activity_status:[],
+                activity_status_map:new Map(),
+                data:[],
                 header: [
                     {
                         title: '活动内容',
@@ -66,32 +63,35 @@
                     },
                     {
                         title: '活动时间',
-                        key: 'planDate',
+                        key: 'activity_time',
                         width: 180
                     },
                     {
                         title: '数量',
-                        key: 'count',
+                        key: 'amount',
                         minWidth: 120,
                     },
                     {
                         title: '范围',
-                        key: 'range',
+                        key: 'departname',
                         minWidth: 100,
                     },
                     {
                         title: '状态',
                         key: 'status',
-                        minWidth: 90
+                        minWidth: 90,
+                        render:(h,params)=>{
+                            return h('div',{},this.activity_status_map.get(params.row.status))
+                        }
                     },
                     {
                         title: '创建人',
-                        key: 'createName',
+                        key: 'realname',
                         minWidth: 70,
                     },
                     {
                         title: '创建时间',
-                        key: 'createDate',
+                        key: 'createdate',
                         minWidth: 70,
                     },
                     {
@@ -101,7 +101,7 @@
                         fixed:'right',
                         width: 250,
                         render:(h,params)=>{
-                            if (params.row.status == "未导入") {
+                            if (params.row.status == "dd") {
                                 return h('div',{},[
                                     h('Button',{
                                         props:{
@@ -115,21 +115,19 @@
                                     },"[激活]")
                                 ])
                             }
-                            if (params.row.status == "已导入") {
-                                return h('div',{},[
-                                    h('Button',{
-                                        props:{
-                                            type:"text"
-                                        }
-                                    },"[激活]")
-                                ])
-                            }
-                            if (params.row.status == "活动中" || params.row.status == "已结束") {
+                            if (params.row.status == "hdz") {
                                 return h('div',{
                                     style:{
                                         color:'#AEDD81'
                                     }
-                                },'已激活')
+                                },'活动中')
+                            }
+                            if (params.row.status == "yjs") {
+                                return h('div',{
+                                    style:{
+                                        color:'red'
+                                    }
+                                },'已结束')
                             }
                         }
                     },
@@ -169,6 +167,48 @@
                     this.$Message.warning("请选择一行进行操作")
                 }
             },
+            get_data(){
+                let _self = this;
+                _self.data1 = []
+                _self.loading = true;
+                this.current_row = ""
+                let url = `api/customer/highseasActivity/list`;
+                let config = {
+                    params: {
+                        page: _self.page,
+                        pageSize: _self.pageSize,
+                    }
+                }
+
+                function success(res){
+                    _self.data = res.data.data.rows
+                    _self.pageTotal = res.data.data.total
+                    _self.loading = false
+                }
+
+                function fail(err){
+
+                }
+
+                this.$Get(url, config, success, fail)
+            },
+            get_data_center(){
+                let params = "activity_status"
+                let _self = this
+                function success(res){
+                    _self.activity_status = res.data.data.activity_status
+                    _self.activity_status_map = _self.$array2map(_self.activity_status)
+                }
+                this.$GetDataCenter(params, success)
+            },
+        },
+        created() {
+            this.get_data_center()
+            this.get_data()
+            this.$bus.off("UPDATE_INDEX",true)
+            this.$bus.on("UPDATE_INDEX",e=>{
+                this.get_data()
+            })
         }
     }
 </script>

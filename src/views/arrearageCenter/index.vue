@@ -91,7 +91,7 @@ export default {
     // 判断关闭按钮是否关闭
     async handleClickButton() {
       const resp = await getSystemParamByKey({ paramKey: 'force_popup_window_filter_users' });
-      if (!resp) {
+        if (!resp) {
         return;
       }
       if (resp == '-1' || resp.split(',').includes(localStorage.getItem('id'))) {
