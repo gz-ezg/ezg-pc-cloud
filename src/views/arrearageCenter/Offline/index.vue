@@ -29,12 +29,12 @@
         <Row :gutter="16">
           <Col span="10">
             <FormItem prop="servicername" label="服务人员">
-              <Input size="small" v-model="order.serverName" readonly />
+              <Input size="small" v-model="detail.server_name" readonly />
             </FormItem>
           </Col>
           <Col span="10">
             <FormItem prop="marketername" label="市场人员">
-              <Input size="small" v-model="order.followby" readonly />
+              <Input size="small" v-model="detail.marketer" readonly />
             </FormItem>
           </Col>
         </Row>
