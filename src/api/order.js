@@ -100,3 +100,10 @@ export function getSystemParamByKey(params) {
     params
   })
 }
+export function budgetPeriod(params) {
+  return request({
+    url: `order/cycle/service/record/budget/period`,
+    method: 'get',
+    params
+  })
+}

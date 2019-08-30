@@ -108,7 +108,7 @@
 </template>
 
 <script>
-import { orderDetail, accountDetail, orderCreate } from '@A/order';
+import { orderDetail, budgetPeriod, accountDetail, orderCreate } from '@A/order';
 import productDetailList from './productDetailList';
 import { DateFormat } from '@U/utils';
 import abOrderSelect from './abOrderSelect';
@@ -146,7 +146,7 @@ export default {
       this.$refs['orderDetail'].validate(async valid => {
         const { orderDetail } = this;
         let orderitems = JSON.parse(JSON.stringify(orderDetail.items)).map(v => {
-          v.servicestartdate = DateFormat(v.servicestartdate);
+          v.servicestartdate = DateFormat(v.servicestartdate).substr(0, 7);
           return v;
         });
 
@@ -173,9 +173,14 @@ export default {
       this.orderDetail = await orderDetail(id);
       this.orderDetail.items = this.orderDetail.items.filter(v => v.skuid == sku_id);
       this.payDirs = await this.$queryCodes('payDirs', true);
+      const resp = await budgetPeriod({ companyId: this.orderDetail.companyid, productId: this.orderDetail.items[0].productid });
+      if (resp) {
+        this.orderDetail.items[0].servicestartdate = resp;
+      }
     },
     async getBalance(id) {
       const data = await accountDetail({ customerId: id });
+      // /api/order/cycle/service/record/budget/period
       this.allUseBalance = (data.accountAmount - data.lockAmount).toFixed(2);
     },
     onNumChange(e) {
