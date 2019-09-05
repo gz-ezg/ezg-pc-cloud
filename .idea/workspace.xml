@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/all.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/all.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/serving.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/serving.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/customerManagement/customerAccount/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customerManagement/customerAccount/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/planManagement/myCommonTask/myCommonTaskIndex/tabpanes/companyCollectionFlow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/planManagement/myCommonTask/myCommonTaskIndex/tabpanes/companyCollectionFlow.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/publicPool/gamesetting/common/detail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/publicPool/gamesetting/common/detail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/publicPool/gamesetting/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/publicPool/gamesetting/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/publicPool/publicgame/common/countDown.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/publicPool/publicgame/common/countDown.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/woa-components/searchModel/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/woa-components/searchModel/index.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -48,34 +35,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/planManagement/myCommonTask/myCommonTask_table.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="106">
-              <caret line="22" column="67" lean-forward="true" selection-start-line="22" selection-start-column="67" selection-end-line="22" selection-end-column="67" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/planManagement/myCommonTask/myCommonTaskIndex/tabpanes/finished.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1275">
-              <caret line="66" column="25" selection-start-line="66" selection-start-column="25" selection-end-line="66" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/views/planManagement/myCommonTask/myCommonTaskIndex/tabpanes/companyCollectionFlow.vue">
+        <entry file="file://$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+            <state relative-caret-position="100">
+              <caret line="170" column="86" lean-forward="true" selection-start-line="170" selection-start-column="86" selection-end-line="170" selection-end-column="86" />
               <folding>
-                <element signature="n#Form#0;n#Modal#0;n#template#0;n#!!top" />
-                <element signature="n#style#0;n#InputNumber#0;n#Col#0;n#Row#0;n#FormItem#0;n#Row#0;n#Form#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#Form#1;n#Modal#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#Form#1;n#Modal#0;n#template#0;n#!!top" />
+                <element signature="n#style#0;n#div#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -180,9 +146,9 @@
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue" />
         <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/all.vue" />
-        <option value="$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue" />
         <option value="$PROJECT_DIR$/src/views/publicPool/gamesetting/index.vue" />
         <option value="$PROJECT_DIR$/src/views/planManagement/myCommonTask/myCommonTaskIndex/tabpanes/companyCollectionFlow.vue" />
+        <option value="$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue" />
       </list>
     </option>
   </component>
@@ -227,15 +193,15 @@
               <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="planManagement" type="462c0819:PsiDirectoryNode" />
+              <item name="publicPool" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="planManagement" type="462c0819:PsiDirectoryNode" />
-              <item name="myCommonTask" type="462c0819:PsiDirectoryNode" />
+              <item name="publicPool" type="462c0819:PsiDirectoryNode" />
+              <item name="publicgame" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -463,7 +429,7 @@
       <workItem from="1567387620603" duration="25531000" />
       <workItem from="1567472455876" duration="29976000" />
       <workItem from="1567559863387" duration="8378000" />
-      <workItem from="1567647185610" duration="3737000" />
+      <workItem from="1567647185610" duration="6762000" />
     </task>
     <task id="LOCAL-00022" summary="修改启动失败的问题">
       <created>1555989851178</created>
@@ -812,7 +778,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1957882000" />
+    <option name="totallyTimeSpent" value="1960907000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -1244,34 +1210,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/all.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="156" column="35" selection-start-line="156" selection-start-column="35" selection-end-line="156" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgency.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/expireCustomer/expireCustomer.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
           <caret line="217" column="17" selection-start-line="217" selection-start-column="17" selection-end-line="217" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="79" column="23" lean-forward="true" selection-start-line="79" selection-start-column="23" selection-end-line="79" selection-end-column="23" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1307,17 +1249,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/router/router.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-384">
-          <caret line="887" column="20" lean-forward="true" selection-start-line="887" selection-start-column="20" selection-end-line="887" selection-end-column="20" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#39178#39426#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/planManagement/myCommonTask/myCommonTask_table.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="106">
@@ -1334,13 +1265,47 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/planManagement/myCommonTask/myCommonTaskIndex/tabpanes/companyCollectionFlow.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        <state relative-caret-position="30">
+          <caret line="374" column="13" lean-forward="true" selection-start-line="374" selection-start-column="13" selection-end-line="374" selection-end-column="13" />
           <folding>
             <element signature="n#Form#0;n#Modal#0;n#template#0;n#!!top" />
             <element signature="n#style#0;n#InputNumber#0;n#Col#0;n#Row#0;n#FormItem#0;n#Row#0;n#Form#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#Form#1;n#Modal#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#Form#1;n#Modal#0;n#template#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/all.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="149" column="38" lean-forward="true" selection-start-line="149" selection-start-column="38" selection-end-line="149" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgency.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="20" column="22" lean-forward="true" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-384">
+          <caret line="887" column="20" lean-forward="true" selection-start-line="887" selection-start-column="20" selection-end-line="887" selection-end-column="20" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#39178#39426#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="170" column="86" lean-forward="true" selection-start-line="170" selection-start-column="86" selection-end-line="170" selection-end-column="86" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

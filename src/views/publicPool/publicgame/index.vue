@@ -14,8 +14,8 @@
                     </div>
                     <div style="width: 467px;margin-bottom: 150px" v-if="showNum">
                         <div style="width: 467px;display: flex;justify-content: space-between;font-weight: bold;font-size: 16px">
-                            <div>公海池还剩余{{amount}}条</div>
-                            <div>你已领取{{num}}条</div>
+                            <div>公海池还剩余{{num}}条</div>
+                            <div>你已领取{{amount}}条</div>
                         </div>
                     </div>
                     <div style="display: flex;justify-content: center">
@@ -166,9 +166,9 @@
             },
             async initWebSocket() {
                 const { port, key } = await serviceApi.auth();
-                // const wsuri = `ws://cloud.zgcfo.com:${port}/highseasActivity/websocket/${key}`;
-                // const wsuri = `ws://192.168.0.220:${port}/wechat/company/notify/${key}`;
-                const wsuri = `ws://192.168.2.89:${port}/highseasActivity/websocket`;
+                // const wsuri = `ws://cloud.zgcfo.com:${port}/highseasActivity/websocket`;
+                const wsuri = `ws://192.168.0.220:${port}/highseasActivity/websocket`;
+                // const wsuri = `ws://192.168.2.89:${port}/highseasActivity/websocket`;
                 this.websock = new WebSocket(wsuri);
                 console.log(this.websock)
                 this.websock.onmessage = this.websocketonmessage;
