@@ -1330,24 +1330,24 @@ export const appRouter = [
         component: () =>
           import(/* webpackChunkName: "publicPool_index" */ '@/views/publicPool/publicPool')
       },
-      // {
-      //   access: 11654,
-      //   meta: 11654,
-      //   path: 'gamesetting',
-      //   title: '活动设置',
-      //   name: 'gamesetting_index',
-      //   component: () =>
-      //       import(/* webpackChunkName: "gamesetting_index" */ '@/views/publicPool/gamesetting/index')
-      // },
-      // {
-      //   access: 11655,
-      //   meta: 11655,
-      //   path: 'publicgame',
-      //   title: '公海池活动',
-      //   name: 'publicgame_index',
-      //   component: () =>
-      //       import(/* webpackChunkName: "publicgame_index" */ '@/views/publicPool/publicgame/index')
-      // },
+      {
+        access: 11654,
+        meta: 11654,
+        path: 'gamesetting',
+        title: '活动设置',
+        name: 'gamesetting_index',
+        component: () =>
+            import(/* webpackChunkName: "gamesetting_index" */ '@/views/publicPool/gamesetting/index')
+      },
+      {
+        access: 11655,
+        meta: 11655,
+        path: 'publicgame',
+        title: '公海池活动',
+        name: 'publicgame_index',
+        component: () =>
+            import(/* webpackChunkName: "publicgame_index" */ '@/views/publicPool/publicgame/index')
+      },
     ]
   },
   {

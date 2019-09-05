@@ -106,6 +106,12 @@
                 loading: false,
                 managestatus:[],
                 managestatus_map: new Map(),
+                cservicest : [],
+                cservicest_map :  new Map(),
+                financialLevel :[],
+                financialLevel_map : new Map(),
+                GDSreport :[],
+                GDSreport_map :new Map(),
                 search_model:"",
                 SearchValidate:{
                     CompanyName:'',
@@ -135,7 +141,10 @@
                     {
                         title: '服务状态',
                         key: 'service_status',
-                        width: 120
+                        width: 120,
+                        render:(h,params)=>{
+                            return h('div',{},this.cservicest_map.get(params.row.service_status))
+                        }
                     },
                     {
                         title: '对应企业',
@@ -144,8 +153,11 @@
                     },
                     {
                         title: '经营状态',
-                        key: 'managestatusName',
-                        width: 120
+                        key: 'managestatus',
+                        width: 120,
+                        render:(h,params)=>{
+                            return h('div',{},this.managestatus_map.get(params.row.managestatus))
+                        }
                     },
                     {
                         title: '产品名称',
@@ -155,7 +167,10 @@
                     {
                         title: '国地税报道',
                         key: 'gdsreport',
-                        width: 120
+                        width: 120,
+                        render:(h,params)=>{
+                            return h('div',{},this.GDSreport_map.get(params.row.gdsreport))
+                        }
                     },
                     {
                         title: '服务人员',
@@ -206,6 +221,14 @@
                         title: "客户跟进",
                         key: "note_kj_flag",
                         minWidth: 120,
+                        render:(h,params)=>{
+                            if (params.row.note_kj_flag=='Y'){
+                                return h('div',{},'完成')
+                            } else {
+                                return h('div',{},'未完成')
+                            }
+
+                        }
                     },
                     {
                         title: '备注',
@@ -395,79 +418,8 @@
                 }
 
                 function doSuccess(res) {
-                    let _data = res.data.data
-                    let _ids = []
-                    _self.pageTotal = _data.total
-                    _self.data = []
-
-                    for (let i = 0; i < _data.rows.length; i++) {
-                        let status = ''
-                        let _gdsreport = ''
-                        let managestatusName = ''
-                        _ids.push(_data.rows[i].month_service_id)
-
-                        if (_data.rows[i].service_status == 'notStarted') {
-                            status = '未开始'
-                        } else if (_data.rows[i].service_status == 'inservice') {
-                            status = '服务中'
-                        } else if (_data.rows[i].service_status == 'stop') {
-                            status = '已终止'
-                        } else if (_data.rows[i].service_status == 'arrears') {
-                            status = '欠费'
-                        } else if (_data.rows[i].service_status == 'unallocated') {
-                            status = '未分配'
-                        } else if (_data.rows[i].service_status == 'pause') {
-                            status = '暂停'
-                        } else if (_data.rows[i].service_status == 'abolish') {
-                            status = '作废'
-                        } else if (_data.rows[i].service_status == 'exception') {
-                            status = '异常'
-                        }
-
-                        for(let j = 0;j<_self.managestatus.length;j++){
-                            if(_data.rows[i].managestatus == _self.managestatus[j][0]){
-                                managestatusName = _self.managestatus[j][1]
-                                break
-                            }
-                        }
-
-                        if (_data.rows[i].gdsreport == 'ybd') {
-                            _gdsreport = '已报道'
-                        } else if (_data.rows[i].gdsreport == 'wbd') {
-                            _gdsreport = '未报道'
-                        } else if (_data.rows[i].gdsreport == 'bybd') {
-                            _gdsreport = '不用报道'
-                        }
-
-                        _self.data.push({
-                            id: _data.rows[i].id,
-                            month_service_id: _data.rows[i].month_service_id,
-                            company_id: _data.rows[i].company_id,
-                            service_depart_id: _data.rows[i].service_depart_id,
-                            service_status: status,
-                            gdsreport: _gdsreport,
-                            CompanyName: _data.rows[i].CompanyName,
-                            begin_period:_data.rows[i].begin_period,
-                            end_period:_data.rows[i].end_period,
-                            server_realname:_data.rows[i].server_realname,
-                            followby_realname:_data.rows[i].followby_realname,
-                            workordermemo:_data.rows[i].workordermemo,
-                            product:_data.rows[i].product,
-                            balance_count:_data.rows[i].balance_count,
-                            batchBookId:_data.rows[i].batchBookId,
-                            customername: _data.rows[i].customername,
-                            accounter_security_line: _data.rows[i].accounter_security_line,
-                            managestatusName: managestatusName,
-                            zl: '',
-                            zz: '',
-                            bs: '',
-                            cycle_work_order_id:_data.rows[i].cycle_work_order_id,
-                            dljz_legwork: _data.rows[i].dljz_legwork,
-                            has_account: _data.rows[i].has_account,
-                            note_kj_flag: _data.rows[i].note_kj_flag == 'Y'? "完成": "未完成"
-                        })
-                    }
-
+                    _self.data  = res.data.data.rows
+                    _self.pageTotal = res.data.data.total
                     _self.loading = false
                 }
 
@@ -692,10 +644,17 @@
             },
             get_data_center(){
                 let _self = this
-                let config = "managestatus"
+                let config = "managestatus,cservicest,financialLevel,GDSreport"
                 function finsih(res){
                     _self.managestatus = res.data.data.managestatus
                     _self.managestatus_map = _self.$array2map(_self.managestatus)
+                    _self.cservicest = res.data.data.cservicest
+                    _self.cservicest_map = _self.$array2map(_self.cservicest)
+                    _self.financialLevel = res.data.data.financialLevel
+                    _self.financialLevel_map = _self.$array2map(_self.financialLevel)
+                    _self.GDSreport = res.data.data.GDSreport
+                    _self.GDSreport_map = _self.$array2map(_self.GDSreport)
+
                 }
                 this.$GetDataCenter(config, finsih)
 

@@ -12,8 +12,8 @@
                                     <Input v-model="form[item.key]" size="small" style="width:100%"></Input>
                                 </FormItem>
                                 <FormItem :label="item.label" :prop="item.key" v-else-if="item.type=='select'">
-                                    <Select transfer v-model="form[item.key]" size="small" @on-change="search" >
-                                        <Option v-for="(item2, index) in item.data" :value="item2.typecode" :key="index">{{ item2.typename }}</Option>
+                                    <Select transfer v-model="form[item.key]" size="small" @on-change="search(form[item.key])" >
+                                        <Option v-for="(item2, index) in item.data" :value="item2.typename" :key="index">{{ item2.typename }}</Option>
                                     </Select>
                                 </FormItem>
                                 <FormItem :label="item.label" :prop="item.key" v-else-if="item.type=='datePicker'">
@@ -37,7 +37,9 @@
 </template>
 
 <script>
-export default {
+    import {deepCopy} from "../../../libs/utils";
+
+    export default {
     name: "searchModel",
     props: {
         data:{
@@ -71,6 +73,8 @@ export default {
     data(){
         return {
             form: {},
+            form1:{},
+            form2:{},
             search_model: false
         }
     },
@@ -82,7 +86,29 @@ export default {
                     this.form["e" + x] = this.form[x][1]
                 }
             }
-            this.$emit("search", this.form)
+            let a = deepCopy(this.form)
+            if (this.form.by=='大于零'){
+                a.by = 0
+                a.xy = ""
+                a.dy = ""
+            }
+            if (this.form.by=='小于零'){
+                a.by = ""
+                a.xy = 0
+                a.dy = ""
+            }
+            if (this.form.by=='等于零'){
+                a.by = ""
+                a.xy = ""
+                a.dy = 0
+            }
+            if (!this.form.by){
+                a.by = ""
+                a.xy = ""
+                a.dy = ""
+            }
+            this.form1 = a
+            this.$emit("search", this.form1)
         },
         handle_reset(){
             this.$refs["form"].resetFields();
@@ -92,7 +118,12 @@ export default {
                     this.form["e" + x] = this.form[x][1]
                 }
             }
-            this.$emit("search", this.form)
+            let a = deepCopy(this.form)
+            a.by = ""
+            a.xy = ""
+            a.dy = ""
+            this.form2  = a
+            this.$emit("search", this.form2)
         },
         date_change(date, key){
             this.form[key] = date

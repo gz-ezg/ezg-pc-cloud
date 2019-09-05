@@ -41,7 +41,8 @@
         mounted () {
             // 计算时间差
             console.log(this.endTime,this.startTime)
-            let timeLag = (this.endTime - this.startTime) / 1000
+            let timeLag = (new Date(this.endTime) - new Date(this.startTime)) / 1000
+            console.log(timeLag)
             // 判断当前是否时分秒的值是否大于10
             let add = num => {
                 return num < 10 ? '0' + num : num
@@ -64,7 +65,7 @@
                 if (time <= 0) {
                     this.isShow = true
                     this.$bus.emit("UPDATE_GAME_INDEX",true)
-                    this.clocker = this.endMsg || '该团已经结束'
+                    this.clocker = this.endMsg || '活动已经结束'
                     clearInterval(go)
                 }
             }

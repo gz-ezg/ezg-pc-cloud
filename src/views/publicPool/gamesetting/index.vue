@@ -5,7 +5,7 @@
                 <Button type="primary" icon="plus" @click="add">新增</Button>
                 <Button type="primary" icon="information-circled" @click="show">查看</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="edit">修改</Button>
-                <!--<Button type="primary" icon="ios-color-wand-outline" @click="import_excel">导入Excel</Button>-->
+                <Button type="primary" icon="ios-color-wand-outline" @click="sync_data">同步数据</Button>
             </ButtonGroup>
         </Row>
         <Row style="margin-top: 10px;">
@@ -34,6 +34,19 @@
             ></Page>
         </Row>
         <detail></detail>
+        <Modal v-model="openImportCustomer" title="导入客户" width="200">
+            <Row :gutter="20">
+                <Col span="24">
+                    <center>
+                        <Upload ref="upload" :before-upload="handleUpload" action="/api/customer/highseasActivity/importInfo">
+                            <Button type="ghost" icon="ios-cloud-upload-outline" style="margin-top:20px">选择文件</Button>
+                            <Button type="info" icon="ios-cloud-download-outline" style="margin-top:20px;" @click="open">导入模板</Button>
+                        </Upload>
+                    </center>
+                </Col>
+            </Row>
+            <div slot="footer"></div>
+        </Modal>
     </Card>
 </template>
 
@@ -52,9 +65,11 @@
                 page: 1,
                 pageSize: 10,
                 current_row:"",
+                activity_id:"",
                 activity_status:[],
                 activity_status_map:new Map(),
                 data:[],
+                openImportCustomer:false,
                 header: [
                     {
                         title: '活动内容',
@@ -74,7 +89,68 @@
                     {
                         title: '范围',
                         key: 'departname',
-                        minWidth: 100,
+                        minWidth: 120,
+                        render: (h, params) => {
+                            if (params.row.departname == "" || params.row.departname == null) {
+                                return "";
+                            } else {
+                                // console.log(params.row.companynames)
+                                let temp = params.row.departname.split(",")
+                                if (temp[0].length > 6) {
+                                    return h("Poptip",{
+                                        props: {
+                                            trigger: "hover",
+                                            title: "范围",
+                                            placement: "bottom"
+                                        }
+                                    },[
+                                        h("span",temp[0].slice(0,6)+"..."),
+                                        h("Icon", {
+                                            props: {
+                                                type: "arrow-down-b"
+                                            }
+                                        }),
+                                        h("div",{
+                                            slot: "content"
+                                        },[
+                                            h("ul",temp.map(item => [
+                                                h("li", {
+                                                    style: {
+                                                        padding: "4px"
+                                                    }
+                                                },"部门：" + item)
+                                            ]))
+                                        ])
+                                    ]);
+                                } else {
+                                    return h("Poptip",{
+                                            props: {
+                                                trigger: "hover",
+                                                title: "范围",
+                                                placement: "bottom"
+                                            }},[
+                                            h("span", temp[0]),
+                                            h("Icon", {
+                                                props: {
+                                                    type: "arrow-down-b"
+                                                }
+                                            }),
+                                            h("div", {
+                                                slot: "content"
+                                            },[
+                                                h("ul",temp.map(item => [h("li",
+                                                    {
+                                                        style: {
+                                                            padding: "4px"
+                                                        }
+                                                    },"部门：" + item)
+                                                ]))
+                                            ])
+                                        ]
+                                    );
+                                }
+                            }
+                        }
                     },
                     {
                         title: '状态',
@@ -92,35 +168,57 @@
                     {
                         title: '创建时间',
                         key: 'createdate',
-                        minWidth: 70,
+                        minWidth: 160,
                     },
                     {
                         title: '操作',
                         key: 'action',
                         align:"center",
                         fixed:'right',
-                        width: 250,
+                        width: 200,
                         render:(h,params)=>{
                             if (params.row.status == "dd") {
                                 return h('div',{},[
                                     h('Button',{
                                         props:{
                                             type:"text"
+                                        },
+                                        on:{
+                                            click:()=>{
+                                                this.import_excel()
+                                            }
                                         }
                                     },"[导入名单]"),
                                     h('Button',{
                                         props:{
                                             type:"text"
+                                        },
+                                        on:{
+                                            click:()=>{
+                                                this.activate(params.row.id,'hdz')
+                                            }
                                         }
                                     },"[激活]")
                                 ])
                             }
                             if (params.row.status == "hdz") {
-                                return h('div',{
-                                    style:{
-                                        color:'#AEDD81'
-                                    }
-                                },'活动中')
+                                return h('div',{},[
+                                    h('span',{
+                                        style:{
+                                            color:'#AEDD81'
+                                        }
+                                    },"活动中"),
+                                    h('Button',{
+                                        props:{
+                                            type:"text"
+                                        },
+                                        on:{
+                                            click:()=>{
+                                                this.activate(params.row.id,'yjs')
+                                            }
+                                        }
+                                    },"[结束]")
+                                ])
                             }
                             if (params.row.status == "yjs") {
                                 return h('div',{
@@ -136,8 +234,8 @@
         },
         methods: {
             selectRow(e) {
-                console.log(e)
                 this.current_row = e;
+                this.activity_id = e.id
             },
             pageChange(a) {
                 let _self = this;
@@ -149,12 +247,62 @@
                 _self.pageSize = a;
                 _self.get_data()
             },
+            import_excel(){
+                this.openImportCustomer = true;
+            },
+            handleUpload(file) {
+                let _self = this;
+                _self.$Spin.show();
+                let formdata = new FormData();
+                let url = 'api/customer/highseasActivity/importInfo';
+
+                formdata.append('activityId', _self.activity_id);
+                formdata.append('file', file);
+
+                function success(res) {
+                    _self.get_data();
+                    _self.openImportCustomer = false;
+                    _self.$Spin.hide();
+                    return false;
+                }
+
+                function fail(err) {
+                    _self.$Spin.hide();
+                    return false;
+                }
+
+                this.$Post(url, formdata, success, fail);
+                return false;
+            },
+            open() {
+                window.open('/api/assets/upload/commonImg/public_pool_template.xlsx');
+            },
+            activate(e,i){
+                let _self = this;
+                this.current_row = ""
+                let url = `api/customer/highseasActivity/changeStatus`;
+                let config = {
+                    params: {
+                        id: e,
+                        status: i,
+                    }
+                }
+
+                function success(res){
+                    _self.get_data();
+                }
+
+                function fail(err){
+
+                }
+
+                this.$Get(url, config, success, fail)
+            },
             add(){
                 this.$bus.emit("ADD_SETTING_INFO",this.current_row)
             },
             show(){
                 if (this.current_row) {
-                    console.log(this.current_row)
                     this.$bus.emit("SHOW_SETTING_INFO",this.current_row)
                 }else {
                     this.$Message.warning("请选择一行进行操作")
@@ -162,14 +310,38 @@
             },
             edit(){
                 if (this.current_row) {
-                    this.$bus.emit("EDIT_SETTING_INFO",this.current_row)
+                    if (this.current_row.status=='dd') {
+                        this.$bus.emit("EDIT_SETTING_INFO",this.current_row)
+                    } else {
+                        this.$Message.warning("当前状态不允许修改！")
+                    }
                 }else {
-                    this.$Message.warning("请选择一行进行操作")
+                    this.$Message.warning("请选择一行进行操作！")
                 }
+            },
+            sync_data(){
+                let _self = this;
+                _self.loading = true;
+                let url = `api/customer/highseasActivity/synchronizedDate`;
+                let config = {
+                    params: {
+
+                    }
+                }
+
+                function success(res){
+                    _self.loading = false
+                    _self.get_data()
+                }
+
+                function fail(err){
+                    _self.get_data()
+                }
+
+                this.$Get(url, config, success, fail)
             },
             get_data(){
                 let _self = this;
-                _self.data1 = []
                 _self.loading = true;
                 this.current_row = ""
                 let url = `api/customer/highseasActivity/list`;
@@ -177,6 +349,7 @@
                     params: {
                         page: _self.page,
                         pageSize: _self.pageSize,
+                        sortField:"activity_time"
                     }
                 }
 

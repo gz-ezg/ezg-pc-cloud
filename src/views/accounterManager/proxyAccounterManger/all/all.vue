@@ -73,6 +73,7 @@
                     :loading="loading"
                     ref="selection"
                     highlight-row
+                    :row-class-name="row_class_name"
                     size="small"
                     :columns="header"
                     :data="data"
@@ -108,6 +109,8 @@
                 cservicest:[],
                 TaxDeclareStatus:[],
                 TaxCompleteStatus:[],
+                GDSreport:[],
+                GDSreport_map:new Map(),
                 cservicest_map:new Map(),
                 TaxDeclareStatus_map:new Map(),
                 TaxCompleteStatus_map:new Map(),
@@ -192,6 +195,19 @@
                                     );
                                 }
                             }
+                        }
+                    },
+                    {
+                        title: '下单时间',
+                        key: 'createdate',
+                        minWidth: 220
+                    },
+                    {
+                        title: '国地税报道',
+                        key: 'gdsreport',
+                        minWidth: 140,
+                        render:(h,params)=>{
+                            return h('div',{},this.GDSreport_map.get(params.row.gdsreport))
                         }
                     },
                     {
@@ -527,6 +543,27 @@
                         title: '剩余外勤',
                         key: 'remainder',
                         minWidth: 120,
+                        render: (h, params) => {
+                            let _self = this;
+                            return h('div', [
+                                h(
+                                    'span',
+                                    {
+                                        style: {
+                                            display: 'inline-block',
+                                            lineHeight: '24px',
+                                            height: '24px',
+                                            cursor:'pointer',
+                                            color:'#0162f4'
+                                        },
+                                        on:{
+                                            click: function() {
+                                                _self.field(params.row);
+                                            }
+                                        }
+                                    },params.row.remainder
+                                )])
+                        }
                     },
                     {
                         title: '税种状态',
@@ -626,11 +663,16 @@
                 _self.get_data()
             },
             row_class_name(row, index) {
-                if (row.balance_count <= 3) {
-                    return 'demo-table-followdate-warning-row';
+                if (row.gdsreport == 'wbd') {
+                    return 'demo-table-followdate-red-row';
+                }else if(row.gdsreport == 'bybd'){
+                    return 'demo-table-followdate-blue-row';
                 } else {
-                    return '';
+                    return ''
                 }
+            },
+            field(e){
+                this.$bus.emit("OPEN_FIELD_DETAIL",e)
             },
             invoice(e){
                 this.$bus.emit("OPEN_INVOICE_PAGE",e)
@@ -803,12 +845,14 @@
                 this.$Get(url, config, success, fail)
             },
             async get_data_center() {
-                let params = 'cservicest,managestatus,financialLevel,TaxDeclareStatus,TaxCompleteStatus';
+                let params = 'GDSreport,cservicest,managestatus,financialLevel,TaxDeclareStatus,TaxCompleteStatus';
                 try {
-                    let { cservicest, managestatus, financialLevel,TaxDeclareStatus,TaxCompleteStatus } = await accountApi.getDictionary(params);
+                    let { GDSreport,cservicest, managestatus, financialLevel,TaxDeclareStatus,TaxCompleteStatus } = await accountApi.getDictionary(params);
                     this.cservicest = cservicest;
                     this.cservicest_map = this.$array2map(this.cservicest);
                     this.managestatus = managestatus;
+                    this.GDSreport = GDSreport
+                    this.GDSreport_map = this.$array2map(GDSreport);
                     this.managestatus_map = this.$array2map(managestatus);
                     this.financialLevel = financialLevel;
                     this.TaxDeclareStatus = TaxDeclareStatus
@@ -835,7 +879,10 @@
 </script>
 
 <style>
-    .ivu-table .demo-table-followdate-warning-row {
-        color: rgb(226 17 0);
+    .ivu-table .demo-table-followdate-red-row td{
+        background-color: #D24D57;
+    }
+    .ivu-table .demo-table-followdate-blue-row td{
+        background-color: #00CCFF;
     }
 </style>

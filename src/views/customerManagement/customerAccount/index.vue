@@ -96,6 +96,12 @@ export default {
                     label: "联系方式：",
                     key: "tel",
                     type: "input"
+                },
+                {
+                    label: "账户余额：",
+                    key: "by",
+                    type: "select",
+                    data:[{typecode:'0',typename:'大于零'},{typecode:'1',typename:'小于零'},{typecode:'',typename:'等于零'}]
                 }
             ],
             header: [
@@ -189,6 +195,7 @@ export default {
     },
     methods: {
         search(e){
+            console.log(e)
             Object.assign(this.formInline, e)
             this.page = 1
             this.get_data()

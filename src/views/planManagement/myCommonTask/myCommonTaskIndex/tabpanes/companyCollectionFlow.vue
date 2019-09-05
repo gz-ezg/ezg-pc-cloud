@@ -11,7 +11,7 @@
                     <FormItem prop="finish_status" label="企业收款期数">
                         <Row :gutter="12">
                             <Col span="18">
-                                <Input type="number" maxlength="100" v-model="period" @on-change="changeDatas"/>
+                                <InputNumber size="small" style="width: 250px"  :max="20" v-model="period" @on-change="changeDatas"/>
                             </Col>
                             <Col span="4">
                                 <Button type="primary" :loading="loading" @click="handleSubmit">保存</Button>
@@ -25,7 +25,6 @@
                             </Col>
                         </Row>
                     </FormItem>
-                    </Col>
                 </Row>
                 <Row>
                     <Table
@@ -359,7 +358,7 @@ export default {
       this.$Get(url, data, doSuccess, fail);
     },
     changeDatas(e) {
-      let value = Number(e.target.value);
+      let value = this.period;
       if (value > 0) {
         this.otherdatas = [];
         for (let i = 0; i < value; i++) {

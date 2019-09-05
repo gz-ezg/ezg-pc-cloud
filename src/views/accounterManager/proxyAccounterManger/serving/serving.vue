@@ -243,6 +243,11 @@
                         }
                     },
                     {
+                        title: '下单时间',
+                        key: 'createdate',
+                        minWidth: 220
+                    },
+                    {
                         title: '重要提醒',
                         key: 'importantList',
                         minWidth: 220,

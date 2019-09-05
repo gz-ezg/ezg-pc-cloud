@@ -17,7 +17,7 @@
                 <Row>
                     <Col>
                         <FormItem label="活动时间：" prop="activity_time">
-                            <DatePicker v-model="detail.activity_time" type="datetime" :readonly="readonly"></DatePicker>
+                            <DatePicker v-model="detail.activity_time" :options="options" type="datetime" :readonly="readonly"></DatePicker>
                         </FormItem>
                     </Col>
                 </Row>
@@ -31,8 +31,8 @@
                 <Row>
                     <Col>
                         <FormItem label="范围：" prop="count">
-                            <Tag v-for="item in count" :key="item" :name="item" closable @on-close="handleClose2">{{ item.departname }}</Tag>
-                            <Button icon="plus" type="dashed" size="small" @click="handleAdd">添加标签</Button>
+                            <Tag v-for="item in count" :key="item" :name="item" :closable="!readonly" @on-close="handleClose2">{{ item.departname }}</Tag>
+                            <Button icon="plus" type="dashed" size="small" @click="handleAdd" v-if="!readonly">添加标签</Button>
                         </FormItem>
                     </Col>
                 </Row>
@@ -65,6 +65,11 @@
                 showSave:false,
                 showEdit:false,
                 departList:[],
+                options: {
+                    disabledDate (date) {
+                        return date && date.valueOf() < Date.now() - 86400000;
+                    }
+                },
                 detail:{
                     content:"",
                     activity_time:"",
@@ -110,6 +115,36 @@
                     this.$Post(url, config, success, fail)
                 }
             },
+            edit(){
+                let _self = this
+                if (!_self.detail.content || !_self.detail.activity_time || !_self.detail.amount || _self.count.length==0){
+                    _self.$Message.warning("请将上述信息填写完整")
+                } else{
+                    _self.loading = true;
+                    let url = `api/customer/highseasActivity/update`;
+                    let config = {
+                        id:_self.detail.id,
+                        content:_self.detail.content,
+                        activityTime: FULLDateFormat(_self.detail.activity_time),
+                        amount:_self.detail.amount,
+                        orgIds:_self.count.map(item=>{
+                            let a= []
+                            a.push(item.ID)
+                            return a
+                        }).join(",")
+                    }
+                    function success(res){
+                        _self.$bus.emit("UPDATE_INDEX",true)
+                        _self.openDetail = false
+                        _self.loading = false
+                    }
+
+                    function fail(err){
+
+                    }
+                    this.$Post(url, config, success, fail)
+                }
+            },
             clear(){
                 this.detail={
                     content:"",
@@ -144,6 +179,7 @@
             this.get_depart_data()
             this.$bus.off("ADD_SETTING_INFO",true)
             this.$bus.on("ADD_SETTING_INFO",e=>{
+                this.clear()
                 this.openDetail = true
                 this.showSave = true
                 this.showEdit = false
@@ -154,22 +190,26 @@
             this.$bus.on("SHOW_SETTING_INFO",e=>{
                 this.showSave = false
                 this.showEdit = false
-                this.openDetail = true
                 this.title = "查看"
                 this.detail = deepCopy(e)
-                let a = this.detail.orgIds.split(",")
-                let b = this.departList.reduce((newArr,v)=>{
-                    console.log(newArr)
-                    a.map(item=>{
-                        if (item==v.ID) {
-                            newArr.push(v)
-                            return newArr
-                        }
-                    })
-                    return newArr
-                },[])
-                console.log(b)
-                this.count = b
+                if(this.detail.orgIds){
+                    let a = this.detail.orgIds.split(",")
+                    let b = this.departList.reduce((newArr,v)=>{
+                        console.log(newArr)
+                        a.map(item=>{
+                            if (item==v.ID) {
+                                newArr.push(v)
+                                return newArr
+                            }
+                        })
+                        return newArr
+                    },[])
+                    console.log(b)
+                    this.count = b
+                } else {
+                    this.count = []
+                }
+                this.openDetail = true
                 this.readonly = true
             })
             this.$bus.off("EDIT_SETTING_INFO",true)
@@ -179,6 +219,23 @@
                 this.showEdit = true
                 this.title = "修改"
                 this.detail = deepCopy(e)
+                if(this.detail.orgIds){
+                    let a = this.detail.orgIds.split(",")
+                    let b = this.departList.reduce((newArr,v)=>{
+                        console.log(newArr)
+                        a.map(item=>{
+                            if (item==v.ID) {
+                                newArr.push(v)
+                                return newArr
+                            }
+                        })
+                        return newArr
+                    },[])
+                    console.log(b)
+                    this.count = b
+                } else {
+                    this.count = []
+                }
                 this.readonly = false
             })
             this.$bus.off("GIVE_LIST",true)
