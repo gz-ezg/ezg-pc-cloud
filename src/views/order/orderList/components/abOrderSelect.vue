@@ -61,7 +61,7 @@ export default {
                     minWidth:150
                 },
                 {
-                    title: '审批事由',
+                    title: '审批是由',
                     key: 'apply_memo',
                     minWidth:100
                 },
@@ -103,18 +103,37 @@ export default {
                     companyId: this.id
                 }
             }
-            _self.data = []
             function success(res){
-                console.log(res)
-                if(_self.data.length !=0){
-                    res.data.data[0].unusual_type =_self.unusualType_map.get(res.data.data[0].unusual_type)
-                    console.log(res.data.data[0].unusual_type)
-                }
+                res.data.data[0].unusual_type =_self.unusualType_map.get(res.data.data[0].unusual_type)
+                console.log(res.data.data[0].unusual_type)
                 _self.data = res.data.data
                 _self.total = res.data.data.length
             }
             this.$Get(url,config,success)
         },
+        // get_data(){
+        //     let _self = this
+        //     let url = `api/customer/company/list`
+        //     _self.loading = true
+        //     let config = {
+        //         params: {
+        //             page: _self.page,
+        //             pageSize: 10,
+        //             companyname: _self.searchCompany
+        //         }
+        //     }
+
+        //     function success(res){
+        //         _self.data = res.data.data.rows
+        //         _self.total = res.data.data.total
+        //         for(let i = 0; i < _self.data.length; i++){
+        //             _self.data[i].gdsStatus = _self.gds_map.get(_self.data[i].gdsreport)
+        //         }
+        //         _self.loading = false
+        //     }
+
+        //     this.$Get(url, config, success)
+        // },
         pageChange(e){
             this.page = e
             this.get_data()

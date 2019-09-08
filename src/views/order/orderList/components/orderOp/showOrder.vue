@@ -268,7 +268,7 @@ export default {
                 console.log(res.data.data)
                 _self.unusualCode = ""
                 if(res.data.data){
-                    _self.unusualCode = res.data.data.unusual_code
+                    _self.unusualCode = res.data.data.unusualCode
                 }
             }
             this.$Get(url,config,success)

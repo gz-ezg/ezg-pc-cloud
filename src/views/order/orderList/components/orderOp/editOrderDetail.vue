@@ -61,14 +61,6 @@
                         </Select>
                     </FormItem>
                     </Col>
-                    <Col span="8">
-                        <FormItem label="异常工单">
-                            <span v-if="this.unusualCode">{{this.unusualCode}}</span>
-                            <div style="display:inline-block">
-                                <Button type="info" size="small" @click="open_abOrder">更改</Button>
-                            </div>
-                        </FormItem>
-                    </Col>
                     <!-- <Col span="8" v-if="orderDetail.isornotkp=='Y'">
                         <FormItem>
                             <Button @click="open_isornotkp('update')" type="info" size="small">开票信息</Button>
@@ -111,12 +103,10 @@
             </div>
         </Modal>
         <service-item @close="close_item" v-if="openServiceItem" :id="orderDetail.companyid"></service-item>
-        <ab-order-change @aborder-change="setting_aborder" :id="orderDetail.companyid"></ab-order-change>
     </div>
 </template>
 
 <script>
-import abOrderChange from '../abOrderChange'
 import serviceItem from '../accountHomeTree'
 import commonSetting from './comonSetting.js'
 import { DateFormat } from '../../../../../libs/utils.js'
@@ -125,68 +115,16 @@ import * as orderApi from '../../api'
 export default {
     mixins: [commonSetting],
     components: {
-        serviceItem,
-        abOrderChange
+        serviceItem
     },
     data(){
         return {
-            applyId: "",
-            orderId: "",
-            unusualCode: "",
             openEditOrderDetail: false,
             loading: false,
             openServiceItem: false
         }
     },
     methods:{
-        //关联异常工单
-        relate(){
-            let _self = this 
-            let url = `api/order/unusual/workorder/linkUnusualWorkOrder`
-            let config = {
-                applyId: this.applyId,
-                orderId: this.orderId
-            }
-            function success(res){
-                console.log(res)
-            }
-            function fail(){
-
-            }
-            this.$Post(url,config,success,fail)
-            this.orderId = ''
-            this.applyId = ''
-            this.orderCode = ''
-        },
-        //打开对应的异常工单列表
-        open_abOrder(){
-            this.$bus.emit("CHANGE_ABORDER", true)
-        },
-        //  选择对应异常工单后回调
-        setting_aborder(e){
-            console.log(e)
-            this.applyId = e.id
-            // this.orderCode = e.unusual_code
-            this.unusualCode = e.unusual_code
-        },
-        //获取异常工单号
-        get_ab_worker_id(){
-            let _self = this
-            let url = `api/order/unusual/workorder/findUnusualWorkOrderByOrderId`
-            let config ={
-                params:{
-                    orderId: this.orderId
-                }
-            }
-            function success(res){
-                console.log(res.data.data)
-                _self.unusualCode = ""
-                if(res.data.data){
-                    _self.unusualCode = res.data.data.unusual_code
-                }
-            }
-            this.$Get(url,config,success)
-        },
         open_service_item(){
             this.openServiceItem = true
         },
@@ -228,7 +166,6 @@ export default {
                     try {
                         let {status, data} = await orderApi.orderUpdate(config)
                         if(status){
-                            _self.relate()
                             setTimeout(()=>{
                                 _self.loading = false
                                 _self.openEditOrderDetail = false
@@ -264,8 +201,6 @@ export default {
         this.$bus.on("OPEN_ORDERLIST_EDIT", (e) => {
             this.checkBalance = false
             this.get_data(e)
-            this.orderId = e
-            this.get_ab_worker_id()
             this.openEditOrderDetail = true
         })
     }

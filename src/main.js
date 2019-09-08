@@ -7,7 +7,7 @@ import 'iview/dist/styles/iview.css';
 import store from './store';
 import App from './app.vue';
 import permission from './directive/permission'
-import VueBus from './plugins/vue-bus'
+import VueBus from './directive/vue-bus'
 import '@/locale';
 import VueI18n from 'vue-i18n';
 import util from '@/libs/util'; 
@@ -23,7 +23,10 @@ if(process.env.NODE_ENV == 'development'){
     Vue.config.devtools = true;
 }
 
-//  异常上报机制(废弃)
+// import datagrid from './libs/easyUI/jquery.easyui.min'
+// import combobox from './libs/easyUI/jquery.easyui.min'
+
+//  异常上报机制
 // import Raven from 'raven-js';
 // import RavenVue from 'raven-js/plugins/vue';
 
@@ -112,8 +115,8 @@ axios.interceptors.response.use(
         return Promise.reject(error)
     }
 )
-// console.log(process.env)
-//  异常监控及上传 （废弃）
+console.log(process.env)
+//  异常监控及上传
 //  上传待接口完成后实现
 // console.log(process.env)
 // if(process.env.NODE_ENV == 'jenkins' ){
@@ -239,7 +242,6 @@ Vue.prototype.$changeCars = function(data){
         return data2
 }
 
-//  方法废弃
 Vue.prototype.$Get = function(url, config, success, fail=function(err){console.log(err);_self.$Message.error(err)}){
     let _self = this
     this.$http.get(url,config).then(function(res){
@@ -253,12 +255,12 @@ Vue.prototype.$Get = function(url, config, success, fail=function(err){console.l
             }
         }
     }).catch(function(err){
+        // _self.$Message.error('数据异常！')
         fail(err)
         console.error(err)
     })
 }
 
-//  方法废弃
 Vue.prototype.$Post = function(url, config, success, fail){
     let _self = this
     this.$http.post(url,config).then(function(res){
@@ -282,15 +284,34 @@ Vue.prototype.$Post = function(url, config, success, fail){
 //  获取数据字典
 Vue.prototype.$GetDataCenter = function(params, finish){
     let _self = this
+    // let result = {}
+    // let temp_params = params.split(",")
+    // for(let i = 0; i<temp_params.length;i++){
+    //     if(_self.$store.state.user.typegroup.hasOwnProperty(temp_params[i])){
+    //         let temp = {}
+    //         temp[temp_params[i]]= _self.$store.state.user.typegroup[temp_params[i]]
+    //         result = Object.assign(result, temp);
+    //         temp_params.splice(i,1)
+    //         i = i - 1
+    //     }
+    // }
+    // let config = {
+    //     params:{
+    //         groupCodes: temp_params.join(",")
+    //     }
+    // }
     let config = {
         params:{
             groupCodes: params
         }
     }
     let url = `api/system/tsType/queryTsTypeByGroupCodes`
-
+    
+    // if(temp_params.length){
         this.$http.get(url, config).then(function(res){
             if(res.data.msgCode == "40000"){
+                // _self.$store.commit('set_typegroup', res.data.data);
+                // res.data.data = Object.assign(result, res.data.data);
                 finish(res)
             }else{
                 _self.$Message.error("请求异常！")
@@ -299,12 +320,24 @@ Vue.prototype.$GetDataCenter = function(params, finish){
             console.log(err)
             _self.$Message.error("网络异常！")
         })
+    // }else{
+        // let res = {
+        //     data:{
+        //         data:[]
+        //     }
+        // }
+        // res.data.data = result
+        // finish(res)
+        // console.log(res)
+    // }
 }
 
 //  此项作废，改由axios拦截器负责
 //  代码仍存留，需要清除
 //  判断是否登录及权限值
 Vue.prototype.$backToLogin = function(res){
+    // 待测试
+    // if(res.data.msgCode == '50003'||res == ""){
     if(res.data.msgCode == '50003'){
         this.$Message.warning('对不起，您还未登陆！即将回到登陆页面！')
         this.$router.push({
@@ -317,7 +350,6 @@ Vue.prototype.$backToLogin = function(res){
 }
 
 //  axios继承给VUE，当做一个实例，可以使用vue-axios，可以使用vue.use
-//  废弃
 Vue.prototype.$http = axios
 
 //  url参数附加,用于excel导出
@@ -344,8 +376,29 @@ Vue.prototype.$array2map = function (array){
     
 }
 
+//  数据字典检索，获得单独的一个
+Vue.prototype.searchTypegroup = function (code){
+    let _typegroupArray = JSON.parse(localStorage.getItem('AllTSTypeGroups'))
+    let _typegroupid
+    let url
+
+    for (let i = 0; i < _typegroupArray.length; i++) {
+        if (_typegroupArray[i].typegroupcode == code) {
+            _typegroupid = _typegroupArray[i].typegroupid
+        }
+    }
+
+    url = (code == 'customerType') ? ('/api/dataCenter/system/queryForSubTSTypeByGroupId/' + _typegroupid) : ('/api/dataCenter/system/queryForTSTypeByGroupId/' + _typegroupid)
+
+    this.$http.get(url)
+        .then(function (response) {
+            let str = JSON.stringify(response.data)
+            localStorage.setItem(code,str)
+        })
+
+}
+
 //  获取数据GetData方法
-//  方法废弃
 Vue.prototype.GetData = function (url, doSuccess, otherConditions=function(err){console.log(err)}){
 
     let _self = this
@@ -380,7 +433,6 @@ Vue.prototype.GetData = function (url, doSuccess, otherConditions=function(err){
         })
 }
 
-//  方法废弃
 Vue.prototype.PostData = function (url, data, doSuccess, otherConditions){
 
     let _self = this
@@ -391,6 +443,31 @@ Vue.prototype.PostData = function (url, data, doSuccess, otherConditions){
         data: data,
         headers: {'Content-Type': 'application/json'},
     }).then(function (response) {
+            if (response.data.msgCode == '40000') {
+                doSuccess(response)
+            } else if (response.data.msgCode == '50003') {
+
+            } else if (response.data.msgCode == '60000') {
+                _self.$Message.error('抱歉，您没有权限');
+            } else {
+                otherConditions(response)
+            }
+        })
+}
+
+Vue.prototype.PostFiles = function (url, data, doSuccess, otherConditions){
+
+    let _self = this
+
+    this.$http({
+        method: 'post',
+        url: '/api' + url,
+        data: data,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+    })
+        .then(function (response) {
             if (response.data.msgCode == '40000') {
                 doSuccess(response)
             } else if (response.data.msgCode == '50003') {

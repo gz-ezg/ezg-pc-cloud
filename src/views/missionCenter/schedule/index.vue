@@ -154,7 +154,6 @@ export default {
         //  左键点击触发
         dayClick(date, jsEvent, view){
             //  可以在此处新增日程
-            console.log(date)
             let _self = this
             this.date = date._d
             let dateTemp = DateFormat(date)
@@ -312,9 +311,6 @@ export default {
         _self.$bus.on("UPDATE_TASK_LIST_DEMO", (e)=>{
             _self.get_data()
             _self.get_onedate_data(DateFormat(new Date()))
-        })
-        _self.$bus.on("UPDATE_TASK_LIST",(e)=>{
-            _self.get_data()
         })
     },
     //  @event-selected 点击事件触发
