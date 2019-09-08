@@ -105,16 +105,16 @@ export default {
                     return
                 }
                 _self.data.push({
-                    applyMemo: res.data.data.apply_memo,
-                    companyId: res.data.data.company_id,
+                    applyMemo: res.data.data.applyMemo,
+                    companyId: res.data.data.companyId,
                     createBy: res.data.data.createBy,
-                    createDate: DateFormat(res.data.data.create_date),
-                    updateDate: DateFormat(res.data.data.update_date),
+                    createDate: DateFormat(res.data.data.createDate),
+                    updateDate: DateFormat(res.data.data.updateDate),
                     id: res.data.data.id,
-                    currentProcessName: res.data.data.current_process_name,
-                    productContent: res.data.data.product_content,
-                    unusualCode: res.data.data.unusual_code,
-                    unusualType: _self.unusualType_map.get(res.data.data.unusual_type)
+                    currentProcessName: res.data.data.currentProcessName,
+                    productContent: res.data.data.productContent,
+                    unusualCode: res.data.data.unusualCode,
+                    unusualType: _self.unusualType_map.get(res.data.data.unusualType)
                 })
             }
             this.$Get(url,config,success)

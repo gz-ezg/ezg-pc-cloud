@@ -61,7 +61,6 @@
                     <Button type="primary" icon="edit" @click="open_edit">编辑</Button>
                     <Button type="primary" icon="information-circled" @click="abOrder_show">查看</Button>
                     <Button type="primary" icon="trash-b" @click="del_abOrder">删除</Button>
-                    <Button type="primary" icon="ios-color-filter-outline" @click="refresh">刷新</Button>
                 </ButtonGroup>
             </Row>
             <Row style="margin-top: 10px;">
@@ -428,11 +427,6 @@ export default {
             }else{
                 this.sortField = "create_date"
             }
-            this.get_data()
-        },
-
-        //刷新
-        refresh(){
             this.get_data()
         }
 
