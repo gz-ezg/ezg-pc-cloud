@@ -1,8 +1,8 @@
 <template>
     <div>
         <Modal
-            v-model="openSelectAbOrder"
-            title="选择对应的异常工单"
+            v-model="openChangeAbOrder"
+            title="更改异常工单"
             width="80%">
             
             <Table
@@ -42,7 +42,7 @@ export default {
             //数据字典
             unusualType:[],
             unusualType_map: new Map(),
-            openSelectAbOrder: false,
+            openChangeAbOrder: false,
             searchCompany: "",
             header: [
                 {
@@ -96,6 +96,7 @@ export default {
             }) 
         },
         get_data(){
+            console.log(this.id)
             let _self = this
             let url = `api/order/unusual/workorder/findUnusualWorkOrderNotBindOrderByCompanyId`
             let config ={
@@ -106,7 +107,8 @@ export default {
             _self.data = []
             function success(res){
                 console.log(res)
-                if(_self.data.length !=0){
+                console.log(_self.data)
+                if(_self.data.length != 0){
                     res.data.data[0].unusual_type =_self.unusualType_map.get(res.data.data[0].unusual_type)
                     console.log(res.data.data[0].unusual_type)
                 }
@@ -121,17 +123,17 @@ export default {
         },
         row_select(e){
             this.$emit("aborder-change", e)
-            this.openSelectAbOrder = false
+            this.openChangeAbOrder = false
         }
     },
     created() {
         let _self = this
-        this.$bus.off("SELECT_ABORDER", true)
-        this.$bus.on("SELECT_ABORDER", (e)=>{
+        this.$bus.off("CHANGE_ABORDER", true)
+        this.$bus.on("CHANGE_ABORDER", (e)=>{
             _self.get_data_center().then(
                 _self.get_data()
             )
-            _self.openSelectAbOrder = true
+            _self.openChangeAbOrder = true
         })
     },
 }
