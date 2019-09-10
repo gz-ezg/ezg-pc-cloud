@@ -18,8 +18,8 @@
                     </div>
                     <div style="width: 467px;margin-bottom: 150px" v-if="showNum">
                         <div style="width: 467px;display: flex;justify-content: space-between;font-weight: bold;font-size: 16px">
-                            <div>公海池还剩余{{num}}条</div>
-                            <div>你已领取{{amount}}条</div>
+                            <div>公海池还剩余<span style="color: red;padding: 0 2px 0 2px">{{num}}</span>条</div>
+                            <div>你已领取<span style="color: red;padding: 0 2px 0 2px">{{amount}}</span>条</div>
                         </div>
                     </div>
                     <div style="display: flex;justify-content: center">
