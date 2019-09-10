@@ -126,7 +126,7 @@
                         id:_self.detail.id,
                         content:_self.detail.content,
                         activityTime: FULLDateFormat(_self.detail.activity_time),
-                        amount:0,
+                        amount:_self.detail.amount,
                         orgIds:_self.count.map(item=>{
                             let a= []
                             a.push(item.ID)

@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/publicPool/gamesetting/common/detail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/publicPool/gamesetting/common/detail.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -26,26 +25,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/publicPool/gamesetting/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-150">
+            <state relative-caret-position="-5550">
               <caret line="97" column="38" lean-forward="true" selection-start-line="97" selection-start-column="38" selection-end-line="97" selection-end-column="38" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/publicPool/gamesetting/common/detail.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-400">
-              <caret line="91" column="23" lean-forward="true" selection-start-line="91" selection-start-column="23" selection-end-line="91" selection-end-column="23" />
+            <state relative-caret-position="550">
+              <caret line="129" column="54" lean-forward="true" selection-start-line="129" selection-start-column="54" selection-end-line="129" selection-end-column="54" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="50">
-              <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+            <state relative-caret-position="1550">
+              <caret line="68" column="32" lean-forward="true" selection-start-line="68" selection-start-column="32" selection-end-line="68" selection-end-column="32" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
@@ -56,6 +55,7 @@
                 <element signature="n#style#0;n#div#1;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#1;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#2;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#div#1;n#div#0;n#div#2;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#2;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
               </folding>
             </state>
@@ -172,15 +172,15 @@
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/accountRemindList/index.vue" />
         <option value="$PROJECT_DIR$/config/config.js" />
-        <option value="$PROJECT_DIR$/src/views/publicPool/gamesetting/common/detail.vue" />
         <option value="$PROJECT_DIR$/src/utils/prototype.js" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/serving.vue" />
         <option value="$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/index.vue" />
         <option value="$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue" />
+        <option value="$PROJECT_DIR$/src/views/publicPool/gamesetting/common/detail.vue" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
@@ -453,7 +453,7 @@
       <workItem from="1567732935187" duration="13691000" />
       <workItem from="1567759833633" duration="7019000" />
       <workItem from="1567991889535" duration="17347000" />
-      <workItem from="1568078592855" duration="26030000" />
+      <workItem from="1568078592855" duration="26546000" />
     </task>
     <task id="LOCAL-00022" summary="修改启动失败的问题">
       <created>1555989851178</created>
@@ -802,7 +802,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2027920000" />
+    <option name="totallyTimeSpent" value="2028436000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -836,7 +836,7 @@
       <window_info anchor="bottom" id="消息" order="13" />
       <window_info anchor="bottom" id="调试" order="14" />
       <window_info anchor="bottom" id="TypeScript" order="15" weight="0.3290938" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="16" sideWeight="0.49924925" visible="true" weight="0.4228935" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="16" sideWeight="0.49924925" visible="true" weight="0.2845787" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1269,20 +1269,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/publicPool/gamesetting/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-150">
-          <caret line="97" column="38" lean-forward="true" selection-start-line="97" selection-start-column="38" selection-end-line="97" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/publicPool/gamesetting/common/detail.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-400">
-          <caret line="91" column="23" lean-forward="true" selection-start-line="91" selection-start-column="23" selection-end-line="91" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/utils/prototype.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="63">
@@ -1322,8 +1308,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+        <state relative-caret-position="1550">
+          <caret line="68" column="32" lean-forward="true" selection-start-line="68" selection-start-column="32" selection-end-line="68" selection-end-column="32" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
@@ -1334,8 +1320,23 @@
             <element signature="n#style#0;n#div#1;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#1;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#2;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#1;n#div#0;n#div#2;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#2;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/publicPool/gamesetting/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5550">
+          <caret line="97" column="38" lean-forward="true" selection-start-line="97" selection-start-column="38" selection-end-line="97" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/publicPool/gamesetting/common/detail.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="129" column="54" lean-forward="true" selection-start-line="129" selection-start-column="54" selection-end-line="129" selection-end-column="54" />
         </state>
       </provider>
     </entry>
