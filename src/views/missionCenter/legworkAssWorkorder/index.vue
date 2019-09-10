@@ -94,7 +94,7 @@
     import editOrder from './editOrder'
     import showOrder from './showOrder'
     export default {
-        name: "index",
+        name: "legworkAssWorkorder_index",
         components:{
             creatOrder,
             editOrder,

@@ -372,8 +372,8 @@ export default {
       );
     }
   },
-  created: function() {
-    this.GetLocalData();
+  async created(){
+    await this.GetLocalData();
     this.$bus.on('search', e => {
       // Bus.$on('search',(e)=>{
       this.search(e);

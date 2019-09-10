@@ -60,6 +60,7 @@
 
 <script>
 export default {
+    name:'attributeManagement',
     data(){
         return{
             isAdd:false,

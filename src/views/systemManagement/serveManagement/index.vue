@@ -118,6 +118,7 @@ import * as userApi from '../api/user.js'
 import userProList from './userProList'
 import productAttr from './productAttr'
 export default{
+	name:'serveMangement_index',
 	components:{
 		userProList,
 		productAttr

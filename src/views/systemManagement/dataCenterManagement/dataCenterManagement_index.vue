@@ -221,6 +221,7 @@
 import secondChild from './second_child_row'
 
 export default {
+    name:'datacenterManagement_index',
     components: {
         secondChild
     },

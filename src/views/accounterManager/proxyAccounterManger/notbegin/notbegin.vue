@@ -601,7 +601,21 @@
                         render: (h, params) => {
                             let _self = this
                             if (params.row.accountList == "" || params.row.accountList == null) {
-                                return "";
+                                return h("div",{
+                                    style: {
+                                        //     display: 'inline-block',
+                                        //     lineHeight: '24px',
+                                        //     height: '24px',
+                                        cursor:'pointer',
+                                        width:'33px'
+                                        //     color:'#0162f4'
+                                    },
+                                    on:{
+                                        click: function() {
+                                            _self.open_account_list(params.row);
+                                        }
+                                    }
+                                },"--")
                             } else {
                                 let temp = JSON.parse(params.row.accountList)
                                 if (temp[0].taskContent.length > 13) {
@@ -613,7 +627,20 @@
                                                 placement: "bottom"
                                             }
                                         },[
-                                            h("span",temp[0].taskContent.slice(0,13) + "..."),
+                                            h("span",{
+                                                style: {
+                                                    //     display: 'inline-block',
+                                                    //     lineHeight: '24px',
+                                                    //     height: '24px',
+                                                    cursor:'pointer',
+                                                    //     color:'#0162f4'
+                                                },
+                                                on:{
+                                                    click: function() {
+                                                        _self.open_account_list(params.row);
+                                                    }
+                                                }
+                                            },temp[0].taskContent.slice(0,13) + "..."),
                                             h("Icon", {
                                                 props: {
                                                     type: "arrow-down-b"
@@ -696,7 +723,20 @@
                                                 title: "备注项",
                                                 placement: "bottom"
                                             }},[
-                                            h("span", temp[0].taskContent),
+                                            h("span",{
+                                                style: {
+                                                    //     display: 'inline-block',
+                                                    //     lineHeight: '24px',
+                                                    //     height: '24px',
+                                                    cursor:'pointer',
+                                                    //     color:'#0162f4'
+                                                },
+                                                on:{
+                                                    click: function() {
+                                                        _self.open_account_list(params.row);
+                                                    }
+                                                }
+                                            }, temp[0].taskContent),
                                             h("Icon", {
                                                 props: {
                                                     type: "arrow-down-b"
@@ -873,7 +913,21 @@
                         render: (h, params) => {
                             let _self = this
                             if (params.row.undoList == "" || params.row.undoList == null) {
-                                return "";
+                                return h("div",{
+                                    style: {
+                                        //     display: 'inline-block',
+                                        //     lineHeight: '24px',
+                                        //     height: '24px',
+                                        cursor:'pointer',
+                                        // width:'33px'
+                                        //     color:'#0162f4'
+                                    },
+                                    on:{
+                                        click: function() {
+                                            _self.open_undo_list(params.row);
+                                        }
+                                    }
+                                },"--")
                             } else {
                                 let temp = JSON.parse(params.row.undoList)
                                 if (temp[0].taskContent.length > 13) {
@@ -885,7 +939,19 @@
                                                 placement: "bottom"
                                             }
                                         },[
-                                            h("span",temp[0].taskContent.slice(0,13) + "..."),
+                                            h("span",{
+                                                style:{
+                                                    cursor:'pointer',
+                                                },
+                                                on:{
+                                                    style:{
+                                                        cursor:'pointer',
+                                                    },
+                                                    click: function() {
+                                                        _self.open_undo_list(params.row);
+                                                    }
+                                                }
+                                            },temp[0].taskContent.slice(0,13) + "..."),
                                             h("Icon", {
                                                 props: {
                                                     type: "arrow-down-b"
@@ -968,7 +1034,16 @@
                                                 title: "备注项",
                                                 placement: "bottom"
                                             }},[
-                                            h("span", temp[0].taskContent),
+                                            h("span",{
+                                                style:{
+                                                    cursor:'pointer',
+                                                },
+                                                on:{
+                                                    click: function() {
+                                                        _self.open_undo_list(params.row);
+                                                    }
+                                                }
+                                            }, temp[0].taskContent),
                                             h("Icon", {
                                                 props: {
                                                     type: "arrow-down-b"
@@ -1189,6 +1264,12 @@
             },
             handle_edit_unit_pricel(row,index){
                 this.l = index;
+            },
+            open_account_list(e){
+                this.$bus.emit("OPEN_ACCOUNT_LIST",e)
+            },
+            open_undo_list(e){
+                this.$bus.emit("OPEN_UNDO_LIST",e)
             },
             invoice(e){
                 this.$bus.emit("OPEN_INVOICE_PAGE",e)

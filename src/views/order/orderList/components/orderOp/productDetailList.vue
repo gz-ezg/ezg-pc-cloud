@@ -271,6 +271,8 @@
 <script>
 import * as orderApi from '../../api';
 import { DateFormat, DateFormatYearMonth, nowDateFormatYearMonth } from '../../../../../libs/utils.js';
+import {deepCopy} from "../../../../../libs/utils";
+
 export default {
   props: ['productList', 'isDisabled', 'orderDetail', 'pageFlag', 'id', 'productListOne', 'createdate'],
   inject: ['cancel_order'],
@@ -386,6 +388,9 @@ export default {
     removeItem(index) {
       let _self = this;
       _self.productList.splice(index, 1);
+      for (let i=0;i<_self.productList.length;i++) {
+        this.changeServerPerson('',i)
+      }
       _self.$bus.emit('REMOVE_ITEM', _self.productList);
       // _self.productListOne = []
       // console.log(_self.productList)
@@ -513,10 +518,8 @@ export default {
         }
         return item;
       });
-
       if (this.flag !== 1) {
         _self.productListOne.push(e);
-        console.log(_self.productListOne);
       }
       // console.log(_self.productList)
       // e.selectServer = e.realname;

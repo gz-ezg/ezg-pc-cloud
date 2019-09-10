@@ -21,7 +21,7 @@
     import finished from './finished'
     import obsolete from './obsolete'
     export default {
-        name: "index",
+        name: "accTaskList_index",
         components:{
             executing,
             finished,

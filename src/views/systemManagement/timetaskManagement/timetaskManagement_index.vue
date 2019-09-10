@@ -105,6 +105,7 @@
 
 <script>
 export default {
+    name: "timetaskManagement",
     data(){
         return{
             isAdd:false,

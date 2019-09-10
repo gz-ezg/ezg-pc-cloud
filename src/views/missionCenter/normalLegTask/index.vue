@@ -126,7 +126,7 @@
     import CreateAccounterTask from './createAccounterTask'
     import DetailAccounterTask from './detailAccounterLegTask'
     export default {
-        name: "index",
+        name: "normalLegTask_index",
         components:{
             FullCalendar,
             Datepicker,

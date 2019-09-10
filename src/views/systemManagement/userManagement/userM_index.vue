@@ -112,6 +112,7 @@ import EditModal from './edit_user'
 import * as userApi from '../api/user.js'
 
     export default {
+        name: "userManagement_index",
         components:{
             CreateUser,
             RoleModal,

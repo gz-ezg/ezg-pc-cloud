@@ -67,6 +67,7 @@
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="service_offline">服务下线</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="service_paused">暂停服务</Button>
+                <!--<Button type="primary" icon="ios-color-wand-outline" @click="turn_offincal">跳转税务局</Button>-->
             </ButtonGroup>
         </Row>
         <Row style="margin-top: 10px;">
@@ -101,6 +102,8 @@
         <log></log>
         <field></field>
         <list></list>
+        <account-list></account-list>
+        <undo-list></undo-list>
         <data-management></data-management>
         <follow-up :company="current_row" v-if="openFollowUp" @close="openFollowUp = false"></follow-up>
     </Card>
@@ -122,6 +125,8 @@
     import Log from './ButtonComponents/changeLog/index'
     import Field from './fieldDetail/index'
     import List from './importRemindList/index'
+    import AccountList from './accountRemindList/index'
+    import UndoList from './undoRemindList/index'
     export default {
         name: "serving",
         components:{
@@ -135,7 +140,9 @@
             FollowUp,
             Log,
             Field,
-            List
+            List,
+            AccountList,
+            UndoList
         },
         data(){
             return{
@@ -747,7 +754,21 @@
                         render: (h, params) => {
                             let _self = this
                             if (params.row.accountList == "" || params.row.accountList == null) {
-                                return "";
+                                return h("div",{
+                                    style: {
+                                        //     display: 'inline-block',
+                                        //     lineHeight: '24px',
+                                        //     height: '24px',
+                                        cursor:'pointer',
+                                        width:'33px'
+                                        //     color:'#0162f4'
+                                    },
+                                    on:{
+                                        click: function() {
+                                            _self.open_account_list(params.row);
+                                        }
+                                    }
+                                },"--")
                             } else {
                                 let temp = JSON.parse(params.row.accountList)
                                 if (temp[0].taskContent.length > 13) {
@@ -759,7 +780,20 @@
                                                     placement: "bottom"
                                                 }
                                             },[
-                                                h("span",temp[0].taskContent.slice(0,13) + "..."),
+                                                h("span",{
+                                                    style: {
+                                                        //     display: 'inline-block',
+                                                        //     lineHeight: '24px',
+                                                        //     height: '24px',
+                                                        cursor:'pointer',
+                                                        //     color:'#0162f4'
+                                                    },
+                                                    on:{
+                                                        click: function() {
+                                                            _self.open_account_list(params.row);
+                                                        }
+                                                    }
+                                                },temp[0].taskContent.slice(0,13) + "..."),
                                                 h("Icon", {
                                                     props: {
                                                         type: "arrow-down-b"
@@ -842,7 +876,20 @@
                                                         title: "备注项",
                                                         placement: "bottom"
                                                     }},[
-                                                    h("span", temp[0].taskContent),
+                                                    h("span",{
+                                                        style: {
+                                                            //     display: 'inline-block',
+                                                            //     lineHeight: '24px',
+                                                            //     height: '24px',
+                                                            cursor:'pointer',
+                                                            //     color:'#0162f4'
+                                                        },
+                                                        on:{
+                                                            click: function() {
+                                                                _self.open_account_list(params.row);
+                                                            }
+                                                        }
+                                                    }, temp[0].taskContent),
                                                     h("Icon", {
                                                         props: {
                                                             type: "arrow-down-b"
@@ -1019,7 +1066,21 @@
                         render: (h, params) => {
                             let _self = this
                             if (params.row.undoList == "" || params.row.undoList == null) {
-                                return "";
+                                return h("div",{
+                                    style: {
+                                        //     display: 'inline-block',
+                                        //     lineHeight: '24px',
+                                        //     height: '24px',
+                                        cursor:'pointer',
+                                        // width:'33px'
+                                        //     color:'#0162f4'
+                                    },
+                                    on:{
+                                        click: function() {
+                                            _self.open_undo_list(params.row);
+                                        }
+                                    }
+                                },"--")
                             } else {
                                 let temp = JSON.parse(params.row.undoList)
                                 if (temp[0].taskContent.length > 13) {
@@ -1031,7 +1092,19 @@
                                                 placement: "bottom"
                                             }
                                         },[
-                                            h("span",temp[0].taskContent.slice(0,13) + "..."),
+                                            h("span",{
+                                                style:{
+                                                    cursor:'pointer',
+                                                },
+                                                on:{
+                                                    style:{
+                                                        cursor:'pointer',
+                                                    },
+                                                    click: function() {
+                                                        _self.open_undo_list(params.row);
+                                                    }
+                                                }
+                                            },temp[0].taskContent.slice(0,13) + "..."),
                                             h("Icon", {
                                                 props: {
                                                     type: "arrow-down-b"
@@ -1114,7 +1187,16 @@
                                                 title: "备注项",
                                                 placement: "bottom"
                                             }},[
-                                            h("span", temp[0].taskContent),
+                                            h("span",{
+                                                style:{
+                                                    cursor:'pointer',
+                                                },
+                                                on:{
+                                                    click: function() {
+                                                        _self.open_undo_list(params.row);
+                                                    }
+                                                }
+                                            }, temp[0].taskContent),
                                             h("Icon", {
                                                 props: {
                                                     type: "arrow-down-b"
@@ -1323,6 +1405,34 @@
                     return '';
                 }
             },
+            turn_offincal(){
+                let _self = this;
+                if (!_self.current_row){
+                    _self.$Message.warning("请选择一行进行操作！")
+                } else{
+                    if (!_self.current_row.nationalnum || !_self.current_row.nationalpsw ){
+                        _self.$Message.warning("要跳转税务局前需要填写实名账号及密码")
+                    } else{
+                        _self.comLoading = true;
+                        let url = `api/customer/company/postHttp`;
+                        let config = {
+                                searchURL:'http://192.168.0.220:5099/getETaxWebSingleSignOnSucessUrl',
+                                nationalnum:_self.current_row.nationalnum,
+                                nationalpsw:_self.current_row.nationalpsw,
+                                accounttype:_self.current_row.accounttype
+
+                        }
+                        function success(res){
+
+                        }
+
+                        function fail(err){
+
+                        }
+                        this.$Post(url, config, success, fail)
+                    }
+                }
+            },
             invoice(e){
                 this.$bus.emit("OPEN_INVOICE_PAGE",e)
             },
@@ -1366,6 +1476,12 @@
             },
             open_import_list(e){
                 this.$bus.emit("OPEN_IMPORT_LIST",e)
+            },
+            open_account_list(e){
+                this.$bus.emit("OPEN_ACCOUNT_LIST",e)
+            },
+            open_undo_list(e){
+                this.$bus.emit("OPEN_UNDO_LIST",e)
             },
             copy(prx){
                 let clipboard = new Clipboard('.foo',{

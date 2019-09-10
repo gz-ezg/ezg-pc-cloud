@@ -5,7 +5,8 @@
                 <Button type="primary" icon="plus" @click="add">新增</Button>
                 <Button type="primary" icon="information-circled" @click="show">查看</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="edit">修改</Button>
-                <Button type="primary" icon="ios-color-wand-outline" @click="sync_data">同步数据</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="openInfo = true">同步数据</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="change_status">{{statusName}}</Button>
             </ButtonGroup>
         </Row>
         <Row style="margin-top: 10px;">
@@ -47,6 +48,13 @@
             </Row>
             <div slot="footer"></div>
         </Modal>
+        <Modal v-model="openInfo" title="提示" width="200">
+            是否同步数据？
+            <div slot="footer">
+                <Button type="primary" @click="sync_data">确定</Button>
+                <Button type="primary" @click="openInfo = false">取消</Button>
+            </div>
+        </Modal>
     </Card>
 </template>
 
@@ -65,11 +73,14 @@
                 page: 1,
                 pageSize: 10,
                 current_row:"",
+                status:"",
+                statusName:"",
                 activity_id:"",
                 activity_status:[],
                 activity_status_map:new Map(),
                 data:[],
                 openImportCustomer:false,
+                openInfo:false,
                 header: [
                     {
                         title: '活动内容',
@@ -321,6 +332,7 @@
             },
             sync_data(){
                 let _self = this;
+                _self.openInfo = false
                 _self.loading = true;
                 let url = `api/customer/highseasActivity/synchronizedDate`;
                 let config = {
@@ -336,6 +348,52 @@
 
                 function fail(err){
                     _self.get_data()
+                }
+
+                this.$Get(url, config, success, fail)
+            },
+            get_status(){
+                let _self = this;
+                let url = `api/customer/highseasActivity/getHighseasStatus`;
+                let config = {
+                    params: {
+
+                    }
+                }
+
+                function success(res){
+                    let a = res.data.data
+                    if (a==0){
+                        _self.status = 1
+                        _self.statusName = "锁定公海池"
+                    }
+                    if (a==1){
+                        _self.status = 0
+                        _self.statusName = "解锁公海池"
+                    }
+                }
+
+                function fail(err){
+
+                }
+
+                this.$Get(url, config, success, fail)
+            },
+            change_status(){
+                let _self = this;
+                let url = `api/customer/highseasActivity/lockHighseas`;
+                let config = {
+                    params: {
+                        status:_self.status
+                    }
+                }
+
+                function success(res){
+                    _self.get_status()
+                }
+
+                function fail(err){
+
                 }
 
                 this.$Get(url, config, success, fail)
@@ -377,6 +435,7 @@
         },
         created() {
             this.get_data_center()
+            this.get_status()
             this.get_data()
             this.$bus.off("UPDATE_INDEX",true)
             this.$bus.on("UPDATE_INDEX",e=>{

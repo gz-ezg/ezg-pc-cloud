@@ -294,7 +294,7 @@ export default {
     },
     //  选择公司后回调
     setting_company(e) {
-      console.log(e);
+      // console.log(e);
       this.orderDetail.CompanyName = e.companyname;
       this.orderDetail.name = e.customerName;
       this.orderDetail.tel = e.customerTel;
@@ -332,7 +332,7 @@ export default {
     //  ======== 打开产品列表 ========
     open_product_list() {
       if (this.orderDetail.companyid) {
-        console.log(this.orderItem)
+        // console.log(this.orderItem)
         this.$bus.emit("OPEN_ORDER_PRODUCT_LIST", this.orderDetail.companyid,this.orderItem);
       } else {
         this.$Message.warning("请先选择公司！");
@@ -588,12 +588,12 @@ export default {
     });
     this.$bus.off("REMOVE_ITEM",true)
     this.$bus.on("REMOVE_ITEM",e => {
-      console.log(e)
+      // console.log(e)
       if (e.length==0){
         this.orderItemOne = []
       } else {
         let a = [e[0]]
-        console.log(a)
+        // console.log(a)
         for (let i=0;i<e.length;i++) {
           let b = e[i]
           let repeat =false;

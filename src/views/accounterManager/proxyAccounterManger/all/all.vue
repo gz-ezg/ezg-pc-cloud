@@ -67,6 +67,11 @@
                 </Panel>
             </Collapse>
         </Row>
+        <Row>
+            <ButtonGroup>
+                <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
+            </ButtonGroup>
+        </Row>
         <Row style="margin-top: 10px;">
             <Table
                     @on-current-change="selectRow"
@@ -396,39 +401,103 @@
                         render: (h, params) => {
                             let _self = this
                             if (params.row.accountList == "" || params.row.accountList == null) {
-                                return "";
+                                return h("div",{
+                                    style: {
+                                        //     display: 'inline-block',
+                                        //     lineHeight: '24px',
+                                        //     height: '24px',
+                                        cursor:'pointer',
+                                        width:'33px'
+                                        //     color:'#0162f4'
+                                    },
+                                    on:{
+                                        click: function() {
+                                            _self.open_account_list(params.row);
+                                        }
+                                    }
+                                },"--")
                             } else {
                                 let temp = JSON.parse(params.row.accountList)
                                 if (temp[0].taskContent.length > 13) {
-                                    return h("Poptip",{
-                                        props: {
-                                            trigger: "hover",
-                                            title: "备注项",
-                                            placement: "bottom"
-                                        }
-                                    },[
-                                        h("span",temp[0].taskContent.slice(0,13) + "..."),
-                                        h("Icon", {
+                                    {
+                                        return h("Poptip",{
                                             props: {
-                                                type: "arrow-down-b"
+                                                trigger: "hover",
+                                                title: "备注项",
+                                                placement: "bottom"
                                             }
-                                        }),
-                                        h("div",{
-                                            slot: "content"
                                         },[
-                                            h("ul",temp.map(item => [
-                                                h("li", {
-                                                        style: {
-                                                            padding: "4px",
-                                                        }
-                                                    },[
-                                                        h("span",{},"备注名：" + item.taskContent),
-                                                    ]
-                                                )
+                                            h("span",{
+                                                style: {
+                                                    //     display: 'inline-block',
+                                                    //     lineHeight: '24px',
+                                                    //     height: '24px',
+                                                    cursor:'pointer',
+                                                    //     color:'#0162f4'
+                                                },
+                                                on:{
+                                                    click: function() {
+                                                        _self.open_account_list(params.row);
+                                                    }
+                                                }
+                                            },temp[0].taskContent.slice(0,13) + "..."),
+                                            h("Icon", {
+                                                props: {
+                                                    type: "arrow-down-b"
+                                                }
+                                            }),
+                                            h("div",{
+                                                slot: "content"
+                                            },[
+                                                h("ul",temp.map(item =>{
+                                                        if (temp[i].taskStage =="tesUnstarted") {
+                                                            return [
+                                                                h("li", {
+                                                                        style: {
+                                                                            padding: "4px",
+                                                                        }
+                                                                    },[
+                                                                        h("span",{},"备注名：" + item.taskContent)
+                                                                    ]
+                                                                )
 
-                                            ]))
-                                        ])
-                                    ]);
+                                                            ]
+                                                        }
+                                                        if (item.taskStage=="tesFinished"){
+                                                            return [h("li",
+                                                                {
+                                                                    style: {
+                                                                        padding: "4px"
+                                                                    }
+                                                                },[
+                                                                    h("span",{},"备注名：" + item.taskContent),
+                                                                    h("span",
+                                                                        {
+                                                                            // props: {
+                                                                            //     type: 'primary',
+                                                                            //     size: 'small',
+                                                                            // },
+                                                                            style:{
+                                                                                // marginTop:'-3px',
+                                                                                marginLeft:'15px',
+                                                                                color:'rgb(160 191 124)'
+                                                                            },
+                                                                            // on: {
+                                                                            //     click: function() {
+                                                                            //         _self.completed(item.taskId);
+                                                                            //     }
+                                                                            // },
+                                                                        },
+                                                                        "已完成"
+                                                                    )
+                                                                ])
+                                                            ]
+                                                        }
+                                                    }
+                                                ))
+                                            ])
+                                        ]);
+                                    }
                                 } else {
                                     return h("Poptip",{
                                             props: {
@@ -436,7 +505,20 @@
                                                 title: "备注项",
                                                 placement: "bottom"
                                             }},[
-                                            h("span", temp[0].taskContent),
+                                            h("span",{
+                                                style: {
+                                                    //     display: 'inline-block',
+                                                    //     lineHeight: '24px',
+                                                    //     height: '24px',
+                                                    cursor:'pointer',
+                                                    //     color:'#0162f4'
+                                                },
+                                                on:{
+                                                    click: function() {
+                                                        _self.open_account_list(params.row);
+                                                    }
+                                                }
+                                            }, temp[0].taskContent),
                                             h("Icon", {
                                                 props: {
                                                     type: "arrow-down-b"
@@ -445,15 +527,50 @@
                                             h("div", {
                                                 slot: "content"
                                             },[
-                                                h("ul",temp.map(item => [h("li",
-                                                    {
-                                                        style: {
-                                                            padding: "4px"
+                                                h("ul",temp.map(item =>{
+                                                        if (item.taskStage=="tesUnstarted"){
+                                                            return [h("li",
+                                                                {
+                                                                    style: {
+                                                                        padding: "4px"
+                                                                    }
+                                                                },[
+                                                                    h("span",{},"备注名：" + item.taskContent)
+                                                                ])
+                                                            ]
                                                         }
-                                                    },[
-                                                        h("span",{},"备注名：" + item.taskContent),
-                                                    ])
-                                                ]))
+                                                        if (item.taskStage=="tesFinished"){
+                                                            return [h("li",
+                                                                {
+                                                                    style: {
+                                                                        padding: "4px"
+                                                                    }
+                                                                },[
+                                                                    h("span",{},"备注名：" + item.taskContent),
+                                                                    h("span",
+                                                                        {
+                                                                            // props: {
+                                                                            //     type: 'primary',
+                                                                            //     size: 'small',
+                                                                            // },
+                                                                            style:{
+                                                                                // marginTop:'-3px',
+                                                                                marginLeft:'15px',
+                                                                                color:'rgb(160 191 124)'
+                                                                            },
+                                                                            // on: {
+                                                                            //     click: function() {
+                                                                            //         _self.completed(item.taskId);
+                                                                            //     }
+                                                                            // },
+                                                                        },
+                                                                        "已完成"
+                                                                    )
+                                                                ])
+                                                            ]
+                                                        }
+                                                    }
+                                                ))
                                             ])
                                         ]
                                     );
@@ -473,48 +590,119 @@
                         render: (h, params) => {
                             let _self = this
                             if (params.row.undoList == "" || params.row.undoList == null) {
-                                return "";
+                                return h("div",{
+                                    style: {
+                                        //     display: 'inline-block',
+                                        //     lineHeight: '24px',
+                                        //     height: '24px',
+                                        cursor:'pointer',
+                                        // width:'33px'
+                                        //     color:'#0162f4'
+                                    },
+                                    on:{
+                                        click: function() {
+                                            _self.open_undo_list(params.row);
+                                        }
+                                    }
+                                },"--")
                             } else {
-                                // console.log(params.row.companynames)
                                 let temp = JSON.parse(params.row.undoList)
                                 if (temp[0].taskContent.length > 13) {
-                                    return h("Poptip",{
-                                        props: {
-                                            trigger: "hover",
-                                            title: "未完项",
-                                            placement: "bottom"
-                                        }
-                                    },[
-                                        h("span",temp[0].taskContent.slice(0,13) + "..."),
-                                        h("Icon", {
+                                    {
+                                        return h("Poptip",{
                                             props: {
-                                                type: "arrow-down-b"
+                                                trigger: "hover",
+                                                title: "备注项",
+                                                placement: "bottom"
                                             }
-                                        }),
-                                        h("div",{
-                                            slot: "content"
                                         },[
-                                            h("ul",temp.map(item => [
-                                                h("li", {
-                                                        style: {
-                                                            padding: "4px",
-                                                        }
-                                                    },[
-                                                        h("span",{},"事项名：" + item.taskContent),
-                                                    ]
-                                                )
+                                            h("span",{
+                                                style:{
+                                                    cursor:'pointer',
+                                                },
+                                                on:{
+                                                    style:{
+                                                        cursor:'pointer',
+                                                    },
+                                                    click: function() {
+                                                        _self.open_undo_list(params.row);
+                                                    }
+                                                }
+                                            },temp[0].taskContent.slice(0,13) + "..."),
+                                            h("Icon", {
+                                                props: {
+                                                    type: "arrow-down-b"
+                                                }
+                                            }),
+                                            h("div",{
+                                                slot: "content"
+                                            },[
+                                                h("ul",temp.map(item =>{
+                                                        if (temp[i].taskStage =="tesUnstarted") {
+                                                            return [
+                                                                h("li", {
+                                                                        style: {
+                                                                            padding: "4px",
+                                                                        }
+                                                                    },[
+                                                                        h("span",{},"备注名：" + item.taskContent)
+                                                                    ]
+                                                                )
 
-                                            ]))
-                                        ])
-                                    ]);
+                                                            ]
+                                                        }
+                                                        if (item.taskStage=="tesFinished"){
+                                                            return [h("li",
+                                                                {
+                                                                    style: {
+                                                                        padding: "4px"
+                                                                    }
+                                                                },[
+                                                                    h("span",{},"备注名：" + item.taskContent),
+                                                                    h("span",
+                                                                        {
+                                                                            // props: {
+                                                                            //     type: 'primary',
+                                                                            //     size: 'small',
+                                                                            // },
+                                                                            style:{
+                                                                                // marginTop:'-3px',
+                                                                                marginLeft:'15px',
+                                                                                color:'rgb(160 191 124)'
+                                                                            },
+                                                                            // on: {
+                                                                            //     click: function() {
+                                                                            //         _self.completed(item.taskId);
+                                                                            //     }
+                                                                            // },
+                                                                        },
+                                                                        "已完成"
+                                                                    )
+                                                                ])
+                                                            ]
+                                                        }
+                                                    }
+                                                ))
+                                            ])
+                                        ]);
+                                    }
                                 } else {
                                     return h("Poptip",{
                                             props: {
                                                 trigger: "hover",
-                                                title: "未完项",
+                                                title: "备注项",
                                                 placement: "bottom"
                                             }},[
-                                            h("span", temp[0].taskContent),
+                                            h("span",{
+                                                style:{
+                                                    cursor:'pointer',
+                                                },
+                                                on:{
+                                                    click: function() {
+                                                        _self.open_undo_list(params.row);
+                                                    }
+                                                }
+                                            }, temp[0].taskContent),
                                             h("Icon", {
                                                 props: {
                                                     type: "arrow-down-b"
@@ -523,15 +711,50 @@
                                             h("div", {
                                                 slot: "content"
                                             },[
-                                                h("ul",temp.map(item => [h("li",
-                                                    {
-                                                        style: {
-                                                            padding: "4px"
+                                                h("ul",temp.map(item =>{
+                                                        if (item.taskStage=="tesUnstarted"){
+                                                            return [h("li",
+                                                                {
+                                                                    style: {
+                                                                        padding: "4px"
+                                                                    }
+                                                                },[
+                                                                    h("span",{},"备注名：" + item.taskContent)
+                                                                ])
+                                                            ]
                                                         }
-                                                    },[
-                                                        h("span",{},"事项名：" + item.taskContent),
-                                                    ])
-                                                ]))
+                                                        if (item.taskStage=="tesFinished"){
+                                                            return [h("li",
+                                                                {
+                                                                    style: {
+                                                                        padding: "4px"
+                                                                    }
+                                                                },[
+                                                                    h("span",{},"备注名：" + item.taskContent),
+                                                                    h("span",
+                                                                        {
+                                                                            // props: {
+                                                                            //     type: 'primary',
+                                                                            //     size: 'small',
+                                                                            // },
+                                                                            style:{
+                                                                                // marginTop:'-3px',
+                                                                                marginLeft:'15px',
+                                                                                color:'rgb(160 191 124)'
+                                                                            },
+                                                                            // on: {
+                                                                            //     click: function() {
+                                                                            //         _self.completed(item.taskId);
+                                                                            //     }
+                                                                            // },
+                                                                        },
+                                                                        "已完成"
+                                                                    )
+                                                                ])
+                                                            ]
+                                                        }
+                                                    }
+                                                ))
                                             ])
                                         ]
                                     );
@@ -674,6 +897,12 @@
             field(e){
                 this.$bus.emit("OPEN_FIELD_DETAIL",e)
             },
+            open_account_list(e){
+                this.$bus.emit("OPEN_ACCOUNT_ALL_LIST",e)
+            },
+            open_undo_list(e){
+                this.$bus.emit("OPEN_UNDO_ALL_LIST",e)
+            },
             invoice(e){
                 this.$bus.emit("OPEN_INVOICE_PAGE",e)
             },
@@ -700,12 +929,21 @@
             downloadExcel(){
                 let field = [
                     {
-                        field: 'companyname',
+                        field: 'CompanyName',
                         title: '公司名称',
                     },
                     {
                         field: 'tax_type',
                         title: '申报税种'
+                    },
+                    {
+                        field: 'createdate',
+                        title: '下单时间'
+                    },
+                    {
+                        field: 'gdsreport',
+                        title: '国地税报道',
+                        format:'GDSreport'
                     },
                     {
                         field: 'importEx',
@@ -730,14 +968,6 @@
                     {
                         field: 'product',
                         title: '代账类型'
-                    },
-                    {
-                        field: 'begin_period',
-                        title: '开始税期'
-                    },
-                    {
-                        field: 'end_period',
-                        title: '结束税期'
                     },
                     {
                         field: 'shebao',
@@ -765,11 +995,11 @@
                         format:'TaxCompleteStatus'
                     },
                     {
-                        field: 'followbyrealname',
+                        field: 'followby_realname',
                         title: '市场'
                     },
                     {
-                        field: 'realname',
+                        field: 'server_realname',
                         title: '服务会计'
                     },
                     {
@@ -784,21 +1014,19 @@
                     },
                 ];
                 let _self = this;
-                let url = `api/order/cycle/service/dljz/cycleMothList`;
+                let url = `api/order/cycle/service/dljz/cycleRecordList`;
                 let config = {
                     page: '1',
                     pageSize: '100000',
-                    period: _self.period,
-                    companyname: _self.SearchValidate.CompanyName,
-                    realname: _self.SearchValidate.server_realname,
+                    service_status:"",
                     sortField: 'unit_price',
-                    followbyrealname: _self.SearchValidate.followby_realname,
+                    service_type:"dljz",
+                    CompanyName: _self.SearchValidate.CompanyName,
+                    server_realname: _self.SearchValidate.server_realname,
+                    followby_realname: _self.SearchValidate.followby_realname,
                     begin_end_period: _self.SearchValidate.begin_end_period,
                     end_end_period: _self.SearchValidate.end_end_period,
-                    note_kj_flag: _self.SearchValidate.note_kj_flag,
-                    hasEAccount: _self.SearchValidate.etaxStatus == 1 ? 1 : '',
-                    hasEAccountAndWrong: _self.SearchValidate.etaxStatus == 2 ? 1 : '',
-                    hasNotEAccount: _self.SearchValidate.etaxStatus == 3 ? 1 : '',
+                    departname:_self.SearchValidate.departname,
                     export: 'Y',
                     exportField: encodeURI(JSON.stringify(field))
                 };

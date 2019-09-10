@@ -136,6 +136,7 @@
 <script>
 
     export default {
+        name:'roleMangement_index',
         data() {
             return {
                 isQX: false,

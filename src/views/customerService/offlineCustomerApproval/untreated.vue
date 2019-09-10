@@ -159,6 +159,11 @@ export default {
           minWidth: 120
         },
         {
+          title: '创建时间',
+          key: 'createdate',
+          minWidth: 160
+        },
+        {
           title: '结束时间',
           key: 'enddate',
           minWidth: 160

@@ -5,8 +5,8 @@
           </Row>
           <Row>
             <ButtonGroup>
-                <Button type="primary" icon="edit" @click="open_account_update">余额调整</Button>
-                <Button type="success" icon="edit" @click="open_integral_update">积分调整</Button>
+                <Button type="primary" icon="edit" v-permission="['yue_tiaozheng']" @click="open_account_update">余额调整</Button>
+                <Button type="success" icon="edit" v-permission="['jifen_tiaozheng']" @click="open_integral_update">积分调整</Button>
             </ButtonGroup>
           </Row>
           <Row style="margin-top: 10px;">

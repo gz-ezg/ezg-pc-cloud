@@ -71,6 +71,8 @@
                 <Button type="primary" icon="information-circled" v-permission="['accounterManager.share']" @click="fpkj">变更会计</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="openFieldByCompanyId">外勤详情</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
+                <Button type="primary" icon="information-circled" v-permission="['accounterManager.upgrade']" @click="service_level">服务升级</Button>
+                <Button type="primary" icon="information-circled" v-permission="['accounterManager.logout']" @click="layout">公司注销</Button>
             </ButtonGroup>
         </Row>
         <Row style="margin-top: 10px;">
@@ -113,6 +115,7 @@
                 GDSreport :[],
                 GDSreport_map :new Map(),
                 search_model:"",
+                current_row:"",
                 SearchValidate:{
                     CompanyName:'',
                     server_realname:'',
@@ -341,7 +344,48 @@
 
                 this.$Post(url,config,success,fail)
             },
+            service_level(){
+                let _self = this
+                if (!_self.current_row){
+                    _self.$Message.warning("请选择一项再进行操作")
+                } else {
+                    let url = `api/order/cycle/service/record/update`
+                    let config = {
+                        id: _self.current_row.id,
+                        serviceStatus: 'upgrade'
+                    }
 
+                    function success(res){
+                        _self.getData()
+                    }
+                    function fail(){
+
+                    }
+
+                    this.$Post(url,config,success,fail)
+                }
+            },
+            layout(){
+                let _self = this
+                if (!_self.current_row){
+                    _self.$Message.warning("请选择一项再进行操作")
+                } else {
+                    let url = `api/order/cycle/service/record/update`
+                    let config = {
+                        id: _self.current_row.id,
+                        serviceStatus: 'logout'
+                    }
+
+                    function success(res){
+                        _self.getData()
+                    }
+                    function fail(){
+
+                    }
+
+                    this.$Post(url,config,success,fail)
+                }
+            },
             downloadExcel(){
                 let field = [
                     {field:'service_status',title:'服务状态',format:'cservicest'},
@@ -397,6 +441,7 @@
             },
             getData() {
                 let _self = this
+                _self.current_row = ""
                 _self.loading = true
                 let url = 'api/order/cycle/service/record/list'
 
@@ -548,6 +593,7 @@
                 let _self = this
                 // let url = '/order/cycle/month/service/item/list?monthServiceId=' + a.month_service_id
                 _self.id = a
+                _self.current_row = a
                 _self.zl = false
                 _self.zz = false
                 _self.bs = false

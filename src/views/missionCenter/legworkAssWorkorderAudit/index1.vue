@@ -18,7 +18,7 @@
     import unApproveList from './index'
     import approveList from './approveList'
     export default {
-        name: "index1",
+        name: "legworkAssWorkorderAudit_index",
         components:{
             unApproveList,
             approveList

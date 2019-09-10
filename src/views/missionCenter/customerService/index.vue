@@ -17,7 +17,7 @@
     import executing from './executing'
     import finished from './finished'
     export default {
-        name: "index",
+        name: "customerServiceIndex",
         components:{
             executing,
             finished

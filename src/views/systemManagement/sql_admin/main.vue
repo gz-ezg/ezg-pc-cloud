@@ -22,7 +22,7 @@ import DShow from './modal/detail_show'
 import CShow from './modal/connect_show'
 
 export default {
-    name: "sqlRoot",
+    name: "admin_sql_deal",
     components: {
         Tableshow,
         ButtonList,

@@ -98,6 +98,7 @@
 
 <script>
 export default {
+    name:'systemparamsManagement_index',
     data(){
         return{
             addParams:{

@@ -144,7 +144,7 @@
     import CreateSchedule from './createSchedule'
     import DetailScheduleTask from './detailScheduleTask'
     export default {
-        name: "index",
+        name: "business_schedule_index",
         components:{
             FullCalendar,
             Datepicker,

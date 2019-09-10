@@ -16,6 +16,7 @@ import Hpay from './had_payment/had_pay_list'
 import Npay from './no_payment/no_pay_list'
 
     export default {
+    name:"spareManagement",
         data() {
             return{}
         },

@@ -750,9 +750,9 @@ export const appRouter = [
         meta: 6020,
         path: 'spareManagement',
         title: '余款管理',
-        name: 'spareManagement_index',
+        name: 'spareManagement',
         component: () =>
-          import(/* webpackChunkName: "spareManagement_index" */ '@/views/order/spareManagement/spareManagement.vue')
+          import(/* webpackChunkName: "spareManagement_index" */ '@/views/order/spareManagement/spareManagement')
       },
       {
         access: 11602,

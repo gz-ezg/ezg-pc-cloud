@@ -91,6 +91,11 @@
               ></DatePicker>
             </FormItem>
           </Col>
+          <Col span="10">
+            <FormItem label="创建时间">
+              <Input size="small" v-model="task_message.createdate" readonly />
+            </FormItem>
+          </Col>
         </Row>
         <Row v-if="task_message.money" :gutter="16">
           <Col span="1" style="visibility:hidden">1</Col>
