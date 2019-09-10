@@ -6,6 +6,10 @@
         <div style="display: flex;justify-content: space-between" v-if="endTime">
             <div style="width: 550px;height: 500px">
                 <Card style="width: 500px;height: 400px;display: flex;align-items: center">
+                    <div style="width: 467px;padding-bottom: 20px;font-weight: bold">
+                        <div>活动内容：{{data.content}}</div>
+                        <div>参与部门：{{data.departname}}</div>
+                    </div>
                     <div style="width: 467px;display: flex;margin-bottom: 150px" v-if="showCountDown">
                         <div style="font-weight: bold;font-size: 16px;margin-right: 5px">
                             距离抢线索还有：

@@ -82,11 +82,11 @@
         <div v-if="showFilter">
             <div class="filter">
                 <Form :label-width="80" style="margin:20px 20px 0 0">
-                    <FormItem label="任务类型：" >
-                        <div class="d" v-for="(item,index) in taskList" :class="{b:currentIndex==index}" @click="showItem(item,index)" >
-                            <span>{{item}}</span>
-                        </div>
-                    </FormItem>
+                    <!--<FormItem label="任务类型：" >-->
+                        <!--<div class="d" v-for="(item,index) in taskList" :class="{b:currentIndex==index}" @click="showItem(item,index)" >-->
+                            <!--<span>{{item}}</span>-->
+                        <!--</div>-->
+                    <!--</FormItem>-->
                     <FormItem label="企业名称：" prop="companyId">
                         <Select ref="select"
                                 v-model="newMission.companyName" placeholder="请输入企业名称搜索"
@@ -395,7 +395,7 @@
                         pageSize: 1000,
                         accountKind:"accountKind",
                         sortField: "plan_date",
-                        task_type:_self.taskType,
+                        task_type:"tkLegAcc",
                         task_kind:_self.taskKind,
                         task_stage:_self.taskStage,
                         executor_id:_self.executor_id,

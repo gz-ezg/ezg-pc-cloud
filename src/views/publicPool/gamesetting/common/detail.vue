@@ -21,13 +21,13 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row>
-                    <Col span="12">
-                        <FormItem label="数量：" prop="amount">
-                            <Input v-model="detail.amount" size="small" type="number" :readonly="readonly"/>
-                        </FormItem>
-                    </Col>
-                </Row>
+                <!--<Row>-->
+                    <!--<Col span="12">-->
+                        <!--<FormItem label="数量：" prop="amount">-->
+                            <!--<Input v-model="detail.amount" size="small" type="number" :readonly="readonly"/>-->
+                        <!--</FormItem>-->
+                    <!--</Col>-->
+                <!--</Row>-->
                 <Row>
                     <Col>
                         <FormItem label="范围：" prop="count">
@@ -87,7 +87,7 @@
             },
             save(){
                 let _self = this
-                if (!_self.detail.content || !_self.detail.activity_time || !_self.detail.amount || _self.count.length==0){
+                if (!_self.detail.content || !_self.detail.activity_time || _self.count.length==0){
                     _self.$Message.warning("请将上述信息填写完整")
                 } else{
                     _self.loading = true;
@@ -95,7 +95,7 @@
                     let config = {
                         content:_self.detail.content,
                         activityTime: FULLDateFormat(_self.detail.activity_time),
-                        amount:_self.detail.amount,
+                        amount:0,
                         orgIds:_self.count.map(item=>{
                             let a= []
                             a.push(item.ID)
@@ -117,7 +117,7 @@
             },
             edit(){
                 let _self = this
-                if (!_self.detail.content || !_self.detail.activity_time || !_self.detail.amount || _self.count.length==0){
+                if (!_self.detail.content || !_self.detail.activity_time || _self.count.length==0){
                     _self.$Message.warning("请将上述信息填写完整")
                 } else{
                     _self.loading = true;
@@ -126,7 +126,7 @@
                         id:_self.detail.id,
                         content:_self.detail.content,
                         activityTime: FULLDateFormat(_self.detail.activity_time),
-                        amount:_self.detail.amount,
+                        amount:0,
                         orgIds:_self.count.map(item=>{
                             let a= []
                             a.push(item.ID)
@@ -147,9 +147,8 @@
             },
             clear(){
                 this.detail={
-                    content:"",
+                        content:"",
                         activity_time:"",
-                        amount:"",
                 }
                 this.count = []
             },

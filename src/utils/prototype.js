@@ -120,6 +120,25 @@ export const vessel = {
         console.error(err)
       })
   },
+  post(url, config, success, fail) {
+    let _self = this
+    axios
+        .post(url, config)
+        .then(function(res) {
+          if (res) {
+            success(res)
+          } else {
+            _self.$Message.error(res)
+            fail(res)
+            console.warn(res)
+          }
+        })
+        .catch(function(err) {
+          fail(err)
+          _self.$Message.error('数据异常！')
+          console.error(err)
+        })
+  },
   async queryCodes(query, boolean = false) {
     try {
       let resp = await request({

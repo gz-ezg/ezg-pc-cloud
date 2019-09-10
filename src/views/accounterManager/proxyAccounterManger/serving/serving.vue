@@ -67,7 +67,7 @@
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="service_offline">服务下线</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="service_paused">暂停服务</Button>
-                <!--<Button type="primary" icon="ios-color-wand-outline" @click="turn_offincal">跳转税务局</Button>-->
+                <Button type="primary" icon="ios-color-wand-outline" @click="turn_offincal" :loading="comLoading">跳转税务局</Button>
             </ButtonGroup>
         </Row>
         <Row style="margin-top: 10px;">
@@ -148,6 +148,7 @@
             return{
                 search_model: '',
                 loading: false,
+                comLoading: false,
                 pageTotal: 0,
                 page: 1,
                 pageSize: 10,
@@ -1414,22 +1415,23 @@
                         _self.$Message.warning("要跳转税务局前需要填写实名账号及密码")
                     } else{
                         _self.comLoading = true;
-                        let url = `api/customer/company/postHttp`;
+                        let url = `http://yjgcs.zgcfo.com/getETaxWebSingleSignOnSucessUrl`;
                         let config = {
-                                searchURL:'http://192.168.0.220:5099/getETaxWebSingleSignOnSucessUrl',
                                 nationalnum:_self.current_row.nationalnum,
                                 nationalpsw:_self.current_row.nationalpsw,
                                 accounttype:_self.current_row.accounttype
 
                         }
                         function success(res){
-
+                            let a = res.data
+                            window.open(a)
+                            _self.comLoading = false
                         }
 
                         function fail(err){
 
                         }
-                        this.$Post(url, config, success, fail)
+                        this.$post(url, config, success, fail)
                     }
                 }
             },
@@ -1516,7 +1518,6 @@
             },
             completed(id){
                 let _self = this;
-                _self.comLoading = true;
                 let url = `api/order/cycle/service/dljz/fininshTask`;
                 let config = {
                     params:{
@@ -1526,7 +1527,6 @@
                     }
                 }
                 function success(res){
-                    _self.comLoading = false
                     _self.get_data()
                 }
 
