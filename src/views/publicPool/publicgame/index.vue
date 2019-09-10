@@ -133,11 +133,9 @@
                 let _self = this;
                 let url = `api/customer/highseasActivity/go`;
                 let config = {
-                    params: {
                         activityId:_self.data.id
                         // page: _self.page,
                         // pageSize: _self.pageSize,
-                    }
                 }
 
                 function success(res){
@@ -162,7 +160,7 @@
 
                 }
 
-                this.$Get(url, config, success, fail)
+                this.$Post(url, config, success, fail)
             },
             sure(){
                 this.showModal = false
@@ -170,8 +168,8 @@
             },
             async initWebSocket() {
                 const { port, key } = await serviceApi.auth();
-                // const wsuri = `ws://cloud.zgcfo.com:${port}/highseasActivity/websocket`;
-                const wsuri = `ws://192.168.0.220:${port}/highseasActivity/websocket`;
+                const wsuri = `ws://cloud.zgcfo.com:${port}/highseasActivity/websocket`;
+                // const wsuri = `ws://192.168.0.220:${port}/highseasActivity/websocket`;
                 // const wsuri = `ws://192.168.2.89:${port}/highseasActivity/websocket`;
                 this.websock = new WebSocket(wsuri);
                 console.log(this.websock)
