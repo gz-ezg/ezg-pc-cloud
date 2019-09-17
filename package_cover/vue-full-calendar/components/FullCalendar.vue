@@ -91,6 +91,10 @@
                         self.$emit('event-mouseover', ...args)
                     },
 
+                    viewRender (...args) {
+                        self.$emit('view-render', ...args)
+                    },
+
                     eventMouseout(...args){
                         self.$emit('event-mouseout', ...args)
                     },
