@@ -3,17 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/DistributionOfAccounting.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/DistributionOfAccounting.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrder.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/arrears.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/arrears.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/inTheService.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/inTheService.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/notbegin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/notbegin.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/ButtonComponents/changeAccounting/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/ButtonComponents/changeAccounting/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/serving.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/serving.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_request.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_request.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/createAccounterTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/createAccounterTask.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/missionCenter/comSchedule/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/missionCenter/comSchedule/index.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -34,10 +31,10 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/views/arrearageCenter/index.vue">
+        <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/serving.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="100" column="27" lean-forward="true" selection-start-line="100" selection-start-column="27" selection-end-line="100" selection-end-column="27" />
+            <state relative-caret-position="188">
+              <caret line="1438" column="23" lean-forward="true" selection-start-line="1438" selection-start-column="23" selection-end-line="1438" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -54,7 +51,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>公海</find>
       <find>handleUpload</find>
       <find>v-per</find>
       <find>到期</find>
@@ -84,6 +80,7 @@
       <find>资料管理</find>
       <find>会计管理</find>
       <find>会计到家</find>
+      <find>营销管理</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -93,9 +90,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/router/router.js" />
-        <option value="$PROJECT_DIR$/src/views/order/spareManagement/spareManagement.vue" />
-        <option value="$PROJECT_DIR$/src/views/systemManagement/systemparamsManagement/systemparamsManagement_index.vue" />
         <option value="$PROJECT_DIR$/src/views/systemManagement/attributeManagement/attributeManagement_index.vue" />
         <option value="$PROJECT_DIR$/src/views/systemManagement/dataCenterManagement/dataCenterManagement_index.vue" />
         <option value="$PROJECT_DIR$/src/views/systemManagement/departManagement/index.vue" />
@@ -134,20 +128,23 @@
         <option value="$PROJECT_DIR$/node_modules/vue-full-calendar/components/FullCalendar.vue" />
         <option value="$PROJECT_DIR$/src/views/missionCenter/comSchedule/index.vue" />
         <option value="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_request.vue" />
-        <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue" />
-        <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/serving.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/inTheService.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/arrears.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/notbegin.vue" />
-        <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue" />
-        <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue" />
         <option value="$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/createAccounterTask.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/ButtonComponents/changeAccounting/index.vue" />
         <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/DistributionOfAccounting.vue" />
+        <option value="$PROJECT_DIR$/src/utils/request.js" />
+        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrder.vue" />
+        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/all.vue" />
+        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/arrears.vue" />
+        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/inTheService.vue" />
+        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/notbegin.vue" />
+        <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/serving.vue" />
+        <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue" />
+        <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue" />
+        <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
@@ -187,7 +184,24 @@
               <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="arrearageCenter" type="462c0819:PsiDirectoryNode" />
+              <item name="accounterManager" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="accounterManager" type="462c0819:PsiDirectoryNode" />
+              <item name="proxyAccounterManger" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="accounterManager" type="462c0819:PsiDirectoryNode" />
+              <item name="proxyAccounterManger" type="462c0819:PsiDirectoryNode" />
+              <item name="serving" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -239,18 +253,18 @@
     <property name="ts.external.directory.path" value="E:\webstorm\WebStorm 2018.3.5\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\ezg\ezg-pc-cloud\src\views\publicPool\gamesetting\common" />
-      <recent name="C:\VueProject\pubg" />
-      <recent name="C:\VueProject\pubg\src\views\customerManagement\marketingManagement" />
-      <recent name="C:\VueProject\pubg\src\components" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\ezg\ezg-pc-cloud\src\views\order\spareManagement" />
       <recent name="D:\ezg\ezg-pc-cloud\src\views\woa-components\companyDetail" />
       <recent name="D:\ezg\ezg-pc-cloud\src\views\accounterManager\proxyAccounterManger\serving\DataManagement" />
       <recent name="D:\ezg\ezg-pc-cloud\src\views\accounterManager\proxyAccounterManger\serving\ButtonComponents\unfinishedThings" />
       <recent name="D:\ezg\ezg-pc-cloud\src\views\accounterManager\proxyAccounterManger\serving\ButtonComponents\accountNote" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\ezg\ezg-pc-cloud\src\views\publicPool\gamesetting\common" />
+      <recent name="C:\VueProject\pubg" />
+      <recent name="C:\VueProject\pubg\src\views\customerManagement\marketingManagement" />
+      <recent name="C:\VueProject\pubg\src\components" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -424,7 +438,7 @@
       <workItem from="1568164268212" duration="10908000" />
       <workItem from="1568251880035" duration="3606000" />
       <workItem from="1568596572345" duration="13306000" />
-      <workItem from="1568683006987" duration="7323000" />
+      <workItem from="1568683006987" duration="17463000" />
     </task>
     <task id="LOCAL-00022" summary="修改启动失败的问题">
       <created>1555989851178</created>
@@ -773,7 +787,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2066386000" />
+    <option name="totallyTimeSpent" value="2076526000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -785,10 +799,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1376" height="784" extended-state="7" />
+    <frame x="-8" y="-8" width="1376" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6918033" visible="true" weight="0.22672673" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6918033" visible="true" weight="0.22672673" />
       <window_info id="Structure" order="1" weight="0.24960506" />
       <window_info id="Favorites" order="2" sideWeight="0.30819672" side_tool="true" weight="0.26276276" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.1399046" />
@@ -807,7 +821,7 @@
       <window_info anchor="bottom" id="消息" order="13" />
       <window_info anchor="bottom" id="调试" order="14" />
       <window_info anchor="bottom" id="TypeScript" order="15" weight="0.3290938" />
-      <window_info anchor="bottom" id="Terminal" order="16" sideWeight="0.49924925" visible="true" weight="0.3799682" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="16" sideWeight="0.49924925" visible="true" weight="0.3799682" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -909,77 +923,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="0.0" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/build.backup/webpack.dev-local.conf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-600" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.backup/webpack.dev-cloud.conf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-654" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.backup/webpack.dll.conf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-811" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.backup/jenkins.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-504" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.backup/config.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.backup/check-versions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-225" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.backup/build.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-779" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.backup/webpack.base.conf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3900" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/webpack.prod.conf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1875" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/webpack.dll.conf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-886" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/webpack.dev.conf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1111" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/webpack.base.conf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2550" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/check-versions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1086" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/build.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-779" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/config.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/prod.env.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1149,138 +1092,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="114" column="16" selection-start-line="114" selection-start-column="16" selection-end-line="114" selection-end-column="33" />
-          <folding>
-            <element signature="e#6922#7105#0" />
-            <element signature="e#7127#7270#0" />
-            <element signature="e#7292#13314#0" />
-            <element signature="e#13336#17665#0" />
-            <element signature="e#17687#22056#0" />
-            <element signature="e#22078#26442#0" />
-            <element signature="e#26464#30844#0" />
-            <element signature="e#30866#31006#0" />
-            <element signature="e#31028#46648#0" />
-            <element signature="e#46670#51464#0" />
-            <element signature="e#72826#74006#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/layouts/Main.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3925">
-          <caret line="5" column="40" lean-forward="true" selection-start-line="5" selection-start-column="40" selection-end-line="5" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/inTheService.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="509" column="12" lean-forward="true" selection-start-line="509" selection-start-column="12" selection-end-line="537" selection-end-column="14" />
-          <folding>
-            <element signature="e#6687#6949#0" />
-            <element signature="e#7239#14392#0" />
-            <element signature="e#7914#9721#0" />
-            <element signature="e#9743#9889#0" />
-            <element signature="e#9911#10063#0" />
-            <element signature="e#10085#10227#0" />
-            <element signature="e#10249#10389#0" />
-            <element signature="e#10411#10415#0" />
-            <element signature="e#10584#10729#0" />
-            <element signature="e#10751#10895#0" />
-            <element signature="e#10917#12437#0" />
-            <element signature="e#12459#14374#0" />
-            <element signature="e#21810#22990#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/arrears.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="68" column="114" selection-start-line="68" selection-start-column="114" selection-end-line="68" selection-end-column="128" />
-          <folding>
-            <element signature="e#6943#7205#0" />
-            <element signature="e#7390#7444#0" />
-            <element signature="e#21795#22963#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/notbegin.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="69" column="14" lean-forward="true" selection-start-line="69" selection-start-column="14" selection-end-line="69" selection-end-column="14" />
-          <folding>
-            <element signature="e#6511#6773#0" />
-            <element signature="e#6958#7012#0" />
-            <element signature="e#7063#13982#0" />
-            <element signature="e#21234#22402#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrder.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="13" column="21" lean-forward="true" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/serving.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="1408" column="12" lean-forward="true" selection-start-line="1408" selection-start-column="12" selection-end-line="1436" selection-end-column="14" />
-          <folding>
-            <element signature="e#80035#81215#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/router/router.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="975" column="20" selection-start-line="975" selection-start-column="16" selection-end-line="975" selection-end-column="20" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="909" column="25" lean-forward="true" selection-start-line="909" selection-start-column="25" selection-end-line="909" selection-end-column="25" />
-          <folding>
-            <element signature="n#Row#0;n#Card#0;n#template#0;n#!!top" />
-            <element signature="e#6496#6679#0" />
-            <element signature="e#6701#10226#0" />
-            <element signature="e#10248#10391#0" />
-            <element signature="e#10413#10720#0" />
-            <element signature="e#10742#16764#0" />
-            <element signature="e#16786#16931#0" />
-            <element signature="e#16953#17096#0" />
-            <element signature="e#17118#17260#0" />
-            <element signature="e#17282#17428#0" />
-            <element signature="e#17450#17590#0" />
-            <element signature="e#17612#19956#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="1242" column="12" selection-start-line="1242" selection-start-column="12" selection-end-line="1270" selection-end-column="14" />
-          <folding>
-            <element signature="e#71881#73049#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/createAccounterTask.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-250">
@@ -1356,10 +1167,191 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/iview/dist/iview.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/request.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-250">
+          <caret line="11" column="33" lean-forward="true" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/arrearageCenter/index.vue">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="27" column="37" lean-forward="true" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
+          <folding>
+            <element signature="n#style#0;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/layouts/Main.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4810">
+          <caret line="609" column="12" lean-forward="true" selection-start-line="609" selection-start-column="12" selection-end-line="609" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/bus.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/inTheService.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="520" column="67" selection-start-line="520" selection-start-column="67" selection-end-line="520" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/notbegin.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="504" column="67" selection-start-line="504" selection-start-column="67" selection-end-line="504" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/stop.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="869">
+          <caret line="120" column="8" selection-start-line="120" selection-start-column="8" selection-end-line="120" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/arrears.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="520" column="67" lean-forward="true" selection-start-line="520" selection-start-column="67" selection-end-line="520" selection-end-column="67" />
+          <folding>
+            <element signature="e#6989#14634#0" />
+            <element signature="e#23402#23440#0" />
+            <element signature="e#23461#23701#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/all.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="520" column="28" lean-forward="true" selection-start-line="520" selection-start-column="28" selection-end-line="520" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrder.vue">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="250">
-          <caret line="100" column="27" lean-forward="true" selection-start-line="100" selection-start-column="27" selection-end-line="100" selection-end-column="27" />
+          <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
+          <folding>
+            <element signature="e#1201#1273#0" expanded="true" />
+            <element signature="e#2619#2680#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="899" column="38" lean-forward="true" selection-start-line="899" selection-start-column="38" selection-end-line="899" selection-end-column="38" />
+          <folding>
+            <element signature="n#Row#0;n#Card#0;n#template#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="1289" column="67" selection-start-line="1289" selection-start-column="67" selection-end-line="1289" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="1253" column="67" selection-start-line="1253" selection-start-column="67" selection-end-line="1253" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="251" column="22" lean-forward="true" selection-start-line="251" selection-start-column="22" selection-end-line="251" selection-end-column="22" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/webpack.prod.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-150" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/webpack.dll.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-50">
+          <caret line="7" column="21" lean-forward="true" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/webpack.dev.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-550">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/webpack.base.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-250">
+          <caret line="5" column="39" lean-forward="true" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/jenkins-shell.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/config.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/check-versions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-550">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/build.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/op/code.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="700">
+          <caret line="70" column="5" lean-forward="true" selection-start-line="70" selection-start-column="5" selection-end-line="70" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="185" column="11" lean-forward="true" selection-start-line="185" selection-start-column="11" selection-end-line="185" selection-end-column="11" />
+          <folding>
+            <element signature="n#Row#0;n#Card#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#Button#1;n#ButtonGroup#0;n#Row#1;n#Card#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#Button#2;n#ButtonGroup#0;n#Row#1;n#Card#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#Button#3;n#ButtonGroup#0;n#Row#1;n#Card#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#Button#4;n#ButtonGroup#0;n#Row#1;n#Card#0;n#div#0;n#template#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/serving.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="1438" column="23" lean-forward="true" selection-start-line="1438" selection-start-column="23" selection-end-line="1438" selection-end-column="23" />
         </state>
       </provider>
     </entry>

@@ -1,56 +1,56 @@
 <template>
     <Card>
         <Row style="margin-bottom:20px">
-                <Collapse v-model="search_model">
-                    <Panel name="1" >
-                        <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
-                        筛选
-                        <div  slot="content" @keydown="show">
-                            <Form ref="formInline" :model="formInline" :label-width="100">
-                                <Row :gutter="12">
-                                    <Col span="8">
-                                        <FormItem prop="companyName" label="公司名称：">
-                                            <Input size="small" type="text" v-model="formInline.companyName" placeholder="">
-                                            </Input>
-                                        </FormItem>
-                                    </Col>
-                                    <Col span="8">
-                                        <FormItem prop="server_realname" label="服务人员：">
-                                            <Input size="small" type="text" v-model="formInline.server_realname" placeholder="">
-                                            </Input>
-                                        </FormItem>
-                                    </Col>
-                                    <!-- <Col span="12">
-                                        <FormItem prop="accmanager_realname" label="会计经理名称：">
-                                            <Input size="small" type="text" v-model="formInline.accmanager_realname" placeholder="">
-                                            </Input>
-                                        </FormItem>
-                                    </Col> -->
-                                    <Col span="8">
-                                        <FormItem prop="followby_realname" label="跟进人：">
-                                            <Input size="small" type="text" v-model="formInline.followby_realname" placeholder="">
-                                            </Input>
-                                        </FormItem>
-                                    </Col>
-                                </Row>
-                                <Row :gutter="12">
-                                    <Col span="8">
+            <Collapse v-model="search_model">
+                <Panel name="1" >
+                    <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
+                    筛选
+                    <div  slot="content" @keydown="show">
+                        <Form ref="formInline" :model="formInline" :label-width="100">
+                            <Row :gutter="12">
+                                <Col span="8">
+                                    <FormItem prop="companyName" label="公司名称：">
+                                        <Input size="small" type="text" v-model="formInline.companyName" placeholder="">
+                                        </Input>
+                                    </FormItem>
+                                </Col>
+                                <Col span="8">
+                                    <FormItem prop="server_realname" label="服务人员：">
+                                        <Input size="small" type="text" v-model="formInline.server_realname" placeholder="">
+                                        </Input>
+                                    </FormItem>
+                                </Col>
+                                <!-- <Col span="12">
+                                    <FormItem prop="accmanager_realname" label="会计经理名称：">
+                                        <Input size="small" type="text" v-model="formInline.accmanager_realname" placeholder="">
+                                        </Input>
+                                    </FormItem>
+                                </Col> -->
+                                <Col span="8">
+                                    <FormItem prop="followby_realname" label="跟进人：">
+                                        <Input size="small" type="text" v-model="formInline.followby_realname" placeholder="">
+                                        </Input>
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row :gutter="12">
+                                <Col span="8">
                                     <FormItem label="结束账期：" prop="followby_realname">
                                         <Input v-model="formInline.begin_end_period" size="small" style="width:40%" placeholder="201807"></Input>
                                         -
                                         <Input v-model="formInline.end_end_period" size="small" style="width:40%" placeholder="201807"></Input>
                                     </FormItem>
-                                    </Col>
-                                </Row>
-                                <FormItem>
-                                    <Button type="primary" @click="search">搜索</Button>
-                                    <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
-                                </FormItem>
-                            </Form>
-                        </div>
-                    </Panel>
-                </Collapse>
-            </Row>
+                                </Col>
+                            </Row>
+                            <FormItem>
+                                <Button type="primary" @click="search">搜索</Button>
+                                <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
+                            </FormItem>
+                        </Form>
+                    </div>
+                </Panel>
+            </Collapse>
+        </Row>
         <Row>
             <ButtonGroup>
                 <!-- <Button type="primary" icon="information-circled" @click="scbd">时长变动日志</Button> -->
@@ -68,14 +68,14 @@
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="turn_offincal" :loading="comLoading">跳转税务局</Button>
             </ButtonGroup>
-            <!-- <Poptip 
-                title="筛选" 
-                placement="bottom-end" 
-                width="700" 
-                style="float:right;margin-right:20px" 
+            <!-- <Poptip
+                title="筛选"
+                placement="bottom-end"
+                width="700"
+                style="float:right;margin-right:20px"
             >
                 <Button type="text" size="small" icon="funnel">筛选</Button>
-                
+
             </Poptip> -->
         </Row>
         <Row style="margin-top: 10px;">
@@ -126,8 +126,8 @@
 
 <script>
     import Bus from '../../../../components/bus'
-
     export default {
+        name: "all",
         data() {
             return {
                 search_model:"",
@@ -261,7 +261,7 @@
                                     }),
                                     h('div',{
                                         slot:'content',
-                                        
+
                                     },[
                                         h('span',params.row.workordermemo)
                                     ])
@@ -325,23 +325,23 @@
                     {field:'begin_period',title:'开始时间'},
                     {field:'end_period',title:'结束时间'},
                     {field:'workordermemo',title:'备注'}
-                    ]
+                ]
                 let _self = this
                 let url = `api/order/cycle/service/record/list`
                 let config = {
-                        service_status:'arrears',
-                        sortField:'createdate',
-                        service_type:'kjdj',
-                        page: '1',
-                        pageSize: '1000000',
-                        companyName: _self.formInline.companyName,
-                        server_realname: _self.formInline.server_realname,
-                        accmanager_realname: _self.formInline.accmanager_realname,
-                        followby_realname: _self.formInline.followby_realname,
-                        begin_end_period: _self.formInline.begin_end_period,
-                        end_end_period: _self.formInline.end_end_period,
-                        export: 'Y',
-                        exportField: encodeURI(JSON.stringify(field))
+                    service_status:'',
+                    sortField:'createdate',
+                    service_type:'kjdj',
+                    page: '1',
+                    pageSize: '1000000',
+                    companyName: _self.formInline.companyName,
+                    server_realname: _self.formInline.server_realname,
+                    accmanager_realname: _self.formInline.accmanager_realname,
+                    followby_realname: _self.formInline.followby_realname,
+                    begin_end_period: _self.formInline.begin_end_period,
+                    end_end_period: _self.formInline.end_end_period,
+                    export: 'Y',
+                    exportField: encodeURI(JSON.stringify(field))
                 }
                 let toExcel = this.$MergeURL(url, config)
                 window.open(toExcel)
@@ -366,7 +366,7 @@
             },
             getData() {
                 let _self = this
-                let url = '/order/cycle/service/record/list?sortField=createdate&service_type=kjdj&page=' + _self.page + '&pageSize=' + _self.pageSize + '&service_status=arrears' +'&companyName=' + _self.formInline.companyName + '&server_realname=' + _self.formInline.server_realname + '&accmanager_realname=' + _self.formInline.accmanager_realname + '&followby_realname=' + _self.formInline.followby_realname + '&begin_end_period=' + _self.formInline.begin_end_period + "&end_end_period=" + _self.formInline.end_end_period
+                let url = '/order/cycle/service/record/list?sortField=createdate&service_type=kjdj&page=' + _self.page + '&pageSize=' + _self.pageSize + '&service_status=' +'&companyName=' + _self.formInline.companyName + '&server_realname=' + _self.formInline.server_realname + '&accmanager_realname=' + _self.formInline.accmanager_realname + '&followby_realname=' + _self.formInline.followby_realname + '&begin_end_period=' + _self.formInline.begin_end_period + "&end_end_period=" + _self.formInline.end_end_period
 
                 function doSuccess(res) {
                     let _data = res.data.data
@@ -396,16 +396,16 @@
 
             pageChange(a) {
                 let _self = this
-                _self.page = a 
+                _self.page = a
                 _self.getData()
             },
 
             pageSizeChange(a) {
                 let _self = this
-                _self.pageSize = a 
+                _self.pageSize = a
                 _self.getData()
             },
-            
+
             scbd() {
                 Bus.$emit('shic',true)
             },
@@ -421,26 +421,26 @@
                     _self.$Message.warning('请选择要停止服务的项目')
                 } else {
                     this.$Modal.confirm({
-                    title: '提示信息',
-                    content: '<p>您确定停止服务吗</p>',
-                    onOk: () => {
-                        let url = '/order/cycle/service/record/update'
-                        let _data = {
-                            id: _self.id.id,
-                            serviceStatus: 'stop'
-                        }
+                        title: '提示信息',
+                        content: '<p>您确定停止服务吗</p>',
+                        onOk: () => {
+                            let url = '/order/cycle/service/record/update'
+                            let _data = {
+                                id: _self.id.id,
+                                serviceStatus: 'stop'
+                            }
 
-                        function doSuccess() {
-                            _self.$Message.success('成功停止服务')
-                            _self.page = 1
-                            _self.getData()
-                            Bus.$emit('UPDATE_ALL_ACCOUNT_PAGE',  true)
-                        }
+                            function doSuccess() {
+                                _self.$Message.success('成功停止服务')
+                                _self.page = 1
+                                _self.getData()
+                                Bus.$emit('UPDATE_ALL_ACCOUNT_PAGE',  true)
+                            }
 
-                        _self.PostData(url, _data, doSuccess)
-                    },
-                    onCancel: () => {}
-                });
+                            _self.PostData(url, _data, doSuccess)
+                        },
+                        onCancel: () => {}
+                    });
                 }
             },
 
@@ -468,7 +468,7 @@
                 if (_self.id.id == '' || _self.id.id == undefined) {
                     this.$Message.warning('请选择要查看的项目')
                 } else {
-                   Bus.$emit('kjfuwu',_self.id)
+                    Bus.$emit('kjfuwu',_self.id)
                 }
             },
 
@@ -478,7 +478,7 @@
                 if (_self.id.id == '' || _self.id.id == undefined) {
                     this.$Message.warning('请选择要查看的项目')
                 } else {
-                  Bus.$emit('yuefw', _self.id)  
+                    Bus.$emit('yuefw', _self.id)
                 }
             },
 
@@ -488,7 +488,7 @@
                 if (_self.id.id == '' || _self.id.id == undefined) {
                     this.$Message.warning('请选择要查看的项目')
                 } else {
-                  Bus.$emit('zongjie', _self.id)  
+                    Bus.$emit('zongjie', _self.id)
                 }
             },
 
@@ -498,7 +498,7 @@
                 if (_self.id.id == '' || _self.id.id == undefined) {
                     this.$Message.warning('请选择要查看的项目')
                 } else {
-                  Bus.$emit('fuwux',  _self.id.company_id)
+                    Bus.$emit('fuwux',  _self.id.company_id)
                 }
             },
 
@@ -563,3 +563,6 @@
     }
 </script>
 
+<style>
+
+</style>

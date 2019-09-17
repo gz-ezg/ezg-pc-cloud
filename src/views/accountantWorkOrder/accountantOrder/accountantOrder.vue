@@ -13,6 +13,9 @@
             <TabPane label="欠费" name="name3">
                 <arrears></arrears>
             </TabPane>
+            <TabPane label="全部" name="name5">
+                <all2></all2>
+            </TabPane>
         </Tabs>
         <change-the-length></change-the-length>
         <product-changes></product-changes>
@@ -36,6 +39,7 @@
     import ChangeTheLength from './accountantOrderIndex/changeTheLength.vue'
     import Notbegin from './accountantOrderIndex/notbegin'
     import Arrears from './accountantOrderIndex/arrears'
+    import All2 from './accountantOrderIndex/all'
     import Stop from './accountantOrderIndex/stop'
     import InTheService from './accountantOrderIndex/inTheService'
     import ProductChanges from './accountantOrderIndex/productChanges'
@@ -52,10 +56,13 @@
     // import companyDetail from '../BookkeepingAgency/BookkeepingAgencyIndex/CompanyDetail'
     import ServiceItem from './accountantOrderIndex/serviceItems'
     import detail from '../detail.vue'
+    import All from "../../accounterManager/proxyAccounterManger/all/all";
 
     export default {
         name:'accountantOrder_index',
         components:{
+            All,
+            All2,
             detail,
             ServiceItem,
             // companyDetail,

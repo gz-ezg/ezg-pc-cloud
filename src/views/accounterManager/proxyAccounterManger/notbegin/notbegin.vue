@@ -1287,6 +1287,7 @@
                         _self.comLoading = true;
                         let url = `http://yjgcs.zgcfo.com/getETaxWebSingleSignOnSucessUrl`;
                         let config = {
+                            taxnumber:_self.current_row.tax_number,
                             nationalnum:_self.current_row.nationalnum,
                             nationalpsw:_self.current_row.nationalpsw,
                             accounttype:_self.current_row.accounttype
