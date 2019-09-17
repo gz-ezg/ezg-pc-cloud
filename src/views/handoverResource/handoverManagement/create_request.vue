@@ -135,6 +135,8 @@ export default {
                                     click: () => {
                                         params.row.num = params.row.max_allow_connect_num
                                         this.fileList.push(params.row)
+                                        this.data.splice(params.index,1)
+                                        this.total  =  this.total - 1
                                     }
                                 }
                         },'新增')
@@ -170,6 +172,8 @@ export default {
                                     click: ()=>{
                                         vm.$emit('on-delete', params)
                                         vm.$emit('input', params.tableData.filter((item, index) => index !== params.row.initRowIndex))
+                                        this.data.push(params.row)
+                                        this.total  =  this.total + 1
                                     }
                                 }
                             })
@@ -338,6 +342,7 @@ export default {
         this.$bus.on("OPEN_CREATE_REQUEST_FILE", (e)=>{
             _self.get_data()
             _self.userList = []
+            _self.fileList = []
             _self.receiverId = ""
             // console.log(e)
             // _self.fileList = e

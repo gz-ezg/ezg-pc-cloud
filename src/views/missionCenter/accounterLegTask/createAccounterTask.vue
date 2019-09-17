@@ -51,9 +51,9 @@
             <Row :gutter="12" v-if="newMission.taskKind==='tkLegAccCyc'">
                 <Col span="12">
                     <FormItem label="外勤类型" prop="cycleType">
-                        <Select v-model="newMission.cycleType" type="text" transfer @on-change="get_type_list">
+                        <Select v-model="newMission.cycleType" type="text" transfer @on-change="get_type_list" style="width: 170px;margin-right: 25px">
                             <Option v-for="(item,index) in cycleTypeList" :key="index" :value="item.typecode">{{item.typename}}</Option>
-                        </Select>
+                        </Select><span v-if="newMission.cycleType=='A'">剩余<span style="color: red;padding: 0 4px 0 4px">{{reminderData.remainderA}}</span>次</span><span v-if="newMission.cycleType=='B'">剩余<span style="color: red;padding: 0 4px 0 4px">{{reminderData.remainderB}}</span>次</span>
                     </FormItem>
                 </Col>
                 <Col span="12">
@@ -212,6 +212,7 @@
                 createLoading: false,
                 openAddMission: false,
                 companyLoading: false,
+                reminderData:{},
                 phraseList:[],
                 companyList: [],
                 productListName:[],
@@ -335,43 +336,78 @@
                     this.$Message.warning('请把上述信息填写完整')
                     return
                 }
-                _self.createLoading = true
                 // let url = `api/task/addLegworkTask`
                 let executorNameArray = []
                 for(let i = 0; i < _self.newMission.executorId.length; i++){
                     executorNameArray.push(_self.allUserList_map.get(_self.newMission.executorId[i].toString()))
                 }
-                // let config = {
-                //     taskKind: "tkLegBus",
-                //     taskName: _self.newMission.taskName,
-                //     companyId: _self.newMission.companyId,
-                //     taskArea:_self.newMission.businessArea,
-                //     taskPlace:_self.newMission.businessPlace,
-                //     executorId: _self.newMission.executorId.join(","),
-                //     businessId:_self.newMission.businessId,
-                //     workFlowStatus:_self.newMission.node,
-                //     executorName: executorNameArray.join(","),
-                //     sPlanDate: FULLDateFormat(_self.newMission.planDate),
-                //
-                // }
-                //
-                //
-                // function success(res){
-                //     _self.createLoading = false
-                //     _self.openAddMission = false
-                //     _self.$bus.emit("UPDATE_BUSINESS_TASK_LIST_DEMO", res.data.data.id)
-                //     _self.cancel_task()
-                // }
-                //
-                // function fail(err){
-                //     _self.createLoading = false
-                //
-                // }
-                //
-                // this.$Post(url, config, success, fail)
                 if (_self.newMission.taskKind==='tkLegAccCyc'){
-                    let url = `api/task/addAccLegworkTask`
-                    let config = {
+                    if (_self.newMission.cycleType=='A'){
+                        if (_self.reminderData.remainderA==0){
+                            _self.$Message.warning("外勤次数不足！")
+                            return
+                        } else {
+                            _self.createLoading = true
+                            let url = `api/task/addAccLegworkTask`
+                            let config = {
+                                taskKind: _self.newMission.taskKind,
+                                taskName: _self.newMission.taskName,
+                                companyId: _self.newMission.companyId,
+                                executorId: _self.newMission.executorId.join(","),
+                                businessId:_self.newMission.businessId,
+                                executorName: executorNameArray.join(","),
+                                sPlanDate: FULLDateFormat(_self.newMission.planDate),
+                                legTypeId: _self.newMission.cycleTypeId,
+                                legType: _self.newMission.cycleType,
+                                legName: _self.newMission.cycleTypeName
+                            }
+                            function success(res){
+                                _self.createLoading = false
+                                _self.openAddMission = false
+                                _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST_DEMO", true)
+                                _self.cancel_task()
+                            }
+                            function fail(err){
+                                _self.createLoading = false
+                            }
+                            this.$Post(url, config, success, fail)
+                        }
+                    }
+                    else  if (_self.newMission.cycleType=='B'){
+                        if (_self.reminderData.remainderB==0){
+                            _self.$Message.warning("外勤次数不足！")
+                            return
+                        } else {
+                            _self.createLoading = true
+                            let url = `api/task/addAccLegworkTask`
+                            let config = {
+                                taskKind: _self.newMission.taskKind,
+                                taskName: _self.newMission.taskName,
+                                companyId: _self.newMission.companyId,
+                                executorId: _self.newMission.executorId.join(","),
+                                businessId:_self.newMission.businessId,
+                                executorName: executorNameArray.join(","),
+                                sPlanDate: FULLDateFormat(_self.newMission.planDate),
+                                legTypeId: _self.newMission.cycleTypeId,
+                                legType: _self.newMission.cycleType,
+                                legName: _self.newMission.cycleTypeName
+                            }
+                            function success(res){
+                                _self.createLoading = false
+                                _self.openAddMission = false
+                                _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST_DEMO", true)
+                                _self.cancel_task()
+                            }
+                            function fail(err){
+                                _self.createLoading = false
+                            }
+                            this.$Post(url, config, success, fail)
+                        }
+                    }
+                    else {
+                        _self.createLoading = true
+                        let url = `api/task/addAccLegworkTask`
+                        let config = {
                             taskKind: _self.newMission.taskKind,
                             taskName: _self.newMission.taskName,
                             companyId: _self.newMission.companyId,
@@ -383,18 +419,21 @@
                             legType: _self.newMission.cycleType,
                             legName: _self.newMission.cycleTypeName
                         }
-                    function success(res){
+                        function success(res){
                             _self.createLoading = false
                             _self.openAddMission = false
                             _self.$bus.emit("UPDATE_ACCOUNT_TASK_LIST_DEMO", true)
                             _self.cancel_task()
                         }
-                    function fail(err){
+                        function fail(err){
                             _self.createLoading = false
                         }
-                    this.$Post(url, config, success, fail)
+                        this.$Post(url, config, success, fail)
+                    }
+
                 }
                 if (_self.newMission.taskKind==='tkLegAcc') {
+                    _self.createLoading = true
                     let url = `api/task/addLegworkTask`
                     let config = {
                         taskKind: _self.newMission.taskKind,
@@ -419,6 +458,7 @@
                     this.$Post(url, config, success, fail)
                 }
                 if (_self.newMission.taskKind==='tkLegAccHom'){
+                    _self.createLoading = true
                     let url = `api/task/addAccLegworkTask`
                     let config = {
                         taskKind: _self.newMission.taskKind,
@@ -441,6 +481,7 @@
                     this.$Post(url, config, success, fail)
                 }
                 if (_self.newMission.taskKind==='tkLegAccNon'){
+                    _self.createLoading = true
                     let url = `api/task/addAccLegworkTask`
                     let config = {
                         taskKind: _self.newMission.taskKind,
@@ -473,6 +514,7 @@
                 this.newMission.cycleType = "A";
                 this.newMission.businessArea = "tianhe";
                 this.newMission.businessPlace = "shuiju";
+
             },
             get_company_name(){
                 let _self = this
@@ -588,6 +630,7 @@
                     _self.get_company_name()
                     _self.get_product_name()
                     _self.get_task_name()
+                    _self.get_num(id)
                     // let obj = {}
                     // let arr = _self.productList
                     //
@@ -599,6 +642,22 @@
                     // }
                     // _self.newMission.taskKind = obj[_self.newMission.businessId]
                     // console.log(_self.newMission.taskKind)
+                }
+
+                this.$Get(url, config, success)
+            },
+            get_num(id){
+                let _self = this
+                let url = `api/user/legwork/companyLegworkCountByCompanyId`
+
+                let config = {
+                    params:{
+                        companyId:id,
+                    }
+                }
+                function success(res){
+                    _self.reminderData = res.data.data
+                    console.log(_self.reminderData)
                 }
 
                 this.$Get(url, config, success)

@@ -70,6 +70,7 @@
         <Row>
             <ButtonGroup>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="turn_offincal" :loading="comLoading">跳转税务局</Button>
             </ButtonGroup>
         </Row>
         <Row style="margin-top: 10px;">
@@ -107,6 +108,7 @@
             return{
                 search_model: '',
                 loading: false,
+                comLoading:false,
                 pageTotal: 0,
                 page: 1,
                 pageSize: 10,
@@ -884,6 +886,35 @@
                 let _self = this;
                 _self.pageSize = a;
                 _self.get_data()
+            },
+            turn_offincal(){
+                let _self = this;
+                if (!_self.current_row){
+                    _self.$Message.warning("请选择一行进行操作！")
+                } else{
+                    if (!_self.current_row.nationalnum || !_self.current_row.nationalpsw ){
+                        _self.$Message.warning("要跳转税务局前需要填写实名账号及密码")
+                    } else{
+                        _self.comLoading = true;
+                        let url = `http://yjgcs.zgcfo.com/getETaxWebSingleSignOnSucessUrl`;
+                        let config = {
+                            nationalnum:_self.current_row.nationalnum,
+                            nationalpsw:_self.current_row.nationalpsw,
+                            accounttype:_self.current_row.accounttype
+
+                        }
+                        function success(res){
+                            let a = res.data
+                            window.open(a)
+                            _self.comLoading = false
+                        }
+
+                        function fail(err){
+
+                        }
+                        this.$post(url, config, success, fail)
+                    }
+                }
             },
             row_class_name(row, index) {
                 if (row.gdsreport == 'wbd') {

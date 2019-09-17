@@ -73,6 +73,7 @@
                 <Button type="primary" icon="ios-color-wand-outline" @click="add_important_reminder">新增重要提醒</Button>
                 <Button type="primary" icon="information-circled" @click="add_account_note">新增做账备注</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="add_unfinished_things">新增未完事项</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="turn_offincal" :loading="comLoading">跳转税务局</Button>
             </ButtonGroup>
         </Row>
         <Row style="margin-top: 10px;">
@@ -111,6 +112,7 @@
             return{
                 search_model: '',
                 loading: false,
+                comLoading:false,
                 pageTotal: 0,
                 page: 1,
                 pageSize: 10,
@@ -1273,6 +1275,35 @@
             },
             invoice(e){
                 this.$bus.emit("OPEN_INVOICE_PAGE",e)
+            },
+            turn_offincal(){
+                let _self = this;
+                if (!_self.current_row){
+                    _self.$Message.warning("请选择一行进行操作！")
+                } else{
+                    if (!_self.current_row.nationalnum || !_self.current_row.nationalpsw ){
+                        _self.$Message.warning("要跳转税务局前需要填写实名账号及密码")
+                    } else{
+                        _self.comLoading = true;
+                        let url = `http://yjgcs.zgcfo.com/getETaxWebSingleSignOnSucessUrl`;
+                        let config = {
+                            nationalnum:_self.current_row.nationalnum,
+                            nationalpsw:_self.current_row.nationalpsw,
+                            accounttype:_self.current_row.accounttype
+
+                        }
+                        function success(res){
+                            let a = res.data
+                            window.open(a)
+                            _self.comLoading = false
+                        }
+
+                        function fail(err){
+
+                        }
+                        this.$post(url, config, success, fail)
+                    }
+                }
             },
             data_management(e){
                 this.$bus.emit("OPEN_DATA_MANAGEMENT",e)

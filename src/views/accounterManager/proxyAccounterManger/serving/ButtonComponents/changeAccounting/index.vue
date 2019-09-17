@@ -54,13 +54,20 @@
                 <Row :gutter="16">
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="10">
-                        <FormItem prop="monthServerChangeFlag" label="本月是否服务">
-
+                        <FormItem prop="monthServerChangeFlag">
+                            <div slot="label"><span style="color: red">原会计</span>本月是否服务</div>
                             <RadioGroup  v-model='monthServerChangeFlag' v-on >
                                 <Radio label="Y">是</Radio>
                                 <Radio label="N">否</Radio>
                             </RadioGroup>
-
+                        </FormItem>
+                    </Col>
+                    <Col span="10">
+                        <FormItem prop="remark" label="是否同步变更资料">
+                            <RadioGroup  v-model='isChange' v-on >
+                                <Radio label="Y">是</Radio>
+                                <Radio label="N">否</Radio>
+                            </RadioGroup>
                         </FormItem>
                     </Col>
                 </Row>
@@ -86,7 +93,8 @@
                 accMag: [],
                 jzAcc: [],
                 remark:"",
-                monthServerChangeFlag:'N'
+                monthServerChangeFlag:'N',
+                isChange:'Y'
             }
         },
         methods: {
@@ -123,7 +131,8 @@
                         userId:_self.jzAccid,
                         managerId:_self.accMagid,
                         remark: _self.remark,
-                        monthServerChangeFlag:_self.monthServerChangeFlag
+                        monthServerChangeFlag:_self.monthServerChangeFlag,
+                        isChange:_self.isChange
                     }
 
                     if (_self.jzAccid != '' && _self.jzAccid != 0) {

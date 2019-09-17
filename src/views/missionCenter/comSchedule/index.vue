@@ -50,6 +50,7 @@
                             @day-right-click="dayRightClick"
                             @event-mouseover="mouse_over"
                             @event-mouseout="mouse_out"
+                            @view-render="viewRender"
                     >
                     </full-calendar>
                 </Col>
@@ -156,6 +157,8 @@
                 load:false,
                 idTmr:"",
                 flag:"month",
+                bDate:"",
+                eDate:"",
                 YMD:"",
                 YM:"",
                 WEEK:[],
@@ -264,6 +267,11 @@
 
         },
         methods:{
+            viewRender(view,element){
+                this.bDate = DateFormat(view.start._i)
+                this.eDate = DateFormat(view.end._i)
+                this.get_data()
+            },
             downLoad(tableid,name){
                 this.getDate()
                 this.down_data(tableid,name)
@@ -507,7 +515,9 @@
                         task_stage:_self.taskStage,
                         executor_id:_self.executor_id,
                         mission:_self.mission,
-                        task_area:_self.newMission.businessArea
+                        task_area:_self.newMission.businessArea,
+                        bweek_date:_self.bDate,
+                        eweek_date:_self.eDate
                     }
                 }
 
@@ -743,7 +753,6 @@
         created() {
             let _self = this
             _self.get_data_center()
-            _self.get_data()
             _self.get_executor_list()
             _self.get_onedate_data((new Date()).toLocaleDateString().replace(new RegExp("/",'g'),"-"))
             this.local_date = (new Date()).toLocaleDateString().replace(new RegExp("/",'g'),"-")
