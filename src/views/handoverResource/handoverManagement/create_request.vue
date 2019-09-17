@@ -320,8 +320,35 @@ export default {
             }
 
             function success(res){
-                _self.total = res.data.data.total
-                _self.data = res.data.data.rows
+                let a =  res.data.data.rows
+                let b = res.data.data.total
+                if (a.length==0){
+                    _self.data = []
+                } else {
+                    _self.total = 0
+                    _self.data = a.reduce((newArr,v,index)=>{
+                        if (_self.fileList.length==0){
+                            newArr = a
+                            _self.total = b
+                            return newArr
+                        } else {
+                            console.log(newArr)
+                            let arr = []
+                            for (let i=0;i<_self.fileList.length;i++){
+                                arr.push(_self.fileList[i].id)
+                            }
+                            if (arr.includes(v.id) ){
+                                return newArr
+                            }else {
+                                newArr.push(v)
+                                _self.total = _self.total+1
+                                return newArr
+                            }
+                        }
+                    },[])
+                }
+                console.log(_self.data)
+                console.log(_self.fileList)
                 _self.loading = false
             }
 
