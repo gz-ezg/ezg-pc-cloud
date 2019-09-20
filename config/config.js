@@ -79,5 +79,18 @@ module.exports = {
         },
         port: 8088,
         message: 'Now Proxy in 127.0.0.1(local); You application is running here http://localhost:8088'
+    },
+    "dev-w3":{
+        proxyTable: {
+            '/api': {
+                target: 'http://litooth.w3.luyouxia.net',
+                pathRewrite: {
+                  '^/api': ''
+                },
+                changeOrigin: true
+            }
+        },
+        port: 10002,
+        message: 'Now Proxy in w3; You application is running here http://localhost:10002'
     }
 }

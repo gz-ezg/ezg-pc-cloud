@@ -81,7 +81,9 @@
                                 show-elevator
                                 :current.sync="page"
                                 @on-change="pageChange"
-                                style="margin-top: 10px"></Page>
+                                style="margin-top: 10px">
+                                <div slot="">共{{total1}}条</div>
+                            </Page>
                         </Row>
                     </Card>
                 </Col>
@@ -106,6 +108,7 @@ export default {
             companyLoading: false,
             companyList: [],
             companyName: "",
+            total1:"",
             header: [
                 {
                     title: "公司名称",
@@ -136,7 +139,7 @@ export default {
                                         params.row.num = params.row.max_allow_connect_num
                                         this.fileList.push(params.row)
                                         this.data.splice(params.index,1)
-                                        this.total  =  this.total - 1
+                                        this.total1  =  this.total1 - 1
                                     }
                                 }
                         },'新增')
@@ -173,7 +176,7 @@ export default {
                                         vm.$emit('on-delete', params)
                                         vm.$emit('input', params.tableData.filter((item, index) => index !== params.row.initRowIndex))
                                         this.data.push(params.row)
-                                        this.total  =  this.total + 1
+                                        this.total1  =  this.total1 + 1
                                     }
                                 }
                             })
@@ -264,7 +267,7 @@ export default {
                     _self.openRequest = false
                     _self.fileList = []
                     //  生成一个二维码，员工扫码进入企业微信的交接工具
-                    _self.$bus.emit("OPEN_INNER_QCODER",true)
+                    _self.$bus.emit("OPEN_INNER_QCODER",res.data.data)
                     _self.$bus.emit("HANDOVER_FILE_UPDATE",true)
                 }
 
@@ -321,15 +324,13 @@ export default {
 
             function success(res){
                 let a =  res.data.data.rows
-                let b = res.data.data.total
+                _self.total = res.data.data.total
                 if (a.length==0){
                     _self.data = []
                 } else {
-                    _self.total = 0
                     _self.data = a.reduce((newArr,v,index)=>{
                         if (_self.fileList.length==0){
                             newArr = a
-                            _self.total = b
                             return newArr
                         } else {
                             console.log(newArr)
@@ -341,14 +342,12 @@ export default {
                                 return newArr
                             }else {
                                 newArr.push(v)
-                                _self.total = _self.total+1
                                 return newArr
                             }
                         }
                     },[])
                 }
-                console.log(_self.data)
-                console.log(_self.fileList)
+                _self.total1 = _self.total - _self.fileList.length
                 _self.loading = false
             }
 

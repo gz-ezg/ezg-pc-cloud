@@ -16,6 +16,7 @@
     "dev:222": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --env=dev-222",
     "dev:225": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --env=dev-225",
     "dev:cloud": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --env=dev-cloud",
+    "dev:w3": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --env=dev-w3",
     "dev:dll": "webpack --progress --config build/webpack.dll.conf.js",
     "analyse": "webpack --config ./build/webpack.prod.conf.js --json > compilation-stats.json",
     "copy:package": "node copyFile.js",

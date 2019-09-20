@@ -350,7 +350,6 @@ export default {
     },
     async create_order() {
       let _self = this;
-
       let order = JSON.parse(JSON.stringify(_self.orderItem));
 
       console.log("order", order);

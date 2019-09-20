@@ -50,14 +50,17 @@ export default {
             this.$Get(url, config, success)
         }
     },
-    mounted() {
+    created() {
         //一个对内，企业微信登录，一个对外，我的服务登录
         let _self = this
+        _self.$bus.off("OPEN_INNER_QCODER",true)
         _self.$bus.on("OPEN_INNER_QCODER", (e)=>{
             _self.qrcode2Open = true
-            let url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7666e5cbbd22b505&redirect_uri=http://cloud.zgcfo.com/api/system/apiWechatQuickOfficeAuthLogin&response_type=code&scope=SCOPE&agentid=1000013&state=STATE#wechat_redirect"
+            // let url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7666e5cbbd22b505&redirect_uri=http://cloud.zgcfo.com/api/system/apiWechatQuickOfficeAuthLogin&response_type=code&scope=SCOPE&agentid=1000013&state=STATE#wechat_redirect"
+           let url = `http://litooth.w3.luyouxia.net/customer/shortUrlCallBack/${e}`
             _self.get_code(url)
         })
+        _self.$bus.off("OPEN_OUTER_QCODER",true)
         _self.$bus.on("OPEN_OUTER_QCODER", (e)=>{
             _self.qrcode2Open = true
             _self.get_url(e)

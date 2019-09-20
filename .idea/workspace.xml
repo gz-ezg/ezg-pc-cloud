@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0" />
+    <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/InvoiceManagement/add.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/InvoiceManagement/add.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/op/code.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/op/code.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/QCode.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/QCode.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_out.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_out.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_request.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_request.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/order/orderList/components/orderOp/createOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/order/orderList/components/orderOp/createOrder.vue" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -19,55 +29,60 @@
     <favorites_list name="pubg" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/missionCenter/comSchedule/index.vue">
+        <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_request.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="159" column="25" lean-forward="true" selection-start-line="159" selection-start-column="25" selection-end-line="159" selection-end-column="25" />
+            <state relative-caret-position="1950">
+              <caret line="78" column="46" selection-start-line="78" selection-start-column="46" selection-end-line="78" selection-end-column="46" />
               <folding>
-                <element signature="n#style#0;n#table#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#7100#7155#0" expanded="true" />
+                <element signature="n#style#0;n#Row#1;n#Card#0;n#Col#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node_modules/vue-full-calendar/index.js">
+        <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_out.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="34" selection-start-column="34" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package_cover/fullcalendar/_dist/fullcalendar.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-58676">
-              <caret line="3" column="21" lean-forward="true" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
-              <folding>
-                <element signature="e#58#64#1" expanded="true" />
-                <element signature="e#58#64#1" expanded="true" />
-                <element signature="n#style#0;n#hr#0;n#!!top" expanded="true" />
-                <element signature="e#4#10#1" expanded="true" />
-                <element signature="e#22#28#0" expanded="true" />
-                <element signature="e#28#34#0" expanded="true" />
-                <element signature="e#34#40#0" expanded="true" />
-                <element signature="e#40#46#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="2025">
+              <caret line="81" column="32" selection-start-line="81" selection-start-column="32" selection-end-line="81" selection-end-column="63" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/node_modules/vue-full-calendar/components/FullCalendar.vue">
+        <entry file="file://$PROJECT_DIR$/src/router/router.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2150">
-              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+            <state relative-caret-position="96">
+              <caret line="778" column="20" selection-start-line="778" selection-start-column="16" selection-end-line="778" selection-end-column="20" />
               <folding>
-                <element signature="e#171#217#0" expanded="true" />
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/QCode.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="110">
+              <caret line="57" column="36" selection-start-line="57" selection-start-column="36" selection-end-line="57" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="275">
+              <caret line="186" column="100" selection-start-line="186" selection-start-column="100" selection-end-line="186" selection-end-column="100" />
+              <folding>
+                <element signature="n#Row#0;n#Card#0;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#Button#1;n#ButtonGroup#0;n#Row#1;n#Card#0;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#Button#2;n#ButtonGroup#0;n#Row#1;n#Card#0;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#Button#3;n#ButtonGroup#0;n#Row#1;n#Card#0;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#Button#4;n#ButtonGroup#0;n#Row#1;n#Card#0;n#div#0;n#template#0;n#!!top" />
               </folding>
             </state>
           </provider>
@@ -85,10 +100,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>v-per</find>
-      <find>到期</find>
-      <find>_ids</find>
-      <find>企划管理</find>
       <find>账户管理</find>
       <find>营销</find>
       <find>余款</find>
@@ -115,6 +126,10 @@
       <find>会计到家</find>
       <find>营销管理</find>
       <find>交接</find>
+      <find>OPEN_OUTER_QCODER</find>
+      <find>$Mo</find>
+      <find>发票</find>
+      <find>异常审批</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -124,11 +139,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/views/systemManagement/departManagement/index.vue" />
-        <option value="$PROJECT_DIR$/src/views/systemManagement/roleManagement/roleM_index.vue" />
-        <option value="$PROJECT_DIR$/src/views/systemManagement/serveManagement/index.vue" />
-        <option value="$PROJECT_DIR$/src/views/systemManagement/sql_admin/main.vue" />
-        <option value="$PROJECT_DIR$/src/views/systemManagement/smsRuleManagement/index.vue" />
         <option value="$PROJECT_DIR$/src/views/systemManagement/timetaskManagement/timetaskManagement_index.vue" />
         <option value="$PROJECT_DIR$/src/views/systemManagement/userManagement/userM_index.vue" />
         <option value="$PROJECT_DIR$/src/views/systemManagement/wechatTemplate/index.vue" />
@@ -145,14 +155,12 @@
         <option value="$PROJECT_DIR$/src/views/customerService/offlineCustomerApproval/processed.vue" />
         <option value="$PROJECT_DIR$/src/views/customerService/offlineCustomerApproval/common/detail.vue" />
         <option value="$PROJECT_DIR$/src/views/order/orderList/components/productSelect.vue" />
-        <option value="$PROJECT_DIR$/src/views/order/orderList/components/orderOp/createOrder.vue" />
         <option value="$PROJECT_DIR$/src/views/order/orderList/components/orderOp/productDetailList.vue" />
         <option value="$PROJECT_DIR$/src/views/publicPool/gamesetting/index.vue" />
         <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/all.vue" />
         <option value="$PROJECT_DIR$/src/views/customerManagement/customerAccount/index.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/undoRemindList/index.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/accountRemindList/index.vue" />
-        <option value="$PROJECT_DIR$/config/config.js" />
         <option value="$PROJECT_DIR$/src/utils/prototype.js" />
         <option value="$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/index.vue" />
         <option value="$PROJECT_DIR$/src/views/publicPool/gamesetting/common/detail.vue" />
@@ -173,8 +181,15 @@
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue" />
         <option value="$PROJECT_DIR$/src/router/router.js" />
+        <option value="$PROJECT_DIR$/package_cover/vue-full-calendar/components/FullCalendar.vue" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/config/config.js" />
+        <option value="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/QCode.vue" />
+        <option value="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/op/code.vue" />
         <option value="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_out.vue" />
         <option value="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_request.vue" />
+        <option value="$PROJECT_DIR$/src/views/order/orderList/components/orderOp/createOrder.vue" />
+        <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/InvoiceManagement/add.vue" />
       </list>
     </option>
   </component>
@@ -205,24 +220,6 @@
             <path>
               <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
-              <item name="package_cover" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
-              <item name="package_cover" type="462c0819:PsiDirectoryNode" />
-              <item name="fullcalendar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
-              <item name="package_cover" type="462c0819:PsiDirectoryNode" />
-              <item name="fullcalendar" type="462c0819:PsiDirectoryNode" />
-              <item name="_dist" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -236,7 +233,24 @@
               <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="missionCenter" type="462c0819:PsiDirectoryNode" />
+              <item name="order" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="order" type="462c0819:PsiDirectoryNode" />
+              <item name="abOrderApprove" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="order" type="462c0819:PsiDirectoryNode" />
+              <item name="abOrderApprove" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -288,18 +302,18 @@
     <property name="ts.external.directory.path" value="E:\webstorm\WebStorm 2018.3.5\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\ezg\ezg-pc-cloud\src\views\publicPool\gamesetting\common" />
+      <recent name="C:\VueProject\pubg" />
+      <recent name="C:\VueProject\pubg\src\views\customerManagement\marketingManagement" />
+      <recent name="C:\VueProject\pubg\src\components" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\ezg\ezg-pc-cloud\src\views\order\spareManagement" />
       <recent name="D:\ezg\ezg-pc-cloud\src\views\woa-components\companyDetail" />
       <recent name="D:\ezg\ezg-pc-cloud\src\views\accounterManager\proxyAccounterManger\serving\DataManagement" />
       <recent name="D:\ezg\ezg-pc-cloud\src\views\accounterManager\proxyAccounterManger\serving\ButtonComponents\unfinishedThings" />
       <recent name="D:\ezg\ezg-pc-cloud\src\views\accounterManager\proxyAccounterManger\serving\ButtonComponents\accountNote" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\ezg\ezg-pc-cloud\src\views\publicPool\gamesetting\common" />
-      <recent name="C:\VueProject\pubg" />
-      <recent name="C:\VueProject\pubg\src\views\customerManagement\marketingManagement" />
-      <recent name="C:\VueProject\pubg\src\components" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -473,7 +487,10 @@
       <workItem from="1568164268212" duration="10908000" />
       <workItem from="1568251880035" duration="3606000" />
       <workItem from="1568596572345" duration="13306000" />
-      <workItem from="1568683006987" duration="26527000" />
+      <workItem from="1568683006987" duration="27927000" />
+      <workItem from="1568769847559" duration="13108000" />
+      <workItem from="1568854712543" duration="20309000" />
+      <workItem from="1568940993811" duration="602000" />
     </task>
     <task id="LOCAL-00022" summary="修改启动失败的问题">
       <created>1555989851178</created>
@@ -822,7 +839,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2085590000" />
+    <option name="totallyTimeSpent" value="2121009000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -837,7 +854,7 @@
     <frame x="-8" y="-8" width="1376" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6918033" visible="true" weight="0.22672673" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6918033" visible="true" weight="0.22672673" />
       <window_info id="Structure" order="1" weight="0.24924925" />
       <window_info id="Favorites" order="2" sideWeight="0.30819672" side_tool="true" weight="0.26276276" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.1399046" />
@@ -856,7 +873,7 @@
       <window_info anchor="bottom" id="消息" order="13" />
       <window_info anchor="bottom" id="调试" order="14" />
       <window_info anchor="bottom" id="TypeScript" order="15" weight="0.3290938" />
-      <window_info anchor="bottom" id="Terminal" order="16" sideWeight="0.49924925" visible="true" weight="0.3799682" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="16" sideWeight="0.49924925" visible="true" weight="0.3799682" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -958,308 +975,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="0.0" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="168" column="35" selection-start-line="168" selection-start-column="35" selection-end-line="168" selection-end-column="35" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#div#1;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#2;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#1;n#div#0;n#div#2;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/publicPool/gamesetting/common/detail.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="116" column="14" selection-start-line="116" selection-start-column="14" selection-end-line="116" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/publicPool/gamesetting/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="97" column="38" selection-start-line="97" selection-start-column="38" selection-end-line="97" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="1215" column="4" selection-start-line="1215" selection-start-column="4" selection-end-line="1215" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/administrationManagement/addManager/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="790">
-          <caret line="953" column="32" lean-forward="true" selection-start-line="953" selection-start-column="32" selection-end-line="953" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/createAccounterTask.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-250">
-          <caret line="131" lean-forward="true" selection-start-line="131" selection-end-line="131" />
-          <folding>
-            <element signature="n#style#0;n#Select#0;n#FormItem#0;n#Col#0;n#Row#1;n#Form#0;n#div#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#span#0;n#FormItem#0;n#Col#0;n#Row#1;n#Form#0;n#div#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#span#1;n#FormItem#0;n#Col#0;n#Row#1;n#Form#0;n#div#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#8843#9571#0" />
-            <element signature="e#13826#20847#0" />
-            <element signature="e#15272#15998#0" />
-            <element signature="e#16040#16311#0" />
-            <element signature="e#16350#16433#0" />
-            <element signature="e#16970#17740#0" />
-            <element signature="e#17790#18081#0" />
-            <element signature="e#18128#18219#0" />
-            <element signature="e#18541#19311#0" />
-            <element signature="e#19361#19652#0" />
-            <element signature="e#19699#19790#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="81" column="30" selection-start-line="81" selection-start-column="30" selection-end-line="81" selection-end-column="30" />
-          <folding>
-            <element signature="n#div#1;n#div#0;n#template#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/ButtonComponents/changeLog/index.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/servicing.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="875">
-          <caret line="153" column="2" selection-start-line="153" selection-start-column="2" selection-end-line="153" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgency.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/DistributionOfAccounting.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="134" column="47" selection-start-line="134" selection-start-column="47" selection-end-line="134" selection-end-column="47" />
-          <folding>
-            <element signature="n#style#0;n#Col#0;n#Row#3;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#Col#1;n#Row#3;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#span#0;n#div#0;n#FormItem#0;n#Col#1;n#Row#3;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#Col#2;n#Row#3;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/ButtonComponents/changeAccounting/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="132" column="45" lean-forward="true" selection-start-line="132" selection-start-column="45" selection-end-line="132" selection-end-column="45" />
-          <folding>
-            <element signature="n#style#0;n#Col#0;n#Row#3;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#Col#1;n#Row#3;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#span#0;n#div#0;n#FormItem#0;n#Col#1;n#Row#3;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/iview/dist/iview.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils/request.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-250">
-          <caret line="11" column="33" lean-forward="true" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/arrearageCenter/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="27" column="37" lean-forward="true" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
-          <folding>
-            <element signature="n#style#0;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/layouts/Main.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4810">
-          <caret line="609" column="12" lean-forward="true" selection-start-line="609" selection-start-column="12" selection-end-line="609" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/bus.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/inTheService.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="520" column="67" selection-start-line="520" selection-start-column="67" selection-end-line="520" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/notbegin.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="504" column="67" selection-start-line="504" selection-start-column="67" selection-end-line="504" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/stop.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="869">
-          <caret line="120" column="8" selection-start-line="120" selection-start-column="8" selection-end-line="120" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/arrears.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="520" column="67" lean-forward="true" selection-start-line="520" selection-start-column="67" selection-end-line="520" selection-end-column="67" />
-          <folding>
-            <element signature="e#6989#14634#0" />
-            <element signature="e#23402#23440#0" />
-            <element signature="e#23461#23701#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrderIndex/all.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="520" column="28" lean-forward="true" selection-start-line="520" selection-start-column="28" selection-end-line="520" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrder.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
-          <folding>
-            <element signature="e#1201#1273#0" expanded="true" />
-            <element signature="e#2619#2680#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="899" column="38" lean-forward="true" selection-start-line="899" selection-start-column="38" selection-end-line="899" selection-end-column="38" />
-          <folding>
-            <element signature="n#Row#0;n#Card#0;n#template#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="1289" column="67" selection-start-line="1289" selection-start-column="67" selection-end-line="1289" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="1253" column="67" selection-start-line="1253" selection-start-column="67" selection-end-line="1253" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/webpack.prod.conf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-150" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/webpack.dll.conf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-50">
-          <caret line="7" column="21" lean-forward="true" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/webpack.dev.conf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-550">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/webpack.base.conf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-250">
-          <caret line="5" column="39" lean-forward="true" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/jenkins-shell.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/config.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/check-versions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-550">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/build.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/op/code.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="700">
-          <caret line="70" column="5" lean-forward="true" selection-start-line="70" selection-start-column="5" selection-end-line="70" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="185" column="11" lean-forward="true" selection-start-line="185" selection-start-column="11" selection-end-line="185" selection-end-column="11" />
-          <folding>
-            <element signature="n#Row#0;n#Card#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#Button#1;n#ButtonGroup#0;n#Row#1;n#Card#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#Button#2;n#ButtonGroup#0;n#Row#1;n#Card#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#Button#3;n#ButtonGroup#0;n#Row#1;n#Card#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#Button#4;n#ButtonGroup#0;n#Row#1;n#Card#0;n#div#0;n#template#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/serving.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="1435" column="21" lean-forward="true" selection-start-line="1435" selection-start-column="21" selection-end-line="1435" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/hand_overdetail.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_file_old.vue">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1276,71 +991,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/index1.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-750" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_out.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="31">
-          <caret line="325" column="12" selection-start-line="325" selection-start-column="12" selection-end-line="356" selection-end-column="13" />
-          <folding>
-            <element signature="e#11566#11899#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_request.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="321" column="33" lean-forward="true" selection-start-line="321" selection-start-column="33" selection-end-line="321" selection-end-column="33" />
-          <folding>
-            <element signature="n#style#0;n#Row#1;n#Card#0;n#Col#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/router/router.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-29">
-          <caret line="1217" column="15" lean-forward="true" selection-start-line="1217" selection-start-column="15" selection-end-line="1217" selection-end-column="15" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/missionCenter/comSchedule/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="159" column="25" lean-forward="true" selection-start-line="159" selection-start-column="25" selection-end-line="159" selection-end-column="25" />
-          <folding>
-            <element signature="n#style#0;n#table#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#7100#7155#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/vue-full-calendar/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="34" selection-start-column="34" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package_cover/fullcalendar/_dist/fullcalendar.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-58676">
-          <caret line="3" column="21" lean-forward="true" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
+        <state relative-caret-position="1299">
+          <caret line="2354" column="24" lean-forward="true" selection-start-line="2354" selection-start-column="24" selection-end-line="2354" selection-end-column="24" />
           <folding>
+            <element signature="n#!!doc" expanded="true" />
             <element signature="e#58#64#1" expanded="true" />
             <element signature="e#58#64#1" expanded="true" />
             <element signature="n#style#0;n#hr#0;n#!!top" expanded="true" />
@@ -1353,12 +1014,323 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/package_cover/vue-full-calendar/components/FullCalendar.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4350">
+          <caret line="176" column="14" selection-start-line="176" selection-start-column="14" selection-end-line="176" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/vue-full-calendar/components/FullCalendar.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2150">
-          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        <state relative-caret-position="75">
+          <caret line="72" column="19" selection-start-line="72" selection-start-column="19" selection-end-line="72" selection-end-column="19" />
           <folding>
             <element signature="e#171#217#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/vue-full-calendar/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="34" selection-start-column="34" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/config.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.backup/build.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-336">
+          <caret line="6" column="30" lean-forward="true" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.backup/webpack.dev-cloud.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-911">
+          <caret line="8" column="11" lean-forward="true" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.backup/webpack.dev-local.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-575">
+          <caret line="7" column="22" lean-forward="true" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.backup/webpack.base.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3375">
+          <caret line="9" column="49" selection-start-line="9" selection-start-column="49" selection-end-line="9" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.backup/webpack.jenkins.conf.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.backup/check-versions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-968">
+          <caret line="8" column="1" lean-forward="true" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.backup/jenkins.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="4" column="35" lean-forward="true" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/check-versions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/webpack-bundle-analyzer/lib/BundleAnalyzerPlugin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="140" lean-forward="true" selection-start-line="140" selection-end-line="140" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/webpack-bundle-analyzer/lib/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="8" column="49" lean-forward="true" selection-start-line="8" selection-start-column="49" selection-end-line="8" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/webpack.prod.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2575">
+          <caret line="103" column="76" lean-forward="true" selection-start-line="103" selection-start-column="76" selection-end-line="103" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/build.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="22" column="50" lean-forward="true" selection-start-line="22" selection-start-column="50" selection-end-line="22" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/op/code.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="42" column="35" lean-forward="true" selection-start-line="42" selection-start-column="35" selection-end-line="42" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/prototype.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="102" column="9" selection-start-line="102" selection-start-column="9" selection-end-line="102" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/commonVue.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1425">
+          <caret line="57" column="27" lean-forward="true" selection-start-line="57" selection-start-column="27" selection-end-line="57" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/missionCenter/comSchedule/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="154" column="15" selection-start-line="154" selection-start-column="15" selection-end-line="154" selection-end-column="15" />
+          <folding>
+            <element signature="n#style#0;n#table#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#7100#7155#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accountantWorkOrder/accountantOrder/accountantOrder.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/accountRemindList/index.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/ButtonComponents/changeAccounting/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1275" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/iview/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-625">
+          <caret line="99" column="4" selection-start-line="99" selection-start-column="4" selection-end-line="99" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/iview/dist/iview.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-502223">
+          <caret line="18042" column="25" lean-forward="true" selection-start-line="18042" selection-start-column="25" selection-end-line="18042" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/webpack.dev.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="39" column="27" lean-forward="true" selection-start-line="39" selection-start-column="27" selection-end-line="39" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="6" column="40" lean-forward="true" selection-start-line="6" selection-start-column="40" selection-end-line="6" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="1" column="17" lean-forward="true" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/order/orderList/components/productSelect.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-125">
+          <caret line="430" column="13" lean-forward="true" selection-start-line="430" selection-start-column="13" selection-end-line="430" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/order/orderList/orderListIndex.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="831" column="8" selection-start-line="831" selection-start-column="8" selection-end-line="831" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/order/orderList/components/orderOp/createOrder.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="349" column="6" lean-forward="true" selection-start-line="349" selection-start-column="6" selection-end-line="349" selection-end-column="6" />
+          <folding>
+            <element signature="e#12357#12577#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/serving.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-40">
+          <caret line="1559" column="12" selection-start-line="1559" selection-start-column="12" selection-end-line="1559" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2225">
+          <caret line="90" column="16" selection-start-line="90" selection-start-column="16" selection-end-line="90" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/InvoiceManagement/add.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="108" column="57" selection-start-line="108" selection-start-column="57" selection-end-line="108" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/InvoiceManagement/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1050">
+          <caret line="57" column="22" lean-forward="true" selection-start-line="57" selection-start-column="22" selection-end-line="57" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/order/abOrderApprove/common/abOrderDetail.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-900" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/order/abOrderApprove/common/dealAbApprove.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_request.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1950">
+          <caret line="78" column="46" selection-start-line="78" selection-start-column="46" selection-end-line="78" selection-end-column="46" />
+          <folding>
+            <element signature="n#style#0;n#Row#1;n#Card#0;n#Col#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_out.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2025">
+          <caret line="81" column="32" selection-start-line="81" selection-start-column="32" selection-end-line="81" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="186" column="100" selection-start-line="186" selection-start-column="100" selection-end-line="186" selection-end-column="100" />
+          <folding>
+            <element signature="n#Row#0;n#Card#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#Button#1;n#ButtonGroup#0;n#Row#1;n#Card#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#Button#2;n#ButtonGroup#0;n#Row#1;n#Card#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#Button#3;n#ButtonGroup#0;n#Row#1;n#Card#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#Button#4;n#ButtonGroup#0;n#Row#1;n#Card#0;n#div#0;n#template#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/QCode.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="57" column="36" selection-start-line="57" selection-start-column="36" selection-end-line="57" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/order/abOrderApprove/common/aduitLog.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1400">
+          <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/order/abOrderApprove/approveAbList.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="252" column="25" selection-start-line="252" selection-start-column="25" selection-end-line="252" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="778" column="20" selection-start-line="778" selection-start-column="16" selection-end-line="778" selection-end-column="20" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>

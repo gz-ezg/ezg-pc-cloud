@@ -27,7 +27,7 @@
                 <Row :gutter="12">
                     <Col span="24">
                         <FormItem label="发票位数">
-                            <Select v-model="invoiceDigits" type="text" transfer>
+                            <Select v-model="invoiceDigits" type="text" transfer @on-change="showNum">
                                 <Option v-for="(item,index) in digits" :key="index" :value="item.typecode">{{item.typename}}</Option>
                             </Select>
                         </FormItem>
@@ -36,14 +36,21 @@
                 <Row :gutter="12" v-if="flag==false">
                     <Col span="24">
                         <FormItem label="本次收到发票量">
-                            <Input v-model="amount"></Input>
+                            <Input v-model="amount" @on-change="showNum"></Input>
                         </FormItem>
                     </Col>
                 </Row>
                 <Row :gutter="12" v-if="flag==true">
                     <Col span="24">
                         <FormItem label="本次开具发票">
-                            <Input v-model="amount"></Input>
+                            <Input v-model="amount" @on-change="showNum"></Input>
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="12">
+                    <Col span="24">
+                        <FormItem label="最大可开金额">
+                            <Input v-model="maxMoney" readonly></Input>
                         </FormItem>
                     </Col>
                 </Row>
@@ -82,6 +89,7 @@
                 companyId:"",
                 isSend:'Y',
                 amount:"",
+                maxMoney:0,
                 invoiceDigits:"thousand",
                 invoiceType: "OrdinaryInvoice"
             }
@@ -91,6 +99,24 @@
                 this.amount = ""
                 this.invoiceDigits = "thousand"
                 this.invoiceType = "OrdinaryInvoice"
+                this.maxMoney = 0
+            },
+            showNum(){
+                if (this.invoiceDigits=='thousand') {
+                    this.maxMoney = (this.amount*999.99).toFixed(2)
+                }
+                if (this.invoiceDigits=='tenThousand') {
+                    this.maxMoney = (this.amount*9999.99).toFixed(2)
+                }
+                if (this.invoiceDigits=='oneHundredThousand') {
+                    this.maxMoney = (this.amount*99999.99).toFixed(2)
+                }
+                if (this.invoiceDigits=='million') {
+                    this.maxMoney = (this.amount*999999.99).toFixed(2)
+                }
+                if (this.invoiceDigits=='tenMillion') {
+                    this.maxMoney = (this.amount*9999999.99).toFixed(2)
+                }
             },
             cancel_task(){
                 this.openAddMission = false

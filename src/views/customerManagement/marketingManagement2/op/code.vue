@@ -43,7 +43,7 @@ export default {
             function success(res) {
                 console.log(res.data.data);
                 let qr = new QRCode("qrcode", {
-                    text: res.data.data,
+                    text: `http://cloud.yrl.fun/api/customer/shortUrlCallBack/${res.data.data}`,
                     width: 200,
                     height: 200,
                     colorDark: "#000000",
