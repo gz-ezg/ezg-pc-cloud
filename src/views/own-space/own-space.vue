@@ -53,6 +53,16 @@
                             <Input v-model="userForm.email"></Input>
                         </div>
                     </FormItem>
+                    <FormItem label="呼叫中心账号" prop="sevenmoorAccount" >
+                        <div style="display:inline-block;width:200px;">
+                            <Input v-model="userForm.sevenmoorAccount"></Input>
+                        </div>
+                    </FormItem>
+                    <FormItem label="呼叫中心手机" prop="sevenmoorMobile" >
+                        <div style="display:inline-block;width:200px;">
+                            <Input v-model="userForm.sevenmoorMobile"></Input>
+                        </div>
+                    </FormItem>
                     <div>
                         <Button type="primary" style="width: 100px;margin-left:60px" :loading="save_loading" @click="saveEdit">保存</Button>
                         <Button type="ghost" style="width: 100px;" @click="cancelEditUserInfor">取消</Button>
@@ -91,6 +101,15 @@ export default {
             }
             
         };
+        const valideNum = (rule, value, callback) => {
+            var re = /^[0-9]*$/;
+            if (!re.test(value)) {
+                callback(new Error('请输入数字！'));
+            } else {
+                callback();
+            }
+
+        };
         return {
             userForm: {
                 realName: "",
@@ -99,6 +118,8 @@ export default {
                 aliasName: "",
                 email: "",
                 userId: localStorage.id,
+                sevenmoorAccount:'',
+                sevenmoorMobile:''
             },
             inforValidate: {
                 realName: [
@@ -109,9 +130,9 @@ export default {
                     { required: true, message: '请输入手机号码！' },
                     { validator: validePhone }
                 ],
-                // officephone: [
-                //     { validator: validePhone }
-                // ],
+                sevenmoorMobile: [
+                    { validator: valideNum }
+                ],
                 // email: [
                 //     { message: '请输入姓名！', trigger: 'change', type: "email"}
                 // ]
@@ -213,12 +234,14 @@ export default {
             let url = `api/user/findUserDetail`
             let config = {}
             function success(res){
-                let { realname, mobilephone, officephone, email, aliasName, portrait} = res.data.data
+                let { realname, mobilephone, officephone, email, aliasName,sevenmoorAccount,sevenmoorMobile,portrait} = res.data.data
                 _self.userForm.realName = realname
                 _self.userForm.mobilephone = mobilephone
                 _self.userForm.officephone = officephone
                 _self.userForm.email = email
                 _self.userForm.aliasName = aliasName
+                _self.userForm.sevenmoorAccount = sevenmoorAccount
+                _self.userForm.sevenmoorMobile = sevenmoorMobile
                 _self.img = "/api/assets/" + portrait
             }
 

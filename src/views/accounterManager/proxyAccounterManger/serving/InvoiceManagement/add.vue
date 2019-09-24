@@ -36,7 +36,7 @@
                 <Row :gutter="12" v-if="flag==false">
                     <Col span="24">
                         <FormItem label="本次收到发票量">
-                            <Input v-model="amount" @on-change="showNum"></Input>
+                            <Input type="number" v-model="amount" @on-change="showNum"></Input>
                         </FormItem>
                     </Col>
                 </Row>
@@ -47,7 +47,7 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="12">
+                <Row :gutter="12" v-if="flag==false">
                     <Col span="24">
                         <FormItem label="最大可开金额">
                             <Input v-model="maxMoney" readonly></Input>

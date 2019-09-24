@@ -10,10 +10,10 @@
             <TabPane label="已完结" name="name3">
                 <finished :companyarea="companyarea"></finished>
             </TabPane>
-            <TabPane label="暂停" name="name5">
+            <TabPane label="暂停" name="name4">
                 <stop :companyarea="companyarea"></stop>
             </TabPane>
-            <TabPane label="全部" name="name4">
+            <TabPane label="全部" name="name6">
                 <all :companyarea="companyarea"></all>
             </TabPane>
         </Tabs>

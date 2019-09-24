@@ -119,12 +119,26 @@ export default {
     },
     // 业务代码
     handleDiff(list) {
+      let d = new Date()
+      let day = d.getDate()
+      console.log(day)
       let temp = list.filter(v => v.diff <= 1);
       if (temp.length == 0) {
         this.isCloseButton = false;
         return list;
       } else {
-        return temp;
+        let temp1 = temp.filter(v => v.diff === 1)
+        console.log(temp1)
+        if (temp1.length==0){
+          return temp;
+        } else {
+          if (day<15){
+            this.isCloseButton = false;
+            return temp;
+          } else {
+            return temp
+          }
+        }
       }
     },
     loadList() {

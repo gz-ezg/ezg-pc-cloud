@@ -45,6 +45,7 @@ module.exports = {
         proxyTable: {
             '/api': {
                 target: 'http://192.168.2.89:9000',
+                // target: 'http://toutou.zgcfo.com:9000',
                 pathRewrite: {
                   '^/api': ''
                 },

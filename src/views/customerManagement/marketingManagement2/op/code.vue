@@ -36,14 +36,14 @@ export default {
             let config = {
                 params: {
                     customerId: e,
-                    redirectUrl: "/servicecenter"
+                    redirectUrl: "/index"
                 }
             };
 
             function success(res) {
                 console.log(res.data.data);
                 let qr = new QRCode("qrcode", {
-                    text: `http://cloud.yrl.fun/api/customer/shortUrlCallBack/${res.data.data}`,
+                    text: `${res.data.data}`,
                     width: 200,
                     height: 200,
                     colorDark: "#000000",

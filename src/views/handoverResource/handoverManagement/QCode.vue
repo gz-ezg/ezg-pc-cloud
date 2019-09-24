@@ -57,7 +57,7 @@ export default {
         _self.$bus.on("OPEN_INNER_QCODER", (e)=>{
             _self.qrcode2Open = true
             // let url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7666e5cbbd22b505&redirect_uri=http://cloud.zgcfo.com/api/system/apiWechatQuickOfficeAuthLogin&response_type=code&scope=SCOPE&agentid=1000013&state=STATE#wechat_redirect"
-           let url = `http://litooth.w3.luyouxia.net/customer/shortUrlCallBack/${e}`
+           let url = `${e}`
             _self.get_code(url)
         })
         _self.$bus.off("OPEN_OUTER_QCODER",true)

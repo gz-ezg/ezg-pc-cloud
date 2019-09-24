@@ -138,8 +138,8 @@ export default {
                                     click: () => {
                                         params.row.num = params.row.max_allow_connect_num
                                         this.fileList.push(params.row)
-                                        this.data.splice(params.index,1)
                                         this.total1  =  this.total1 - 1
+                                        this.get_data()
                                     }
                                 }
                         },'新增')
@@ -175,8 +175,8 @@ export default {
                                     click: ()=>{
                                         vm.$emit('on-delete', params)
                                         vm.$emit('input', params.tableData.filter((item, index) => index !== params.row.initRowIndex))
-                                        this.data.push(params.row)
                                         this.total1  =  this.total1 + 1
+                                        this.get_data()
                                     }
                                 }
                             })

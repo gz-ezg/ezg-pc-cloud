@@ -131,12 +131,9 @@
             },
             go(){
                 let _self = this;
+                let formdata = new FormData()
                 let url = `api/customer/highseasActivity/go`;
-                let config = {
-                        activityId:_self.data.id
-                        // page: _self.page,
-                        // pageSize: _self.pageSize,
-                }
+                formdata.append("activityId", _self.data.id)
 
                 function success(res){
                     if (res.data.msgCode==50000){
@@ -160,7 +157,7 @@
 
                 }
 
-                this.$Post(url, config, success, fail)
+                this.$Post(url, formdata, success, fail)
             },
             sure(){
                 this.showModal = false

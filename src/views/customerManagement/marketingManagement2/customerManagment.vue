@@ -520,8 +520,9 @@ export default {
                   },
                   on: {
                     click: function(event) {
-                      this.phone(params.row.ID, params.row.TEL);
-                      this.getLoginerMessage(params.row.TEL);
+                      this.dialout(params.row.TEL,params.row.ID)
+                      // this.phone(params.row.ID, params.row.TEL);
+                      // this.getLoginerMessage(params.row.TEL);
                       event.stopPropagation();
                     }.bind(this)
                   }
@@ -634,6 +635,29 @@ export default {
     };
   },
   methods: {
+    dialout(T,i){
+      let _self = this;
+      let url = `api/customer/sevenmoor/dialout`;
+      let config = {
+        params:{
+          mobile:T
+        }
+      };
+
+      function success(res) {
+        if (res.data.msgCode=='40000'){
+          _self.$Message.success(res.data.msg)
+          _self.uploadPhoneType(i)
+          _self.getLoginerMessage(T)
+        }
+      }
+
+      function fail(err) {
+        _self.loading = false;
+      }
+
+      this.$Get(url, config, success, fail);
+    },
     phone(e, T) {
       window.location.href = 'yhhl://call/num=' + T + '&custom_key=123456&';
       this.uploadPhoneType(e);

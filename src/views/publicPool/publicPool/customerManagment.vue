@@ -514,8 +514,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.phone(params.row.full_tel,params.row.ID);
-                      this.getLoginerMessage(params.row.full_tel);
+                      this.dialout(params.row.full_tel,params.row.ID)
                     }
                   }
                 },
@@ -818,10 +817,32 @@ export default {
     close_edit() {
       this.openEdit = false;
     },
+    dialout(T,i){
+      let _self = this;
+      let url = `api/customer/sevenmoor/dialout`;
+      let config = {
+        params:{
+          mobile:T
+        }
+      };
+
+      function success(res) {
+        if (res.data.msgCode=='40000'){
+          _self.$Message.success(res.data.msg)
+          _self.uploadPhoneType(i)
+          _self.getLoginerMessage(T)
+        }
+      }
+
+      function fail(err) {
+        _self.loading = false;
+      }
+
+      this.$Get(url, config, success, fail);
+    },
     phone(T,i) {
       window.location.href = 'yhhl://call/num=' + T + '&custom_key=123456&';
       this.uploadPhoneType(i);
-
     },
     uploadPhoneType(i) {
       let _self = this;

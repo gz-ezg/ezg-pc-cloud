@@ -143,7 +143,7 @@ export default {
                     companyname:'',
                     servicename:'',
                     product:'',
-                    workserverstatus
+                    workserverstatus:''
                 },
                 //  加载中
                 Sloading:false,
