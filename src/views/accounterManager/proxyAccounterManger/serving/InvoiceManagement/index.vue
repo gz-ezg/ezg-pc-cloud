@@ -132,7 +132,7 @@
                 }
 
                 function fail(err){
-
+                    _self.openInvoiceMission = false
                 }
                 this.$Post(url, config, success, fail)
             },

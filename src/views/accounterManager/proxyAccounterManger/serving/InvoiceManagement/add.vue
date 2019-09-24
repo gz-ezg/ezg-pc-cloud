@@ -147,7 +147,7 @@
                     }
 
                     function fail(err) {
-                        _self.openAddMission = false
+                        _self.loading = false;
                     }
 
                     this.$Post(url, config, success, fail)
@@ -172,7 +172,7 @@
                     }
 
                     function fail(err) {
-                        _self.openAddMission = false
+                        _self.loading = false;
                     }
 
                     this.$Post(url, config, success, fail)
