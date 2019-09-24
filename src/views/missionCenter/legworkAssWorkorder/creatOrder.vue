@@ -35,9 +35,9 @@
             <Row :gutter="12" v-if="newMission.businessId==-999">
                 <Col span="12">
                     <FormItem label="外勤类型" prop="cycleType">
-                        <Select v-model="newMission.cycleType" type="text" transfer @on-change="get_type_list">
+                        <Select v-model="newMission.cycleType" type="text" transfer @on-change="get_type_list" style="width: 170px;margin-right: 25px">
                             <Option v-for="(item,index) in cycleTypeList" :key="index" :value="item.typecode">{{item.typename}}</Option>
-                        </Select>
+                        </Select><span v-if="newMission.cycleType=='A'">剩余<span style="color: red;padding: 0 4px 0 4px">{{reminderData.remainderA}}</span>次</span><span v-if="newMission.cycleType=='B'">剩余<span style="color: red;padding: 0 4px 0 4px">{{reminderData.remainderB}}</span>次</span>
                     </FormItem>
                 </Col>
                 <Col span="12">
@@ -104,6 +104,7 @@
                 cycleTypeList:[{"typecode":"A","typename":"A类"},{"typecode":"B","typename":"B类"},{"typecode":"其他","typename":"其他"}],
                 cycleTypeNameList:[],
                 userLoading:false,
+                reminderData:{},
                 newMission: {
                     applyContent: "",
                     taskContent: "",
@@ -128,6 +129,22 @@
             }
         },
         methods:{
+            get_num(id){
+                let _self = this
+                let url = `api/user/legwork/companyLegworkCountByCompanyId`
+
+                let config = {
+                    params:{
+                        companyId:id,
+                    }
+                }
+                function success(res){
+                    _self.reminderData = res.data.data
+                    console.log(_self.reminderData)
+                }
+
+                this.$Get(url, config, success)
+            },
             get_company(query){
                 let _self = this
                 _self.companyLoading = true
@@ -215,6 +232,7 @@
                         _self.newMission.businessId =  null
                     }
                     _self.get_type_list()
+                    _self.get_num(id)
                 }
 
                 this.$Get(url, config, success)
@@ -263,26 +281,83 @@
                     executorNameArray.push(_self.allUserList_map.get(_self.newMission.executorId[i].toString()))
                 }
                 if (_self.newMission.businessId=="-999"){
-                    let url = `api/task/addBusAssApply`
-                    let config = {
-                        companyId:_self.newMission.companyId,
-                        applyTypeId: _self.newMission.cycleTypeId,
-                        businessId:_self.newMission.businessId,
-                        applyContent:_self.newMission.applyContent,
-                        expectDate:FULLDateFormat(_self.newMission.planDate),
-                        excutorId:_self.newMission.executorId.join(","),
-                        excutorName:executorNameArray.join(","),
+                    if (_self.newMission.cycleType=='A'){
+                        if (_self.reminderData.remainderA==0){
+                            _self.$Message.warning("外勤次数不足！")
+                            _self.createLoading = false
+                            return
+                        } else {
+                            let url = `api/task/addBusAssApply`
+                            let config = {
+                                companyId:_self.newMission.companyId,
+                                applyTypeId: _self.newMission.cycleTypeId,
+                                businessId:_self.newMission.businessId,
+                                applyContent:_self.newMission.applyContent,
+                                expectDate:FULLDateFormat(_self.newMission.planDate),
+                                excutorId:_self.newMission.executorId.join(","),
+                                excutorName:executorNameArray.join(","),
+                            }
+                            function success(res){
+                                _self.createLoading = false
+                                _self.openAddMission = false
+                                _self.$bus.emit("UPDATE_ORDER_LIST", true)
+                                _self.cancel_task()
+                            }
+                            function fail(err){
+                                _self.createLoading = false
+                            }
+                            this.$Post(url, config, success, fail)
+                        }
                     }
-                    function success(res){
-                        _self.createLoading = false
-                        _self.openAddMission = false
-                        _self.$bus.emit("UPDATE_ORDER_LIST", true)
-                        _self.cancel_task()
+                    else if (_self.newMission.cycleType=='B'){
+                        if (_self.reminderData.remainderB==0){
+                            _self.$Message.warning("外勤次数不足！")
+                            _self.createLoading = false
+                            return
+                        } else {
+                            let url = `api/task/addBusAssApply`
+                            let config = {
+                                companyId:_self.newMission.companyId,
+                                applyTypeId: _self.newMission.cycleTypeId,
+                                businessId:_self.newMission.businessId,
+                                applyContent:_self.newMission.applyContent,
+                                expectDate:FULLDateFormat(_self.newMission.planDate),
+                                excutorId:_self.newMission.executorId.join(","),
+                                excutorName:executorNameArray.join(","),
+                            }
+                            function success(res){
+                                _self.createLoading = false
+                                _self.openAddMission = false
+                                _self.$bus.emit("UPDATE_ORDER_LIST", true)
+                                _self.cancel_task()
+                            }
+                            function fail(err){
+                                _self.createLoading = false
+                            }
+                            this.$Post(url, config, success, fail)
+                        }
+                    } else {
+                        let url = `api/task/addBusAssApply`
+                        let config = {
+                            companyId:_self.newMission.companyId,
+                            applyTypeId: _self.newMission.cycleTypeId,
+                            businessId:_self.newMission.businessId,
+                            applyContent:_self.newMission.applyContent,
+                            expectDate:FULLDateFormat(_self.newMission.planDate),
+                            excutorId:_self.newMission.executorId.join(","),
+                            excutorName:executorNameArray.join(","),
+                        }
+                        function success(res){
+                            _self.createLoading = false
+                            _self.openAddMission = false
+                            _self.$bus.emit("UPDATE_ORDER_LIST", true)
+                            _self.cancel_task()
+                        }
+                        function fail(err){
+                            _self.createLoading = false
+                        }
+                        this.$Post(url, config, success, fail)
                     }
-                    function fail(err){
-                        _self.createLoading = false
-                    }
-                    this.$Post(url, config, success, fail)
                 }
                 if (_self.newMission.businessId!=="-999"){
                     let url = `api/task/addBusAssApply`
