@@ -9,6 +9,7 @@
                     <div style="width: 467px;padding-bottom: 20px;font-weight: bold">
                         <div>活动内容：{{data.content}}</div>
                         <div>参与部门：{{data.departname}}</div>
+                        <div>您还能领取：<span style="color: red;margin:0 4px 0 0">{{recept}}</span>条</div>
                     </div>
                     <div style="width: 467px;display: flex;margin-bottom: 150px" v-if="showCountDown">
                         <div style="font-weight: bold;font-size: 16px;margin-right: 5px">
@@ -78,10 +79,11 @@
                     activity_time:"",
                     now:"",
                     amount:"",
-                    num:""
+                    num:"",
                 },
                 amount:"",
                 num:"",
+                recept:'',
                 msg:"",
                 endTime:"",
                 startTime:"",
@@ -108,6 +110,7 @@
                     if (_self.data ) {
                         _self.amount = _self.data.amount
                         _self.num = _self.data.num
+                        _self.recept = res.data.data.recept
                         _self.endTime = _self.data.activity_time
                         _self.startTime = _self.data.now
                         if (new Date(_self.endTime) - new Date(_self.startTime)<=0){
@@ -147,6 +150,7 @@
                         if (res.data.data) {
                             _self.amount = res.data.data.amount
                             _self.num = res.data.data.num
+                            _self.recept = res.data.data.recept
                         }
                     }
                     // _self.pageTotal = res.data.data.total
