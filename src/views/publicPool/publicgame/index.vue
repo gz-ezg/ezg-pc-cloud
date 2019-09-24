@@ -20,7 +20,7 @@
                     <div style="width: 467px;margin-bottom: 150px" v-if="showNum">
                         <div style="width: 467px;display: flex;justify-content: space-between;font-weight: bold;font-size: 16px">
                             <div>公海池还剩余<span style="color: red;padding: 0 2px 0 2px">{{num}}</span>条</div>
-                            <div>你已领取<span style="color: red;padding: 0 2px 0 2px">{{amount}}</span>条</div>
+                            <div>您已领取<span style="color: red;padding: 0 2px 0 2px">{{amount}}</span>条</div>
                         </div>
                     </div>
                     <div style="display: flex;justify-content: center">
@@ -169,8 +169,8 @@
             },
             async initWebSocket() {
                 const { port, key } = await serviceApi.auth();
-                // const wsuri = `ws://cloud.zgcfo.com:${port}/highseasActivity/websocket`;
-                const wsuri = `ws://192.168.0.220:${port}/highseasActivity/websocket`;
+                const wsuri = `ws://cloud.zgcfo.com:${port}/highseasActivity/websocket`;
+                // const wsuri = `ws://192.168.0.220:${port}/highseasActivity/websocket`;
                 // const wsuri = `ws://192.168.2.89:${port}/highseasActivity/websocket`;
                 this.websock = new WebSocket(wsuri);
                 console.log(this.websock)
