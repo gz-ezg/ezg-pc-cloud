@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/op/code.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/op/code.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/administrationManagement/addManager/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/administrationManagement/addManager/index.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -41,11 +40,29 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/op/code.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+            <state relative-caret-position="900">
+              <caret line="50" column="42" lean-forward="true" selection-start-line="50" selection-start-column="42" selection-end-line="50" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/views/administrationManagement/addManager/index.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="964" column="39" selection-start-line="964" selection-start-column="39" selection-end-line="964" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/administrationManagement/addManager/common/detail.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="802">
+              <caret line="219" column="14" selection-start-line="219" selection-start-column="14" selection-end-line="219" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -101,8 +118,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/views/customerService/offlineCustomerApproval/processed.vue" />
-        <option value="$PROJECT_DIR$/src/views/customerService/offlineCustomerApproval/common/detail.vue" />
         <option value="$PROJECT_DIR$/src/views/publicPool/gamesetting/index.vue" />
         <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/all.vue" />
         <option value="$PROJECT_DIR$/src/views/customerManagement/customerAccount/index.vue" />
@@ -152,6 +167,8 @@
         <option value="$PROJECT_DIR$/src/libs/utils.js" />
         <option value="$PROJECT_DIR$/src/views/order/orderList/components/orderOp/productDetailList.vue" />
         <option value="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/op/code.vue" />
+        <option value="$PROJECT_DIR$/src/views/administrationManagement/addManager/common/detail.vue" />
+        <option value="$PROJECT_DIR$/src/views/administrationManagement/addManager/index.vue" />
       </list>
     </option>
   </component>
@@ -196,24 +213,24 @@
               <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="customerManagement" type="462c0819:PsiDirectoryNode" />
+              <item name="administrationManagement" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="customerManagement" type="462c0819:PsiDirectoryNode" />
-              <item name="marketingManagement2" type="462c0819:PsiDirectoryNode" />
+              <item name="administrationManagement" type="462c0819:PsiDirectoryNode" />
+              <item name="addManager" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="customerManagement" type="462c0819:PsiDirectoryNode" />
-              <item name="marketingManagement2" type="462c0819:PsiDirectoryNode" />
-              <item name="op" type="462c0819:PsiDirectoryNode" />
+              <item name="administrationManagement" type="462c0819:PsiDirectoryNode" />
+              <item name="addManager" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -458,7 +475,7 @@
       <workItem from="1569290011403" duration="12332000" />
       <workItem from="1569392516619" duration="5879000" />
       <workItem from="1569470012984" duration="13315000" />
-      <workItem from="1569547860651" duration="17480000" />
+      <workItem from="1569547860651" duration="21392000" />
     </task>
     <task id="LOCAL-00022" summary="修改启动失败的问题">
       <created>1555989851178</created>
@@ -807,7 +824,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2199692000" />
+    <option name="totallyTimeSpent" value="2203604000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -822,7 +839,7 @@
     <frame x="-8" y="-8" width="1376" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6918033" visible="true" weight="0.22672673" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6918033" visible="true" weight="0.22672673" />
       <window_info id="Structure" order="1" weight="0.24924925" />
       <window_info id="Favorites" order="2" sideWeight="0.30819672" side_tool="true" weight="0.26276276" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.1399046" />
@@ -841,7 +858,7 @@
       <window_info anchor="bottom" id="消息" order="13" />
       <window_info anchor="bottom" id="调试" order="14" />
       <window_info anchor="bottom" id="TypeScript" order="15" weight="0.3290938" />
-      <window_info anchor="bottom" id="Terminal" order="16" sideWeight="0.49924925" visible="true" weight="0.38791734" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="16" sideWeight="0.49924925" visible="true" weight="0.38791734" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -943,20 +960,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="0.0" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="6" column="40" lean-forward="true" selection-start-line="6" selection-start-column="40" selection-end-line="6" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/order/orderList/orderListIndex.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="831" column="8" selection-start-line="831" selection-start-column="8" selection-end-line="831" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/order/abOrderApprove/common/abOrderDetail.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-900" />
@@ -1381,8 +1384,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/op/code.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+        <state relative-caret-position="900">
+          <caret line="50" column="42" lean-forward="true" selection-start-line="50" selection-start-column="42" selection-end-line="50" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/administrationManagement/addManager/common/detail.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="802">
+          <caret line="219" column="14" selection-start-line="219" selection-start-column="14" selection-end-line="219" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/administrationManagement/addManager/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="964" column="39" selection-start-line="964" selection-start-column="39" selection-end-line="964" selection-end-column="39" />
         </state>
       </provider>
     </entry>

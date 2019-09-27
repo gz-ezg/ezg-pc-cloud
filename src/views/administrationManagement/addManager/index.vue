@@ -86,7 +86,7 @@
                 <Button type="primary" icon="information-circled" @click="show">查看</Button>
                 <Button v-permission="['addManager_index.edit']" type="primary" icon="ios-color-wand-outline" @click="edit">修改</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
-                <!--<Button type="primary" icon="ios-color-wand-outline" @click="import_excel">导入Excel</Button>-->
+                <Button type="primary" icon="ios-color-wand-outline" @click="deleted">批量删除</Button>
             </ButtonGroup>
         </Row>
         <Row style="margin-top: 10px;">
@@ -132,6 +132,7 @@
                 currentIndex1:"",
                 pageSize: 10,
                 current_row:"",
+                checkBoxList:[],
                 currentIndex:-1,
                 gzaddrarea:[],
                 addr_property:[],
@@ -164,6 +165,38 @@
                         render:(h,params)=>{
                             let _self = this
                             return h('div',{},_self.gzaddrarea_map.get(params.row.AREA))
+                        }
+                    },
+                    {
+                        title: '#',
+                        key: '#',
+                        align:'center',
+                        width: 80,
+                        render: (h, params) => {
+                            return h('div', {
+                                'class':{
+                                    subCol:true,
+                                }
+                            }, [
+                                h('ul', this.data1[params.index].list.map(item => {
+                                    if (item){
+                                            return h('li', {},[
+                                                h('Checkbox',{
+                                                    on:{
+                                                        'on-change':(val)=>{
+                                                            if (val==true){
+                                                                this.checkBoxList.push(item)
+                                                            } else {
+                                                                this.checkBoxList.splice(item,1)
+                                                            }
+                                                            console.log(this.checkBoxList)
+                                                        }
+                                                    }
+                                                })
+                                            ] )
+                                    }
+                                }))
+                            ]);
                         }
                     },
                     {
@@ -846,6 +879,32 @@
             changeIndex(){
                 this.currentIndex = -1
             },
+            deleted(){
+                if (this.checkBoxList.length==0){
+                    this.$Message.warning("请选择要删除的项！")
+                } else {
+                    this.delete()
+                }
+            },
+            delete(){
+                let _self = this
+                let url = `api/system/addrPrice/delete`;
+                let config = {
+                    params:{
+                        ids: [_self.checkBoxList.map((e)=>{
+                            return e.id
+                        })].join(",")
+                    }
+                }
+                function success(res){
+                    _self.$bus.emit("UPDATE_MANAGER_INFO",true)
+                }
+
+                function fail(err){
+
+                }
+                this.$Get(url, config, success, fail)
+            },
             add(){
                 this.$bus.emit("ADD_MANAGER_INFO",this.current_row)
             },
@@ -900,9 +959,10 @@
                 let _self = this;
                 _self.data1 = []
                 _self.loading = true;
-                this.current_row = ""
-                this.currentIndex1 = -1
-                this.currentIndex = -1
+                _self.current_row = ""
+                _self.currentIndex1 = -1
+                _self.currentIndex = -1
+                _self.checkBoxList = []
                 let url = `api/system/addrPrice/list`;
                 let config = {
                     params: {
