@@ -977,6 +977,13 @@ export default {
     let _self = this;
     this.headerTemp = this.header;
     //  销售以跟进时间显示
+    let a = localStorage.getItem('id');
+    if (a!=='10059'){
+      if(location.href.indexOf('#reloaded')==-1){
+        location.href=location.href+"#reloaded";
+        location.reload();
+      }
+    }
     let temp = localStorage.getItem('Main_Role');
     if (temp == 'salers') {
       _self.sortName = 'lastfollowdate';

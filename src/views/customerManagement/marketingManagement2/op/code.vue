@@ -6,7 +6,7 @@
         >
             <Spin v-if="loading" fix></Spin>
             <center>
-                <div id="qrcode"></div>
+                <div  id="qrcode"></div>
             </center>
             <div slot="footer"></div>
         </Modal>
@@ -20,16 +20,16 @@ export default {
     data(){
         return {
             qrcode2Open: false,
-            loading: false
+            loading: false,
         }
     },
     methods: {
         get_code(e){
             let _self = this
+            _self.qrcode2Open = true
+            // _self.codeLoading = false
 
-            _self.qrcode2Open = true;
-
-            document.getElementById("qrcode").innerHTML = "";
+            // document.getElementById("qrcode").innerHTML = "";
 
             let url = `api/customer/bind/image/create`;
 
@@ -42,16 +42,17 @@ export default {
 
             function success(res) {
                 console.log(res.data.data);
+                // _self.codeLoading = true
                 let qr = new QRCode("qrcode", {
-                    text: `${res.data.data}`,
+                    text: res.data.data,
                     width: 200,
                     height: 200,
                     colorDark: "#000000",
                     colorLight: "#ffffff",
                     correctLevel: QRCode.CorrectLevel.H
                 });
-                _self.qrcode2Open = true
                 _self.loading = false
+
             }
 
             this.$Get(url, config, success);

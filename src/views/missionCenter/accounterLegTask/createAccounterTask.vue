@@ -343,7 +343,7 @@
                 }
                 if (_self.newMission.taskKind==='tkLegAccCyc'){
                     if (_self.newMission.cycleType=='A'){
-                        if (_self.reminderData.remainderA==0){
+                        if (_self.reminderData.remainderA <= 0){
                             _self.$Message.warning("外勤次数不足！")
                             return
                         } else {
@@ -374,7 +374,7 @@
                         }
                     }
                     else  if (_self.newMission.cycleType=='B'){
-                        if (_self.reminderData.remainderB==0){
+                        if (_self.reminderData.remainderB <= 0){
                             _self.$Message.warning("外勤次数不足！")
                             return
                         } else {

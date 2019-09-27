@@ -270,6 +270,7 @@
 
 <script>
 import * as orderApi from '../../api';
+import {getSystemParamByKey} from "../../../../../api/order";
 import { DateFormat, DateFormatYearMonth, nowDateFormatYearMonth } from '../../../../../libs/utils.js';
 import {deepCopy} from "../../../../../libs/utils";
 
@@ -283,7 +284,7 @@ export default {
       departServerObj: [],
       serverList: [],
       flag: 0,
-
+      isDateOptions:false,
       dateOptions: {
         disabledDate: this.checkMonth
       },
@@ -311,11 +312,23 @@ export default {
   },
   methods: {
     checkMonth(data) {
-      let product = this.createdate;
-      let period = null;
-      period = product ? nowDateFormatYearMonth(product) : nowDateFormatYearMonth();
-      let between = data.getFullYear() * 12 + data.getMonth() - period.substr(0, 4) * 12 - period.substr(4) * 1;
-      return -3 >= between;
+      if (this.isDateOptions){
+        return ""
+      } else {
+        let product = this.createdate;
+        let period = null;
+        period = product ? nowDateFormatYearMonth(product) : nowDateFormatYearMonth();
+        let between = data.getFullYear() * 12 + data.getMonth() - period.substr(0, 4) * 12 - period.substr(4) * 1;
+        return -3 >= between;
+      }
+    },
+    async handleClickDate() {
+      const resp = await getSystemParamByKey({ paramKey: 'force_oi_taxperiod_filter_users' });
+      if ( resp.split(',').includes(localStorage.getItem('id'))) {
+          this.isDateOptions = true
+      } else {
+        this.isDateOptions = false
+      }
     },
     async handleGetService(e, index) {
       let url = `api/product/server/list`;
@@ -478,6 +491,7 @@ export default {
   },
   created() {
     let _self = this;
+    _self.handleClickDate()
     this.productList.forEach((e, i) => {
       if (e.defaultdepartalias == 'PLAN') {
         e.receipt_type = 'quota';
