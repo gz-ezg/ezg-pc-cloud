@@ -4,12 +4,8 @@
     <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/libs/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/libs/utils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/op/code.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/op/code.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/createAccounterTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/createAccounterTask.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/missionCenter/legworkAssWorkorder/creatOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/missionCenter/legworkAssWorkorder/creatOrder.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/order/orderList/components/orderOp/productDetailList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/order/orderList/components/orderOp/productDetailList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/order/orderList/components/productSelect.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/order/orderList/components/productSelect.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -62,8 +58,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/order/orderList/components/orderOp/createOrder.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="214" column="26" lean-forward="true" selection-start-line="214" selection-start-column="26" selection-end-line="214" selection-end-column="26" />
+            <state relative-caret-position="1384">
+              <caret line="332" column="4" selection-start-line="332" selection-start-column="4" selection-end-line="332" selection-end-column="4" />
               <folding>
                 <element signature="e#9118#9163#0" expanded="true" />
               </folding>
@@ -71,13 +67,34 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/order/orderList/components/productSelect.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-275">
+              <caret line="490" column="41" lean-forward="true" selection-start-line="490" selection-start-column="41" selection-end-line="490" selection-end-column="41" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/order/orderList/components/orderOp/productDetailList.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2759">
-              <caret line="431" column="17" lean-forward="true" selection-start-line="431" selection-start-column="17" selection-end-line="431" selection-end-column="17" />
+            <state relative-caret-position="127">
+              <caret line="327" column="27" selection-start-line="327" selection-start-column="27" selection-end-line="327" selection-end-column="27" />
               <folding>
                 <element signature="e#11530#11568#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/libs/utils.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="184">
+              <caret line="89" column="26" selection-start-line="89" selection-start-column="26" selection-end-line="89" selection-end-column="26" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -129,8 +146,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>下线客户审批</find>
-      <find>REMOVE_ITEM</find>
       <find>departChange</find>
       <find>open_import_list</find>
       <find>completed</find>
@@ -158,6 +173,8 @@
       <find>行政</find>
       <find>DatePic</find>
       <find>force_popup_window_filter_users</find>
+      <find>order/cycle/service/record/budget/period</find>
+      <find>ADD_PRODUCT</find>
       <find>servicestartdate</find>
     </findStrings>
   </component>
@@ -170,7 +187,6 @@
       <list>
         <option value="$PROJECT_DIR$/src/views/customerService/offlineCustomerApproval/processed.vue" />
         <option value="$PROJECT_DIR$/src/views/customerService/offlineCustomerApproval/common/detail.vue" />
-        <option value="$PROJECT_DIR$/src/views/order/orderList/components/productSelect.vue" />
         <option value="$PROJECT_DIR$/src/views/publicPool/gamesetting/index.vue" />
         <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/BookkeepingAgency/BookkeepingAgencyIndex/Table/all.vue" />
         <option value="$PROJECT_DIR$/src/views/customerManagement/customerAccount/index.vue" />
@@ -213,11 +229,12 @@
         <option value="$PROJECT_DIR$/src/views/administrationManagement/accountworks/index.vue" />
         <option value="$PROJECT_DIR$/src/views/missionCenter/accounterLegTask/createAccounterTask.vue" />
         <option value="$PROJECT_DIR$/src/views/missionCenter/legworkAssWorkorder/creatOrder.vue" />
-        <option value="$PROJECT_DIR$/src/libs/utils.js" />
         <option value="$PROJECT_DIR$/src/views/administrationManagement/accountworks/BookkeepingAgencyProduct/index.vue" />
         <option value="$PROJECT_DIR$/src/views/administrationManagement/accountworks/AccountingHome/index.vue" />
         <option value="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/op/code.vue" />
         <option value="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue" />
+        <option value="$PROJECT_DIR$/src/views/order/orderList/components/productSelect.vue" />
+        <option value="$PROJECT_DIR$/src/libs/utils.js" />
         <option value="$PROJECT_DIR$/src/views/order/orderList/components/orderOp/productDetailList.vue" />
       </list>
     </option>
@@ -535,7 +552,7 @@
       <workItem from="1569290011403" duration="12332000" />
       <workItem from="1569392516619" duration="5879000" />
       <workItem from="1569470012984" duration="13315000" />
-      <workItem from="1569547860651" duration="5982000" />
+      <workItem from="1569547860651" duration="14262000" />
     </task>
     <task id="LOCAL-00022" summary="修改启动失败的问题">
       <created>1555989851178</created>
@@ -884,7 +901,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2188194000" />
+    <option name="totallyTimeSpent" value="2196474000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -1024,13 +1041,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret line="6" column="40" lean-forward="true" selection-start-line="6" selection-start-column="40" selection-end-line="6" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/order/orderList/components/productSelect.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-125">
-          <caret line="430" column="13" lean-forward="true" selection-start-line="430" selection-start-column="13" selection-end-line="430" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -1379,16 +1389,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/libs/utils.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="72" column="35" selection-start-line="72" selection-start-column="16" selection-end-line="72" selection-end-column="35" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/router/router.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="359">
@@ -1419,16 +1419,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/order/orderList/components/orderOp/createOrder.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="214" column="26" lean-forward="true" selection-start-line="214" selection-start-column="26" selection-end-line="214" selection-end-column="26" />
-          <folding>
-            <element signature="e#9118#9163#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="177">
@@ -1453,10 +1443,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/order/orderList/components/orderOp/createOrder.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1384">
+          <caret line="332" column="4" selection-start-line="332" selection-start-column="4" selection-end-line="332" selection-end-column="4" />
+          <folding>
+            <element signature="e#9118#9163#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/order/orderList/components/productSelect.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-275">
+          <caret line="490" column="41" lean-forward="true" selection-start-line="490" selection-start-column="41" selection-end-line="490" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/libs/utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="89" column="26" selection-start-line="89" selection-start-column="26" selection-end-line="89" selection-end-column="26" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/order/orderList/components/orderOp/productDetailList.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2759">
-          <caret line="431" column="17" lean-forward="true" selection-start-line="431" selection-start-column="17" selection-end-line="431" selection-end-column="17" />
+        <state relative-caret-position="127">
+          <caret line="327" column="27" selection-start-line="327" selection-start-column="27" selection-end-line="327" selection-end-column="27" />
           <folding>
             <element signature="e#11530#11568#0" expanded="true" />
           </folding>

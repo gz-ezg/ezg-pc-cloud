@@ -271,8 +271,9 @@
 <script>
 import * as orderApi from '../../api';
 import {getSystemParamByKey} from "../../../../../api/order";
-import { DateFormat, DateFormatYearMonth, nowDateFormatYearMonth } from '../../../../../libs/utils.js';
 import {deepCopy} from "../../../../../libs/utils";
+import { DateFormat, DateFormatYearMonth, nowDateFormatYearMonth } from '../../../../../libs/utils.js';
+
 
 export default {
   props: ['productList', 'isDisabled', 'orderDetail', 'pageFlag', 'id', 'productListOne', 'createdate'],
@@ -315,11 +316,20 @@ export default {
       if (this.isDateOptions){
         return ""
       } else {
-        let product = this.createdate;
-        let period = null;
-        period = product ? nowDateFormatYearMonth(product) : nowDateFormatYearMonth();
-        let between = data.getFullYear() * 12 + data.getMonth() - period.substr(0, 4) * 12 - period.substr(4) * 1;
-        return -3 >= between;
+        if (this.servicestartdate){
+          let a = this.servicestartdate.substr(0, 4)
+          let b = this.servicestartdate.substr(4)
+          let product = a+"-"+b
+          let period = null
+          period = product ? nowDateFormatYearMonth(product) : nowDateFormatYearMonth();
+          let between = data.getFullYear() * 12 + data.getMonth() - period.substr(0, 4) * 12 - period.substr(4) * 1;
+          return -3 >= between;
+        } else {
+          let period = null
+          period = nowDateFormatYearMonth();
+          let between = data.getFullYear() * 12 + data.getMonth() - period.substr(0, 4) * 12 - period.substr(4) * 1;
+          return -3 >= between;
+        }
       }
     },
     async handleClickDate() {
@@ -503,9 +513,12 @@ export default {
     });
     this.$bus.off('ADD_PRODUCT_DETAIL_LIST', true);
     this.$bus.on('ADD_PRODUCT_DETAIL_LIST', e => {
-      if (e.servicestartdate) {
-        this.servicestartdate = e.servicestartdate;
+      console.log(e)
+      let a = deepCopy(e)
+      if (a.servicestartdate) {
+        this.servicestartdate = a.servicestartdate;
       }
+      console.log(a)
       this.flag = 0;
       e.givethenumber = 0;
       if (e.departid) {
@@ -551,7 +564,7 @@ export default {
       }
     });
     _self.$bus.off('OPEN_ORDER_PRODUCT_LIST', true);
-    _self.$bus.on('OPEN_ORDER_PRODUCT_LIST', e => {
+    _self.$bus.on('OPEN_ORDER_PRODUCT_LIST', (e) => {
       _self.companyId = e;
     });
   }

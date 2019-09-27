@@ -86,11 +86,10 @@ export function DateFormatYearMonth(date) {
 //  日期转YYYY-MM
 export function nowDateFormatYearMonth(value) {
   var d = value ? new Date(value) : new Date(),
-    month = '' + (d.getMonth() + 1),
+    month = d.getMonth() + 1,
     year = d.getFullYear()
-
   if (month.length < 2) month = '0' + month
-
+  console.log(`${year}${month}`)
   return `${year}${month}`
 }
 //YYYYMM 本月的上个月
