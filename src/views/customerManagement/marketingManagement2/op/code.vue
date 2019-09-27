@@ -29,7 +29,7 @@ export default {
             _self.qrcode2Open = true
             // _self.codeLoading = false
 
-            // document.getElementById("qrcode").innerHTML = "";
+            document.getElementById("qrcode").innerHTML = "";
 
             let url = `api/customer/bind/image/create`;
 
