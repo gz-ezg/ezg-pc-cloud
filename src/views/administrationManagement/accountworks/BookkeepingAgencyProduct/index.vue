@@ -67,7 +67,7 @@
 </template>
 
 <script>
-    import {DateFormatYearMonth,DateFormatYearMonth2} from "../../../../libs/utils";
+    import {DateFormatYearMonth,DateFormatYearMonth3} from "../../../../libs/utils";
 
     export default {
         name: "index",
@@ -253,7 +253,7 @@
         },
         created() {
             let a = new Date()
-            this.SearchValidate.work_month = DateFormatYearMonth2(a)
+            this.SearchValidate.work_month = DateFormatYearMonth3(a)
             this.get_data()
             this.get_data_center()
         }
