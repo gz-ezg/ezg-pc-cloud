@@ -911,9 +911,9 @@
                 const { port } = await serviceApi.auth();
                 const { sevenmoorAccount } = await serviceApi1.auth1();
                 console.log({ sevenmoorAccount })
-                // const wsuri = `ws://cloud.zgcfo.com:${port}/highseasActivity/websocket`;
-                // const wsuri = `ws://192.168.0.220:${port}/highseasActivity/websocket`;
-                const wsuri = `ws://192.168.2.89:${port}/callback/websocket/${sevenmoorAccount}`;
+                const wsuri = `ws://cloud.zgcfo.com:${port}/callback/websocket/${sevenmoorAccount}`;
+                // const wsuri = `ws://192.168.0.220:${port}/callback/websocket/${sevenmoorAccount}`;
+                // const wsuri = `ws://192.168.2.89:${port}/callback/websocket/${sevenmoorAccount}`;
                 this.websock = new WebSocket(wsuri);
                 console.log(this.websock)
                 this.websock.onmessage = this.websocketonmessage;

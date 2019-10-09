@@ -3,14 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/Service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/Service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/missionCenter/customerService/executing.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/missionCenter/customerService/executing.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/missionCenter/customerService/finished.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/missionCenter/customerService/finished.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/customerManagement/resourceManager/resourcePool/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customerManagement/resourceManager/resourcePool/index.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -90,8 +83,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/customerManagement/resourceManager/resourcePool/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="616" column="41" selection-start-line="616" selection-start-column="41" selection-end-line="616" selection-end-column="41" />
+            <state relative-caret-position="328">
+              <caret line="916" column="52" lean-forward="true" selection-start-line="916" selection-start-column="52" selection-end-line="916" selection-end-column="52" />
               <folding>
                 <element signature="n#style#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#Row#0;n#Col#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
@@ -660,7 +653,7 @@
       <workItem from="1569719301400" duration="27648000" />
       <workItem from="1569804651917" duration="20147000" />
       <workItem from="1570495808540" duration="26811000" />
-      <workItem from="1570583862126" duration="32497000" />
+      <workItem from="1570583862126" duration="33315000" />
     </task>
     <task id="LOCAL-00022" summary="修改启动失败的问题">
       <created>1555989851178</created>
@@ -1009,7 +1002,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2311504000" />
+    <option name="totallyTimeSpent" value="2312322000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -1631,8 +1624,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/customerManagement/resourceManager/resourcePool/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="616" column="41" selection-start-line="616" selection-start-column="41" selection-end-line="616" selection-end-column="41" />
+        <state relative-caret-position="328">
+          <caret line="916" column="52" lean-forward="true" selection-start-line="916" selection-start-column="52" selection-end-line="916" selection-end-column="52" />
           <folding>
             <element signature="n#style#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#Row#0;n#Col#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
