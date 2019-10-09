@@ -16,6 +16,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import proto from './utils/prototype'
 //  引入自定义主题文件
+import animated from 'animate.css'
 // import './my-theme/index.vue.less';
 // 最低可以兼容IE11,启用此行并将babelrc配置修改即可
 // import "@babel/polyfill";
@@ -30,6 +31,7 @@ Vue.use(VueBus)
 Vue.use(vueBus)
 Vue.use(iviewArea)
 Vue.use(proto)
+Vue.use(animated)
 //  获取数据GetData方法
 //  方法废弃
 Vue.prototype.GetData = function(

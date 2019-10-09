@@ -280,7 +280,16 @@ export const appRouter = [
         name: 'customerLog_index',
         component: () =>
           import(/* webpackChunkName: "customerLog_index" */ '@/views/customerManagement/customerLog/index.vue')
-      }
+      },
+      {
+            access: 6114,
+            meta: 6114,
+            path: 'resourceManager',
+            title: '资源池管理',
+            name: 'resourceManager_index',
+            component: () =>
+                import(/* webpackChunkName: "resourceManager_index" */ '@/views/customerManagement/resourceManager/index.vue')
+        },
     ]
   },
   {

@@ -134,7 +134,7 @@
                     {
                         title: '客户',
                         key: 'name',
-                        minWidth: 240,
+                        minWidth: 140,
                     },
                     {
                         title: '联系方式',
@@ -291,6 +291,11 @@
                         title: '对应市场',
                         key: 'realname',
                         minWidth: 120,
+                    },
+                    {
+                        title: '服务人员',
+                        key: 'servername',
+                        minWidth: 140,
                     },
                     {
                         title: '操作',

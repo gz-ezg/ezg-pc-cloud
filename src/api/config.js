@@ -3,7 +3,8 @@ export default {
     getList: 'user/list'
   },
   socket: {
-    auth: 'system/socket/wechat/company/auth'
+    auth: 'system/socket/wechat/company/auth',
+    auth1:'user/findUserDetail'
   },
   marketingTemplate: {
     getDetail: 'system/marketing/template/detail',
