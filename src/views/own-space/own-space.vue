@@ -53,6 +53,11 @@
                             <Input v-model="userForm.email"></Input>
                         </div>
                     </FormItem>
+                    <FormItem label="拨打方式：" prop="callType" >
+                        <Select style="display:inline-block;width:200px;" transfer v-model="userForm.callType"  @on-change="call_change">
+                            <Option v-for="(item, index) in callTypeArray" :key=index :value="item.typecode">{{item.typename}}</Option>
+                        </Select>
+                    </FormItem>
                     <FormItem label="呼叫中心账号" prop="sevenmoorAccount" >
                         <div style="display:inline-block;width:200px;">
                             <Input v-model="userForm.sevenmoorAccount"></Input>
@@ -76,7 +81,7 @@
 <script>
 import {yasuo} from '../../libs/img_beforeUpload.js'
 export default {
-    name: 'ownspace_index',
+    name: 'index',
     data () {
         const validePhone = (rule, value, callback) => {
             var re = /^1[0-9]{10}$/;
@@ -117,10 +122,12 @@ export default {
                 officephone: "",
                 aliasName: "",
                 email: "",
+                callType:'',
                 userId: localStorage.id,
                 sevenmoorAccount:'',
                 sevenmoorMobile:''
             },
+            callTypeArray:[{typecode:'gateway',typename:'座机'},{typecode:'Local',typename:'手机'},{typecode:'',typename:'--'}],
             inforValidate: {
                 realName: [
                     { required: true, message: '请输入姓名！', trigger: 'change', type: "string" },
@@ -193,6 +200,19 @@ export default {
             this.$Post(url, formdata, success, fail)
 
         },
+        call_change(){
+            if (this.userForm.callType=='gateway') {
+                this.inforValidate.sevenmoorAccount = [{required: true, message: '请输入呼叫中心账号！'}]
+                this.inforValidate.sevenmoorMobile = []
+            } else if (this.userForm.callType=='Local') {
+                this.inforValidate.sevenmoorMobile = [{required: true, message: '请输入呼叫中心手机！'}]
+                this.inforValidate.sevenmoorAccount = [{required: true, message: '请输入呼叫中心账号！'}]
+            } else {
+                this.inforValidate.sevenmoorMobile = []
+                this.inforValidate.sevenmoorAccount = []
+            }
+
+        },
         // change_icon(){
         //     console.log("点击了头像！")
         // },
@@ -234,11 +254,12 @@ export default {
             let url = `api/user/findUserDetail`
             let config = {}
             function success(res){
-                let { realname, mobilephone, officephone, email, aliasName,sevenmoorAccount,sevenmoorMobile,portrait} = res.data.data
+                let { realname, mobilephone, officephone, email,callType , aliasName,sevenmoorAccount,sevenmoorMobile,portrait} = res.data.data
                 _self.userForm.realName = realname
                 _self.userForm.mobilephone = mobilephone
                 _self.userForm.officephone = officephone
                 _self.userForm.email = email
+                _self.userForm.callType = callType
                 _self.userForm.aliasName = aliasName
                 _self.userForm.sevenmoorAccount = sevenmoorAccount
                 _self.userForm.sevenmoorMobile = sevenmoorMobile
