@@ -625,6 +625,9 @@
                 let url = 'api/customer/private/list';
                 let config = {
                     params:{
+                        ctuomer_name:_self.SearchValidate.name,
+                        tel:_self.SearchValidate.tel,
+                        sortField:'createdate',
                         status:_self.SearchValidate.followSituation,
                         isCall:_self.SearchValidate.callSituation,
                         page:_self.page,
@@ -648,6 +651,7 @@
                 let url = 'api/customer/private/list';
                 let config = {
                     params:{
+                        sortField:'createdate',
                         ctuomer_name:_self.SearchValidate.name,
                         tel:_self.SearchValidate.tel,
                         status:_self.SearchValidate.followSituation,
@@ -675,6 +679,9 @@
                 let url = 'api/customer/private/list';
                 let config = {
                     params:{
+                        sortField:'createdate',
+                        ctuomer_name:_self.SearchValidate.name,
+                        tel:_self.SearchValidate.tel,
                         status:_self.SearchValidate.followSituation,
                         isCall:_self.SearchValidate.callSituation,
                         page:_self.page,
@@ -700,6 +707,9 @@
                 let url = 'api/customer/private/list';
                 let config = {
                     params:{
+                        sortField:'createdate',
+                        ctuomer_name:_self.SearchValidate.name,
+                        tel:_self.SearchValidate.tel,
                         status:_self.SearchValidate.followSituation,
                         isCall:_self.SearchValidate.callSituation,
                         page:_self.page,

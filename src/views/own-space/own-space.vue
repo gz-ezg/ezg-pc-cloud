@@ -127,7 +127,7 @@ export default {
                 sevenmoorAccount:'',
                 sevenmoorMobile:''
             },
-            callTypeArray:[{typecode:'gateway',typename:'座机'},{typecode:'Local',typename:'手机'},{typecode:'',typename:'--'}],
+            callTypeArray:[{typecode:'gateway',typename:'座机'},{typecode:'Local',typename:'手机'},{typecode:'',typename:'无'}],
             inforValidate: {
                 realName: [
                     { required: true, message: '请输入姓名！', trigger: 'change', type: "string" },
