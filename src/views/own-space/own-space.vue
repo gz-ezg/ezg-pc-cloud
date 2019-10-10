@@ -60,7 +60,7 @@
                     </FormItem>
                     <FormItem label="呼叫中心手机" prop="sevenmoorMobile" >
                         <div style="display:inline-block;width:200px;">
-                            <Input v-model="userForm.sevenmoorMobile"></Input>
+                            <Input v-model="userForm.sevenmoorMobile" type="number"></Input>
                         </div>
                     </FormItem>
                     <div>
@@ -130,9 +130,9 @@ export default {
                     { required: true, message: '请输入手机号码！' },
                     { validator: validePhone }
                 ],
-                sevenmoorMobile: [
-                    { validator: valideNum }
-                ],
+                // sevenmoorMobile: [
+                //     { validator: valideNum }
+                // ],
                 // email: [
                 //     { message: '请输入姓名！', trigger: 'change', type: "email"}
                 // ]
