@@ -108,8 +108,8 @@ export default {
           this.$router.push({ name: 'home_index' });
         } else {
           this.companyList = this.handleDiff(resp);
-          this.currentCompany = resp[0];
-          this.companyId = resp[0].id;
+          this.currentCompany = this.companyList[0];
+          this.companyId = this.companyList[0].id;
         }
       } catch (error) {
         this.$router.push({
@@ -121,7 +121,6 @@ export default {
     handleDiff(list) {
       let d = new Date()
       let day = d.getDate()
-      console.log(day)
       let temp = list.filter(v => v.diff <= 1);
       if (temp.length == 0) {
         this.isCloseButton = false;
@@ -147,8 +146,8 @@ export default {
         if (resp) {
           resp = JSON.parse(resp);
           this.companyList = this.handleDiff(resp);
-          this.currentCompany = resp[0];
-          this.companyId = resp[0].id;
+          this.currentCompany = this.companyList[0];
+          this.companyId = this.companyList[0].id;
         } else {
           this.handleGetList();
         }
@@ -162,6 +161,9 @@ export default {
   created() {
     this.handleClickButton();
     this.loadList();
+    console.log(this.companyList)
+    console.log(this.currentCompany)
+    console.log(this.companyId)
   },
   beforeRouteLeave(to, from, next) {
     if (this.clickExit || !this.companyList.length) {

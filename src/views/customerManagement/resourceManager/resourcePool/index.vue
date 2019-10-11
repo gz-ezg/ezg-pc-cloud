@@ -53,13 +53,17 @@
                     </Collapse>
                 </Row>
                 <Row>
-                    <ButtonGroup  shape="circle">
-                        <Button type="primary" icon="skip-backward" @click="pre" :disabled="disabled"></Button>
-                        <Button type="primary" icon="play" @click="play" v-if="!showPause" style="width: 40px"></Button>
-                        <Button type="primary" icon="pause" @click="pause" v-if="showPause" style="width: 40px"></Button>
-                        <Button type="primary" icon="skip-forward" @click="next" :disabled="disabled"></Button>
-                        <!--<Button type="primary" icon="ios-color-wand-outline" @click="import_execl">批量导入</Button>-->
-                    </ButtonGroup>
+                    <Switch @on-change="change">
+                        <span slot="open">开</span>
+                        <span slot="close">关</span>
+                    </Switch>
+                    <!--<ButtonGroup>-->
+                        <!--&lt;!&ndash;<Button type="primary" icon="skip-backward" @click="pre" :disabled="disabled"></Button>&ndash;&gt;-->
+                        <!--<Button type="primary" icon="play" @click="play" v-if="!showPause" style="width: 40px"></Button>-->
+                        <!--<Button type="primary" icon="pause" @click="pause" v-if="showPause" style="width: 40px"></Button>-->
+                        <!--&lt;!&ndash;<Button type="primary" icon="skip-forward" @click="next" :disabled="disabled"></Button>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<Button type="primary" icon="ios-color-wand-outline" @click="import_execl">批量导入</Button>&ndash;&gt;-->
+                    <!--</ButtonGroup>-->
                     <RadioGroup v-model="second" style="margin-left: 60px">
                         <Radio label="2s" :disabled="disabled">
                             <span>2秒</span>
@@ -68,17 +72,19 @@
                             <span>4秒</span>
                         </Radio>
                     </RadioGroup>
-                    <Button type="primary" icon="ios-color-wand-outline" @click="import_excel" style="margin-left: 158px">批量导入</Button>
+                    <Button type="primary" icon="ios-color-wand-outline" @click="deleted" style="margin-left: 65px">批量删除</Button>
+                    <Button type="primary" icon="ios-color-wand-outline" @click="import_excel" style="margin-left: 65px">批量导入</Button>
                 </Row>
                 <Row style="margin-top: 10px;">
                     <Table
                             @on-current-change="selectRow"
+                            @on-select = "selectRowList"
+                            @on-select-all = "selectAllRowList"
                             :loading="loading"
                             ref="selection"
                             highlight-row
                             size="small"
                             :columns="header"
-                            :show-header="false"
                             :data="data"
                     ></Table>
                     <Page
@@ -117,6 +123,11 @@
                     <Col span="12">
                         <div>{{cus_data.customer.companyname}}</div>
                         <div>{{cus_data.customer.tel}}</div>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col >
+                        <div>备注：<div style="margin-left: 5px;display: inline-block;word-break: break-all;word-wrap: break-word;">{{cus_data.customer.memo}}</div></div>
                     </Col>
                 </Row>
                 <Row  class="demo-tabs-style1">
@@ -199,6 +210,7 @@
                 pageSize: 10,
                 tabName:'tel',
                 current_row:"",
+                current_row_list:'',
                 tel:'',
                 second:'2s',
                 showPause:false,
@@ -236,10 +248,16 @@
                 data:[{name:"流川枫",situation:'wyx'},{name:"樱木花道",situation:'yyx'},{name:"薇恩",situation:'tx'},{name:"伊泽瑞尔",situation:'wxdh'}],
                 header: [
                     {
+                        type: 'selection',
+                        fixed: 'left',
+                        width: 60,
+                        align: 'center'
+                    },
+                    {
                         title: '名称',
                         fixed: 'left',
                         key: 'ctuomer_name',
-                        minWidth: 100,
+                        minWidth: 80,
                         render: (h, params) => {
                             if(params.row.status=='wyx'){
                                 return h('div', [
@@ -355,9 +373,9 @@
                         }
                     },
                     {
-                        title: '操作',
+                        title: '#',
                         key: 'action',
-                        width: 200,
+                        width: 180,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
@@ -412,9 +430,9 @@
                         }
                     },
                     {
-                        title: '操作',
+                        title: '#',
                         key: 'action',
-                        width: 140,
+                        width: 120,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
@@ -470,6 +488,14 @@
                 } else {
                     this.showSend = false
                 }
+            },
+            selectRowList(e){
+                this.current_row_list = e
+                console.log(this.current_row_list)
+            },
+            selectAllRowList(e){
+                this.current_row_list = e
+                console.log(this.current_row_list)
             },
             pageChange(a) {
                 let _self = this;
@@ -556,6 +582,13 @@
                     return Math.ceil(a/b)
                 }
             },
+            change(e){
+                if (e){
+                    this.play()
+                } else {
+                    this.pause()
+                }
+            },
             play(){
                 this.showPause = true
                 this.flag = true
@@ -584,8 +617,37 @@
                 }
                 this.$Get(url, config, success, fail);
             },
+            deleted(){
+                let _self = this;
+                if (!_self.current_row_list.length){
+                    _self.$Message.warning("请选择要批量删除的数据！")
+                } else {
+                    _self.loading = true
+                    let url = 'api/customer/private/delete';
+                    let config = {
+                        params:{
+                            ids:_self.current_row_list.map(v =>{
+                                return v.id
+                            }).join(",")
+                        }
+                    }
+
+                    function success(res) {
+                        _self.get_data()
+                        _self.loading = false
+                    }
+
+                    function fail(err) {
+                    }
+                    this.$Get(url, config, success, fail);
+                }
+
+            },
             import_excel(){
                 this.openImportCustomer = true;
+            },
+            open() {
+                window.open('/api/assets/upload/commonImg/public_pool_template.xlsx');
             },
             handleUpload(file) {
                 let _self = this;
@@ -648,6 +710,7 @@
             get_data(){
                 let _self = this;
                 _self.loading = true
+                _self.current_row_list = []
                 let url = 'api/customer/private/list';
                 let config = {
                     params:{
@@ -784,6 +847,7 @@
                 let url = `api/customer/sevenmoor/dialout`;
                 let config = {
                     params:{
+                        id:i,
                         mobile:t
                     }
                 };
@@ -921,8 +985,8 @@
                 const { port } = await serviceApi.auth();
                 const { sevenmoorAccount } = await serviceApi1.auth1();
                 console.log({ sevenmoorAccount })
-                const wsuri = `ws://cloud.zgcfo.com:${port}/callback/websocket/${sevenmoorAccount}`;
-                // const wsuri = `ws://192.168.0.220:${port}/callback/websocket/${sevenmoorAccount}`;
+                // const wsuri = `ws://cloud.zgcfo.com:${port}/callback/websocket/${sevenmoorAccount}`;
+                const wsuri = `ws://192.168.0.220:${port}/callback/websocket/${sevenmoorAccount}`;
                 // const wsuri = `ws://192.168.2.89:${port}/callback/websocket/${sevenmoorAccount}`;
                 this.websock = new WebSocket(wsuri);
                 console.log(this.websock)
