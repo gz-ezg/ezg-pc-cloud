@@ -65,7 +65,7 @@
                     </FormItem>
                     <FormItem label="呼叫中心手机" prop="sevenmoorMobile" >
                         <div style="display:inline-block;width:200px;">
-                            <Input v-model="userForm.sevenmoorMobile" type="number"></Input>
+                            <Input v-model="userForm.sevenmoorMobile"></Input>
                         </div>
                     </FormItem>
                     <div>
@@ -122,10 +122,10 @@ export default {
                 officephone: "",
                 aliasName: "",
                 email: "",
-                callType:'',
+                callType:"",
                 userId: localStorage.id,
-                sevenmoorAccount:'',
-                sevenmoorMobile:''
+                sevenmoorAccount:"",
+                sevenmoorMobile:""
             },
             callTypeArray:[{typecode:'gateway',typename:'座机'},{typecode:'Local',typename:'手机'},{typecode:'',typename:'无'}],
             inforValidate: {
@@ -185,6 +185,7 @@ export default {
             for(let x in this.userForm){
                 formdata.append(x, _self.userForm[x])
             }
+
             if(!this.img.includes("api/assets/upload/files")){
                 formdata.append("files", _self.uploadImg)
             }
@@ -208,6 +209,7 @@ export default {
                 this.inforValidate.sevenmoorMobile = [{required: true, message: '请输入呼叫中心手机！'}]
                 this.inforValidate.sevenmoorAccount = [{required: true, message: '请输入呼叫中心账号！'}]
             } else {
+                this.userForm.callType = ''
                 this.inforValidate.sevenmoorMobile = []
                 this.inforValidate.sevenmoorAccount = []
             }
@@ -255,14 +257,14 @@ export default {
             let config = {}
             function success(res){
                 let { realname, mobilephone, officephone, email,callType , aliasName,sevenmoorAccount,sevenmoorMobile,portrait} = res.data.data
-                _self.userForm.realName = realname
-                _self.userForm.mobilephone = mobilephone
-                _self.userForm.officephone = officephone
-                _self.userForm.email = email
-                _self.userForm.callType = callType
-                _self.userForm.aliasName = aliasName
-                _self.userForm.sevenmoorAccount = sevenmoorAccount
-                _self.userForm.sevenmoorMobile = sevenmoorMobile
+                _self.userForm.realName = realname ? realname : ''
+                _self.userForm.mobilephone = mobilephone ? mobilephone : ''
+                _self.userForm.officephone = officephone ? officephone : ''
+                _self.userForm.email = email ? email : ''
+                _self.userForm.callType = callType ? callType : ''
+                _self.userForm.aliasName = aliasName ? aliasName : ''
+                _self.userForm.sevenmoorAccount = sevenmoorAccount ? sevenmoorAccount : ''
+                _self.userForm.sevenmoorMobile = sevenmoorMobile ? sevenmoorMobile : ''
                 _self.img = "/api/assets/" + portrait
             }
 
