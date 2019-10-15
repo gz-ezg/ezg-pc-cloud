@@ -73,6 +73,7 @@
         <Row style="margin-top: 10px;">
             <Table
                     @on-current-change="selectRow"
+                    id="d3"
                     :loading="loading"
                     ref="selection"
                     highlight-row

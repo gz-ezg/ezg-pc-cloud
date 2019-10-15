@@ -7,7 +7,7 @@
             <Button type="primary" icon="search" @click="onAdd">新增</Button>
             <Button type="primary" icon="search" @click="onEdit">编辑</Button>
             <Button type="primary" icon="search" @click="onShow">查看</Button>
-            <Button type="primary" icon="search" @click="onDelete">删除</Button>
+            <Button v-permission="['arrearsOrder_index.del']" type="primary" icon="search" @click="onDelete">删除</Button>
           </ButtonGroup>
         </Row>
       </x-table>

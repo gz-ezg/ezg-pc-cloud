@@ -41,6 +41,43 @@ export default {
                 key: "realname",
                 minWidth: 150
             },
+			{
+				title: "当日（未成交）上限",
+				minWidth: 180,
+				render: (h, parmas) => {
+					let _self = this
+					// console.log(parmas.row)
+					return h('div',[
+						h('Input',{
+							props:{
+								value: this.tableData[parmas.index].customer_limit_num,
+								autosize: true,
+								type: "text",
+								size: "small"
+							},
+							"class": {
+								clueNum: true
+							},
+							on: {
+								//  失去焦点触发
+								"on-blur": function(event){
+									// console.log(event)
+									// _self.tableData[parmas.index.vue].customer_receipt_max_num = event.target.value
+									_self.save_new_clue_num1(parmas.row.id, event.target.value)
+								},
+								//  敲回车触发
+								"on-enter": function(event){
+									// _self.tableData[parmas.index.vue].customer_receipt_max_num = event.target.value
+									_self.save_new_clue_num1(parmas.row.id, event.target.value)
+								}
+							},
+							style: {
+								width: "100%"
+							}
+						})
+					])
+				}
+			},
             {
                 title: "线索领取上限",
                 key: "realname",
@@ -174,7 +211,25 @@ export default {
         }
 
         this.$Post(url, config, success, fail)
-    }
+    },
+    save_new_clue_num1(id, num){
+        let _self = this
+        let url = `api/user/update/detail`
+        let config = {
+            id: id,
+			customerLimitNum: num,
+        }
+
+        function success(res){
+            _self.get_data()
+        }
+
+        function fail(err){
+            _self.get_data()
+        }
+
+        this.$Post(url, config, success, fail)
+    },
   },
   mounted () {
     this.getAllDepartTree()
