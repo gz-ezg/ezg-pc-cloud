@@ -72,13 +72,15 @@
                             <span>4秒</span>
                         </Radio>
                     </RadioGroup>
-                    <Button type="primary" icon="ios-color-wand-outline" @click="deleted" style="margin-left: 65px">批量删除</Button>
-                    <Button type="primary" icon="ios-color-wand-outline" @click="import_excel" style="margin-left: 65px">批量导入</Button>
+                    <ButtonGroup style="margin-left: 138px">
+                        <Button type="primary" icon="ios-color-wand-outline" @click="deleted">批量删除</Button>
+                        <Button type="primary" icon="ios-color-wand-outline" @click="import_excel">批量导入</Button>
+                    </ButtonGroup>
                 </Row>
                 <Row style="margin-top: 10px;">
                     <Table
                             @on-current-change="selectRow"
-                            @on-select = "selectRowList"
+                            @on-selection-change = "selectRowList"
                             @on-select-all = "selectAllRowList"
                             :loading="loading"
                             ref="selection"
@@ -404,7 +406,7 @@
                         }
                     },
                     {
-                        title: '#',
+                        title: '操作',
                         key: 'action',
                         width: 180,
                         align: 'center',
@@ -461,7 +463,7 @@
                         }
                     },
                     {
-                        title: '#',
+                        title: '状态',
                         key: 'action',
                         width: 120,
                         align: 'center',
@@ -769,8 +771,14 @@
                     _self.data = res.data.data.rows
                     _self.pageTotal = res.data.data.total
                     _self.loading = false
-                    _self.current_row = _self.data[0]
-                    _self.get_customer_data()
+                    if(_self.data.length){
+                        _self.current_row = _self.data[0]
+                        _self.get_customer_data()
+                    } else {
+                        _self.current_row = ''
+                        _self.cus_data = []
+                    }
+
                 }
 
                 function fail(err) {

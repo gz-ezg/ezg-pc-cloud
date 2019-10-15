@@ -79,7 +79,7 @@
                 departList:[],
                 header: [
                     {
-                        title: '',
+                        title: '姓名',
                         key: 'ctuomer_name',
                         minWidth: 100,
                     },
