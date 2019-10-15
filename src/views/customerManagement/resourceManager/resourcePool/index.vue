@@ -142,6 +142,31 @@
                 </Row>
                 <Row  style="margin-top: 50px;">
                     <Card title="联系历史">
+                        <Row style="margin-bottom:20px">
+                            <Collapse v-model="search_model1">
+                                <Panel name="1">
+                                    <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
+                                    筛选
+                                    <div slot="content" @keydown.enter="Search1">
+                                        <Form ref="SearchValidate" :model="SearchValidate1" :label-width="130" style="margin-top: 15px">
+                                            <Row  style="height:56px">
+                                                <Col>
+                                                    <FormItem label="呼出时间：" prop="time">
+                                                        <DatePicker transfer type="daterange" v-model="SearchValidate1.time"></DatePicker>
+                                                    </FormItem>
+                                                </Col>
+                                            </Row>
+                                            <center>
+                                                <FormItem>
+                                                    <Button type="primary" @click="Search1">搜索</Button>
+                                                    <Button type="ghost" @click="handleReset1" style="margin-left: 8px">重置</Button>
+                                                </FormItem>
+                                            </center>
+                                        </Form>
+                                    </div>
+                                </Panel>
+                            </Collapse>
+                        </Row>
                         <Row>共有<span style="color: red;padding:0 2px 0 2px">{{cus_data.total}}</span>条沟通记录</Row>
                         <Row style="margin-top: 10px;">
                             <Table
@@ -189,6 +214,8 @@
 
 <script>
     import {Service1,Service} from "../../../../api/Service";
+    import {DateFormat} from "../../../../libs/utils";
+
     let serviceApi = new Service('socket');
     let serviceApi1 = new Service1('socket');
     import Tel from './telAnimate'
@@ -203,6 +230,7 @@
             return{
                 status:"",
                 search_model: '',
+                search_model1:'',
                 loading: false,
                 loading1:false,
                 pageTotal: 0,
@@ -232,7 +260,7 @@
                 send_email_model:false,
                 formEmail:{},
                 send_email_loading:false,
-                header1:[{title:"创建时间",key:"createdate",minWidth:140},{title:"通话时间",key:"diff",minWidth:100},{title:"处理结果",key:"state",minWidth:100,render:(h,params)=>{return h('div',{},this.call_status_map.get(params.row.state))}}],
+                header1:[{title:"呼出时间",key:"createdate",minWidth:140},{title:"通话时间",key:"diff",minWidth:100},{title:"处理结果",key:"state",minWidth:100,render:(h,params)=>{return h('div',{},this.call_status_map.get(params.row.state))}}],
                 // data1:[{date:'今天 18:09',callTime:'2:30',status:'已接听'},{date:'昨天 18:09',callTime:'0:30',status:'未接听'}],
                 followby_status:[{type:'1',name:'有意向'},{type:'2',name:'无意向'},{type:'3',name:'同行'},{type:'4',name:'无效电话'}],
                 followby_status_map:new Map(),
@@ -244,6 +272,9 @@
                     tel:"",
                     callSituation:"",
                     followSituation:""
+                },
+                SearchValidate1:{
+                    time:""
                 },
                 data:[{name:"流川枫",situation:'wyx'},{name:"樱木花道",situation:'yyx'},{name:"薇恩",situation:'tx'},{name:"伊泽瑞尔",situation:'wxdh'}],
                 header: [
@@ -516,6 +547,10 @@
                 this.page = 1;
                 this.get_data()
             },
+            Search1() {
+                this.page = 1;
+                this.get_customer_data()
+            },
             pre(){
                 let a = this.current_row.id
                 let b = this.data.map(value => {
@@ -681,6 +716,12 @@
                 }
                 this.Search();
             },
+            handleReset1() {
+                this.SearchValidate1 = {
+                    time:''
+                }
+                this.Search1();
+            },
             get_data1(){
                 let _self = this;
                 _self.loading = true
@@ -798,7 +839,9 @@
                 let url = 'api/customer/private/detail';
                 let config = {
                     params:{
-                        customerId:_self.current_row.id
+                        customerId:_self.current_row.id,
+                        beginTime:DateFormat(_self.SearchValidate1.time[0]),
+                        endTime:DateFormat(_self.SearchValidate1.time[1])
                     }
                 }
 
@@ -985,8 +1028,8 @@
                 const { port } = await serviceApi.auth();
                 const { sevenmoorAccount } = await serviceApi1.auth1();
                 console.log({ sevenmoorAccount })
-                // const wsuri = `ws://cloud.zgcfo.com:${port}/callback/websocket/${sevenmoorAccount}`;
-                const wsuri = `ws://192.168.0.220:${port}/callback/websocket/${sevenmoorAccount}`;
+                const wsuri = `ws://cloud.zgcfo.com:${port}/callback/websocket/${sevenmoorAccount}`;
+                // const wsuri = `ws://192.168.0.220:${port}/callback/websocket/${sevenmoorAccount}`;
                 // const wsuri = `ws://192.168.2.89:${port}/callback/websocket/${sevenmoorAccount}`;
                 this.websock = new WebSocket(wsuri);
                 console.log(this.websock)

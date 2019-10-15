@@ -6,6 +6,9 @@
           style="display: flex; justify-content: space-between;align-items: center; padding: 5px; margin-top: 10px; background: #f8f8f9;border: 1px solid #dddee1;border-bottom: none"
         >
           <span>{{ item.product }}</span>
+          <Button  type="error" size="small" @click="removeItem(index)"
+          >删除</Button
+          >
         </h3>
         <Card>
           <Form label-position="left" ref="formValidate" :rules="ruleValidate">
@@ -145,10 +148,13 @@
 </template>
 
 <script>
-export default {
+  import {deepCopy} from "../../../libs/utils";
+
+  export default {
   props: ['productList'],
   data() {
     return {
+      copyList:[],
       ruleValidate: {
         productnumber: [
           {
@@ -190,9 +196,56 @@ export default {
         paynumber: paynumber,
         realnumber: realnumber
       });
-    }
+    },
+    removeItem(index) {
+      let _self = this;
+      _self.copyList =deepCopy( _self.productList)
+      _self.productList.splice(index, 1);
+      // for (let i=0;i<_self.productList.length;i++) {
+      //   this.changeServerPerson('',i)
+      // }
+    },
+  },
+  created() {
+    this.$bus.off('ADD_PRODUCT_DETAIL_LIST', true);
+    this.$bus.on('ADD_PRODUCT_DETAIL_LIST', e=> {
+      console.log(e)
+      console.log(this.copyList)
+      let b = this.copyList[0]
+      let a = {}
+      a.areaid = e.areaid
+      a.baseprice = e.baseprice
+      a.declare_year = b.declare_year
+      a.defaultdepartalias = e.defaultdepartalias
+      a.deleteflag = b.deleteflag
+      a.departid = e.departid
+      a.departname = e.departname
+      a.givethenumber = b.givethenumber
+      a.iscycle = e.iscycle
+      a.itemid = b.itemid
+      a.memo = ""
+      a.oaprice = e.oaprice
+      a.paynumber = e.paynumber
+      a.plusdeduct = e.plusdeduct
+      a.product = e.product
+      a.productid = e.productid
+      a.productnumber = e.productnumber
+      a.propertys = e.propertys
+      a.realname = b.realname
+      a.receipt_proportion = b.receipt_proportion
+      a.receipt_type = b.receipt_type
+      a.serverid = b.serverid
+      a.servicedeparts = b.servicedeparts
+      a.servicestartdate = e.servicestartdate
+      a.skuid = e.skuid
+      a.type_a_count = e.type_a_count
+      a.type_b_count = e.type_b_count
+      a.unitprice = e.unitprice
+      console.log(a)
+      this.productList.push(a)
+    });
   }
-};
+  };
 </script>
 
 <style>

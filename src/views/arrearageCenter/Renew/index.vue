@@ -90,6 +90,13 @@
                 </FormItem>
               </Col>
             </Row>
+            <Row :gutter="16">
+              <Col span="10">
+                <FormItem label="新增产品">
+                  <Button type="primary" icon="plus" @click="open_product_list">新增</Button>
+                </FormItem>
+              </Col>
+            </Row>
           </Form>
         </Col>
         <Col span="14">
@@ -97,13 +104,14 @@
           <product-detail-list @payNumChange="onNumChange" :productList="orderDetail.items"></product-detail-list>
         </Col>
       </Row>
-      <Row> </Row>
+      <Row></Row>
       <div slot="footer">
         <Button type="primary" @click="onSumbit" name="order_edit" :loading="loading">确定</Button>
         <Button type="ghost" @click="onClose">关闭</Button>
       </div>
     </Modal>
     <ab-order-select @aborder-change="settingAborder" :id="orderDetail.companyid"></ab-order-select>
+    <prodect-select></prodect-select>
   </div>
 </template>
 
@@ -111,13 +119,15 @@
 import { orderDetail, budgetPeriod, accountDetail, orderCreate } from '@A/order';
 import productDetailList from './productDetailList';
 import { DateFormat } from '@U/utils';
+import prodectSelect from './productSelect'
 import abOrderSelect from './abOrderSelect';
 
 export default {
   props: ['order'],
   components: {
     productDetailList,
-    abOrderSelect
+    abOrderSelect,
+    prodectSelect
   },
 
   data() {
@@ -186,6 +196,9 @@ export default {
     onNumChange(e) {
       this.orderDetail.paynumber = e.paynumber;
       this.orderDetail.realnumber = e.realnumber;
+    },
+    open_product_list() {
+        this.$bus.emit("OPEN_ORDER_PRODUCT_LIST", this.orderDetail.companyid,this.orderDetail.items);
     },
     openAbOrder() {
       this.$bus.emit('SELECT_ABORDER', true);

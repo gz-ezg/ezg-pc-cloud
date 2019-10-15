@@ -56,6 +56,7 @@
                 <ButtonGroup>
                     <Button type="primary" icon="ios-color-wand-outline" @click="upload">上传资料</Button>
                     <Button type="primary" icon="ios-color-wand-outline" @click="edit">编辑</Button>
+                    <Button type="primary" v-permission="['CompanyInformation_index.del']" icon="ios-color-wand-outline" @click="delete_file">删除</Button>
                 </ButtonGroup>
             </Row>
 
@@ -207,22 +208,22 @@ export default {
                                         }
                                     }
                                 }, '下载'),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small',
-                                    },
-                                    style: {
-                                        marginRight: '5px',
-                                        display: (localStorage.getItem("realname") == "管理员") ? "inline" : "none"
-                                        
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.delete_file(params.row)
-                                        }
-                                    }
-                                }, '删除')
+                                // h('Button', {
+                                //     props: {
+                                //         type: 'text',
+                                //         size: 'small',
+                                //     },
+                                //     style: {
+                                //         marginRight: '5px',
+                                //         display: (localStorage.getItem("realname") == "管理员") ? "inline" : "none"
+                                //
+                                //     },
+                                //     on: {
+                                //         click: () => {
+                                //             this.delete_file(params.row)
+                                //         }
+                                //     }
+                                // }, '删除')
                             ]);
                         }else{
                             return h('div', [
@@ -260,21 +261,21 @@ export default {
                                         }
                                     }
                                 }, '下载'),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small',
-                                    },
-                                    style: {
-                                        marginRight: '5px',
-                                        display: (localStorage.getItem("realname") == "管理员") ? "inline" : "none"
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.delete_file(params.row)
-                                        }
-                                    }
-                                }, '删除')
+                                // h('Button', {
+                                //     props: {
+                                //         type: 'text',
+                                //         size: 'small',
+                                //     },
+                                //     style: {
+                                //         marginRight: '5px',
+                                //         display: (localStorage.getItem("realname") == "管理员") ? "inline" : "none"
+                                //     },
+                                //     on: {
+                                //         click: () => {
+                                //             this.delete_file(params.row)
+                                //         }
+                                //     }
+                                // }, '删除')
                             ]);
                         }
                     }
@@ -313,11 +314,11 @@ export default {
             }
         },
         save_rows(row){
-            this.local_rows = []
+            this.local_rows = ""
             this.local_rows = row
         },
         getData(){
-            this.local_rows = []
+            this.local_rows = ""
             let _self = this
             _self.loading = true
             let url = `api/system/resource/showResourceInfo`
@@ -370,24 +371,28 @@ export default {
                 _self.$GetDataCenter(params, finish)
             })
         },
-        delete_file(e){
+        delete_file(){
             let _self = this
-            let url = "api/system/resource/updateSource"
+            if (!_self.local_rows){
+                _self.$Message.warning("请选择一行进行操作")
+            } else {
+                let url = "api/system/resource/updateSource"
 
-            let config = {
-                id: e.id,
-                deleteflag: "1"
+                let config = {
+                    id: _self.local_rows.id,
+                    deleteflag: "1"
+                }
+
+                function success(res){
+                    // _self.$Message.success("删除成功")
+                    _self.getData()
+                }
+
+                function fail(err){
+                }
+
+                this.$Post(url, config, success, fail)
             }
-
-            function success(res){
-                // _self.$Message.success("删除成功")
-                _self.getData()
-            }
-
-            function fail(err){
-            }
-
-            this.$Post(url, config, success, fail)
         }
     },
     created () {

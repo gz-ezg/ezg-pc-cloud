@@ -800,8 +800,8 @@ export const appRouter = [
           import(/* webpackChunkName: "arrearsOrder_index" */ '@/views/order/arrearsOrder/index.vue')
       },
       {
-        access: 11602,
-        meta: 11602,
+        access: 11653,
+        meta: 11653,
         path: 'arrearsOrderApprove',
         title: '欠费单审批',
         name: 'arrearsOrderApprove_index',
