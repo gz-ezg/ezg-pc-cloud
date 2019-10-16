@@ -916,8 +916,8 @@ import publicCustomer from './publicCustomer'
                         params:{
                             receipt:'N',
                             // isAudit:'Y',
-                            sortField:'clue_level',
-                            order:'asc',
+                            sortField:'c.createdate',
+                            // order:'asc',
                             page:_self.paget,
                             pageSize:_self.pageSizet,
                             customerName:_self.SearchValidate.customerName,
@@ -999,8 +999,8 @@ import publicCustomer from './publicCustomer'
                         params:{
                             receipt:'Y',
                             // isAudit:'Y',
-                            sortField:'receipt_time',
-                            order:'asc',
+                            sortField:'c.createdate',
+                            // order:'asc',
                             page:_self.pagey,
                             pageSize:_self.pageSizey,
                             customerName:_self.SearchValidate1.customerName,

@@ -176,6 +176,13 @@
             v-permission="['marketingM.change']"
             >变更</Button
           >
+          <!--<Button-->
+                  <!--type="primary"-->
+                  <!--name="marketingManagement_index_edit_delete"-->
+                  <!--icon="trash-b"-->
+                  <!--@click="check_select('COPY_CUSTOMER')"-->
+          <!--&gt;复制到资源池</Button-->
+          <!--&gt;-->
           <Button
             type="primary"
             name="marketingManagement_index_edit_delete"
@@ -266,6 +273,7 @@
     <dymaic></dymaic>
     <Qcode></Qcode>
     <del-customer></del-customer>
+    <copy-customer></copy-customer>
     <edit-customer
       :customer="row"
       @close-edit="close_edit"
@@ -335,6 +343,7 @@ import field from './op/field';
 import dymaic from './op/dymaic';
 import Qcode from './op/code';
 import delCustomer from './op/del';
+import copyCustomer from './op/copy';
 
 export default {
   name: 'marketingManagement_index',
@@ -350,7 +359,8 @@ export default {
     Qcode,
     delCustomer,
     editCustomer,
-    reCustomer
+    reCustomer,
+    copyCustomer
   },
   data() {
     return {

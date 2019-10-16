@@ -82,6 +82,15 @@ export default {
           this.$Message.warning('请选择需要操作的客户！')
         }
       }
+      if (e == 'COPY_CUSTOMER') {
+        if (this.selectRow.length !== 0) {
+          this.$bus.emit(e, this.selectRow)
+        } else if (this.row) {
+          this.$bus.emit(e, [this.row])
+        } else {
+          this.$Message.warning('请选择需要操作的客户！')
+        }
+      }
       if (e == 'CUSTOMER_CHANGE_MARKETER') {
         if (this.selectRow.length !== 0) {
           this.$bus.emit(e, this.selectRow)

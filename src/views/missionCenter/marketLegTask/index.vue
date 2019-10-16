@@ -42,6 +42,7 @@
                             @day-right-click="dayRightClick"
                             @event-mouseover="mouse_over"
                             @event-mouseout="mouse_out"
+                            @view-render="viewRender"
                     >
                     </full-calendar>
                 </Col>
@@ -188,6 +189,11 @@
             }
         },
         methods:{
+            viewRender(view,element){
+                this.bDate = DateFormat(view.start._i)
+                this.eDate = DateFormat(view.end._i)
+                this.get_data()
+            },
             close_right_menu(){
                 this.right_click_show = false
             },
@@ -267,7 +273,9 @@
                     params:{
                         page: 1,
                         pageSize: 1000,
-                        marketKind:"tkLegMar"
+                        marketKind:"tkLegMar",
+                        bweek_date:_self.bDate,
+                        eweek_date:_self.eDate
                     }
                 }
 
@@ -355,7 +363,6 @@
         created() {
             let _self = this
             _self.get_data_center()
-            _self.get_data()
             _self.get_onedate_data((new Date()).toLocaleDateString().replace(new RegExp("/",'g'),"-"))
             this.local_date = (new Date()).toLocaleDateString().replace(new RegExp("/",'g'),"-")
             this.local_date = DateFormat(new Date())

@@ -119,10 +119,10 @@
             </Col>
             <Col span="12" style="padding-left: 20px" v-if="cus_data.length!==0">
                 <Row>
-                    <Col span="4">
+                    <Col span="6">
                         <div style="font-weight: bold;font-size: 20px;color: red;">{{cus_data.customer.ctuomerName}}</div>
                     </Col>
-                    <Col span="12">
+                    <Col span="10">
                         <div>{{cus_data.customer.companyname}}</div>
                         <div>{{cus_data.customer.tel}}</div>
                     </Col>
