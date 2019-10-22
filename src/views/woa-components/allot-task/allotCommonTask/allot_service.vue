@@ -59,7 +59,7 @@ export default {
             })
         },
         get_depart(){
-            let url = 'apisystem/depart/list?alias_code=BUSSINESS&terminal_flag=1'
+            let url = 'api/system/depart/list?alias_code=BUSSINESS&terminal_flag=1'
             let _self = this
             this.$http.get(url).then(function(res){
                 _self.servicerDepartList = res.data.data
