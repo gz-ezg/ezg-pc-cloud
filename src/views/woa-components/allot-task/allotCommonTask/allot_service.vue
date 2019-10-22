@@ -9,8 +9,9 @@
                     <Col span="1" style="visibility:hidden">1</Col>
                     <Col span="20">
                         <FormItem prop="departName" label="服务部门：">
-                            <Input type="text" v-model="departName" readonly>
-                            </Input>
+                            <Select transfer v-model="servicerDepart" filterable @on-change="getAllUserList">
+                                <Option v-for="(item,index) in servicerDepartList" :key="index" :value="item.ID">{{item.departname}}</Option>
+                            </Select>
                         </FormItem>
                     </Col>
                 </Row>
@@ -42,17 +43,26 @@ export default {
             departName:"",
             ServiceDeptID:"",
             allDepartUser:[],
+            servicerDepartList:[],
             loading:false,
-            servicerID:""
+            servicerID:"",
+            servicerDepart:""
         }
     },
     methods:{
         getAllUserList(){
-            let url = 'api/user/getUserListByDepartId?departId='+ this.ServiceDeptID
+            let url = `api/user/getUserListByDepartId?departId=${this.servicerDepart}`
             // 11572
             let _self = this
             this.$http.get(url).then(function(res){
                 _self.allDepartUser = res.data.data
+            })
+        },
+        get_depart(){
+            let url = 'apisystem/depart/list?alias_code=BUSSINESS&terminal_flag=1'
+            let _self = this
+            this.$http.get(url).then(function(res){
+                _self.servicerDepartList = res.data.data
             })
         },
         allot(){
@@ -61,7 +71,8 @@ export default {
             let url = 'api/order/batchUpdateServicer'
             let config = {
                 workOrderIds:_self.workorderIds,
-                userId: _self.servicerID
+                userId: _self.servicerID,
+                departId:_self.servicerDepart
             }
 
             function success(res){
@@ -84,10 +95,12 @@ export default {
     },
     created(){
         let _self = this
+        _self.get_depart()
         this.$bus.on('global_allot_commonorder',(e)=>{
             console.log("123")
             _self.show = true
             _self.ServiceDeptID = e[0]
+            _self.servicerDepart = e[0]
             _self.departName = e[1]
             _self.workorderIds = e[2]
             _self.getAllUserList()

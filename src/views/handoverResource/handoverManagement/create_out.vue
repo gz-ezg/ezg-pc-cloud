@@ -292,7 +292,7 @@ export default {
             let config = {
                 params:{
                     page: 1,
-                    pageSize: 10,
+                    pageSize: 100,
                     companyname: query,
                     
                 }

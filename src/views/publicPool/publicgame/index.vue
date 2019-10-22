@@ -151,6 +151,11 @@
                             _self.amount = res.data.data.amount
                             _self.num = res.data.data.num
                             _self.recept = res.data.data.recept
+                            if (res.data.data.end){
+                                setTimeout(()=>{
+                                    _self.sync_data()
+                                },5000)
+                            }
                         }
                     }
                     // _self.pageTotal = res.data.data.total
@@ -162,6 +167,25 @@
                 }
 
                 this.$Post(url, formdata, success, fail)
+            },
+            sync_data(){
+                let _self = this;
+                let url = `api/customer/highseasActivity/synchronizedDate`;
+                let config = {
+                    params: {
+
+                    }
+                }
+
+                function success(res){
+
+                }
+
+                function fail(err){
+
+                }
+
+                this.$Get(url, config, success, fail)
             },
             sure(){
                 this.showModal = false

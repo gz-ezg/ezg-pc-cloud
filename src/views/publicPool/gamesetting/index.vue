@@ -7,6 +7,7 @@
                 <Button type="primary" icon="ios-color-wand-outline" @click="edit">修改</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="openInfo = true">同步数据</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="change_status">{{statusName}}</Button>
+                <Button type="primary" icon="ios-color-wand-outline" @click="import_excel1">导入名单</Button>
             </ButtonGroup>
         </Row>
         <Row style="margin-top: 10px;">
@@ -48,6 +49,19 @@
             </Row>
             <div slot="footer"></div>
         </Modal>
+        <Modal v-model="openImportCustomer1" title="导入客户" width="200">
+            <Row :gutter="20">
+                <Col span="24">
+                    <center>
+                        <Upload ref="upload" :before-upload="handleUpload1" action="/api/customer/highseasActivity/importInfoAI">
+                            <Button type="ghost" icon="ios-cloud-upload-outline" style="margin-top:20px">选择文件</Button>
+                            <Button type="info" icon="ios-cloud-download-outline" style="margin-top:20px;" @click="open">导入模板</Button>
+                        </Upload>
+                    </center>
+                </Col>
+            </Row>
+            <div slot="footer"></div>
+        </Modal>
         <Modal v-model="openInfo" title="提示" width="200">
             是否同步数据？
             <div slot="footer">
@@ -80,6 +94,7 @@
                 activity_status_map:new Map(),
                 data:[],
                 openImportCustomer:false,
+                openImportCustomer1:false,
                 openInfo:false,
                 header: [
                     {
@@ -261,6 +276,9 @@
             import_excel(){
                 this.openImportCustomer = true;
             },
+            import_excel1(){
+                this.openImportCustomer1 = true;
+            },
             handleUpload(file) {
                 let _self = this;
                 _self.$Spin.show();
@@ -273,6 +291,29 @@
                 function success(res) {
                     _self.get_data();
                     _self.openImportCustomer = false;
+                    _self.$Spin.hide();
+                    return false;
+                }
+
+                function fail(err) {
+                    _self.$Spin.hide();
+                    return false;
+                }
+
+                this.$Post(url, formdata, success, fail);
+                return false;
+            },
+            handleUpload1(file) {
+                let _self = this;
+                _self.$Spin.show();
+                let formdata = new FormData();
+                let url = 'api/customer/highseasActivity/importInfoAI';
+
+                formdata.append('file', file);
+
+                function success(res) {
+                    _self.get_data();
+                    _self.openImportCustomer1 = false;
                     _self.$Spin.hide();
                     return false;
                 }

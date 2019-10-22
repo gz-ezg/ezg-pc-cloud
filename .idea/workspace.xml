@@ -3,11 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/cluesLibrary/cluesLibraryTable/cluesLibrary_table.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/cluesLibrary/cluesLibraryTable/cluesLibrary_table.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/commonVue.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/commonVue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/customerManagement/resourceManager/resourcePool/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customerManagement/resourceManager/resourcePool/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/missionCenter/marketLegTask/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/missionCenter/marketLegTask/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_out.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_out.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_request.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_request.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/publicPool/gamesetting/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/publicPool/gamesetting/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/woa-components/allot-task/allotCommonTask/allot_service.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/woa-components/allot-task/allotCommonTask/allot_service.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -30,8 +30,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/router/router.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-14">
-              <caret line="553" column="21" lean-forward="true" selection-start-line="553" selection-start-column="21" selection-end-line="553" selection-end-column="21" />
+            <state relative-caret-position="111">
+              <caret line="863" column="31" lean-forward="true" selection-start-line="863" selection-start-column="31" selection-end-line="863" selection-end-column="31" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#7331#7630#0" />
@@ -44,46 +44,67 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/missionCenter/marketLegTask/index.vue">
+        <entry file="file://$PROJECT_DIR$/src/views/woa-components/allot-task/allotCommonTask/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="364" column="35" lean-forward="true" selection-start-line="364" selection-start-column="35" selection-end-line="364" selection-end-column="35" />
+            <state relative-caret-position="16901">
+              <caret line="708" column="57" lean-forward="true" selection-start-line="708" selection-start-column="57" selection-end-line="708" selection-end-column="57" />
+              <folding>
+                <element signature="e#8258#8292#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue">
+        <entry file="file://$PROJECT_DIR$/src/views/woa-components/allot-task/allotCommonTask/allot_service.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="178" column="10" lean-forward="true" selection-start-line="178" selection-start-column="14" selection-end-line="184" selection-end-column="18" />
-              <folding>
-                <element signature="e#13088#13124#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="300">
+              <caret line="74" column="45" selection-start-line="74" selection-start-column="45" selection-end-line="74" selection-end-column="45" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/missionCenter/comSchedule/index.vue">
+        <entry file="file://$PROJECT_DIR$/src/views/woa-components/allot-task/allotCommonTask/allot_accout_service.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="52" column="28" selection-start-line="52" selection-start-column="28" selection-end-line="52" selection-end-column="53" />
-              <folding>
-                <element signature="e#12049#12140#0" />
-                <element signature="e#12176#13442#0" />
-                <element signature="e#13470#14224#0" />
-                <element signature="e#14248#14347#0" />
-                <element signature="e#14392#16263#0" />
-                <element signature="e#16298#16477#0" />
-                <element signature="e#16514#17276#0" />
-                <element signature="e#17303#17350#0" />
-                <element signature="e#17376#17473#0" />
-                <element signature="e#17522#17632#0" />
-                <element signature="e#17675#17958#0" />
-                <element signature="e#17986#18768#0" />
-                <element signature="e#18839#19151#0" />
-              </folding>
+            <state relative-caret-position="81">
+              <caret line="105" column="55" lean-forward="true" selection-start-line="105" selection-start-column="55" selection-end-line="105" selection-end-column="55" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/index.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="100">
+              <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/tabs/normal.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="9250">
+              <caret line="370" column="25" selection-start-line="370" selection-start-column="25" selection-end-line="370" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_request.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="7825">
+              <caret line="313" column="37" selection-start-line="313" selection-start-column="37" selection-end-line="313" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_out.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="294" column="34" selection-start-line="294" selection-start-column="34" selection-end-line="294" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -100,8 +121,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>个人信息</find>
-      <find>营销管理</find>
       <find>formDa</find>
       <find>商事</find>
       <find>reminderData</find>
@@ -130,6 +149,8 @@
       <find>欠费单</find>
       <find>公海池控制</find>
       <find>线索库</find>
+      <find>资</find>
+      <find>工单分</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -139,16 +160,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/views/order/orderList/components/orderOp/createOrder.vue" />
-        <option value="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_request.vue" />
-        <option value="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_out.vue" />
         <option value="$PROJECT_DIR$/src/views/publicPool/publicPool/customerManagment.vue" />
         <option value="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/QCode.vue" />
         <option value="$PROJECT_DIR$/config/config.js" />
         <option value="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/edit/companyInfo/index.vue" />
         <option value="$PROJECT_DIR$/src/views/commercialManagement/myCommonTask/myCommonTask_table.vue" />
         <option value="$PROJECT_DIR$/src/views/commercialManagement/myCommonTask/myCommonTaskIndex/stop.vue" />
-        <option value="$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/InvoiceManagement/index.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/InvoiceManagement/add.vue" />
         <option value="$PROJECT_DIR$/src/views/administrationManagement/accountworks/index.vue" />
@@ -167,7 +184,6 @@
         <option value="$PROJECT_DIR$/src/views/customerManagement/resourceManager/index.vue" />
         <option value="$PROJECT_DIR$/src/views/customerManagement/resourceManager/callSituation/message/index.vue" />
         <option value="$PROJECT_DIR$/src/main.js" />
-        <option value="$PROJECT_DIR$/src/views/publicPool/gamesetting/index.vue" />
         <option value="$PROJECT_DIR$/src/api/config.js" />
         <option value="$PROJECT_DIR$/src/api/Service.js" />
         <option value="$PROJECT_DIR$/src/views/customerManagement/resourceManager/resourcePool/telAnimate.vue" />
@@ -190,10 +206,15 @@
         <option value="$PROJECT_DIR$/src/views/cluesLibrary/cluesLibraryTable/cluesLibrary_table.vue" />
         <option value="$PROJECT_DIR$/src/views/missionCenter/marketLegTask/index.vue" />
         <option value="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue" />
+        <option value="$PROJECT_DIR$/src/views/publicPool/gamesetting/index.vue" />
+        <option value="$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue" />
+        <option value="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_request.vue" />
+        <option value="$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_out.vue" />
+        <option value="$PROJECT_DIR$/src/views/woa-components/allot-task/allotCommonTask/allot_service.vue" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
@@ -234,15 +255,31 @@
               <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="customerManagement" type="462c0819:PsiDirectoryNode" />
+              <item name="commercialManagement" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="customerManagement" type="462c0819:PsiDirectoryNode" />
-              <item name="marketingManagement2" type="462c0819:PsiDirectoryNode" />
+              <item name="woa-components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="woa-components" type="462c0819:PsiDirectoryNode" />
+              <item name="allot-task" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="woa-components" type="462c0819:PsiDirectoryNode" />
+              <item name="allot-task" type="462c0819:PsiDirectoryNode" />
+              <item name="allotCommonTask" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -497,7 +534,11 @@
       <workItem from="1570842612321" duration="20340000" />
       <workItem from="1571015897705" duration="14028000" />
       <workItem from="1571102371630" duration="20175000" />
-      <workItem from="1571191909150" duration="7166000" />
+      <workItem from="1571191909150" duration="7794000" />
+      <workItem from="1571281846878" duration="2343000" />
+      <workItem from="1571381337135" duration="4366000" />
+      <workItem from="1571630938751" duration="1593000" />
+      <workItem from="1571707180037" duration="3422000" />
     </task>
     <task id="LOCAL-00022" summary="修改启动失败的问题">
       <created>1555989851178</created>
@@ -846,7 +887,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2396903000" />
+    <option name="totallyTimeSpent" value="2409255000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -982,106 +1023,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="0.0" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/api/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="6" column="31" lean-forward="true" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/http.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/Service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="33" column="9" lean-forward="true" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#21#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/logManagement/smsSendLog.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="409" column="4" selection-start-line="409" selection-start-column="4" selection-end-line="414" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/publicPool/gamesetting/common/departList.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/customerManagement/resourceManager/resourcePool/messageAnimate.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="34" column="19" selection-start-line="34" selection-start-column="19" selection-end-line="34" selection-end-column="19" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Icon#0;n#div#0;n#div#1;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#1;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Icon#0;n#div#1;n#div#1;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#Card#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#Card#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#Card#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#Card#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Icon#0;n#div#0;n#div#1;n#Card#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#1;n#Card#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Icon#0;n#div#1;n#div#1;n#Card#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#Card#2;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#Card#2;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#Card#2;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#Card#2;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Icon#0;n#div#0;n#div#1;n#Card#2;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#1;n#Card#2;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Icon#0;n#div#1;n#div#1;n#Card#2;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/customerManagement/resourceManager/resourcePool/telAnimate.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="17" column="37" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="37" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Icon#0;n#div#0;n#div#1;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#Card#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#Card#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#Card#2;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#Card#2;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Icon#0;n#div#1;n#Card#2;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="17266" column="17" selection-start-line="17266" selection-start-column="17" selection-end-line="17266" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/publicPool/publicPool/customerManagment.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10650">
-          <caret line="575" column="6" lean-forward="true" selection-start-line="575" selection-start-column="6" selection-end-line="575" selection-end-column="6" />
-          <folding>
-            <element signature="n#Row#0;n#Card#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#Button#0;n#Upload#0;n#center#0;n#Col#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Button#1;n#Upload#0;n#center#0;n#Col#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#23047#23496#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/publicPool/gamesetting/common/detail.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
@@ -1194,25 +1135,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/publicPool/gamesetting/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="287" column="20" lean-forward="true" selection-start-line="287" selection-start-column="20" selection-end-line="287" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4350">
-          <caret line="174" column="52" lean-forward="true" selection-start-line="174" selection-start-column="52" selection-end-line="174" selection-end-column="52" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#2;n#div#0;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#3149#3194#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/arrearageCenter/Renew/productDetailList.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5450">
@@ -1281,16 +1203,6 @@
           <folding>
             <element signature="n#style#0;n#span#0;n#div#0;n#FormItem#0;n#Col#0;n#Row#5;n#Form#0;n#Col#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#1;n#div#0;n#FormItem#0;n#Col#0;n#Row#5;n#Form#0;n#Col#0;n#Row#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/arrearageCenter/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="8" column="11" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
-          <folding>
-            <element signature="e#1621#1692#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1456,20 +1368,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/router/router.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-14">
-          <caret line="553" column="21" lean-forward="true" selection-start-line="553" selection-start-column="21" selection-end-line="553" selection-end-column="21" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#7331#7630#0" />
-            <element signature="e#7638#7932#0" />
-            <element signature="e#7940#8274#0" />
-            <element signature="e#8282#8558#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/missionCenter/comSchedule/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
@@ -1495,17 +1393,119 @@
     <entry file="file://$PROJECT_DIR$/src/views/missionCenter/marketLegTask/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
-          <caret line="364" column="35" lean-forward="true" selection-start-line="364" selection-start-column="35" selection-end-line="364" selection-end-column="35" />
+          <caret line="364" column="35" selection-start-line="364" selection-start-column="35" selection-end-line="364" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="178" column="10" lean-forward="true" selection-start-line="178" selection-start-column="14" selection-end-line="184" selection-end-column="18" />
+        <state relative-caret-position="275">
+          <caret line="185" column="17" lean-forward="true" selection-start-line="185" selection-start-column="17" selection-end-line="185" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3650">
+          <caret line="146" column="46" lean-forward="true" selection-start-line="146" selection-start-column="46" selection-end-line="146" selection-end-column="46" />
           <folding>
-            <element signature="e#13088#13124#0" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#2;n#div#0;n#Card#0;n#div#0;n#div#1;n#Card#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#3149#3194#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/arrearageCenter/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="133" column="22" selection-start-line="133" selection-start-column="22" selection-end-line="133" selection-end-column="22" />
+          <folding>
+            <element signature="e#1621#1692#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/publicPool/gamesetting/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="373" column="12" selection-start-line="373" selection-start-column="12" selection-end-line="394" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/tabs/normal.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9250">
+          <caret line="370" column="25" selection-start-line="370" selection-start-column="25" selection-end-line="370" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_request.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7825">
+          <caret line="313" column="37" selection-start-line="313" selection-start-column="37" selection-end-line="313" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/handoverResource/handoverManagement/create_out.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="294" column="34" selection-start-line="294" selection-start-column="34" selection-end-line="294" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/commercialManagement/rule.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="9" column="47" lean-forward="true" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/woa-components/allot-task/allotCommonTask/detail.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="863" column="31" lean-forward="true" selection-start-line="863" selection-start-column="31" selection-end-line="863" selection-end-column="31" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#7331#7630#0" />
+            <element signature="e#7638#7932#0" />
+            <element signature="e#7940#8274#0" />
+            <element signature="e#8282#8558#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/woa-components/allot-task/allotCommonTask/allot_accout_service.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="105" column="55" lean-forward="true" selection-start-line="105" selection-start-column="55" selection-end-line="105" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/woa-components/allot-task/allotCommonTask/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16901">
+          <caret line="708" column="57" lean-forward="true" selection-start-line="708" selection-start-column="57" selection-end-line="708" selection-end-column="57" />
+          <folding>
+            <element signature="e#8258#8292#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/woa-components/allot-task/allotCommonTask/allot_service.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="74" column="45" selection-start-line="74" selection-start-column="45" selection-end-line="74" selection-end-column="45" />
         </state>
       </provider>
     </entry>
