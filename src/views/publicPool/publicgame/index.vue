@@ -130,6 +130,7 @@
                 this.$Get(url, config, success, fail)
             },
             receive(){
+                this.disabled = true
                 this.go()
             },
             go(){
@@ -145,7 +146,6 @@
                     }
                     if (res.data.msgCode==40000) {
                         _self.showModal = true
-                        _self.disabled = true
                        _self.msg = res.data.msg
                         if (res.data.data) {
                             _self.amount = res.data.data.amount
