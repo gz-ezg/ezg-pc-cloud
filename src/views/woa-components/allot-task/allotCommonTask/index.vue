@@ -142,6 +142,7 @@
         <AllotDetail></AllotDetail>
         <allot-account-service></allot-account-service>
         <allot-service></allot-service>
+        <allot-service1></allot-service1>
     </div>
 </template>
 
@@ -150,13 +151,15 @@ import { DateFormat } from "../../../../libs/utils.js"
 // import Bus from '../../../components/bus'
 import AllotDetail from './detail'
 import allotService from './allot_service'
+import allotService1 from './allot_service1'
 import allotAccountService from './allot_accout_service'
 
     export default {
         components:{
             AllotDetail,
             allotAccountService,
-            allotService
+            allotService,
+            allotService1
         },
         data() {
             return {
@@ -710,9 +713,9 @@ import allotAccountService from './allot_accout_service'
                         if(_self.local_router_name =="'ACCOUNT'"){
                             //  分配表单需要接收三项数据1.服务部门的id，2.部门名称，3.分配的工单id
                             _self.$bus.emit("global_allot_accountorder",[_self.change_rowN[0].ServiceDeptID,_self.change_rowN[0].departname,workOrderIds])
-                        }else{
+                        }else {
                             //  否则则使用allot_service组件
-                            _self.$bus.emit("global_allot_commonorder",[_self.change_rowN[0].ServiceDeptID,_self.change_rowN[0].departname,workOrderIds])                            
+                            _self.$bus.emit("global_allot_commonorder1",[_self.change_rowN[0].ServiceDeptID,_self.change_rowN[0].departname,workOrderIds])
                         }
                     }else{
                         _self.$Message.warning('请选择相同的服务部门！')
@@ -741,8 +744,10 @@ import allotAccountService from './allot_accout_service'
                         let workOrderIds = temp.join(",")
                         if(_self.local_router_name =="'ACCOUNT'"){
                             _self.$bus.emit("global_allot_accountorder",[_self.change_rowY[0].ServiceDeptID,_self.change_rowY[0].departname,workOrderIds])
-                        }else{
+                        }else if (_self.local_router_name =="'BUSSINESS'") {
                             _self.$bus.emit("global_allot_commonorder",[_self.change_rowY[0].ServiceDeptID,_self.change_rowY[0].departname,workOrderIds])                            
+                        } else {
+                            _self.$bus.emit("global_allot_commonorder1",[_self.change_rowY[0].ServiceDeptID,_self.change_rowY[0].departname,workOrderIds])
                         }
                     }else{
                         _self.$Message.warning('请选择相同的服务部门！')
