@@ -61,8 +61,8 @@
                         <!--&lt;!&ndash;<Button type="primary" icon="skip-backward" @click="pre" :disabled="disabled"></Button>&ndash;&gt;-->
                         <!--<Button type="primary" icon="play" @click="play" v-if="!showPause" style="width: 40px"></Button>-->
                         <!--<Button type="primary" icon="pause" @click="pause" v-if="showPause" style="width: 40px"></Button>-->
-                        <!--&lt;!&ndash;<Button type="primary" icon="skip-forward" @click="next" :disabled="disabled"></Button>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<Button type="primary" icon="ios-color-wand-outline" @click="import_execl">批量导入</Button>&ndash;&gt;-->
+                        <Button type="primary" icon="skip-forward" @click="next1" :disabled="disabled"></Button>
+                        <!--<Button type="primary" icon="ios-color-wand-outline" @click="import_execl">批量导入</Button>-->
                     <!--</ButtonGroup>-->
                     <RadioGroup v-model="second" style="margin-left: 60px">
                         <Radio label="2s" :disabled="disabled">
@@ -1036,8 +1036,8 @@
                 const { port } = await serviceApi.auth();
                 const { sevenmoorAccount } = await serviceApi1.auth1();
                 console.log({ sevenmoorAccount })
-                const wsuri = `ws://cloud.zgcfo.com:${port}/callback/websocket/${sevenmoorAccount}`;
-                // const wsuri = `ws://192.168.0.220:${port}/callback/websocket/${sevenmoorAccount}`;
+                // const wsuri = `ws://cloud.zgcfo.com:${port}/callback/websocket/${sevenmoorAccount}`;
+                const wsuri = `ws://192.168.0.220:${port}/callback/websocket/${sevenmoorAccount}`;
                 // const wsuri = `ws://192.168.2.89:${port}/callback/websocket/${sevenmoorAccount}`;
                 this.websock = new WebSocket(wsuri);
                 console.log(this.websock)
@@ -1048,46 +1048,44 @@
             },
             async websocketonmessage(e) {
                 let a = JSON.parse(e.data)
-                this.tel = a.tel
+                let id = parseInt(a.id)
                 this.result = a.result
                 console.log(a.result)
-                console.log(a.tel)
+                console.log(a.id)
                 try {
-                    if (a.result==='ringing' && a.tel == this.cus_data.customer.tel ){
+                    if (a.result==='ringing' && id == this.cus_data.customer.id ){
                         this.ringing = true
                         this.link = false
                         this.over = false
-                    } else if (a.result==='link' && a.tel == this.cus_data.customer.tel){
+                    } else if (a.result==='link' && id == this.cus_data.customer.id){
                         this.ringing = false
                         this.link = true
                         this.over = false
                     } else if (a.result==='over'){
-                        if(a.tel == this.cus_data.customer.tel){
+                        if(id == this.cus_data.customer.id){
                             this.ringing = false
                             this.link = false
                             this.over = true
                         }
                         if (this.flag){
                             if (this.second=='2s') {
-                                let tel = a.tel
-                                let data = this.data.map(v=>{return v.tel})
-                                let num =  data.findIndex(v=>{return v == tel})
+                                let data = this.data.map(v=>{return v.id})
+                                let num =  data.findIndex(v=>{return v == id})
                                 this.current_row = this.data[num]
                                 setTimeout(()=>{
                                     this.next1()
                                 },2000)
                             }
                             if (this.second=='4s') {
-                                let tel = a.tel
-                                let data = this.data.map(v=>{return v.tel})
-                                let num =  data.findIndex(v=>{return v == tel})
+                                let data = this.data.map(v=>{return v.id})
+                                let num =  data.findIndex(v=>{return v == id})
                                 this.current_row = this.data[num]
                                 setTimeout(()=>{
                                     this.next1()
                                 },4000)
                             }
                         } else {
-                            if(a.tel == this.cus_data.customer.tel){
+                            if(id == this.cus_data.customer.id){
                                 this.ringing = false
                                 this.link = false
                                 this.over = true

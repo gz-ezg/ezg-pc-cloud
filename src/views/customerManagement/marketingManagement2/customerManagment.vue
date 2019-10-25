@@ -176,13 +176,13 @@
             v-permission="['marketingM.change']"
             >变更</Button
           >
-          <!--<Button-->
-                  <!--type="primary"-->
-                  <!--name="marketingManagement_index_edit_delete"-->
-                  <!--icon="trash-b"-->
-                  <!--@click="check_select('COPY_CUSTOMER')"-->
-          <!--&gt;复制到资源池</Button-->
-          <!--&gt;-->
+          <Button
+                  type="primary"
+                  name="marketingManagement_index_edit_delete"
+                  icon="trash-b"
+                  @click="check_select('COPY_CUSTOMER')"
+          >复制到资源池</Button
+          >
           <Button
             type="primary"
             name="marketingManagement_index_edit_delete"

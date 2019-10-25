@@ -1072,6 +1072,15 @@ export const appRouter = [
         component: () =>
             import(/* webpackChunkName: "serviceUpgradeSuggestion" */ '@/views/accounterManager/serviceUpgradeSuggestion/index.vue')
       },
+      {
+        access: 11658,
+        meta: 11658,
+        path: 'accounterAutoShareSettingManager',
+        title: '会计分单管理',
+        name: 'accounterAutoShareSettingManager_index',
+        component: () =>
+            import(/* webpackChunkName: "accounterAutoShareSettingManager" */ '@/views/accounterManager/accounterAutoShareSettingManager/index.vue')
+      },
     ]
   },
   {
