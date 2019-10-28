@@ -765,7 +765,6 @@ export default {
         productid: _self.task_message.productid,
         servicer: _self.task_message.serviceId,
         marketer: _self.task_message.marketerId,
-        enddate: DateFormat(_self.task_message.enddate),
         servicebegindate: DateFormat(_self.task_message.servicebegindate),
         callbackdate: DateFormat(_self.task_message.callbackdate),
         reasonformarketer: _self.task_message.reasonformarketer,

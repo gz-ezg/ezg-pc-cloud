@@ -211,7 +211,6 @@ export default {
       this.$refs['form'].validate(async valid => {
         if (valid) {
           const { order, form, detail } = this;
-          let a = new Date()
           let config = {
             companyid: order.company_id,
             productid: detail.product_id,
@@ -222,7 +221,6 @@ export default {
             endreason: form.endreason,
             money: this.money,
             servicebegindate:DateFormat(detail.account_begin_time),
-            enddate:DateFormat(a),
             payType: detail.payType,
             taxperiod: DateFormat(form.taxperiod),
             followbusiness: form.followbusiness,

@@ -2,115 +2,113 @@
   <div>
     <Card>
       <Row style="margin-bottom:10px;">
-        <Collapse v-model="search_model">
+        <Collapse v-model="search_model" >
           <Panel name="1">
             <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
             筛选
             <div slot="content" @keydown.enter="search">
-              <Form ref="formValidate" :model="formValidate" :label-width="120" style="margin-top: 15px">
-                <Row :gutter="16" style="height:56px">
-                  <Col span="8">
+              <Form ref="formValidate" :model="formValidate" :label-width="100" style="margin-top: 15px">
+                <Row :gutter="12" class="row">
+                  <Col span="6">
                     <FormItem label="客户名称：" prop="name">
-                      <Input v-model="formValidate.name" size="small"></Input>
+                      <Input v-model="formValidate.name" size="small" style="width: 158px"></Input>
                     </FormItem>
                   </Col>
-                  <Col span="8">
+                  <Col span="6">
                     <FormItem label="电话：" prop="tel">
-                      <Input v-model="formValidate.tel" size="small"></Input>
+                      <Input v-model="formValidate.tel" size="small" style="width: 158px"></Input>
                     </FormItem>
                   </Col>
-                  <Col span="8">
+                  <Col span="6">
                     <FormItem label="归属公司：" prop="companyname">
-                      <Input v-model="formValidate.companyname" size="small"></Input>
+                      <Input v-model="formValidate.companyname" size="small" style="width: 158px"></Input>
+                    </FormItem>
+                  </Col>
+                  <Col span="6">
+                    <FormItem label="跟进人：" prop="followbyname">
+                      <Input v-model="formValidate.followbyname" size="small" style="width: 158px"></Input>
                     </FormItem>
                   </Col>
                 </Row>
-                <Row :gutter="12" style="height:56px">
-                  <Col span="8">
-                    <FormItem label="跟进人：" prop="followbyname">
-                      <Input v-model="formValidate.followbyname" size="small"></Input>
-                    </FormItem>
-                  </Col>
-                  <Col span="8">
+                <Row :gutter="6" class="row">
+                  <Col span="6">
                     <FormItem label="客户状态：" prop="customerType">
                       <Cascader
                         trigger="hover"
                         :data="customerTypes_Casr"
                         v-model="formValidate.customerType"
                         size="small"
-                        style="margin-top:5px;width:100%"
+                        style="margin-top:5px;width: 158px"
                       ></Cascader>
                     </FormItem>
                   </Col>
-                  <Col span="8">
+                  <Col span="6">
                     <FormItem label="区域：" prop="area">
-                      <Select transfer v-model="formValidate.area" size="small" @on-change="search">
+                      <Select transfer v-model="formValidate.area" size="small" @on-change="search" style="width: 160px">
                         <Option v-for="item in area" :value="item.typecode" :key="item.id">
                           {{ item.typename }}
                         </Option>
                       </Select>
                     </FormItem>
                   </Col>
-                </Row>
-                <Row :gutter="12" style="height:56px">
-                  <Col span="8">
-                    <FormItem label="客户来源：" prop="customersource">
-                      <Select transfer v-model="formValidate.customersource" size="small" @on-change="search" style="width:100%">
+                  <Col span="6">
+                    <FormItem label="客户来源：" prop="customersource" style="margin-left: 3px">
+                      <Select transfer v-model="formValidate.customersource" size="small" @on-change="search" style="width: 160px">
                         <Option v-for="item in cluesources" :value="item.typecode" :key="item.id">
                           {{ item.typename }}
                         </Option>
                       </Select>
                     </FormItem>
                   </Col>
-                  <Col span="8">
-                    <FormItem label="渠道名称：" prop="channelTypeName">
-                      <Input v-model="formValidate.channelTypeName" size="small"></Input>
+                  <Col span="6">
+                    <FormItem label="渠道名称：" prop="channelTypeName" style="margin-left: 5px">
+                      <Input v-model="formValidate.channelTypeName" size="small" style="width: 158px;"></Input>
                     </FormItem>
                   </Col>
-                  <Col span="8">
+                </Row>
+                <Row :gutter="12" class="row">
+                  <Col span="6">
                     <FormItem label="微信绑定：" prop="isbound">
-                      <Select transfer v-model="formValidate.isbound" size="small" @on-change="search" style="width:100%">
+                      <Select transfer v-model="formValidate.isbound" size="small" @on-change="search" style="width: 158px">
                         <Option value="Y">是</Option>
                         <Option value="N">否</Option>
                       </Select>
                     </FormItem>
                   </Col>
-                </Row>
-                <Row :gutter="12" style="height:56px">
-                  <Col span="8">
+                  <Col span="6">
                     <FormItem label="创建时间：" prop="credate">
                       <DatePicker
-                        type="daterange"
-                        transfer
-                        v-model="formValidate.credate"
-                        placement="bottom-end"
-                        size="small"
-                        style="width:100%"
+                              type="daterange"
+                              transfer
+                              v-model="formValidate.credate"
+                              placement="bottom-end"
+                              size="small"
+                              style="width: 158px"
                       ></DatePicker>
                     </FormItem>
                   </Col>
-                  <Col span="8">
+                  <Col span="6">
                     <FormItem label="更新时间：" prop="upddate">
                       <DatePicker
-                        type="daterange"
-                        transfer
-                        v-model="formValidate.upddate"
-                        placement="bottom-start"
-                        size="small"
-                        style="width:100%"
+                              type="daterange"
+                              transfer
+                              v-model="formValidate.upddate"
+                              placement="bottom-start"
+                              size="small"
+                              style="width: 158px"
                       ></DatePicker>
                     </FormItem>
                   </Col>
-                  <Col span="8">
+                  <Col span="6">
                     <FormItem label="标签：" prop="labelName">
-                      <Input v-model="formValidate.labelName" size="small"></Input>
+                      <Input v-model="formValidate.labelName" size="small" style="width: 158px"></Input>
                     </FormItem>
                   </Col>
                 </Row>
-                <Row :gutter="12" style="height:56px">
-                  <Col span="8">
+                <Row :gutter="12" class="row">
+                  <Col span="6">
                     <FormItem label="客户等级：" prop="importlevel">
-                      <Select transfer v-model="formValidate.importlevel" size="small" @on-change="search" style="width:100%">
+                      <Select transfer v-model="formValidate.importlevel" size="small" @on-change="search" style="width: 158px">
                         <Option value=""></Option>
                         <Option v-for="item in customerrating" :value="item.typecode" :key="item.id">
                           {{ item.typename }}
@@ -118,16 +116,16 @@
                       </Select>
                     </FormItem>
                   </Col>
-                  <Col span="8">
+                  <Col span="6">
                     <FormItem label="剩余跟进时间：" prop="begin_residue_time">
                       <Input v-model="formValidate.begin_residue_time" size="small" style="width:30%" placeholder="起始"></Input>
                       -
                       <Input v-model="formValidate.end_residue_time" size="small" style="width:30%" placeholder="结束"></Input>
                     </FormItem>
                   </Col>
-                  <Col span="8">
+                  <Col span="6">
                     <FormItem label="客户重要性：" prop="importance">
-                      <Select transfer v-model="formValidate.importance" size="small" @on-change="search" style="width:100%">
+                      <Select transfer v-model="formValidate.importance" size="small" @on-change="search" style="width: 158px">
                         <Option value=""> </Option>
                         <Option v-for="item in importance" :value="item.typecode" :key="item.id">
                           {{ item.typename }}
@@ -135,15 +133,15 @@
                       </Select>
                     </FormItem>
                   </Col>
-                </Row>
-                <center>
-                  <FormItem style="margin-top:10px">
-                    <Button type="primary" name="marketingManagement_index_edit_search" @click="search">搜索</Button>
-                    <Button type="ghost" name="marketingManagement_index_edit_reset" @click="handleReset" style="margin-left: 8px"
+                  <Col span="6">
+                    <FormItem style="margin-top:10px">
+                      <Button type="primary" size="small" name="marketingManagement_index_edit_search" @click="search">搜索</Button>
+                      <Button type="ghost" size="small" name="marketingManagement_index_edit_reset" @click="handleReset" style="margin-left: 8px"
                       >重置</Button
-                    >
-                  </FormItem>
-                </center>
+                      >
+                    </FormItem>
+                  </Col>
+                </Row>
               </Form>
             </div>
           </Panel>
@@ -393,7 +391,7 @@ export default {
       showHeaderCheckBox: false,
       openEdit: false,
       openEditOne: false,
-      search_model: '',
+      search_model: '1',
       header: [
         {
           title: '姓名',
@@ -1029,5 +1027,8 @@ export default {
 <style>
 .ivu-table .demo-table-followdate-warning-row {
   color: #ff6600;
+}
+.ivu-col-span-6 {
+  height: 28px;
 }
 </style>

@@ -52,30 +52,34 @@
                         </Panel>
                     </Collapse>
                 </Row>
-                <Row>
-                    <Switch @on-change="change">
-                        <span slot="open">开</span>
-                        <span slot="close">关</span>
-                    </Switch>
-                    <!--<ButtonGroup>-->
+                <Row style="display: flex;justify-content: space-between">
+                    <div style="display: flex;justify-content: space-between">
+                        <Switch @on-change="change">
+                            <span slot="open">开</span>
+                            <span slot="close">关</span>
+                        </Switch>
+                        <!--<ButtonGroup>-->
                         <!--&lt;!&ndash;<Button type="primary" icon="skip-backward" @click="pre" :disabled="disabled"></Button>&ndash;&gt;-->
                         <!--<Button type="primary" icon="play" @click="play" v-if="!showPause" style="width: 40px"></Button>-->
                         <!--<Button type="primary" icon="pause" @click="pause" v-if="showPause" style="width: 40px"></Button>-->
-                        <Button type="primary" icon="skip-forward" @click="next1" :disabled="disabled"></Button>
+                        <!--<Button type="primary" icon="skip-forward" @click="next1" :disabled="disabled"></Button>-->
                         <!--<Button type="primary" icon="ios-color-wand-outline" @click="import_execl">批量导入</Button>-->
-                    <!--</ButtonGroup>-->
-                    <RadioGroup v-model="second" style="margin-left: 60px">
-                        <Radio label="2s" :disabled="disabled">
-                            <span>2秒</span>
-                        </Radio>
-                        <Radio label="4s" :disabled="disabled">
-                            <span>4秒</span>
-                        </Radio>
-                    </RadioGroup>
-                    <ButtonGroup style="margin-left: 138px">
-                        <Button type="primary" icon="ios-color-wand-outline" @click="deleted">批量删除</Button>
-                        <Button type="primary" icon="ios-color-wand-outline" @click="import_excel">批量导入</Button>
-                    </ButtonGroup>
+                        <!--</ButtonGroup>-->
+                        <RadioGroup v-model="second" style="margin-left: 60px;display: flex;justify-content: flex-start">
+                            <Radio label="2s" :disabled="disabled">
+                                <span>2秒</span>
+                            </Radio>
+                            <Radio label="4s" :disabled="disabled">
+                                <span>4秒</span>
+                            </Radio>
+                        </RadioGroup>
+                    </div>
+                    <div>
+                        <ButtonGroup style="margin-left: 138px;display: flex;justify-content: flex-start">
+                            <Button type="primary" icon="ios-color-wand-outline" @click="deleted">批量删除</Button>
+                            <Button type="primary" icon="ios-color-wand-outline" @click="import_excel">批量导入</Button>
+                        </ButtonGroup>
+                    </div>
                 </Row>
                 <Row style="margin-top: 10px;">
                     <Table
