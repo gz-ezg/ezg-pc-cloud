@@ -78,7 +78,6 @@
         </Row>
         <Row style="display: flex;justify-content: flex-end">
             <Button type="primary" v-if="!showNum" :loading="buttonLoading" @click="save">保存</Button>
-            <Button type="primary" v-if="showNum" @click="save1">保存</Button>
         </Row>
     </Card>
 </template>
