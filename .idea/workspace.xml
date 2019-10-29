@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/accounterAutoShareSettingManager/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/accounterAutoShareSettingManager/index.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -25,8 +25,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/accounterManager/accounterAutoShareSettingManager/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="65" column="21" lean-forward="true" selection-start-line="65" selection-start-column="21" selection-end-line="65" selection-end-column="21" />
+            <state relative-caret-position="122">
+              <caret line="344" column="21" selection-start-line="344" selection-start-column="21" selection-end-line="344" selection-end-column="21" />
               <folding>
                 <element signature="n#style#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#Col#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
@@ -208,9 +208,9 @@
         <option value="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue" />
         <option value="$PROJECT_DIR$/src/views/publicPool/publicgame/index.vue" />
         <option value="$PROJECT_DIR$/src/layouts/Main.vue" />
-        <option value="$PROJECT_DIR$/src/views/accounterManager/accounterAutoShareSettingManager/index.vue" />
         <option value="$PROJECT_DIR$/src/views/notificationPush/smsSendLog/Menu/show.vue" />
         <option value="$PROJECT_DIR$/src/views/customerManagement/resourceManager/resourcePool/index.vue" />
+        <option value="$PROJECT_DIR$/src/views/accounterManager/accounterAutoShareSettingManager/index.vue" />
       </list>
     </option>
   </component>
@@ -542,7 +542,7 @@
       <workItem from="1571877850689" duration="11445000" />
       <workItem from="1571981945049" duration="13804000" />
       <workItem from="1572225304956" duration="25940000" />
-      <workItem from="1572310539299" duration="26344000" />
+      <workItem from="1572310539299" duration="26765000" />
     </task>
     <task id="LOCAL-00022" summary="修改启动失败的问题">
       <created>1555989851178</created>
@@ -891,7 +891,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2499059000" />
+    <option name="totallyTimeSpent" value="2499480000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -904,6 +904,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1376" height="784" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6918033" visible="true" weight="0.22897898" />
       <window_info id="Structure" order="1" weight="0.24924925" />
@@ -1494,8 +1495,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/accounterManager/accounterAutoShareSettingManager/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="65" column="21" lean-forward="true" selection-start-line="65" selection-start-column="21" selection-end-line="65" selection-end-column="21" />
+        <state relative-caret-position="122">
+          <caret line="344" column="21" selection-start-line="344" selection-start-column="21" selection-end-line="344" selection-end-column="21" />
           <folding>
             <element signature="n#style#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#Col#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />

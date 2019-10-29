@@ -306,41 +306,43 @@
                     // _self.menu = res.data.data
                     _self.selectRow = []
                     _self.data = []
-                    _self.productData = res.data.data.productList
-                    _self.userProductData = res.data.data.userProductList
-                    _self.product = res.data.data.productList[0].product
-                    let ids = res.data.data.userProductList.map((v)=>{return v.account_product_id})
-                    for (let i in res.data.data.productList){
-                        let str  = res.data.data.productList[i].items
-                        let product = res.data.data.productList[i].product
-                        console.log(str)
-                        console.log(ids)
-                        let arr = str.split(",")
-                        let arr1 = []
+                    if (res.data.data.productList.length){
+                        _self.productData = res.data.data.productList
+                        _self.product = res.data.data.productList[0].product
+                        for (let i in res.data.data.productList){
+                            let str  = res.data.data.productList[i].items
+                            let product = res.data.data.productList[i].product
+                            console.log(str)
+                            let arr = str.split(",")
+                            let arr1 = []
 
-                        console.log(arr)
-                        for(let i in arr){
-                            let obj = {}
-                            let arr2 = arr[i].split("-")
-                            console.log(arr2)
-                            obj.id = parseFloat(arr2[0])
-                            obj.productName = arr2[1]+'('+arr2[2]+')'
-                            obj.score = parseFloat(arr2[2])
-                            obj.product = product
-                            arr1.push(obj)
-                        }
-                        console.log(arr1)
-                        _self.data = _self.data.concat(arr1)
-                        console.log(_self.data)
-                    }
-
-                    for (let i in _self.data){
-                        if (ids.includes(parseInt(_self.data[i].id))) {
-                            _self.data[i]._checked = true
-                            _self.selectRow.push(_self.data[i])
+                            console.log(arr)
+                            for(let i in arr){
+                                let obj = {}
+                                let arr2 = arr[i].split("-")
+                                console.log(arr2)
+                                obj.id = parseFloat(arr2[0])
+                                obj.productName = arr2[1]+'('+arr2[2]+')'
+                                obj.score = parseFloat(arr2[2])
+                                obj.product = product
+                                arr1.push(obj)
+                            }
+                            console.log(arr1)
+                            _self.data = _self.data.concat(arr1)
+                            console.log(_self.data)
                         }
                     }
-                    console.log( _self.selectRow)
+                    if (res.data.data.userProductList.length) {
+                        _self.userProductData = res.data.data.userProductList
+                        let ids = res.data.data.userProductList.map((v)=>{return v.account_product_id})
+                        for (let i in _self.data){
+                            if (ids.includes(parseInt(_self.data[i].id))) {
+                                _self.data[i]._checked = true
+                                _self.selectRow.push(_self.data[i])
+                            }
+                        }
+                        console.log( _self.selectRow)
+                    }
                 }
 
                 this.$Get(url, config ,success)
