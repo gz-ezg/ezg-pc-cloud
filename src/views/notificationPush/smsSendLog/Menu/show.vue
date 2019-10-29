@@ -20,14 +20,14 @@
         <Row :gutter="16">
           <Col span="12">
             <FormItem label="结果">
-              <Input readonly size="small" type="textarea" :autosize="{ maxRows: 8 }" v-model="row.info" placeholder=""> </Input>
+              <Input readonly  type="textarea" :autosize="{minRows:2,maxRows: 8 }" v-model="row.info" placeholder=""> </Input>
             </FormItem>
           </Col>
         </Row>
         <Row :gutter="16">
           <Col span="24">
             <FormItem label="短信内容：">
-              <Input size="small" type="textarea" :autosize="{ maxRows: 8 }" v-model="row.msg_content" placeholder="" readonly>
+              <Input  type="textarea" :autosize="{ minRows:3,maxRows: 8 }" v-model="row.msg_content" placeholder="" readonly>
               </Input>
             </FormItem>
           </Col>

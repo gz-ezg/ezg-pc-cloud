@@ -4,7 +4,6 @@
             <Col span="4" style="max-height: 450px">
                 <Row style="display: flex" v-for="(item,index) in company_post" :key="index">
                     <Button type="error" style="flex: 1 1 166px;border-radius: 0" v-if="item.id=='11310'" @click="get_account_list(item.id)">{{item.typename}}</Button>
-
                 </Row>
                 <Row>
                     <div  style="display: flex">
@@ -20,9 +19,9 @@
                 </Row>
                 <Row style="display: flex">
                     <div style="max-height: 355px;overflow-y: scroll;overflow-x: hidden">
-                        <Menu theme="dark" value="1" style="flex: 1 1 166px;" @on-select="select">
-                            <Menu-group v-for="(item,index) in menu" :key="index">
-                                <Menu-item :name="item.ID" >
+                        <Menu ref="user" theme="dark" :active-name="name" style="flex: 1 1 166px;" @on-select="select">
+                            <Menu-group>
+                                <Menu-item v-for="(item,index) in menu" :key="index" :name="item.ID" >
                                     <Icon type="document-text"></Icon>
                                     {{item.realname}}
                                 </Menu-item>
@@ -32,39 +31,54 @@
                 </Row>
             </Col>
             <Col span="8" style="max-height: 450px">
-                <Tabs value="name1">
+                <Tabs value="name1" @on-click="change_tab">
                     <TabPane label="产品名称" name="name1">
                         <Table
                                 :loading="loading1"
                                 highlight-row
                                 :show-header="false"
-                                :row-class-name="rowClassName"
                                 @on-row-click="select_product"
                                 :columns="productColumns"
                                 :data="productData">
                         </Table>
                     </TabPane>
-                    <TabPane label="总分" name="name2" style="display: flex;justify-content: center">
-                        <Form>
-                            <FormItem label="还剩余分值"></FormItem>
-                            <FormItem label="本月已分配分值"></FormItem>
-                            <FormItem label="本月最大可分配分值"></FormItem>
+                    <TabPane label="总分" name="name2" >
+                        <Form style="margin-left: 80px">
+                            <FormItem label="还剩余分值">{{formData.score-formData.use_score}}</FormItem>
+                            <FormItem label="本月已分配分值">{{formData.use_score}}</FormItem>
+                            <FormItem label="本月最大可分配分值">
+                                <Input @on-blur="saveScore" size="small" v-model="formData.score" style="width: 50px"></Input>
+                            </FormItem>
                         </Form>
                     </TabPane>
                 </Tabs>
             </Col>
-            <Col span="11" style="max-height: 450px;margin-left: 2px">
+            <Col span="11" style="max-height: 450px;margin-left: 2px" v-show="!showNum">
+            <Table
+                    @on-select-all="selectALL"
+                    @on-selection-change = "selectChange"
+                    ref="selection"
+                    :row-class-name="RowClassName"
+                    highlight-row
+                    size="small"
+                    :columns="header"
+                    :data="data"
+            ></Table>
+            </Col>
+            <Col span="11" style="max-height: 450px;margin-left: 2px" v-show="showNum">
                 <Table
-                        @on-select-all="selectALL"
-                        @on-selection-change = "selectChange"
                         :loading="loading"
                         ref="selection"
                         highlight-row
                         size="small"
-                        :columns="header"
-                        :data="data"
+                        :columns="header1"
+                        :data="data1"
                 ></Table>
             </Col>
+        </Row>
+        <Row style="display: flex;justify-content: flex-end">
+            <Button type="primary" v-if="!showNum" :loading="buttonLoading" @click="save">保存</Button>
+            <Button type="primary" v-if="showNum" @click="save1">保存</Button>
         </Row>
     </Card>
 </template>
@@ -75,6 +89,8 @@
         data(){
             return{
                 loading:false,
+                buttonLoading:false,
+                showNum:false,
                 header:[
                     {
                         type: 'selection',
@@ -84,12 +100,28 @@
                     {
                         title: '产品名称（分数）',
                         key: 'productName',
-                        minWidth: 120
+                        minWidth: 120,
+                    },
+                ],
+                header1:[
+                    {
+                        title: '产品名称（数量）',
+                        key: 'product_name',
+                        minWidth: 120,
+                        render:(h,params)=>{
+                            return h('div',{},params.row.product_name+'（'+params.row.amount+'）')
+                        }
                     },
                 ],
                 data:[],
+                data1:[],
+                product:"",
+                name:"",
                 current_row:"",
+                postId:"",
+                userId:"",
                 menu:[],
+                formData:{},
                 productColumns:[
                     {
                     title: '产品名称',
@@ -97,6 +129,7 @@
                     align:'center'
                 },],
                 productData:[],
+                userProductData:[],
                 selectRow:[],
                 company_post:[]
             }
@@ -104,29 +137,138 @@
         methods:{
             selectALL(e){
                 this.selectRow = e
+                console.log(e)
             },
             selectChange(e){
                 this.selectRow = e
+                console.log(e)
+            },
+            RowClassName(row){
+                if (row.product==this.product) {
+                    return ""
+                } else {
+                    return "demo-table-hide-row"
+                }
+            },
+            change_tab(e){
+                if (e=='name1'){
+                    this.showNum = false
+                } else {
+                    this.showNum = true
+                }
             },
             select_product(e){
-                let str  = e.items
-                let arr = str.split(",")
-                let arr1 = []
-                for(let i in arr){
-                    let obj = {}
-                    let arr2 = arr[i].split("-")
-                    obj.id = arr2[0]
-                    obj.productName = arr2[1]+'('+arr2[2]+')'
-                    obj.score = arr2[2]
-                    arr1.push(obj)
-                }
-                this.data = arr1
+                console.log(e)
+                this.product = e.product
+                // let ids = this.userProductData.map((v)=>{return v.account_product_id})
+                // for (let i in this.data){
+                //     if (ids.includes(parseInt(this.data[i].id))) {
+                //         this.data[i]._checked = true
+                //         this.selectRow.push(this.data[i])
+                //     }
+                // }
+                console.log( this.selectRow)
             },
             select(e){
+                if (!e){
+                    this.userId = ""
+                } else {
+                    this.userId = parseInt(e)
+                }
+                this.name = e
+                this.$nextTick(()=> {
+                    this.$refs.user.updateActiveName()
+                })
                 this.get_product_list(e)
+                this.get_score_data(e)
+            },
+            save(){
+                let _self = this
+                _self.buttonLoading = true
+                console.log(_self.postId)
+                let url = 'api/product/account/updateAccountProduct'
+                if (!_self.userId){
+                    let config = {
+                        postId:_self.postId,
+                        productIds:_self.selectRow.map((v)=>{return v.id}).join(",")
+
+                    }
+
+                    function success(res){
+                        _self.buttonLoading = false
+                        _self.get_product_list(_self.userId)
+                    }
+
+                    function fail(res){
+                        _self.buttonLoading = false
+                    }
+
+                    this.$Post(url, config ,success,fail)
+                }
+                if (_self.userId){
+                    let config = {
+                        userId:_self.userId,
+                        productIds:_self.selectRow.map((v)=>{return v.id}).join(",")
+
+                    }
+
+                    function success(res){
+                        _self.buttonLoading = false
+                        _self.get_product_list(_self.userId)
+                    }
+
+                    function fail(res){
+                        _self.buttonLoading = false
+                    }
+
+                    this.$Post(url, config ,success,fail)
+                }
+
+            },
+            saveScore(){
+                let _self = this
+                let url = 'api/product/account/updateAccountScore'
+                if (!_self.userId){
+                    let config = {
+                        postId:_self.postId,
+                        score:_self.formData.score
+
+                    }
+
+                    function success(res){
+                        _self.buttonLoading = false
+                        _self.get_score_data(_self.userId)
+                    }
+
+                    function fail(res){
+                        _self.buttonLoading = false
+                    }
+
+                    this.$Post(url, config ,success,fail)
+                }
+                if (_self.userId){
+                    let config = {
+                        userId:_self.userId,
+                        score:_self.formData.score
+
+                    }
+
+                    function success(res){
+                        _self.buttonLoading = false
+                        _self.get_score_data(_self.userId)
+                    }
+
+                    function fail(res){
+                        _self.buttonLoading = false
+                    }
+
+                    this.$Post(url, config ,success,fail)
+                }
+
             },
             get_account_list(id){
                 let _self = this
+                _self.postId = id
                 let url = 'api/product/account/getAccountByPostId'
                 let config = {
                     params:{
@@ -137,14 +279,22 @@
                 function success(res){
                     console.log(res.data.data)
                     _self.menu = res.data.data
+                    let obj = {ID:"",realname:"全部"}
+                    _self.menu.unshift(obj)
                     let id = _self.menu[0].ID
+                    _self.name = ""
+                    _self.$nextTick(()=> {
+                        _self.$refs.user.updateActiveName()
+                    })
                     _self.get_product_list(id)
+                    _self.get_score_data(id)
                 }
 
                 this.$Get(url, config ,success)
             },
             get_product_list(id){
                 let _self = this
+                _self.userId  = id
                 let url = 'api/product/account/productList'
                 let config = {
                     params:{
@@ -155,29 +305,65 @@
                 function success(res){
                     console.log(res.data.data)
                     // _self.menu = res.data.data
+                    _self.selectRow = []
+                    _self.data = []
                     _self.productData = res.data.data.productList
-                    let str  = res.data.data.productList[0].items
-                    let id = res.data.data.userProductList[0].account_product_id
-                    console.log(str)
-                    let arr = str.split(",")
-                    let arr1 = []
+                    _self.userProductData = res.data.data.userProductList
+                    _self.product = res.data.data.productList[0].product
+                    let ids = res.data.data.userProductList.map((v)=>{return v.account_product_id})
+                    for (let i in res.data.data.productList){
+                        let str  = res.data.data.productList[i].items
+                        let product = res.data.data.productList[i].product
+                        console.log(str)
+                        console.log(ids)
+                        let arr = str.split(",")
+                        let arr1 = []
 
-                    console.log(arr)
-                    for(let i in arr){
-                        let obj = {}
-                        let arr2 = arr[i].split("-")
-                        console.log(arr2)
-                        obj.id = arr2[0]
-                        obj.productName = arr2[1]+'('+arr2[2]+')'
-                        obj.score = arr2[2]
-                        arr1.push(obj)
+                        console.log(arr)
+                        for(let i in arr){
+                            let obj = {}
+                            let arr2 = arr[i].split("-")
+                            console.log(arr2)
+                            obj.id = parseFloat(arr2[0])
+                            obj.productName = arr2[1]+'('+arr2[2]+')'
+                            obj.score = parseFloat(arr2[2])
+                            obj.product = product
+                            arr1.push(obj)
+                        }
+                        console.log(arr1)
+                        _self.data = _self.data.concat(arr1)
+                        console.log(_self.data)
                     }
-                    console.log(arr1)
-                    _self.data = arr1
+
                     for (let i in _self.data){
-                        if (_self.data[i].id==id) {
+                        if (ids.includes(parseInt(_self.data[i].id))) {
+                            _self.data[i]._checked = true
                             _self.selectRow.push(_self.data[i])
                         }
+                    }
+                    console.log( _self.selectRow)
+                }
+
+                this.$Get(url, config ,success)
+            },
+            get_score_data(id){
+                let _self = this
+                let url = 'api/product/account/getUserScoreByUserId'
+                let config = {
+                    params:{
+                        userId:id,
+                    }
+                }
+
+                function success(res){
+                    console.log(res.data.data)
+                    _self.data1 = res.data.data.pList
+                    _self.formData = res.data.data.score
+                    if (!_self.formData || !_self.formData.score){
+                        _self.formData.score = 0
+                    }
+                    if (!_self.formData || !_self.formData.use_score){
+                        _self.formData.use_score = 0
                     }
                 }
 
@@ -198,6 +384,12 @@
                 this.$GetDataCenter(params,success)
             }
         },
+        mounted(){
+            this.name = ""
+            this.$nextTick(()=> {
+                this.$refs.user.updateActiveName()
+            })
+        },
         created() {
             this.get_data_center()
             this.get_account_list(11310)
@@ -207,6 +399,12 @@
 
 <style>
     .ivu-menu-item-group-title{
+        display: none;
+    }
+    .ivu-table .demo-table-show-row td{
+
+    }
+    .ivu-table .demo-table-hide-row td{
         display: none;
     }
 </style>

@@ -680,6 +680,9 @@ export default {
       }
     } catch (error) {}
   },
+  beforeDestroy(){
+    this.websock.close()
+  },
   beforeRouteEnter(to, from, next) {
     if (localStorage.getItem('arrearList')) {
       next('/arrearageCenter');

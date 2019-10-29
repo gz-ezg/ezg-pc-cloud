@@ -1124,6 +1124,9 @@
             this.get_data()
             this.get_data_center()
             this.initWebSocket()
+        },
+        beforeDestroy() {
+            this.websock.close()
         }
     }
 </script>

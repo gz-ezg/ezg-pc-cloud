@@ -193,8 +193,8 @@
             },
             async initWebSocket() {
                 const { port, key } = await serviceApi.auth();
-                // const wsuri = `ws://cloud.zgcfo.com:${port}/highseasActivity/websocket`;
-                const wsuri = `ws://192.168.0.220:${port}/highseasActivity/websocket`;
+                const wsuri = `ws://cloud.zgcfo.com:${port}/highseasActivity/websocket`;
+                // const wsuri = `ws://192.168.0.220:${port}/highseasActivity/websocket`;
                 // const wsuri = `ws://192.168.2.89:${port}/highseasActivity/websocket`;
                 this.websock = new WebSocket(wsuri);
                 console.log(this.websock)
@@ -247,13 +247,14 @@
                 }, 300000);
             },
             websocketclose(e) {
-                console.log('断开连接', e);
+                console.log('断开连接',e);
             }
         },
         mounted(){
             this.$Notice.config({
                 top: 500,
             });
+
         },
         created() {
             let _self = this
@@ -284,6 +285,9 @@
                 this.showNum = true
             })
 
+        },
+        beforeDestroy() {
+            this.websock.close()
         }
     }
 </script>
