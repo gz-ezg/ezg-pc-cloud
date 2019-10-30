@@ -6,8 +6,8 @@
                 筛选
                 <div slot="content" @keydown.enter="search">
                     <Form ref="form" :model="form" :label-width="120" style="margin-top: 15px">
-                        <Row :gutter="16" type="flex">
-                            <Col span="8" v-for="(item, index) in data" :key="index">
+                        <Row>
+                            <Col span="6" v-for="(item, index) in data" :key="index">
                                 <FormItem :label="item.label" :prop="item.key" v-if="item.type=='input'">
                                     <Input v-model="form[item.key]" size="small" style="width:100%"></Input>
                                 </FormItem>
@@ -22,7 +22,7 @@
                                 <FormItem  v-else>
                                 </FormItem>
                             </Col>
-                            <Col span="24">
+                            <Col span="24" style="margin-top: 15px">
                                 <center>
                                     <Button type="primary" @click="search">搜索</Button>
                                     <Button type="ghost" @click="handle_reset" style="margin-left: 8px">重置</Button>
@@ -75,7 +75,7 @@
             form: {},
             form1:{},
             form2:{},
-            search_model: false
+            search_model: 1
         }
     },
     methods: {

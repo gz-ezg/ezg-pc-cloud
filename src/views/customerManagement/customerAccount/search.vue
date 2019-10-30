@@ -7,7 +7,7 @@
                 <div slot="content" @keydown.enter="search">
                     <Form ref="form" :model="form" :label-width="120" style="margin-top: 15px">
                         <Row :gutter="16" type="flex">
-                            <Col span="8" v-for="(item, index) in data" :key="index">
+                            <Col span="6" v-for="(item, index) in data" :key="index">
                                 <FormItem :label="item.label" :prop="item.key" v-if="item.type=='input'">
                                     <Input v-model="form[item.key]" size="small" style="width:100%"></Input>
                                 </FormItem>

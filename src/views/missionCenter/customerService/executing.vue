@@ -8,8 +8,8 @@
                         筛选
                         <div slot="content" @keydown.enter="Search">
                             <Form ref="formValidateSearch" :model="formValidateSearch" :label-width="100">
-                                <Row :gutter="24">
-                                    <Col span="8">
+                                <Row>
+                                    <Col span="6">
                                         <FormItem label="公司名称：" prop="companyname">
                                             <Input v-model="formValidateSearch.companyName" size="small"></Input>
                                         </FormItem>
@@ -19,42 +19,42 @@
                                             <!--<Input v-model="formValidateSearch.customertel" size="small"></Input>-->
                                         <!--</FormItem>-->
                                     <!--</Col>-->
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="市场人员：" prop="date">
                                             <Input v-model="formValidateSearch.creatorName" s size="small"></Input>
                                         </FormItem>
                                     </Col>
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="计划回访时间：" prop="paytime">
                                             <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:100%" size="small"></DatePicker>
                                         </FormItem>
                                     </Col>
-                                </Row>
-                                <Row :gutter="24">
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="联系方式：" prop="customertel">
                                             <Input v-model="formValidateSearch.customertel" size="small"></Input>
                                         </FormItem>
                                     </Col>
+                                </Row>
+                                <Row>
                                     <!--<Col span="8">-->
                                     <!--<FormItem label="客户联系方式：" prop="customername">-->
                                     <!--<Input v-model="formValidateSearch.customertel" size="small"></Input>-->
                                     <!--</FormItem>-->
                                     <!--</Col>-->
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="服务评分：" prop="paytime">
-                                            <Input v-model="formValidateSearch.brank" style="width:45%" size="small" type="number"></Input>
-                                            ----
-                                            <Input v-model="formValidateSearch.erank" style="width:45%" size="small" type="number"></Input>
+                                            <Input v-model="formValidateSearch.brank" style="width:41%" size="small" type="number"></Input>
+                                            -----
+                                            <Input v-model="formValidateSearch.erank" style="width:41%" size="small" type="number"></Input>
+                                        </FormItem>
+                                    </Col>
+                                    <Col span="6">
+                                        <FormItem>
+                                            <Button size="small" type="primary" @click="Search">搜索</Button>
+                                            <Button size="small" type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
                                         </FormItem>
                                     </Col>
                                 </Row>
-                                <center>
-                                    <FormItem>
-                                        <Button type="primary" @click="Search">搜索</Button>
-                                        <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
-                                    </FormItem>
-                                </center>
                             </Form>
                         </div>
                     </Panel>
@@ -115,7 +115,7 @@
                 taskKind:[],
                 row:[],
                 taskKind_map:new Map(),
-                search_model: "0",
+                search_model: 1,
                 formValidateSearch: {
                     brank:"",
                     erank:"",
@@ -499,5 +499,7 @@
 </script>
 
 <style>
-
+    .ivu-col-span-6 {
+        height: 28px;
+    }
 </style>

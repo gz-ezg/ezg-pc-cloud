@@ -8,25 +8,23 @@
                         
                             <div slot="content" @keydown.enter="Search">
                             <Form ref="formValidate" :model="formValidate" :label-width="120" style="margin-top: 15px">
-                                <Row :gutter="16" style="height:56px">
-                                    <Col span="8">
+                                <Row>
+                                    <Col span="6">
                                         <FormItem label="客户名称：" prop="name">
                                             <Input v-model="formValidate.name" size="small" style="width:100%"></Input>
                                         </FormItem>
                                     </Col>
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="电话：" prop="tel">
                                             <Input v-model="formValidate.tel" size="small" style="width:100%"></Input>
                                         </FormItem>
                                     </Col>
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="公司名称：" prop="companyname">
                                             <Input v-model="formValidate.companyname" size="small" style="width:100%"></Input>
                                         </FormItem>
                                     </Col>
-                                </Row>
-                                <Row :gutter="16" style="height:56px">
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="类型：" prop="type">
                                             <Select transfer v-model="formValidate.type" size="small" @on-change="Search" style="width:100%">
                                                 <Option v-for="item in customerDynamicType" :value="item.typecode" :key="item.id">
@@ -35,20 +33,22 @@
                                             </Select>
                                         </FormItem>
                                     </Col>
-                                    <Col span="8">
+                                </Row>
+                                <Row>
+                                    <Col span="6">
                                         <FormItem label="跟进人：" prop="realname">
                                             <Input v-model="formValidate.realname" size="small" style="width:100%"></Input>
                                         </FormItem>
                                     </Col>
+                                    <Col span="6">
+                                        <FormItem style="margin-top:10px">
+                                            <Button size="small" type="primary" @click="Search">搜索</Button>
+                                            <Button size="small" type="ghost" @click="handleReset" style="margin-left: 8px">
+                                                重置
+                                            </Button>
+                                        </FormItem>
+                                    </Col>
                                 </Row>
-                                <center>
-                                    <FormItem style="margin-top:10px">
-                                        <Button type="primary" @click="Search">搜索</Button>
-                                        <Button type="ghost" @click="handleReset" style="margin-left: 8px">
-                                            重置
-                                        </Button>
-                                    </FormItem>
-                                </center>
                             </Form>
                         </div>
                     </Panel>
@@ -81,7 +81,7 @@ export default {
     name:'customerLog_index',
     data(){
         return{
-            search_model:"",
+            search_model:1,
             customerDynamicType:[],
             customerDynamicType_Map: new Map(),
             formValidate:{
@@ -258,3 +258,8 @@ export default {
 }
 </script>
 
+<style>
+    .ivu-col-span-6 {
+        height: 28px;
+    }
+</style>

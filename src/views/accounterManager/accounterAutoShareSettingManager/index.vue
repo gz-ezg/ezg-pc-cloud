@@ -5,18 +5,16 @@
                 <Row style="display: flex" v-for="(item,index) in company_post" :key="index">
                     <Button type="error" style="flex: 1 1 166px;border-radius: 0" v-if="item.id=='11310'" @click="get_account_list(item.id)">{{item.typename}}</Button>
                 </Row>
-                <Row>
-                    <div  style="display: flex">
-                        <Button type="primary" v-for="(item,index) in company_post" :key="index" style="flex: 1 1 84px;border-radius: 0" v-if="item.id=='11311'" @click="get_account_list(item.id)">{{item.typename}}</Button>
-                        <Button type="info" v-for="(item,index) in company_post" :key="index" style="flex: 1 1 84px;border-radius: 0" v-if="item.id=='11312'" @click="get_account_list(item.id)">{{item.typename}}</Button>
-                    </div>
-                </Row>
-                <Row>
-                    <div  style="display: flex">
-                        <Button type="warning" v-for="(item,index) in company_post" :key="index" style="flex: 1 1 89px;border-radius: 0" v-if="item.id=='11313'" @click="get_account_list(item.id)">{{item.typename}}</Button>
-                        <Button type="success" v-for="(item,index) in company_post" :key="index" style="flex: 1 1 84px;border-radius: 0" v-if="item.id=='11314'" @click="get_account_list(item.id)">{{item.typename}}</Button>
-                    </div>
-                </Row>
+                <div  style="display: flex;flex-wrap: wrap">
+                    <Button :type="styleList[index]" v-for="(item,index) in company_post" v-if="item.id!='11310'" :key="index" style="flex: 1 1 auto;border-radius: 0" @click="get_account_list(item.id)">{{item.typename}}</Button>
+                    <!--<Button type="info" v-for="(item,index) in company_post" :key="index" style="flex: 1 1 84px;border-radius: 0" v-if="item.id=='11312'" @click="get_account_list(item.id)">{{item.typename}}</Button>-->
+                </div>
+                <!--<Row>-->
+                    <!--<div  style="display: flex">-->
+                        <!--<Button type="warning" v-for="(item,index) in company_post" :key="index" style="flex: 1 1 89px;border-radius: 0" v-if="item.id=='11313'" @click="get_account_list(item.id)">{{item.typename}}</Button>-->
+                        <!--<Button type="success" v-for="(item,index) in company_post" :key="index" style="flex: 1 1 84px;border-radius: 0" v-if="item.id=='11314'" @click="get_account_list(item.id)">{{item.typename}}</Button>-->
+                    <!--</div>-->
+                <!--</Row>-->
                 <Row style="display: flex">
                     <div style="max-height: 355px;overflow-y: scroll;overflow-x: hidden">
                         <Menu ref="user" theme="dark" :active-name="name" style="flex: 1 1 166px;" @on-select="select">
@@ -114,6 +112,7 @@
                 ],
                 data:[],
                 data1:[],
+                styleList:["error","primary","info","warning","success","error","primary","info","warning","success","error","primary","info","warning","success"],
                 product:"",
                 name:"",
                 current_row:"",
@@ -376,7 +375,9 @@
 
                 function success(res){
                     let {company_post} = res.data.data
-                    _self.company_post = company_post[0].children
+                    _self.company_post = company_post[0].children.sort((a,b)=>{
+                        return a.id - b.id
+                    })
                     console.log(_self.company_post )
                     // _self.accountChangeItemType = _self.$array2map(account_change_item_type)
                     // console.log(account_change_type, account_change_item_type)
