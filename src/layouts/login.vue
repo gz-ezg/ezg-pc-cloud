@@ -90,7 +90,7 @@ export default {
         "id" : "wxcode",  //#id
         "appid" : "wx7666e5cbbd22b505",
         "agentid" : "1000052",
-        "redirect_uri" :"http%3a%2f%2fcloud.zgcfo.com%3a8089%2f%23%2flogin",
+        "redirect_uri" :"http%3a%2f%2fcloud.zgcfo.com%2f%23%2flogin",
         // "redirect_uri" :"http%3a%2f%2fyc.zgcfo.com%3a8089%2fapi%2fuser%2fm%2flogin%2f1000052",
         "state" : "web_login",
         "href" : "https://cloud.zgcfo.com/api/assets/upload/commonImg/wx_code.css",

@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0">
-      <change beforePath="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layouts/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/layouts/login.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -27,11 +28,11 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/layouts/login.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="94" column="30" lean-forward="true" selection-start-line="94" selection-start-column="30" selection-end-line="94" selection-end-column="30" />
+            <state relative-caret-position="100">
+              <caret line="91" column="30" lean-forward="true" selection-start-line="91" selection-start-column="30" selection-end-line="91" selection-end-column="30" />
               <folding>
                 <element signature="n#Spin#0;n#div#0;n#template#0;n#!!top" />
                 <element signature="n#style#0;n#FormItem#1;n#Form#0;n#div#0;n#TabPane#1;n#Tabs#0;n#Card#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -41,11 +42,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="978" column="14" lean-forward="true" selection-start-line="978" selection-start-column="14" selection-end-line="978" selection-end-column="14" />
+            <state relative-caret-position="140">
+              <caret line="800" column="31" lean-forward="true" selection-start-line="800" selection-start-column="31" selection-end-line="800" selection-end-column="31" />
               <folding>
                 <element signature="n#style#0;n#Row#0;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#Icon#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -183,8 +184,8 @@
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue" />
         <option value="$PROJECT_DIR$/src/views/publicPool/publicPool/customerManagment.vue" />
-        <option value="$PROJECT_DIR$/src/layouts/login.vue" />
         <option value="$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue" />
+        <option value="$PROJECT_DIR$/src/layouts/login.vue" />
       </list>
     </option>
   </component>
@@ -507,7 +508,7 @@
       <workItem from="1572483999068" duration="17695000" />
       <workItem from="1572569292958" duration="14840000" />
       <workItem from="1572829478732" duration="30402000" />
-      <workItem from="1572914947494" duration="16218000" />
+      <workItem from="1572914947494" duration="17476000" />
     </task>
     <task id="LOCAL-00022" summary="修改启动失败的问题">
       <created>1555989851178</created>
@@ -856,7 +857,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2595295000" />
+    <option name="totallyTimeSpent" value="2596553000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -1401,22 +1402,10 @@
     <entry file="file://$PROJECT_DIR$/src/views/publicPool/publicPool/commonVue.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/layouts/login.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="94" column="30" lean-forward="true" selection-start-line="94" selection-start-column="30" selection-end-line="94" selection-end-column="30" />
-          <folding>
-            <element signature="n#Spin#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#FormItem#1;n#Form#0;n#div#0;n#TabPane#1;n#Tabs#0;n#Card#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#2109#2141#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/customerManagement/marketingManagement2/customerManagment.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="978" column="14" lean-forward="true" selection-start-line="978" selection-start-column="14" selection-end-line="978" selection-end-column="14" />
+        <state relative-caret-position="140">
+          <caret line="800" column="31" lean-forward="true" selection-start-line="800" selection-start-column="31" selection-end-line="800" selection-end-column="31" />
           <folding>
             <element signature="n#style#0;n#Row#0;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#Icon#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -1448,6 +1437,18 @@
             <element signature="e#35837#36973#0" />
             <element signature="e#27207#27555#0" />
             <element signature="e#28489#28528#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/layouts/login.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="91" column="30" lean-forward="true" selection-start-line="91" selection-start-column="30" selection-end-line="91" selection-end-column="30" />
+          <folding>
+            <element signature="n#Spin#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#FormItem#1;n#Form#0;n#div#0;n#TabPane#1;n#Tabs#0;n#Card#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#2109#2141#0" expanded="true" />
           </folding>
         </state>
       </provider>
