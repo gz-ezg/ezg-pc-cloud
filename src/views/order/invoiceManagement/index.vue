@@ -7,7 +7,7 @@
                     <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
                     筛选
                     <div  slot="content" @keydown.enter="search">
-                        <Form ref="seacrhFormInline" :model="seacrhFormInline" :label-width="100">
+                        <Form ref="seacrhFormInline" :model="seacrhFormInline" :label-width="100" style="margin-top: -10px">
                             <Row :gutter="16">
                                 <Col span="8">
                                     <FormItem prop="customerName" label="客户名称：">

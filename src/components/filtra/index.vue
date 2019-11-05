@@ -5,7 +5,7 @@
         <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
         筛选
         <div slot="content" @keydown.enter="search">
-          <Form ref="searchModel" :model="searchModel" :label-width="100">
+          <Form ref="searchModel" :model="searchModel" :label-width="100" style="margin-top: -10px">
             <Row>
               <template v-for="(item, index) in this.config">
                 <Col v-if="item.type == 'date'" :key="index" span="6">

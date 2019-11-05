@@ -7,7 +7,7 @@
                         <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
                             筛选
                         <div slot="content" @keydown.enter="search">
-                            <Form ref="formValidateSearch" :model="formValidateSearch" :label-width="80" style="margin-top: 15px">
+                            <Form ref="formValidateSearch" :model="formValidateSearch" :label-width="80" style="margin-top: -10px">
                                 <Row>
                                     <Col span="6">
                                         <FormItem label="订单号码：" prop="ordercode">

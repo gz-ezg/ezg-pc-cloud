@@ -5,7 +5,7 @@
                 <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
                 筛选
                 <div slot="content" @keydown.enter="search">
-                    <Form ref="form" :model="form" :label-width="120" style="margin-top: 15px">
+                    <Form ref="form" :model="form" :label-width="120" style="margin-top: -10px">
                         <Row>
                             <Col span="6" v-for="(item, index) in data" :key="index">
                                 <FormItem :label="item.label" :prop="item.key" v-if="item.type=='input'">
