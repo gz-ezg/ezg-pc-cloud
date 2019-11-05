@@ -740,32 +740,270 @@ export default {
       // }else{
       //     temp_status = _self.formValidate.customerType.join("-");
       // }
-      let url = `api/customer/list`;
-      let config = {
-        page: '1',
-        pageSize: '1000000',
-        name: _self.formValidate.name,
-        tel: _self.formValidate.tel,
-        customerType: _self.formValidate.customerType.join('-'),
-        // customerType: temp_status,
-        channelTypeName: _self.formValidate.channelTypeName,
-        followbyname: _self.formValidate.followbyname,
-        isbound: _self.formValidate.isbound,
-        customersource: _self.formValidate.customersource,
-        area: _self.formValidate.area,
-        companyname: _self.formValidate.companyname,
-        labelName: _self.formValidate.labelName,
-        importlevel: _self.formValidate.importlevel,
-        importance: _self.formValidate.importance,
-        bcreatedate: FULLDateFormat(_self.formValidate.credate[0]),
-        ecreatedate: FULLDateFormat(_self.formValidate.credate[1]),
-        bupdatedate: FULLDateFormat(_self.formValidate.upddate[0]),
-        eupdatedate: FULLDateFormat(_self.formValidate.upddate[1]),
-        export: 'Y',
-        exportField: encodeURI(JSON.stringify(field))
-      };
-      let toExcel = this.$MergeURL(url, config);
-      window.open(toExcel);
+      if (_self.formValidate.upddate[0] && !_self.formValidate.credate[0]) {
+        let a = FULLDateFormat(_self.formValidate.upddate[0]).split(' ')[1].split(":").join("")
+        let b = FULLDateFormat(_self.formValidate.upddate[1]).split(' ')[1].split(":").join("")
+        let c= a+b
+        console.log(c)
+        if (c=='000000000000'){
+          let url = `api/customer/list`;
+          let config = {
+            page: '1',
+            pageSize: '1000000',
+            name: _self.formValidate.name,
+            tel: _self.formValidate.tel,
+            customerType: _self.formValidate.customerType.join('-'),
+            // customerType: temp_status,
+            channelTypeName: _self.formValidate.channelTypeName,
+            followbyname: _self.formValidate.followbyname,
+            isbound: _self.formValidate.isbound,
+            customersource: _self.formValidate.customersource,
+            area: _self.formValidate.area,
+            companyname: _self.formValidate.companyname,
+            labelName: _self.formValidate.labelName,
+            importlevel: _self.formValidate.importlevel,
+            importance: _self.formValidate.importance,
+            bcreatedate: DateFormat(_self.formValidate.credate[0]),
+            ecreatedate: DateFormat(_self.formValidate.credate[1]),
+            bupdatedate: DateFormat(_self.formValidate.upddate[0]),
+            eupdatedate: DateFormat(_self.formValidate.upddate[1]),
+            export: 'Y',
+            exportField: encodeURI(JSON.stringify(field))
+          };
+          let toExcel = this.$MergeURL(url, config);
+          window.open(toExcel);
+        } else {
+          let url = `api/customer/list`;
+          let config = {
+            page: '1',
+            pageSize: '1000000',
+            name: _self.formValidate.name,
+            tel: _self.formValidate.tel,
+            customerType: _self.formValidate.customerType.join('-'),
+            // customerType: temp_status,
+            channelTypeName: _self.formValidate.channelTypeName,
+            followbyname: _self.formValidate.followbyname,
+            isbound: _self.formValidate.isbound,
+            customersource: _self.formValidate.customersource,
+            area: _self.formValidate.area,
+            companyname: _self.formValidate.companyname,
+            labelName: _self.formValidate.labelName,
+            importlevel: _self.formValidate.importlevel,
+            importance: _self.formValidate.importance,
+            bcreatedate: FULLDateFormat(_self.formValidate.credate[0]),
+            ecreatedate: FULLDateFormat(_self.formValidate.credate[1]),
+            bupdatedate: FULLDateFormat(_self.formValidate.upddate[0]),
+            eupdatedate: FULLDateFormat(_self.formValidate.upddate[1]),
+            export: 'Y',
+            exportField: encodeURI(JSON.stringify(field))
+          };
+          let toExcel = this.$MergeURL(url, config);
+          window.open(toExcel);
+        }
+      } else if (_self.formValidate.credate[0] && !_self.formValidate.upddate[0]){
+        let a = FULLDateFormat(_self.formValidate.credate[0]).split(' ')[1].split(":").join("")
+        let b = FULLDateFormat(_self.formValidate.credate[1]).split(' ')[1].split(":").join("")
+        let c= a+b
+        if (c=='000000000000'){
+          let url = `api/customer/list`;
+          let config = {
+            page: '1',
+            pageSize: '1000000',
+            name: _self.formValidate.name,
+            tel: _self.formValidate.tel,
+            customerType: _self.formValidate.customerType.join('-'),
+            // customerType: temp_status,
+            channelTypeName: _self.formValidate.channelTypeName,
+            followbyname: _self.formValidate.followbyname,
+            isbound: _self.formValidate.isbound,
+            customersource: _self.formValidate.customersource,
+            area: _self.formValidate.area,
+            companyname: _self.formValidate.companyname,
+            labelName: _self.formValidate.labelName,
+            importlevel: _self.formValidate.importlevel,
+            importance: _self.formValidate.importance,
+            bcreatedate: DateFormat(_self.formValidate.credate[0]),
+            ecreatedate: DateFormat(_self.formValidate.credate[1]),
+            bupdatedate: DateFormat(_self.formValidate.upddate[0]),
+            eupdatedate: DateFormat(_self.formValidate.upddate[1]),
+            export: 'Y',
+            exportField: encodeURI(JSON.stringify(field))
+          };
+          let toExcel = this.$MergeURL(url, config);
+          window.open(toExcel);
+        } else {
+          let url = `api/customer/list`;
+          let config = {
+            page: '1',
+            pageSize: '1000000',
+            name: _self.formValidate.name,
+            tel: _self.formValidate.tel,
+            customerType: _self.formValidate.customerType.join('-'),
+            // customerType: temp_status,
+            channelTypeName: _self.formValidate.channelTypeName,
+            followbyname: _self.formValidate.followbyname,
+            isbound: _self.formValidate.isbound,
+            customersource: _self.formValidate.customersource,
+            area: _self.formValidate.area,
+            companyname: _self.formValidate.companyname,
+            labelName: _self.formValidate.labelName,
+            importlevel: _self.formValidate.importlevel,
+            importance: _self.formValidate.importance,
+            bcreatedate: FULLDateFormat(_self.formValidate.credate[0]),
+            ecreatedate: FULLDateFormat(_self.formValidate.credate[1]),
+            bupdatedate: FULLDateFormat(_self.formValidate.upddate[0]),
+            eupdatedate: FULLDateFormat(_self.formValidate.upddate[1]),
+            export: 'Y',
+            exportField: encodeURI(JSON.stringify(field))
+          };
+          let toExcel = this.$MergeURL(url, config);
+          window.open(toExcel);
+        }
+      } else if (_self.formValidate.credate[0] && _self.formValidate.upddate[0]) {
+        let a = FULLDateFormat(_self.formValidate.upddate[0]).split(' ')[1].split(":").join("")
+        let b = FULLDateFormat(_self.formValidate.upddate[1]).split(' ')[1].split(":").join("")
+        let c = FULLDateFormat(_self.formValidate.credate[0]).split(' ')[1].split(":").join("")
+        let d = FULLDateFormat(_self.formValidate.credate[1]).split(' ')[1].split(":").join("")
+        let e = a+b
+        let f = c+d
+        if (e=='000000000000' && f=='000000000000'){
+          let url = `api/customer/list`;
+          let config = {
+            page: '1',
+            pageSize: '1000000',
+            name: _self.formValidate.name,
+            tel: _self.formValidate.tel,
+            customerType: _self.formValidate.customerType.join('-'),
+            // customerType: temp_status,
+            channelTypeName: _self.formValidate.channelTypeName,
+            followbyname: _self.formValidate.followbyname,
+            isbound: _self.formValidate.isbound,
+            customersource: _self.formValidate.customersource,
+            area: _self.formValidate.area,
+            companyname: _self.formValidate.companyname,
+            labelName: _self.formValidate.labelName,
+            importlevel: _self.formValidate.importlevel,
+            importance: _self.formValidate.importance,
+            bcreatedate: DateFormat(_self.formValidate.credate[0]),
+            ecreatedate: DateFormat(_self.formValidate.credate[1]),
+            bupdatedate: DateFormat(_self.formValidate.upddate[0]),
+            eupdatedate: DateFormat(_self.formValidate.upddate[1]),
+            export: 'Y',
+            exportField: encodeURI(JSON.stringify(field))
+          };
+          let toExcel = this.$MergeURL(url, config);
+          window.open(toExcel);
+        } else if(e=='000000000000' && f!=='000000000000'){
+          let url = `api/customer/list`;
+          let config = {
+            page: '1',
+            pageSize: '1000000',
+            name: _self.formValidate.name,
+            tel: _self.formValidate.tel,
+            customerType: _self.formValidate.customerType.join('-'),
+            // customerType: temp_status,
+            channelTypeName: _self.formValidate.channelTypeName,
+            followbyname: _self.formValidate.followbyname,
+            isbound: _self.formValidate.isbound,
+            customersource: _self.formValidate.customersource,
+            area: _self.formValidate.area,
+            companyname: _self.formValidate.companyname,
+            labelName: _self.formValidate.labelName,
+            importlevel: _self.formValidate.importlevel,
+            importance: _self.formValidate.importance,
+            bcreatedate: FULLDateFormat(_self.formValidate.credate[0]),
+            ecreatedate: FULLDateFormat(_self.formValidate.credate[1]),
+            bupdatedate: DateFormat(_self.formValidate.upddate[0]),
+            eupdatedate: DateFormat(_self.formValidate.upddate[1]),
+            export: 'Y',
+            exportField: encodeURI(JSON.stringify(field))
+          };
+          let toExcel = this.$MergeURL(url, config);
+          window.open(toExcel);
+        } else if (e!=='000000000000' && f=='000000000000'){
+          let _self = this
+          let url = `api/customer/list`;
+          let config = {
+            page: '1',
+            pageSize: '1000000',
+            name: _self.formValidate.name,
+            tel: _self.formValidate.tel,
+            customerType: _self.formValidate.customerType.join('-'),
+            // customerType: temp_status,
+            channelTypeName: _self.formValidate.channelTypeName,
+            followbyname: _self.formValidate.followbyname,
+            isbound: _self.formValidate.isbound,
+            customersource: _self.formValidate.customersource,
+            area: _self.formValidate.area,
+            companyname: _self.formValidate.companyname,
+            labelName: _self.formValidate.labelName,
+            importlevel: _self.formValidate.importlevel,
+            importance: _self.formValidate.importance,
+            bcreatedate: DateFormat(_self.formValidate.credate[0]),
+            ecreatedate: DateFormat(_self.formValidate.credate[1]),
+            bupdatedate: FULLDateFormat(_self.formValidate.upddate[0]),
+            eupdatedate: FULLDateFormat(_self.formValidate.upddate[1]),
+            export: 'Y',
+            exportField: encodeURI(JSON.stringify(field))
+          };
+          let toExcel = this.$MergeURL(url, config);
+          window.open(toExcel);
+        } else{
+          let url = `api/customer/list`;
+          let config = {
+            page: '1',
+            pageSize: '1000000',
+            name: _self.formValidate.name,
+            tel: _self.formValidate.tel,
+            customerType: _self.formValidate.customerType.join('-'),
+            // customerType: temp_status,
+            channelTypeName: _self.formValidate.channelTypeName,
+            followbyname: _self.formValidate.followbyname,
+            isbound: _self.formValidate.isbound,
+            customersource: _self.formValidate.customersource,
+            area: _self.formValidate.area,
+            companyname: _self.formValidate.companyname,
+            labelName: _self.formValidate.labelName,
+            importlevel: _self.formValidate.importlevel,
+            importance: _self.formValidate.importance,
+            bcreatedate: FULLDateFormat(_self.formValidate.credate[0]),
+            ecreatedate: FULLDateFormat(_self.formValidate.credate[1]),
+            bupdatedate: FULLDateFormat(_self.formValidate.upddate[0]),
+            eupdatedate: FULLDateFormat(_self.formValidate.upddate[1]),
+            export: 'Y',
+            exportField: encodeURI(JSON.stringify(field))
+          };
+          let toExcel = this.$MergeURL(url, config);
+          window.open(toExcel);
+        }
+      } else {
+        let url = `api/customer/list`;
+        let config = {
+          page: '1',
+          pageSize: '1000000',
+          name: _self.formValidate.name,
+          tel: _self.formValidate.tel,
+          customerType: _self.formValidate.customerType.join('-'),
+          // customerType: temp_status,
+          channelTypeName: _self.formValidate.channelTypeName,
+          followbyname: _self.formValidate.followbyname,
+          isbound: _self.formValidate.isbound,
+          customersource: _self.formValidate.customersource,
+          area: _self.formValidate.area,
+          companyname: _self.formValidate.companyname,
+          labelName: _self.formValidate.labelName,
+          importlevel: _self.formValidate.importlevel,
+          importance: _self.formValidate.importance,
+          bcreatedate: FULLDateFormat(_self.formValidate.credate[0]),
+          ecreatedate: FULLDateFormat(_self.formValidate.credate[1]),
+          bupdatedate: FULLDateFormat(_self.formValidate.upddate[0]),
+          eupdatedate: FULLDateFormat(_self.formValidate.upddate[1]),
+          export: 'Y',
+          exportField: encodeURI(JSON.stringify(field))
+        };
+        let toExcel = this.$MergeURL(url, config);
+        window.open(toExcel);
+      }
     },
     sort(e) {
       if (e.order == 'normal') {
@@ -832,10 +1070,252 @@ export default {
     },
     get_data() {
       let _self = this;
-      let url = `api/customer/list`;
       this.selectRow = [];
       _self.tableLoading = true;
+      if (_self.formValidate.upddate[0] && !_self.formValidate.credate[0]) {
+        let a = FULLDateFormat(_self.formValidate.upddate[0]).split(' ')[1].split(":").join("")
+        let b = FULLDateFormat(_self.formValidate.upddate[1]).split(' ')[1].split(":").join("")
+        let c= a+b
+        console.log(c)
+        if (c=='000000000000'){
+          _self.get_data1()
+        } else {
+          _self.get_data2()
+        }
+      } else if (_self.formValidate.credate[0] && !_self.formValidate.upddate[0]){
+        let a = FULLDateFormat(_self.formValidate.credate[0]).split(' ')[1].split(":").join("")
+        let b = FULLDateFormat(_self.formValidate.credate[1]).split(' ')[1].split(":").join("")
+        let c= a+b
+        if (c=='000000000000'){
+          _self.get_data1()
+        } else {
+          _self.get_data2()
+        }
+      } else if (_self.formValidate.credate[0] && _self.formValidate.upddate[0]) {
+        let a = FULLDateFormat(_self.formValidate.upddate[0]).split(' ')[1].split(":").join("")
+        let b = FULLDateFormat(_self.formValidate.upddate[1]).split(' ')[1].split(":").join("")
+        let c = FULLDateFormat(_self.formValidate.credate[0]).split(' ')[1].split(":").join("")
+        let d = FULLDateFormat(_self.formValidate.credate[1]).split(' ')[1].split(":").join("")
+        let e = a+b
+        let f = c+d
+        if (e=='000000000000' && f=='000000000000'){
+          _self.get_data1()
+        } else if(e=='000000000000' && f!=='000000000000'){
+          let _self = this
+          let url = `api/customer/list`;
+          var config = {
+            params: {
+              order: _self.order,
+              page: _self.page,
+              pageSize: _self.pageSize,
+              sortField: _self.sortName,
+              name: _self.formValidate.name,
+              tel: _self.formValidate.tel,
+              customerType: _self.formValidate.customerType.join('-'),
+              // customerType: temp_status,
+              channelTypeName: _self.formValidate.channelTypeName,
+              followbyname: _self.formValidate.followbyname,
+              isbound: _self.formValidate.isbound,
+              customersource: _self.formValidate.customersource,
+              area: _self.formValidate.area,
+              labelName: _self.formValidate.labelName,
+              importlevel: _self.formValidate.importlevel,
+              companyName: _self.formValidate.companyname,
+              importance: _self.formValidate.importance,
+              bcreatedate: FULLDateFormat(_self.formValidate.credate[0]),
+              ecreatedate: FULLDateFormat(_self.formValidate.credate[1]),
+              bupdatedate: DateFormat(_self.formValidate.upddate[0]),
+              eupdatedate: DateFormat(_self.formValidate.upddate[1]),
+              begin_residue_time: _self.formValidate.begin_residue_time,
+              end_residue_time: _self.formValidate.end_residue_time
+            }
+          };
 
+          function success(res) {
+            _self.data = res.data.data.rows;
+            _self.total = res.data.data.total;
+            for (let i = 0; i < _self.data.length; i++) {
+              _self.data[i].customerType = _self.findCustomerType(_self.data[i].customerType);
+              if (_self.data[i].importlevel) {
+                _self.data[i].importlevel = _self.customerrating_map.get(_self.data[i].importlevel.toString());
+              }
+              _self.data[i].AREA = _self.area_map.get(_self.data[i].AREA);
+              _self.data[i].customersourceCode = _self.data[i].customersource;
+              _self.data[i].customersource = _self.cluesources_map.get(_self.data[i].customersource);
+              _self.data[i].importance = _self.importance_map.get(_self.data[i].importance);
+              _self.data[i].isbound = _self.sf_yn_map.get(_self.data[i].isbound);
+              if (_self.data[i].CREATEDATE) {
+                _self.data[i].CREATEDATE = _self.data[i].CREATEDATE.slice(0, 10);
+              }
+              if (_self.data[i].updatedate) {
+                _self.data[i].updatedate = _self.data[i].updatedate.slice(0, 10);
+              }
+
+              //  剩余跟进时间
+              if (_self.data[i].residue_time == null) {
+              } else {
+                if (_self.data[i].residue_time < 1) {
+                  let time = new Date();
+                  let hour = 24 - time.getHours();
+                  _self.data[i].residue_time = hour + '小时';
+                } else {
+                  _self.data[i].residue_time = _self.data[i].residue_time;
+                }
+              }
+            }
+
+            _self.tableLoading = false;
+          }
+
+          this.$Get(url, config, success);
+        } else if (e!=='000000000000' && f=='000000000000'){
+          let _self = this
+          let url = `api/customer/list`;
+          var config = {
+            params: {
+              order: _self.order,
+              page: _self.page,
+              pageSize: _self.pageSize,
+              sortField: _self.sortName,
+              name: _self.formValidate.name,
+              tel: _self.formValidate.tel,
+              customerType: _self.formValidate.customerType.join('-'),
+              // customerType: temp_status,
+              channelTypeName: _self.formValidate.channelTypeName,
+              followbyname: _self.formValidate.followbyname,
+              isbound: _self.formValidate.isbound,
+              customersource: _self.formValidate.customersource,
+              area: _self.formValidate.area,
+              labelName: _self.formValidate.labelName,
+              importlevel: _self.formValidate.importlevel,
+              companyName: _self.formValidate.companyname,
+              importance: _self.formValidate.importance,
+              bcreatedate: DateFormat(_self.formValidate.credate[0]),
+              ecreatedate: DateFormat(_self.formValidate.credate[1]),
+              bupdatedate: FULLDateFormat(_self.formValidate.upddate[0]),
+              eupdatedate: FULLDateFormat(_self.formValidate.upddate[1]),
+              begin_residue_time: _self.formValidate.begin_residue_time,
+              end_residue_time: _self.formValidate.end_residue_time
+            }
+          };
+
+          function success(res) {
+            _self.data = res.data.data.rows;
+            _self.total = res.data.data.total;
+            for (let i = 0; i < _self.data.length; i++) {
+              _self.data[i].customerType = _self.findCustomerType(_self.data[i].customerType);
+              if (_self.data[i].importlevel) {
+                _self.data[i].importlevel = _self.customerrating_map.get(_self.data[i].importlevel.toString());
+              }
+              _self.data[i].AREA = _self.area_map.get(_self.data[i].AREA);
+              _self.data[i].customersourceCode = _self.data[i].customersource;
+              _self.data[i].customersource = _self.cluesources_map.get(_self.data[i].customersource);
+              _self.data[i].importance = _self.importance_map.get(_self.data[i].importance);
+              _self.data[i].isbound = _self.sf_yn_map.get(_self.data[i].isbound);
+              if (_self.data[i].CREATEDATE) {
+                _self.data[i].CREATEDATE = _self.data[i].CREATEDATE.slice(0, 10);
+              }
+              if (_self.data[i].updatedate) {
+                _self.data[i].updatedate = _self.data[i].updatedate.slice(0, 10);
+              }
+
+              //  剩余跟进时间
+              if (_self.data[i].residue_time == null) {
+              } else {
+                if (_self.data[i].residue_time < 1) {
+                  let time = new Date();
+                  let hour = 24 - time.getHours();
+                  _self.data[i].residue_time = hour + '小时';
+                } else {
+                  _self.data[i].residue_time = _self.data[i].residue_time;
+                }
+              }
+            }
+
+            _self.tableLoading = false;
+          }
+
+          this.$Get(url, config, success);
+        } else{
+          _self.get_data2()
+        }
+      } else {
+        _self.get_data2()
+      }
+    },
+
+    get_data1(){
+      let _self = this
+      let url = `api/customer/list`;
+      var config = {
+        params: {
+          order: _self.order,
+          page: _self.page,
+          pageSize: _self.pageSize,
+          sortField: _self.sortName,
+          name: _self.formValidate.name,
+          tel: _self.formValidate.tel,
+          customerType: _self.formValidate.customerType.join('-'),
+          // customerType: temp_status,
+          channelTypeName: _self.formValidate.channelTypeName,
+          followbyname: _self.formValidate.followbyname,
+          isbound: _self.formValidate.isbound,
+          customersource: _self.formValidate.customersource,
+          area: _self.formValidate.area,
+          labelName: _self.formValidate.labelName,
+          importlevel: _self.formValidate.importlevel,
+          companyName: _self.formValidate.companyname,
+          importance: _self.formValidate.importance,
+          bcreatedate: DateFormat(_self.formValidate.credate[0]),
+          ecreatedate: DateFormat(_self.formValidate.credate[1]),
+          bupdatedate: DateFormat(_self.formValidate.upddate[0]),
+          eupdatedate: DateFormat(_self.formValidate.upddate[1]),
+          begin_residue_time: _self.formValidate.begin_residue_time,
+          end_residue_time: _self.formValidate.end_residue_time
+        }
+      };
+
+      function success(res) {
+        _self.data = res.data.data.rows;
+        _self.total = res.data.data.total;
+        for (let i = 0; i < _self.data.length; i++) {
+          _self.data[i].customerType = _self.findCustomerType(_self.data[i].customerType);
+          if (_self.data[i].importlevel) {
+            _self.data[i].importlevel = _self.customerrating_map.get(_self.data[i].importlevel.toString());
+          }
+          _self.data[i].AREA = _self.area_map.get(_self.data[i].AREA);
+          _self.data[i].customersourceCode = _self.data[i].customersource;
+          _self.data[i].customersource = _self.cluesources_map.get(_self.data[i].customersource);
+          _self.data[i].importance = _self.importance_map.get(_self.data[i].importance);
+          _self.data[i].isbound = _self.sf_yn_map.get(_self.data[i].isbound);
+          if (_self.data[i].CREATEDATE) {
+            _self.data[i].CREATEDATE = _self.data[i].CREATEDATE.slice(0, 10);
+          }
+          if (_self.data[i].updatedate) {
+            _self.data[i].updatedate = _self.data[i].updatedate.slice(0, 10);
+          }
+
+          //  剩余跟进时间
+          if (_self.data[i].residue_time == null) {
+          } else {
+            if (_self.data[i].residue_time < 1) {
+              let time = new Date();
+              let hour = 24 - time.getHours();
+              _self.data[i].residue_time = hour + '小时';
+            } else {
+              _self.data[i].residue_time = _self.data[i].residue_time;
+            }
+          }
+        }
+
+        _self.tableLoading = false;
+      }
+
+      this.$Get(url, config, success);
+    },
+    get_data2(){
+      let _self = this
+      let url = `api/customer/list`;
       var config = {
         params: {
           order: _self.order,
