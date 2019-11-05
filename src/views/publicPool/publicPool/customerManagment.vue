@@ -7,31 +7,31 @@
             <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
             筛选
             <div slot="content" @keydown.enter="search">
-              <Form ref="formValidate" :model="formValidate" :label-width="120" style="margin-top: 15px">
-                <Row :gutter="16" style="height:56px">
-                  <Col span="8">
+              <Form ref="formValidate" :model="formValidate" :label-width="120">
+                <Row>
+                  <Col span="6">
                     <FormItem label="客户名称：" prop="name">
                       <Input v-model="formValidate.name" size="small"></Input>
                     </FormItem>
                   </Col>
-                  <Col span="8">
+                  <Col span="6">
                     <FormItem label="电话：" prop="tel">
                       <Input v-model="formValidate.tel" size="small"></Input>
                     </FormItem>
                   </Col>
-                  <Col span="8">
+                  <Col span="6">
                     <FormItem label="归属公司：" prop="companyname">
                       <Input v-model="formValidate.companyname" size="small"></Input>
                     </FormItem>
                   </Col>
-                </Row>
-                <Row :gutter="12" style="height:56px">
-                  <Col span="8">
+                  <Col span="6">
                     <FormItem label="跟进人：" prop="followbyname">
                       <Input v-model="formValidate.followbyname" size="small"></Input>
                     </FormItem>
                   </Col>
-                  <Col span="8">
+                </Row>
+                <Row>
+                  <Col span="6">
                     <FormItem label="客户状态：" prop="customerType">
                       <Cascader
                         trigger="hover"
@@ -42,7 +42,7 @@
                       ></Cascader>
                     </FormItem>
                   </Col>
-                  <Col span="8">
+                  <Col span="6">
                     <FormItem label="区域：" prop="area">
                       <Select transfer v-model="formValidate.area" size="small" @on-change="search">
                         <Option v-for="item in area" :value="item.typecode" :key="item.id">
@@ -51,9 +51,7 @@
                       </Select>
                     </FormItem>
                   </Col>
-                </Row>
-                <Row :gutter="12" style="height:56px">
-                  <Col span="8">
+                  <Col span="6">
                     <FormItem label="客户来源：" prop="customersource">
                       <Select transfer v-model="formValidate.customersource" size="small" @on-change="search" style="width:100%">
                         <Option v-for="item in cluesources" :value="item.typecode" :key="item.id">
@@ -62,12 +60,14 @@
                       </Select>
                     </FormItem>
                   </Col>
-                  <Col span="8">
+                  <Col span="6">
                     <FormItem label="渠道名称：" prop="channelTypeName">
                       <Input v-model="formValidate.channelTypeName" size="small"></Input>
                     </FormItem>
                   </Col>
-                  <Col span="8">
+                </Row>
+                <Row>
+                  <Col span="6">
                     <FormItem label="微信绑定：" prop="isbound">
                       <Select transfer v-model="formValidate.isbound" size="small" @on-change="search" style="width:100%">
                         <Option value="Y">是</Option>
@@ -75,40 +75,38 @@
                       </Select>
                     </FormItem>
                   </Col>
-                </Row>
-                <Row :gutter="12" style="height:56px">
-                  <Col span="8">
+                  <Col span="6">
                     <FormItem label="创建时间：" prop="credate">
                       <DatePicker
-                        type="daterange"
-                        transfer
-                        v-model="formValidate.credate"
-                        placement="bottom-end"
-                        size="small"
-                        style="width:100%"
+                              type="daterange"
+                              transfer
+                              v-model="formValidate.credate"
+                              placement="bottom-end"
+                              size="small"
+                              style="width:100%"
                       ></DatePicker>
                     </FormItem>
                   </Col>
-                  <Col span="8">
+                  <Col span="6">
                     <FormItem label="回滚时间：" prop="upddate">
                       <DatePicker
-                        type="daterange"
-                        transfer
-                        v-model="formValidate.upddate"
-                        placement="bottom-start"
-                        size="small"
-                        style="width:100%"
+                              type="daterange"
+                              transfer
+                              v-model="formValidate.upddate"
+                              placement="bottom-start"
+                              size="small"
+                              style="width:100%"
                       ></DatePicker>
                     </FormItem>
                   </Col>
-                  <Col span="8">
+                  <Col span="6">
                     <FormItem label="标签：" prop="labelName">
                       <Input v-model="formValidate.labelName" size="small"></Input>
                     </FormItem>
                   </Col>
                 </Row>
-                <Row :gutter="12" style="height:56px">
-                  <Col span="8">
+                <Row>
+                  <Col span="6">
                     <FormItem label="客户等级：" prop="importlevel">
                       <Select transfer v-model="formValidate.importlevel" size="small" @on-change="search" style="width:100%">
                         <Option value=""></Option>
@@ -116,6 +114,14 @@
                           {{ item.typename }}
                         </Option>
                       </Select>
+                    </FormItem>
+                  </Col>
+                  <Col span="6">
+                    <FormItem>
+                      <Button size="small" type="primary" name="marketingManagement_index_edit_search" @click="search">搜索</Button>
+                      <Button size="small" type="ghost" name="marketingManagement_index_edit_reset" @click="handleReset" style="margin-left: 8px"
+                      >重置</Button
+                      >
                     </FormItem>
                   </Col>
                   <!-- <Col span="8">
@@ -135,14 +141,6 @@
                                         </FormItem>
                                     </Col> -->
                 </Row>
-                <center>
-                  <FormItem style="margin-top:10px">
-                    <Button type="primary" name="marketingManagement_index_edit_search" @click="search">搜索</Button>
-                    <Button type="ghost" name="marketingManagement_index_edit_reset" @click="handleReset" style="margin-left: 8px"
-                      >重置</Button
-                    >
-                  </FormItem>
-                </center>
               </Form>
             </div>
           </Panel>
@@ -302,7 +300,7 @@ export default {
       selectRowArray: [],
       openImportCustomer: false,
       openEdit: false,
-      search_model: '',
+      search_model: 1,
       receiptLoading: false,
       send_email_model: false,
       formEmail: {
@@ -976,5 +974,8 @@ export default {
 <style>
 .ivu-table .demo-table-followdate-warning-row {
   color: #ff6600;
+}
+.ivu-col-span-6 {
+  height: 28px;
 }
 </style>

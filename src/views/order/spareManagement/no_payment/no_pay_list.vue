@@ -59,7 +59,7 @@ import Payment from './payment';
 export default {
   data() {
     return {
-      search_model: '',
+      search_model:1,
       np_loading: false,
       isshow: false,
       searchgroups: {

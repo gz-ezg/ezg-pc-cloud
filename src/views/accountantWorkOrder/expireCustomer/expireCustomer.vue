@@ -25,38 +25,40 @@
 			        筛选
 			        <div  slot="content" @keydown.enter="search">
 			            <Form ref="formInline" :model="searchForm" :label-width="100">
-			                <Row :gutter="16">
-			                    <Col span="8">
+			                <Row>
+			                    <Col span="6">
 			                        <FormItem prop="companyName" label="公司名称：">
 			                            <Input size="small" type="text"  v-model="searchForm.companyname" placeholder="">
 			                            </Input>
 			                        </FormItem>
 			                    </Col>
-			                    <Col span="8">
+			                    <Col span="6">
 			                        <FormItem prop="name" label="客户名：">
 			                            <Input size="small" type="text"  v-model="searchForm.name" placeholder="">
 			                            </Input>
 			                        </FormItem>
 			                    </Col>
+								<Col span="6">
+									<FormItem prop="tel" label="电话：">
+										<Input size="small" type="text"  v-model="searchForm.tel" placeholder="">
+										</Input>
+									</FormItem>
+								</Col>
+								<Col span="6">
+									<FormItem prop="followby_realname" label="市场：">
+										<Input size="small" type="text"  v-model="searchForm.followby_realname" placeholder="">
+										</Input>
+									</FormItem>
+								</Col>
 			                </Row>
-							<Row :gutter="16">
-							    <Col span="8">
-							        <FormItem prop="tel" label="电话：">
-							            <Input size="small" type="text"  v-model="searchForm.tel" placeholder="">
-							            </Input>
-							        </FormItem>
-							    </Col>
-							    <Col span="8">
-							        <FormItem prop="followby_realname" label="市场：">
-							            <Input size="small" type="text"  v-model="searchForm.followby_realname" placeholder="">
-							            </Input>
-							        </FormItem>
-							    </Col>
+							<Row>
+								<Col span="6">
+									<FormItem style="margin-top: 10px">
+										<Button size="small" type="primary" @click="search">搜索</Button>
+										<Button size="small" type="ghost" style="margin-left:20px" @click="reset">重置</Button>
+									</FormItem>
+								</Col>
 							</Row>
-			                <FormItem>
-			                    <Button type="primary" @click="search">搜索</Button>
-			                    <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
-			                </FormItem>
 			            </Form>
 			        </div>
 			    </Panel>
@@ -102,7 +104,7 @@
 					tel:"",
 					followby_realname:""
 				},
-				search_model:"",
+				search_model:1,
 				pageTotal:new Number(),
 				page:1,
 				pageSize:10,
@@ -270,4 +272,7 @@
 </script>
 
 <style>
+	.ivu-col-span-6 {
+		height: 28px;
+	}
 </style>

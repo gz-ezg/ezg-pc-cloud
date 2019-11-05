@@ -12,33 +12,41 @@
           <Icon type="log-in"></Icon>
           亿账柜信息管理平台
         </p>
-        <div class="form-con" @on-keydown="keyDown">
-          <Form ref="loginForm" :model="form" :rules="rules">
-            <FormItem prop="userName" style="margin-bottom:24px">
-              <Input v-model="form.userName" placeholder="用户名" />
-              <span slot="prepend">
+        <Tabs value="1">
+          <TabPane name="1" label="扫码登陆">
+              <div  id="wxcode" class="wx-code"></div>
+            <p class="login-tip">© 亿账柜版权所有woa3.0</p>
+          </TabPane>
+          <TabPane name="2" label="账号密码登录">
+            <div class="form-con" @on-keydown="keyDown">
+              <Form ref="loginForm" :model="form" :rules="rules">
+                <FormItem prop="userName" style="margin-bottom:24px">
+                  <Input v-model="form.userName" placeholder="用户名" />
+                  <span slot="prepend">
                 <Icon :size="16" type="person"></Icon>
               </span>
-            </FormItem>
-            <FormItem prop="password" style="margin-bottom:24px">
-              <Input type="password" v-model="form.password" placeholder="密码" />
-              <span slot="prepend">
+                </FormItem>
+                <FormItem prop="password" style="margin-bottom:24px">
+                  <Input type="password" v-model="form.password" placeholder="密码" />
+                  <span slot="prepend">
                 <Icon :size="14" type="locked"></Icon>
               </span>
-            </FormItem>
-            <FormItem prop="code" v-if="yzmShow" id="code">
-              <Input v-model="form.code" placeholder="验证码" style="width: 60%" />
-              <Img id="randCodeImage" :src="yzm_url" style="float: right;height: 32px" @click="change_yzm" />
-            </FormItem>
-            <FormItem prop="isSave" style="margin-bottom:6px">
-              <Checkbox v-model="isSave">七天免登陆</Checkbox>
-            </FormItem>
-            <FormItem>
-              <Button @click="handleSubmit" type="primary" long :loading="loading">登录</Button>
-            </FormItem>
-          </Form>
-          <p class="login-tip">© 亿账柜版权所有woa3.0</p>
-        </div>
+                </FormItem>
+                <FormItem prop="code" v-if="yzmShow" id="code">
+                  <Input v-model="form.code" placeholder="验证码" style="width: 60%" />
+                  <Img id="randCodeImage" :src="yzm_url" style="float: right;height: 32px" @click="change_yzm" />
+                </FormItem>
+                <FormItem prop="isSave" style="margin-bottom:6px">
+                  <Checkbox v-model="isSave">七天免登陆</Checkbox>
+                </FormItem>
+                <FormItem>
+                  <Button @click="handleSubmit" type="primary" long :loading="loading">登录</Button>
+                </FormItem>
+              </Form>
+              <p class="login-tip">© 亿账柜版权所有woa3.0</p>
+            </div>
+          </TabPane>
+        </Tabs>
       </Card>
     </div>
   </div>
@@ -66,10 +74,28 @@ export default {
       },
       yzm_url: '/api/user/createImg',
       yzmShow: false,
-      loading: false
+      loading: false,
+      code:""
     };
   },
   methods: {
+    getRequest(){
+
+    },
+    get_login(code){
+
+    },
+    get_wx_code(){
+      window.WwLogin({
+        "id" : "wxcode",  //#id
+        "appid" : "wx7666e5cbbd22b505",
+        "agentid" : "1000052",
+        "redirect_uri" :"http%3a%2f%2fyc.zgcfo.com%3a8089%2f%23%2flogin",
+        // "redirect_uri" :"http%3a%2f%2fyc.zgcfo.com%3a8089%2fapi%2fuser%2fm%2flogin%2f1000052",
+        "state" : "web_login",
+        "href" : "https://cloud.zgcfo.com/api/assets/upload/commonImg/wx_code.css",
+      });
+    },
     handleSubmit() {
       let _self = this;
       let _submit = {};
@@ -274,6 +300,47 @@ export default {
     }
   },
   mounted() {
+    this.get_wx_code()
+    let code = ""
+    let setinterval = setInterval(()=>{
+      console.log("1")
+      let after = window.location.search;
+      after = after.substr(1) || window.location.hash.split("?")[1];
+      if (after){
+        code = after.split("=")[1]
+        console.log(code)
+        if (code){
+          let _self = this
+          let url = `api/user/qy/login`;
+          let config={
+            params:{
+              code:code
+            }
+          }
+          function success(res){
+            console.log(res.data.data.realname)
+            Cookies.set('user', '');
+            localStorage.removeItem('realname')
+            localStorage.removeItem('id')
+            localStorage.removeItem('companyname')
+            Cookies.set('user', res.data.data.realname);
+            localStorage.setItem('realname', res.data.data.realname);
+            localStorage.setItem('id', res.data.data.id);
+            localStorage.setItem('companyname', '');
+            _self.getUserRole(res.data.data.id);
+          }
+
+          function fail(err){
+            _self.$router.push('/login');
+            setTimeout(()=>{
+              window.location.reload()
+            },3000)
+          }
+          this.$Get(url,config,success, fail)
+          clearInterval(setinterval)
+        }
+      }
+    },1000)
     if (Cookies.get('7issave')) {
       this.isSave = JSON.parse(Cookies.get('7issave'));
       if (Cookies.get('7user') && this.isSave) {
@@ -287,6 +354,10 @@ export default {
 </script>
 
 <style lang="less">
+/*html{*/
+  /*display: flex;*/
+  /*justify-content: center;*/
+/*}*/
 .login {
   width: 100%;
   height: 100%;

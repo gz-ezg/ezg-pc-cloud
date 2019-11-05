@@ -11,44 +11,46 @@
                     <!-- <Search slot="content"></Search> -->
                     <div  slot="content" @keydown.enter="search">
                         <Form ref="formInline" :model="formInline" :label-width="100">
-                            <Row :gutter="16">
-                                <Col span="8">
+                            <Row>
+                                <Col span="6">
                                     <FormItem prop="companyName" label="公司名称：">
                                         <Input size="small"  type="text" v-model="formInline.companyname" placeholder="">
                                         </Input>
                                     </FormItem>
                                 </Col>
-                                <Col span="8">
+                                <Col span="6">
                                     <FormItem prop="servicename" label="服务人员名称：">
                                         <Input size="small"  type="text" v-model="formInline.servicename" placeholder="">
                                         </Input>
                                     </FormItem>
                                 </Col>
-                                <Col span="8">
+                                <Col span="6">
                                     <FormItem prop="product" label="产品：">
                                         <Input size="small"  type="text" v-model="formInline.product" placeholder="">
                                         </Input>
                                     </FormItem>
                                 </Col>
-                            </Row>
-                            <Row :gutter="16">
-                                <Col span="8">
+                                <Col span="6">
                                     <FormItem prop="updatedate" label="实际完成时间：">
                                         <DatePicker type="daterange" size="small" transfer v-model="formInline.updatedate" >
                                         </DatePicker>
                                     </FormItem>
                                 </Col>
-                                <Col span="8">
+                            </Row>
+                            <Row>
+                                <Col span="6">
                                     <FormItem prop="workserverstatus" label="工单服务状态：">
                                         <Input size="small"  type="text" v-model="formInline.workserverstatus" placeholder="">
                                         </Input>
                                     </FormItem>
                                 </Col>
+                                <Col span="6">
+                                    <FormItem>
+                                        <Button size="small" type="primary" @click="search">搜索</Button>
+                                        <Button size="small" type="ghost" style="margin-left:20px" @click="reset">重置</Button>
+                                    </FormItem>
+                                </Col>
                             </Row>
-                            <FormItem>
-                                <Button type="primary" @click="search">搜索</Button>
-                                <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
-                            </FormItem>
                         </Form>
                     </div>
                 </Panel>
@@ -135,7 +137,7 @@ export default {
                 managestatus:[],
                 sortField:'updatedate',
                 order:'desc',
-                search_model:"",
+                search_model:1,
                 //  触发搜索
                 isSearh:false,
                 //  筛选数据
@@ -571,5 +573,9 @@ export default {
 }
 </script>
 
-
+<style>
+    .ivu-col-span-6 {
+        height: 28px;
+    }
+</style>
 

@@ -299,14 +299,6 @@ export default {
             trigger: 'blur',
             type: 'integer'
           }
-        ],
-        declare_year: [
-          {
-            required: true,
-            message: '.',
-            trigger: 'change',
-            type: 'date'
-          }
         ]
       }
     };

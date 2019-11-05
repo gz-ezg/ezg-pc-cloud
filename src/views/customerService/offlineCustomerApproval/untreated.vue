@@ -233,6 +233,8 @@ export default {
         // {field:'baseorderid',title:'提示'},
         { field: 'TEL', title: '客户手机' },
         { field: 'product', title: '产品名称' },
+        {field: 'unitPrice', title: '单价'},
+        { field: 'money', title: '欠费金额' },
         { field: 'enddate', title: '下线时间' },
         { field: 'taxperiod', title: '下线税期' },
         { field: 'callbackdate', title: '回访时间' },

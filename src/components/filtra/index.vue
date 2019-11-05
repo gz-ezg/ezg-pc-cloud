@@ -1,14 +1,14 @@
  <template>
   <Row style="margin-bottom:10px">
-    <Collapse>
+    <Collapse v-model="search_model">
       <Panel name="1">
         <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
         筛选
         <div slot="content" @keydown.enter="search">
           <Form ref="searchModel" :model="searchModel" :label-width="100">
-            <Row :gutter="16">
+            <Row>
               <template v-for="(item, index) in this.config">
-                <Col v-if="item.type == 'date'" :key="index" span="8">
+                <Col v-if="item.type == 'date'" :key="index" span="6">
                   <FormItem :key="index" :label="item.label">
                     <DatePicker
                       format="yyyy-MM-dd"
@@ -20,25 +20,27 @@
                     ></DatePicker>
                   </FormItem>
                 </Col>
-                <Col v-if="item.type == 'select'" :key="index" span="8">
+                <Col v-if="item.type == 'select'" :key="index" span="6">
                   <FormItem :key="index" :label="item.label">
-                    <Select :key="index" v-model="searchModel[item.key]">
+                    <Select size="small" :key="index" v-model="searchModel[item.key]">
                       <Option v-for="item in item.option" :value="item.value" :key="item.value">{{ item.label }}</Option>
                     </Select>
                   </FormItem>
                 </Col>
 
-                <Col v-if="item.type == 'input'" :key="index" span="8">
+                <Col v-if="item.type == 'input'" :key="index" span="6">
                   <FormItem :key="index" :label="item.label">
                     <Input size="small" type="text" v-model="searchModel[item.key]" />
                   </FormItem>
                 </Col>
               </template>
+              <Col span="6">
+                <FormItem>
+                  <Button size="small" type="primary" @click="search">查询</Button>
+                  <Button size="small" type="ghost" style="margin-left:10px" @click="reset">清空</Button>
+                </FormItem>
+              </Col>
             </Row>
-            <FormItem>
-              <Button type="primary" @click="search">查询</Button>
-              <Button type="ghost" style="margin-left:20px" @click="reset">清空</Button>
-            </FormItem>
           </Form>
         </div>
       </Panel>
@@ -51,6 +53,7 @@ export default {
   props: ['config'],
   data() {
     return {
+      search_model:1,
       searchModel: {}
     };
   },
@@ -80,3 +83,9 @@ export default {
   created() {}
 };
 </script>
+
+<style>
+  .ivu-col-span-6 {
+    height: 28px;
+  }
+</style>

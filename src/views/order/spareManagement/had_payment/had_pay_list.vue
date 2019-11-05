@@ -40,7 +40,7 @@ import Display from './display'
 export default {
     data(){
         return{
-            search_model2:"",
+            search_model2:1,
             np_loading:false,
             searchgroups:{
                 companyName:'',

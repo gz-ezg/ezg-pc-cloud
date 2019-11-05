@@ -7,25 +7,23 @@
                         筛选
                         <div slot="content" @keydown.enter="Search">
                             <Form ref="SearchValidate" :model="SearchValidate" :label-width="80" style="margin-top: 15px">
-                                <Row :gutter="8" style="height:56px">
-                                    <Col span="8">
+                                <Row>
+                                    <Col span="6">
                                     <FormItem label="企业名称：" prop="CompanyName">
                                         <Input v-model="SearchValidate.CompanyName" size="small"></Input>
                                     </FormItem>
                                     </Col>
-                                    <Col span="8">
+                                    <Col span="6">
                                     <FormItem label="服务人员：" prop="server_realname">
                                         <Input v-model="SearchValidate.server_realname" size="small"></Input>
                                     </FormItem>
                                     </Col>
-                                    <Col span="8">
+                                    <Col span="6">
                                     <FormItem label="跟进人：" prop="followby_realname">
                                         <Input v-model="SearchValidate.followby_realname" size="small"></Input>
                                     </FormItem>
                                     </Col>
-                                </Row>
-                                <Row :gutter="8" style="height:56px">
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="服务部门：" prop="departname">
                                             <Select v-model="SearchValidate.departname" size="small" transfer @on-change="getData">
                                                 <Option value="广州会计1组">广州会计1组</Option>
@@ -36,22 +34,24 @@
                                             </Select>
                                         </FormItem>
                                     </Col>
-                                    <Col span="8">
+                                </Row>
+                                <Row>
+                                    <Col span="6">
                                         <FormItem label="结束账期：" prop="followby_realname">
                                             <Input v-model="SearchValidate.begin_end_period" size="small" style="width:40%" placeholder="201807"></Input>
                                             -
                                             <Input v-model="SearchValidate.end_end_period" size="small" style="width:40%" placeholder="201807"></Input>
                                         </FormItem>
                                     </Col>
+                                    <Col span="6">
+                                        <FormItem>
+                                            <Button size="small" type="primary" @click="Search">搜索</Button>
+                                            <Button size="small" type="ghost" @click="handleReset" style="margin-left: 8px">
+                                                重置
+                                            </Button>
+                                        </FormItem>
+                                    </Col>
                                 </Row>
-                                <center>
-                                    <FormItem>
-                                        <Button type="primary" @click="Search">搜索</Button>
-                                        <Button type="ghost" @click="handleReset" style="margin-left: 8px">
-                                            重置
-                                        </Button>
-                                    </FormItem>
-                                </center>
                             </Form>
                         </div>
                     </Panel>
@@ -99,7 +99,7 @@
         data() {
             return {
                 loading: false,
-                search_model:"",
+                search_model:1,
                 SearchValidate:{
                     CompanyName:'',
                     server_realname:'',
@@ -575,3 +575,8 @@
     }
 </script>
 
+<style>
+    .ivu-col-span-6 {
+        height: 28px;
+    }
+</style>

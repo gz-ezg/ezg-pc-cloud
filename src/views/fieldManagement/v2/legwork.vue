@@ -336,6 +336,7 @@
             }
         },
         methods:{
+
             get_data(){
                 var _self = this
 
@@ -409,6 +410,7 @@
                     {field:'service_content',title:'服务内容'},
                     {field:'realname',title:'打卡人'},
                     {field:'departname',title:'服务部门'},
+                    {field:'begin_address',title:'打卡地址'},
                     {field:'begin_time',title:'开始打卡时间'},
                     {field:'end_time',title:'结束打卡时间'},
                     {field:'task_name',title:'任务名称'},
@@ -473,3 +475,7 @@
         }
     }
 </script>
+
+<style>
+
+</style>

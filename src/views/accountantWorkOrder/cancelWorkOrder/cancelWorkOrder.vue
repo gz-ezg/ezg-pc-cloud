@@ -12,33 +12,33 @@
                     <!-- <Search slot="content"></Search> -->
                     <div  slot="content" @keydown.enter="search">
                         <Form ref="searchModel" :model="searchModel" :label-width="100">
-                            <Row :gutter="16">
-                                <Col span="8">
+                            <Row>
+                                <Col span="6">
                                     <FormItem prop="companyname" label="公司名称：">
                                         <Input size="small"  type="text" v-model="searchModel.companyname" placeholder="">
                                         </Input>
                                     </FormItem>
                                 </Col>
-                                <Col span="8">
+                                <Col span="6">
                                     <FormItem prop="zxName" label="商事名称：">
                                         <Input size="small"  type="text" v-model="searchModel.zxname" placeholder="">
                                         </Input>
                                     </FormItem>
                                 </Col>
-                                <Col span="8">
+                                <Col span="6">
                                     <FormItem prop="kjName" label="会计名称：">
                                         <Input size="small"  type="text" v-model="searchModel.kjname" placeholder="">
                                         </Input>
                                     </FormItem>
                                 </Col>
-                            </Row>
-                            <Row :gutter="16">
-                                <Col span="8">
+                                <Col span="6">
                                     <FormItem prop="allotTime" label="分配时间：">
                                         <DatePicker transfer type="daterange" placement="bottom-start" style="width:100%" v-model="searchModel.allotTime" size="small"></DatePicker>
                                     </FormItem>
                                 </Col>
-                                <Col span="8">
+                            </Row>
+                            <Row>
+                                <Col span="6">
                                 <FormItem label="注销单状态：" prop="cancellation_status">
                                     <Select transfer v-model="searchModel.cancellation_status" size="small" @on-change="search"  style="width:100%">
                                         <Option value="">     </Option>
@@ -48,12 +48,13 @@
                                     </Select>
                                 </FormItem>
                                 </Col>
+                                <Col span="6">
+                                    <FormItem>
+                                        <Button size="small" type="primary" @click="search">搜索</Button>
+                                        <Button size="small" type="ghost" style="margin-left:20px" @click="reset">重置</Button>
+                                    </FormItem>
+                                </Col>
                             </Row>
-
-                            <FormItem>
-                                <Button type="primary" @click="search">搜索</Button>
-                                <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
-                            </FormItem>
                         </Form>
                     </div>
                 </Panel>
@@ -128,7 +129,7 @@
 
                 //  查看框
                 //  筛选
-                search_model: "",
+                search_model:1,
                 current_row:"",
                 pageTotal: new Number(),
                 page: 1,
@@ -351,3 +352,9 @@
         }
     }
 </script>
+
+<style>
+    .ivu-col-span-6 {
+        height: 28px;
+    }
+</style>

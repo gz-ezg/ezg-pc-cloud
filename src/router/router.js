@@ -43,6 +43,7 @@ export const arrearageCenter = {
   component: () =>
     import(/* webpackChunkName: "commonIndex" */ '@/views/arrearageCenter/index.vue')
 }
+
 //  暂时不需要使用的页面
 //  文章预览
 // export const preview = {

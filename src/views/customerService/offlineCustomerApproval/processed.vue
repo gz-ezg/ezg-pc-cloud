@@ -255,6 +255,8 @@ export default {
         { field: 'CompanyName', title: '公司名称' },
         // {field:'baseorderid',title:'提示'},
         { field: 'product', title: '产品名称' },
+        {field: 'unitPrice', title: '单价'},
+        { field: 'money', title: '欠费金额' },
         { field: 'enddate', title: '下线时间' },
         { field: 'taxperiod', title: '下线税期' },
         { field: 'callbackdate', title: '回访时间' },

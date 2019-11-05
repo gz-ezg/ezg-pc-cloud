@@ -8,41 +8,41 @@
                             筛选
                         <div slot="content" @keydown.enter="search">
                             <Form ref="formValidateSearch" :model="formValidateSearch" :label-width="80" style="margin-top: 15px">
-                                <Row :gutter="16">
-                                    <Col span="8">
+                                <Row>
+                                    <Col span="6">
                                         <FormItem label="订单号码：" prop="ordercode">
                                             <Input v-model="formValidateSearch.ordercode" size="small"></Input>
                                         </FormItem>
                                     </Col>
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="公司名称：" prop="companyname">
                                             <Input v-model="formValidateSearch.companyname" size="small"></Input>
                                         </FormItem>
                                     </Col>
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="客户名称：" prop="customername">
                                             <Input v-model="formValidateSearch.customername" size="small"></Input>
                                         </FormItem>
                                     </Col>
-                                </Row>
-                                <Row :gutter="16">
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="客户电话：" prop="customertel">
                                             <Input v-model="formValidateSearch.customertel" size="small"></Input>
                                         </FormItem>
                                     </Col>
-                                    <Col span="8">
+                                </Row>
+                                <Row>
+                                    <Col span="6">
                                         <FormItem label="创建人：" prop="crealname">
                                             <Input v-model="formValidateSearch.crealname" size="small"></Input>
                                         </FormItem>
                                     </Col>
+                                    <Col span="6">
+                                        <FormItem>
+                                            <Button size="small" type="primary" @click="search">搜索</Button>
+                                            <Button size="small" type="ghost" @click="handleReset('formValidateSearch')" style="margin-left: 8px">重置</Button>
+                                        </FormItem>
+                                    </Col>
                                 </Row>
-                                <center>
-                                    <FormItem>
-                                        <Button type="primary" @click="search">搜索</Button>
-                                        <Button type="ghost" @click="handleReset('formValidateSearch')" style="margin-left: 8px">重置</Button>
-                                    </FormItem>
-                                </center>
                             </Form>
                         </div>
                     </Panel>
@@ -85,7 +85,7 @@ export default {
     props: {},
     data(){
         return{
-            search_model: "",
+            search_model: 1,
             tableLoading: false,
             total: 0,
             header: [
@@ -357,3 +357,8 @@ export default {
 }
 </script>
 
+<style>
+    .ivu-col-span-6 {
+        height: 28px;
+    }
+</style>

@@ -8,28 +8,35 @@
                     筛选
                     <div slot="content" @keydown.enter="Search">
                         <Form ref="SearchValidate" :model="SearchValidate" :label-width="130" style="margin-top: 15px">
-                            <Row :gutter="8" style="height:56px">
-                                <Col span="8">
+                            <Row>
+                                <Col span="6">
                                     <FormItem label="地区：" prop="CompanyName">
                                         <Select v-model="SearchValidate.area" size="small" type="text" transfer>
                                             <Option v-for="(item,index) in gzaddrarea" :key="index" :value="item.typecode">{{item.typename}}</Option>
                                         </Select>
                                     </FormItem>
                                 </Col>
-                                <Col span="8">
+                                <Col span="6">
                                     <FormItem label="地址：" prop="server_realname">
                                         <Input v-model="SearchValidate.place" size="small"></Input>
                                     </FormItem>
                                 </Col>
-                                <Col span="8">
+                                <Col span="6">
                                     <FormItem label="地址类型：" prop="followby_realname">
                                         <Select v-model="SearchValidate.kpType" size="small" type="text" transfer>
                                             <Option v-for="(item,index) in kp_type" :key="index" :value="item.typecode">{{item.typename}}</Option>
                                         </Select>
                                     </FormItem>
                                 </Col>
+                                <Col span="6">
+                                    <FormItem label="可开：" prop="etaxStatus">
+                                        <Select v-model="SearchValidate.canInvoice" size="small" type="text" transfer>
+                                            <Option v-for="(item,index) in sf_yn" :key="index" :value="item.typecode">{{item.typename}}</Option>
+                                        </Select>
+                                    </FormItem>
+                                </Col>
                             </Row>
-                            <Row :gutter="8" style="height:56px">
+                            <Row>
                                 <!--<Col span="8">-->
                                     <!--<FormItem label="地址属性：" prop="note_kj_flag">-->
                                         <!--<Select v-model="SearchValidate.addrProperty" size="small" type="text" transfer>-->
@@ -37,44 +44,35 @@
                                         <!--</Select>-->
                                     <!--</FormItem>-->
                                 <!--</Col>-->
-                                <Col span="8">
-                                    <FormItem label="可开：" prop="etaxStatus">
-                                        <Select v-model="SearchValidate.canInvoice" size="small" type="text" transfer>
-                                            <Option v-for="(item,index) in sf_yn" :key="index" :value="item.typecode">{{item.typename}}</Option>
-                                        </Select>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
+
+                                <Col span="6">
                                     <FormItem label="可查：" prop="etaxStatus">
                                         <Select v-model="SearchValidate.canCheck" size="small" type="text" transfer>
                                             <Option v-for="(item,index) in sf_yn" :key="index" :value="item.typecode">{{item.typename}}</Option>
                                         </Select>
                                     </FormItem>
                                 </Col>
-                                <Col span="8">
+                                <Col span="6">
                                     <FormItem label="工商情况：" prop="note_kj_flag">
                                         <Select v-model="SearchValidate.taxStatus" size="small" type="text" transfer>
                                             <Option v-for="(item,index) in business_tax_status" :key="index" :value="item.typecode">{{item.typename}}</Option>
                                         </Select>
                                     </FormItem>
                                 </Col>
-                            </Row>
-                            <Row :gutter="8" style="height:56px">
-
-                                <Col span="8">
+                                <Col span="6">
                                     <FormItem label="税务情况：" prop="etaxStatus">
                                         <Select v-model="SearchValidate.businessStatus" size="small" type="text" transfer>
                                             <Option v-for="(item,index) in business_tax_status" :key="index" :value="item.typecode">{{item.typename}}</Option>
                                         </Select>
                                     </FormItem>
                                 </Col>
+                                <Col span="6">
+                                    <FormItem>
+                                        <Button size="small" type="primary" @click="Search">搜索</Button>
+                                        <Button size="small" type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
+                                    </FormItem>
+                                </Col>
                             </Row>
-                            <center>
-                                <FormItem>
-                                    <Button type="primary" @click="Search">搜索</Button>
-                                    <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
-                                </FormItem>
-                            </center>
                         </Form>
                     </div>
                 </Panel>
@@ -125,7 +123,7 @@
         },
         data(){
             return{
-                search_model: '',
+                search_model: 1,
                 loading: false,
                 pageTotal: 0,
                 page: 1,
@@ -1073,5 +1071,8 @@
     }
     .a{
         background-color: rgb(235,247,25);
+    }
+    .ivu-col-span-6 {
+        height: 28px;
     }
 </style>

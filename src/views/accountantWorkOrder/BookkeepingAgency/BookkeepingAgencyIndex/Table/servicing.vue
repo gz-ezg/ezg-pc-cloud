@@ -7,27 +7,25 @@
           筛选
           <div slot="content" @keydown.enter="Search">
             <Form ref="SearchValidate" :model="SearchValidate" :label-width="130" style="margin-top: 15px">
-              <Row :gutter="8" style="height:56px">
-                <Col span="8">
+              <Row>
+                <Col span="6">
                   <FormItem label="企业名称：" prop="CompanyName">
                     <Input v-model="SearchValidate.CompanyName" size="small"></Input>
                   </FormItem>
                 </Col>
-                <Col span="8">
+                <Col span="6">
                   <FormItem label="服务人员：" prop="server_realname">
                     <Input v-model="SearchValidate.server_realname" size="small"></Input>
                   </FormItem>
                 </Col>
-                <Col span="8">
+                <Col span="6">
                   <FormItem label="结束账期：" prop="followby_realname">
                     <Input v-model="SearchValidate.begin_end_period" size="small" style="width:40%" placeholder="201807"></Input>
                     -
                     <Input v-model="SearchValidate.end_end_period" size="small" style="width:40%" placeholder="201807"></Input>
                   </FormItem>
                 </Col>
-              </Row>
-              <Row :gutter="8" style="height:56px">
-                <Col span="8">
+                <Col span="6">
                   <FormItem label="客户跟进：" prop="note_kj_flag">
                     <Select v-model="SearchValidate.note_kj_flag" size="small" style="width:100%">
                       <Option value="Y">完成</Option>
@@ -35,7 +33,9 @@
                     </Select>
                   </FormItem>
                 </Col>
-                <Col span="8">
+              </Row>
+              <Row>
+                <Col span="6">
                   <FormItem label="电子税务局状态：" prop="etaxStatus">
                     <Select v-model="SearchValidate.etaxStatus" size="small" style="width:100%">
                       <Option :value="1">账号正常</Option>
@@ -44,13 +44,13 @@
                     </Select>
                   </FormItem>
                 </Col>
+                <Col span="6">
+                  <FormItem>
+                    <Button size="small" type="primary" @click="Search">搜索</Button>
+                    <Button size="small" type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
+                  </FormItem>
+                </Col>
               </Row>
-              <center>
-                <FormItem>
-                  <Button type="primary" @click="Search">搜索</Button>
-                  <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
-                </FormItem>
-              </center>
             </Form>
           </div>
         </Panel>
@@ -208,7 +208,7 @@ export default {
       cservicest: '',
       cservicest_map: new Map(),
       loading: false,
-      search_model: '',
+      search_model:1,
       SearchValidate: {
         CompanyName: '',
         server_realname: '',
@@ -228,7 +228,6 @@ export default {
       zlid: '',
       zzid: '',
       bsid: '',
-      search_model: '',
       id: {},
       pageTotal: 0,
       task_message: {
@@ -987,5 +986,8 @@ export default {
 <style>
 .demo-table-error-row2 {
   color: red;
+}
+.ivu-col-span-6 {
+  height: 28px;
 }
 </style>

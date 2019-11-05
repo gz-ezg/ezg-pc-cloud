@@ -8,77 +8,75 @@
                             筛选
                         <div slot="content" @keydown.enter="Search">
                             <Form ref="formValidateSearch" :model="formValidateSearch" :label-width="100">
-                                <Row :gutter="16">
-                                    <Col span="8">
+                                <Row>
+                                    <Col span="6">
                                         <FormItem label="订单号码：" prop="ordercode">
                                             <Input v-model="formValidateSearch.ordercode" size="small"></Input>
                                         </FormItem>
                                     </Col>
-                                <Col span="8">
-                                    <FormItem label="公司名称：" prop="companyname">
-                                        <Input v-model="formValidateSearch.companyname" size="small"></Input>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem label="客户名称：" prop="customername">
-                                        <Input v-model="formValidateSearch.customername" size="small"></Input>
-                                    </FormItem>
-                                </Col>
+                                    <Col span="6">
+                                        <FormItem label="公司名称：" prop="companyname">
+                                            <Input v-model="formValidateSearch.companyname" size="small"></Input>
+                                        </FormItem>
+                                    </Col>
+                                    <Col span="6">
+                                        <FormItem label="客户名称：" prop="customername">
+                                            <Input v-model="formValidateSearch.customername" size="small"></Input>
+                                        </FormItem>
+                                    </Col>
+                                    <Col span="6">
+                                        <FormItem label="客户电话：" prop="customertel">
+                                            <Input v-model="formValidateSearch.customertel" size="small"></Input>
+                                        </FormItem>
+                                    </Col>
                             </Row>
-                            <Row :gutter="16">
-                                <Col span="8">
-                                    <FormItem label="客户电话：" prop="customertel">
-                                        <Input v-model="formValidateSearch.customertel" size="small"></Input>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
+                            <Row>
+                                <Col span="6">
                                     <FormItem label="缴费渠道：" prop="customername">
                                         <Select transfer v-model="formValidateSearch.payDir" size="small">
                                             <Option v-for="(item, index) in payDirs" :key=index :value="item.typecode">{{item.typename}}</Option>                            
                                         </Select>
                                     </FormItem>
                                 </Col>
-                                <Col span="8">
+                                <Col span="6">
                                     <FormItem label="创建时间：" prop="date">
                                         <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:100%" size="small"></DatePicker>
                                     </FormItem>
                                 </Col>
-                            </Row>
-                            <Row :gutter="16">
-                                <Col span="8">
+                                <Col span="6">
                                     <FormItem label="创建人：" prop="crealname">
                                         <Input v-model="formValidateSearch.crealname" size="small"></Input>
                                     </FormItem>
                                 </Col>
-                                <Col span="8">
+                                <Col span="6">
                                     <FormItem label="跟进人：" prop="frealname">
                                         <Input v-model="formValidateSearch.frealname" size="small"></Input>
                                     </FormItem>
                                 </Col>
-                                <Col span="8">
+                            </Row>
+                            <Row>
+                                <Col span="6">
                                     <FormItem label="缴费时间：" prop="paytime">
                                         <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.paytime" style="width:100%" size="small"></DatePicker>
                                     </FormItem>
                                 </Col>
-                            </Row>
-                            <Row :gutter="16">
-                                <Col span="8">
+                                <Col span="6">
                                     <FormItem label="客户创建时间：" prop="customerCreateTime">
                                         <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.customerCreateTime" style="width:100%" size="small"></DatePicker>
                                     </FormItem>
                                 </Col>
-                                <Col span="8">
+                                <Col span="6">
                                     <FormItem label="产品名称：" prop="productname">
                                         <Input v-model="formValidateSearch.productname" size="small"></Input>
                                     </FormItem>
                                 </Col>
+                                <Col span="6">
+                                    <FormItem>
+                                        <Button size="small" type="primary" @click="Search">搜索</Button>
+                                        <Button size="small" type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
+                                    </FormItem>
+                                </Col>
                             </Row>
-                            <center>
-                                <FormItem>
-                                    <Button type="primary" @click="Search">搜索</Button>
-                                    <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
-                                </FormItem>
-                            </center>
                         </Form>
                     </div>
                 </Panel>
@@ -175,7 +173,7 @@ export default {
             flowImgOpen: false,
             flowChartImg: "",
             payDirType: [],
-            search_model: "0",
+            search_model: 1,
             //  列表查询相关
             selectRow: "",
             formValidateSearch: {
@@ -857,5 +855,8 @@ export default {
 .ivu-table .demo-table-error-row td {
     background-color: #ff6600;
     color:#000;
+}
+.ivu-col-span-6 {
+    height: 28px;
 }
 </style>

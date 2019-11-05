@@ -7,7 +7,7 @@
             <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
             筛选
             <div slot="content" @keydown.enter="search">
-              <Form ref="formValidate" :model="formValidate" :label-width="100" style="margin-top: 15px">
+              <Form ref="formValidate" :model="formValidate" :label-width="110" style="margin-top: 15px">
                 <Row :gutter="12" class="row">
                   <Col span="6">
                     <FormItem label="客户名称：" prop="name">
@@ -78,7 +78,7 @@
                   <Col span="6">
                     <FormItem label="创建时间：" prop="credate">
                       <DatePicker
-                              type="daterange"
+                              type="datetimerange"
                               transfer
                               v-model="formValidate.credate"
                               placement="bottom-end"
@@ -90,7 +90,7 @@
                   <Col span="6">
                     <FormItem label="更新时间：" prop="upddate">
                       <DatePicker
-                              type="daterange"
+                              type="datetimerange"
                               transfer
                               v-model="formValidate.upddate"
                               placement="bottom-start"
@@ -134,7 +134,7 @@
                     </FormItem>
                   </Col>
                   <Col span="6">
-                    <FormItem style="margin-top:10px">
+                    <FormItem>
                       <Button type="primary" size="small" name="marketingManagement_index_edit_search" @click="search">搜索</Button>
                       <Button type="ghost" size="small" name="marketingManagement_index_edit_reset" @click="handleReset" style="margin-left: 8px"
                       >重置</Button
@@ -757,10 +757,10 @@ export default {
         labelName: _self.formValidate.labelName,
         importlevel: _self.formValidate.importlevel,
         importance: _self.formValidate.importance,
-        bcreatedate: DateFormat(_self.formValidate.credate[0]),
-        ecreatedate: DateFormat(_self.formValidate.credate[1]),
-        bupdatedate: DateFormat(_self.formValidate.upddate[0]),
-        eupdatedate: DateFormat(_self.formValidate.upddate[1]),
+        bcreatedate: FULLDateFormat(_self.formValidate.credate[0]),
+        ecreatedate: FULLDateFormat(_self.formValidate.credate[1]),
+        bupdatedate: FULLDateFormat(_self.formValidate.upddate[0]),
+        eupdatedate: FULLDateFormat(_self.formValidate.upddate[1]),
         export: 'Y',
         exportField: encodeURI(JSON.stringify(field))
       };
@@ -855,10 +855,10 @@ export default {
           importlevel: _self.formValidate.importlevel,
           companyName: _self.formValidate.companyname,
           importance: _self.formValidate.importance,
-          bcreatedate: DateFormat(_self.formValidate.credate[0]),
-          ecreatedate: DateFormat(_self.formValidate.credate[1]),
-          bupdatedate: DateFormat(_self.formValidate.upddate[0]),
-          eupdatedate: DateFormat(_self.formValidate.upddate[1]),
+          bcreatedate: FULLDateFormat(_self.formValidate.credate[0]),
+          ecreatedate: FULLDateFormat(_self.formValidate.credate[1]),
+          bupdatedate: FULLDateFormat(_self.formValidate.upddate[0]),
+          eupdatedate: FULLDateFormat(_self.formValidate.upddate[1]),
           begin_residue_time: _self.formValidate.begin_residue_time,
           end_residue_time: _self.formValidate.end_residue_time
         }

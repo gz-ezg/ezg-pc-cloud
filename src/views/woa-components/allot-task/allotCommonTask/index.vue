@@ -13,24 +13,26 @@
                                 筛选
                                 <div  slot="content" @keydown.enter="searchN">
                                     <Form ref="formInlineN" :model="formInlineN" :label-width="100">
-                                        <Row :gutter="16">
-                                            <Col span="8">
+                                        <Row>
+                                            <Col span="6">
                                                 <FormItem prop="companyName" label="公司名称：">
                                                     <Input type="text" v-model="formInlineN.companyname" placeholder="" size="small">
                                                     </Input>
                                                 </FormItem>
                                             </Col>
-                                            <Col span="8">
+                                            <Col span="6">
                                                 <FormItem prop="departname" label="服务部门：">
                                                     <Input type="text" v-model="formInlineN.departname" placeholder="" size="small">
                                                     </Input>
                                                 </FormItem>
                                             </Col>
+                                            <Col span="6">
+                                                <FormItem>
+                                                    <Button size="small" type="primary" @click="searchN">搜索</Button>
+                                                    <Button size="small" type="ghost" style="margin-left:20px" @click="resetN">重置</Button>
+                                                </FormItem>
+                                            </Col>
                                         </Row>
-                                        <FormItem>
-                                            <Button type="primary" @click="searchN">搜索</Button>
-                                            <Button type="ghost" style="margin-left:20px" @click="resetN">重置</Button>
-                                        </FormItem>
                                     </Form>
                                 </div>
                             </Panel>
@@ -73,38 +75,40 @@
                                 筛选
                                 <div  slot="content" @keydown.enter="searchY">
                                     <Form ref="formInlineY" :model="formInlineY" :label-width="100">
-                                        <Row :gutter="16">
-                                            <Col span="8">
+                                        <Row>
+                                            <Col span="6">
                                                 <FormItem prop="companyName" label="公司名称：">
                                                     <Input type="text" v-model="formInlineY.companyname" placeholder="" size="small">
                                                     </Input>
                                                 </FormItem>
                                             </Col>
-                                            <Col span="8">
+                                            <Col span="6">
                                                 <FormItem prop="servicename" label="服务人员名称：">
                                                     <Input type="text" v-model="formInlineY.servicename" placeholder="" size="small">
                                                     </Input>
                                                 </FormItem>
                                             </Col>
-                                            <Col span="8">
+                                            <Col span="6">
                                                 <FormItem prop="departname" label="服务部门：">
                                                     <Input type="text" v-model="formInlineY.departname" placeholder="" size="small">
                                                     </Input>
                                                 </FormItem>
                                             </Col>
-                                        </Row>
-                                        <Row :gutter="16">
-                                            <Col span="8">
+                                            <Col span="6">
                                                 <FormItem prop="allottime" label="分配时间：">
                                                     <DatePicker type="daterange" v-model="formInlineY.allottime" placeholder="" size="small">
                                                     </DatePicker>
                                                 </FormItem>
                                             </Col>
                                         </Row>
-                                        <FormItem>
-                                            <Button type="primary" @click="searchY">搜索</Button>
-                                            <Button type="ghost" style="margin-left:20px" @click="resetY">重置</Button>
-                                        </FormItem>
+                                        <Row>
+                                            <Col span="6">
+                                                <FormItem style="margin-top: 10px">
+                                                    <Button size="small" type="primary" @click="searchY">搜索</Button>
+                                                    <Button size="small" type="ghost" style="margin-left:20px" @click="resetY">重置</Button>
+                                                </FormItem>
+                                            </Col>
+                                        </Row>
                                     </Form>
                                 </div>
                             </Panel>
@@ -164,7 +168,7 @@ import allotAccountService from './allot_accout_service'
         data() {
             return {
                 companyarea:"",
-                search_model:"",
+                search_model:1,
                 local_router_name:'',
                 //  加载种处理
                 Nloading:false,
@@ -855,3 +859,9 @@ import allotAccountService from './allot_accout_service'
     }
     }
 </script>
+
+<style>
+    .ivu-col-span-6 {
+        height: 28px;
+    }
+</style>

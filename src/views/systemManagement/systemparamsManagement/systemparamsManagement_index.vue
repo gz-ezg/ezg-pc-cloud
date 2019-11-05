@@ -78,15 +78,15 @@
             width="800"
             
         >
-            <Form ref="editParams" :model="editParams" :label-width="150">
+            <Form ref="editParams" :model="addParams" :label-width="150">
                 <FormItem label="参数名称：" prop="paramname">
-                    <Input v-model="editParams.paramname" style="width:500px" disabled></Input>
+                    <Input v-model="addParams.paramname" style="width:500px" disabled></Input>
                 </FormItem>
                 <FormItem label="参数KEY：" prop="paramkey">
-                    <Input v-model="editParams.paramkey" style="width:500px" disabled></Input>
+                    <Input v-model="addParams.paramkey" style="width:500px" disabled></Input>
                 </FormItem>
                 <FormItem label="参数值：" prop="paramvalue" >
-                    <Input v-model="editParams.paramvalue" style="width:500px" disabled></Input>                        
+                    <Input v-model="addParams.paramvalue" style="width:500px" disabled></Input>
                 </FormItem>
             </Form>
         <div slot="footer">
@@ -208,7 +208,7 @@ export default {
             let config = {
                 paramname: _self.addParams.paramname,
                 paramkey: _self.addParams.paramkey,
-                paramvalue: _self.editParams.paramvalue
+                paramvalue: _self.addParams.paramvalue
             }
             this.$http.post(url,config).then(function(res){
                 _self.$backToLogin(res)

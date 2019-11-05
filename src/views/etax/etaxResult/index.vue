@@ -8,80 +8,80 @@
                             筛选
                         <div slot="content" @keydown.enter="Search">
                             <Form ref="formValidateSearch" :model="formValidateSearch" :label-width="100">
-                                <Row :gutter="16">
-                                    <Col span="8">
+                                <Row>
+                                    <Col span="6">
                                         <FormItem label="企业名称：" prop="qybdname">
                                             <Input v-model="formValidateSearch.qybdname" size="small"></Input>
                                         </FormItem>
                                     </Col>
-                                <Col span="8">
-                                    <FormItem label="征收项目：" prop="subject">
-                                        <Input v-model="formValidateSearch.subject" size="small"></Input>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem label="征收品目：" prop="item">
-                                        <Input v-model="formValidateSearch.item" size="small"></Input>
-                                    </FormItem>
-                                </Col>
-                            </Row>
-                            <Row :gutter="16">
-                                <Col span="8">
-                                    <FormItem label="申报月份：" prop="bsmonth">
-                                        <DatePicker transfer type="month" placement="bottom-end" v-model="formValidateSearch.bsmonth" style="width:100%" size="small"></DatePicker>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem label="税款所属期起：" prop="taxstart">
-                                        <DatePicker transfer type="date" placement="bottom-end" v-model="formValidateSearch.taxstart" style="width:100%" size="small"></DatePicker>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem label="税款所属期止：" prop="taxend">
-                                        <DatePicker transfer type="date" placement="bottom-end" v-model="formValidateSearch.taxend" style="width:100%" size="small"></DatePicker>
-                                    </FormItem>
-                                </Col>
-                            </Row>
-                            <Row :gutter="16">
-                                <Col span="8">
-                                    <FormItem label="申报期限：" prop="period">
-                                        <DatePicker transfer type="date" placement="bottom-end" v-model="formValidateSearch.period" style="width:100%" size="small"></DatePicker>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem label="申报日期：" prop="bsdate">
-                                        <DatePicker transfer type="date" placement="bottom-end" v-model="formValidateSearch.bsdate" style="width:100%" size="small"></DatePicker>
-                                    </FormItem>
-                                </Col>
-                            </Row>
-                            <center>
-                                <FormItem>
-                                    <Button type="primary" @click="Search">搜索</Button>
-                                    <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
-                                </FormItem>
-                            </center>
-                        </Form>
-                    </div>
-                </Panel>
-            </Collapse>
-        </Row>
-        <Row style="margin-top: 10px;">
-            <Table
-                :loading="loading"
-                highlight-row
-                size="small"
-                border
-                :columns="header"
-                :data="data"></Table>
-            <Page
-                size="small"
-                :total="total"
-                show-total
-                show-elevator
-                :current.sync="page"
-                @on-change="pageChange"
-                style="margin-top: 10px"></Page>
-        </Row>
+                                    <Col span="6">
+                                        <FormItem label="征收项目：" prop="subject">
+                                            <Input v-model="formValidateSearch.subject" size="small"></Input>
+                                        </FormItem>
+                                    </Col>
+                                    <Col span="6">
+                                        <FormItem label="征收品目：" prop="item">
+                                            <Input v-model="formValidateSearch.item" size="small"></Input>
+                                        </FormItem>
+                                    </Col>
+                                    <Col span="6">
+                                        <FormItem label="申报月份：" prop="bsmonth">
+                                            <DatePicker transfer type="month" placement="bottom-end" v-model="formValidateSearch.bsmonth" style="width:100%" size="small"></DatePicker>
+                                        </FormItem>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col span="6">
+                                        <FormItem label="税款所属期起：" prop="taxstart">
+                                            <DatePicker transfer type="date" placement="bottom-end" v-model="formValidateSearch.taxstart" style="width:100%" size="small"></DatePicker>
+                                        </FormItem>
+                                    </Col>
+                                    <Col span="6">
+                                        <FormItem label="税款所属期止：" prop="taxend">
+                                            <DatePicker transfer type="date" placement="bottom-end" v-model="formValidateSearch.taxend" style="width:100%" size="small"></DatePicker>
+                                        </FormItem>
+                                    </Col>
+                                    <Col span="6">
+                                        <FormItem label="申报期限：" prop="period">
+                                            <DatePicker transfer type="date" placement="bottom-end" v-model="formValidateSearch.period" style="width:100%" size="small"></DatePicker>
+                                        </FormItem>
+                                    </Col>
+                                    <Col span="6">
+                                        <FormItem label="申报日期：" prop="bsdate">
+                                            <DatePicker transfer type="date" placement="bottom-end" v-model="formValidateSearch.bsdate" style="width:100%" size="small"></DatePicker>
+                                        </FormItem>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col span="6">
+                                        <FormItem style="margin-top: 10px">
+                                            <Button size="small" type="primary" @click="Search">搜索</Button>
+                                            <Button size="small" type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
+                                        </FormItem>
+                                    </Col>
+                                </Row>
+                            </Form>
+                        </div>
+                    </Panel>
+                </Collapse>
+            </Row>
+            <Row style="margin-top: 10px;">
+                <Table
+                    :loading="loading"
+                    highlight-row
+                    size="small"
+                    border
+                    :columns="header"
+                    :data="data"></Table>
+                <Page
+                    size="small"
+                    :total="total"
+                    show-total
+                    show-elevator
+                    :current.sync="page"
+                    @on-change="pageChange"
+                    style="margin-top: 10px"></Page>
+            </Row>
         </Card>
     </div>
 </template>
@@ -164,7 +164,7 @@ export default {
                 bsdate: ""
             },
             total: 0,
-            search_model: ""
+            search_model: 1
         }
     },
     methods: {
@@ -218,3 +218,9 @@ export default {
     }
 }
 </script>
+
+<style>
+    .ivu-col-span-6 {
+        height: 28px;
+    }
+</style>

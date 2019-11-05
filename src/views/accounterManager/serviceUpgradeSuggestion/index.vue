@@ -8,28 +8,34 @@
                         筛选
                         <div slot="content" @keydown.enter="Search">
                             <Form ref="SearchValidate" :model="SearchValidate" :label-width="130" style="margin-top: 15px">
-                                <Row :gutter="8" style="height:56px">
-                                    <Col span="8">
+                                <Row>
+                                    <Col span="6">
                                         <FormItem label="企业名称：" prop="CompanyName">
                                             <Input v-model="SearchValidate.CompanyName" size="small"></Input>
                                         </FormItem>
                                     </Col>
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="服务会计：" prop="server_realname">
                                             <Input v-model="SearchValidate.server_realname" size="small"></Input>
                                         </FormItem>
                                     </Col>
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="结束账期：" prop="followby_realname">
                                             <DatePicker transfer type="daterange" placement="bottom-end" v-model="SearchValidate.date" style="width:100%" size="small"></DatePicker>
                                         </FormItem>
                                     </Col>
-                                </Row>
-                                <Row :gutter="8" style="height:56px">
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="市场人员：" prop="departname">
                                             <Input v-model="SearchValidate.followbyName" size="small" >
                                             </Input>
+                                        </FormItem>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col span="6">
+                                        <FormItem style="margin-top: 10px">
+                                            <Button size="small" type="primary" @click="Search">搜索</Button>
+                                            <Button size="small" type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
                                         </FormItem>
                                     </Col>
                                     <!--<Col span="8">-->
@@ -50,12 +56,6 @@
                                     <!--</FormItem>-->
                                     <!--</Col>-->
                                 </Row>
-                                <center>
-                                    <FormItem>
-                                        <Button type="primary" @click="Search">搜索</Button>
-                                        <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
-                                    </FormItem>
-                                </center>
                             </Form>
                         </div>
                     </Panel>
@@ -91,6 +91,7 @@
         name: "index",
         data(){
             return{
+                search_model:1,
                 loading:false,
                 data:[],
                 total:1000,
@@ -197,5 +198,7 @@
 </script>
 
 <style>
-
+    .ivu-col-span-6 {
+        height: 28px;
+    }
 </style>
