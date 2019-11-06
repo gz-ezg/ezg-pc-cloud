@@ -80,7 +80,9 @@
                       <DatePicker
                               type="datetimerange"
                               transfer
+                              :format="format"
                               v-model="formValidate.credate"
+                              @on-change="change_format"
                               placement="bottom-end"
                               size="small"
                               style="width: 158px"
@@ -92,6 +94,8 @@
                       <DatePicker
                               type="datetimerange"
                               transfer
+                              :format="format1"
+                              @on-change="change_format1"
                               v-model="formValidate.upddate"
                               placement="bottom-start"
                               size="small"
@@ -391,6 +395,8 @@ export default {
       showHeaderCheckBox: false,
       openEdit: false,
       openEditOne: false,
+      format:"yyyy-MM-dd HH:mm:ss",
+      format1:"yyyy-MM-dd HH:mm:ss",
       search_model: '1',
       header: [
         {
@@ -643,6 +649,26 @@ export default {
     };
   },
   methods: {
+    change_format(){
+      let a = FULLDateFormat(this.formValidate.credate[0]).split(' ')[1].split(':').join('')
+      let b = FULLDateFormat(this.formValidate.credate[1]).split(' ')[1].split(':').join('')
+      let c = a+b
+      if (c=='000000000000') {
+        this.format = 'yyyy-MM-dd'
+      } else {
+        this.format = 'yyyy-MM-dd HH:mm:ss'
+      }
+    },
+    change_format1(){
+      let a = FULLDateFormat(this.formValidate.upddate[0]).split(' ')[1].split(':').join('')
+      let b = FULLDateFormat(this.formValidate.upddate[1]).split(' ')[1].split(':').join('')
+      let c = a+b
+      if (c=='000000000000') {
+        this.format1 = 'yyyy-MM-dd'
+      } else {
+        this.format1 = 'yyyy-MM-dd HH:mm:ss'
+      }
+    },
     dialout(T,i){
       let _self = this;
       let url = `api/customer/sevenmoor/dialout`;
