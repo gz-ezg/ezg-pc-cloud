@@ -34,7 +34,9 @@ function AjaxPost(url, config, success, fail=commonFail){
     return new Promise((resolve, reject)=>{
         axios.post(baseUrl, config).then((res)=>{
             if(res.status == 200 && res.data.msgCode == 40000){
-                iView.Message.success(res.data.msg || "执行成功！")
+                if (res.data.msg){
+                    iView.Message.success(res.data.msg)
+                }
                 resolve({
                     status: true,
                     data: res.data
