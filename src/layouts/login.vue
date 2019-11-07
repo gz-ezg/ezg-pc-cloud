@@ -1,5 +1,4 @@
 
-
 <template>
   <div class="login" @keydown.enter="handleSubmit">
     <Spin size="large" v-if="!sso" fix>

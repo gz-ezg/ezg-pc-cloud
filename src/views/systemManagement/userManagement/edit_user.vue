@@ -189,8 +189,7 @@ export default {
             },
             formdataRule:{
                 username:[
-                    { message:"格式错误！",required: true, trigger: 'change' },
-                    { message:"格式错误！",validator: validateUsername, trigger: 'blur' }
+                    { message:"请补全信息！",required: true, trigger: 'change' },
                 ],
                 realname:[
                     { message:"格式错误！",required: true, trigger: 'change' },

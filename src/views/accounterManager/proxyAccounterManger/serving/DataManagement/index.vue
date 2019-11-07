@@ -4,7 +4,6 @@
             v-model="openDetailMission"
             width="1000"
             :mask-closable="false"
-            class-name="vertical-top-modal"
     >
         <Card>
             <Row style="margin-bottom:10px">

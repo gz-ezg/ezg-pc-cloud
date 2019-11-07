@@ -4,7 +4,6 @@
             v-model="openFieldMission"
             width="1000"
             :mask-closable="false"
-            class-name="vertical-top-modal"
     >
         <div>
             <Tabs value="name1">

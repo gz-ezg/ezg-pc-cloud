@@ -22,11 +22,11 @@
                                 <FormItem  v-else>
                                 </FormItem>
                             </Col>
-                            <Col span="24" style="margin-top: 15px">
-                                <center>
-                                    <Button type="primary" @click="search">搜索</Button>
-                                    <Button type="ghost" @click="handle_reset" style="margin-left: 8px">重置</Button>
-                                </center>
+                            <Col span="6">
+                                <FormItem>
+                                    <Button size="small" type="primary" @click="search">搜索</Button>
+                                    <Button size="small" type="ghost" @click="handle_reset" style="margin-left: 8px">重置</Button>
+                                </FormItem>
                             </Col>
                         </Row>
                     </Form>
@@ -145,3 +145,9 @@
     }
 }
 </script>
+
+<style>
+    .ivu-col-span-6 {
+        height: 28px;
+    }
+</style>

@@ -107,6 +107,7 @@
         <undo-list></undo-list>
         <data-management></data-management>
         <follow-up :company="current_row" v-if="openFollowUp" @close="openFollowUp = false"></follow-up>
+        <follow-record></follow-record>
     </Card>
 </template>
 
@@ -128,6 +129,7 @@
     import List from './importRemindList/index'
     import AccountList from './accountRemindList/index'
     import UndoList from './undoRemindList/index'
+    import FollowRecord from './followRecord/index'
     export default {
         name: "serving",
         components:{
@@ -143,7 +145,8 @@
             Field,
             List,
             AccountList,
-            UndoList
+            UndoList,
+            FollowRecord
         },
         data(){
             return{
@@ -1331,7 +1334,7 @@
                     {
                         title: '操作',
                         key: 'action',
-                        width: 250,
+                        width: 200,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
@@ -1379,7 +1382,22 @@
                                         }
                                     },
                                     '[资料管理]'
-                                )
+                                ),
+                                h(
+                                    'Button',
+                                    {
+                                        props: {
+                                            type: 'text',
+                                            size: 'small'
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.follow_record(params.row);
+                                            }
+                                        }
+                                    },
+                                    '[跟进记录]'
+                                ),
                             ]);
                         }
                     },
@@ -1439,6 +1457,9 @@
             },
             invoice(e){
                 this.$bus.emit("OPEN_INVOICE_PAGE",e)
+            },
+            follow_record(e){
+                this.$bus.emit("OPEN_FOLLOW_RECORD",e)
             },
             level(e){
                 this.$bus.emit("OPEN_LEVEL_PAGE",e)

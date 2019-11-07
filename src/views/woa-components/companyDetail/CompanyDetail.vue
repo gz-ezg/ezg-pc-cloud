@@ -92,7 +92,6 @@
                                         <div v-for="(item,index) in show_file" :key=index>{{ item.name }}
                                             <Button type="text" @click="fileRemove(item)">移除</Button>
                                         </div>
-                                        
                                     </FormItem>
                                 </Col>
                             </Row>
