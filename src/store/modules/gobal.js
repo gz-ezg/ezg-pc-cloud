@@ -4,6 +4,7 @@ const gobal = {
     gobalCustomer: {
       ID: ''
     },
+    hideRecord:false,
     gobalworkOrderId: '',
     gobalWorkorderDetailShow: false,
     gobalWorkorderStopWorkOrder: false,
@@ -45,6 +46,7 @@ const gobal = {
     open_gobal_customer_detail_modal(state, customer) {
       state.gobalCustomerDetailShow = true
       state.gobalCustomer = customer
+
     },
     close_gobal_customer_detail_modal(state) {
       state.gobalCustomerDetailShow = false
@@ -60,8 +62,12 @@ const gobal = {
       state.gobalCompanyDetailShow = true
       state.gobalCompanyId = companyId
     },
+    hide_recoord(state){
+      state.hideRecord = true
+    },
     close_gobal_company_detail_modal(state) {
       state.gobalCompanyDetailShow = false
+      state.hideRecord = false
     },
     open_gobal_set_finish_time_modal(state, workOrderDetail) {
       state.gobalSetFinishTime = true

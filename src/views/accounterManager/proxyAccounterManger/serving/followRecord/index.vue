@@ -38,63 +38,10 @@
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="16" v-if="openFinish">
-                    <Col span="12">
-                        <FormItem label="完成状态" prop="finishFlag">
-                            <Select transfer v-model="addDetailContent.finishFlag" size="small">
-                                <Option value="Y" >完成</Option>
-                                <Option value="N" >未完成</Option>
-                            </Select>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="20">
-                        <FormItem label="通知时间：" prop="date">
-                            <Col span="8">
-                                <DatePicker transfer type="date" placeholder="选择日期" v-model="addDetailContent.followupdate" size="small"></DatePicker>
-                            </Col>
-                            <Col span="2" style="text-align: center">-</Col>
-                            <Col span="8">
-                                <TimePicker transfer type="time" format="HH:mm" placeholder="选择时间" hide-disabled-options :disabled-hours="[0,1,2,3,4,5,6,7]" v-model="addDetailContent.followuptime" size="small"></TimePicker>
-                            </Col>
-                        </FormItem>
-                    </Col>
-                </Row>
                 <Row :gutter="16">
                     <Col span="20">
                         <FormItem prop="content" label="跟进内容：" style="margin-bottom:5px">
                             <Input v-model="addDetailContent.content" type="textarea"></Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-
-                <Row :gutter="16">
-                    <Col span="20">
-                        <FormItem style="margin-bottom:5px" label="沟通证据：">
-                            <!-- class="upload_before" -->
-                            <Upload
-                                    ref="upload"
-                                    multiple
-                                    :before-upload="handleUpload"
-                                    action="/api/customer/addCustomerContentImg"
-                            >
-                                <Button type="ghost" icon="ios-cloud-upload-outline" :class="{input_warning:warning}">选择文件</Button>
-                            </Upload>
-                            <!-- <div v-show="warning" style="color:#ed3f14;height:20px;margin-bottom:5px;line-height:20px">请上传附件</div> -->
-                            <div v-for="(item,index) in show_file" :key=index>{{ item.name }}
-                                <Button type="text" @click="fileRemove(item)">移除</Button>
-                            </div>
-
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="16">
-                    <Col span="24">
-                        <FormItem label="通知用户" prop="customerTags" style="margin-bottom:10px">
-                            <Select v-model="test" filterable multiple @on-change='t' >
-                                <Option v-for="item in user" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                            </Select>
                         </FormItem>
                     </Col>
                 </Row>
@@ -277,6 +224,32 @@
                 this.file_array.splice(this.file_array.indexOf(e), 1);
                 this.show_file.splice(this.show_file.indexOf(e), 1);
             },
+            getRole(){
+                let _self = this
+                let temp = localStorage.getItem("Main_Role")
+                // if(temp == "kuaiji" || temp == "shangshi" || temp == "qihua" || temp == "shenji"){
+                if(_self.$indexOfArray(temp, ["kuaiji","shangshi","qihua","shenji"])){
+                    _self.followupshow = false
+                    switch(temp){
+                        case "kuaiji":
+                            _self.addDetailContent.followUpType = "18"
+                            // _self.openFinish = true
+                            _self.addDetailContent.finishFlag = "N"
+                            break;
+                        case "shangshi":
+                            _self.addDetailContent.followUpType = "17"
+                            break;
+                        case "qihua":
+                            _self.addDetailContent.followUpType = "19"
+                            break;
+                        case "shenji":
+                            _self.addDetailContent.followUpType = "23"
+                            break;
+                    }
+                }else{
+                    _self.followupshow = true
+                }
+            },
             upload(){
                 let _self = this
                 _self.followUp_loading = true
@@ -396,6 +369,7 @@
             this.$bus.off("OPEN_FOLLOW_RECORD",true)
             this.$bus.on("OPEN_FOLLOW_RECORD",(e)=>{
                 this.companyId = e.company_id
+                this.getRole()
                 this.getData()
             })
         }

@@ -1363,6 +1363,7 @@
                                         on: {
                                             click: () => {
                                                 this.$store.commit('open_gobal_company_detail_modal', params.row.company_id);
+                                                this.$store.commit('hide_recoord');
                                             }
                                         }
                                     },

@@ -9,7 +9,7 @@
         >
         <Spin fix size="large" v-if="spinShow"></Spin>
             <Tabs v-model="openTab">
-                <TabPane label="客户跟进记录" name="name8">
+                <TabPane label="客户跟进记录" name="name8" v-if="!hideRecord">
                     <!-- <Row style="margin-top:10px;margin-bottom:10px;font-size:16px;margin-left:30px">
                         <span>公司名称：{{companyInfo.companyname}}</span>
                         <span style="margin-left:20px">归属客户：{{companyInfo.NAME}}</span>                        
@@ -75,7 +75,7 @@
                                     </FormItem>
                                 </Col>
                             </Row>
-                            
+
                             <Row :gutter="16">
                                     <Col span="20">
                                     <FormItem style="margin-bottom:5px" label="沟通证据：">
@@ -1197,6 +1197,9 @@
             pageId: {
                 type: [String, Number]
             },
+            hideRecord:{
+                type:[String,Boolean]
+            },
             ifMatch: {
                 type: [String, Number]
             },
@@ -1964,6 +1967,7 @@
             },
             changeTab(){
                 console.log(this.pageId)
+                console.log(this.hideRecord)
                 if (this.pageId){
                     this.openTab = "name1"
                     this.ruleValidate = {

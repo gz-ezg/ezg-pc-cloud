@@ -129,6 +129,7 @@
       v-if="gobalCompanyDetailShow"
       :pageId="gobalCompanyPageId"
       :companyId="gobalCompanyId"
+      :hideRecord="gobalHideRecord"
       :ifMatch="gobalCompanyIfMatch"
       :serviceDemo="gobalCompanyServiceDemo"
     ></company-detail>
@@ -349,6 +350,9 @@ export default {
     },
     gobalCompanyId() {
       return this.$store.state.gobal.gobalCompanyId;
+    },
+    gobalHideRecord() {
+      return this.$store.state.gobal.hideRecord;
     },
     //  设置完成时间存在莫名bug...激活取消事件之后窗口不消失，待确认
     gobalSetFinishTime() {
