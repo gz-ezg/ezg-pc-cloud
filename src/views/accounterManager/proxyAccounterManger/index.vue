@@ -1,7 +1,7 @@
 <template>
     <div>
         <Tabs value="name1" v-if="loading">
-            <TabPane label="服务" name="name1">
+            <TabPane label="服务中x" name="name1">
                 <serving></serving>
             </TabPane>
             <TabPane label="未开始" name="name2">

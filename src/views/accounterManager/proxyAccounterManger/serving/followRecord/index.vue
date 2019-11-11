@@ -363,12 +363,32 @@
             },
             cancel(){
                 this.openFollowRecord = false
-            }
+            },
+            GetFollowUpType(){
+                let _self = this
+                _self.followTypeText = []
+                let params = "follow_up_type"
+
+                function success(res){
+                    for(let i = 0;i<res.data.data.follow_up_type.length;i++){
+                        var temp={}
+                        if(res.data.data.follow_up_type[i].typecode == 21||res.data.data.follow_up_type[i].typecode == 22){
+                        }else{
+                            temp.typecode=res.data.data.follow_up_type[i].typecode
+                            temp.typename=res.data.data.follow_up_type[i].typename
+                            temp.id=res.data.data.follow_up_type[i].id
+                            _self.followTypeText.push(temp)
+                        }
+                    }
+                }
+                this.$GetDataCenter(params, success)
+            },
         },
         created() {
             this.$bus.off("OPEN_FOLLOW_RECORD",true)
             this.$bus.on("OPEN_FOLLOW_RECORD",(e)=>{
                 this.companyId = e.company_id
+                this.GetFollowUpType()
                 this.getRole()
                 this.getData()
             })
