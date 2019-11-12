@@ -818,7 +818,7 @@
                     {
                         title: '操作',
                         key: 'action',
-                        width: 250,
+                        width: 200,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
@@ -847,6 +847,7 @@
                                         on: {
                                             click: () => {
                                                 this.$store.commit('open_gobal_company_detail_modal', params.row.company_id);
+                                                this.$store.commit('hide_recoord');
                                             }
                                         }
                                     },
@@ -866,7 +867,22 @@
                                         }
                                     },
                                     '[资料管理]'
-                                )
+                                ),
+                                h(
+                                    'Button',
+                                    {
+                                        props: {
+                                            type: 'text',
+                                            size: 'small'
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.follow_record(params.row);
+                                            }
+                                        }
+                                    },
+                                    '[跟进记录]'
+                                ),
                             ]);
                         }
                     },
@@ -874,6 +890,9 @@
             }
         },
         methods:{
+            follow_record(e){
+                this.$bus.emit("OPEN_FOLLOW_RECORD",e)
+            },
             selectRow(e) {
                 this.current_row = e;
             },

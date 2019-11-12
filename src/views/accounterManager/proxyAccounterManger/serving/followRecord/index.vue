@@ -26,9 +26,9 @@
                 <Row :gutter="16" v-if="followupshow">
                     <Col span="12">
                         <FormItem prop="followUpType" label="跟进类型：" style="margin-bottom:5px">
-                            <!-- <Select transfer v-model="addDetailContent.followUpType" size="small" :disabled="followupshow"> -->
-                            <Cascader :data="followTypeText" v-model="addDetailContent.followUpType" trigger="hover">
-                            </Cascader>
+                            <Select transfer v-model="addDetailContent.followUpType" size="small">
+                                <Option v-for="item in followTypeText" :value="item.typecode" :key="item.typecode">{{item.typename}}</Option>
+                            </Select>
                         </FormItem>
                     </Col>
                     <Col span="12">
@@ -268,8 +268,8 @@
                     content: _self.addDetailContent.content,
                     customerId: _self.companyInfo.customerid,
                     companyId:_self.companyInfo.id,
-                    followUpType: _self.addDetailContent.followUpType[0],
-                    accountType:_self.addDetailContent.followUpType[1] ? _self.addDetailContent.followUpType[1] : ""
+                    followUpType: "18",
+                    accountType:_self.addDetailContent.followUpType
                 }
                 function success(res){
                     if(_self.isClue){
@@ -344,33 +344,12 @@
                 let params = "follow_up_type"
 
                 function success(res){
-                    _self.followTypeText = res.data.data.follow_up_type.map(v=>{
-                        if (v.children){
-                            return{
-                                value:v.typecode,
-                                id:v.id,
-                                label:v.typename,
-                                children:v.children.map(i=>{
-                                    return {
-                                        bom:i.bom,
-                                        id:i.id,
-                                        pid:i.pid,
-                                        sort:i.sort,
-                                        value:i.typecode,
-                                        typegroupcode:i.typegroupcode,
-                                        typegroupname:i.typegroupname,
-                                        label:i.typename
-                                    }
-                                })
-                            }
-                        } else {
-                            return {
-                                value:v.typecode,
-                                id:v.id,
-                                label:v.typename
-                            }
+                     res.data.data.follow_up_type.map(v=>{
+                        if (v.typecode=="18"){
+                            _self.followTypeText.push(...v.children)
                         }
                     })
+
                     console.log(_self.followTypeText)
                 }
                 this.$GetDataCenter(params, success)
