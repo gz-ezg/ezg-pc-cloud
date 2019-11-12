@@ -27,9 +27,8 @@
                     <Col span="12">
                         <FormItem prop="followUpType" label="跟进类型：" style="margin-bottom:5px">
                             <!-- <Select transfer v-model="addDetailContent.followUpType" size="small" :disabled="followupshow"> -->
-                            <Select transfer v-model="addDetailContent.followUpType" size="small">
-                                <Option v-for="item in followTypeText" :value="item.typecode" :key="item.typecode">{{item.typename}}</Option>
-                            </Select>
+                            <Cascader :data="followTypeText" v-model="addDetailContent.followUpType" trigger="hover">
+                            </Cascader>
                         </FormItem>
                     </Col>
                     <Col span="12">
@@ -118,8 +117,15 @@
                     },
                     {
                         title:'跟进类型',
-                        key: 'typename',
-                        minWidth:120
+                        key: 'account_type',
+                        minWidth:120,
+                        render:(h, params) => {
+                            if (params.row.account_type){
+                                return h('div',{},params.row.account_type)
+                            } else {
+                                return h('div',{},params.row.typename)
+                            }
+                        }
                     },
                     {
                         title:'跟进内容',
@@ -253,36 +259,7 @@
             upload(){
                 let _self = this
                 _self.followUp_loading = true
-                if(_self.file_array.length == 0){
-                    _self.add_workorder_followup()
-                }else{
-                    let formdata = new FormData()
-                    for(let i = 0;i<_self.file_array.length;i++){
-                        // console.log(_self.file_array[i])
-                        formdata.append('files',_self.file_array[i],"file_" + Date.parse(new Date()) + ".jpg")
-                    }
-
-                    let url = `/api/customer/addCustomerContentImg`
-
-                    _self.$http.post(url,formdata).then(function(res){
-                        // console.log(res.data.msgCode)
-                        if(res.data.msgCode == "40000"){
-                            let temp = []
-                            for(let j = 0;j<res.data.data.length;j++){
-                                temp.push(res.data.data[j].id)
-                            }
-                            _self.attIds = temp.toString()
-                            _self.add_workorder_followup()
-                        }else{
-                            _self.followUp_loading = false
-                            _self.$Message.error("新增错误！")
-                        }
-                    }).catch(function(err){
-                        _self.followUp_loading = false
-                        _self.$Message.error("网络异常！")
-
-                    })
-                }
+                _self.add_workorder_followup()
             },
             add_workorder_followup(){
                 let url =  `api/customer/addCustomerContentNote`
@@ -291,11 +268,8 @@
                     content: _self.addDetailContent.content,
                     customerId: _self.companyInfo.customerid,
                     companyId:_self.companyInfo.id,
-                    followUpType: _self.addDetailContent.followUpType,
-                    attIds:_self.attIds,
-                    finishFlag: _self.addDetailContent.finishFlag,
-                    notifyDate: (DateFormat(_self.addDetailContent.followupdate) + ' ' + _self.addDetailContent.followuptime),
-                    notify_ids: _self.notify_ids
+                    followUpType: _self.addDetailContent.followUpType[0],
+                    accountType:_self.addDetailContent.followUpType[1] ? _self.addDetailContent.followUpType[1] : ""
                 }
                 function success(res){
                     if(_self.isClue){
@@ -370,16 +344,34 @@
                 let params = "follow_up_type"
 
                 function success(res){
-                    for(let i = 0;i<res.data.data.follow_up_type.length;i++){
-                        var temp={}
-                        if(res.data.data.follow_up_type[i].typecode == 21||res.data.data.follow_up_type[i].typecode == 22){
-                        }else{
-                            temp.typecode=res.data.data.follow_up_type[i].typecode
-                            temp.typename=res.data.data.follow_up_type[i].typename
-                            temp.id=res.data.data.follow_up_type[i].id
-                            _self.followTypeText.push(temp)
+                    _self.followTypeText = res.data.data.follow_up_type.map(v=>{
+                        if (v.children){
+                            return{
+                                value:v.typecode,
+                                id:v.id,
+                                label:v.typename,
+                                children:v.children.map(i=>{
+                                    return {
+                                        bom:i.bom,
+                                        id:i.id,
+                                        pid:i.pid,
+                                        sort:i.sort,
+                                        value:i.typecode,
+                                        typegroupcode:i.typegroupcode,
+                                        typegroupname:i.typegroupname,
+                                        label:i.typename
+                                    }
+                                })
+                            }
+                        } else {
+                            return {
+                                value:v.typecode,
+                                id:v.id,
+                                label:v.typename
+                            }
                         }
-                    }
+                    })
+                    console.log(_self.followTypeText)
                 }
                 this.$GetDataCenter(params, success)
             },
