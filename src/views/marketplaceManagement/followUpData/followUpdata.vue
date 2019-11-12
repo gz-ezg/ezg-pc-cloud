@@ -294,7 +294,7 @@ export default {
                 ecreatedate:DateFormat(_self.searchData.createdate[1]),
                 companyname:_self.searchData.companyname,
                 followuptype:_self.searchData.followuptype[0],
-                accountType:_self.searchData.followuptype[1],
+                accountType:_self.searchData.followuptype[1]?_self.searchData.followuptype[1]:"",
                 servicename:_self.searchData.servicename,
                 departname:_self.searchData.departname,
                 bupdatedate:DateFormat(_self.searchData.updatedate[0]),
