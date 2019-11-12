@@ -25,9 +25,7 @@
                                             </Col>
                                             <Col span="8">
                                                 <FormItem prop="followuptype" label="跟进类型：">
-                                                    <Select transfer v-model="searchData.followuptype" placeholder="" style="width:100%" size="small" @on-change="search">
-                                                        <Option v-for="(item,index) in followUpType" :key=index :value="item.typecode">{{item.typename}}</Option>
-                                                    </Select>
+                                                    <Cascader :data="followUpType"  v-model="searchData.followuptype" trigger="hover" style="width:100%" size="small" ></Cascader >
                                                 </FormItem>
                                             </Col>
                                         </Row>
@@ -146,7 +144,14 @@ export default {
                 {
                     title:'跟进类型',
                     key:'followuptype',
-                    minWidth: 100
+                    minWidth: 100,
+                    render:(h,params)=>{
+                        if (params.row.account_type) {
+                            return h("div",{},this.followUpType_Map.get(params.row.followuptype)+'/'+this.accountType_Map.get(params.row.account_type))
+                        } else {
+                            return h("div",{},this.followUpType_Map.get(params.row.followuptype))
+                        }
+                    }
                 },
                 {
                     title:'完成状态',
@@ -233,6 +238,8 @@ export default {
             pageSize:10,
             pageTotal:new Number(),
             followUpType:"",
+            accountType:[],
+            accountType_Map:"",
             followUpType_Map:""            
         }
     },
@@ -265,6 +272,7 @@ export default {
                 {field:'name',title:'客户名称'},
                 {field:'companyname',title:'公司名称'},           
                 {field:'followuptype',title:'跟进类型',format:'follow_up_type'},
+                {field:'account_type',title:'跟进类型',format:'account_followup_type'},
                 {field:'servicecontent',title:'跟进内容'},
                 {field:'servicename',title:'录入人'},
                 {field:'followname',title:'跟进人'},
@@ -285,7 +293,8 @@ export default {
                 bcreatedate:DateFormat(_self.searchData.createdate[0]),
                 ecreatedate:DateFormat(_self.searchData.createdate[1]),
                 companyname:_self.searchData.companyname,
-                followuptype:_self.searchData.followuptype,
+                followuptype:_self.searchData.followuptype[0],
+                accountType:_self.searchData.followuptype[1],
                 servicename:_self.searchData.servicename,
                 departname:_self.searchData.departname,
                 bupdatedate:DateFormat(_self.searchData.updatedate[0]),
@@ -309,7 +318,8 @@ export default {
                     bcreatedate: DateFormat(_self.searchData.createdate[0]),
                     ecreatedate: DateFormat(_self.searchData.createdate[1]),
                     companyname:_self.searchData.companyname,
-                    followuptype:_self.searchData.followuptype,
+                    followuptype:_self.searchData.followuptype[0],
+                    accountType:_self.searchData.followuptype[1]?_self.searchData.followuptype[1]:"",
                     servicename:_self.searchData.servicename,
                     departname:_self.searchData.departname,
                     bupdatedate:DateFormat(_self.searchData.updatedate[0]),
@@ -326,7 +336,6 @@ export default {
                 _self.loading = false
                 
                 for(let i = 0;i<_self.data.length;i++){
-                    _self.data[i].followuptype = _self.followUpType_Map.get(_self.data[i].followuptype)
                     if(_self.data[i].finish_flag == 'Y'){
                         _self.data[i].finish_flag = "完成"
                     }else if(_self.data[i].finish_flag == 'N'){
@@ -357,10 +366,44 @@ export default {
         },
         getDataCenter(){
             let _self = this
+            _self.followUpType=[]
             function finish(res){
                 // console.log(res.data.data.follow_up_type)
-                _self.followUpType = res.data.data.follow_up_type
-                _self.followUpType_Map = _self.$array2map(_self.followUpType)
+                _self.followUpType = res.data.data.follow_up_type.map(v=>{
+                    if (v.children) {
+                        return {
+                            id:v.id,
+                            value:v.typecode,
+                            label:v.typename,
+                            children:v.children.map(i=>{
+                                return{
+                                    bom:i.bom,
+                                    id:i.id,
+                                    pid:i.pid,
+                                    sort:i.sort,
+                                    value:i.typecode,
+                                    typegroupcode:i.typegroupcode,
+                                    typegroupname:i.typegroupname,
+                                    label:i.typename
+                                }
+                            })
+                        }
+                    } else {
+                        return{
+                            id:v.id,
+                            value:v.typecode,
+                            label:v.typename
+                        }
+                    }
+                })
+                console.log(_self.followUpType)
+                _self.followUpType.map(v=>{
+                    if (v.children){
+                        _self.accountType.push(...v.children)
+                    }
+                })
+                _self.accountType_Map = _self.$array3map(_self.accountType)
+                _self.followUpType_Map = _self.$array3map(_self.followUpType)
                 // console.log(_self.followUpType_Map)
             }
             this.$GetDataCenter("follow_up_type", finish)

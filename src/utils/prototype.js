@@ -211,6 +211,17 @@ export const vessel = {
       return tempMap
     }
   },
+  array3map(array) {
+    if (array == '' || array == null) {
+      return
+    } else {
+      let tempMap = new Map()
+      for (let i = 0; i < array.length; i++) {
+        tempMap.set(array[i].value, array[i].label)
+      }
+      return tempMap
+    }
+  },
   MergeURL(url, config) {
     let temp = `${url}?`
     for (let i in config) {

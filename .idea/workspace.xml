@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="37f9a5f2-00da-4e4b-9d51-77151b3c2072" name="Default" comment="0.0">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/followRecord/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/followRecord/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/prototype.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/prototype.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/marketplaceManagement/followUpData/followUpdata.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/marketplaceManagement/followUpData/followUpdata.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -27,89 +25,37 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/serving.vue">
+        <entry file="file://$PROJECT_DIR$/src/router/router.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="1336" column="34" selection-start-line="1336" selection-start-column="31" selection-end-line="1336" selection-end-column="34" />
+            <state relative-caret-position="84">
+              <caret line="454" column="18" selection-start-line="454" selection-start-column="16" selection-end-line="454" selection-end-column="18" />
               <folding>
-                <element signature="n#style#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#77309#77823#0" />
-                <element signature="e#78071#78230#0" />
-                <element signature="e#78920#79079#0" />
-                <element signature="e#79640#79799#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/notbegin/notbegin.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="1165" column="34" selection-start-line="1165" selection-start-column="34" selection-end-line="1165" selection-end-column="34" />
-              <folding>
-                <element signature="n#style#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#71024#71183#0" />
-                <element signature="e#71229#71457#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="820" column="34" selection-start-line="820" selection-start-column="34" selection-end-line="820" selection-end-column="34" />
-              <folding>
-                <element signature="n#style#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#49484#49643#0" />
-                <element signature="e#49689#49917#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/woa-components/companyDetail/CompanyDetail.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="38" column="49" lean-forward="true" selection-start-line="36" selection-start-column="40" selection-end-line="38" selection-end-column="49" />
-              <folding>
-                <element signature="n#style#0;n#FormItem#0;n#Col#0;n#Row#2;n#Form#0;n#Row#0;n#TabPane#0;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#Col#1;n#FormItem#0;n#Col#0;n#Row#4;n#Form#0;n#Row#0;n#TabPane#0;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#FormItem#0;n#Col#0;n#Row#5;n#Form#0;n#Row#0;n#TabPane#0;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#FormItem#0;n#Col#0;n#Row#6;n#Form#0;n#Row#0;n#TabPane#0;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#FormItem#0;n#Col#0;n#Row#7;n#Form#0;n#Row#0;n#TabPane#0;n#Tabs#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#Col#0;n#Row#4;n#Form#0;n#Modal#2;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#FormItem#0;n#Col#1;n#Row#4;n#Form#0;n#Modal#2;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#110639#111786#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
-              <caret line="1140" column="48" lean-forward="true" selection-start-line="1140" selection-start-column="48" selection-end-line="1140" selection-end-column="48" />
-              <folding>
-                <element signature="n#style#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#70234#70393#0" />
+                <element signature="n#!!doc" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/followRecord/index.vue">
+        <entry file="file://$PROJECT_DIR$/src/views/marketplaceManagement/followUpData/followUpdata.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="270" column="39" lean-forward="true" selection-start-line="270" selection-start-column="39" selection-end-line="270" selection-end-column="39" />
+            <state relative-caret-position="116">
+              <caret line="277" column="49" lean-forward="true" selection-start-line="277" selection-start-column="49" selection-end-line="277" selection-end-column="49" />
               <folding>
-                <element signature="n#style#0;n#FormItem#0;n#Col#0;n#Row#0;n#Form#0;n#Row#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#FormItem#0;n#Col#0;n#Row#2;n#Form#0;n#Row#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Input#0;n#FormItem#0;n#Col#2;n#Row#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/utils/prototype.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1109">
+              <caret line="217" column="29" lean-forward="true" selection-start-line="217" selection-start-column="29" selection-end-line="217" selection-end-column="29" />
+              <folding>
+                <element signature="e#0#47#0" expanded="true" />
+                <element signature="e#4763#5004#0" />
               </folding>
             </state>
           </provider>
@@ -128,9 +74,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>工单分</find>
-      <find>_self.local_router_name</find>
-      <find>会计管理（</find>
       <find>GetDa</find>
       <find>get_data</find>
       <find>Menu</find>
@@ -153,11 +96,14 @@
       <find>companyInfo</find>
       <find>file_array</find>
       <find>openTab</find>
-      <find>followupshow</find>
       <find>isClue</find>
       <find>notify_ids</find>
       <find>attIds</find>
       <find>followTypeText</find>
+      <find>followupshow</find>
+      <find>跟进</find>
+      <find>Cascader</find>
+      <find>followUpType</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -167,8 +113,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/expireCustomer/expireCustomer.vue" />
-        <option value="$PROJECT_DIR$/src/views/accountantWorkOrder/cancelWorkOrder/cancelWorkOrder.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/serviceUpgradeSuggestion/index.vue" />
         <option value="$PROJECT_DIR$/src/views/etax/etaxResult/index.vue" />
         <option value="$PROJECT_DIR$/src/views/administrationManagement/employeeInfo/inService/index.vue" />
@@ -218,6 +162,8 @@
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/all/all.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/stop/stop.vue" />
         <option value="$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/followRecord/index.vue" />
+        <option value="$PROJECT_DIR$/src/utils/prototype.js" />
+        <option value="$PROJECT_DIR$/src/views/marketplaceManagement/followUpData/followUpdata.vue" />
       </list>
     </option>
   </component>
@@ -255,22 +201,13 @@
               <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="woa-components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ezg-pc-cloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ezg-pc-cloud" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="woa-components" type="462c0819:PsiDirectoryNode" />
-              <item name="companyDetail" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -546,7 +483,7 @@
       <workItem from="1573177108606" duration="1184000" />
       <workItem from="1573432848451" duration="11634000" />
       <workItem from="1573458922362" duration="2581000" />
-      <workItem from="1573520175321" duration="5209000" />
+      <workItem from="1573520175321" duration="9871000" />
     </task>
     <task id="LOCAL-00022" summary="修改启动失败的问题">
       <created>1555989851178</created>
@@ -895,7 +832,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2639754000" />
+    <option name="totallyTimeSpent" value="2644416000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -1031,36 +968,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="0.0" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/views/order/orderApprove/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/order/orderApprove/approveList.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="6" column="93" lean-forward="true" selection-start-line="6" selection-start-column="93" selection-end-line="6" selection-end-column="93" />
-          <folding>
-            <element signature="n#style#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/order/errorWorkOrderApprove/index.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/filtra/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="22" lean-forward="true" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
-          <folding>
-            <element signature="n#style#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/xTable/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
@@ -1475,11 +1382,51 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/accounterManager/proxyAccounterManger/serving/followRecord/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="270" column="39" lean-forward="true" selection-start-line="270" selection-start-column="39" selection-end-line="270" selection-end-column="39" />
+        <state relative-caret-position="327">
+          <caret line="248" column="14" lean-forward="true" selection-start-line="248" selection-start-column="14" selection-end-line="248" selection-end-column="14" />
           <folding>
             <element signature="n#style#0;n#FormItem#0;n#Col#0;n#Row#0;n#Form#0;n#Row#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#FormItem#0;n#Col#0;n#Row#2;n#Form#0;n#Row#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="454" column="18" selection-start-line="454" selection-start-column="16" selection-end-line="454" selection-end-column="18" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/request.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/prototype.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1109">
+          <caret line="217" column="29" lean-forward="true" selection-start-line="217" selection-start-column="29" selection-end-line="217" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#47#0" expanded="true" />
+            <element signature="e#4763#5004#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/marketplaceManagement/followUpData/followUpdata.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="277" column="49" lean-forward="true" selection-start-line="277" selection-start-column="49" selection-end-line="277" selection-end-column="49" />
+          <folding>
+            <element signature="n#style#0;n#Input#0;n#FormItem#0;n#Col#2;n#Row#0;n#Form#0;n#div#0;n#Panel#0;n#Collapse#0;n#Row#0;n#Card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
