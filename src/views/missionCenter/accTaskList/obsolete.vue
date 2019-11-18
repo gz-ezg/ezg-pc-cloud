@@ -9,28 +9,29 @@
                         <div slot="content" @keydown.enter="Search">
                             <Form ref="formValidateSearch" :model="formValidateSearch" :label-width="100">
                                 <Row :gutter="24">
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="公司名称：" prop="companyname">
-                                            <Input v-model="formValidateSearch.companyName" size="small"></Input>
+                                            <Input v-model="formValidateSearch.companyName" size="small" style="width:158px"></Input>
                                         </FormItem>
                                     </Col>
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="执行人：" prop="date">
-                                            <Input v-model="formValidateSearch.creatorName" s size="small"></Input>
+                                            <Input v-model="formValidateSearch.creatorName" s size="small" style="width:158px"></Input>
                                         </FormItem>
                                     </Col>
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="执行时间期间：" prop="paytime">
-                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:100%" size="small"></DatePicker>
+                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:158px" size="small"></DatePicker>
                                         </FormItem>
                                     </Col>
-                                </Row>
-                                <center>
+                                    <center>
                                     <FormItem>
                                         <Button type="primary" @click="Search">搜索</Button>
                                         <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
                                     </FormItem>
                                 </center>
+                                </Row>
+                                
                             </Form>
                         </div>
                     </Panel>
