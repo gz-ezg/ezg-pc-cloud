@@ -24,12 +24,12 @@
                                             <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:158px" size="small"></DatePicker>
                                         </FormItem>
                                     </Col>
-                                    <center>
+                                    <Col span="6">
                                     <FormItem>
-                                        <Button type="primary" @click="Search">搜索</Button>
-                                        <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
+                                        <Button type="primary" size="small" @click="Search">搜索</Button>
+                                        <Button type="ghost" size="small" @click="handleReset" style="margin-left: 8px">重置</Button>
                                     </FormItem>
-                                </center>
+                                </Col>
                                 </Row>
                                 
                             </Form>
