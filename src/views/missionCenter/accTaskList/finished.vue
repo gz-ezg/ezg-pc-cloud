@@ -39,13 +39,22 @@
                                             <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.endDate" style="width:158px" size="small"></DatePicker>
                                         </FormItem>
                                     </Col>
-                                    
-                                    <center>
+                                    <Col span="6">
+                                      <FormItem>
+                                        &nbsp;
+                                      </FormItem>
+                                    </Col>
+                                    <Col span="6">
+                                      <FormItem>
+                                        &nbsp;
+                                      </FormItem>
+                                    </Col>
+                                    <Col span="6">
                                     <FormItem>
                                         <Button type="primary" @click="Search">搜索</Button>
                                         <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
                                     </FormItem>
-                                    </center>
+                                    </Col>
                                 </Row>
                                 
                             </Form>
@@ -100,7 +109,7 @@
                 taskKind_map:new Map(),
                 taskStage:[],
                 taskStage_map:new Map(),
-                search_model: "0",
+                search_model: "1",
                 formValidateSearch: {
                     ordercode: "",
                     companyName: "",

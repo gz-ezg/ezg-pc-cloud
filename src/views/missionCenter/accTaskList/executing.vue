@@ -6,11 +6,12 @@
                     <Panel name="1" >
                         <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
                         筛选
-                        <div slot="content" @keydown.enter="Search" >
-                            <Form ref="formValidateSearch" :model="formValidateSearch" :label-width="100" style="display:block">
+                        <div slot="content">
+                           <!-- @keydown.enter="Search" -->
+                            <Form ref="formValidateSearch" :model="formValidateSearch" :label-width="100" style="display:block;z-index:10;">
                                 <Row :gutter="24">
                                     <Col span="6">
-                                        <FormItem label="公司名称11：" prop="companyname">
+                                        <FormItem label="公司名称：" prop="companyname">
                                             <Input v-model="formValidateSearch.companyName" size="small" style="width:158px;"></Input>
                                         </FormItem>
                                     </Col>
@@ -29,12 +30,12 @@
                                             <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:158px" size="small"></DatePicker>
                                         </FormItem>
                                     </Col>
-                                     <center>
+                                     <Col span="6">
                                     <FormItem>
                                         <Button type="primary" @click="Search">搜索</Button>
                                         <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
                                     </FormItem>
-                                </center>
+                                </Col>
                                 </Row>
                                
                             </Form>

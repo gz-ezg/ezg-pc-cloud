@@ -72,7 +72,7 @@
                 data:[],
                 taskKind:[],
                 taskKind_map:new Map(),
-                search_model: "0",
+                search_model: "1",
                 formValidateSearch: {
                     ordercode: "",
                     companyName: "",
