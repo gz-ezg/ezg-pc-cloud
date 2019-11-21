@@ -113,3 +113,22 @@
         </Modal>
     </div>
 </template>
+
+<script>
+export default {
+  data(){
+    return{
+      financelevelValue:[
+        {
+          value:'value',
+          label:'label'
+        }
+      ]
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+  
+</style>

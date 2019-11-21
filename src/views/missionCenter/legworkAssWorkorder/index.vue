@@ -11,27 +11,27 @@
                                 <Row>
                                     <Col span="6">
                                         <FormItem label="公司名称：" prop="companyname">
-                                            <Input v-model="formValidateSearch.companyName" size="small"></Input>
+                                            <Input v-model="formValidateSearch.companyName" size="small" style="width:158px"></Input>
                                         </FormItem>
                                     </Col>
                                     <Col span="6">
                                         <FormItem label="会计名称：" prop="customername">
-                                            <Input v-model="formValidateSearch.creatorName" size="small"></Input>
+                                            <Input v-model="formValidateSearch.creatorName" size="small" style="width:158px"></Input>
                                         </FormItem>
                                     </Col>
                                     <Col span="6">
                                         <FormItem label="核实时间：" prop="date">
-                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:100%" size="small"></DatePicker>
+                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:158px" size="small"></DatePicker>
                                         </FormItem>
                                     </Col>
                                     <Col span="6">
                                         <FormItem label="创建时间：" prop="paytime">
-                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.paytime" style="width:100%" size="small"></DatePicker>
+                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.paytime" style="width:158px" size="small"></DatePicker>
                                         </FormItem>
                                     </Col>
                                 </Row>
                                 <center>
-                                    <FormItem style="margin-top: 15px">
+                                    <FormItem style="margin-top: 15px;margin-bottom:0;">
                                         <Button size="small" type="primary" @click="Search">搜索</Button>
                                         <Button size="small" type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
                                     </FormItem>

@@ -28,6 +28,7 @@
         <shift-company v-if="openShiftCompany" @close="close_shift_company" :company="selectCompany"></shift-company>
         <merge-company :data="data"></merge-company>
         <field-detail></field-detail>
+        <amendCompany />
     </div>
 </template>
 
@@ -172,7 +173,12 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            this.edit(params);
+                                          // console.log(params)
+                                            // this.$bus.emit("OPEN_COMPANY_UPDATE", params.row)
+                                            // this.open_company_merge()
+
+                                            // this.edit(params);
+
                                         }
                                     }
                                 }, '工商信息'),

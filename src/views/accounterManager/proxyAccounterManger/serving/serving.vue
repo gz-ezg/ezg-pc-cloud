@@ -1958,4 +1958,13 @@
     .ivu-col-span-6 {
         height: 28px;
     }
+    .ivu-table-wrapper{
+      height:70%;
+    }
+    .ivu-table-fixed, .ivu-table-fixed-right{
+      height:70%;
+    }
+    .ivu-table-tbody{
+      height: 70%;
+    }
 </style>

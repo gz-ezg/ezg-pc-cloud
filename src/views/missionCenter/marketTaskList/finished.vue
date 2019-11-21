@@ -11,27 +11,27 @@
                                 <Row>
                                     <Col span="6">
                                         <FormItem label="公司名称：" prop="companyname">
-                                            <Input v-model="formValidateSearch.companyName" size="small"></Input>
+                                            <Input v-model="formValidateSearch.companyName" size="small" style="width:158px"></Input>
                                         </FormItem>
                                     </Col>
                                     <Col span="6">
                                         <FormItem label="客户联系方式：" prop="customername">
-                                            <Input v-model="formValidateSearch.customertel" size="small"></Input>
+                                            <Input v-model="formValidateSearch.customertel" size="small" style="width:158px"></Input>
                                         </FormItem>
                                     </Col>
                                     <Col span="6">
                                         <FormItem label="执行人：" prop="date">
-                                            <Input v-model="formValidateSearch.creatorName" s size="small"></Input>
+                                            <Input v-model="formValidateSearch.creatorName" s size="small" style="width:158px"></Input>
                                         </FormItem>
                                     </Col>
                                     <Col span="6">
                                         <FormItem label="执行时间期间：" prop="paytime">
-                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:100%" size="small"></DatePicker>
+                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:158px" size="small"></DatePicker>
                                         </FormItem>
                                     </Col>
                                 </Row>
                                 <center>
-                                    <FormItem style="margin-top: 15px">
+                                    <FormItem style="margin-top:0;margin-bottom:0">
                                         <Button size="small" type="primary" @click="Search">搜索</Button>
                                         <Button size="small" type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
                                     </FormItem>

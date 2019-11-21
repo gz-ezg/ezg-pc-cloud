@@ -73,8 +73,9 @@
                 <Button type="primary" icon="ios-color-wand-outline" @click="turn_offincal" :loading="comLoading">跳转税务局</Button>
             </ButtonGroup>
         </Row>
-        <Row style="margin-top: 10px;">
-            <Table
+        <Row style="margin-top: 10px;" class="changeTable">
+            <Table  
+                    border 
                     @on-current-change="selectRow"
                     :loading="loading"
                     ref="selection"
@@ -83,6 +84,7 @@
                     size="small"
                     :columns="header"
                     :data="data"
+                    
             ></Table>
             <Page
                     size="small"
@@ -142,6 +144,7 @@
                         title: '申报税种',
                         key: 'tax_type',
                         width: 180,
+                        resizable:true,
                         render: (h, params) => {
                             if (params.row.tax_type == "" || params.row.tax_type == null) {
                                 return "";
@@ -207,12 +210,14 @@
                     {
                         title: '下单时间',
                         key: 'createdate',
-                        minWidth: 220
+                        minWidth: 220,
+                        resizable:true,
                     },
                     {
                         title: '国地税报道',
                         key: 'gdsreport',
                         minWidth: 140,
+                        resizable:true,
                         render:(h,params)=>{
                             return h('div',{},this.GDSreport_map.get(params.row.gdsreport))
                         }
@@ -221,6 +226,7 @@
                         title: '重要提醒',
                         key: 'importantList',
                         minWidth: 220,
+                        resizable:true,
                         render: (h, params) => {
                             let _self = this
                             if (params.row.importantList == "" || params.row.importantList == null) {
@@ -327,31 +333,37 @@
                         title: '实名账号',
                         key: 'nationalnum',
                         minWidth: 150,
+                        resizable:true,
                     },
                     {
                         title: '密码',
                         key: 'nationalpsw',
                         minWidth: 150,
+                        resizable:true,
                     },
                     {
                         title: '税号',
                         key: 'tax_number',
                         minWidth: 150,
+                        resizable:true,
                     },
                     {
                         title: '个税密码',
                         key: 'tax_password',
                         minWidth: 150,
+                        resizable:true,
                     },
                     {
                         title: '代账类型',
                         key: 'product',
-                        minWidth: 230
+                        minWidth: 230,
+                        resizable:true,
                     },
                     {
                         title: '社保',
                         key: 'shebao',
                         minWidth: 150,
+                        resizable:true,
                         render: (h, params) => {
                             if (!params.row.shebao){
                                 return ""
@@ -400,6 +412,7 @@
                         title: '做账备注',
                         key: 'accountList',
                         minWidth: 120,
+                        resizable:true,
                         render: (h, params) => {
                             let _self = this
                             if (params.row.accountList == "" || params.row.accountList == null) {
@@ -584,11 +597,13 @@
                         title: '产品金额',
                         key: 'unit_price',
                         minWidth: 180,
+                        resizable:true,
                     },
                     {
                         title: '未完事项',
                         key: 'undoList',
                         minWidth: 120,
+                        resizable:true,
                         render: (h, params) => {
                             let _self = this
                             if (params.row.undoList == "" || params.row.undoList == null) {
@@ -768,6 +783,7 @@
                         title: '剩余外勤',
                         key: 'remainder',
                         minWidth: 120,
+                        resizable:true,
                         render: (h, params) => {
                             let _self = this;
                             return h('div', [
@@ -793,32 +809,38 @@
                     {
                         title: '税种状态',
                         key: 'tax_status',
-                        minWidth: 120
+                        minWidth: 120,
+                        resizable:true,
                     },
                     {
                         title: '市场',
                         key: 'followby_realname',
-                        minWidth: 120
+                        minWidth: 120,
+                        resizable:true,
                     },
                     {
                         title: '服务会计',
                         key: 'server_realname',
-                        minWidth: 120
+                        minWidth: 120,
+                        resizable:true,
                     },
                     {
                         title: '服务状态',
                         key: 'service_status',
-                        minWidth: 120
+                        minWidth: 120,
+                        resizable:true,
                     },
                     {
                         title: '本月税报结果',
                         key: 'tax_result',
-                        minWidth: 120
+                        minWidth: 120,
+                        resizable:true,
                     },
                     {
                         title: '操作',
                         key: 'action',
                         width: 200,
+                        resizable:true,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
@@ -1166,5 +1188,14 @@
     }
     .ivu-col-span-6 {
         height: 28px;
+    }
+    .ivu-table-fixed{
+      height:96%;
+    }
+    .ivu-table-fixed-body{
+      height:90%;
+    }
+    .ivu-table-overflowX{
+      height: 50vh;
     }
 </style>

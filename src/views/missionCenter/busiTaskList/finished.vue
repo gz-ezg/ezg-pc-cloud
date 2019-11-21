@@ -9,42 +9,46 @@
                         <div slot="content" @keydown.enter="Search">
                             <Form ref="formValidateSearch" :model="formValidateSearch" :label-width="100">
                                 <Row :gutter="24">
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="公司名称：" prop="companyname">
-                                            <Input v-model="formValidateSearch.companyName" size="small"></Input>
+                                            <Input v-model="formValidateSearch.companyName" size="small" style="width:158px"></Input>
                                         </FormItem>
                                     </Col>
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="执行人：" prop="date">
-                                            <Input v-model="formValidateSearch.creatorName"  size="small"></Input>
+                                            <Input v-model="formValidateSearch.creatorName"  size="small" style="width:158px"></Input>
                                         </FormItem>
                                     </Col>
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="任务结果：" prop="customername">
-                                            <Select v-model="formValidateSearch.mission" size="small" style="width:180px">
+                                            <Select v-model="formValidateSearch.mission" size="small" style="width:158px">
                                                 <Option v-for="item in missionList" :value="item.typecode" :key="item.id">{{item.typename}}</Option>
                                             </Select>
                                         </FormItem>
                                     </Col>
-                                </Row>
-                                <Row :gutter="24">
-                                    <Col span="8">
+                                    <Col span="6">
                                         <FormItem label="执行时间期间：" prop="paytime">
                                             <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.date" style="width:100%" size="small"></DatePicker>
                                         </FormItem>
                                     </Col>
-                                    <Col span="8">
+                                </Row>
+                                <Row :gutter="24">
+                                    
+                                    <Col span="6">
                                         <FormItem label="完结时间期间：" prop="paytime">
-                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.endDate" style="width:100%" size="small"></DatePicker>
+                                            <DatePicker transfer type="daterange" placement="bottom-end" v-model="formValidateSearch.endDate" style="width:158px" size="small"></DatePicker>
                                         </FormItem>
                                     </Col>
-                                </Row>
-                                <center>
+                                    <Col span="6">&nbsp;</Col>
+                                    <Col span="6">&nbsp;</Col>
+                                    <Col span="6">
                                     <FormItem>
-                                        <Button type="primary" @click="Search">搜索</Button>
-                                        <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
+                                        <Button type="primary" size="small" @click="Search">搜索</Button>
+                                        <Button type="ghost" size="small" @click="handleReset" style="margin-left: 8px">重置</Button>
                                     </FormItem>
-                                </center>
+                                </Col>
+                                </Row>
+                                
                             </Form>
                         </div>
                     </Panel>
@@ -97,7 +101,7 @@
                 taskKind_map:new Map(),
                 taskStage:[],
                 taskStage_map:new Map(),
-                search_model: "0",
+                search_model: "1",
                 formValidateSearch: {
                     ordercode: "",
                     companyName: "",
