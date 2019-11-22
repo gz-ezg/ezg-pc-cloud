@@ -340,6 +340,16 @@ export const appRouter = [
                 component: resolve => {
                     require(['@/views/customerManagement/customerLog/index.vue'], resolve);
                 }
+            },
+             {
+                access: 11659,
+                meta: 11659,
+                path: 'customerBelong',
+                title: '客户归属',
+                name: 'customerBelong_index',
+                component: resolve => {
+                    require(['@/views/customerManagement/customerBelong/customerBelong.vue'], resolve);
+                }
             }
         ]
     },

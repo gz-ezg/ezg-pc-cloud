@@ -1190,12 +1190,12 @@
         height: 28px;
     }
     .ivu-table-fixed{
-      height:96%;
+      height:92%;
     }
     .ivu-table-fixed-body{
-      height:90%;
+      height:87%;
     }
     .ivu-table-overflowX{
-      height: 50vh;
+      height: 35vh;
     }
 </style>

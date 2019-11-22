@@ -191,7 +191,7 @@
                     {
                         title: '申报税种',
                         key: 'tax_type',
-                        width: 180,
+                        width: 100,
                         render: (h, params) => {
                             if (params.row.tax_type == "" || params.row.tax_type == null) {
                                 return "";
@@ -257,12 +257,12 @@
                     {
                         title: '下单时间',
                         key: 'createdate',
-                        minWidth: 220
+                        minWidth: 170
                     },
                     {
                         title: '重要提醒',
                         key: 'importantList',
-                        minWidth: 220,
+                        minWidth: 100,
                         render: (h, params) => {
                             let _self = this
                             if (params.row.importantList == "" || params.row.importantList == null) {
@@ -368,7 +368,7 @@
                     {
                         title: '实名账号',
                         key: 'nationalnum',
-                        minWidth: 150,
+                        minWidth: 120,
                         render: (h, params) => {
                             let _self = this;
                             if (params.index != _self.currentIndex) {
@@ -451,7 +451,7 @@
                     {
                         title: '密码',
                         key: 'nationalpsw',
-                        minWidth: 150,
+                        minWidth: 120,
                         render: (h, params) => {
                             let _self = this;
                             if (params.index != this.currentIndexx) {

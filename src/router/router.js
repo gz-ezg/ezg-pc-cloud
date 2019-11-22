@@ -283,6 +283,15 @@ export const appRouter = [
           import(/* webpackChunkName: "customerLog_index" */ '@/views/customerManagement/customerLog/index.vue')
       },
       {
+        access: 11659,
+        meta: 11659,
+        path: 'customerBelong',
+        title: '客户归属',
+        name: 'customerBelong_index',
+        component: () =>
+          import(/* webpackChunkName: "customerLog_index" */ '@/views/customerManagement/customerBelong/customerBelong.vue')
+      },
+      {
             access: 11657,
             meta: 11657,
             path: 'resourceManager',

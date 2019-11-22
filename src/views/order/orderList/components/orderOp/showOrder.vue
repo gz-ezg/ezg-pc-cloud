@@ -132,8 +132,10 @@
 				<h3 style="margin-bottom: 10px;">
 					产品详情
 				</h3>
-				
-				 <product-detail-list v-if="openShowOrderDetail" :productList="orderItem" :pageFlag="pageFlag" :isDisabled="isDisabled" :orderDetail="orderDetail"></product-detail-list>
+				 <div class="all">
+                     <product-detail-list v-if="openShowOrderDetail" :productList="orderItem" :pageFlag="pageFlag" :isDisabled="isDisabled" :orderDetail="orderDetail"></product-detail-list>
+                 </div>
+				 
 			</Col>
         </Row>    
 			<div slot="footer">
@@ -277,5 +279,10 @@ export default {
 
 .demo-table-refund-row{
     color: red
+}
+.all{
+    overflow-y: true;
+    overflow: auto;
+    height: 400px;
 }
 </style>
