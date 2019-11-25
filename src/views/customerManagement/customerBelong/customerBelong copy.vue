@@ -25,23 +25,14 @@
                                     </FormItem>
                                 </Col>
                                 <Col span="8">
-                                    <FormItem prop="tel" label="跟进人">
-                                        <Input type="text" size="small" v-model="seacrhFormInline.followby" placeholder="">
+                                    <FormItem prop="tel" label="联系方式：">
+                                        <Input type="text" size="small" v-model="seacrhFormInline.tel" placeholder="">
                                         </Input>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem prop="tel" label="状态">
-                                        <!-- @on-change="search" -->
-                                         <Select transfer v-model="seacrhFormInline.ifPool" size="small" style="width: 158px">
-                        <Option value="Y">是</Option>
-                        <Option value="N">否</Option>
-                      </Select>
                                     </FormItem>
                                 </Col>
                             </Row>
                             <FormItem>
-                                <Button type="primary" @click.native="search">搜索</Button>
+                                <Button type="primary" @click="search">搜索</Button>
                                 <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
                             </FormItem>
                         </Form>
@@ -64,14 +55,14 @@
                 :data="data"
             >
             </Table>
-            <!-- <Page
+            <Page
                 placement="top"
                 size="small"
                 :total="total"
                 show-total
                 show-elevator
                 @on-change="pageChange"
-                style="margin-top: 10px"></Page> -->
+                style="margin-top: 10px"></Page>
         </Row>
         <create-resoure-type @update="get_data" :departAlias="departAlias"></create-resoure-type>
         <update-resoure-type @update="get_data" :departAlias="departAlias"></update-resoure-type>
@@ -79,16 +70,15 @@
 </template>
 
 <script>
-import createResoureType from './create_name'
-import updateResoureType from './update_name'
-import {getCompanyDetailByCompanyName} from '@/api/customerBelong'
+// import createResoureType from './create_name'
+// import updateResoureType from './update_name'
 
 export default {
     name: 'customerBelong_index',
-    components:{
-        createResoureType,
-        updateResoureType
-    },
+    // components:{
+    //     createResoureType,
+    //     updateResoureType
+    // },
     data(){
         return{
             search_model:"",
@@ -100,37 +90,68 @@ export default {
             seacrhFormInline: {
                 companyname: "",
                 name: "",
-                followby:"",
-                ifPool:""
+                tel: ""
             },
             page: 1,
-            pageSize: 5,
+            pageSize: 10,
             total: 0,
             data: [],
             departAlias: [],
             // departAlias_map: new Map(),
             header: [
                 {
-                    title: "公司名称",
-                    key: "CompanyName",
+                    title: "资料名称",
+                    key: "file_type_name",
                     minWidth: 120
                 },
                 {
                     //  自定义，1
-                    title: "客户名称",
-                    key: "NAME",
+                    title: "数量",
+                    key: "plural_name",
                     minWidth: 120
                 },
                 {
-                    title: "跟进人",
-                    key: "followby",
+                    title: "部门",
+                    key: "use_departs_name",
                     minWidth: 200
                 },
                 {
-                    title: "状态",
-                    key: "ifPool",
+                    title: "客户展示",
+                    key: "show_customer_name",
                     minWidth: 150
-                }
+                },
+                {
+                    title: "操作",
+                    key: "action",
+                    minWidth: 250,
+                    render: (h, parmas) =>{
+                            return h('div',[ 
+                                h('Button',{
+                                    props: {
+                                        type: 'text',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.update_type(parmas.row)
+                                        }
+                                    }
+                                },'[ 编辑 ]'),
+                                h('Button',{
+                                    props: {
+                                        type: 'text',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            // console.log(parmas.row)
+                                            this.delete_type(parmas.row.id)
+                                        }
+                                    }
+                                },'[ 删除 ]'),
+                            ])
+                        }
+                    }
             ]
         }
     },
@@ -229,26 +250,10 @@ export default {
             this.get_data()
         },
         search(){
-           getCompanyDetailByCompanyName({
-               followby:this.seacrhFormInline.followby,
-               name:this.seacrhFormInline.name,
-               companyName:this.seacrhFormInline.companyname,
-               ifPool:this.seacrhFormInline.ifPool
-           }).then(res=>{
-               console.log(res)
-               this.data = res
-               followby:this.data.followby
-               NAME:this.data.NAME
-               CompanyName:this.data.companyName
-               ifPool:this.data.ifPool
-           })
+
         },
         reset(){
-          this.seacrhFormInline = []
-           followby:''
-            NAME:''
-            CompanyName:''
-            ifPool:''
+
         }
     },
     created(){
