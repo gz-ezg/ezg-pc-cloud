@@ -95,9 +95,9 @@
         <Button
           type="primary"
           name="marketingManagement_index_field_log"
+          :size="small"
           icon="edit"
           @click="showHeaderCheckBox = true"
-          :size="small"
         >自定义表头</Button>
       </ButtonGroup>
     </Row>
@@ -204,7 +204,7 @@ export default {
         false,
         false,
         false,
-        true,
+        false,
         false,
         true,
         false,
@@ -351,10 +351,38 @@ export default {
             }
           }
         },
+         {
+          title: "代账类型",
+          key: "product",
+          minWidth: 230
+        },
         {
-          title: "下单时间",
-          key: "createdate",
-          minWidth: 170
+          title: "剩余外勤",
+          key: "remainder",
+          minWidth: 170,
+          render: (h, params) => {
+            let _self = this;
+            return h("div", [
+              h(
+                "span",
+                {
+                  style: {
+                    display: "inline-block",
+                    lineHeight: "24px",
+                    height: "24px",
+                    cursor: "pointer",
+                    color: "#0162f4"
+                  },
+                  on: {
+                    click: function() {
+                      _self.field(params.row);
+                    }
+                  }
+                },
+                params.row.remainder
+              )
+            ]);
+          }
         },
         {
           title: "重要提醒",
@@ -832,11 +860,11 @@ export default {
             }
           }
         },
-        {
-          title: "代账类型",
-          key: "product",
-          minWidth: 230
-        },
+        // {
+        //   title: "代账类型",
+        //   key: "product",
+        //   minWidth: 230
+        // },
         {
           title: "社保",
           key: "shebao",
@@ -1546,33 +1574,10 @@ export default {
             }
           }
         },
-        {
-          title: "剩余外勤",
-          key: "remainder",
-          minWidth: 120,
-          render: (h, params) => {
-            let _self = this;
-            return h("div", [
-              h(
-                "span",
-                {
-                  style: {
-                    display: "inline-block",
-                    lineHeight: "24px",
-                    height: "24px",
-                    cursor: "pointer",
-                    color: "#0162f4"
-                  },
-                  on: {
-                    click: function() {
-                      _self.field(params.row);
-                    }
-                  }
-                },
-                params.row.remainder
-              )
-            ]);
-          }
+          {
+          title: "下单时间",
+          key: "createdate",
+          minWidth: 170
         },
         {
           title: "税种状态",
