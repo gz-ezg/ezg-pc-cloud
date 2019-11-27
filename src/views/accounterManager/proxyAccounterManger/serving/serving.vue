@@ -76,26 +76,28 @@
     </Row>
     <Row>
       <ButtonGroup>
-        <Button type="primary" icon="ios-color-wand-outline" @click="add_important_reminder">新增重要提醒</Button>
-        <Button type="primary" icon="information-circled" @click="add_account_note">新增做账备注</Button>
-        <Button type="primary" icon="ios-color-wand-outline" @click="add_unfinished_things">新增未完事项</Button>
-        <Button type="primary" icon="ios-color-wand-outline" @click="change_accounting">变更会计</Button>
-        <Button type="primary" icon="ios-color-wand-outline" @click="service_detail">服务详情</Button>
-        <Button type="primary" icon="ios-color-wand-outline" @click="open_acc_change_log">会计变更日志</Button>
-        <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
-        <Button type="primary" icon="ios-color-wand-outline" @click="service_offline">服务下线</Button>
-        <Button type="primary" icon="ios-color-wand-outline" @click="service_paused">暂停服务</Button>
+        <Button type="primary" :size="small" icon="ios-color-wand-outline" @click="add_important_reminder">新增重要提醒</Button>
+        <Button type="primary" :size="small" icon="information-circled" @click="add_account_note">新增做账备注</Button>
+        <Button type="primary" :size="small"  icon="ios-color-wand-outline" @click="add_unfinished_things">新增未完事项</Button>
+        <Button type="primary"  :size="small" icon="ios-color-wand-outline" @click="change_accounting">变更会计</Button>
+        <Button type="primary" :size="small" icon="ios-color-wand-outline" @click="service_detail">服务详情</Button>
+        <Button type="primary"  :size="small" icon="ios-color-wand-outline" @click="open_acc_change_log">会计变更日志</Button>
+        <Button type="primary" :size="small" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
+        <Button type="primary" :size="small" icon="ios-color-wand-outline" @click="service_offline">服务下线</Button>
+        <Button type="primary"  :size="small" icon="ios-color-wand-outline" @click="service_paused">暂停服务</Button>
         <Button
           type="primary"
           icon="ios-color-wand-outline"
           @click="turn_offincal"
           :loading="comLoading"
+          :size="small"
         >跳转税务局</Button>
         <Button
           type="primary"
           name="marketingManagement_index_field_log"
           icon="edit"
           @click="showHeaderCheckBox = true"
+          :size="small"
         >自定义表头</Button>
       </ButtonGroup>
     </Row>

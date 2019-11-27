@@ -1187,10 +1187,11 @@
         background-color: #00CCFF;
     }
     .ivu-col-span-6 {
-        height: 28px;
+      height: 28px;
     }
     .ivu-table-fixed{
-      height:92%;
+      -webkit-height:95%;
+      height:95%;
     }
     .ivu-table-fixed-body{
       height:87%;
