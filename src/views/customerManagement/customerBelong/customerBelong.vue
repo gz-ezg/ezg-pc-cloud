@@ -25,34 +25,17 @@
                                     </FormItem>
                                 </Col>
                                 <Col span="8">
-                                    <FormItem prop="tel" label="跟进人">
-                                        <Input type="text" size="small" v-model="seacrhFormInline.followby" placeholder="">
-                                        </Input>
-                                    </FormItem>
-                                </Col>
-                                <Col span="8">
-                                    <FormItem prop="tel" label="状态">
-                                        <!-- @on-change="search" -->
-                                         <Select transfer v-model="seacrhFormInline.ifPool" size="small" style="width: 158px">
-                        <Option value="Y">是</Option>
-                        <Option value="N">否</Option>
-                      </Select>
-                                    </FormItem>
-                                </Col>
-                            </Row>
-                            <FormItem>
+                                   <FormItem>
                                 <Button type="primary" @click.native="search">搜索</Button>
                                 <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
                             </FormItem>
+                                </Col>
+                            </Row>
+                            
                         </Form>
                     </div>
                 </Panel>
             </Collapse>
-        </Row>
-        <Row>
-            <ButtonGroup>
-                <Button type="primary" icon="plus" @click="create_resoure">新增</Button>
-            </ButtonGroup>
         </Row>
         <Row style="margin-top: 10px;">
             <Table
@@ -62,6 +45,7 @@
                 :loading="loading"
                 :columns="header"
                 :data="data"
+                v-show="isShow"
             >
             </Table>
             <!-- <Page
@@ -91,9 +75,10 @@ export default {
     },
     data(){
         return{
-            search_model:"",
+            search_model:"1",
             loading: false,
             openDetail:false,
+            isShow:false,
             selectRow:{
 
             },
@@ -127,7 +112,7 @@ export default {
                     minWidth: 200
                 },
                 {
-                    title: "状态",
+                    title: "是否在公海池",
                     key: "ifPool",
                     minWidth: 150
                 }
@@ -229,6 +214,7 @@ export default {
             this.get_data()
         },
         search(){
+        
            getCompanyDetailByCompanyName({
                followby:this.seacrhFormInline.followby,
                name:this.seacrhFormInline.name,
@@ -237,6 +223,9 @@ export default {
            }).then(res=>{
                console.log(res)
                this.data = res
+               if(this.data.length != 0){
+                  this.isShow = true;
+               }
                followby:this.data.followby
                NAME:this.data.NAME
                CompanyName:this.data.companyName
@@ -244,6 +233,7 @@ export default {
            })
         },
         reset(){
+        this.isShow = false;
           this.seacrhFormInline = []
            followby:''
             NAME:''

@@ -1,11 +1,11 @@
 <template>
     <Card>
-        <Row style="margin-bottom:20px">
+        <Row style="margin-bottom:20px;">
             <Collapse v-model="search_model">
                 <Panel name="1">
                     <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
                     筛选
-                    <div slot="content" @keydown.enter="Search">
+                    <div slot="content" @keydown.enter="Search" style="padding-bottom:30px;">
                         <Form ref="SearchValidate" :model="SearchValidate" :label-width="130" style="margin-top: 15px">
                             <Row :gutter="8" style="height:56px">
                                 <Col span="8">
@@ -24,10 +24,12 @@
                                     </FormItem>
                                 </Col>
                             </Row>
-                            <center>
+                            <center style="float:right">
                                 <FormItem>
                                     <Button type="primary" @click="Search">搜索</Button>
-                                    <Button type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
+                                    <ButtonGroup>
+                <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
+            </ButtonGroup>
                                 </FormItem>
                             </center>
                         </Form>
@@ -36,9 +38,7 @@
             </Collapse>
         </Row>
         <Row>
-            <ButtonGroup>
-                <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
-            </ButtonGroup>
+           
         </Row>
         <Row style="margin-top: 10px;">
             <Table
@@ -73,7 +73,7 @@
         name: "index",
         data(){
             return{
-                search_model: '',
+                search_model: '1',
                 loading: false,
                 pageTotal: 0,
                 page: 1,
@@ -92,7 +92,7 @@
                     {
                         title: '服务状态',
                         key: 'service_status',
-                        minWidth: 220,
+                        minWidth: 40,
                         render:(h,params)=>{
                             let _self = this
                             return h('div',{},_self.cservicest_map.get(params.row.service_status))
@@ -101,37 +101,37 @@
                     {
                         title: '企业',
                         key: 'companyname',
-                        minWidth: 220
+                        minWidth: 200
                     },
                     {
                         title: '产品名称',
                         key: 'product',
-                        minWidth: 220
+                        minWidth: 80
                     },
                     {
                         title: '产品详情',
                         key: 'skuname',
-                        minWidth: 220
+                        minWidth: 120
                     },
                     {
                         title: '开始税期',
                         key: 'begin_period',
-                        minWidth: 220
+                        minWidth: 40
                     },
                     {
                         title: '结束税期',
                         key: 'end_period',
-                        minWidth: 220
+                        minWidth: 40
                     },
                     {
                         title: '会计',
                         key: 'cmsServername',
-                        minWidth: 220
+                        minWidth: 40
                     },
                     {
                         title: '单价',
                         key: 'unit_price',
-                        minWidth: 220
+                        minWidth: 40
                     },
                 ]
             }

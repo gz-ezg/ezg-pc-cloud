@@ -1091,6 +1091,15 @@ export const appRouter = [
         component: () =>
             import(/* webpackChunkName: "accounterAutoShareSettingManager" */ '@/views/accounterManager/accounterAutoShareSettingManager/index.vue')
       },
+      {
+        access: 11660,
+        meta: 11660,
+        path: 'bindingVoucher',
+        title: '凭证装订任务',
+        name: 'bindingVoucher_index',
+        component: () =>
+            import(/* webpackChunkName: "accounterAutoShareSettingManager" */ '@/views/accounterManager/bindingVoucher/index.vue')
+      }
     ]
   },
   {

@@ -79,12 +79,12 @@
         <Button type="primary" :size="small" icon="ios-color-wand-outline" @click="add_important_reminder">新增重要提醒</Button>
         <Button type="primary" :size="small" icon="information-circled" @click="add_account_note">新增做账备注</Button>
         <Button type="primary" :size="small"  icon="ios-color-wand-outline" @click="add_unfinished_things">新增未完事项</Button>
-        <Button type="primary"  :size="small" icon="ios-color-wand-outline" @click="change_accounting">变更会计</Button>
+        <Button type="primary"  :size="small" icon="ios-color-wand-outline" @click="change_accounting" v-permission="['proxyAccounterManger.share']">变更会计</Button>
         <Button type="primary" :size="small" icon="ios-color-wand-outline" @click="service_detail">服务详情</Button>
         <Button type="primary"  :size="small" icon="ios-color-wand-outline" @click="open_acc_change_log">会计变更日志</Button>
         <Button type="primary" :size="small" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
-        <Button type="primary" :size="small" icon="ios-color-wand-outline" @click="service_offline">服务下线</Button>
-        <Button type="primary"  :size="small" icon="ios-color-wand-outline" @click="service_paused">暂停服务</Button>
+        <Button type="primary" :size="small" icon="ios-color-wand-outline" @click="service_offline" v-permission="['proxyAccounterManger.stop']">服务下线</Button>
+        <Button type="primary"  :size="small" icon="ios-color-wand-outline" @click="service_paused" v-permission="['proxyAccounterManger.pause']">暂停服务</Button>
         <Button
           type="primary"
           icon="ios-color-wand-outline"

@@ -555,7 +555,8 @@ export default {
                 {field:'base_paydir',title:'缴费渠道',format:'payDirs'},
                 {field:'paynumber',title:'订单价格'},
                 {field:'realnumber',title:'已付款'},                    
-                {field:'neednumber',title:'余款'},                    
+                {field:'neednumber',title:'余款'}, 
+                 {field:'customersource',title:'客户来源'},                   
                 {field:'base_createdate',title:'创建时间'},
                 {field:'crealname',title:'创建人'},
                 {field:'frealname',title:'跟进人'},
@@ -638,7 +639,6 @@ export default {
             }
 
             function success(res){
-                console.log(res.data.data.rows)
                 _self.data = res.data.data.rows
                 _self.total = res.data.data.total
                 for(let i = 0; i < _self.data.length; i++){
@@ -650,6 +650,8 @@ export default {
                         _self.data[i].base_createdate = _self.data[i].base_createdate.slice(0,10)
                     }
                 }
+                
+                
                 _self.data.push({
                     base_paydir: '合计',
                     paynumber: res.data.data.sum.paynumber,
