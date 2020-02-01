@@ -87,7 +87,7 @@ export default {
     get_wx_code(){
       window.WwLogin({
         "id" : "wxcode",  //#id
-        "appid" : "wx7666e5cbbd22b505",
+        "appid" : "ww35cf36c59582b438",
         "agentid" : "1000052",
         "redirect_uri" :"http%3a%2f%2fcloud.zgcfo.com%2f%23%2flogin",
         // "redirect_uri" :"http%3a%2f%2fyc.zgcfo.com%3a8089%2fapi%2fuser%2fm%2flogin%2f1000052",

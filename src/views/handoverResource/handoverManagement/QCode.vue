@@ -56,7 +56,7 @@ export default {
         _self.$bus.off("OPEN_INNER_QCODER",true)
         _self.$bus.on("OPEN_INNER_QCODER", (e)=>{
             _self.qrcode2Open = true
-            // let url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7666e5cbbd22b505&redirect_uri=http://cloud.zgcfo.com/api/system/apiWechatQuickOfficeAuthLogin&response_type=code&scope=SCOPE&agentid=1000013&state=STATE#wechat_redirect"
+            // let url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=ww35cf36c59582b438&redirect_uri=http://cloud.zgcfo.com/api/system/apiWechatQuickOfficeAuthLogin&response_type=code&scope=SCOPE&agentid=1000013&state=STATE#wechat_redirect"
            let url = `${e}`
             _self.get_code(url)
         })
