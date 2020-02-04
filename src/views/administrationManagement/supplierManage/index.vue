@@ -97,8 +97,98 @@
       </TabPane>
       <!-- 历史供应商 -->
       <TabPane label="历史供应商" name="name2">
+        <Card style="min-width:800px">
+          <Row style="margin-bottom:10px">
+            <Collapse v-model="search_model">
+              <Panel name="1">
+                <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>筛选
+                <div slot="content" @keydown.enter="Search2">
+                  <Form
+                    ref="formValidateSearch2"
+                    :model="formValidateSearch2"
+                    :label-width="100"
+                    style="margin-top: -10px"
+                  >
+                    <Row>
+                      <Col span="6">
+                        <FormItem label="供应商" prop="supplierName">
+                          <Input v-model="formValidateSearch2.supplierName" size="small"></Input>
+                        </FormItem>
+                      </Col>
+                      <Col span="6">
+                        <FormItem label="产品" prop="product">
+                          <Input v-model="formValidateSearch2.product" size="small"></Input>
+                        </FormItem>
+                      </Col>
+                      <Col span="6">
+                        <FormItem>
+                          <Button size="small" type="primary" @click="Search2">搜索</Button>
+                        </FormItem>
+                      </Col>
+                    </Row>
+                  </Form>
+                </div>
+              </Panel>
+            </Collapse>
+          </Row>
+          <Row>
+            <ButtonGroup>
+              <Button
+                v-permission="['orderL.add']"
+                type="primary"
+                icon="plus"
+                @click="open_add"
+                name="order_add"
+              >新增</Button>
+              <Button
+                v-permission="['orderL.edit']"
+                type="primary"
+                icon="edit"
+                @click="open_edit"
+                name="order_edit"
+              >编辑</Button>
+              <Button
+                v-permission="['orderL.detail']"
+                type="primary"
+                icon="information-circled"
+                @click="order_show"
+                name="order_show"
+              >查看</Button>
+              <Button
+                v-permission="['orderL.export']"
+                type="primary"
+                icon="ios-color-filter-outline"
+                @click="downloadExcel2"
+              >导出Excel</Button>
+            </ButtonGroup>
+          </Row>
+          <Row style="margin-top: 10px;">
+            <Table
+              :loading="loading"
+              highlight-row
+              size="small"
+              border
+              :row-class-name="rowClassName"
+              @on-row-click="select_row"
+              @on-row-dblclick="open_order_detail"
+              @on-sort-change="sort"
+              :columns="header2"
+              :data="data2"
+            ></Table>
+            <Page
+              size="small"
+              :total="total2"
+              show-total
+              show-sizer
+              show-elevator
+              :current.sync="page2"
+              @on-change="pageChange2"
+              @on-page-size-change="pageSizeChange2"
+              style="margin-top: 10px"
+            ></Page>
+          </Row>
+        </Card>
       </TabPane>
-
     </Tabs>
 
     <show-order :payDirs="payDirs"></show-order>
@@ -140,9 +230,16 @@ export default {
         supplierName: "",
         product: ""
       },
+      formValidateSearch2: {
+        supplierName: "",
+        product: ""
+      },
       total: 0,
       page: 1,
       pageSize: 10,
+      total2: 0,
+      page2: 1,
+      pageSize2: 10,
       loading: false,
       order: "desc",
       sortField: "id",
@@ -168,7 +265,30 @@ export default {
           minWidth: 120
         }
       ],
+       header2: [
+        {
+          title: "供应商",
+          key: "supplier_name",
+          minWidth: 140
+        },
+        {
+          title: "产品",
+          key: "product",
+          minWidth: 300
+        },
+        {
+          title: "结算价",
+          key: "settlement_price",
+          minWidth: 120
+        },
+        {
+          title: "销售价",
+          key: "sales_price",
+          minWidth: 120
+        }
+      ],
       data: [],
+      data2: [],
       //  数据字典
       payDirs: [],
       cluesources: [],
@@ -183,7 +303,7 @@ export default {
     downloadExcel() {
       let field = [
         { field: "supplier_name", title: "供应商" },
-        { field: "product", title: "产品"},
+        { field: "product", title: "产品" },
         { field: "settlement_price", title: "结算价" },
         { field: "sales_price", title: "销售价" }
       ];
@@ -191,13 +311,35 @@ export default {
       let url = `api/product/supplier/list`;
       let config = {
         page: _self.page,
-          pageSize: _self.pageSize,
-          supplierName: _self.formValidateSearch.supplier_name,
-          status: _self.formValidateSearch.status,
-          product: _self.formValidateSearch.product,
-          export: "Y",
-          exportField: encodeURI(JSON.stringify(field))
-      }
+        pageSize: _self.pageSize,
+        supplierName: _self.formValidateSearch.supplier_name,
+        status: _self.formValidateSearch.status,
+        product: _self.formValidateSearch.product,
+        export: "Y",
+        exportField: encodeURI(JSON.stringify(field))
+      };
+      let toExcel = this.$MergeURL(url, config);
+      window.open(toExcel);
+    },
+    // 历史下载文件
+     downloadExcel2() {
+     let field = [
+        { field: "supplier_name", title: "供应商" },
+        { field: "product", title: "产品" },
+        { field: "settlement_price", title: "结算价" },
+        { field: "sales_price", title: "销售价" }
+      ];
+      let _self = this;
+      let url = `api/product/supplier/list`;
+      let config = {
+        page: _self.page,
+        pageSize: _self.pageSize,
+        supplierName: _self.formValidateSearch.supplier_name,
+        status: 'N',
+        product: _self.formValidateSearch.product,
+        export: "Y",
+        exportField: encodeURI(JSON.stringify(field))
+      };
       let toExcel = this.$MergeURL(url, config);
       window.open(toExcel);
     },
@@ -206,11 +348,15 @@ export default {
       this.page = 1;
       this.get_data();
     },
-    handleReset() {
-      this.$refs["formValidateSearch"].resetFields();
-      this.formValidateSearch.date = [];
-      this.get_data();
+    Search2() {
+      this.page2 = 1;
+      this.get_data2();
     },
+    // handleReset() {
+    //   this.$refs["formValidateSearch"].resetFields();
+    //   this.formValidateSearch.date = [];
+    //   this.get_data();
+    // },
     //  自定义排序
     sort(e) {
       this.sortField = e.key;
@@ -240,12 +386,29 @@ export default {
         // console.log(res)
         _self.data = res.data.data.rows;
         _self.total = res.data.data.total;
-        // for(let i = 0; i < _self.data.length; i++){
-        //     // _self.data[i].customer_createDate = DateFormat(_self.data[i].customer_createDate)
-        //     // _self.data[i].base_paydir = _self.payDirs_map.get(_self.data[i].base_paydir)
-        //     // _self.data[i].customersource = _self.cluesources_map.get(_self.data[i].customersource)
-        //     // _self.data[i].contract_flag = _self.order_contract_flag_map.get(_self.data[i].contract_flag)
-        // }
+        _self.loading = false;
+      }
+
+      this.$Get(url, config, success);
+    },
+    // 获取列表2
+    get_data2() {
+      let _self = this;
+      let url = `api/product/supplier/list`;
+      _self.loading = true;
+      let config = {
+        params: {
+          page: _self.page2,
+          pageSize: _self.pageSize2,
+          supplierName: _self.formValidateSearch2.supplierName,
+          status: "N",
+          product: _self.formValidateSearch2.product
+        }
+      };
+      function success(res) {
+        // console.log(res.data.data)
+        _self.data2 = res.data.data.rows;
+        _self.total2 = res.data.data.total;
         _self.loading = false;
       }
 
@@ -258,6 +421,15 @@ export default {
     pageSizeChange(e) {
       this.pageSize = e;
       this.get_data();
+    },
+    // 历史
+    pageChange2(e) {
+      this.page2 = e;
+      this.get_data2();
+    },
+    pageSizeChange2(e) {
+      this.pageSize2 = e;
+      this.get_data2();
     },
     //  列表分类处理
     rowClassName(row, index) {
@@ -338,11 +510,13 @@ export default {
   created() {
     this.loading = true;
     this.get_data_center().then(this.get_data());
+    this.get_data_center().then(this.get_data2());
     // if(localStorage.getItem('id')==10059){
     //     this.header.push(this.amdinOpertionCol)
     // }
     this.$bus.on("UPDATE_ORDER_LIST", e => {
       this.get_data();
+      this.get_data2();
     });
   }
 };
