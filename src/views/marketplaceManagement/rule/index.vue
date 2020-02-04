@@ -159,7 +159,7 @@ export default {
                                         },
                                         on: {
                                             click: () => {
-                                                this.$bus.emit('open_edit_customer_rule',params.row)                                                
+                                                this.$bus.emit('open_edit_customer_rule',params.row)                               
                                             }
                                         }
                                     }, '[修改]'),

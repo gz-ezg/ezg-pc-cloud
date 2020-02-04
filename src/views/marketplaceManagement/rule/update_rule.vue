@@ -11,11 +11,11 @@
             <Form :label-width="100" ref="formdata" :rules="formdataRule" :model="formdata" :show-message="false">
                 <Row>
                     <Col span="12" >
-                        <FormItem prop="customerStatus" >
+                        <FormItem prop="customerStatus">
                             <span slot="label" class="warning">客户状态</span>
                             <Cascader size="small"  v-model="customerStatus" :data="CUStype" style="width:100%" trigger="hover" transfer >
                             </Cascader >
-                        </FormItem>
+                        </FormItem>          
                     </Col>
                     <Col span="12">
                         <FormItem label="客户等级" prop="customerLevel">

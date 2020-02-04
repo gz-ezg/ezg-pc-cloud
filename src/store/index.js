@@ -13,12 +13,16 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
         //
+        status:1
     },
     mutations: {
         //
     },
+    getters:{
+        
+    },
     actions: {
-
+        
     },
     modules: {
         app,
