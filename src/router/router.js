@@ -1258,7 +1258,7 @@ export const appRouter = [
         title: '供应商管理',
         name: 'supplyManage ',
         component: () =>
-            import(/* webpackChunkName: "supplyManage" */ '@/views/administrationManagement/SupplyManage/index.vue')
+            import(/* webpackChunkName: "supplyManage" */ '@/views/administrationManagement/supplyManage/index.vue')
       },
     ]
   },
