@@ -76,7 +76,7 @@ export function terminateExecutiveWorkOrder(data) {
 // 变更--行政部工单
 export function changeWorkorderSuppiler(data) {
   return request({
-    url: '/work/order/changeWorkorderSuppiler',
+    url: '/order/work/order/changeWorkorderSuppiler',
     method: 'post',
     data
   })

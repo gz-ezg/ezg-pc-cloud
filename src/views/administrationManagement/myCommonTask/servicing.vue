@@ -706,7 +706,7 @@ export default {
     },
     async handleSupplyChange() {
       await changeWorkorderSuppiler({
-        workOrderId: this.current_row.id,
+        workorderId: this.current_row.id,
         suppilerId: this.forms.suppilerId,
         settlementPrice: this.forms.settlementPrice
       });
