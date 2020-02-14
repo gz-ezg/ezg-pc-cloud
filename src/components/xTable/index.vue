@@ -4,6 +4,7 @@
     <slot></slot>
     <Row style="margin-top: 10px;">
       <Table
+        ref="xTable"
         highlight-row
         border
         size="small"
@@ -11,6 +12,7 @@
         :loading="list.loading"
         :columns="header"
         :data="list.data"
+        @on-selection-change="selectionChange"
       ></Table>
 
       <Page
@@ -29,14 +31,14 @@
   </div>
 </template>
 <script>
-import listManage from '@U/listManage';
-import filtra from '@C/filtra';
+import listManage from "@U/listManage";
+import filtra from "@C/filtra";
 export default {
   props: {
-    header: Object,
+    header: Array,
     handler: Function,
     url: String,
-    config: Object,
+    config: Array,
     listQuery: Object
   },
   components: {
@@ -49,7 +51,10 @@ export default {
   },
   methods: {
     selectRow(e) {
-      this.$emit('select', e);
+      this.$emit("select", e);
+    },
+    selectionChange(e) {
+      this.$emit("selectionChange", e);
     }
   },
   mounted() {},

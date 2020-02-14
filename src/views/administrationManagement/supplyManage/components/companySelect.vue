@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Modal v-model="openSelectCompany" title="选择产品" width="80%">
+    <Modal z-index="2000" v-model="openSelectCompany" title="选择产品" width="80%">
       <Row :gutter="16">
         <Col span="8">
           <Input v-model="product" placeholder="输入产品名称搜索" @on-enter="get_data">
@@ -41,6 +41,7 @@ export default {
       openSelectCompany: false,
       searchCompany: "",
       productData: [],
+      product: "",
       header: [
         {
           type: "index"
@@ -92,7 +93,7 @@ export default {
       // console.log(e)
       this.$emit("company-change", e);
       this.openSelectCompany = false;
-    //   this.$store.commit("orderList/getCompanyId", e.id);
+      //   this.$store.commit("orderList/getCompanyId", e.id);
     }
   },
   created() {
@@ -104,7 +105,7 @@ export default {
     });
     this.$bus.off("ORDER_EDIE_SELECT_COMPANY", true);
     this.$bus.on("ORDER_EDIE_SELECT_COMPANY", e => {
-      console.log(555)
+      console.log(555);
       _self.get_data();
       _self.openSelectCompany = true;
     });

@@ -22,6 +22,18 @@
                     <Input type="text" size="small" v-model="formInline.servicename" placeholder></Input>
                   </FormItem>
                 </Col>
+                <Col span="8">
+                  <FormItem prop="servicename" label="产品类型">
+                    <Select v-model="formInline.productType" style="width:200px">
+                      <Option value>全部</Option>
+                      <Option
+                        v-for="(item,index) in productTypeDict"
+                        :key="index"
+                        :value="item.typecode"
+                      >{{item.typename}}</Option>
+                    </Select>
+                  </FormItem>
+                </Col>
               </Row>
               <FormItem>
                 <Button type="primary" @click="search">搜索</Button>
@@ -69,6 +81,12 @@
         <img :src="flowChartImg" />
       </center>
     </Modal>
+    <fishModal
+      :current_row="current_row"
+      @ok="handleFishModal"
+      @cancel="handleFishModalCancel"
+      :show="isFishModal"
+    ></fishModal>
     <!-- <Modal
             v-model="pause"
             title="提示信息"
@@ -84,20 +102,24 @@
 </template>
 
 <script>
+import fishModal from "./Menu/fishModal";
 export default {
+  components: { fishModal },
   data() {
     return {
-      productType:'',
+      productType: "",
       isAdmin: false,
       search_model: "",
       sortField: "updatedate",
       order: "desc",
       //  触发搜索
       isSearh: false,
+      productTypeDict: [],
       //  筛选数据
       formInline: {
         companyname: "",
-        servicename: ""
+        servicename: "",
+        produType: ""
       },
       //  加载中
       Sloading: false,
@@ -115,6 +137,7 @@ export default {
       page: "1",
       pageSize: "10",
       data: [],
+      isFishModal: false,
       workOrderStatus: [],
       workOrderStatus_map: new Map(),
       header: [
@@ -430,6 +453,7 @@ export default {
         iscycle: "N",
         companyName: _self.formInline.companyname,
         serviceName: _self.formInline.servicename,
+        productType: _self.formInline.productType,
         // serviceDept:"'ACCOUNT','AUDIT'",
         serviceDept: "'EXECUTIVE'",
         export: "Y",
@@ -437,6 +461,13 @@ export default {
       };
       let toExcel = this.$MergeURL(url, config);
       window.open(toExcel);
+    },
+    handleFishModal() {
+      this.isFishModal = false;
+      this.getData();
+    },
+    handleFishModalCancel() {
+      this.isFishModal = false;
     },
     getData() {
       var _self = this;
@@ -450,6 +481,7 @@ export default {
           pageSize: _self.pageSize,
           companyName: _self.formInline.companyname,
           serviceName: _self.formInline.servicename,
+          productType: _self.formInline.productType,
           // serviceDept:"'ACCOUNT','AUDIT'",
           serviceDept: "'EXECUTIVE'",
           iscycle: "N"
@@ -464,7 +496,7 @@ export default {
         // console.log(_self.data[0])
         for (let i = 0; i < res.data.data.rows.length; i++) {
           _self.data[i].productType = _self.data[i].product_type;
-          
+
           _self.data[i].supplierName = _self.data[i].supplier_name;
           if (
             _self.data[i].CreateDate != "" &&
@@ -489,8 +521,8 @@ export default {
           }
         }
         _self.Sloading = false;
-        
-        _self.getDataCenter()
+
+        _self.getDataCenter();
         //  测试块，测试map()
       });
     },
@@ -558,16 +590,24 @@ export default {
     finsih_workerorder() {
       let _self = this;
       if (this.current_row != "") {
-        let url = `api/order/goFinshWorkOrderProcess`;
-        let config = {
-          params: {
-            workOrderId: _self.current_row.id
+        if (this.current_row.product_type == "gyscp") {
+          if (this.current_row.CurrentProcess !== "完结") {
+            this.isFishModal = true;
+          } else {
+            this.$Message.warning("该产品已完结");
           }
-        };
-        function success(res) {
-          _self.$Message.success(res.data.msg);
+        } else {
+          let url = `api/order/goFinshWorkOrderProcess`;
+          let config = {
+            params: {
+              workOrderId: _self.current_row.id
+            }
+          };
+          function success(res) {
+            _self.$Message.success(res.data.msg);
+          }
+          _self.$Get(url, config, success);
         }
-        _self.$Get(url, config, success);
       } else {
         this.$Message.warning("请选择一行！");
       }
@@ -598,44 +638,26 @@ export default {
     },
     getDataCenter() {
       let _self = this;
-      // let url = `api/dataCenter/system/tsType/queryTsTypeByGroupCodes`
-      // let config = {
-      //     params:{
-      //         groupCodes:'workOrderStatus'
-      //     }
-      // }
-      // this.$http.get(url, config).then(function(res){
-      //     _self.$backToLogin(res)
-      //     _self.workOrderStatus = res.data.workOrderStatus
-      //     _self.workOrderStatus_map = _self.$array2map(_self.workOrderStatus)
-      // })
-// workOrderStatus
       let params = "product_type";
-    //   _self.data[i].productType
-    let map = new Map()
+      let map = new Map();
+
       function finish(res) {
-          res.data.data.product_type.forEach(e=>{
-              map.set(e.typecode,e.typename)
-          })
-        //   console.log(res)
-          _self.data.forEach(e=>{
-            // console.log(e)
-            e.productType = map.get(e.productType)
-            e.product_type = map.get(e.product_type)
-        })
-        _self.data = _self.data
-        // _self.workOrderStatus = res.data.workOrderStatus;
-        // _self.workOrderStatus_map = _self.$array2map(_self.workOrderStatus);
-        // _self.data.productType= res.data.product_type
-        console.log( _self.data)
-        
+        _self.productTypeDict = res.data.data.product_type;
+        res.data.data.product_type.forEach(e => {
+          map.set(e.typecode, e.typename);
+        });
+
+        _self.data = _self.data.map(v => {
+          v.productType = map.get(v.product_type);
+          return v;
+        });
       }
       this.$GetDataCenter(params, finish);
     }
   },
   created() {
     var _self = this;
-    
+
     this.getData();
     this.$bus.on("flowsuccess", e => {
       _self.getData();

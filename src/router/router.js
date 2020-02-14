@@ -1254,11 +1254,11 @@ export const appRouter = [
       {
         access: 11661,
         meta: 11661,
-        path: 'supplierManage',
+        path: 'supplyManage',
         title: '供应商管理',
-        name: 'supplierManage_index ',
+        name: 'supplyManage ',
         component: () =>
-            import(/* webpackChunkName: "accountworks_index" */ '@/views/administrationManagement/supplierManage/index.vue')
+            import(/* webpackChunkName: "supplyManage" */ '@/views/administrationManagement/SupplyManage/index.vue')
       },
     ]
   },
