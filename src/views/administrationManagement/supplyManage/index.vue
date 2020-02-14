@@ -66,7 +66,7 @@ import Add from "./Menu/add.vue";
 import edit from "./Menu/edit.vue";
 import show from "./Menu/show.vue";
 export default {
-  name: "SupplyManage",
+  name: "supplyManage",
   components: { xTable, Add, edit, show },
   data() {
     return {
