@@ -326,7 +326,7 @@ export default {
                   cursor: "pointer"
                 },
                 attrs: {
-                  src: "/assets/" + params.row.credential
+                  src: "/api/assets/" + params.row.credential
                 },
                 on: {
                   click: e => {
