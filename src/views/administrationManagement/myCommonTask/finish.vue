@@ -75,6 +75,9 @@
         <img :src="flowChartImg" />
       </center>
     </Modal>
+    <Modal title="查看凭证" v-model="visible">
+      <img :src="imgUrl" v-if="visible" style="width: 100%" />
+    </Modal>
     <!-- <Modal
             v-model="pause"
             title="提示信息"
@@ -93,6 +96,8 @@
 export default {
   data() {
     return {
+      visible: false, // 显示图片
+      imgUrl: "", // 凭证地址
       search_model: "",
       sortField: "updatedate",
       order: "desc",
@@ -192,22 +197,22 @@ export default {
             }
           }
         },
-        {
-          title: "提示",
-          key: "baseorderid",
-          width: 120
-        },
+        // {
+        //   title: "提示",
+        //   key: "baseorderid",
+        //   width: 120
+        // },
         // {
         //     title: '订单',
         //     key: 'ordercode',
         //     width: 150
         // },
-        {
-          title: "服务部门",
-          key: "departname",
-          width: 120,
-          sortable: true
-        },
+        // {
+        //   title: "服务部门",
+        //   key: "departname",
+        //   width: 120,
+        //   sortable: true
+        // },
         {
           title: "产品全称",
           key: "product",
@@ -247,40 +252,40 @@ export default {
             }
           }
         },
-        {
-          title: "产品数量",
-          key: "productnumber",
-          width: 120
-        },
-        {
-          title: "产品类型",
-          key: "productType",
-          width: 120,
-          render: (h, params) => {
-            return h(
-              "span",
-              params.row.product_type == "gyscp" ? "供应商产品" : "自营产品"
-            );
-          }
-        },
-        {
-          title: "目前进度",
-          key: "CurrentProcess",
-          width: 120,
-          sortable: true
-        },
-        {
-          title: "下个进度",
-          key: "nextprocess",
-          width: 120,
-          sortable: true
-        },
-        {
-          title: "服务开始时间",
-          key: "ServiceStart",
-          width: 140,
-          sortable: true
-        },
+        // {
+        //   title: "产品数量",
+        //   key: "productnumber",
+        //   width: 120
+        // },
+        // {
+        //   title: "产品类型",
+        //   key: "productType",
+        //   width: 120,
+        //   render: (h, params) => {
+        //     return h(
+        //       "span",
+        //       params.row.product_type == "gyscp" ? "供应商产品" : "自营产品"
+        //     );
+        //   }
+        // },
+        // {
+        //   title: "目前进度",
+        //   key: "CurrentProcess",
+        //   width: 120,
+        //   sortable: true
+        // },
+        // {
+        //   title: "下个进度",
+        //   key: "nextprocess",
+        //   width: 120,
+        //   sortable: true
+        // },
+        // {
+        //   title: "服务开始时间",
+        //   key: "ServiceStart",
+        //   width: 140,
+        //   sortable: true
+        // },
         {
           title: "创建时间",
           key: "CreateDate",
@@ -292,11 +297,51 @@ export default {
         //     key: 'baseorderid',
         //     width: 120
         // },
+        // {
+        //   title: "实际完成时间",
+        //   key: "UpdateDate",
+        //   width: 140,
+        //   sortable: true
+        // },
         {
-          title: "实际完成时间",
-          key: "UpdateDate",
-          width: 140,
-          sortable: true
+          title: "供应商",
+          key: "supplier_name",
+          width: 120
+        },
+        {
+          title: "结算价",
+          key: "settlement_price",
+          width: 120
+        },
+        {
+          title: "凭证",
+          render: (h, params) => {
+            return h("div", [
+              h("img", {
+                style: {
+                  "margin-top": "2px",
+                  "border-radius": "4px",
+                  width: "80px",
+                  height: "40px",
+                  cursor: "pointer"
+                },
+                attrs: {
+                  src: "/assets/" + params.row.credential
+                },
+                on: {
+                  click: e => {
+                    this.handleView(e.srcElement.currentSrc);
+                  }
+                }
+              })
+            ]);
+          },
+          width: 120
+        },
+        {
+          title: "备注",
+          key: "remark",
+          width: 180
         },
         {
           title: "服务人员",
@@ -309,92 +354,92 @@ export default {
           key: "followname",
           width: 120,
           sortable: true
-        },
-        {
-          title: "操作",
-          key: "action",
-          fixed: "right",
-          width: 120,
-          align: "center",
-          render: (h, params) => {
-            return h("div", [
-              // h('Button', {
-              //     props: {
-              //         type: 'text',
-              //         size: 'small'
-              //     },
-              //     on: {
-              //         click: () => {
-              //             // console.log(params)
-              //             Bus.$emit('showcompanydetail',params)
-              //         }
-              //     }
-              // }, '[查看公司]'),
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "text",
-                    size: "small"
-                  },
-                  on: {
-                    click: () => {
-                      this.flowChart(params);
-                    }
-                  }
-                },
-                "[流程图]"
-              )
-              // h('Button', {
-              //     props: {
-              //         type: 'text',
-              //         size: 'small'
-              //     },
-              //     on: {
-              //         click: () => {
-              //             var _self = this
-              //             console.log(params)
-              //             //  暂停
-              //             if(params.row.resumeFlag == null || params.row.resumeFlag == 3){
-              //                 let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=3`
-              //                 this.$http.get(url).then(function(res){
-              //                 _self.$backToLogin(res)
-              //                     if(res.data.msgCode == 40000){
-              //                         _self.$Message.success(res.data.msg)
-              //                     }else{
-              //                         _self.$Message.error(res.data.msg)
-              //                     }
-              //                     _self.getData()
-              //                 })
-              //             }else if(params.row.resumeFlag == 2){
-              //                 let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=2`
-              //                 this.$http.get(url).then(function(res){
-              //                 _self.$backToLogin(res)
-              //                     if(res.data.msgCode == 40000){
-              //                         _self.$Message.success(res.data.msg)
-              //                     }else{
-              //                         _self.$Message.error(res.data.msg)
-              //                     }
-              //                     _self.getData()
-              //                 })
-              //             }else{}
-              //         }
-              //     }
-              // }, '[暂停/解锁]'),
-              // h('Button', {
-              //     props: {
-              //         type: 'text',
-              //         size: 'small'
-              //     },
-              //     on: {
-              //         click: () => {
-              //             this.endlife = true
-              //         }
-              //     }
-              // }, '[退款终止]'),
-            ]);
-          }
         }
+        // {
+        //   title: "操作",
+        //   key: "action",
+        //   fixed: "right",
+        //   width: 120,
+        //   align: "center",
+        //   render: (h, params) => {
+        //     return h("div", [
+        //       // h('Button', {
+        //       //     props: {
+        //       //         type: 'text',
+        //       //         size: 'small'
+        //       //     },
+        //       //     on: {
+        //       //         click: () => {
+        //       //             // console.log(params)
+        //       //             Bus.$emit('showcompanydetail',params)
+        //       //         }
+        //       //     }
+        //       // }, '[查看公司]'),
+        //       h(
+        //         "Button",
+        //         {
+        //           props: {
+        //             type: "text",
+        //             size: "small"
+        //           },
+        //           on: {
+        //             click: () => {
+        //               this.flowChart(params);
+        //             }
+        //           }
+        //         },
+        //         "[流程图]"
+        //       )
+        //       // h('Button', {
+        //       //     props: {
+        //       //         type: 'text',
+        //       //         size: 'small'
+        //       //     },
+        //       //     on: {
+        //       //         click: () => {
+        //       //             var _self = this
+        //       //             console.log(params)
+        //       //             //  暂停
+        //       //             if(params.row.resumeFlag == null || params.row.resumeFlag == 3){
+        //       //                 let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=3`
+        //       //                 this.$http.get(url).then(function(res){
+        //       //                 _self.$backToLogin(res)
+        //       //                     if(res.data.msgCode == 40000){
+        //       //                         _self.$Message.success(res.data.msg)
+        //       //                     }else{
+        //       //                         _self.$Message.error(res.data.msg)
+        //       //                     }
+        //       //                     _self.getData()
+        //       //                 })
+        //       //             }else if(params.row.resumeFlag == 2){
+        //       //                 let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=2`
+        //       //                 this.$http.get(url).then(function(res){
+        //       //                 _self.$backToLogin(res)
+        //       //                     if(res.data.msgCode == 40000){
+        //       //                         _self.$Message.success(res.data.msg)
+        //       //                     }else{
+        //       //                         _self.$Message.error(res.data.msg)
+        //       //                     }
+        //       //                     _self.getData()
+        //       //                 })
+        //       //             }else{}
+        //       //         }
+        //       //     }
+        //       // }, '[暂停/解锁]'),
+        //       // h('Button', {
+        //       //     props: {
+        //       //         type: 'text',
+        //       //         size: 'small'
+        //       //     },
+        //       //     on: {
+        //       //         click: () => {
+        //       //             this.endlife = true
+        //       //         }
+        //       //     }
+        //       // }, '[退款终止]'),
+        //     ]);
+        //   }
+        // }
       ]
     };
   },
@@ -504,6 +549,10 @@ export default {
       this.page = 1;
       this.isSearh = true;
       this.getData();
+    },
+    handleView(url) {
+      this.imgUrl = url;
+      this.visible = true;
     },
     reset() {
       this.isSearh = false;

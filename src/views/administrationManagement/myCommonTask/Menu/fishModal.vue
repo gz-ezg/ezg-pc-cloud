@@ -51,7 +51,11 @@
 </template>
 
 <script>
-import { listByProductId, addSuppilerByWorkorderId } from "@A/supplierManage";
+import {
+  listByProductId,
+  addSuppilerByWorkorderId,
+  doneExecutiveWorkOrder
+} from "@A/supplierManage";
 export default {
   props: {
     current_row: { type: Object, default: {} },
@@ -88,8 +92,7 @@ export default {
       formData.append("remark", this.forms.remark);
       this.gysModelLoading = true;
       try {
-        await addSuppilerByWorkorderId(formData);
-        this.handleFinish();
+        await doneExecutiveWorkOrder(formData);
         this.gysModelLoading = false;
       } catch (error) {
         this.gysModelLoading = false;

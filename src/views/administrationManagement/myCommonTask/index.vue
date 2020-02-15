@@ -1,9 +1,6 @@
 <template>
   <div>
-    <Tabs value="name1">
-      <TabPane label="全部" name="name1">
-        <all></all>
-      </TabPane>
+    <Tabs value="name2">
       <TabPane label="未开始" name="name2">
         <unbegin></unbegin>
       </TabPane>
@@ -18,6 +15,9 @@
       </TabPane>
       <TabPane label="已结算" name="name6">
         <settle />
+      </TabPane>
+      <TabPane label="全部" name="name1">
+        <all></all>
       </TabPane>
     </Tabs>
     <!-- <flow></flow> -->

@@ -41,6 +41,9 @@
         </FormItem>
       </Form>
     </Modal>
+    <Modal title="查看凭证" v-model="visible">
+      <img :src="imgUrl" v-if="visible" style="width: 100%" />
+    </Modal>
   </div>
 </template>
 
@@ -56,20 +59,22 @@ export default {
   components: { xTable },
   data() {
     return {
+      visible: false,
+      imgUrl: "",
       priceModal: false,
       url: "/order/workOrderList",
       listQuery: { yesJs: "Y", iscycle: "N", serviceDept: "'EXECUTIVE'" },
       tableHeader: [
         {
-          title: "企业",
+          title: "归属企业",
           key: "companyname",
           minWidth: 140
         },
-        {
-          title: "跟进销售",
-          key: "servername",
-          minWidth: 300
-        },
+        // {
+        //   title: "跟进销售",
+        //   key: "servername",
+        //   minWidth: 300
+        // },
         {
           title: "产品全称",
           key: "product",
@@ -85,20 +90,58 @@ export default {
           key: "settlement_price",
           minWidth: 120
         },
+        // {
+        //   title: "销售价格",
+        //   key: "paynumber",
+        //   minWidth: 120
+        // },
+
+        // {
+        //   title: "结算时间",
+        //   key: "settlement_time",
+        //   width: 150
+        // },
         {
-          title: "销售价格",
-          key: "paynumber",
-          minWidth: 120
+          title: "凭证",
+          render: (h, params) => {
+            return h("div", [
+              h("img", {
+                style: {
+                  "margin-top": "2px",
+                  "border-radius": "4px",
+                  width: "80px",
+                  height: "40px",
+                  cursor: "pointer"
+                },
+                attrs: {
+                  src: "/assets/" + params.row.credential
+                },
+                on: {
+                  click: e => {
+                    this.handleView(e.srcElement.currentSrc);
+                  }
+                }
+              })
+            ]);
+          },
+          width: 120
         },
         {
-          title: "完结时间",
-          key: "ServiceEnd",
-          width: 150
+          title: "备注",
+          key: "remark",
+          width: 180
         },
         {
-          title: "结算时间",
-          key: "settlement_time",
-          width: 150
+          title: "服务人员",
+          key: "servername",
+          width: 120,
+          sortable: true
+        },
+        {
+          title: "跟进人",
+          key: "followname",
+          width: 120,
+          sortable: true
         }
       ],
       filtraConfig: [
@@ -144,6 +187,10 @@ export default {
           this.$Message.error("请完善信息");
         }
       });
+    },
+    handleView(url) {
+      this.imgUrl = url;
+      this.visible = true;
     },
     handleExcel() {
       this.$refs.table.list.setSearchConfig(this.listQuery);
