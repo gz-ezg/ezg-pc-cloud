@@ -839,11 +839,15 @@ export default {
       this.$GetDataCenter(params, finish);
     }, //  分配工单
     distributionTask() {
-      this.$bus.emit("global_allot_commonorder", [
-        this.current_row.ServiceDeptID,
-        this.current_row.departname,
-        this.current_row.id
-      ]);
+      if (this.current_row != "") {
+        this.$bus.emit("global_allot_commonorder", [
+          this.current_row.ServiceDeptID,
+          this.current_row.departname,
+          this.current_row.id
+        ]);
+      } else {
+        this.$Message.warning("请选择一行进行分配！");
+      }
     }
   },
   created() {
