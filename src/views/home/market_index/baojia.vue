@@ -175,9 +175,9 @@ export default {
           : C5 < 1000000000
           ? 60550 + ((C5 - 500000000) * 0.008) / 100
           : 100550 + ((C5 - 1000000000) * 0.006) / 100;
-      //   _self.Discount6 = Math.max(1000, this.total * 0.6);
-      //   _self.Discount5 = C5 < 500 * 10000 ? 0 : this.total * 0.5;
-      //   _self.Discount4 = C5 < 5000 * 10000 ? 0 : this.total * 0.4;
+      _self.Discount6 = Math.max(1000, this.total * 0.6);
+      _self.Discount5 = C5 < 500 * 10000 ? 0 : this.total * 0.5;
+      _self.Discount4 = C5 < 5000 * 10000 ? 0 : this.total * 0.4;
       // _self.Discount5 =
       //   C5 < 500 * 10000
       //     ? this.total * 0.5 < 1000
@@ -251,9 +251,9 @@ export default {
           : C4 < 1000000000
           ? 105100 + ((C4 - 500000000) * 0.01) / 100
           : 155100 + ((C4 - 1000000000) * 0.008) / 1000;
-      //   this.Discount6 = Math.max(2000, this.total * 0.6);
-      //   this.Discount5 = C4 < 500 * 10000 ? 0 : this.total * 0.5;
-      //   this.Discount4 = C4 < 1000 * 10000 ? 0 : this.total * 0.4;
+      this.Discount6 = Math.max(2000, this.total * 0.6);
+      this.Discount5 = C4 < 500 * 10000 ? 0 : this.total * 0.5;
+      this.Discount4 = C4 < 1000 * 10000 ? 0 : this.total * 0.4;
       _self.Discount5 = C4 >= 0 ? this.total * 0.5 : 0;
       _self.Discount5 = _self.Discount5 < 1500 ? 1500 : _self.Discount5;
       _self.Discount4_5 = C4 > 500 * 10000 ? this.total * 0.45 : 0;
@@ -280,9 +280,9 @@ export default {
           ? 71500 + ((C3 - 500000000) * 0.005) / 100
           : 96500 + ((C3 - 1000000000) * 0.002) / 100;
 
-      //   this.Discount6 = Math.max(1200, this.total * 0.6);
-      //   this.Discount5 = C3 < 500 * 10000 ? 0 : this.total * 0.5;
-      //   this.Discount4 = C3 < 1000 * 10000 ? 0 : this.total * 0.4;
+      this.Discount6 = Math.max(1200, this.total * 0.6);
+      this.Discount5 = C3 < 500 * 10000 ? 0 : this.total * 0.5;
+      this.Discount4 = C3 < 1000 * 10000 ? 0 : this.total * 0.4;
       _self.Discount5 = C3 >= 0 ? this.total * 0.5 : 0;
       _self.Discount5 = _self.Discount5 < 1200 ? 1200 : _self.Discount5;
       _self.Discount4_5 = C3 > 500 * 10000 ? this.total * 0.45 : 0;
