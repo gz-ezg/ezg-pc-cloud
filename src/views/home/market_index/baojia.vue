@@ -232,7 +232,7 @@ export default {
     // 年度审计
     SJ_count() {
       let _self = this;
-      var C4 = _self.searchData.income * 10000 + 200;
+      var C4 = _self.searchData.income * 10000;
       this.total =
         C4 < 500000
           ? 2000
@@ -254,10 +254,10 @@ export default {
       //   this.Discount6 = Math.max(2000, this.total * 0.6);
       //   this.Discount5 = C4 < 500 * 10000 ? 0 : this.total * 0.5;
       //   this.Discount4 = C4 < 1000 * 10000 ? 0 : this.total * 0.4;
-      _self.Discount5 = C5 >= 0 ? this.total * 0.5 : 0;
+      _self.Discount5 = C4 >= 0 ? this.total * 0.5 : 0;
       _self.Discount5 = _self.Discount5 < 1500 ? 1500 : _self.Discount5;
-      _self.Discount4_5 = C5 > 500 * 10000 ? this.total * 0.45 : 0;
-      _self.Discount3_5 = C5 > 1000 * 10000 ? this.total * 0.35 : 0;
+      _self.Discount4_5 = C4 > 500 * 10000 ? this.total * 0.45 : 0;
+      _self.Discount3_5 = C4 > 1000 * 10000 ? this.total * 0.35 : 0;
     },
     // 所得税
     ZXQJ_count() {
@@ -283,10 +283,10 @@ export default {
       //   this.Discount6 = Math.max(1200, this.total * 0.6);
       //   this.Discount5 = C3 < 500 * 10000 ? 0 : this.total * 0.5;
       //   this.Discount4 = C3 < 1000 * 10000 ? 0 : this.total * 0.4;
-      _self.Discount5 = C5 >= 0 ? this.total * 0.5 : 0;
+      _self.Discount5 = C3 >= 0 ? this.total * 0.5 : 0;
       _self.Discount5 = _self.Discount5 < 1200 ? 1200 : _self.Discount5;
-      _self.Discount4_5 = C5 > 500 * 10000 ? this.total * 0.45 : 0;
-      _self.Discount3_5 = C5 > 1000 * 10000 ? this.total * 0.35 : 0;
+      _self.Discount4_5 = C3 > 500 * 10000 ? this.total * 0.45 : 0;
+      _self.Discount3_5 = C3 > 1000 * 10000 ? this.total * 0.35 : 0;
     },
     ZXQS_count() {
       let _self = this;
