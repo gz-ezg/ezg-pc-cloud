@@ -45,8 +45,8 @@
                 <Option value="zxqs">注销清税</Option>
                 <Option value="ndsjbg">年度审计报告</Option>
                 <Option value="sdshsqj">所得税汇算清缴</Option>
-                <Option value="engineering">高新费用+收入报告（工业型）</Option>
-                <Option value="service">高新费用+收入（服务型）</Option>
+                <Option value="engineering">高新费用+收入(工业型)</Option>
+                <Option value="service">高新费用+收入(服务型)</Option>
               </Select>
             </FormItem>
           </Col>
@@ -84,11 +84,12 @@
             <div v-if="Discount8">8折报价： {{Discount8.toFixed(0)}} 元</div>
             <div v-if="Discount7">7折报价： {{Discount7.toFixed(0)}} 元</div>
             <div v-if="Discount6">6折报价： {{Discount6.toFixed(0)}} 元</div>
+            <div v-if="Discount5_5">5.5折报价： {{Discount5_5.toFixed(0)}} 元</div>
             <div v-if="Discount5">5折报价： {{Discount5.toFixed(0)}} 元</div>
-            <div v-if="Discount4">4折报价： {{Discount4.toFixed(0)}} 元</div>
-            <div v-if="Discount3">3折报价： {{Discount3.toFixed(0)}} 元</div>
-            <div v-if="Discount3_5">3.5折报价： {{Discount3_5.toFixed(0)}} 元</div>
             <div v-if="Discount4_5">4.5折报价： {{Discount4_5.toFixed(0)}} 元</div>
+            <div v-if="Discount4">4折报价： {{Discount4.toFixed(0)}} 元</div>
+            <div v-if="Discount3_5">3.5折报价： {{Discount3_5.toFixed(0)}} 元</div>
+            <div v-if="Discount3">3折报价： {{Discount3.toFixed(0)}} 元</div>
           </center>
           <center v-else>
             <div>找大掌柜报价</div>
@@ -96,7 +97,7 @@
         </Row>
         <center style="margin-top:20px">
           <Button type="primary" @click="search">报价</Button>
-          <Button type="ghost" style="margin-left:20px" @click="reset">重置</Button>
+          <Button type="success" style="margin-left:20px" @click="reset">重置</Button>
         </center>
       </Form>
     </Row>
@@ -117,6 +118,7 @@ export default {
       total: new Number(),
       Discount3_5: "",
       Discount4_5: "",
+      Discount5_5: "",
       Discount3: "",
       Discount4: "",
       Discount5: "",
@@ -149,11 +151,12 @@ export default {
       this.Discount9 = 0;
       this.Discount3_5 = 0;
       this.Discount4_5 = 0;
+      this.Discount5_5 = 0;
     },
     // 验资
     yz_count() {
       let _self = this;
-      var C5 = _self.searchData.income * 10000 + 200;
+      var C5 = _self.searchData.income * 10000;
       _self.total =
         C5 < 500000
           ? 1200
@@ -175,27 +178,33 @@ export default {
       //   _self.Discount6 = Math.max(1000, this.total * 0.6);
       //   _self.Discount5 = C5 < 500 * 10000 ? 0 : this.total * 0.5;
       //   _self.Discount4 = C5 < 5000 * 10000 ? 0 : this.total * 0.4;
-      _self.Discount5 =
-        C5 < 500 * 10000
-          ? this.total * 0.5 < 1000
-            ? 1000
-            : this.total * 0.5
-          : 0;
-      _self.Discount4_5 =
-        C5 > 500 * 10000 && C5 < 5000 * 10000 ? this.total * 0.45 : 0;
-      _self.Discount3_5 = C5 < 5000 * 10000 ? 0 : this.total * 0.35;
+      // _self.Discount5 =
+      //   C5 < 500 * 10000
+      //     ? this.total * 0.5 < 1000
+      //       ? 1000
+      //       : this.total * 0.5
+      //     : 0;
+      // _self.Discount4_5 =
+      //   C5 > 500 * 10000 && C5 < 5000 * 10000 ? this.total * 0.45 : 0;
+      // _self.Discount3_5 = C5 < 5000 * 10000 ? 0 : this.total * 0.35;
+      _self.Discount5_5 = C5 >= 0 ? this.total * 0.55 : 0;
+      _self.Discount5_5 = _self.Discount5_5 < 1000 ? 1000 : _self.Discount5_5;
+      _self.Discount4_5 = C5 > 500 * 10000 ? this.total * 0.45 : 0;
+      _self.Discount3_5 = C5 > 5000 * 10000 ? this.total * 0.35 : 0;
     },
     // 高新费用+收入报告（工业型）
     engineeringCount() {
       this.total =
         this.searchData.income > 15000 && this.searchData.income <= 50000
-          ? 30000
-          : 20000;
-      this.Discount7 = this.searchData.income <= 1000 ? this.total * 0.7 : 0;
-      this.Discount8 = this.searchData.income <= 5000 ? this.total * 0.8 : 0;
-      this.Discount9 = this.searchData.income <= 15000 ? this.total * 0.9 : 0;
-      if (this.searchData.income > 50000) {
+          ? 33000
+          : 22000;
+      let income = this.searchData.income;
+      if (income > 50000) {
         this.total = -1;
+      } else {
+        this.Discount7 = income <= 1000 ? this.total * 0.7 : 0;
+        this.Discount8 = income <= 5000 ? this.total * 0.8 : 0;
+        this.Discount9 = income <= 15000 ? this.total * 0.9 : 0;
       }
     },
     // 高新费用+收入（服务型）
@@ -204,11 +213,13 @@ export default {
         this.searchData.income > 15000 && this.searchData.income <= 50000
           ? 22500
           : 15000;
-      this.Discount7 = this.searchData.income <= 1000 ? this.total * 0.7 : 0;
-      this.Discount8 = this.searchData.income <= 5000 ? this.total * 0.8 : 0;
-      this.Discount9 = this.searchData.income <= 15000 ? this.total * 0.9 : 0;
-      if (this.searchData.income > 50000) {
+      let income = this.searchData.income;
+      if (income > 50000) {
         this.total = -1;
+      } else {
+        this.Discount7 = income <= 1000 ? this.total * 0.7 : 0;
+        this.Discount8 = income <= 5000 ? this.total * 0.8 : 0;
+        this.Discount9 = income <= 15000 ? this.total * 0.9 : 0;
       }
     },
     ZX_count() {
@@ -243,15 +254,10 @@ export default {
       //   this.Discount6 = Math.max(2000, this.total * 0.6);
       //   this.Discount5 = C4 < 500 * 10000 ? 0 : this.total * 0.5;
       //   this.Discount4 = C4 < 1000 * 10000 ? 0 : this.total * 0.4;
-      _self.Discount5 =
-        C4 < 500 * 10000
-          ? this.total * 0.5 < 1500
-            ? 1500
-            : this.total * 0.5
-          : 0;
-      _self.Discount4_5 =
-        C4 > 500 * 10000 && C4 < 1000 * 10000 ? this.total * 0.45 : 0;
-      _self.Discount3_5 = C4 < 1000 * 10000 ? 0 : this.total * 0.35;
+      _self.Discount5 = C5 >= 0 ? this.total * 0.5 : 0;
+      _self.Discount5 = _self.Discount5 < 1500 ? 1500 : _self.Discount5;
+      _self.Discount4_5 = C5 > 500 * 10000 ? this.total * 0.45 : 0;
+      _self.Discount3_5 = C5 > 1000 * 10000 ? this.total * 0.35 : 0;
     },
     // 所得税
     ZXQJ_count() {
@@ -277,15 +283,10 @@ export default {
       //   this.Discount6 = Math.max(1200, this.total * 0.6);
       //   this.Discount5 = C3 < 500 * 10000 ? 0 : this.total * 0.5;
       //   this.Discount4 = C3 < 1000 * 10000 ? 0 : this.total * 0.4;
-      _self.Discount5 =
-        C3 < 500 * 10000
-          ? this.total * 0.5 < 1200
-            ? 1200
-            : this.total * 0.5
-          : 0;
-      _self.Discount4_5 =
-        C3 > 500 * 10000 && C3 < 1000 * 10000 ? this.total * 0.45 : 0;
-      _self.Discount3_5 = C3 < 1000 * 10000 ? 0 : this.total * 0.35;
+      _self.Discount5 = C5 >= 0 ? this.total * 0.5 : 0;
+      _self.Discount5 = _self.Discount5 < 1200 ? 1200 : _self.Discount5;
+      _self.Discount4_5 = C5 > 500 * 10000 ? this.total * 0.45 : 0;
+      _self.Discount3_5 = C5 > 1000 * 10000 ? this.total * 0.35 : 0;
     },
     ZXQS_count() {
       let _self = this;
@@ -307,6 +308,7 @@ export default {
       this.Discount9 = 0;
       this.Discount3_5 = 0;
       this.Discount4_5 = 0;
+      this.Discount5_5 = 0;
       if (_self.searchData.product == "jzbg") {
         switch (_self.searchData.type) {
           case "yz":
