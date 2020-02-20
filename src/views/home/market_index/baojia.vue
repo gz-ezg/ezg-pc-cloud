@@ -211,8 +211,8 @@ export default {
     serviceCount() {
       this.total =
         this.searchData.income > 15000 && this.searchData.income <= 50000
-          ? 22500
-          : 15000;
+          ? 24000
+          : 16000;
       let income = this.searchData.income;
       if (income > 50000) {
         this.total = -1;
