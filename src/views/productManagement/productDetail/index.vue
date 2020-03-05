@@ -8,7 +8,7 @@
               <Input v-model="data.product"></Input>
             </FormItem>
             <FormItem label="产品类型：" prop="productTypeName">
-              <Input v-model="data.productTypeName" @on-focus="open_type_tree"></Input>
+              <Input readonly v-model="data.productTypeName" @on-focus="open_type_tree"></Input>
             </FormItem>
             <FormItem label="周期性产品：" prop="iscycle">
               <Select v-model="data.iscycle">
@@ -36,7 +36,7 @@
               </CheckboxGroup>
             </FormItem>
             <FormItem label="产品编码：" prop="productCode">
-              <Input v-model="data.productCode" :readonly="readonly"></Input>
+              <Input v-model="data.productCode" ></Input>
             </FormItem>
             <FormItem label="产品状态：" prop="status">
               <!-- <Input v-model="data.status" :readonly="readonly"></Input> -->
@@ -46,7 +46,7 @@
               </Select>
             </FormItem>
             <FormItem label="产品排序：" prop="ordernumber">
-              <Input v-model="data.ordernumber" :readonly="readonly"></Input>
+              <Input v-model="data.ordernumber" ></Input>
             </FormItem>
             <FormItem label="产品服务类型" prop="product_type">
               <RadioGroup v-model="data.product_type" size="large">
@@ -287,7 +287,6 @@ export default {
 
       let attrList = this.tranform();
 
-    
       let config = {
         productcode: _self.data.productCode,
         product: _self.data.product,
@@ -328,11 +327,11 @@ export default {
         defaultdepartalias: _self.data.defaultdepartalias,
         departalias: _self.data.departalias.join(","),
         productTypeId: _self.data.productTypeID,
+        productcode: _self.data.productCode,
         propertyIds: JSON.stringify(attrList),
-        productType: _self.data.product_type
-        // sortid: _self.data.ordernumber,
-        // status: _self.data.status,
-        // ordernumber: _self.data.ordernumber
+        productType: _self.data.product_type,
+        sortid: _self.data.ordernumber,
+        ordernumber: _self.data.ordernumber
       };
 
       function success(res) {
