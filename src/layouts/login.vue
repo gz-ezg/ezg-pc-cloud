@@ -302,12 +302,12 @@ export default {
     this.get_wx_code()
     let code = ""
     let setinterval = setInterval(()=>{
-      console.log("1")
+      // console.log("1")
       let after = window.location.search;
       after = after.substr(1) || window.location.hash.split("?")[1];
       if (after){
         code = after.split("=")[1]
-        console.log(code)
+        // console.log(code)
         if (code){
           let _self = this
           let url = `api/user/qy/login`;

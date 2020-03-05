@@ -259,7 +259,9 @@ export default {
     //  创建及修改之逻辑
     before_update_product() {
       let _self = this;
+
       this.$refs["data"].validate(valid => {
+        console.log(valid);
         if (valid) {
           if (_self.$route.query.id) {
             //  调用更新逻辑
@@ -284,6 +286,8 @@ export default {
       let url = `api/product/create`;
 
       let attrList = this.tranform();
+
+    
       let config = {
         productcode: _self.data.productCode,
         product: _self.data.product,
@@ -295,7 +299,7 @@ export default {
         sortid: _self.data.ordernumber,
         status: _self.data.status,
         ordernumber: _self.data.ordernumber,
-        productType:__self.data.product_type
+        productType: _self.data.product_type
       };
 
       function success(res) {
@@ -325,7 +329,7 @@ export default {
         departalias: _self.data.departalias.join(","),
         productTypeId: _self.data.productTypeID,
         propertyIds: JSON.stringify(attrList),
-        productType:_self.data.product_type
+        productType: _self.data.product_type
         // sortid: _self.data.ordernumber,
         // status: _self.data.status,
         // ordernumber: _self.data.ordernumber
