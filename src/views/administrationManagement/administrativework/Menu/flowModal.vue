@@ -26,7 +26,7 @@
             <p>上传</p>
           </div>
         </Upload>
-        <template v-for="(item,index) in picUrl" ><img :key="index" :src="item" style="width:386px;height:200px" /></template>
+        <img v-if="picUrl" :src="picUrl" style="width:375px;height:200px" />
       </FormItem>
       <FormItem label="备注" prop="remark">
         <Input v-model="forms.remark" />
@@ -51,9 +51,9 @@ export default {
     return {
       model: false,
       gysModelLoading: false,
-      forms: { files: [] , remark: "" },
+      forms: { file: null, remark: "" },
       ruleValidate: {},
-      picUrl: [],
+      picUrl: "",
       gycList: []
     };
   },
@@ -61,9 +61,7 @@ export default {
   methods: {
     async hanldeProductFinish() {
       let formData = new FormData();
-      this.forms.files.forEach(v=>{
-        formData.append("files",v);
-      })
+      formData.append("file", this.forms.file);
       formData.append("workorderId", this.current_row.id);
       formData.append("remark", this.forms.remark);
       this.gysModelLoading = true;
@@ -81,11 +79,11 @@ export default {
       this.$emit("cancel");
     },
     handleUpload(file) {
-      this.forms.files.push(file);
+      this.forms.file = file;
       let fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       fileReader.onload = e => {
-        this.picUrl.push(e.target.result);
+        this.picUrl = e.target.result;
       };
       return false;
     }

@@ -22,7 +22,7 @@
                     <Input type="text" size="small" v-model="formInline.servicename" placeholder></Input>
                   </FormItem>
                 </Col>
-                <Col span="8">
+                <!-- <Col span="8">
                   <FormItem prop="servicename" label="产品类型">
                     <Select v-model="formInline.productType" style="width:200px">
                       <Option value>全部</Option>
@@ -33,7 +33,7 @@
                       >{{item.typename}}</Option>
                     </Select>
                   </FormItem>
-                </Col>
+                </Col> -->
               </Row>
               <FormItem>
                 <Button type="primary" @click="search">搜索</Button>
@@ -119,7 +119,7 @@ export default {
       formInline: {
         companyname: "",
         servicename: "",
-        produType: ""
+        productType: "gyscp"
       },
       //  加载中
       Sloading: false,
@@ -326,6 +326,10 @@ export default {
           key: "followname",
           width: 120,
           sortable: true
+        },
+        {
+          title: "备注",
+          key: "remark",
         },
         // {
         //   title: "操作",
@@ -573,6 +577,7 @@ export default {
         };
         function success(res) {
           _self.$Message.success(res.data.msg);
+          _self.getData();
         }
         _self.$Get(url, config, success);
       } else {

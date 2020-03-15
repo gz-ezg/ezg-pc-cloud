@@ -9,39 +9,61 @@
         :config="filtraConfig"
         :listQuery="listQuery"
         @select="selectRow"
-        @selectionChange="selectionChange"
       >
         <Row>
           <ButtonGroup>
-            <Button
-              type="primary"
-              icon="plus"
-              @click="hanldeSelectMore"
-            >{{ canSelectMore ? '取消多选' : '多选' }}</Button>
-            <Button type="primary" icon="search" @click="handleSettle">结算</Button>
+            <Button type="primary" icon="plus" @click="handlePopus">调整价格</Button>
+            <Button type="primary" icon="plus" @click="handleCancel">退回至未结算</Button>
             <Button type="primary" icon="search" @click="handleExcel">导出Excel</Button>
           </ButtonGroup>
         </Row>
       </x-table>
     </Card>
-    <Modal width="70%" title="查看凭证" v-model="visible">
-      <template v-for="(item,index) in imgUrl"><img :key="index" :src="item" v-if="visible" style="width: 100%" /></template>
+    <Modal
+      v-model="priceModal"
+      title="调整价格"
+      @on-ok="hanldePriceEdit"
+      @on-cancel="priceModal = false"
+    >
+      <Form
+        style="padding-rigth:20px"
+        ref="form"
+        :model="forms"
+        :rules="ruleValidate"
+        label-position="right"
+        :label-width="100"
+      >
+        <FormItem label="供应商" prop="supplierName">
+          <Input v-model="forms.supplierName" readonly />
+        </FormItem>
+        <FormItem label="结算价格" prop="settlementPrice">
+          <Input type="number" v-model="forms.settlementPrice" />
+        </FormItem>
+      </Form>
+    </Modal>
+    <Modal title="查看凭证" v-model="visible">
+      <img :src="imgUrl" v-if="visible" style="width: 100%" />
     </Modal>
   </div>
 </template>
 
 <script>
 import xTable from "@C/xTable";
-import { settlementByWorkorderId } from "@A/supplierManage";
+import {
+  cancelSettlementByWorkorderId,
+  updateSettlementPrice
+} from "@A/supplierManage";
+
 export default {
   name: "settle",
   components: { xTable },
   data() {
     return {
-      imgUrl: [],
       visible: false,
+      imgUrl: "",
+      priceModal: false,
       url: "/order/workOrderList",
-      listQuery: { notJs: "Y", iscycle: "N", serviceDept: "'EXECUTIVE'" },
+      listQuery: { yesJs: "Y", iscycle: "N", serviceDept: "'EXECUTIVE'" },
       tableHeader: [
         {
           title: "归属企业",
@@ -74,11 +96,11 @@ export default {
         //   minWidth: 120
         // },
 
-        {
-          title: "结算时间",
-          key: "settlement_time",
-          width: 150
-        },
+        // {
+        //   title: "结算时间",
+        //   key: "settlement_time",
+        //   width: 150
+        // },
         {
           title: "凭证",
           render: (h, params) => {
@@ -92,11 +114,11 @@ export default {
                   cursor: "pointer"
                 },
                 attrs: {
-                  src: "/api/assets/" + params.row.credential.split(',')[0]
+                  src: "/api/assets/" + params.row.credential
                 },
                 on: {
                   click: e => {
-                    this.handleView(params.row.credential);
+                    this.handleView(e.srcElement.currentSrc);
                   }
                 }
               })
@@ -132,63 +154,51 @@ export default {
         { field: "settlement_price", title: "结算价" },
         { field: "sales_price", title: "销售价" }
       ],
-
+      forms: { workOrderId: "", settlementPrice: "", supplier_name: "" },
       currentRow: null,
       dataHandle: data => data,
-      canSelectMore: false,
-      selectRows: []
+      ruleValidate: {
+        settlementPrice: [
+          {
+            required: true,
+            message: "请填写销售价",
+            trigger: "change"
+          }
+        ]
+      }
     };
   },
   methods: {
     //  获取当前点击行
     selectRow(e) {
       this.currentRow = e;
+      this.forms = {
+        workOrderId: e.id,
+        settlementPrice: e.settlement_price,
+        supplierName: e.supplier_name
+      };
     },
-    selectionChange(e) {
-      this.selectRows = e;
-    },
-    hanldeSelectMore() {
-      if (this.canSelectMore) {
-        this.tableHeader.shift();
-        this.$refs["table"].$refs.xTable.selectAll(false);
-
-        this.selectRows = [];
-      } else {
-        this.tableHeader.unshift({
-          title: "#",
-          type: "selection",
-          width: 60
-        });
-      }
-      this.canSelectMore = !this.canSelectMore;
-    },
-    downloadExcel(name) {
-      this.$refs[name].list.downloadExcel(this.excelField);
-    },
-    handleView(url) {
-      this.imgUrl = url.split(',').map(v=>'/api/assets/'+v);
-      this.visible = true;
-    },
-    // 结算
-    async handleSettle() {
-      this.$Modal.confirm({
-        title: "是否确定结算",
-        content: "<p>请不要误操作</p>",
-        onOk: async () => {
-          await settlementByWorkorderId({
-            workOrderIds: this.canSelectMore
-              ? this.selectRows.map(v => v.id).join(",")
-              : this.currentRow.id
-          });
+    hanldePriceEdit() {
+      this.$refs.form.validate(async valid => {
+        if (valid) {
+          await updateSettlementPrice(this.forms);
           this.$refs.table.list.fetchList();
-          if (this.canSelectMore) {
-            this.tableHeader.shift();
-            this.$refs["table"].$refs.xTable.selectAll(false);
-
-            this.selectRows = [];
-          }
+        } else {
+          this.$Message.error("请完善信息");
         }
       });
+    },
+    handleView(url) {
+      this.imgUrl = url;
+      this.visible = true;
+    },
+    handleExcel() {
+      this.$refs.table.list.setSearchConfig(this.listQuery);
+      this.$refs.table.list.downloadExcel(this.excelField);
+    },
+    // 弹出调整价格
+    handlePopus() {
+      this.priceModal = true;
     },
     // 编辑
     handleEdit() {
@@ -200,18 +210,17 @@ export default {
       // }
       this.isEdit = !this.isEdit;
     },
-    handleExcel() {
-      this.$refs.table.list.setSearchConfig(this.listQuery);
-      this.$refs.table.list.downloadExcel(this.excelField);
-    },
-    handleShow() {
-      if (!this.currentRow) {
-        return this.$Message.info("请选择一行进行查看");
-      }
-      // if (this.currentRow.notify_status == "sent") {
-      //   return this.$Message.info("该消息不能编辑");
-      // }
-      this.isShow = !this.isShow;
+    handleCancel() {
+      this.$Modal.confirm({
+        title: "是否退回至未结算",
+        content: "<p>请不要误操作</p>",
+        onOk: async () => {
+          await cancelSettlementByWorkorderId({
+            workOrderIds: this.currentRow.id
+          });
+          this.$refs.table.list.fetchList();
+        }
+      });
     }
   },
   created() {}

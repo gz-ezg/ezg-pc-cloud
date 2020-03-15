@@ -43,12 +43,13 @@
       <ButtonGroup style="float:left">
         <!-- <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
         <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>-->
-        <Button
+        <!-- <Button
+          v-if="current_row.product_type=='gyscp'"
           type="primary"
           icon="ios-color-wand-outline"
           @click="handleServeModal"
-        >开始服务</Button>
-        <!-- <Button v-else type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button> -->
+        >开始服务</Button> -->
+        <Button type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button>
         <!-- <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button> -->
         <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
         <Button type="primary" icon="ios-color-wand-outline" @click="finsih_workerorder">一键完结</Button>
@@ -128,8 +129,7 @@
               <p>上传</p>
             </div>
           </Upload>
-          <template v-for="(item,index) in picUrl" ><img :key="index" :src="item" style="width:386px;height:200px" /></template>
-         
+          <img v-if="picUrl" :src="picUrl" style="width:386px;height:200px" />
         </FormItem>
         <FormItem label="备注" prop="remark">
           <Input v-model="forms.remark" />
@@ -209,12 +209,12 @@ export default {
       formInline: {
         companyname: "",
         servicename: "",
-        productType: 'gyscp'
+        productType: 'zycp'
       },
       gysModelLoading: false,
-      picUrl: [],
+      picUrl: "",
       productTypeDict: [],
-      forms: { salesPrice: "", settlementPrice: "", files: [], remark: '' },
+      forms: { salesPrice: "", settlementPrice: "", file: null, remark: '' },
       ruleValidate: {},
       gycList: [],
       //  加载中
@@ -389,10 +389,10 @@ export default {
          
           sortable: true
         },
-        {
-          title: "备注",
-          key: "remark",
-        },
+        // {
+        //   title: "备注",
+        //   key: "remark",
+        // },
         // {
         //   title: "操作",
         //   key: "action",
@@ -508,9 +508,7 @@ export default {
     },
     async hanldeProductFinish() {
       let formData = new FormData();
-      this.forms.files.forEach(v=>{
-        formData.append("files",v);
-      })
+      formData.append("file", this.forms.file);
       formData.append("workorderId", this.current_row.id);
       formData.append("salesPrice", this.forms.salesPrice);
       formData.append("suppilerId", this.forms.suppilerId);
@@ -586,13 +584,11 @@ export default {
       this.getData();
     },
     handleUpload(file) {
-      console.log(file)
-      let that = this;
-      this.forms.files.push(file);
+      this.forms.file = file;
       let fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       fileReader.onload = e => {
-        that.picUrl.push(e.target.result);
+        this.picUrl = e.target.result;
       };
       return false;
     },
@@ -805,8 +801,7 @@ export default {
             this.forms.settlementPrice = this.gycList[0].settlement_price;
             this.forms.suppilerId = this.gycList[0].id;
           }
-          this.forms.files = [];
-          this.picUrl = [];
+          this.forms.file = null;
           this.forms.remark = "";
           this.isGysModel = true;
         } else {

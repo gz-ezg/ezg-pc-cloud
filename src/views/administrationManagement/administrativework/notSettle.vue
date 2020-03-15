@@ -24,8 +24,8 @@
         </Row>
       </x-table>
     </Card>
-    <Modal width="70%" title="查看凭证" v-model="visible">
-      <template v-for="(item,index) in imgUrl"><img :key="index" :src="item" v-if="visible" style="width: 100%" /></template>
+    <Modal title="查看凭证" v-model="visible">
+      <img :src="imgUrl" v-if="visible" style="width: 100%" />
     </Modal>
   </div>
 </template>
@@ -38,7 +38,7 @@ export default {
   components: { xTable },
   data() {
     return {
-      imgUrl: [],
+      imgUrl: "",
       visible: false,
       url: "/order/workOrderList",
       listQuery: { notJs: "Y", iscycle: "N", serviceDept: "'EXECUTIVE'" },
@@ -92,11 +92,11 @@ export default {
                   cursor: "pointer"
                 },
                 attrs: {
-                  src: "/api/assets/" + params.row.credential.split(',')[0]
+                  src: "/api/assets/" + params.row.credential
                 },
                 on: {
                   click: e => {
-                    this.handleView(params.row.credential);
+                    this.handleView(e.srcElement.currentSrc);
                   }
                 }
               })
@@ -166,7 +166,7 @@ export default {
       this.$refs[name].list.downloadExcel(this.excelField);
     },
     handleView(url) {
-      this.imgUrl = url.split(',').map(v=>'/api/assets/'+v);
+      this.imgUrl = url;
       this.visible = true;
     },
     // 结算

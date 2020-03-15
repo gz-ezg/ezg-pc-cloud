@@ -41,7 +41,7 @@
             <p>上传</p>
           </div>
         </Upload>
-          <template v-for="(item,index) in picUrl" ><img :key="index" :src="item" style="width:386px;height:200px" /></template>
+        <img v-if="picUrl" :src="picUrl" style="width:375px;height:200px" />
       </FormItem>
       <FormItem label="备注" prop="remark">
         <Input v-model="forms.remark" />
@@ -65,8 +65,8 @@ export default {
     show(value) {
       this.model = value;
       if (value) {
-        this.picUrl = [];
-        this.forms = { salesPrice: "", settlementPrice: "", files: [] };
+        this.picUrl = "";
+        this.forms = { salesPrice: "", settlementPrice: "", file: null };
         this.finsihWorkerorder();
       }
     }
@@ -75,9 +75,9 @@ export default {
     return {
       model: false,
       gysModelLoading: false,
-      forms: { salesPrice: "", settlementPrice: "", files: [] },
+      forms: { salesPrice: "", settlementPrice: "", file: null },
       ruleValidate: {},
-      picUrl: [],
+      picUrl: "",
       gycList: []
     };
   },
@@ -85,9 +85,7 @@ export default {
   methods: {
     async hanldeProductFinish() {
       let formData = new FormData();
-      this.forms.files.forEach(v=>{
-        formData.append("files",v);
-      })
+      formData.append("file", this.forms.file);
       formData.append("workorderId", this.current_row.id);
       formData.append("salesPrice", this.forms.salesPrice);
       formData.append("settlementPrice", this.forms.settlementPrice);
@@ -106,11 +104,11 @@ export default {
       this.$emit("cancel");
     },
     handleUpload(file) {
-      this.forms.files.push(file);
+      this.forms.file = file;
       let fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       fileReader.onload = e => {
-        this.picUrl.push(e.target.result);
+        this.picUrl = e.target.result;
       };
       return false;
     },

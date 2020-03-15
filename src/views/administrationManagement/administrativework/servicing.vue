@@ -41,19 +41,25 @@
     </Row>
     <Row>
       <ButtonGroup style="float:left">
-        <!-- <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
-        <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>-->
         <Button
+          v-if="current_row.product_type=='gyscp'"
           type="primary"
           icon="ios-color-wand-outline"
           @click="handleServeModal"
-        >开始服务</Button>
-        <!-- <Button v-else type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button> -->
-        <!-- <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button> -->
-        <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
-        <Button type="primary" icon="ios-color-wand-outline" @click="finsih_workerorder">一键完结</Button>
-        <Button type="primary" icon="ios-color-wand-outline" @click="distributionTask">重新分配</Button>
+        >变更服务商</Button>
 
+        <Button
+          v-if="current_row.product_type=='gyscp'"
+          type="primary"
+          icon="ios-color-wand-outline"
+          @click="stopModal = true"
+        >流程终止</Button>
+        <Button type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button>
+        <!-- <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button> -->
+        <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
+        <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
+        <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
+        <!-- <Button type="primary" icon="ios-color-wand-outline" @click="finsih_workerorder">一键完结</Button> -->
         <!-- <Button type="primary" icon="ios-color-wand-outline" @click="reCreate" v-permission="['administration.rebuild']">重新生成流程</Button> -->
       </ButtonGroup>
     </Row>
@@ -86,62 +92,38 @@
         <img :src="flowChartImg" />
       </center>
     </Modal>
-    <!-- 供应商产品一键完结 -->
-    <Modal
-      v-model="isGysModel"
-      :loading="gysModelLoading"
-      title="供应商产品一键完结"
-      @on-ok="hanldeProductFinish"
-      @on-cancel="isGysModel = false"
-    >
-      <Form
-        style="padding-rigth:20px"
-        ref="form"
-        :model="forms"
-        :rules="ruleValidate"
-        label-position="right"
-        :label-width="100"
-      >
-        <FormItem prop="servicename" label="供应商">
-          <Select @on-change="gycSelectChange" v-model="forms.suppilerId" style="width:200px">
-            <Option
-              v-for="(item,index) in gycList"
-              :key="index"
-              :value="item.id"
-            >{{item.supplier_name}}</Option>
-          </Select>
-        </FormItem>
-        <FormItem label="结算价" prop="settlementPrice">
-          <Input v-model="forms.settlementPrice" />
-        </FormItem>
-        <FormItem label="销售价" prop="sales_price">
-          <Input v-model="forms.salesPrice" />
-        </FormItem>
-        <FormItem label="凭证" prop="file">
-          <Upload
-            action="//jsonplaceholder.typicode.com/posts/"
-            type="drag"
-            :before-upload="handleUpload"
-          >
-            <div style="padding: 20px 0">
-              <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-              <p>上传</p>
-            </div>
-          </Upload>
-          <template v-for="(item,index) in picUrl" ><img :key="index" :src="item" style="width:386px;height:200px" /></template>
-         
-        </FormItem>
-        <FormItem label="备注" prop="remark">
-          <Input v-model="forms.remark" />
+
+    <fishModal
+      :current_row="current_row"
+      @ok="handleFishModal"
+      @cancel="isFishModal=false"
+      :show="isFishModal"
+    ></fishModal>
+
+    <flowModal
+      :show="isFlowModal"
+      :current_row="current_row"
+      @ok="handleFlowModal"
+      @cancel="handleFlowModalCancel"
+    ></flowModal>
+
+    <Modal v-model="stopModal" title="终止流程" @on-ok="stopModal=false" @on-cancel="stopModal = false">
+      <Form style="padding-rigth:20px" ref="form" label-position="right" :label-width="100">
+        <FormItem label="备注">
+          <Input v-model="stopRemark" />
         </FormItem>
       </Form>
+      <div slot="footer">
+        <Button type="primary" @click="handleSupplyStop">终止流程</Button>
+        <Button type="ghost" style="margin-left:20px" @click="stopModal=false">取消</Button>
+      </div>
     </Modal>
 
     <Modal
-      v-model="serveModal"
-      title="开始服务"
-      @on-ok="serveModal=false"
-      @on-cancel="serveModal = false"
+      v-model="changeModal"
+      title="变更服务商"
+      @on-ok="changeModal=false"
+      @on-cancel="changeModal = false"
     >
       <Form
         style="padding-rigth:20px"
@@ -163,13 +145,10 @@
         <FormItem label="结算价" prop="settlementPrice">
           <Input type="number" v-model="forms.settlementPrice" />
         </FormItem>
-        <FormItem label="备注" >
-          <Input type="text" v-model="forms.remark" />
-        </FormItem>
       </Form>
       <div slot="footer">
-        <Button type="primary" @click="handleServe">开始服务</Button>
-        <Button type="ghost" style="margin-left:20px" @click="serveModal=false">取消</Button>
+        <Button type="primary" @click="handleSupplyChange">变更</Button>
+        <Button type="ghost" style="margin-left:20px" @click="changeModal=false">取消</Button>
       </div>
     </Modal>
     <!-- <Modal
@@ -183,23 +162,27 @@
             </div>
         </Modal>
     -->
-    <allot-service></allot-service>
   </Card>
 </template>
 
 <script>
+import fishModal from "./Menu/fishModal";
+import flowModal from "./Menu/flowModal";
 import {
+  terminateExecutiveWorkOrder,
   listByProductId,
-  addSuppilerByWorkorderId,
-  beginExecutiveWorkOrder,
-  doneExecutiveWorkOrder
+  goNextExecutiveWorkOrder,
+  changeWorkorderSuppiler
 } from "@A/supplierManage";
-import allotService from "./Menu/allot_service";
 export default {
-  components: { allotService },
+  components: { fishModal, flowModal },
   data() {
     return {
-      serveModal: false,
+      forms: { salesPrice: "", settlementPrice: "", file: null },
+      ruleValidate: {},
+      gycList: [],
+      changeModal: false,
+      stopRemark: "", //终止流程备注
       search_model: "",
       sortField: "updatedate",
       order: "desc",
@@ -209,15 +192,11 @@ export default {
       formInline: {
         companyname: "",
         servicename: "",
-        productType: 'gyscp'
+        productType: "zycp"
       },
-      gysModelLoading: false,
-      picUrl: [],
-      productTypeDict: [],
-      forms: { salesPrice: "", settlementPrice: "", files: [], remark: '' },
-      ruleValidate: {},
-      gycList: [],
-      //  加载中
+
+      isFishModal: false,
+      isFlowModal: false,
       Sloading: false,
       //  当前选中行
       current_row: "",
@@ -233,6 +212,8 @@ export default {
       page: "1",
       pageSize: "10",
       data: [],
+      stopModal: false,
+      productTypeDict: [],
       workOrderStatus: [],
       workOrderStatus_map: new Map(),
       header: [
@@ -241,10 +222,37 @@ export default {
         //     width: 60,
         //     align: 'center'
         // },
+        // {
+        //     title: '工单状态',
+        //     key: 'workOrderStatus',
+        //     width:100,
+        //     sortable: true,
+        //     render:(h, params) => {
+        //         // console.log(params.row.workOrderStatus.toString())
+
+        //         // let temp = this.workOrderStatus_map.get(params.row.workOrderStatus.toString())
+        //         // return h('div',temp)
+        //         if(params.row.workOrderStatus == '10'){
+        //             return h('div','未分配')
+        //         }else if(params.row.workOrderStatus == '20'){
+        //             return h('div','未开始')
+        //         }else if(params.row.workOrderStatus == '30'){
+        //             return h('div','服务中')
+        //         }else if(params.row.workOrderStatus == '40'){
+        //             return h('div','暂停')
+        //         }else if(params.row.workOrderStatus == '50'){
+        //             return h('div','退款终止')
+        //         }else if(params.row.workOrderStatus == '60'){
+        //             return h('div','已完结')
+        //         }else{
+        //             return h('div','无状态')
+        //         }
+        //     }
+        // },
         {
           title: "归属公司",
           key: "companyname",
-          
+          width: 220,
           sortable: true,
           render: (h, params) => {
             // console.log(params)
@@ -302,7 +310,7 @@ export default {
         {
           title: "产品全称",
           key: "product",
-          
+          width: 200,
           sortable: true,
           render: (h, params) => {
             // console.log(params)
@@ -369,7 +377,7 @@ export default {
         {
           title: "创建时间",
           key: "CreateDate",
-          
+          width: 120,
           sortable: true
         },
         // {
@@ -377,16 +385,32 @@ export default {
         //     key: 'baseorderid',
         //     width: 120
         // },
+        // {
+        //   title: "实际完成时间",
+        //   key: "UpdateDate",
+        //   width: 140,
+        //   sortable: true
+        // },
+        {
+          title: "供应商",
+          key: "supplier_name",
+          width: 120
+        },
+        {
+          title: "结算价",
+          key: "settlement_price",
+          width: 120
+        },
         {
           title: "服务人员",
           key: "servername",
-         
+          width: 120,
           sortable: true
         },
         {
           title: "跟进人",
           key: "followname",
-         
+          width: 120,
           sortable: true
         },
         {
@@ -453,7 +477,6 @@ export default {
         //       //                 let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=2`
         //       //                 this.$http.get(url).then(function(res){
         //       //                 _self.$backToLogin(res)
-
         //       //                     if(res.data.msgCode == 40000){
         //       //                         _self.$Message.success(res.data.msg)
         //       //                     }else{
@@ -480,12 +503,11 @@ export default {
         //   }
         // }
       ],
-      tempArray: [],
-      isGysModel: false
+      tempArray: []
     };
   },
   methods: {
-    // 开始服务弹窗
+    // 供应商改变
     async handleServeModal() {
       this.gycList = await listByProductId({
         productId: this.current_row.productId
@@ -494,40 +516,10 @@ export default {
         this.forms.settlementPrice = this.gycList[0].settlement_price;
         this.forms.suppilerId = this.gycList[0].id;
       }
-      this.serveModal = true;
-    },
-    async handleServe() {
-      await beginExecutiveWorkOrder({
-        workorderId: this.current_row.id,
-        suppilerId: this.forms.suppilerId,
-        settlementPrice: this.forms.settlementPrice,
-        remark: this.forms.remark
-      });
-      this.serveModal = false;
-      this.getData();
-    },
-    async hanldeProductFinish() {
-      let formData = new FormData();
-      this.forms.files.forEach(v=>{
-        formData.append("files",v);
-      })
-      formData.append("workorderId", this.current_row.id);
-      formData.append("salesPrice", this.forms.salesPrice);
-      formData.append("suppilerId", this.forms.suppilerId);
-      formData.append("settlementPrice", this.forms.settlementPrice);
-      formData.append("remark", this.forms.remark);
-      this.gysModelLoading = true;
-      try {
-        await doneExecutiveWorkOrder(formData);
-        // this.handleFinish();
-      } catch (error) {
-      } finally {
-        this.gysModelLoading = false;
-        this.getData();
-      }
+      this.changeModal = true;
     },
     get_all_selection(e) {
-      // console.log(e)
+      console.log(e);
       this.tempArray = e;
     },
     flow_all() {
@@ -551,9 +543,8 @@ export default {
                 _self.tempArray[i].product
             );
             if (_self.tempArray.length == i + 1) {
+              // _self.getData()
               _self.$bus.emit("flowsuccess", true);
-
-              _self.getData();
             }
           }
 
@@ -585,17 +576,6 @@ export default {
       }
       this.getData();
     },
-    handleUpload(file) {
-      console.log(file)
-      let that = this;
-      this.forms.files.push(file);
-      let fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = e => {
-        that.picUrl.push(e.target.result);
-      };
-      return false;
-    },
     downloadExcel() {
       let field = [
         {
@@ -620,8 +600,8 @@ export default {
       let config = {
         page: "1",
         pageSize: "1000000",
+        workOrderStatus: "30",
         iscycle: "N",
-        workOrderStatus: 20,
         companyName: _self.formInline.companyname,
         serviceName: _self.formInline.servicename,
         productType: _self.formInline.productType,
@@ -636,9 +616,10 @@ export default {
     getData() {
       var _self = this;
       _self.Sloading = true;
-      var url = "api/order/workOrderList?workOrderStatus=20";
+      var url = "api/order/workOrderList";
       var config = {
         params: {
+          workOrderStatus: "30",
           sortField: _self.sortField,
           order: _self.order,
           page: _self.page,
@@ -686,25 +667,26 @@ export default {
         //  测试块，测试map()
       });
     },
-    showflow() {
-      if (this.current_row != "") {
-        if (this.current_row.resumeFlag == 2) {
-          this.$Message.warning("当前工单已锁定！");
-        } else {
-          if (this.current_row.product_type == "gyscp") {
-            this.product;
-          } else {
-            this.$bus.emit("myflow", this.current_row);
-          }
-        }
-      } else {
-        this.$Message.warning("请选择一行进行流转！");
-      }
-    },
     search() {
       this.page = 1;
       this.isSearh = true;
       this.getData();
+    },
+    // 流程终止
+    async handleSupplyStop() {
+      await terminateExecutiveWorkOrder({
+        workorderId: this.current_row.id,
+        remark: this.stopRemark
+      });
+      this.stopModal = false;
+      this.getData();
+    },
+
+    gycSelectChange(id) {
+      const values = this.gycList.find(v => id == v.id);
+
+      this.forms.settlementPrice = values.settlement_price;
+      this.forms.suppilerId = values.id;
     },
     reset() {
       this.isSearh = false;
@@ -721,28 +703,44 @@ export default {
       this.pageSize = e;
       this.getData();
     },
+    handleFlowModalCancel() {
+      this.isFlowModal = false;
+      console.log("ahhahah", this.isFlowModal);
+    },
     //  保存当前选中行
     save_current_row(e) {
       // console.log(e)
       this.current_row = e;
     },
+    handleFishModal() {
+      this.isFishModal = false;
+      this.getData();
+    },
+    handleFlowModal() {
+      this.isFlowModal = false;
+      this.getData();
+    },
+    async handleSupplyChange() {
+      await changeWorkorderSuppiler({
+        workorderId: this.current_row.id,
+        suppilerId: this.forms.suppilerId,
+        settlementPrice: this.forms.settlementPrice
+      });
+      this.changeModal = false;
+      this.getData();
+    },
     showdetail() {
       if (this.current_row != "") {
+        // this.$bus.emit('myCommonTask',this.current_row)
         this.$store.commit(
           "open_gobal_work_order_detail_modal",
           this.current_row.id
         );
-        // this.$bus.emit('myCommonTask',this.current_row)
       } else {
         this.$Message.warning("请选择一行查看详情！");
       }
     },
-    gycSelectChange(id) {
-      const values = this.gycList.find(v => id == v.id);
-      this.forms.salesPrice = values.sales_price;
-      this.forms.settlementPrice = values.settlement_price;
-      this.forms.suppilerId = values.id;
-    },
+
     reCreate() {
       let _self = this;
       if (this.current_row != "") {
@@ -760,14 +758,42 @@ export default {
         this.$Message.warning("请选择一行！");
       }
     },
-    // showflow(){
-    //     // console.log('111111111')
-    //     if(this.current_row != ''){
-    //         this.$bus.emit('myflow',this.current_row)
-    //     }else{
-    //         this.$Message.warning('请选择一行进行流转！')
-    //     }
-    // },
+    showflow() {
+      console.log("111111111");
+      if (this.current_row != "") {
+        if (this.current_row.product_type == "gyscp") {
+          this.isFlowModal = true;
+        } else {
+          this.$bus.emit("myflow", this.current_row);
+        }
+      } else {
+        this.$Message.warning("请选择一行进行流转！");
+      }
+    },
+    finsih_workerorder() {
+      let _self = this;
+      if (this.current_row != "") {
+        if (
+          this.current_row.productType == "供应商产品" &&
+          this.current_row.CurrentProcess !== "完结"
+        ) {
+          this.isFishModal = true;
+        } else {
+          let url = `api/order/goFinshWorkOrderProcess`;
+          let config = {
+            params: {
+              workOrderId: _self.current_row.id
+            }
+          };
+          function success(res) {
+            _self.$Message.success(res.data.msg);
+          }
+          _self.$Get(url, config, success);
+        }
+      } else {
+        this.$Message.warning("请选择一行！");
+      }
+    },
     //  流程图
     flowChart(a) {
       let _self = this;
@@ -777,44 +803,6 @@ export default {
         a.row.id +
         "&bussinessType=20&time=" +
         new Date();
-    },
-    handleFinish() {
-      let _self = this;
-      let url = `api/order/goFinshWorkOrderProcess`;
-      let config = {
-        params: {
-          workOrderId: _self.current_row.id
-        }
-      };
-      function success(res) {
-        _self.$Message.success(res.data.msg);
-      }
-      _self.$Get(url, config, success);
-    },
-    handleBind() {},
-    // 获取供应商列表通过Id
-    async finsih_workerorder() {
-      let _self = this;
-      if (this.current_row != "") {
-        if (this.current_row.product_type == "gyscp") {
-          this.gycList = await listByProductId({
-            productId: this.current_row.productId
-          });
-          if (this.gycList.length) {
-            this.forms.salesPrice = this.gycList[0].sales_price;
-            this.forms.settlementPrice = this.gycList[0].settlement_price;
-            this.forms.suppilerId = this.gycList[0].id;
-          }
-          this.forms.files = [];
-          this.picUrl = [];
-          this.forms.remark = "";
-          this.isGysModel = true;
-        } else {
-          this.handleFinish();
-        }
-      } else {
-        this.$Message.warning("请选择一行！");
-      }
     },
     // foundClues(){
     //     Bus.$emit('workOrderClues',true)
@@ -847,28 +835,13 @@ export default {
           return v;
         });
       }
-      this.$GetDataCenter(params, finish);
-    }, //  分配工单
-    distributionTask() {
-      if (this.current_row != "") {
-        this.$bus.emit("global_allot_commonorder", [
-          this.current_row.ServiceDeptID,
-          this.current_row.departname,
-          this.current_row.id
-        ]);
-      } else {
-        this.$Message.warning("请选择一行进行分配！");
-      }
+      _self.$GetDataCenter(params, finish);
     }
   },
   created() {
     var _self = this;
-    // this.getDataCenter()
     this.getData();
     this.$bus.on("flowsuccess", e => {
-      _self.getData();
-    });
-    this.$bus.on("update_allot_index", e => {
       _self.getData();
     });
   }

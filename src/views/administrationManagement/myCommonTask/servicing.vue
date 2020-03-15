@@ -17,7 +17,7 @@
                     <Input type="text" size="small" v-model="formInline.servicename" placeholder></Input>
                   </FormItem>
                 </Col>
-                <Col span="8">
+                <!-- <Col span="8">
                   <FormItem prop="servicename" label="产品类型">
                     <Select v-model="formInline.productType" style="width:200px">
                       <Option value>全部</Option>
@@ -28,7 +28,7 @@
                       >{{item.typename}}</Option>
                     </Select>
                   </FormItem>
-                </Col>
+                </Col> -->
               </Row>
               <FormItem>
                 <Button type="primary" @click="search">搜索</Button>
@@ -42,14 +42,12 @@
     <Row>
       <ButtonGroup style="float:left">
         <Button
-          v-if="current_row.product_type=='gyscp'"
           type="primary"
           icon="ios-color-wand-outline"
           @click="handleServeModal"
         >变更服务商</Button>
 
         <Button
-          v-if="current_row.product_type=='gyscp'"
           type="primary"
           icon="ios-color-wand-outline"
           @click="stopModal = true"
@@ -191,7 +189,8 @@ export default {
       //  筛选数据
       formInline: {
         companyname: "",
-        servicename: ""
+        servicename: "",
+        productType: 'gyscp'
       },
 
       isFishModal: false,
@@ -251,7 +250,6 @@ export default {
         {
           title: "归属公司",
           key: "companyname",
-          width: 220,
           sortable: true,
           render: (h, params) => {
             // console.log(params)
@@ -309,7 +307,6 @@ export default {
         {
           title: "产品全称",
           key: "product",
-          width: 200,
           sortable: true,
           render: (h, params) => {
             // console.log(params)
@@ -376,7 +373,6 @@ export default {
         {
           title: "创建时间",
           key: "CreateDate",
-          width: 120,
           sortable: true
         },
         // {
@@ -393,25 +389,29 @@ export default {
         {
           title: "供应商",
           key: "supplier_name",
-          width: 120
+   
         },
         {
           title: "结算价",
           key: "settlement_price",
-          width: 120
+        
         },
         {
           title: "服务人员",
           key: "servername",
-          width: 120,
+    
           sortable: true
         },
         {
           title: "跟进人",
           key: "followname",
-          width: 120,
+       
           sortable: true
-        }
+        },
+        {
+          title: "备注",
+          key: "remark",
+        },
         // {
         //   title: "操作",
         //   key: "action",
@@ -673,6 +673,7 @@ export default {
         workorderId: this.current_row.id,
         remark: this.stopRemark
       });
+      this.stopModal = false;
       this.getData();
     },
 

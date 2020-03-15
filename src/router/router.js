@@ -1189,11 +1189,20 @@ export const appRouter = [
       {
         access: 6093,
         meta: 6093,
+        path: 'purchasingtaskmanagement',
+        title: '采购类工单',
+        name: 'purchasingtaskmanagement',
+        component: () =>
+          import(/* webpackChunkName: "purchasingtaskmanagement" */ '@/views/administrationManagement/myCommonTask/index.vue')
+      },
+      {
+        access: 11662, //11662
+        meta: 11662,
         path: 'administratiotaskmanagement',
-        title: '工单管理',
+        title: '行政部工单管理',
         name: 'administratiotaskmanagement',
         component: () =>
-          import(/* webpackChunkName: "audittaskmanagement_index" */ '@/views/administrationManagement/myCommonTask/index.vue')
+          import(/* webpackChunkName: "administrativework" */ '@/views/administrationManagement/administrativework/index.vue')
       },
       {
         access: 6094,

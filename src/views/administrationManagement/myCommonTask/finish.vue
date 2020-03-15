@@ -17,7 +17,7 @@
                     <Input type="text" size="small" v-model="formInline.servicename" placeholder></Input>
                   </FormItem>
                 </Col>
-                <Col span="8">
+                <!-- <Col span="8">
                   <FormItem prop="servicename" label="产品类型">
                     <Select v-model="formInline.productType" style="width:200px">
                       <Option value>全部</Option>
@@ -28,7 +28,7 @@
                       >{{item.typename}}</Option>
                     </Select>
                   </FormItem>
-                </Col>
+                </Col> -->
               </Row>
               <FormItem>
                 <Button type="primary" @click="search">搜索</Button>
@@ -75,8 +75,8 @@
         <img :src="flowChartImg" />
       </center>
     </Modal>
-    <Modal title="查看凭证" v-model="visible">
-      <img :src="imgUrl" v-if="visible" style="width: 100%" />
+    <Modal width="70%" title="查看凭证" v-model="visible">
+      <template v-for="(item,index) in imgUrl"><img :key="index" :src="item" v-if="visible" style="width: 100%" /></template>
     </Modal>
     <!-- <Modal
             v-model="pause"
@@ -97,7 +97,7 @@ export default {
   data() {
     return {
       visible: false, // 显示图片
-      imgUrl: "", // 凭证地址
+      imgUrl: [], // 凭证地址
       search_model: "",
       sortField: "updatedate",
       order: "desc",
@@ -106,7 +106,8 @@ export default {
       //  筛选数据
       formInline: {
         companyname: "",
-        servicename: ""
+        servicename: "",
+        productType: 'gyscp'
       },
       productTypeDict: [],
       //  加载中
@@ -326,11 +327,11 @@ export default {
                   cursor: "pointer"
                 },
                 attrs: {
-                  src: "/api/assets/" + params.row.credential
+                  src: "/api/assets/" + params.row.credential.split(',')[0]
                 },
                 on: {
                   click: e => {
-                    this.handleView(e.srcElement.currentSrc);
+                    this.handleView(params.row.credential);
                   }
                 }
               })
@@ -551,7 +552,7 @@ export default {
       this.getData();
     },
     handleView(url) {
-      this.imgUrl = url;
+      this.imgUrl = url.split(',').map(v=>'/api/assets/'+v);
       this.visible = true;
     },
     reset() {

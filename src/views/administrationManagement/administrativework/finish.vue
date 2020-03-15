@@ -41,19 +41,9 @@
     </Row>
     <Row>
       <ButtonGroup style="float:left">
-        <!-- <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
-        <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>-->
-        <Button
-          type="primary"
-          icon="ios-color-wand-outline"
-          @click="handleServeModal"
-        >开始服务</Button>
-        <!-- <Button v-else type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button> -->
-        <!-- <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button> -->
+        <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
+        <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
         <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
-        <Button type="primary" icon="ios-color-wand-outline" @click="finsih_workerorder">一键完结</Button>
-        <Button type="primary" icon="ios-color-wand-outline" @click="distributionTask">重新分配</Button>
-
         <!-- <Button type="primary" icon="ios-color-wand-outline" @click="reCreate" v-permission="['administration.rebuild']">重新生成流程</Button> -->
       </ButtonGroup>
     </Row>
@@ -67,7 +57,6 @@
         @on-current-change="save_current_row"
         @on-row-dblclick="showdetail"
         @on-sort-change="sort"
-        @on-selection-change="get_all_selection"
       ></Table>
       <Page
         placement="top"
@@ -86,91 +75,8 @@
         <img :src="flowChartImg" />
       </center>
     </Modal>
-    <!-- 供应商产品一键完结 -->
-    <Modal
-      v-model="isGysModel"
-      :loading="gysModelLoading"
-      title="供应商产品一键完结"
-      @on-ok="hanldeProductFinish"
-      @on-cancel="isGysModel = false"
-    >
-      <Form
-        style="padding-rigth:20px"
-        ref="form"
-        :model="forms"
-        :rules="ruleValidate"
-        label-position="right"
-        :label-width="100"
-      >
-        <FormItem prop="servicename" label="供应商">
-          <Select @on-change="gycSelectChange" v-model="forms.suppilerId" style="width:200px">
-            <Option
-              v-for="(item,index) in gycList"
-              :key="index"
-              :value="item.id"
-            >{{item.supplier_name}}</Option>
-          </Select>
-        </FormItem>
-        <FormItem label="结算价" prop="settlementPrice">
-          <Input v-model="forms.settlementPrice" />
-        </FormItem>
-        <FormItem label="销售价" prop="sales_price">
-          <Input v-model="forms.salesPrice" />
-        </FormItem>
-        <FormItem label="凭证" prop="file">
-          <Upload
-            action="//jsonplaceholder.typicode.com/posts/"
-            type="drag"
-            :before-upload="handleUpload"
-          >
-            <div style="padding: 20px 0">
-              <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-              <p>上传</p>
-            </div>
-          </Upload>
-          <template v-for="(item,index) in picUrl" ><img :key="index" :src="item" style="width:386px;height:200px" /></template>
-         
-        </FormItem>
-        <FormItem label="备注" prop="remark">
-          <Input v-model="forms.remark" />
-        </FormItem>
-      </Form>
-    </Modal>
-
-    <Modal
-      v-model="serveModal"
-      title="开始服务"
-      @on-ok="serveModal=false"
-      @on-cancel="serveModal = false"
-    >
-      <Form
-        style="padding-rigth:20px"
-        ref="form"
-        :model="forms"
-        :rules="ruleValidate"
-        label-position="right"
-        :label-width="100"
-      >
-        <FormItem prop="servicename" label="供应商">
-          <Select @on-change="gycSelectChange" v-model="forms.suppilerId" style="width:200px">
-            <Option
-              v-for="(item,index) in gycList"
-              :key="index"
-              :value="item.id"
-            >{{item.supplier_name}}</Option>
-          </Select>
-        </FormItem>
-        <FormItem label="结算价" prop="settlementPrice">
-          <Input type="number" v-model="forms.settlementPrice" />
-        </FormItem>
-        <FormItem label="备注" >
-          <Input type="text" v-model="forms.remark" />
-        </FormItem>
-      </Form>
-      <div slot="footer">
-        <Button type="primary" @click="handleServe">开始服务</Button>
-        <Button type="ghost" style="margin-left:20px" @click="serveModal=false">取消</Button>
-      </div>
+    <Modal title="查看凭证" v-model="visible">
+      <img :src="imgUrl" v-if="visible" style="width: 100%" />
     </Modal>
     <!-- <Modal
             v-model="pause"
@@ -183,23 +89,15 @@
             </div>
         </Modal>
     -->
-    <allot-service></allot-service>
   </Card>
 </template>
 
 <script>
-import {
-  listByProductId,
-  addSuppilerByWorkorderId,
-  beginExecutiveWorkOrder,
-  doneExecutiveWorkOrder
-} from "@A/supplierManage";
-import allotService from "./Menu/allot_service";
 export default {
-  components: { allotService },
   data() {
     return {
-      serveModal: false,
+      visible: false, // 显示图片
+      imgUrl: "", // 凭证地址
       search_model: "",
       sortField: "updatedate",
       order: "desc",
@@ -209,14 +107,9 @@ export default {
       formInline: {
         companyname: "",
         servicename: "",
-        productType: 'gyscp'
+        productType: "zycp"
       },
-      gysModelLoading: false,
-      picUrl: [],
       productTypeDict: [],
-      forms: { salesPrice: "", settlementPrice: "", files: [], remark: '' },
-      ruleValidate: {},
-      gycList: [],
       //  加载中
       Sloading: false,
       //  当前选中行
@@ -237,14 +130,36 @@ export default {
       workOrderStatus_map: new Map(),
       header: [
         // {
-        //     type: 'selection',
-        //     width: 60,
-        //     align: 'center'
+        //     title: '工单状态',
+        //     key: 'workOrderStatus',
+        //     width:100,
+        //     sortable: true,
+        //     render:(h, params) => {
+        //         // console.log(params.row.workOrderStatus.toString())
+
+        //         // let temp = this.workOrderStatus_map.get(params.row.workOrderStatus.toString())
+        //         // return h('div',temp)
+        //         if(params.row.workOrderStatus == '10'){
+        //             return h('div','未分配')
+        //         }else if(params.row.workOrderStatus == '20'){
+        //             return h('div','未开始')
+        //         }else if(params.row.workOrderStatus == '30'){
+        //             return h('div','服务中')
+        //         }else if(params.row.workOrderStatus == '40'){
+        //             return h('div','暂停')
+        //         }else if(params.row.workOrderStatus == '50'){
+        //             return h('div','退款终止')
+        //         }else if(params.row.workOrderStatus == '60'){
+        //             return h('div','已完结')
+        //         }else{
+        //             return h('div','无状态')
+        //         }
+        //     }
         // },
         {
           title: "归属公司",
           key: "companyname",
-          
+          width: 220,
           sortable: true,
           render: (h, params) => {
             // console.log(params)
@@ -302,7 +217,7 @@ export default {
         {
           title: "产品全称",
           key: "product",
-          
+          width: 200,
           sortable: true,
           render: (h, params) => {
             // console.log(params)
@@ -346,7 +261,13 @@ export default {
         // {
         //   title: "产品类型",
         //   key: "productType",
-        //   width: 120
+        //   width: 120,
+        //   render: (h, params) => {
+        //     return h(
+        //       "span",
+        //       params.row.product_type == "gyscp" ? "供应商产品" : "自营产品"
+        //     );
+        //   }
         // },
         // {
         //   title: "目前进度",
@@ -369,7 +290,7 @@ export default {
         {
           title: "创建时间",
           key: "CreateDate",
-          
+          width: 120,
           sortable: true
         },
         // {
@@ -377,22 +298,64 @@ export default {
         //     key: 'baseorderid',
         //     width: 120
         // },
+        // {
+        //   title: "实际完成时间",
+        //   key: "UpdateDate",
+        //   width: 140,
+        //   sortable: true
+        // },
+        {
+          title: "供应商",
+          key: "supplier_name",
+          width: 120
+        },
+        {
+          title: "结算价",
+          key: "settlement_price",
+          width: 120
+        },
+        {
+          title: "凭证",
+          render: (h, params) => {
+            return h("div", [
+              h("img", {
+                style: {
+                  "margin-top": "2px",
+                  "border-radius": "4px",
+                  width: "80px",
+                  height: "40px",
+                  cursor: "pointer"
+                },
+                attrs: {
+                  src: "/api/assets/" + params.row.credential
+                },
+                on: {
+                  click: e => {
+                    this.handleView(e.srcElement.currentSrc);
+                  }
+                }
+              })
+            ]);
+          },
+          width: 120
+        },
+        {
+          title: "备注",
+          key: "remark",
+          width: 180
+        },
         {
           title: "服务人员",
           key: "servername",
-         
+          width: 120,
           sortable: true
         },
         {
           title: "跟进人",
           key: "followname",
-         
+          width: 120,
           sortable: true
-        },
-        {
-          title: "备注",
-          key: "remark",
-        },
+        }
         // {
         //   title: "操作",
         //   key: "action",
@@ -453,7 +416,6 @@ export default {
         //       //                 let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=2`
         //       //                 this.$http.get(url).then(function(res){
         //       //                 _self.$backToLogin(res)
-
         //       //                     if(res.data.msgCode == 40000){
         //       //                         _self.$Message.success(res.data.msg)
         //       //                     }else{
@@ -479,102 +441,10 @@ export default {
         //     ]);
         //   }
         // }
-      ],
-      tempArray: [],
-      isGysModel: false
+      ]
     };
   },
   methods: {
-    // 开始服务弹窗
-    async handleServeModal() {
-      this.gycList = await listByProductId({
-        productId: this.current_row.productId
-      });
-      if (this.gycList.length) {
-        this.forms.settlementPrice = this.gycList[0].settlement_price;
-        this.forms.suppilerId = this.gycList[0].id;
-      }
-      this.serveModal = true;
-    },
-    async handleServe() {
-      await beginExecutiveWorkOrder({
-        workorderId: this.current_row.id,
-        suppilerId: this.forms.suppilerId,
-        settlementPrice: this.forms.settlementPrice,
-        remark: this.forms.remark
-      });
-      this.serveModal = false;
-      this.getData();
-    },
-    async hanldeProductFinish() {
-      let formData = new FormData();
-      this.forms.files.forEach(v=>{
-        formData.append("files",v);
-      })
-      formData.append("workorderId", this.current_row.id);
-      formData.append("salesPrice", this.forms.salesPrice);
-      formData.append("suppilerId", this.forms.suppilerId);
-      formData.append("settlementPrice", this.forms.settlementPrice);
-      formData.append("remark", this.forms.remark);
-      this.gysModelLoading = true;
-      try {
-        await doneExecutiveWorkOrder(formData);
-        // this.handleFinish();
-      } catch (error) {
-      } finally {
-        this.gysModelLoading = false;
-        this.getData();
-      }
-    },
-    get_all_selection(e) {
-      // console.log(e)
-      this.tempArray = e;
-    },
-    flow_all() {
-      let _self = this;
-      if (this.tempArray.length == 0) {
-        _self.$Message.warning("请选择需要流转的工单！");
-      } else {
-        for (let i = 0; i < this.tempArray.length; i++) {
-          let url = `api/order/next`;
-          let config = {
-            workOrderId: _self.tempArray[i].id,
-            backup: "批量流转"
-          };
-          function success(res) {
-            console.log(
-              "流转成功：" +
-                _self.tempArray[i].id +
-                " - " +
-                _self.tempArray[i].companyname +
-                " - " +
-                _self.tempArray[i].product
-            );
-            if (_self.tempArray.length == i + 1) {
-              _self.$bus.emit("flowsuccess", true);
-
-              _self.getData();
-            }
-          }
-
-          function fail(err) {
-            console.log(
-              "流转失败：" +
-                _self.tempArray[i].id +
-                " - " +
-                _self.tempArray[i].companyname +
-                " - " +
-                _self.tempArray[i].product
-            );
-            if (_self.tempArray.length == i + 1) {
-              // _self.getData()
-              _self.$bus.emit("flowsuccess", true);
-            }
-          }
-          _self.$Post(url, config, success, fail);
-        }
-      }
-    },
     sort(e) {
       this.sortField = e.key;
       if (e.order == "normal") {
@@ -584,17 +454,6 @@ export default {
         this.order = e.order;
       }
       this.getData();
-    },
-    handleUpload(file) {
-      console.log(file)
-      let that = this;
-      this.forms.files.push(file);
-      let fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = e => {
-        that.picUrl.push(e.target.result);
-      };
-      return false;
     },
     downloadExcel() {
       let field = [
@@ -618,10 +477,10 @@ export default {
       let _self = this;
       let url = `api/order/workOrderList`;
       let config = {
+        workOrderStatus: "60",
         page: "1",
         pageSize: "1000000",
         iscycle: "N",
-        workOrderStatus: 20,
         companyName: _self.formInline.companyname,
         serviceName: _self.formInline.servicename,
         productType: _self.formInline.productType,
@@ -636,9 +495,10 @@ export default {
     getData() {
       var _self = this;
       _self.Sloading = true;
-      var url = "api/order/workOrderList?workOrderStatus=20";
+      var url = "api/order/workOrderList";
       var config = {
         params: {
+          workOrderStatus: "60",
           sortField: _self.sortField,
           order: _self.order,
           page: _self.page,
@@ -686,25 +546,14 @@ export default {
         //  测试块，测试map()
       });
     },
-    showflow() {
-      if (this.current_row != "") {
-        if (this.current_row.resumeFlag == 2) {
-          this.$Message.warning("当前工单已锁定！");
-        } else {
-          if (this.current_row.product_type == "gyscp") {
-            this.product;
-          } else {
-            this.$bus.emit("myflow", this.current_row);
-          }
-        }
-      } else {
-        this.$Message.warning("请选择一行进行流转！");
-      }
-    },
     search() {
       this.page = 1;
       this.isSearh = true;
       this.getData();
+    },
+    handleView(url) {
+      this.imgUrl = url;
+      this.visible = true;
     },
     reset() {
       this.isSearh = false;
@@ -737,12 +586,6 @@ export default {
         this.$Message.warning("请选择一行查看详情！");
       }
     },
-    gycSelectChange(id) {
-      const values = this.gycList.find(v => id == v.id);
-      this.forms.salesPrice = values.sales_price;
-      this.forms.settlementPrice = values.settlement_price;
-      this.forms.suppilerId = values.id;
-    },
     reCreate() {
       let _self = this;
       if (this.current_row != "") {
@@ -760,14 +603,14 @@ export default {
         this.$Message.warning("请选择一行！");
       }
     },
-    // showflow(){
-    //     // console.log('111111111')
-    //     if(this.current_row != ''){
-    //         this.$bus.emit('myflow',this.current_row)
-    //     }else{
-    //         this.$Message.warning('请选择一行进行流转！')
-    //     }
-    // },
+    showflow() {
+      // console.log('111111111')
+      if (this.current_row != "") {
+        this.$bus.emit("myflow", this.current_row);
+      } else {
+        this.$Message.warning("请选择一行进行流转！");
+      }
+    },
     //  流程图
     flowChart(a) {
       let _self = this;
@@ -777,44 +620,6 @@ export default {
         a.row.id +
         "&bussinessType=20&time=" +
         new Date();
-    },
-    handleFinish() {
-      let _self = this;
-      let url = `api/order/goFinshWorkOrderProcess`;
-      let config = {
-        params: {
-          workOrderId: _self.current_row.id
-        }
-      };
-      function success(res) {
-        _self.$Message.success(res.data.msg);
-      }
-      _self.$Get(url, config, success);
-    },
-    handleBind() {},
-    // 获取供应商列表通过Id
-    async finsih_workerorder() {
-      let _self = this;
-      if (this.current_row != "") {
-        if (this.current_row.product_type == "gyscp") {
-          this.gycList = await listByProductId({
-            productId: this.current_row.productId
-          });
-          if (this.gycList.length) {
-            this.forms.salesPrice = this.gycList[0].sales_price;
-            this.forms.settlementPrice = this.gycList[0].settlement_price;
-            this.forms.suppilerId = this.gycList[0].id;
-          }
-          this.forms.files = [];
-          this.picUrl = [];
-          this.forms.remark = "";
-          this.isGysModel = true;
-        } else {
-          this.handleFinish();
-        }
-      } else {
-        this.$Message.warning("请选择一行！");
-      }
     },
     // foundClues(){
     //     Bus.$emit('workOrderClues',true)
@@ -832,33 +637,12 @@ export default {
     },
     getDataCenter() {
       let _self = this;
-
       let params = "product_type";
-      let map = new Map();
 
       function finish(res) {
         _self.productTypeDict = res.data.data.product_type;
-        res.data.data.product_type.forEach(e => {
-          map.set(e.typecode, e.typename);
-        });
-
-        _self.data = _self.data.map(v => {
-          v.productType = map.get(v.product_type);
-          return v;
-        });
       }
       this.$GetDataCenter(params, finish);
-    }, //  分配工单
-    distributionTask() {
-      if (this.current_row != "") {
-        this.$bus.emit("global_allot_commonorder", [
-          this.current_row.ServiceDeptID,
-          this.current_row.departname,
-          this.current_row.id
-        ]);
-      } else {
-        this.$Message.warning("请选择一行进行分配！");
-      }
     }
   },
   created() {
@@ -866,9 +650,6 @@ export default {
     // this.getDataCenter()
     this.getData();
     this.$bus.on("flowsuccess", e => {
-      _self.getData();
-    });
-    this.$bus.on("update_allot_index", e => {
       _self.getData();
     });
   }
