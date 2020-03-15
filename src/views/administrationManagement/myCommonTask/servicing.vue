@@ -50,7 +50,7 @@
         <Button
           type="primary"
           icon="ios-color-wand-outline"
-          @click="stopModal = true"
+          @click="stopRemark=current_row.remark;stopModal = true"
         >流程终止</Button>
         <Button type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button>
         <!-- <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button> -->
@@ -108,7 +108,7 @@
     <Modal v-model="stopModal" title="终止流程" @on-ok="stopModal=false" @on-cancel="stopModal = false">
       <Form style="padding-rigth:20px" ref="form" label-position="right" :label-width="100">
         <FormItem label="备注">
-          <Input v-model="stopRemark" />
+          <Input type="textarea" v-model="stopRemark" />
         </FormItem>
       </Form>
       <div slot="footer">

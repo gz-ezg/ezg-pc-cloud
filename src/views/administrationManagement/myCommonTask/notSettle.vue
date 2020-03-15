@@ -124,7 +124,8 @@ export default {
       ],
       filtraConfig: [
         { type: "input", key: "supplierName", label: "供应商名称：" },
-        { type: "date", key: "settlementTime", label: "完结时间" }
+        { type: "date", key: "settlementTime", label: "完结时间" },
+        { type: "date", key: "servicebegintime", label: "服务开始时间" },
       ],
       excelField: [
         { field: "supplier_name", title: "供应商" },

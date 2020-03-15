@@ -120,19 +120,20 @@
         <FormItem label="凭证" prop="file">
           <Upload
             action="//jsonplaceholder.typicode.com/posts/"
-            type="drag"
             :before-upload="handleUpload"
           >
-            <div style="padding: 20px 0">
+            <!-- <div style="padding: 20px 0">
               <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
               <p>上传</p>
-            </div>
+            </div> -->
+
+             <Button icon="ios-cloud-upload-outline">上传</Button>
           </Upload>
-          <template v-for="(item,index) in picUrl" ><img :key="index" :src="item" style="width:386px;height:200px" /></template>
+          <template v-for="(item,index) in picUrl" ><img :key="index" :src="item" style="width:100px;height:100px" /></template>
          
         </FormItem>
         <FormItem label="备注" prop="remark">
-          <Input v-model="forms.remark" />
+          <Input type="textarea" v-model="forms.remark" />
         </FormItem>
       </Form>
     </Modal>
@@ -164,7 +165,7 @@
           <Input type="number" v-model="forms.settlementPrice" />
         </FormItem>
         <FormItem label="备注" >
-          <Input type="text" v-model="forms.remark" />
+          <Input type="textarea" v-model="forms.remark" />
         </FormItem>
       </Form>
       <div slot="footer">
@@ -494,6 +495,7 @@ export default {
         this.forms.settlementPrice = this.gycList[0].settlement_price;
         this.forms.suppilerId = this.gycList[0].id;
       }
+      this.forms.remark = this.current_row.remark;
       this.serveModal = true;
     },
     async handleServe() {
@@ -807,7 +809,7 @@ export default {
           }
           this.forms.files = [];
           this.picUrl = [];
-          this.forms.remark = "";
+          this.forms.remark = this.current_row.remark;
           this.isGysModel = true;
         } else {
           this.handleFinish();
