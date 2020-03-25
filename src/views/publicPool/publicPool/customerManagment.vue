@@ -4,10 +4,14 @@
       <Row style="margin-bottom:10px;">
         <Collapse v-model="search_model">
           <Panel name="1">
-            <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>
-            筛选
+            <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>筛选
             <div slot="content" @keydown.enter="search">
-              <Form ref="formValidate" :model="formValidate" :label-width="120" style="margin-top: -10px">
+              <Form
+                ref="formValidate"
+                :model="formValidate"
+                :label-width="120"
+                style="margin-top: -10px"
+              >
                 <Row>
                   <Col span="6">
                     <FormItem label="客户名称：" prop="name">
@@ -45,18 +49,28 @@
                   <Col span="6">
                     <FormItem label="区域：" prop="area">
                       <Select transfer v-model="formValidate.area" size="small" @on-change="search">
-                        <Option v-for="item in area" :value="item.typecode" :key="item.id">
-                          {{ item.typename }}
-                        </Option>
+                        <Option
+                          v-for="item in area"
+                          :value="item.typecode"
+                          :key="item.id"
+                        >{{ item.typename }}</Option>
                       </Select>
                     </FormItem>
                   </Col>
                   <Col span="6">
                     <FormItem label="客户来源：" prop="customersource">
-                      <Select transfer v-model="formValidate.customersource" size="small" @on-change="search" style="width:100%">
-                        <Option v-for="item in cluesources" :value="item.typecode" :key="item.id">
-                          {{ item.typename }}
-                        </Option>
+                      <Select
+                        transfer
+                        v-model="formValidate.customersource"
+                        size="small"
+                        @on-change="search"
+                        style="width:100%"
+                      >
+                        <Option
+                          v-for="item in cluesources"
+                          :value="item.typecode"
+                          :key="item.id"
+                        >{{ item.typename }}</Option>
                       </Select>
                     </FormItem>
                   </Col>
@@ -69,7 +83,13 @@
                 <Row>
                   <Col span="6">
                     <FormItem label="微信绑定：" prop="isbound">
-                      <Select transfer v-model="formValidate.isbound" size="small" @on-change="search" style="width:100%">
+                      <Select
+                        transfer
+                        v-model="formValidate.isbound"
+                        size="small"
+                        @on-change="search"
+                        style="width:100%"
+                      >
                         <Option value="Y">是</Option>
                         <Option value="N">否</Option>
                       </Select>
@@ -78,50 +98,78 @@
                   <Col span="6">
                     <FormItem label="创建时间：" prop="credate">
                       <DatePicker
-                              type="daterange"
-                              transfer
-                              v-model="formValidate.credate"
-                              placement="bottom-end"
-                              size="small"
-                              style="width:100%"
+                        type="daterange"
+                        transfer
+                        v-model="formValidate.credate"
+                        placement="bottom-end"
+                        size="small"
+                        style="width:100%"
                       ></DatePicker>
                     </FormItem>
                   </Col>
                   <Col span="6">
                     <FormItem label="回滚时间：" prop="upddate">
                       <DatePicker
-                              type="daterange"
-                              transfer
-                              v-model="formValidate.upddate"
-                              placement="bottom-start"
-                              size="small"
-                              style="width:100%"
+                        type="daterange"
+                        transfer
+                        v-model="formValidate.upddate"
+                        placement="bottom-start"
+                        size="small"
+                        style="width:100%"
                       ></DatePicker>
                     </FormItem>
                   </Col>
                   <Col span="6">
                     <FormItem label="标签：" prop="labelName">
-                      <Input v-model="formValidate.labelName" size="small"></Input>
+                      <Select
+                        size="small"
+                        v-model="formValidate.labelName"
+                        multiple
+                        style="width:150px"
+                      >
+                        <Option
+                          v-for="item in labelList"
+                          :value="item.labelName"
+                          :key="item.labelCode"
+                        >{{ item.labelName }}</Option>
+                      </Select>
                     </FormItem>
                   </Col>
                 </Row>
                 <Row>
                   <Col span="6">
                     <FormItem label="客户等级：" prop="importlevel">
-                      <Select transfer v-model="formValidate.importlevel" size="small" @on-change="search" style="width:100%">
-                        <Option value=""></Option>
-                        <Option v-for="item in customerrating" :value="item.typecode" :key="item.id">
-                          {{ item.typename }}
-                        </Option>
+                      <Select
+                        transfer
+                        v-model="formValidate.importlevel"
+                        size="small"
+                        @on-change="search"
+                        style="width:100%"
+                      >
+                        <Option value></Option>
+                        <Option
+                          v-for="item in customerrating"
+                          :value="item.typecode"
+                          :key="item.id"
+                        >{{ item.typename }}</Option>
                       </Select>
                     </FormItem>
                   </Col>
                   <Col span="6">
                     <FormItem>
-                      <Button size="small" type="primary" name="marketingManagement_index_edit_search" @click="search">搜索</Button>
-                      <Button size="small" type="ghost" name="marketingManagement_index_edit_reset" @click="handleReset" style="margin-left: 8px"
-                      >重置</Button
-                      >
+                      <Button
+                        size="small"
+                        type="primary"
+                        name="marketingManagement_index_edit_search"
+                        @click="search"
+                      >搜索</Button>
+                      <Button
+                        size="small"
+                        type="ghost"
+                        name="marketingManagement_index_edit_reset"
+                        @click="handleReset"
+                        style="margin-left: 8px"
+                      >重置</Button>
                     </FormItem>
                   </Col>
                   <!-- <Col span="8">
@@ -129,7 +177,7 @@
                                             <Input  v-model="formValidate.begin_residue_time" size="small" style="width:30%" placeholder="起始"></Input> - 
                                             <Input  v-model="formValidate.end_residue_time" size="small" style="width:30%" placeholder="结束"></Input>
                                         </FormItem>
-                                    </Col> -->
+                  </Col>-->
                   <!-- <Col span="8">
                                         <FormItem label="客户重要性：" prop="importance">
                                             <Select transfer v-model="formValidate.importance" size="small" @on-change="search"  style="width:100%">
@@ -139,7 +187,7 @@
                                                 </Option>
                                             </Select>
                                         </FormItem>
-                                    </Col> -->
+                  </Col>-->
                 </Row>
               </Form>
             </div>
@@ -156,14 +204,16 @@
             icon="edit"
             @click="open_edit"
             v-permission="['marketingM.edit']"
-            >查看</Button
-          >
+          >查看</Button>
           <!-- <Button type="primary" name="marketingManagement_index_edit_change" icon="ios-crop" @click="check_select('CUSTOMER_CHANGE_MARKETER')" v-permission="['marketingM.change']">变更</Button> -->
           <!-- <Button type="primary" name="marketingManagement_index_edit_delete" icon="trash-b" @click="check_select('DELETE_CUSTOMER')" v-permission="['marketingM.delete']">删除</Button> -->
           <!-- <Button type="primary" name="marketingManagement_index_edit_qrcode" icon="grid" @click="check_select('OPEN_CODE')">查看二维码</Button> -->
-          <Button type="primary" name="marketingManagement_index_edit_excel" icon="ios-download" @click="download_excel"
-            >导出Excel</Button
-          >
+          <Button
+            type="primary"
+            name="marketingManagement_index_edit_excel"
+            icon="ios-download"
+            @click="download_excel"
+          >导出Excel</Button>
           <!-- <Button type="primary" name="marketingManagement_index_info_log" icon="drag" @click="check_select('OPEN_CHANGE_LOG')">销售变更日志</Button> -->
           <!-- <Button type="primary" name="marketingManagement_index_edit_log" icon="ios-color-filter-outline" @click="check_select('OPEN_CUSTOMER_LOG')">客户动态</Button> -->
           <!-- <Button type="primary" name="marketingManagement_index_field_log" icon="navigate" @click="check_select('OPEN_CUSTOMER_FIELD_LOG')">客户外勤</Button> -->
@@ -172,16 +222,14 @@
             name="marketingManagement_index_field_log"
             icon="android-share-alt"
             @click="check_select('SHOW_OPEN_CUSTOMER_CLUE_LOG')"
-            >客户线索</Button
-          >
+          >客户线索</Button>
           <Button
             type="primary"
             icon="ios-color-wand-outline"
             @click="batch_receipt"
             v-permission="['returnVisitN-edit']"
             :loading="receiptLoading"
-            >批量领取</Button
-          >
+          >批量领取</Button>
         </ButtonGroup>
       </Row>
       <Row style="margin-top: 10px;">
@@ -206,8 +254,7 @@
           @on-change="page_change"
           @on-page-size-change="page_size_change"
           style="margin-top: 10px"
-        >
-        </Page>
+        ></Page>
       </Row>
     </Card>
 
@@ -219,14 +266,14 @@
             :sf_yn="sf_yn"
             :importance="importance"
             :customerTypes_Casr="customerTypes_Casr"
-        ></create-customer> -->
+    ></create-customer>-->
     <!-- <change-marker></change-marker>
         <change-log></change-log>
         <clue-log></clue-log>
         <field></field>
         <dymaic></dymaic>
         <Qcode></Qcode>
-        <del-customer></del-customer> -->
+    <del-customer></del-customer>-->
     <clue-log></clue-log>
     <edit-customer
       :customer="selectRow"
@@ -243,9 +290,18 @@
       <Row :gutter="20">
         <Col span="24">
           <center>
-            <Upload ref="upload" :before-upload="handleUpload" action="/api/customer/importHighSeasPoolMessage">
+            <Upload
+              ref="upload"
+              :before-upload="handleUpload"
+              action="/api/customer/importHighSeasPoolMessage"
+            >
               <Button type="ghost" icon="ios-cloud-upload-outline" style="margin-top:20px">选择文件</Button>
-              <Button type="info" icon="ios-cloud-download-outline" style="margin-top:20px;" @click="open">导入模板</Button>
+              <Button
+                type="info"
+                icon="ios-cloud-download-outline"
+                style="margin-top:20px;"
+                @click="open"
+              >导入模板</Button>
             </Upload>
           </center>
         </Col>
@@ -271,25 +327,25 @@
 </template>
 
 <script>
-import commonVue from './commonVue';
-import { DateFormat } from '../../../libs/utils';
-
+import commonVue from "./commonVue";
+import { DateFormat } from "../../../libs/utils";
+import { getLabelList } from "@A/systemManage";
 // import tagSelect from './components/tag_select'
 
 // import createCustomer from './components/create'
-import editCustomer from './edit/index';
-import {FULLDateFormat} from "../../../libs/utils";
+import editCustomer from "./edit/index";
+import { FULLDateFormat } from "../../../libs/utils";
 // import changeMarker from './op/change'
 // import changeLog from './op/changeLog'
-import clueLog from './op/clue';
-import { Promise } from 'q';
+import clueLog from "./op/clue";
+import { Promise } from "q";
 // import field from './op/field'
 // import dymaic from './op/dymaic'
 // import Qcode from './op/code'
 // import delCustomer from './op/del'
 
 export default {
-  name: 'publicPool_index',
+  name: "publicPool_index",
   mixins: [commonVue],
   components: {
     clueLog,
@@ -297,6 +353,7 @@ export default {
   },
   data() {
     return {
+      labelList: [],
       selectRowArray: [],
       openImportCustomer: false,
       openEdit: false,
@@ -304,65 +361,68 @@ export default {
       receiptLoading: false,
       send_email_model: false,
       formEmail: {
-        phone: '',
-        content: ''
+        phone: "",
+        content: ""
       },
       header: [
         {
-          title: '#',
-          type: 'selection',
+          title: "#",
+          type: "selection",
           width: 60
         },
         {
-          title: '姓名',
-          key: 'NAME',
-          sortable: 'custom',
+          title: "姓名",
+          key: "NAME",
+          sortable: "custom",
           width: 120
         },
         {
-          title: '归属公司',
-          key: 'companynames',
+          title: "归属公司",
+          key: "companynames",
           width: 210,
           render: (h, params) => {
-            if (params.row.companynames == '' || params.row.companynames == null) {
-              return '';
+            if (
+              params.row.companynames == "" ||
+              params.row.companynames == null
+            ) {
+              return "";
             } else {
               // console.log(params.row.companynames)
-              let temp = params.row.companynames.split(',');
+              let temp = params.row.companynames.split(",");
               if (temp[0].length > 13) {
                 return h(
-                  'Poptip',
+                  "Poptip",
                   {
                     props: {
-                      trigger: 'hover',
-                      title: '归属公司',
-                      placement: 'bottom'
+                      trigger: "hover",
+                      title: "归属公司",
+                      placement: "bottom"
                     }
                   },
                   [
-                    h('span', temp[0].slice(0, 13) + '...'),
-                    h('Icon', {
+                    h("span", temp[0].slice(0, 13) + "..."),
+                    h("Icon", {
                       props: {
-                        type: 'arrow-down-b'
+                        type: "arrow-down-b"
                       }
                     }),
                     h(
-                      'div',
+                      "div",
                       {
-                        slot: 'content'
+                        slot: "content"
                       },
                       [
                         h(
-                          'ul',
+                          "ul",
                           temp.map(item => [
                             h(
-                              'li',
+                              "li",
                               {
                                 style: {
-                                  padding: '4px'
+                                  padding: "4px"
                                 }
                               },
-                              '公司名：' + item
+                              "公司名：" + item
                             )
                           ])
                         )
@@ -372,38 +432,38 @@ export default {
                 );
               } else {
                 return h(
-                  'Poptip',
+                  "Poptip",
                   {
                     props: {
-                      trigger: 'hover',
-                      title: '归属公司',
-                      placement: 'bottom'
+                      trigger: "hover",
+                      title: "归属公司",
+                      placement: "bottom"
                     }
                   },
                   [
-                    h('span', temp[0]),
-                    h('Icon', {
+                    h("span", temp[0]),
+                    h("Icon", {
                       props: {
-                        type: 'arrow-down-b'
+                        type: "arrow-down-b"
                       }
                     }),
                     h(
-                      'div',
+                      "div",
                       {
-                        slot: 'content'
+                        slot: "content"
                       },
                       [
                         h(
-                          'ul',
+                          "ul",
                           temp.map(item => [
                             h(
-                              'li',
+                              "li",
                               {
                                 style: {
-                                  padding: '4px'
+                                  padding: "4px"
                                 }
                               },
-                              '公司名：' + item
+                              "公司名：" + item
                             )
                           ])
                         )
@@ -416,114 +476,114 @@ export default {
           }
         },
         {
-          title: '电话',
-          key: 'TEL',
+          title: "电话",
+          key: "TEL",
           width: 120
         },
         {
-          title: '客户状态',
-          key: 'customerType',
+          title: "客户状态",
+          key: "customerType",
           width: 140,
-          sortable: 'custom'
+          sortable: "custom"
         },
         {
-          title: '客户来源',
-          key: 'customersource',
+          title: "客户来源",
+          key: "customersource",
           width: 120,
-          sortable: 'custom'
+          sortable: "custom"
         },
         {
-          title: '客户等级',
-          key: 'importlevel',
+          title: "客户等级",
+          key: "importlevel",
           width: 120,
-          sortable: 'custom'
+          sortable: "custom"
         },
         {
-          title: '客户重要性',
-          key: 'importance',
+          title: "客户重要性",
+          key: "importance",
           width: 120
         },
         {
-          title: '区域',
-          key: 'AREA',
+          title: "区域",
+          key: "AREA",
           width: 80,
-          sortable: 'custom'
+          sortable: "custom"
         },
         {
-          title: '渠道名称',
-          key: 'channelTypeName',
+          title: "渠道名称",
+          key: "channelTypeName",
           width: 140,
-          sortable: 'custom'
+          sortable: "custom"
         },
         {
-          title: '跟进人',
-          key: 'followbyname',
+          title: "跟进人",
+          key: "followbyname",
           width: 120,
-          sortable: 'custom'
+          sortable: "custom"
         },
         {
-          title: '创建时间',
-          key: 'CREATEDATE',
+          title: "创建时间",
+          key: "CREATEDATE",
           width: 120,
-          sortable: 'custom'
+          sortable: "custom"
         },
         {
-          title: '线索权重',
-          key: 'clue_ranks',
+          title: "线索权重",
+          key: "clue_ranks",
           minWidth: 120,
-          sortable: 'custom'
+          sortable: "custom"
         },
         {
-          title: '回滚时间',
-          key: 'updatedate',
+          title: "回滚时间",
+          key: "updatedate",
           width: 120,
-          sortable: 'custom'
+          sortable: "custom"
         },
         {
-          title: '成交总额',
-          key: 'total_money',
+          title: "成交总额",
+          key: "total_money",
           width: 120,
-          sortable: 'custom'
+          sortable: "custom"
         },
         {
-          title: '最后成交时间',
-          key: 'lately_order_time',
+          title: "最后成交时间",
+          key: "lately_order_time",
           width: 150,
-          sortable: 'custom'
+          sortable: "custom"
         },
         {
-          title: '操作',
-          key: 'action',
-          fixed: 'right',
+          title: "操作",
+          key: "action",
+          fixed: "right",
           width: 160,
-          align: 'center',
+          align: "center",
           render: (h, params) => {
             console.log(params);
-            return h('div', [
+            return h("div", [
               h(
-                'Button',
+                "Button",
                 {
                   props: {
-                    type: 'primary',
-                    size: 'small'
+                    type: "primary",
+                    size: "small"
                   },
                   style: {
-                    marginRight: '10px'
+                    marginRight: "10px"
                   },
                   on: {
                     click: () => {
-                      this.dialout(params.row.full_tel,params.row.ID)
+                      this.dialout(params.row.full_tel, params.row.ID);
                     }
                   }
                 },
-                '[ 拨打 ]'
+                "[ 拨打 ]"
               ),
               h(
-                'Button',
+                "Button",
                 {
                   props: {
-                    type: 'primary',
-                    size: 'small'
+                    type: "primary",
+                    size: "small"
                   },
                   on: {
                     click: () => {
@@ -531,7 +591,7 @@ export default {
                     }
                   }
                 },
-                '[ 领取 ]'
+                "[ 领取 ]"
               )
             ]);
           }
@@ -543,54 +603,54 @@ export default {
       total: 0,
       tableLoading: true,
       formValidate: {
-        name: '',
-        tel: '',
-        companyname: '',
-        followbyname: '',
+        name: "",
+        tel: "",
+        companyname: "",
+        followbyname: "",
         customerType: [],
-        area: '',
-        customersource: '',
-        channelTypeName: '',
-        isbound: '',
+        area: "",
+        customersource: "",
+        channelTypeName: "",
+        isbound: "",
         credate: [],
         upddate: [],
-        labelName: '',
-        importlevel: '',
-        begin_residue_time: '',
-        end_residue_time: '',
-        importance: '',
-        order: 'desc',
-        sortField: 'clue_ranks'
+        labelName: [],
+        importlevel: "",
+        begin_residue_time: "",
+        end_residue_time: "",
+        importance: "",
+        order: "desc",
+        sortField: "clue_ranks"
       },
       //  模态框控制
       createCustomerStatus: false,
-      sortName: 'clue_ranks',
-      order: 'desc'
+      sortName: "clue_ranks",
+      order: "desc"
     };
   },
   methods: {
     open() {
-      window.open('/api/assets/upload/commonImg/public_pool_template.xlsx');
+      window.open("/api/assets/upload/commonImg/public_pool_template.xlsx");
     },
     //  下载
     download_excel() {
       let field = [
-        { field: 'NAME', title: '姓名' },
-        { field: 'companynames', title: '公司' },
-        { field: 'customerType', title: '客户状态', format: 'customerTypes' },
-        { field: 'customersource', title: '客户来源', format: 'cluesources' },
-        { field: 'importlevel', title: '客户等级', format: 'importlevel' },
-        { field: 'AREA', title: '地区', format: 'area' },
-        { field: 'channelTypeName', title: '渠道名称' },
-        { field: 'followbyname', title: '跟进人' },
-        { field: 'CREATEDATE', title: '创建时间' },
-        { field: 'updatedate', title: '更新时间' },
-        { field: 'isbound', title: '微信绑定', format: 'sf_yn' },
-        { field: 'lastfollowdate', title: '市场最后跟进时间' },
-        { field: 'importance', title: '客户重要性', format: 'importance' }
+        { field: "NAME", title: "姓名" },
+        { field: "companynames", title: "公司" },
+        { field: "customerType", title: "客户状态", format: "customerTypes" },
+        { field: "customersource", title: "客户来源", format: "cluesources" },
+        { field: "importlevel", title: "客户等级", format: "importlevel" },
+        { field: "AREA", title: "地区", format: "area" },
+        { field: "channelTypeName", title: "渠道名称" },
+        { field: "followbyname", title: "跟进人" },
+        { field: "CREATEDATE", title: "创建时间" },
+        { field: "updatedate", title: "更新时间" },
+        { field: "isbound", title: "微信绑定", format: "sf_yn" },
+        { field: "lastfollowdate", title: "市场最后跟进时间" },
+        { field: "importance", title: "客户重要性", format: "importance" }
       ];
       let _self = this;
-      _self.$ButtonCollect('marketingManagement_index_edit_excel');
+      _self.$ButtonCollect("marketingManagement_index_edit_excel");
 
       //  当初为什么有这种写法，思考
       // let temp_status = "";
@@ -601,12 +661,12 @@ export default {
       // }
       let url = `api/customer/public/pool/list`;
       let config = {
-        deleteflag: '3',
-        page: '1',
-        pageSize: '1000000',
+        deleteflag: "3",
+        page: "1",
+        pageSize: "1000000",
         name: _self.formValidate.name,
         tel: _self.formValidate.tel,
-        customerType: _self.formValidate.customerType.join('-'),
+        customerType: _self.formValidate.customerType.join("-"),
         // customerType: temp_status,
         channelTypeName: _self.formValidate.channelTypeName,
         followbyname: _self.formValidate.followbyname,
@@ -614,14 +674,14 @@ export default {
         customersource: _self.formValidate.customersource,
         area: _self.formValidate.area,
         companyname: _self.formValidate.companyname,
-        labelName: _self.formValidate.labelName,
+        labelName: _self.formValidate.labelName.join(','),
         importlevel: _self.formValidate.importlevel,
         importance: _self.formValidate.importance,
         bcreatedate: DateFormat(_self.formValidate.credate[0]),
         ecreatedate: DateFormat(_self.formValidate.credate[1]),
         bupdatedate: DateFormat(_self.formValidate.upddate[0]),
         eupdatedate: DateFormat(_self.formValidate.upddate[1]),
-        export: 'Y',
+        export: "Y",
         exportField: encodeURI(JSON.stringify(field))
       };
       let toExcel = this.$MergeURL(url, config);
@@ -629,20 +689,20 @@ export default {
     },
 
     getLoginerMessage(phone) {
-      let url = 'api/user/login/detail';
+      let url = "api/user/login/detail";
       let success = resp => {
-        const { mobilephone = '', realname = '' } = resp.data.data.user;
+        const { mobilephone = "", realname = "" } = resp.data.data.user;
         this.formEmail.phone = phone;
         this.formEmail.content = `东家你好，我是刚刚联系您的财税管家${realname}经理(联系电话: ${mobilephone}), 极致财税，用心服务`;
         // this.send_email(mobilephone, realname);
         this.send_email_model = true;
       };
-      this.$Get(url, '', success);
+      this.$Get(url, "", success);
     },
 
     send_email() {
       let _self = this;
-      let url = 'api/system/message/sendMessage';
+      let url = "api/system/message/sendMessage";
 
       const { phone, content } = this.formEmail;
       let params = {
@@ -660,10 +720,14 @@ export default {
 
       this.$Post(url, formData, success);
     },
+    async getLabel() {
+      const resp = await getLabelList({ page: 1, pageSize: 100 });
+      this.labelList = resp.rows;
+    },
     sort(e) {
-      if (e.order == 'normal') {
-        this.order = '';
-        this.sortName = 'updatedate';
+      if (e.order == "normal") {
+        this.order = "";
+        this.sortName = "updatedate";
       } else {
         this.sortName = e.key;
         this.order = e.order;
@@ -676,36 +740,36 @@ export default {
     },
     handleReset() {
       this.page = 1;
-      this.$refs['formValidate'].resetFields();
+      this.$refs["formValidate"].resetFields();
       this.formValidate.credate = [];
       this.formValidate.upddate = [];
-      this.formValidate.end_residue_time = '';
+      this.formValidate.end_residue_time = "";
       this.formValidate.customerType = [];
       this.get_data();
     },
     get_data() {
       let _self = this;
       let url = `api/customer/public/pool/list`;
-      this.selectRow = '';
+      this.selectRow = "";
       _self.tableLoading = true;
 
       var config = {
         params: {
-          deleteflag: '3',
+          deleteflag: "3",
           order: _self.order,
           page: _self.page,
           pageSize: _self.pageSize,
           sortField: _self.sortName,
           name: _self.formValidate.name,
           tel: _self.formValidate.tel,
-          customerType: _self.formValidate.customerType.join('-'),
+          customerType: _self.formValidate.customerType.join("-"),
           // customerType: temp_status,
           channelTypeName: _self.formValidate.channelTypeName,
           followbyname: _self.formValidate.followbyname,
           isbound: _self.formValidate.isbound,
           customersource: _self.formValidate.customersource,
           area: _self.formValidate.area,
-          labelName: _self.formValidate.labelName,
+          labelName: _self.formValidate.labelName.join(','),
           importlevel: _self.formValidate.importlevel,
           companyName: _self.formValidate.companyname,
           importance: _self.formValidate.importance,
@@ -722,14 +786,22 @@ export default {
         _self.data = res.data.data.rows;
         _self.total = res.data.data.total;
         for (let i = 0; i < _self.data.length; i++) {
-          _self.data[i].customerType = _self.findCustomerType(_self.data[i].customerType);
+          _self.data[i].customerType = _self.findCustomerType(
+            _self.data[i].customerType
+          );
           if (_self.data[i].importlevel) {
-            _self.data[i].importlevel = _self.customerrating_map.get(_self.data[i].importlevel.toString());
+            _self.data[i].importlevel = _self.customerrating_map.get(
+              _self.data[i].importlevel.toString()
+            );
           }
           _self.data[i].AREA = _self.area_map.get(_self.data[i].AREA);
           _self.data[i].customersourceCode = _self.data[i].customersource;
-          _self.data[i].customersource = _self.cluesources_map.get(_self.data[i].customersource);
-          _self.data[i].importance = _self.importance_map.get(_self.data[i].importance);
+          _self.data[i].customersource = _self.cluesources_map.get(
+            _self.data[i].customersource
+          );
+          _self.data[i].importance = _self.importance_map.get(
+            _self.data[i].importance
+          );
           _self.data[i].isbound = _self.sf_yn_map.get(_self.data[i].isbound);
           if (_self.data[i].CREATEDATE) {
             _self.data[i].CREATEDATE = _self.data[i].CREATEDATE.slice(0, 10);
@@ -782,21 +854,25 @@ export default {
     // },
     open_edit() {
       if (this.selectRow) {
-        this.$store.commit('open_gobal_customer_detail_modal', this.selectRow);
+        this.$store.commit("open_gobal_customer_detail_modal", this.selectRow);
       } else {
-        this.$Message.warning('请选择一行!');
+        this.$Message.warning("请选择一行!");
       }
     },
     //  转换客户状态
     findCustomerType(temp) {
-      if (temp == '' || temp == null) {
-        return '';
+      if (temp == "" || temp == null) {
+        return "";
       } else {
-        let temp2 = temp.split('-');
+        let temp2 = temp.split("-");
         let _self = this;
         for (let i = 0; i < _self.customerTypes_array.length; i++) {
-          if (_self.customerTypes_array[i].id == temp2[1] && temp2[1] != '') {
-            return _self.customerTypes_array[i].ptypename + ' - ' + _self.customerTypes_array[i].typename;
+          if (_self.customerTypes_array[i].id == temp2[1] && temp2[1] != "") {
+            return (
+              _self.customerTypes_array[i].ptypename +
+              " - " +
+              _self.customerTypes_array[i].typename
+            );
           }
         }
       }
@@ -815,20 +891,20 @@ export default {
     close_edit() {
       this.openEdit = false;
     },
-    dialout(T,i){
+    dialout(T, i) {
       let _self = this;
       let url = `api/customer/sevenmoor/dialout`;
       let config = {
-        params:{
-          mobile:T
+        params: {
+          mobile: T
         }
       };
 
       function success(res) {
-        if (res.data.msgCode=='40000'){
-          _self.$Message.success(res.data.msg)
-          _self.uploadPhoneType(i)
-          _self.getLoginerMessage(T)
+        if (res.data.msgCode == "40000") {
+          _self.$Message.success(res.data.msg);
+          _self.uploadPhoneType(i);
+          _self.getLoginerMessage(T);
         }
       }
 
@@ -838,8 +914,8 @@ export default {
 
       this.$Get(url, config, success, fail);
     },
-    phone(T,i) {
-      window.location.href = 'yhhl://call/num=' + T + '&custom_key=123456&';
+    phone(T, i) {
+      window.location.href = "yhhl://call/num=" + T + "&custom_key=123456&";
       this.uploadPhoneType(i);
     },
     uploadPhoneType(i) {
@@ -848,13 +924,13 @@ export default {
       let date = new Date();
       let config = {
         followUpType: 11,
-        content: '拨打电话，时间为:' + FULLDateFormat(date),
-        attIds: '',
+        content: "拨打电话，时间为:" + FULLDateFormat(date),
+        attIds: "",
         customerId: i,
-        finishFlag: '',
-        notifyDate: '',
+        finishFlag: "",
+        notifyDate: "",
         // notifyDate: "2018-10-24 13:00"
-        notify_ids: ''
+        notify_ids: ""
       };
 
       function success(res) {
@@ -887,7 +963,7 @@ export default {
     batch_receipt() {
       let _self = this;
       if (this.selectRowArray.length === 0) {
-        _self.$Message.warning('请先勾选需要批量处理的行！');
+        _self.$Message.warning("请先勾选需要批量处理的行！");
       } else {
         _self.receiptLoading = true;
         let ids = [];
@@ -898,7 +974,7 @@ export default {
         let url = `api/customer/receipt`;
 
         let config = {
-          customerId: ids.join(',')
+          customerId: ids.join(",")
         };
         function success(res) {
           _self.get_data();
@@ -918,9 +994,9 @@ export default {
       let _self = this;
       _self.$Spin.show();
       let formdata = new FormData();
-      let url = 'api/customer/importHighSeasPoolMessage';
+      let url = "api/customer/importHighSeasPoolMessage";
 
-      formdata.append('file', file);
+      formdata.append("file", file);
 
       function success(res) {
         _self.get_data();
@@ -939,6 +1015,7 @@ export default {
     }
   },
   created() {
+    this.getLabel();
     let _self = this;
     //  销售以跟进时间显示
     // let temp = localStorage.getItem("Main_Role");
@@ -953,7 +1030,7 @@ export default {
       })
       .catch(() => {
         _self.get_data();
-        _self.$Message.error('属性转换失败！');
+        _self.$Message.error("属性转换失败！");
       });
     //  更新表格内容
     // this.$bus.off("UPDATE_CUSTOMER", true)

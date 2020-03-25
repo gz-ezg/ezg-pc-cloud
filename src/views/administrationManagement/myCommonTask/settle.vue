@@ -132,6 +132,11 @@ export default {
           width: 180
         },
         {
+          title: "结算时间",
+          key: "settlement_time",
+          width: 180
+        },
+        {
           title: "服务人员",
           key: "servername",
           width: 120,

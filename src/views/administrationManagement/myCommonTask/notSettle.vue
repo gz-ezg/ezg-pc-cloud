@@ -25,7 +25,9 @@
       </x-table>
     </Card>
     <Modal width="70%" title="查看凭证" v-model="visible">
-      <template v-for="(item,index) in imgUrl"><img :key="index" :src="item" v-if="visible" style="width: 100%" /></template>
+      <template v-for="(item,index) in imgUrl">
+        <img :key="index" :src="item" v-if="visible" style="width: 100%" />
+      </template>
     </Modal>
   </div>
 </template>
@@ -41,7 +43,13 @@ export default {
       imgUrl: [],
       visible: false,
       url: "/order/workOrderList",
-      listQuery: { notJs: "Y", iscycle: "N", serviceDept: "'EXECUTIVE'" },
+      listQuery: {
+        notJs: "Y",
+        iscycle: "N",
+        serviceDept: "'EXECUTIVE'",
+        sortField: "updatedate",
+        order: "desc"
+      },
       tableHeader: [
         {
           title: "归属企业",
@@ -92,7 +100,7 @@ export default {
                   cursor: "pointer"
                 },
                 attrs: {
-                  src: "/api/assets/" + params.row.credential.split(',')[0]
+                  src: "/api/assets/" + params.row.credential.split(",")[0]
                 },
                 on: {
                   click: e => {
@@ -125,7 +133,7 @@ export default {
       filtraConfig: [
         { type: "input", key: "supplierName", label: "供应商名称：" },
         { type: "date", key: "settlementTime", label: "完结时间" },
-        { type: "date", key: "servicebegintime", label: "服务开始时间" },
+        { type: "date", key: "servicebegintime", label: "服务开始时间" }
       ],
       excelField: [
         { field: "supplier_name", title: "供应商" },
@@ -167,7 +175,7 @@ export default {
       this.$refs[name].list.downloadExcel(this.excelField);
     },
     handleView(url) {
-      this.imgUrl = url.split(',').map(v=>'/api/assets/'+v);
+      this.imgUrl = url.split(",").map(v => "/api/assets/" + v);
       this.visible = true;
     },
     // 结算

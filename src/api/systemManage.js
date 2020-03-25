@@ -44,3 +44,10 @@ export function addGather(params) {
     params
   })
 }
+export function getLabelList(params) {
+  return request({
+    url: '/system/label/list',
+    method: 'get',
+    params
+  })
+}

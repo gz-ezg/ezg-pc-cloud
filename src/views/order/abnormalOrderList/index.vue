@@ -2,12 +2,22 @@
   <div>
     <Card style="min-width:800px">
       <Row style="margin-bottom:10px">
-        <Collapse v-model="search_model" >
+        <Collapse v-model="search_model">
           <Panel name="1">
             <Icon type="search" style="margin-left:20px;margin-right:5px"></Icon>筛选
             <div slot="content" @keydown.enter="Search">
-              <Form ref="formValidateSearch" :model="formValidateSearch" :label-width="100" style="margin-top: -10px">
+              <Form
+                ref="formValidateSearch"
+                :model="formValidateSearch"
+                :label-width="100"
+                style="margin-top: -10px"
+              >
                 <Row>
+                  <Col span="6">
+                    <FormItem label="异常工单：" prop="unusualCode">
+                      <Input v-model="formValidateSearch.unusualCode" size="small"></Input>
+                    </FormItem>
+                  </Col>
                   <Col span="6">
                     <FormItem label="企业名称：" prop="companyname">
                       <Input v-model="formValidateSearch.companyname" size="small"></Input>
@@ -23,13 +33,13 @@
                       <Input size="small"></Input>
                     </FormItem>
                   </Col>
+                </Row>
+                <Row>
                   <Col span="6">
                     <FormItem label="创建人：" prop="tel">
                       <Input v-model="formValidateSearch.crealname" size="small"></Input>
                     </FormItem>
                   </Col>
-                </Row>
-                <Row>
                   <Col span="6">
                     <FormItem label="异常类型：" prop="unType">
                       <Select transfer v-model="formValidateSearch.unType" size="small">
@@ -56,7 +66,12 @@
                   <Col span="6">
                     <FormItem>
                       <Button size="small" type="primary" @click="Search">搜索</Button>
-                      <Button size="small" type="ghost" @click="handleReset" style="margin-left: 8px">重置</Button>
+                      <Button
+                        size="small"
+                        type="ghost"
+                        @click="handleReset"
+                        style="margin-left: 8px"
+                      >重置</Button>
                     </FormItem>
                   </Col>
                 </Row>
@@ -129,13 +144,14 @@ export default {
   data() {
     return {
       //筛选相关
-      search_model:1,
+      search_model: 1,
       formValidateSearch: {
         companyname: "",
         tel: "",
         crealname: "",
         unType: "",
-        date: []
+        date: [],
+        unusualCode: ""
       },
       //数据字典
       unusualType: [],
@@ -305,11 +321,11 @@ export default {
     };
   },
   methods: {
-    Untied(){
-      let _self = this
+    Untied() {
+      let _self = this;
       if (_self.selectRow) {
         console.log(_self.selectRow);
-        if (_self.selectRow.current_process == "Finished" ) {
+        if (_self.selectRow.current_process == "Finished") {
           let url = `api/order/unusual/workorder/unlinkUnusualWorkOrderByUnusualId`;
           let config = {
             params: {
@@ -318,16 +334,15 @@ export default {
           };
 
           function success(res) {
-              _self.$Message.success("解绑成功！");
-              _self.get_data()
-
+            _self.$Message.success("解绑成功！");
+            _self.get_data();
           }
           function fail() {}
 
           this.$Get(url, config, success, fail);
           //   this.$bus.emit("OPEN_AB_ORDERLIST_EDIT", _self.selectRow);
         }
-        if( _self.selectRow.current_process !== "Finished" ){
+        if (_self.selectRow.current_process !== "Finished") {
           _self.$Message.warning("当前订单状态不允许解绑！");
         }
       } else {
@@ -382,7 +397,7 @@ export default {
     //获取异常工单列表
     get_data() {
       let _self = this;
-      _self.selectRow = ""
+      _self.selectRow = "";
       let url = `api/order/unusual/workorder/list`;
       _self.loading = true;
       let config = {
@@ -390,6 +405,7 @@ export default {
           page: _self.page,
           pageSize: _self.pageSize,
           companyName: _self.formValidateSearch.companyname,
+          unusualCode: _self.formValidateSearch.unusualCode,
           tel: _self.formValidateSearch.tel,
           sortField: _self.sortField,
           bcreatedate: DateFormat(_self.formValidateSearch.date[0]),
@@ -435,8 +451,8 @@ export default {
       this.pageSize = e;
       this.get_data();
     },
-    row_class_name(row, index){
-      if (row.oa_order_id== null || row.oa_order_id=="") {
+    row_class_name(row, index) {
+      if (row.oa_order_id == null || row.oa_order_id == "") {
         return "demo-table-followdate-warning-row";
       } else {
         return "";
@@ -501,21 +517,19 @@ export default {
       let _self = this;
       if (_self.selectRow) {
         _self.$Modal.confirm({
-          title: '提示',
-          content: '您确定要删除此条异常工单吗？',
+          title: "提示",
+          content: "您确定要删除此条异常工单吗？",
           onOk: () => {
-            _self.del()
+            _self.del();
           },
-          onCancel: () => {
-
-          }
+          onCancel: () => {}
         });
       } else {
         this.$Message.warning("请选择一行进行操作！");
       }
     },
-    del(){
-      let _self = this
+    del() {
+      let _self = this;
       let url = `api/order/unusual/workorder/deleteWorkOrder`;
       let config = {
         params: {
@@ -562,10 +576,10 @@ export default {
 </script>
 
 <style>
-  .ivu-table .demo-table-followdate-warning-row {
-    color: #008800;
-  }
-  .ivu-col-span-6 {
-    height: 28px;
-  }
+.ivu-table .demo-table-followdate-warning-row {
+  color: #008800;
+}
+.ivu-col-span-6 {
+  height: 28px;
+}
 </style>

@@ -28,7 +28,7 @@
                       >{{item.typename}}</Option>
                     </Select>
                   </FormItem>
-                </Col> -->
+                </Col>-->
               </Row>
               <FormItem>
                 <Button type="primary" @click="search">搜索</Button>
@@ -48,7 +48,7 @@
           type="primary"
           icon="ios-color-wand-outline"
           @click="handleServeModal"
-        >开始服务</Button> -->
+        >开始服务</Button>-->
         <Button type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button>
         <!-- <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button> -->
         <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
@@ -163,7 +163,7 @@
         <FormItem label="结算价" prop="settlementPrice">
           <Input type="number" v-model="forms.settlementPrice" />
         </FormItem>
-        <FormItem label="备注" >
+        <FormItem label="备注">
           <Input type="text" v-model="forms.remark" />
         </FormItem>
       </Form>
@@ -209,12 +209,12 @@ export default {
       formInline: {
         companyname: "",
         servicename: "",
-        productType: 'zycp'
+        productType: "zycp"
       },
       gysModelLoading: false,
       picUrl: "",
       productTypeDict: [],
-      forms: { salesPrice: "", settlementPrice: "", file: null, remark: '' },
+      forms: { salesPrice: "", settlementPrice: "", file: null, remark: "" },
       ruleValidate: {},
       gycList: [],
       //  加载中
@@ -244,7 +244,7 @@ export default {
         {
           title: "归属公司",
           key: "companyname",
-          
+
           sortable: true,
           render: (h, params) => {
             // console.log(params)
@@ -302,7 +302,7 @@ export default {
         {
           title: "产品全称",
           key: "product",
-          
+
           sortable: true,
           render: (h, params) => {
             // console.log(params)
@@ -369,7 +369,7 @@ export default {
         {
           title: "创建时间",
           key: "CreateDate",
-          
+
           sortable: true
         },
         // {
@@ -380,15 +380,15 @@ export default {
         {
           title: "服务人员",
           key: "servername",
-         
+
           sortable: true
         },
         {
           title: "跟进人",
           key: "followname",
-         
+
           sortable: true
-        },
+        }
         // {
         //   title: "备注",
         //   key: "remark",
@@ -687,11 +687,7 @@ export default {
         if (this.current_row.resumeFlag == 2) {
           this.$Message.warning("当前工单已锁定！");
         } else {
-          if (this.current_row.product_type == "gyscp") {
-            this.product;
-          } else {
-            this.$bus.emit("myflow", this.current_row);
-          }
+          this.$bus.emit("myflow", this.current_row);
         }
       } else {
         this.$Message.warning("请选择一行进行流转！");
@@ -784,6 +780,7 @@ export default {
       };
       function success(res) {
         _self.$Message.success(res.data.msg);
+        _self.getData();
       }
       _self.$Get(url, config, success);
     },
@@ -860,7 +857,7 @@ export default {
     var _self = this;
     // this.getDataCenter()
     this.getData();
-    this.$bus.on("flowsuccess", e => {
+    this.$bus.on("FLOW_NEXT", e => {
       _self.getData();
     });
     this.$bus.on("update_allot_index", e => {

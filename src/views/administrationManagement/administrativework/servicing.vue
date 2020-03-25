@@ -28,7 +28,7 @@
                       >{{item.typename}}</Option>
                     </Select>
                   </FormItem>
-                </Col> -->
+                </Col>-->
               </Row>
               <FormItem>
                 <Button type="primary" @click="search">搜索</Button>
@@ -391,16 +391,16 @@ export default {
         //   width: 140,
         //   sortable: true
         // },
-        {
-          title: "供应商",
-          key: "supplier_name",
-          width: 120
-        },
-        {
-          title: "结算价",
-          key: "settlement_price",
-          width: 120
-        },
+        // {
+        //   title: "供应商",
+        //   key: "supplier_name",
+        //   width: 120
+        // },
+        // {
+        //   title: "结算价",
+        //   key: "settlement_price",
+        //   width: 120
+        // },
         {
           title: "服务人员",
           key: "servername",
@@ -415,8 +415,8 @@ export default {
         },
         {
           title: "备注",
-          key: "remark",
-        },
+          key: "remark"
+        }
         // {
         //   title: "操作",
         //   key: "action",
@@ -841,7 +841,7 @@ export default {
   created() {
     var _self = this;
     this.getData();
-    this.$bus.on("flowsuccess", e => {
+    this.$bus.on("FLOW_NEXT", e => {
       _self.getData();
     });
   }

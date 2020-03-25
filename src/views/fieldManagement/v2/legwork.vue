@@ -404,7 +404,7 @@
                 let field = [
                     {field:'CompanyName',title:'公司名称'},
                     {field:'name',title:'客户名'},
-                    {field:'tel',title:'电话号码'},
+                    // {field:'tel',title:'电话号码'},
                     {field:'task_kind',title:'任务类型',format:'taskKind'},
                     {field:'finish_status',title:'完成状态',format:'legwork_finish_status'},
                     {field:'service_content',title:'服务内容'},

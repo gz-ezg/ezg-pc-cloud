@@ -33,7 +33,7 @@
                       >{{item.typename}}</Option>
                     </Select>
                   </FormItem>
-                </Col> -->
+                </Col>-->
               </Row>
               <FormItem>
                 <Button type="primary" @click="search">搜索</Button>
@@ -329,8 +329,8 @@ export default {
         },
         {
           title: "备注",
-          key: "remark",
-        },
+          key: "remark"
+        }
         // {
         //   title: "操作",
         //   key: "action",
@@ -610,6 +610,7 @@ export default {
           };
           function success(res) {
             _self.$Message.success(res.data.msg);
+            _self.getData();
           }
           _self.$Get(url, config, success);
         }

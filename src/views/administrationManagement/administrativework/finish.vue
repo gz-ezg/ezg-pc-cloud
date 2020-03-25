@@ -304,41 +304,41 @@ export default {
         //   width: 140,
         //   sortable: true
         // },
-        {
-          title: "供应商",
-          key: "supplier_name",
-          width: 120
-        },
-        {
-          title: "结算价",
-          key: "settlement_price",
-          width: 120
-        },
-        {
-          title: "凭证",
-          render: (h, params) => {
-            return h("div", [
-              h("img", {
-                style: {
-                  "margin-top": "2px",
-                  "border-radius": "4px",
-                  width: "80px",
-                  height: "40px",
-                  cursor: "pointer"
-                },
-                attrs: {
-                  src: "/api/assets/" + params.row.credential
-                },
-                on: {
-                  click: e => {
-                    this.handleView(e.srcElement.currentSrc);
-                  }
-                }
-              })
-            ]);
-          },
-          width: 120
-        },
+        // {
+        //   title: "供应商",
+        //   key: "supplier_name",
+        //   width: 120
+        // },
+        // {
+        //   title: "结算价",
+        //   key: "settlement_price",
+        //   width: 120
+        // },
+        // {
+        //   title: "凭证",
+        //   render: (h, params) => {
+        //     return h("div", [
+        //       h("img", {
+        //         style: {
+        //           "margin-top": "2px",
+        //           "border-radius": "4px",
+        //           width: "80px",
+        //           height: "40px",
+        //           cursor: "pointer"
+        //         },
+        //         attrs: {
+        //           src: "/api/assets/" + params.row.credential
+        //         },
+        //         on: {
+        //           click: e => {
+        //             this.handleView(e.srcElement.currentSrc);
+        //           }
+        //         }
+        //       })
+        //     ]);
+        //   },
+        //   width: 120
+        // },
         {
           title: "备注",
           key: "remark",
