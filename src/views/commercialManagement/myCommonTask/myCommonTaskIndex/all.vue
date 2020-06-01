@@ -864,7 +864,9 @@ export default {
     Bus.$on("flowsuccess", e => {
       _self.getData();
     });
-    if (localStorage.getItem("id") == 10059) {
+    if (
+      localStorage.getItem("id") == 10059
+    || localStorage.getItem("id") == 10228 ) {
       _self.isAdmin = true;
     } else {
       _self.isAdmin = false;
