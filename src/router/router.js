@@ -44,6 +44,14 @@ export const arrearageCenter = {
     import(/* webpackChunkName: "commonIndex" */ '@/views/arrearageCenter/index.vue')
 }
 
+
+export const accountantCenter = {
+  path: '/accountantCenter',
+  meta: {},
+  name: 'accountantCenter',
+  component: () =>
+    import(/* webpackChunkName: "accountantCenter" */ '@/views/accounterManager/proxyAccounterManger/home.vue')
+}
 //  暂时不需要使用的页面
 //  文章预览
 // export const preview = {
@@ -1769,6 +1777,7 @@ export const routers = [
   ...appRouter,
   // previewFile,
   arrearageCenter,
+  accountantCenter,
   page500,
   page403,
   page404
