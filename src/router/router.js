@@ -292,14 +292,23 @@ export const appRouter = [
           import(/* webpackChunkName: "customerLog_index" */ '@/views/customerManagement/customerBelong/customerBelong.vue')
       },
       {
-            access: 11657,
-            meta: 11657,
-            path: 'resourceManager',
-            title: '资源池管理',
-            name: 'resourceManager_index',
-            component: () =>
-                import(/* webpackChunkName: "resourceManager_index" */ '@/views/customerManagement/resourceManager/index.vue')
-        },
+        access: 11657,
+        meta: 11657,
+        path: 'resourceManager',
+        title: '资源池管理',
+        name: 'resourceManager_index',
+        component: () =>
+          import(/* webpackChunkName: "resourceManager_index" */ '@/views/customerManagement/resourceManager/index.vue')
+      },
+      // {
+      //   access: 11657,
+      //   meta: 11657,
+      //   path: 'testPackage',
+      //   title: '测试包管理',
+      //   name: 'testPackage_index',
+      //   component: () =>
+      //     import(/* webpackChunkName: "testPackage_index" */ '@/views/testPackage/test.vue')
+      // },
     ]
   },
   {
@@ -1071,7 +1080,7 @@ export const appRouter = [
         title: '代理记账管理（新）',
         name: 'proxyAccounterManger_index',
         component: () =>
-            import(/* webpackChunkName: "proxyAccounterManger" */ '@/views/accounterManager/proxyAccounterManger/index.vue')
+          import(/* webpackChunkName: "proxyAccounterManger" */ '@/views/accounterManager/proxyAccounterManger/index.vue')
       },
       {
         access: 11649,
@@ -1080,7 +1089,7 @@ export const appRouter = [
         title: '服务升级意见管理',
         name: 'serviceUpgradeSuggestion_index',
         component: () =>
-            import(/* webpackChunkName: "serviceUpgradeSuggestion" */ '@/views/accounterManager/serviceUpgradeSuggestion/index.vue')
+          import(/* webpackChunkName: "serviceUpgradeSuggestion" */ '@/views/accounterManager/serviceUpgradeSuggestion/index.vue')
       },
       {
         access: 11658,
@@ -1089,7 +1098,7 @@ export const appRouter = [
         title: '会计分单管理',
         name: 'accounterAutoShareSettingManager_index',
         component: () =>
-            import(/* webpackChunkName: "accounterAutoShareSettingManager" */ '@/views/accounterManager/accounterAutoShareSettingManager/index.vue')
+          import(/* webpackChunkName: "accounterAutoShareSettingManager" */ '@/views/accounterManager/accounterAutoShareSettingManager/index.vue')
       },
       {
         access: 11660,
@@ -1098,7 +1107,7 @@ export const appRouter = [
         title: '凭证装订任务',
         name: 'bindingVoucher_index',
         component: () =>
-            import(/* webpackChunkName: "accounterAutoShareSettingManager" */ '@/views/accounterManager/bindingVoucher/index.vue')
+          import(/* webpackChunkName: "accounterAutoShareSettingManager" */ '@/views/accounterManager/bindingVoucher/index.vue')
       }
     ]
   },
@@ -1258,7 +1267,7 @@ export const appRouter = [
         title: '会计工作量',
         name: 'accountworks_index',
         component: () =>
-            import(/* webpackChunkName: "accountworks_index" */ '@/views/administrationManagement/accountworks/index.vue')
+          import(/* webpackChunkName: "accountworks_index" */ '@/views/administrationManagement/accountworks/index.vue')
       },
       {
         access: 11661,
@@ -1267,7 +1276,7 @@ export const appRouter = [
         title: '供应商管理',
         name: 'supplyManage ',
         component: () =>
-            import(/* webpackChunkName: "supplyManage" */ '@/views/administrationManagement/supplyManage/index.vue')
+          import(/* webpackChunkName: "supplyManage" */ '@/views/administrationManagement/supplyManage/index.vue')
       },
     ]
   },
@@ -1401,7 +1410,7 @@ export const appRouter = [
         title: '活动设置',
         name: 'gamesetting_index',
         component: () =>
-            import(/* webpackChunkName: "gamesetting_index" */ '@/views/publicPool/gamesetting/index')
+          import(/* webpackChunkName: "gamesetting_index" */ '@/views/publicPool/gamesetting/index')
       },
       {
         access: 11655,
@@ -1410,7 +1419,7 @@ export const appRouter = [
         title: '公海池活动',
         name: 'publicgame_index',
         component: () =>
-            import(/* webpackChunkName: "publicgame_index" */ '@/views/publicPool/publicgame/index')
+          import(/* webpackChunkName: "publicgame_index" */ '@/views/publicPool/publicgame/index')
       },
     ]
   },
@@ -1617,7 +1626,7 @@ export const appRouter = [
           import(/* webpackChunkName: "messagPops" */ '@/views/notificationPush/messagPops/index.vue')
       }
     ]
-  },  
+  },
   {
     access: 6103,
     meta: 6103,
