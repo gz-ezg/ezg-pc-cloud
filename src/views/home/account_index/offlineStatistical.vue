@@ -41,7 +41,7 @@
     },
     methods:{
       get_data(){
-        let url = 'api/order/accounter/index.vue/offline/customer/detail'
+        let url = 'api/order/accounter/index/offline/customer/detail'
         let _self = this
 
         let config = {

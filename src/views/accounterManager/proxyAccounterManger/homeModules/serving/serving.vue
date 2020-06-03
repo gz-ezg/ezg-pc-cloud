@@ -448,6 +448,16 @@ export default {
           field: "end_period",
           title: "结束税期"
         },
+        {
+          title: "市场",
+          key: "followby_realname",
+          minWidth: 80
+        },
+        {
+          title: "会计",
+          key: "realname",
+          minWidth: 80
+        }
         // {
         //   field: "shebao",
         //   title: "社保"
@@ -470,10 +480,10 @@ export default {
         //   title: "税种状态",
         //   format: "TaxCompleteStatus"
         // },
-        {
-          field: "followbyrealname",
-          title: "市场"
-        }
+        // {
+        //   field: "followbyrealname",
+        //   title: "市场"
+        // }
         // ,
         // {
         //   field: "realname",

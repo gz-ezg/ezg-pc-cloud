@@ -111,11 +111,15 @@ export default {
           key: "end_period",
           minWidth: 80
         },
-
         {
           title: "市场",
           key: "followby_realname",
-          minWidth: 120
+          minWidth: 80
+        },
+        {
+          title: "会计",
+          key: "server_realname",
+          minWidth: 80
         }
       ]
     };
