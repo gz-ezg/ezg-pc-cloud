@@ -287,10 +287,24 @@
                             </FormItem>
                         </Row>
                         <Row style="margin-bottom: 10px" v-if="pageId">
+                            <FormItem label="开始税期" prop="servicestartdate">
+                                <DatePicker
+                                class="input-me"
+                                type="month"
+                                :options="dateOptions"
+                                v-model="servicestartdate"
+                                placeholder="选择月份"
+                                style="width:120px"
+                                size="small"
+                                ></DatePicker>
+                            </FormItem>
+                       </Row>
+                        <Row style="margin-bottom: 10px" v-if="pageId">
                             <FormItem  style="margin-bottom:5px">
                                 <div>服务备注：</div>
                             </FormItem>
                         </Row>
+              
                         <Row style="margin-bottom: 10px" v-if="pageId">
                             <FormItem  style="margin-bottom:5px">
                                 <Input :readonly="readonly" v-model="serviceDemo" type="textarea" :autosize="{minRows: 3,maxRows: 7}" style="width: 600px" placeholder="请输入......"></Input>
@@ -1181,13 +1195,13 @@
 </template>
 
 <script>
+    import { servicePeriod } from '@A/order.js'
     import Bus from '../../../components/bus.js'
     // import Bscroll from 'better-scroll'
     // import { yasuo } from '../../../libs/img_beforeUpload.js'
     import { yasuo } from '../../../libs/img_beforeUpload'
-    import { DateFormat } from '../../../libs/utils.js'
     import Create from './create'
-
+    import { DateFormat, DateFormatYearMonth, nowDateFormatYearMonth } from '@/libs/utils.js';
 
     export default {
         props: {
@@ -1212,6 +1226,10 @@
         },
         data(){
             return {
+                dateOptions: {
+                    disabledDate: null
+                },
+                servicestartdate:'',
                 //通知用户相关
                 test: [],
                 userData: [],
@@ -1418,6 +1436,9 @@
                     ifMatch:[
                         { required: true, message: '请选择', trigger: 'change' }
                     ],
+                    // servicestartdate:[
+                    //     { required: true, message: '请选择税期', trigger: 'blur' }
+                    // ],
                     financial_handover: [
                         { required: true, message: '请输入提示或告知书', trigger: 'blur' }
                     ],
@@ -1672,10 +1693,20 @@
                         minWidth:160
                     },
                 ],
-
         }
         },
         methods: {
+            checkMonth(data) {
+                console.log('cehis',data,this.servicestartdate)
+                if (this.servicestartdate){
+                let a = this.servicestartdate.substr(0, 4)
+                let b = this.servicestartdate.substr(4)
+                let between = data.getFullYear() * 12 + data.getMonth() - a  * 12 - b * 1;
+                    console.log('cehis',between)
+                return 0 >= between;
+                }
+            },
+
             pageChange(e){
                 this.page = e
                 this.get_data()
@@ -1836,6 +1867,10 @@
                     this.$Message.warning("请选择产品规模")
                     return
                 }
+                if (!this.servicestartdate) {
+                    this.$Message.warning("请选择开始服务税期")
+                    return
+                } 
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         let _self = this
@@ -1843,6 +1878,7 @@
                         let config = {
                             companyId: _self.companyId,
                             id:_self.companyInfoo.id,
+                            servicestartdate:DateFormat(_self.servicestartdate),
                             recordId:_self.pageId,
                             ifMatch:_self.ifMatch,
                             serviceDemo:_self.serviceDemo,
@@ -2259,9 +2295,18 @@
             },
 
         },
-        created(){
+        async created(){
             this.getUserData()
             this.changeTab()
+           const resp = await servicePeriod({companyId:this.companyId,productId:this.$store.state.gobal.gobalProductId})
+            this.servicestartdate = resp
+            this.dateOptions.disabledDate =  function(data){
+                 let a = resp.substr(0, 4)
+                let b = resp.substr(4)
+                let between = data.getFullYear() * 12 + data.getMonth() - a  * 12 - b * 1;
+                console.log('cehis',between)
+                return -2 >= between;
+            }
         },
         mounted(){
             this.get_data_center()

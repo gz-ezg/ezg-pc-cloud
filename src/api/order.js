@@ -21,6 +21,13 @@ export function auditList(params) {
     params
   })
 }
+export function servicePeriod(params) {
+  return request({
+    url: '/order/cycle/service/record/budget/period',
+    method: 'get',
+    params
+  })
+}
 export function createOweOrder(data) {
   return request({
     url: '/order/oweOrder/create',

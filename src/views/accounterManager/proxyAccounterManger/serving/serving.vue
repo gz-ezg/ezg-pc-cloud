@@ -105,6 +105,7 @@
       <Table
         @on-current-change="selectRow"
         id="d3"
+        height="380px"
         :loading="loading"
         ref="selection"
         highlight-row

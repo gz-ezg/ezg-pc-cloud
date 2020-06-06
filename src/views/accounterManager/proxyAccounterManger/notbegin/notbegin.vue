@@ -1384,6 +1384,7 @@
                         this.$store.commit('open_gobal_company_detail_modal', this.current_row.company_id)
                         this.$store.commit('setIfMatch', this.current_row.if_match)
                         this.$store.commit('setServiceDemo', this.current_row.service_memo)
+                        this.$store.commit('setProductId', this.current_row.product_id)
                     }else{
                         this.$Message.warning("国地税未报到，无法开始服务！")
                     }
