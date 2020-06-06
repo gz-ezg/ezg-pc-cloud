@@ -11,6 +11,7 @@ const gobal = {
     gobalWorkorderStopWorkOrderList: false,
     gobalWorkOrderStatus: '',
     gobalCompanyId: '',
+    gobalProductId: '',
     gobalCompanyDetailShow: false,
     gobalWorkorderDetail: {
       companyname: '',
@@ -39,6 +40,9 @@ const gobal = {
     },
     setServiceDemo(state, serviceDemo) {
       state.gobalCompanyServiceDemo = serviceDemo
+    },
+    setProductId(state, productId) {
+      state.gobalProductId = productId
     },
     close_gobal_relogin_modal(state) {
       state.gobalReloginShow = false
