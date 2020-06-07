@@ -274,9 +274,12 @@ export default {
             "open_gobal_company_detail_modal",
             this.current_row.company_id
           );
+          let begin_period = this.current_row.begin_period;
+          begin_period = begin_period.substring(0,4) + "-" + begin_period.substring(4,6);
           this.$store.commit("setIfMatch", this.current_row.if_match);
           this.$store.commit("setServiceDemo", this.current_row.service_memo);
           this.$store.commit('setProductId', this.current_row.product_id)
+          this.$store.commit('setServicestartdate', begin_period)
         } else {
           this.$Message.warning("国地税未报到，无法开始服务！");
         }

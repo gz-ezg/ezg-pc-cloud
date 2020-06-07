@@ -1220,6 +1220,9 @@
             serviceDemo: {
                 type: [String, Number]
             },
+            servicestartdate: {
+                type: [String, Number]
+            },
         },
         components:{
             Create
@@ -1436,9 +1439,9 @@
                     ifMatch:[
                         { required: true, message: '请选择', trigger: 'change' }
                     ],
-                    // servicestartdate:[
-                    //     { required: true, message: '请选择税期', trigger: 'blur' }
-                    // ],
+                    servicestartdate:[
+                        { required: true, message: '请选择税期', trigger: 'blur' }
+                    ],
                     financial_handover: [
                         { required: true, message: '请输入提示或告知书', trigger: 'blur' }
                     ],
@@ -1942,7 +1945,8 @@
                 let url = `api/order/cycle/service/record/update`
                 let config = {
                     id: _self.pageId,
-                    serviceStatus: 'inservice'
+                    serviceStatus: 'inservice',
+                    servicestartdate:DateFormat(_self.servicestartdate)
                 }
 
                 function success(res){
@@ -2298,11 +2302,14 @@
         async created(){
             this.getUserData()
             this.changeTab()
-           const resp = await servicePeriod({companyId:this.companyId,productId:this.$store.state.gobal.gobalProductId})
-            this.servicestartdate = resp
+           //const resp = await servicePeriod({companyId:this.companyId,productId:this.$store.state.gobal.gobalProductId})
+            const resp = this.$store.state.gobal.gobalServicestartdate;
+           
+            this.servicestartdate = resp;
+            console.log("servicestartdate："+ resp);
             this.dateOptions.disabledDate =  function(data){
                  let a = resp.substr(0, 4)
-                let b = resp.substr(4)
+                let b = resp.substr(5)
                 let between = data.getFullYear() * 12 + data.getMonth() - a  * 12 - b * 1;
                 console.log('cehis',between)
                 return -2 >= between;

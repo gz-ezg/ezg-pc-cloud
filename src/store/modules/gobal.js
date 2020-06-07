@@ -21,6 +21,7 @@ const gobal = {
     gobalSetFinishTime: false,
     gobalReloginShow: false,
     gobalCompanyPageId: '',
+    gobalServicestartdate:'',
     gobalIsForceLock: true
   },
   mutations: {
@@ -33,6 +34,9 @@ const gobal = {
     },
     setIfMatch(state, ifMatch) {
       state.gobalCompanyIfMatch = ifMatch
+    },
+    setServicestartdate(state, servicestartdate) {
+      state.gobalServicestartdate = servicestartdate
     },
     setForceLock(state, value) {
       console.log(value)
