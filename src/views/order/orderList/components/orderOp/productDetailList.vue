@@ -181,17 +181,16 @@
                     </Col>
 
                     <Col v-if="item.isyearcycle == 'Y'" span="12">
-                      <FormItem label="服务年度" prop="servicestartdate">
+                      <FormItem label="服务年份" prop="serviceyear">
                         <DatePicker
                           v-if="item.isyearcycle == 'Y'"
-                          class="input-me"
                           :disabled="isDisabled"
-                          type="month"
-                          :options="dateOptions"
-                          v-model="item.servicestartdate"
-                          placeholder="选择月份"
-                          style="width:120px"
-                          size="small"
+                          type="year"
+                          format="yyyy"
+                          @on-change="item.serviceyear = $event"
+                          v-model="item.serviceyear"
+                          placeholder="选择年份"
+                          style="margin-left: 10px;display:inline-block;width:200px"
                         ></DatePicker>
                       </FormItem>
                     </Col>
