@@ -1201,7 +1201,7 @@
     // import { yasuo } from '../../../libs/img_beforeUpload.js'
     import { yasuo } from '../../../libs/img_beforeUpload'
     import Create from './create'
-    import { DateFormat, DateFormatYearMonth, nowDateFormatYearMonth } from '@/libs/utils.js';
+    import { DateFormat, DateFormatYearMonth, nowDateFormatYearMonth, DateFormatYearMonth3 } from '@/libs/utils.js';
 
     export default {
         props: {
@@ -2303,10 +2303,18 @@
             this.getUserData()
             this.changeTab()
            //const resp = await servicePeriod({companyId:this.companyId,productId:this.$store.state.gobal.gobalProductId})
-            const resp = this.$store.state.gobal.gobalServicestartdate;
+            let resp = this.$store.state.gobal.gobalServicestartdate;
            
+
+            let d = new Date(resp+"-01");
+            let now = new Date();
+            let nowDate = DateFormatYearMonth3(now);
+            if (now > d){
+                resp = nowDate;
+            }
+
             this.servicestartdate = resp;
-            console.log("servicestartdate："+ resp);
+
             this.dateOptions.disabledDate =  function(data){
                  let a = resp.substr(0, 4)
                 let b = resp.substr(5)
