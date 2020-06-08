@@ -1137,6 +1137,7 @@
                         title: '操作',
                         key: 'action',
                         width: 200,
+                        fixed: "left",
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [

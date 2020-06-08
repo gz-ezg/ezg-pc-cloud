@@ -167,7 +167,7 @@ export default {
         {
           title: "产品",
           key: "product",
-          minWidth: 200
+          minWidth: 180
         },
         {
           title: "单价",
@@ -188,7 +188,14 @@ export default {
         {
           title: "市场",
           key: "followbyrealname",
-          minWidth: 120
+          minWidth: 80
+        }
+        ,
+
+        {
+          title: "会计",
+          key: "realname",
+          minWidth: 80
         }
       ]
     };
@@ -450,7 +457,7 @@ export default {
         },
         {
           title: "市场",
-          key: "followby_realname",
+          key: "followbyrealname",
           minWidth: 80
         },
         {

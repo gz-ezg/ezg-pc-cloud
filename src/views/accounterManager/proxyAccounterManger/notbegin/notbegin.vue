@@ -79,6 +79,7 @@
         <Row style="margin-top: 10px;">
             <Table
                     @on-current-change="selectRow"
+                    
                     :loading="loading"
                     ref="selection"
                     highlight-row
@@ -1164,6 +1165,7 @@
                         title: '操作',
                         key: 'action',
                         width: 200,
+                        fixed: "left",
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [

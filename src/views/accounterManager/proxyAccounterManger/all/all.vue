@@ -839,6 +839,7 @@
                     {
                         title: '操作',
                         key: 'action',
+                        fixed: "left",
                         width: 200,
                         resizable:true,
                         align: 'center',
