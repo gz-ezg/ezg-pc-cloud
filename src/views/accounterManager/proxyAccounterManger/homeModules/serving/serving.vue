@@ -457,13 +457,11 @@ export default {
         },
         {
           title: "市场",
-          key: "followbyrealname",
-          minWidth: 80
+          field: "followbyrealname"
         },
         {
           title: "会计",
-          key: "realname",
-          minWidth: 80
+          field: "realname"
         }
         // {
         //   field: "shebao",
