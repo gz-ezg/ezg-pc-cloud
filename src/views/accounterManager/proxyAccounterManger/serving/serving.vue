@@ -2239,14 +2239,16 @@ export default {
 </script>
 
 <style>
-.ivu-table .demo-table-followdate-warning-row {
-  color: rgb(226 17 0);
-}
+
 .ivu-col-span-6 {
   height: 28px;
 }
-.ivu-table-wrapper {
-  height: 70%;
+
+.ivu-table .demo-table-followdate-warning-row {
+  color: rgb(226 17 0);
+}
+/* .ivu-table-wrapper {
+  height: 100%;
 }
 .ivu-table-fixed,
 .ivu-table-fixed-right {
@@ -2254,5 +2256,5 @@ export default {
 }
 .ivu-table-tbody {
   height: 70%;
-}
+} */
 </style>
