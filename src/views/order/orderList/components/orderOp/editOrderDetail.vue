@@ -301,12 +301,20 @@ export default {
           let order = JSON.parse(JSON.stringify(_self.orderItem));
           for (let i = 0; i < order.length; i++) {
             order[i].servicedeparts = '';
-            order[i].servicestartdate = DateFormat(order[i].servicestartdate);
+            // order[i].servicestartdate = DateFormat(order[i].servicestartdate);
             order[i].serverId = (order[i].selectServer && order[i].selectServer.userId) || '';
             order[i].realname = (order[i].selectServer && order[i].selectServer.realname) || '';
 
+            if (order[i].servicestartdate) {
+							order[i].servicestartdate = DateFormat(order[i].servicestartdate);
+						}
+
             if (order[i].declare_year) {
               order[i].declare_year = new Date(order[i].declare_year).getFullYear();
+            }
+
+            if (order[i].serviceyear) {
+              order[i].serviceyear = new Date(order[i].serviceyear).getFullYear();
             }
           }
           let config = {

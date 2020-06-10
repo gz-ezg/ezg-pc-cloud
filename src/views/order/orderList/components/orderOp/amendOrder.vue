@@ -186,7 +186,20 @@ export default {
 					let order =_self.orderItem;
 					for(let i=0;i<order.length;i++){
 						order[i].servicedeparts = ""
-						order[i].servicestartdate = DateFormat(order[i].servicestartdate);
+						// order[i].servicestartdate = DateFormat(order[i].servicestartdate);
+
+						if (order[i].servicestartdate) {
+							order[i].servicestartdate = DateFormat(order[i].servicestartdate);
+						}
+
+						if (order[i].serviceyear) {
+							order[i].serviceyear = new Date(order[i].serviceyear).getFullYear();
+						}
+						
+						if (order[i].declare_year) {
+							order[i].declare_year = new Date(order[i].declare_year).getFullYear();
+						}
+						
 					}
                     let config = {
                         id: _self.orderDetail.id,

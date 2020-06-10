@@ -153,6 +153,11 @@ export default {
           minWidth: 120
         },
         {
+          title: '审批状态',
+          key: 'process_type',
+          minWidth: 120
+        },
+        {
           title: '回访时间',
           key: 'callbackdate',
           minWidth: 160
@@ -255,6 +260,7 @@ export default {
         { field: 'CompanyName', title: '公司名称' },
         // {field:'baseorderid',title:'提示'},
         { field: 'product', title: '产品名称' },
+        { field: 'process_type', title: '审批流程' },        
         {field: 'unitPrice', title: '单价'},
         { field: 'money', title: '欠费金额' },
         { field: 'enddate', title: '下线时间' },
