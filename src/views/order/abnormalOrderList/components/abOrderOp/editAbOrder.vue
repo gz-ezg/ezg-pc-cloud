@@ -1,12 +1,6 @@
 <template>
   <div>
-    <Modal
-      title="编辑异常工单"
-      v-model="openEditAbOrder"
-      width="100"
-      :mask-closable="false"
-      @on-cancel="cancel"
-    >
+    <Modal title="编辑异常工单" v-model="openEditAbOrder" width="80" @on-cancel="cancel">
       <Form
         ref="abnormalOrderDetail"
         :model="abnormalOrderDetail"
@@ -16,17 +10,17 @@
         <Row :gutter="16">
           <Col span="8">
             <FormItem label="企业名称" prop="companyName">
-              <Input size="small" v-model="abnormalOrderDetail.companyName" readonly/>
+              <Input size="small" v-model="abnormalOrderDetail.companyName" readonly />
             </FormItem>
           </Col>
           <Col span="8">
             <FormItem label="联系人" prop="linkname">
-              <Input size="small" v-model="abnormalOrderDetail.linkname" readonly/>
+              <Input size="small" v-model="abnormalOrderDetail.linkname" readonly />
             </FormItem>
           </Col>
           <Col span="8">
             <FormItem label="联系电话" prop="linkTel">
-              <Input size="small" v-model="abnormalOrderDetail.linkTel" readonly/>
+              <Input size="small" v-model="abnormalOrderDetail.linkTel" readonly />
             </FormItem>
           </Col>
         </Row>
@@ -46,20 +40,21 @@
         </Row>
         <Row :gutter="16">
           <Col>
-            <FormItem label="产品内容" prop="productContent">
-              <Input
-                type="textarea"
-                :rows="2"
-                size="small"
-                v-model="abnormalOrderDetail.productContent"
-              />
+            <FormItem label="产品内容">
+              <Table border :columns="productListColumns" :data="productList"></Table>
+              <Button
+                @click="handleAddProduct"
+                type="ghost"
+                style="margin:10px auto;display:block"
+                icon="add"
+              >添加</Button>
             </FormItem>
           </Col>
         </Row>
         <Row :gutter="16">
           <Col>
             <FormItem label="审批事由" prop="reason">
-              <Input type="textarea" :rows="4" size="small" v-model="abnormalOrderDetail.reason"/>
+              <Input type="textarea" :rows="4" size="small" v-model="abnormalOrderDetail.reason" />
             </FormItem>
           </Col>
         </Row>
@@ -70,7 +65,7 @@
               v-for="(item, index) in abnormalOrderDetail.imgs"
               style="width:200px;height:200px"
               :src="item"
-            >
+            />
           </FormItem>
         </Row>
         <Row :gutter="16">
@@ -100,11 +95,14 @@
         <Button type="ghost" @click="openEditAbOrder = false">关闭</Button>
       </div>
     </Modal>
+    <prodect-select @selectProduct="handleSelectProduct"></prodect-select>
   </div>
 </template>
 
 <script>
+import prodectSelect from "./productSelect";
 export default {
+  components: { prodectSelect },
   data() {
     return {
       openEditAbOrder: false,
@@ -120,10 +118,137 @@ export default {
         reason: "",
         attIds: "",
         imgs: []
-      }
+      },
+      productListColumns: [
+        {
+          title: "产品名称",
+          key: "productName"
+        },
+        {
+          title: "数量",
+          key: "amount",
+          render: (h, params) => {
+            return h("div", [
+              h(
+                "Input",
+                {
+                  props: {
+                    type: "danger",
+                    size: "small",
+                    value: params.row.amount
+                  },
+                  style: {
+                    width: "200px",
+                    marginRight: "5px"
+                  },
+                  on: {
+                    "on-change": e => {
+                      this.handleChangeNum(params, e);
+                    }
+                  }
+                },
+                "删除"
+              )
+            ]);
+          }
+        },
+        {
+          title: "销售金额",
+          key: "totalMoney"
+        },
+        {
+          title: "优惠后金额",
+          key: "finalMoney",
+          render: (h, params) => {
+            return h("div", [
+              h(
+                "Input",
+                {
+                  props: {
+                    type: "danger",
+                    size: "small",
+                    value: params.row.finalMoney
+                  },
+                  style: {
+                    width: "200px",
+                    marginRight: "5px"
+                  },
+                  on: {
+                    "on-change": e => {
+                      this.handleChangeFinalMoneny(params, e);
+                    }
+                  }
+                },
+                "删除"
+              )
+            ]);
+          }
+        },
+        {
+          title: "操作",
+          slot: "action",
+          width: 150,
+          align: "center",
+          render: (h, params) => {
+            return h("div", [
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "danger",
+                    size: "small"
+                  },
+                  style: {
+                    marginRight: "5px"
+                  },
+                  on: {
+                    click: () => {
+                      this.productList.splice(params.index, 1);
+                    }
+                  }
+                },
+                "删除"
+              )
+            ]);
+          }
+        }
+      ],
+      productList: [
+        // { productType: "", amount: "", totalMoneny: "", finalMoneny: "" }
+      ]
     };
   },
   methods: {
+    handleAddProduct() {
+      this.$bus.emit(
+        "OPEN_ORDER_PRODUCT_LIST",
+        this.abnormalOrderDetail.companyId,
+        {}
+      );
+    },
+    handleChangeNum({ row, index }, { target: { value } }) {
+      row.amount = value; //如果是select记得 要直接等于e  例如：params.row.attrName = e
+      row.totalMoney = value * row.oPrice; //如果是select记得 要直接等于e  例如：params.row.attrName = e
+      this.productList[index] = row;
+    },
+
+    handleChangeFinalMoneny({ row, index }, { target: { value } }) {
+      row.finalMoney = value; //如果是select记得 要直接等于e  例如：params.row.attrName = e
+      this.productList[index] = row;
+    },
+    handleSelectProduct(e) {
+      this.productList.push({
+        productName: e.product,
+        productId: e.id,
+        productSkuId: e.skuId,
+        oPrice: e.productPrice,
+        amount: 1,
+        totalMoney: e.productPrice,
+        finalMoney: e.productPrice,
+        areaId: e.areaId
+      });
+      console.log("selectProduct", e);
+    },
     handleUpload(file) {
       this.file.push(file);
       return false;
@@ -151,7 +276,8 @@ export default {
         unusualType: _self.abnormalOrderDetail.type,
         productContent: _self.abnormalOrderDetail.productContent,
         applyMemo: _self.abnormalOrderDetail.reason,
-        attIds: _self.abnormalOrderDetail.attIds
+        attIds: _self.abnormalOrderDetail.attIds,
+        productItems: JSON.stringify(_self.productList)
       };
 
       function success(res) {
@@ -184,6 +310,7 @@ export default {
         _self.abnormalOrderDetail.companyName = e.companyname;
         _self.abnormalOrderDetail.linkname = e.name;
         _self.abnormalOrderDetail.linkTel = e.tel;
+        _self.productList = res.data.data.productItems;
         if (res.data.data.urls) {
           _self.abnormalOrderDetail.imgs = res.data.data.urls
             .split(",")

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Modal title="新增异常工单" :value="true" width="100" @on-cancel="close">
+    <Modal title="新增异常工单" :value="true" width="80" @on-cancel="close">
       <Form
         ref="abnormalOrderDetail"
         :model="abnormalOrderDetail"
@@ -55,6 +55,20 @@
         </Row>
         <Row :gutter="16">
           <Col>
+            <FormItem label="产品内容">
+              <Table border :columns="productListColumns" :data="productList"></Table>
+              <Button
+                @click="handleAddProduct"
+                type="ghost"
+                style="margin:10px auto;display:block"
+                icon="add"
+              >添加</Button>
+            </FormItem>
+          </Col>
+        </Row>
+
+        <!-- <Row :gutter="16">
+          <Col>
             <FormItem label="产品内容" prop="productContent">
               <Input
                 type="textarea"
@@ -64,11 +78,12 @@
               />
             </FormItem>
           </Col>
-        </Row>
+        </Row>-->
+
         <Row :gutter="16">
           <Col>
             <FormItem label="审批事由" prop="reason">
-              <Input type="textarea" :rows="4" size="small" v-model="abnormalOrderDetail.reason"/>
+              <Input type="textarea" :rows="4" size="small" v-model="abnormalOrderDetail.reason" />
             </FormItem>
           </Col>
         </Row>
@@ -100,22 +115,121 @@
         <Button type="ghost" @click="close">关闭</Button>
       </div>
     </Modal>
-
+    <prodect-select @selectProduct="handleSelectProduct"></prodect-select>
     <company-select @company-change="setting_company"></company-select>
   </div>
 </template>
 
 <script>
 import companySelect from "../companySelect";
+import prodectSelect from "./productSelect";
 
 export default {
   name: "abnormalWorkOrder_index",
   components: {
-    companySelect
+    companySelect,
+    prodectSelect
   },
   data() {
     return {
       file: [],
+      productListColumns: [
+        {
+          title: "产品名称",
+          key: "productName"
+        },
+        {
+          title: "数量",
+          key: "amount",
+          render: (h, params) => {
+            return h("div", [
+              h(
+                "Input",
+                {
+                  props: {
+                    type: "danger",
+                    size: "small",
+                    value: params.row.amount
+                  },
+                  style: {
+                    width: "200px",
+                    marginRight: "5px"
+                  },
+                  on: {
+                    "on-change": e => {
+                      this.handleChangeNum(params, e);
+                    }
+                  }
+                },
+                "删除"
+              )
+            ]);
+          }
+        },
+        {
+          title: "销售金额",
+          key: "totalMoney"
+        },
+        {
+          title: "优惠后金额",
+          key: "finalMoney",
+          render: (h, params) => {
+            return h("div", [
+              h(
+                "Input",
+                {
+                  props: {
+                    type: "danger",
+                    size: "small",
+                    value: params.row.finalMoney
+                  },
+                  style: {
+                    width: "200px",
+                    marginRight: "5px"
+                  },
+                  on: {
+                    "on-change": e => {
+                      this.handleChangeFinalMoneny(params, e);
+                    }
+                  }
+                },
+                "删除"
+              )
+            ]);
+          }
+        },
+        {
+          title: "操作",
+          slot: "action",
+          width: 150,
+          align: "center",
+          render: (h, params) => {
+            return h("div", [
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "danger",
+                    size: "small"
+                  },
+                  style: {
+                    marginRight: "5px"
+                  },
+                  on: {
+                    click: () => {
+                      this.productList.splice(params.index, 1);
+                    }
+                  }
+                },
+                "删除"
+              )
+            ]);
+          }
+        }
+      ],
+      productList: [
+        // { productType: "", amount: "", totalMoneny: "", finalMoneny: "" }
+      ],
       openAddAbOrderDetail: false,
       abnormalOrderDetail: {
         companyId: "",
@@ -142,6 +256,36 @@ export default {
     };
   },
   methods: {
+    handleAddProduct() {
+      this.$bus.emit(
+        "OPEN_ORDER_PRODUCT_LIST",
+        this.abnormalOrderDetail.companyId,
+        {}
+      );
+    },
+    handleChangeNum({ row, index }, { target: { value } }) {
+      row.amount = value; //如果是select记得 要直接等于e  例如：params.row.attrName = e
+      row.totalMoney = value * row.oPrice; //如果是select记得 要直接等于e  例如：params.row.attrName = e
+      this.productList[index] = row;
+    },
+
+    handleChangeFinalMoneny({ row, index }, { target: { value } }) {
+      row.finalMoney = value; //如果是select记得 要直接等于e  例如：params.row.attrName = e
+      this.productList[index] = row;
+    },
+    handleSelectProduct(e) {
+      this.productList.push({
+        productName: e.product,
+        productId: e.id,
+        productSkuId: e.skuId,
+        oPrice: e.productPrice,
+        amount: 1,
+        totalMoney: e.productPrice,
+        finalMoney: e.productPrice,
+        areaId: e.areaId
+      });
+      console.log("selectProduct", e);
+    },
     //选择公司
     open_company() {
       this.$bus.emit("AB_ORDER_OPEN_SELECT_COMPANY", true);
@@ -192,6 +336,9 @@ export default {
     },
     create(name) {
       let _self = this;
+      if (!_self.productList.length) {
+        _self.$Message.error("请先补全产品信息");
+      }
       this.$refs[name].validate(valid => {
         if (valid) {
           _self.add_ab_order();
@@ -225,6 +372,8 @@ export default {
         companyId: _self.abnormalOrderDetail.companyId,
         unusualType: _self.abnormalOrderDetail.type,
         productContent: _self.abnormalOrderDetail.productContent,
+        productItems: JSON.stringify(_self.productList),
+        // productItems: _self.productList,
         applyMemo: _self.abnormalOrderDetail.reason,
         attIds: _self.abnormalOrderDetail.attIds
       };
