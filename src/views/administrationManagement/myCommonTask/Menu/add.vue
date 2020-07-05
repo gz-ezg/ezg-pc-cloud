@@ -21,7 +21,7 @@
           <Input v-model="forms.tel" />
         </FormItem>
         <FormItem prop="servicename" label="开户行">
-          <Select @on-change="gycSelectChange" v-model="forms.suppilerId" style="width:200px">
+          <Select v-model="forms.openBankId" style="width:200px">
             <Option
               v-for="(item,index) in openBankList"
               :key="index"
