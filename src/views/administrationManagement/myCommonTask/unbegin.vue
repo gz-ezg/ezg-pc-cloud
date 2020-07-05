@@ -28,7 +28,7 @@
                       >{{item.typename}}</Option>
                     </Select>
                   </FormItem>
-                </Col> -->
+                </Col>-->
               </Row>
               <FormItem>
                 <Button type="primary" @click="search">搜索</Button>
@@ -43,11 +43,7 @@
       <ButtonGroup style="float:left">
         <!-- <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
         <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>-->
-        <Button
-          type="primary"
-          icon="ios-color-wand-outline"
-          @click="handleServeModal"
-        >开始服务</Button>
+        <Button type="primary" icon="ios-color-wand-outline" @click="handleServeModal">开始服务</Button>
         <!-- <Button v-else type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button> -->
         <!-- <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button> -->
         <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
@@ -118,19 +114,17 @@
           <Input v-model="forms.salesPrice" />
         </FormItem>
         <FormItem label="凭证" prop="file">
-          <Upload
-            action="//jsonplaceholder.typicode.com/posts/"
-            :before-upload="handleUpload"
-          >
+          <Upload action="//jsonplaceholder.typicode.com/posts/" :before-upload="handleUpload">
             <!-- <div style="padding: 20px 0">
               <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
               <p>上传</p>
-            </div> -->
+            </div>-->
 
-             <Button icon="ios-cloud-upload-outline">上传</Button>
+            <Button icon="ios-cloud-upload-outline">上传</Button>
           </Upload>
-          <template v-for="(item,index) in picUrl" ><img :key="index" :src="item" style="width:100px;height:100px" /></template>
-         
+          <template v-for="(item,index) in picUrl">
+            <img :key="index" :src="item" style="width:100px;height:100px" />
+          </template>
         </FormItem>
         <FormItem label="备注" prop="remark">
           <Input type="textarea" v-model="forms.remark" />
@@ -160,11 +154,12 @@
               :value="item.id"
             >{{item.supplier_name}}</Option>
           </Select>
+          <Button @click="handleAddSuppiler">添加</Button>
         </FormItem>
         <FormItem label="结算价" prop="settlementPrice">
           <Input type="number" v-model="forms.settlementPrice" />
         </FormItem>
-        <FormItem label="备注" >
+        <FormItem label="备注">
           <Input type="textarea" v-model="forms.remark" />
         </FormItem>
       </Form>
@@ -173,22 +168,14 @@
         <Button type="ghost" style="margin-left:20px" @click="serveModal=false">取消</Button>
       </div>
     </Modal>
-    <!-- <Modal
-            v-model="pause"
-            title="提示信息"
-        >
-            <div style="font-size:20px;"><Icon type="alert-circled"></Icon>是否暂停/解锁</div>
-            <div slot="footer">
-                <Button type="primary" @click="pausetask">确定</Button>
-                <Button type="ghost" style="margin-left:20px" @click="pause=!pause">取消</Button>
-            </div>
-        </Modal>
-    -->
+
+    <Add @ok="handleAddSuppilerModel" @cancel="addSuppilerModel=false" v-if="addSuppilerModel" />
     <allot-service></allot-service>
   </Card>
 </template>
 
 <script>
+import Add from "./Menu/add.vue";
 import {
   listByProductId,
   addSuppilerByWorkorderId,
@@ -197,9 +184,10 @@ import {
 } from "@A/supplierManage";
 import allotService from "./Menu/allot_service";
 export default {
-  components: { allotService },
+  components: { allotService, Add },
   data() {
     return {
+      addSuppilerModel: false,
       serveModal: false,
       search_model: "",
       sortField: "updatedate",
@@ -210,12 +198,12 @@ export default {
       formInline: {
         companyname: "",
         servicename: "",
-        productType: 'gyscp'
+        productType: "gyscp"
       },
       gysModelLoading: false,
       picUrl: [],
       productTypeDict: [],
-      forms: { salesPrice: "", settlementPrice: "", files: [], remark: '' },
+      forms: { salesPrice: "", settlementPrice: "", files: [], remark: "" },
       ruleValidate: {},
       gycList: [],
       //  加载中
@@ -245,7 +233,7 @@ export default {
         {
           title: "归属公司",
           key: "companyname",
-          
+
           sortable: true,
           render: (h, params) => {
             // console.log(params)
@@ -303,7 +291,7 @@ export default {
         {
           title: "产品全称",
           key: "product",
-          
+
           sortable: true,
           render: (h, params) => {
             // console.log(params)
@@ -370,7 +358,7 @@ export default {
         {
           title: "创建时间",
           key: "CreateDate",
-          
+
           sortable: true
         },
         // {
@@ -381,105 +369,19 @@ export default {
         {
           title: "服务人员",
           key: "servername",
-         
+
           sortable: true
         },
         {
           title: "跟进人",
           key: "followname",
-         
+
           sortable: true
         },
         {
           title: "备注",
-          key: "remark",
-        },
-        // {
-        //   title: "操作",
-        //   key: "action",
-        //   fixed: "right",
-        //   width: 120,
-        //   align: "center",
-        //   render: (h, params) => {
-        //     return h("div", [
-        //       // h('Button', {
-        //       //     props: {
-        //       //         type: 'text',
-        //       //         size: 'small'
-        //       //     },
-        //       //     on: {
-        //       //         click: () => {
-        //       //             // console.log(params)
-        //       //             Bus.$emit('showcompanydetail',params)
-        //       //         }
-        //       //     }
-        //       // }, '[查看公司]'),
-        //       h(
-        //         "Button",
-        //         {
-        //           props: {
-        //             type: "text",
-        //             size: "small"
-        //           },
-        //           on: {
-        //             click: () => {
-        //               this.flowChart(params);
-        //             }
-        //           }
-        //         },
-        //         "[流程图]"
-        //       )
-        //       // h('Button', {
-        //       //     props: {
-        //       //         type: 'text',
-        //       //         size: 'small'
-        //       //     },
-        //       //     on: {
-        //       //         click: () => {
-        //       //             var _self = this
-        //       //             console.log(params)
-        //       //             //  暂停
-        //       //             if(params.row.resumeFlag == null || params.row.resumeFlag == 3){
-        //       //                 let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=3`
-        //       //                 this.$http.get(url).then(function(res){
-        //       //                 _self.$backToLogin(res)
-        //       //                     if(res.data.msgCode == 40000){
-        //       //                         _self.$Message.success(res.data.msg)
-        //       //                     }else{
-        //       //                         _self.$Message.error(res.data.msg)
-        //       //                     }
-        //       //                     _self.getData()
-        //       //                 })
-        //       //             }else if(params.row.resumeFlag == 2){
-        //       //                 let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=2`
-        //       //                 this.$http.get(url).then(function(res){
-        //       //                 _self.$backToLogin(res)
-
-        //       //                     if(res.data.msgCode == 40000){
-        //       //                         _self.$Message.success(res.data.msg)
-        //       //                     }else{
-        //       //                         _self.$Message.error(res.data.msg)
-        //       //                     }
-        //       //                     _self.getData()
-        //       //                 })
-        //       //             }else{}
-        //       //         }
-        //       //     }
-        //       // }, '[暂停/解锁]'),
-        //       // h('Button', {
-        //       //     props: {
-        //       //         type: 'text',
-        //       //         size: 'small'
-        //       //     },
-        //       //     on: {
-        //       //         click: () => {
-        //       //             this.endlife = true
-        //       //         }
-        //       //     }
-        //       // }, '[退款终止]'),
-        //     ]);
-        //   }
-        // }
+          key: "remark"
+        }
       ],
       tempArray: [],
       isGysModel: false
@@ -510,9 +412,9 @@ export default {
     },
     async hanldeProductFinish() {
       let formData = new FormData();
-      this.forms.files.forEach(v=>{
-        formData.append("files",v);
-      })
+      this.forms.files.forEach(v => {
+        formData.append("files", v);
+      });
       formData.append("workorderId", this.current_row.id);
       formData.append("salesPrice", this.forms.salesPrice);
       formData.append("suppilerId", this.forms.suppilerId);
@@ -588,7 +490,7 @@ export default {
       this.getData();
     },
     handleUpload(file) {
-      console.log(file)
+      console.log(file);
       let that = this;
       this.forms.files.push(file);
       let fileReader = new FileReader();
@@ -634,6 +536,9 @@ export default {
       };
       let toExcel = this.$MergeURL(url, config);
       window.open(toExcel);
+    },
+    handleAddSuppiler() {
+      this.addSuppilerModel = true;
     },
     getData() {
       var _self = this;
