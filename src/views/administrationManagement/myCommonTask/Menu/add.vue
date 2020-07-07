@@ -20,18 +20,17 @@
         <FormItem label="电话" prop="tel">
           <Input v-model="forms.tel" />
         </FormItem>
-        <FormItem prop="servicename" label="开户行">
-          <Select v-model="forms.openBankId" style="width:200px">
+        <FormItem prop="settlementOpenBank" label="开户行">
+          <Select v-model="forms.settlementOpenBank" style="width:200px">
             <Option
               v-for="(item,index) in openBankList"
               :key="index"
-              :value="item.value"
+              :value="item.label"
             >{{item.label}}</Option>
           </Select>
-          <Button @click="handleAddSuppiler">添加</Button>
         </FormItem>
-        <FormItem label="开户行支行" prop="contactName">
-          <Input v-model="forms.contactName" />
+        <FormItem label="开户行支行" prop="settlementOpenBankItem">
+          <Input v-model="forms.settlementOpenBankItem" />
         </FormItem>
         <FormItem label="结算账号" prop="settlementAccount">
           <Input v-model="forms.settlementAccount" />

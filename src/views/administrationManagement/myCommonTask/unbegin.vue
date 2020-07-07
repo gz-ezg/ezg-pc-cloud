@@ -99,12 +99,12 @@
         :label-width="100"
       >
         <FormItem prop="servicename" label="供应商">
-          <Select @on-change="gycSelectChange" v-model="forms.suppilerId" style="width:200px">
+          <Select @on-change="gycSelectChange" :value="forms.supplierId" style="width:200px">
             <Option
               v-for="(item,index) in gycList"
               :key="index"
-              :value="item.id"
-            >{{item.supplier_name}}</Option>
+              :value="item.supplierId"
+            >{{item.supplierName}}</Option>
           </Select>
         </FormItem>
         <FormItem label="结算价" prop="settlementPrice">
@@ -147,15 +147,33 @@
         :label-width="100"
       >
         <FormItem prop="servicename" label="供应商">
-          <Select @on-change="gycSelectChange" v-model="forms.suppilerId" style="width:200px">
+          <Select @on-change="gycSelectChange" :value="forms.supplierId" style="width:200px">
             <Option
               v-for="(item,index) in gycList"
               :key="index"
-              :value="item.id"
-            >{{item.supplier_name}}</Option>
+              :value="item.supplierId"
+            >{{item.supplierName}}</Option>
           </Select>
           <Button @click="handleAddSuppiler">添加</Button>
         </FormItem>
+        <FormItem label="联系方式" prop="settlementPrice">
+          <Input readonly v-model="forms.tel" />
+        </FormItem>
+        <FormItem label="开户行" prop="settlementPrice">
+          <Input readonly type="number" v-model="forms.settlementOpenBank" />
+        </FormItem>
+        <FormItem label="开户支行" prop="settlementPrice">
+          <Input readonly type="number" v-model="forms.settlementOpenBankItem" />
+        </FormItem>
+        <FormItem label="结算账号" prop="settlementPrice">
+          <Input readonly type="number" v-model="forms.settlementAccount" />
+        </FormItem>
+        <!-- <FormItem label="产品" prop="settlementPrice">
+          <Input disabled v-model="forms.settlementPrice" />
+        </FormItem>-->
+        <!-- <FormItem label="销售价" prop="settlementPrice">
+          <Input disabled type="number" v-model="forms.settlementPrice" />
+        </FormItem>-->
         <FormItem label="结算价" prop="settlementPrice">
           <Input type="number" v-model="forms.settlementPrice" />
         </FormItem>
@@ -180,7 +198,8 @@ import {
   listByProductId,
   addSuppilerByWorkorderId,
   beginExecutiveWorkOrder,
-  doneExecutiveWorkOrder
+  doneExecutiveWorkOrder,
+  getSupplierWorkOrderAndSupplierByWorkOrderId
 } from "@A/supplierManage";
 import allotService from "./Menu/allot_service";
 export default {
@@ -390,15 +409,17 @@ export default {
   methods: {
     // 开始服务弹窗
     async handleServeModal() {
-      this.gycList = await listByProductId({
-        productId: this.current_row.productId
+      this.gycList = await getSupplierWorkOrderAndSupplierByWorkOrderId({
+        productId: this.current_row.id
       });
       if (this.gycList.length) {
-        this.forms.settlementPrice = this.gycList[0].settlement_price;
-        this.forms.suppilerId = this.gycList[0].id;
+        this.forms = this.gycList[0];
       }
       this.forms.remark = this.current_row.remark;
       this.serveModal = true;
+    },
+    async handleAddSuppilerModel() {
+      this.addSuppilerModel = false;
     },
     async handleServe() {
       await beginExecutiveWorkOrder({
@@ -645,10 +666,9 @@ export default {
       }
     },
     gycSelectChange(id) {
-      const values = this.gycList.find(v => id == v.id);
-      this.forms.salesPrice = values.sales_price;
-      this.forms.settlementPrice = values.settlement_price;
-      this.forms.suppilerId = values.id;
+      console.log(this.forms);
+      const values = this.gycList.find(v => id == v.supplierId);
+      this.forms = values;
     },
     reCreate() {
       let _self = this;

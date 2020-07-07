@@ -26,7 +26,18 @@
         <FormItem label="电话" prop="tel">
           <Input :readonly="type=='show'" v-model="forms.tel" />
         </FormItem>
-
+        <FormItem prop="settlementOpenBank" label="开户行">
+          <Select v-model="forms.settlementOpenBank" style="width:200px">
+            <Option
+              v-for="(item,index) in openBankList"
+              :key="index"
+              :value="item.label"
+            >{{item.label}}</Option>
+          </Select>
+        </FormItem>
+        <FormItem label="开户行支行" prop="settlementOpenBankItem">
+          <Input v-model="forms.settlementOpenBankItem" />
+        </FormItem>
         <FormItem label="结算账号" prop="settlementAccount">
           <Input :readonly="type=='show'" v-model="forms.settlementAccount" />
         </FormItem>
@@ -88,6 +99,7 @@ export default {
       show: true,
       loading: false,
       userList: "",
+      openBankList: [],
       forms: { status: "Y", productId: "", product: "" },
       ruleValidate: {
         supplierName: [
@@ -125,7 +137,11 @@ export default {
         return;
       }
     },
-
+    async getOpenBankList() {
+      const resp = await this.$queryCodes("open_bank");
+      console.log(resp);
+      this.openBankList = resp[0];
+    },
     onCancel() {
       this.$emit("cancel");
     },
@@ -152,6 +168,9 @@ export default {
     this.forms.status = this.initForm.status;
     this.forms.salesPrice = this.initForm.sales_price;
     this.forms.settlementPrice = this.initForm.settlement_price;
+    this.forms.settlementOpenBank = this.initForm.settlement_open_bank;
+    this.forms.settlementOpenBankItem = this.initForm.settlement_open_bank_item;
+    this.getOpenBankList();
   }
 };
 </script>

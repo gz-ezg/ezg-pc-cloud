@@ -130,7 +130,7 @@ axios.interceptors.response.use(
       }
     }
     if (response.data.msgCode == '60000') {
-      iView.Message.warning('对不起，您没有权限访问该页面！')
+      // iView.Message.warning('对不起，您没有权限访问该页面！')
       // iView.Message.destroy()
       setTimeout(() => {
         router.push({

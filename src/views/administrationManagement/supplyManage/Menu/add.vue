@@ -1,6 +1,6 @@
  <template>
   <div>
-    <Modal :mask-closable="false" v-model="show" title="新增" width="500" @on-cancel="onCancel">
+    <Modal :mask-closable="false" v-model="show" title="新增" width="600" @on-cancel="onCancel">
       <Form
         style="padding-rigth:20px"
         ref="form"
@@ -20,7 +20,18 @@
         <FormItem label="电话" prop="tel">
           <Input v-model="forms.tel" />
         </FormItem>
-
+        <FormItem prop="settlementOpenBank" label="开户行">
+          <Select v-model="forms.settlementOpenBank" style="width:200px">
+            <Option
+              v-for="(item,index) in openBankList"
+              :key="index"
+              :value="item.label"
+            >{{item.label}}</Option>
+          </Select>
+        </FormItem>
+        <FormItem label="开户行支行" prop="settlementOpenBankItem">
+          <Input v-model="forms.settlementOpenBankItem" />
+        </FormItem>
         <FormItem label="结算账号" prop="settlementAccount">
           <Input v-model="forms.settlementAccount" />
         </FormItem>
@@ -56,7 +67,6 @@
       <div slot="footer">
         <Button type="primary" @click="handleConfirm" :loading="loading" style="margin-left:20px">确定</Button>
       </div>
-      <!-- 产品选择 -->
     </Modal>
     <company-select @company-change="selectCompany"></company-select>
   </div>
@@ -74,6 +84,7 @@ export default {
       show: true,
       loading: false,
       userList: "",
+      openBankList: [],
       forms: { status: "Y", productId: "", product: "" },
       ruleValidate: {
         supplierName: [
@@ -112,6 +123,11 @@ export default {
     onCancel() {
       this.$emit("cancel");
     },
+    async getOpenBankList() {
+      const resp = await this.$queryCodes("open_bank");
+      console.log(resp);
+      this.openBankList = resp[0];
+    },
     handleConfirm() {
       this.$refs.form.validate(async valid => {
         if (valid) {
@@ -124,7 +140,7 @@ export default {
     }
   },
   created() {
-    this.getUser();
+    this.getOpenBankList();
   }
 };
 </script>

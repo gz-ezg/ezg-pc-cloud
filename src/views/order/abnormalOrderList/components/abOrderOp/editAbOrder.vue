@@ -95,7 +95,12 @@
         <Button type="ghost" @click="openEditAbOrder = false">关闭</Button>
       </div>
     </Modal>
-    <prodect-select @selectProduct="handleSelectProduct"></prodect-select>
+
+    <prodect-select
+      @close="prodectSelectModel=false"
+      v-if="prodectSelectModel"
+      @selectProduct="handleSelectProduct"
+    ></prodect-select>
   </div>
 </template>
 
@@ -106,6 +111,7 @@ export default {
   data() {
     return {
       openEditAbOrder: false,
+      prodectSelectModel: false,
       file: [],
       abnormalOrderDetail: {
         applyId: "",
@@ -248,6 +254,7 @@ export default {
         areaId: e.areaId
       });
       console.log("selectProduct", e);
+      this.prodectSelectModel = false;
     },
     handleUpload(file) {
       this.file.push(file);
@@ -310,7 +317,11 @@ export default {
         _self.abnormalOrderDetail.companyName = e.companyname;
         _self.abnormalOrderDetail.linkname = e.name;
         _self.abnormalOrderDetail.linkTel = e.tel;
-        _self.productList = res.data.data.productItems;
+
+        _self.productList = res.data.data.productItems.map(v => {
+          v.oPrice = Math.floor(v.totalMoney / v.amount);
+          return v;
+        });
         if (res.data.data.urls) {
           _self.abnormalOrderDetail.imgs = res.data.data.urls
             .split(",")

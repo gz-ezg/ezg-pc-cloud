@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Modal v-model="orderAddProduct" title="产品名称" width="1000">
+    <Modal @on-cancel="cancel" :value="true" title="产品名称" width="1000">
       <Row style="margin-bottom:10px">
         <Col span="4">
           <Input v-model="searchProduct" placeholder="输入产品搜索" @on-enter="search_product_1">
@@ -137,41 +137,6 @@
               <!-- <Button type="error" icon="bag" size="large" style="margin-top: 20px" @click="open_flow_img" :disabled="disabled" v-if="isAdmin">查看流程图</Button>-->
             </Row>
           </Card>
-          <!-- <Card dis-hover v-if="isProductDetail">
-                        <p slot="title">产品详情</p>
-                        <div class="productDetail-title">
-                            <p id="product_name"></p>
-                            <p class="productDetail-title-price">
-                                <span>￥<strong id="product_price">加载中</strong></span>
-                            </p>
-                            <div class="productDetail-title-content">
-                            </div>
-                        </div>
-                        <div class="productDetail-option" id="productDetail-option-id" @click="areaChange()">
-                            <div class="_propertys_class_" v-for="(item, index.vue) in basePropertys" :key=index.vue>
-                                <p :id="item.propertyId">{{ item.name }}</p>
-                                <div class="productDetail-option-buttonList" :name="index.vue==0?'firstProperty':''">
-                                    <button
-                                            type="button"
-                                            v-for="(item2, index2) in item.children"
-                                            :key = index2
-                                            :class="index2==0?'active':''"
-                                            :id="item2.pvId"
-                                            @click="chooseThisProperty(item2.pvId)">
-                                        {{ item2.propertyValue }}
-                                    </button>
-                                </div>
-                            </div>
-                            <p id="areaId">地区</p>
-                            <Row :gutter="16">
-                                <Col span="10">
-                                <al-cascader v-model="res1" data-type="code" level="2" @on-change="areaChange()"/>
-                                </Col>
-                            </Row>
-                            <Button type="error" icon="bag" size="large" style="margin-top: 20px" @click="addProduct">立即购买</Button>
-                            <Button type="error" icon="bag" size="large" style="margin-top: 20px" @click="open_flow_img" v-if="isAdmin">查看流程图</Button>
-                        </div>
-          </Card>-->
         </Col>
       </Row>
       <div slot="footer"></div>
@@ -268,6 +233,9 @@ export default {
     }
   },
   methods: {
+    cancel() {
+      this.$emit("close");
+    },
     search_product_1() {
       this.page = 1;
       this.search_product();
@@ -367,9 +335,6 @@ export default {
           _self.property_change();
         }
 
-        // for(let i = 0; i<temp.length; i++){
-        //     _self.selectProperty.push(parseInt(temp[i]))
-        // }
         _self.property_change();
         setTimeout(() => {
           _self.sideLoading = false;
@@ -466,168 +431,11 @@ export default {
         skuId: this.SKU,
         areaId: this.areaCode[2]
       });
-
-      this.orderAddProduct = false;
-    },
-    //  产品操作
-    // add_product(){
-    //     for (let i=0;i<this.cycleList.length;i++){
-    //         console.log(i)
-    //         if (this.cycleList[i].iscycle=="Y"){
-    //             this.isCycleOne = "Y"
-    //         }
-    //     }
-    //     for (let i=0;i<this.defaultdepartaliasList.length;i++){
-    //         if (this.defaultdepartaliasList[i].defaultdepartalias=="PLAN"){
-    //             this.defaultdepartaliasOne = "PLAN"
-    //         }
-    //     }
-    //     // console.log(this.isCycleOne)
-    //     // if (this.isCycleOne == "Y" && this.isCycle=="Y"){
-    //     //     this.$Message.warning(this.selectProduct.product+"产品请单独下一个订单")
-    //     //     return
-    //     // }
-    //     if (this.isCycle=="Y"){
-    //         this.isCycleNum = this.isCycleNum+1
-    //     }
-    //     if (this.defaultdepartalias=="PLAN"){
-    //         this.flag = 1
-    //     }
-    //     if (this.defaultdepartalias!=="PLAN"){
-    //         this.fflag = 1
-    //     }
-    //     if ( this.isCycleOne == "Y" && this.isCycle=="Y") {
-    //         this.$Message.warning("订单中只能含有一个周期性产品的订单项")
-    //         return
-    //     }
-    //     if (this.isCycle=="Y" && this.isCycleNum>1) {
-    //         this.$Message.warning("订单中只能含有一个周期性产品的订单项")
-    //         return
-    //     }
-    //     if (this.defaultdepartalias!=='PLAN' && this.flag==1) {
-    //         // console.log("111")
-    //         this.$Message.warning("企划产品只能单独下单")
-    //         this.fflag=0
-    //         return
-    //     }
-    //     if (this.defaultdepartalias=='PLAN' && this.fflag==1) {
-    //         // console.log("222")
-    //         this.$Message.warning("企划产品只能单独下单")
-    //         this.flag = 0
-    //         return
-    //     }
-    //     if (this.defaultdepartaliasOne=='PLAN' && this.defaultdepartalias!=='PLAN'){
-    //         // console.log("333")
-    //         this.$Message.warning("企划产品只能单独下单")
-    //         this.fflag=0
-    //         return
-    //     }
-    //     if (this.defaultdepartaliasOne!=='PLAN' && this.defaultdepartalias=='PLAN' && this.defaultdepartaliasList.length!==0){
-    //         // console.log("444")
-    //         this.$Message.warning("企划产品只能单独下单")
-    //         this.flag = 0
-    //         return
-    //     }
-    //     let _self = this
-    //     let url = '/api/order/queryItemDetail'
-
-    //     let config = {
-    //         params:{
-    //             productSkuIds: _self.SKU,
-    //             areaId: _self.areaCode[2]
-    //         }
-    //     }
-
-    //     function success(res){
-    //             for(let i = 0;i<res.data.data.length;i++){
-    //                 _self.detail = res.data.data[i]
-    //                 if(_self.detail.skuid =='1051' || _self.detail.skuid =='1052' ||_self.detail.skuid =='1053' ||_self.detail.skuid =='1054'){
-    //                     _self.detail.productnumber = '12'
-    //                     _self.detail.unitprice = parseInt(_self.detail.unitprice/12)
-    //                 }
-
-    //                 if(res.data.data[i].iscycle == "Y"){
-    //                     let url2 = "api/order/cycle/service/record/budget/period"
-    //                     let config2 = {
-    //                         params: {
-    //                             productId: _self.selectProduct.id,
-    //                             companyId: _self.companyId
-    //                         }
-    //                     }
-
-    //                     function success2(re){
-    //                         _self.detail.servicestartdate = re.data.data
-    //                         _self.$bus.emit("ADD_PRODUCT_DETAIL_LIST",_self.detail)
-    //                         _self.productListShow = false
-
-    //                     }
-
-    //                     _self.$Get(url2, config2, success2)
-    //                 }else{
-    //                     _self.$bus.emit("ADD_PRODUCT_DETAIL_LIST",_self.detail)
-    //                     _self.productListShow = false
-
-    //                 }
-    //             }
-
-    //     }
-
-    //     this.$Get(url, config, success)
-    // },
-    //  产品流程图
-    open_flow_img() {
-      window.open(
-        "/api/dataCenter/activiti/getInputStreamBySkuId?skuId=" + this.SKU
-      );
-    },
-    //  限制某项产品
-    rowClassName(row, index) {
-      if (row.id == "14") {
-        return "disabled-row";
-      }
     }
   },
-  watch: {
-    // queryProperty: function(){
-    //     let _self = this
-    //     this.productPrice = 0
-    //     if(this.queryProperty.length){
-    //         this.find_sku().then(() => {
-    //             _self.get_product_price_by_sku()
-    //         }).catch(function(err){
-    //             console.log(err)
-    //         })
-    //     }else{
-    //     }
-    // }
-  },
+
   created() {
-    let _self = this;
-    this.$bus.off("OPEN_ORDER_PRODUCT_LIST", true);
-    this.$bus.on("OPEN_ORDER_PRODUCT_LIST", (e, p) => {
-      _self.productPrice = 0;
-      _self.selectProduct = "";
-      _self.searchProduct = "";
-      _self.companyId = e;
-      _self.orderItem = p;
-      _self.cycleList = [];
-      _self.isCycleNum = 0;
-      _self.isCycle = "";
-      _self.isCycleOne = "";
-      _self.defaultdepartaliasList = [];
-      _self.defaultdepartalias = "";
-      _self.defaultdepartaliasOne = "";
-      _self.flag = 0;
-      _self.fflag = 0;
-      for (let i = 0; i < _self.orderItem.length; i++) {
-        _self.cycleList.push({ iscycle: _self.orderItem[i].iscycle });
-        _self.defaultdepartaliasList.push({
-          defaultdepartalias: _self.orderItem[i].defaultdepartalias
-        });
-      }
-      _self.search_product();
-      _self.orderAddProduct = true;
-    });
+    this.search_product();
   }
 };
 </script>

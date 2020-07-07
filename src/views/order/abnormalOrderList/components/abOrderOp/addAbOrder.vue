@@ -115,7 +115,11 @@
         <Button type="ghost" @click="close">关闭</Button>
       </div>
     </Modal>
-    <prodect-select @selectProduct="handleSelectProduct"></prodect-select>
+    <prodect-select
+      @close="prodectSelectModel=false"
+      v-if="prodectSelectModel"
+      @selectProduct="handleSelectProduct"
+    ></prodect-select>
     <company-select @company-change="setting_company"></company-select>
   </div>
 </template>
@@ -133,6 +137,7 @@ export default {
   data() {
     return {
       file: [],
+      prodectSelectModel: false,
       productListColumns: [
         {
           title: "产品名称",
@@ -257,11 +262,7 @@ export default {
   },
   methods: {
     handleAddProduct() {
-      this.$bus.emit(
-        "OPEN_ORDER_PRODUCT_LIST",
-        this.abnormalOrderDetail.companyId,
-        {}
-      );
+      this.prodectSelectModel = true;
     },
     handleChangeNum({ row, index }, { target: { value } }) {
       row.amount = value; //如果是select记得 要直接等于e  例如：params.row.attrName = e
@@ -285,6 +286,7 @@ export default {
         areaId: e.areaId
       });
       console.log("selectProduct", e);
+      this.prodectSelectModel = false;
     },
     //选择公司
     open_company() {
