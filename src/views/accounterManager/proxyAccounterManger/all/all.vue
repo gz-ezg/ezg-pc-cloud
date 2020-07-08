@@ -70,6 +70,8 @@
         <Row>
             <ButtonGroup>
                 <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
+                <Button type="primary" :size="small" icon="ios-color-wand-outline" @click="service_detail">服务详情</Button>
+                <Button type="primary"  :size="small" icon="ios-color-wand-outline" @click="open_acc_change_log">会计变更日志</Button>
                 <Button type="primary" icon="ios-color-wand-outline" @click="turn_offincal" :loading="comLoading">跳转税务局</Button>
             </ButtonGroup>
         </Row>
@@ -99,6 +101,8 @@
                     style="margin-top: 10px"
             ></Page>
         </Row>
+
+        <follow-up :company="current_row" v-if="openFollowUp" @close="openFollowUp = false"></follow-up>
     </Card>
 </template>
 
@@ -114,6 +118,7 @@
                 pageTotal: 0,
                 page: 1,
                 pageSize: 10,
+                openFollowUp: false,
                 current_row:"",
                 cservicest:[],
                 TaxDeclareStatus:[],
@@ -999,6 +1004,27 @@
                 this.SearchValidate.departname = "";
                 this.current_row = ""
                 this.Search();
+            },
+            service_detail() {
+                let _self = this;
+                if (_self.current_row == "" || _self.current_row == null) {
+                    _self.$Message.warning("请选择要查看的服务详情！");
+                } else {
+                    // _self.$bus.emit('open_booking_follow',_self.current_row)
+                    this.openFollowUp = true;
+                }
+            },
+            open_acc_change_log() {
+                let _self = this;
+
+                if (!_self.current_row) {
+                    this.$Message.warning("请选择要查看的项目！");
+                } else {
+                    _self.$bus.emit(
+                    "OPEN_ACC_CHANGE_LOG",
+                    _self.current_row.id
+                    );
+                }
             },
             downloadExcel(){
                 let field = [
