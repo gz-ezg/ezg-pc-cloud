@@ -5,33 +5,33 @@
         <Row :gutter="16">
           <Col span="8">
             <FormItem label="企业名称" prop="companyname">
-              <Input size="small" v-model="formValidateDetail.companyname" readonly/>
+              <Input size="small" v-model="formValidateDetail.companyname" readonly />
             </FormItem>
           </Col>
           <Col span="8">
             <FormItem label="联系人" prop="name">
-              <Input size="small" v-model="formValidateDetail.name" readonly/>
+              <Input size="small" v-model="formValidateDetail.name" readonly />
             </FormItem>
           </Col>
           <Col span="8">
             <FormItem label="联系电话" prop="tel">
-              <Input size="small" v-model="formValidateDetail.tel" readonly/>
+              <Input size="small" v-model="formValidateDetail.tel" readonly />
             </FormItem>
           </Col>
         </Row>
         <Row :gutter="16">
           <Col span="8">
             <FormItem label="异常类别" prop="unusual_type">
-              <Input size="small" v-model="formValidateDetail.unusual_type" readonly/>
+              <Input size="small" v-model="formValidateDetail.unusual_type" readonly />
             </FormItem>
           </Col>
           <Col span="8">
             <FormItem label="销售人员" prop="realname">
-              <Input size="small" v-model="formValidateDetail.realname" readonly/>
+              <Input size="small" v-model="formValidateDetail.realname" readonly />
             </FormItem>
           </Col>
         </Row>
-        <Row>
+        <!-- <Row>
           <FormItem label="产品内容" prop="product_content">
             <Input
               size="small"
@@ -41,6 +41,13 @@
               readonly
             />
           </FormItem>
+        </Row>-->
+        <Row :gutter="16">
+          <Col>
+            <FormItem label="产品内容">
+              <Table border :columns="productListColumns" :data="productItems"></Table>
+            </FormItem>
+          </Col>
         </Row>
         <Row>
           <FormItem label="审批事由" prop="apply_memo">
@@ -71,7 +78,7 @@
               target="_blank"
               :href="item"
             >
-              <img style="width:200px;height:200px;border-radius:20px" :src="item">
+              <img style="width:200px;height:200px;border-radius:20px" :src="item" />
             </a>
           </FormItem>
         </Row>
@@ -105,16 +112,35 @@ export default {
       disabled: false,
       openAbApproveDeal: false,
       formValidateDetail: {},
-      historyData:[],
-      nameData:[],
-      memoData:[],
-      id:"",
+      historyData: [],
+      nameData: [],
+      memoData: [],
+      productItems: [],
+      productListColumns: [
+        {
+          title: "产品名称",
+          key: "productName"
+        },
+        {
+          title: "数量",
+          key: "amount"
+        },
+        {
+          title: "销售金额",
+          key: "totalMoney"
+        },
+        {
+          title: "优惠后金额",
+          key: "finalMoney"
+        }
+      ],
+      id: "",
       banlishenpi: {
         agree: "Agree",
         desc: ""
       },
       submitLoading: false,
-      data:[]
+      data: []
     };
   },
   methods: {
@@ -128,28 +154,32 @@ export default {
 
       console.log(this.formValidateDetail);
     },
-    get_history_data(){
-      let _self = this
-      let url = `api/order/unusual/workorder/searchWordOrderById`
+    get_history_data() {
+      let _self = this;
+      let url = `api/order/unusual/workorder/searchWordOrderById`;
       let config = {
         params: {
-          applyId:_self.id
+          applyId: _self.id
         }
-      }
+      };
 
-      function success(res){
-        _self.data = res.data.data
-        _self.historyData = res.data.data.items
-        for (let i=0;i<_self.historyData.length;i++){
-          if (_self.historyData[i].audit_memo =="" || _self.historyData[i].audit_memo==null){
-            _self.historyData[i].audit_memo = "审批备注为空"
+      function success(res) {
+        _self.data = res.data.data;
+        _self.historyData = res.data.data.items;
+        _self.productItems = res.data.data.productItems;
+        for (let i = 0; i < _self.historyData.length; i++) {
+          if (
+            _self.historyData[i].audit_memo == "" ||
+            _self.historyData[i].audit_memo == null
+          ) {
+            _self.historyData[i].audit_memo = "审批备注为空";
           }
         }
-        console.log(_self.historyData )
-        _self.tableLoading = false
+        console.log(_self.historyData);
+        _self.tableLoading = false;
       }
 
-      this.$Get(url,config,success)
+      this.$Get(url, config, success);
     },
     //办理审批
     submit() {
@@ -172,8 +202,7 @@ export default {
         _self.$bus.emit("UPDATE_AB_ORDER_DATA", true);
       }
 
-      function fail() {
-      }
+      function fail() {}
 
       this.$Post(url, config, success, fail);
     }
@@ -182,11 +211,11 @@ export default {
     let _self = this;
     this.$bus.on("AB_ORDER_APPROVE_DEAL", e => {
       _self.disabled = false;
-      _self.nameData = []
-      _self.memoData = []
+      _self.nameData = [];
+      _self.memoData = [];
       _self.get_data(e);
-      _self.id = e.applyId
-      _self.get_history_data()
+      _self.id = e.applyId;
+      _self.get_history_data();
       _self.openAbApproveDeal = true;
     });
   }
@@ -194,27 +223,27 @@ export default {
 </script>
 
 <style>
-  .s{
-    min-height: 32px;
-    vertical-align: bottom;
-    font-size: 12px;
-    border: 1px solid #dddee1;
-    padding: 4px 7px;
-    border-radius: 4px;
-    color: #495060;
-    background-color: #fff;
-    position: relative;
-    cursor: text;
-    font-family: inherit;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-  }
-  .s1{
-    display: flex;
-    justify-content: space-between;
-  }
-  .s2{
-    flex: 0 0 120px;
-    margin-left: 50px;
-  }
+.s {
+  min-height: 32px;
+  vertical-align: bottom;
+  font-size: 12px;
+  border: 1px solid #dddee1;
+  padding: 4px 7px;
+  border-radius: 4px;
+  color: #495060;
+  background-color: #fff;
+  position: relative;
+  cursor: text;
+  font-family: inherit;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+.s1 {
+  display: flex;
+  justify-content: space-between;
+}
+.s2 {
+  flex: 0 0 120px;
+  margin-left: 50px;
+}
 </style>

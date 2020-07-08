@@ -16,17 +16,17 @@
         <Row :gutter="16">
           <Col span="8">
             <FormItem label="企业名称" prop="companyName">
-              <Input size="small" v-model="abnormalOrderDetail.companyName" readonly/>
+              <Input size="small" v-model="abnormalOrderDetail.companyName" readonly />
             </FormItem>
           </Col>
           <Col span="8">
             <FormItem label="联系人" prop="linkname">
-              <Input size="small" v-model="abnormalOrderDetail.linkname" readonly/>
+              <Input size="small" v-model="abnormalOrderDetail.linkname" readonly />
             </FormItem>
           </Col>
           <Col span="8">
             <FormItem label="联系电话" prop="linkTel">
-              <Input size="small" v-model="abnormalOrderDetail.linkTel" readonly/>
+              <Input size="small" v-model="abnormalOrderDetail.linkTel" readonly />
             </FormItem>
           </Col>
         </Row>
@@ -46,14 +46,8 @@
         </Row>
         <Row :gutter="16">
           <Col>
-            <FormItem label="产品内容" prop="productContent">
-              <Input
-                type="textarea"
-                :rows="2"
-                size="small"
-                v-model="abnormalOrderDetail.productContent"
-                readonly
-              />
+            <FormItem label="产品内容">
+              <Table border :columns="productListColumns" :data="productItems"></Table>
             </FormItem>
           </Col>
         </Row>
@@ -78,7 +72,7 @@
               target="_blank"
               :href="item"
             >
-              <img style="width:200px;height:200px;border-radius:10px" :src="item">
+              <img style="width:200px;height:200px;border-radius:10px" :src="item" />
             </a>
           </FormItem>
         </Row>
@@ -105,7 +99,26 @@ export default {
         productContent: "",
         reason: "",
         imgs: []
-      }
+      },
+      productItems: [],
+      productListColumns: [
+        {
+          title: "产品名称",
+          key: "productName"
+        },
+        {
+          title: "数量",
+          key: "amount"
+        },
+        {
+          title: "销售金额",
+          key: "totalMoney"
+        },
+        {
+          title: "优惠后金额",
+          key: "finalMoney"
+        }
+      ]
     };
   },
   methods: {
@@ -129,15 +142,16 @@ export default {
         _self.abnormalOrderDetail.companyName = e.companyname;
         _self.abnormalOrderDetail.linkname = e.name;
         _self.abnormalOrderDetail.linkTel = e.tel;
+        _self.productItems = res.data.data.productItems;
         if (res.data.data.urls) {
           _self.abnormalOrderDetail.imgs = res.data.data.urls
-                  .split(",")
-                  .map(v => {
-                    return "/api/assets/" + v;
-                  });
+            .split(",")
+            .map(v => {
+              return "/api/assets/" + v;
+            });
         }
 
-        console.log(_self.abnormalOrderDetail);
+        console.log(_self.productItems);
       }
 
       this.$Get(url, config, success);

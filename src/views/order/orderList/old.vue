@@ -1526,14 +1526,14 @@
                             _self.add_order_button_loading = false
 
                         } else if (response.data.msgCode == '50003') {
-                            _self.$Message.error('抱歉，您还未登录，即将前往登录页面');
+                            // _self.$Message.error('抱歉，您还未登录，即将前往登录页面');
                             setTimeout(() => {
                                 _self.$router.push({
                                     name: 'login'
                                 });
                             }, 2000);
                         } else if (response.data.msgCode == '60000') {
-                            _self.$Message.error('抱歉，您没有权限');
+                            // _self.$Message.error('抱歉，您没有权限');
                         } else {
                             _self.$nextTick(() => {
                                 _self.loading = true;
