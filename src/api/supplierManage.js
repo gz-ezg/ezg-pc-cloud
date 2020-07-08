@@ -92,7 +92,7 @@ export function goNextExecutiveWorkOrder(data) {
 
 export function getSupplierWorkOrderAndSupplierByWorkOrderId(params) {
   return request({
-    url: "/product/supplier/getSupplierWorkOrderAndSupplierByWorkOrderId",
+    url: "/product/supplier/getSupplierWorkOrderAndSupplierByWorkorderId",
     method: "get",
     params,
   });
