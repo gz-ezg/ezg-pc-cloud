@@ -226,11 +226,7 @@ export default {
   },
   methods: {
     handleAddProduct() {
-      this.$bus.emit(
-        "OPEN_ORDER_PRODUCT_LIST",
-        this.abnormalOrderDetail.companyId,
-        {}
-      );
+      this.prodectSelectModel = true;
     },
     handleChangeNum({ row, index }, { target: { value } }) {
       row.amount = value; //如果是select记得 要直接等于e  例如：params.row.attrName = e
@@ -253,7 +249,7 @@ export default {
         finalMoney: e.productPrice,
         areaId: e.areaId
       });
-      console.log("selectProduct", e);
+
       this.prodectSelectModel = false;
     },
     handleUpload(file) {

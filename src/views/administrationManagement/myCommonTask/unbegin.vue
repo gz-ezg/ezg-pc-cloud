@@ -434,6 +434,9 @@ export default {
   methods: {
     // 开始服务弹窗
     async handleServeModal() {
+      if (!this.current_row) {
+        return this.$Message.warning("请选择！");
+      }
       const resp = await getSupplierWorkOrderAndSupplierByWorkOrderId({
         workorderId: this.current_row.id
       });
