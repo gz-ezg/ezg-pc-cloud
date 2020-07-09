@@ -481,11 +481,11 @@ export default {
     //编辑异常工单
     open_edit() {
       let _self = this;
-      this.$bus.emit("OPEN_AB_ORDERLIST_EDIT", _self.selectRow);
+      //this.$bus.emit("OPEN_AB_ORDERLIST_EDIT", _self.selectRow);
       if (this.selectRow) {
         console.log(this.selectRow);
         if (
-          this.selectRow.current_process == "Ready" ||
+          this.selectRow.current_process == "jl" ||
           this.selectRow.current_process == "Returned"
         ) {
           this.$bus.emit("OPEN_AB_ORDERLIST_EDIT", _self.selectRow);
