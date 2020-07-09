@@ -5,33 +5,33 @@
         <Row :gutter="16">
           <Col span="8">
             <FormItem label="企业名称" prop="companyname">
-              <Input size="small" v-model="formValidateDetail.companyname" readonly/>
+              <Input size="small" v-model="formValidateDetail.companyname" readonly />
             </FormItem>
           </Col>
           <Col span="8">
             <FormItem label="联系人" prop="name">
-              <Input size="small" v-model="formValidateDetail.name" readonly/>
+              <Input size="small" v-model="formValidateDetail.name" readonly />
             </FormItem>
           </Col>
           <Col span="8">
             <FormItem label="联系电话" prop="tel">
-              <Input size="small" v-model="formValidateDetail.tel" readonly/>
+              <Input size="small" v-model="formValidateDetail.tel" readonly />
             </FormItem>
           </Col>
         </Row>
         <Row :gutter="16">
           <Col span="8">
             <FormItem label="异常类别" prop="unusual_type">
-              <Input size="small" v-model="formValidateDetail.unusual_type" readonly/>
+              <Input size="small" v-model="formValidateDetail.unusual_type" readonly />
             </FormItem>
           </Col>
           <Col span="8">
             <FormItem label="销售人员" prop="realname">
-              <Input size="small" v-model="formValidateDetail.realname" readonly/>
+              <Input size="small" v-model="formValidateDetail.realname" readonly />
             </FormItem>
           </Col>
         </Row>
-        <Row>
+        <!-- <Row>
           <FormItem label="产品内容" prop="product_content">
             <Input
               size="small"
@@ -41,6 +41,13 @@
               readonly
             />
           </FormItem>
+        </Row>-->
+        <Row :gutter="16">
+          <Col>
+            <FormItem label="产品内容">
+              <Table border :columns="productListColumns" :data="productItems"></Table>
+            </FormItem>
+          </Col>
         </Row>
         <Row>
           <FormItem label="审批事由" prop="apply_memo">
@@ -62,7 +69,7 @@
               target="_blank"
               :href="item"
             >
-              <img style="width:200px;height:200px;border-radius:20px" :src="item">
+              <img style="width:200px;height:200px;border-radius:20px" :src="item" />
             </a>
           </FormItem>
         </Row>
@@ -77,7 +84,26 @@ export default {
   data() {
     return {
       openAbOrderDetail: false,
-      formValidateDetail: {}
+      formValidateDetail: {},
+      productItems: [],
+      productListColumns: [
+        {
+          title: "产品名称",
+          key: "productName"
+        },
+        {
+          title: "数量",
+          key: "amount"
+        },
+        {
+          title: "销售金额",
+          key: "totalMoney"
+        },
+        {
+          title: "优惠后金额",
+          key: "finalMoney"
+        }
+      ]
     };
   },
   methods: {
@@ -88,12 +114,28 @@ export default {
           return "/api/assets/" + v;
         });
       }
+    },
+    get_history_data(id) {
+      let _self = this;
+      let url = `api/order/unusual/workorder/searchWordOrderById`;
+      let config = {
+        params: {
+          applyId: id
+        }
+      };
+
+      function success(res) {
+        _self.productItems = res.data.data.productItems;
+      }
+
+      this.$Get(url, config, success);
     }
   },
   created() {
     let _self = this;
     this.$bus.on("OPEN_AB_ORDER_DETAIL", e => {
       _self.get_data(e);
+      _self.get_history_data(e.applyId);
       _self.openAbOrderDetail = true;
     });
   }

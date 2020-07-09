@@ -481,6 +481,7 @@ export default {
     //编辑异常工单
     open_edit() {
       let _self = this;
+      this.$bus.emit("OPEN_AB_ORDERLIST_EDIT", _self.selectRow);
       if (this.selectRow) {
         console.log(this.selectRow);
         if (

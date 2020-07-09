@@ -28,7 +28,7 @@
                       >{{item.typename}}</Option>
                     </Select>
                   </FormItem>
-                </Col> -->
+                </Col>-->
               </Row>
               <FormItem>
                 <Button type="primary" @click="search">搜索</Button>
@@ -43,11 +43,7 @@
       <ButtonGroup style="float:left">
         <!-- <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
         <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>-->
-        <Button
-          type="primary"
-          icon="ios-color-wand-outline"
-          @click="handleServeModal"
-        >开始服务</Button>
+        <Button type="primary" icon="ios-color-wand-outline" @click="handleServeModal">开始服务</Button>
         <!-- <Button v-else type="primary" icon="ios-color-wand-outline" @click="showflow">流转</Button> -->
         <!-- <Button type="primary" icon="ios-color-wand-outline" @click="flow_all">批量流转</Button> -->
         <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
@@ -103,12 +99,12 @@
         :label-width="100"
       >
         <FormItem prop="servicename" label="供应商">
-          <Select @on-change="gycSelectChange" v-model="forms.suppilerId" style="width:200px">
+          <Select @on-change="gycSelectChangeTwo" :value="forms.supplierId" style="width:200px">
             <Option
               v-for="(item,index) in gycList"
               :key="index"
-              :value="item.id"
-            >{{item.supplier_name}}</Option>
+              :value="item.supplierId"
+            >{{item.supplierName}}</Option>
           </Select>
         </FormItem>
         <FormItem label="结算价" prop="settlementPrice">
@@ -118,19 +114,17 @@
           <Input v-model="forms.salesPrice" />
         </FormItem>
         <FormItem label="凭证" prop="file">
-          <Upload
-            action="//jsonplaceholder.typicode.com/posts/"
-            :before-upload="handleUpload"
-          >
+          <Upload action="//jsonplaceholder.typicode.com/posts/" :before-upload="handleUpload">
             <!-- <div style="padding: 20px 0">
               <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
               <p>上传</p>
-            </div> -->
+            </div>-->
 
-             <Button icon="ios-cloud-upload-outline">上传</Button>
+            <Button icon="ios-cloud-upload-outline">上传</Button>
           </Upload>
-          <template v-for="(item,index) in picUrl" ><img :key="index" :src="item" style="width:100px;height:100px" /></template>
-         
+          <template v-for="(item,index) in picUrl">
+            <img :key="index" :src="item" style="width:100px;height:100px" />
+          </template>
         </FormItem>
         <FormItem label="备注" prop="remark">
           <Input type="textarea" v-model="forms.remark" />
@@ -153,18 +147,55 @@
         :label-width="100"
       >
         <FormItem prop="servicename" label="供应商">
-          <Select @on-change="gycSelectChange" v-model="forms.suppilerId" style="width:200px">
+          <Select @on-change="gycSelectChange" :value="forms.id" style="width:200px">
             <Option
-              v-for="(item,index) in gycList"
+              v-for="(item,index) in forms.supplierList"
               :key="index"
               :value="item.id"
             >{{item.supplier_name}}</Option>
           </Select>
+          <Button @click="handleAddSuppiler">添加</Button>
         </FormItem>
-        <FormItem label="结算价" prop="settlementPrice">
-          <Input type="number" v-model="forms.settlementPrice" />
+        <FormItem label="联系方式" prop="tel">
+          <Input readonly v-model="forms.tel" />
         </FormItem>
-        <FormItem label="备注" >
+        <FormItem label="开户行" prop="settlement_open_bank">
+          <Input readonly v-model="forms.settlement_open_bank" />
+        </FormItem>
+        <FormItem label="开户支行" prop="settlement_open_bank_item">
+          <Input readonly v-model="forms.settlement_open_bank_item" />
+        </FormItem>
+        <FormItem label="结算账号" prop="settlement_account">
+          <Input readonly v-model="forms.settlement_account" />
+        </FormItem>
+        <FormItem label="产品" prop="product">
+          <Input readonly v-model="forms.product" />
+        </FormItem>
+        <FormItem label="销售价" prop="sales_price">
+          <Input readonly v-model="forms.sales_price" />
+        </FormItem>
+        <FormItem label="结算价" prop="settlement_price">
+          <Input type="number" v-model="forms.settlement_price" />
+        </FormItem>
+        <FormItem prop="servicename" label="服务部门">
+          <Select disabled :value="forms.departId" style="width:200px">
+            <Option
+              v-for="(item,index) in forms.serviceDeparts"
+              :key="index"
+              :value="item.departId"
+            >{{item.departName}}</Option>
+          </Select>
+        </FormItem>
+        <FormItem prop="servicename" label="服务人员">
+          <Select :value="forms.serverId" style="width:200px">
+            <Option
+              v-for="(item,index) in forms.currentDepartServers"
+              :key="index"
+              :value="item.id"
+            >{{item.realname}}</Option>
+          </Select>
+        </FormItem>
+        <FormItem label="备注">
           <Input type="textarea" v-model="forms.remark" />
         </FormItem>
       </Form>
@@ -173,33 +204,27 @@
         <Button type="ghost" style="margin-left:20px" @click="serveModal=false">取消</Button>
       </div>
     </Modal>
-    <!-- <Modal
-            v-model="pause"
-            title="提示信息"
-        >
-            <div style="font-size:20px;"><Icon type="alert-circled"></Icon>是否暂停/解锁</div>
-            <div slot="footer">
-                <Button type="primary" @click="pausetask">确定</Button>
-                <Button type="ghost" style="margin-left:20px" @click="pause=!pause">取消</Button>
-            </div>
-        </Modal>
-    -->
+
+    <Add @ok="handleAddSuppilerModel" @cancel="addSuppilerModel=false" v-if="addSuppilerModel" />
     <allot-service></allot-service>
   </Card>
 </template>
 
 <script>
+import Add from "./Menu/add.vue";
 import {
   listByProductId,
   addSuppilerByWorkorderId,
   beginExecutiveWorkOrder,
-  doneExecutiveWorkOrder
+  doneExecutiveWorkOrder,
+  getSupplierWorkOrderAndSupplierByWorkOrderId
 } from "@A/supplierManage";
 import allotService from "./Menu/allot_service";
 export default {
-  components: { allotService },
+  components: { allotService, Add },
   data() {
     return {
+      addSuppilerModel: false,
       serveModal: false,
       search_model: "",
       sortField: "updatedate",
@@ -210,12 +235,19 @@ export default {
       formInline: {
         companyname: "",
         servicename: "",
-        productType: 'gyscp'
+        productType: "gyscp"
       },
       gysModelLoading: false,
       picUrl: [],
       productTypeDict: [],
-      forms: { salesPrice: "", settlementPrice: "", files: [], remark: '' },
+      forms: {
+        settlement_open_bank: "",
+        settlement_account: "",
+        sales_price: "",
+        settlement_open_bank_item: "",
+        files: [],
+        remark: ""
+      },
       ruleValidate: {},
       gycList: [],
       //  加载中
@@ -245,7 +277,7 @@ export default {
         {
           title: "归属公司",
           key: "companyname",
-          
+
           sortable: true,
           render: (h, params) => {
             // console.log(params)
@@ -303,7 +335,7 @@ export default {
         {
           title: "产品全称",
           key: "product",
-          
+
           sortable: true,
           render: (h, params) => {
             // console.log(params)
@@ -370,7 +402,7 @@ export default {
         {
           title: "创建时间",
           key: "CreateDate",
-          
+
           sortable: true
         },
         // {
@@ -381,105 +413,19 @@ export default {
         {
           title: "服务人员",
           key: "servername",
-         
+
           sortable: true
         },
         {
           title: "跟进人",
           key: "followname",
-         
+
           sortable: true
         },
         {
           title: "备注",
-          key: "remark",
-        },
-        // {
-        //   title: "操作",
-        //   key: "action",
-        //   fixed: "right",
-        //   width: 120,
-        //   align: "center",
-        //   render: (h, params) => {
-        //     return h("div", [
-        //       // h('Button', {
-        //       //     props: {
-        //       //         type: 'text',
-        //       //         size: 'small'
-        //       //     },
-        //       //     on: {
-        //       //         click: () => {
-        //       //             // console.log(params)
-        //       //             Bus.$emit('showcompanydetail',params)
-        //       //         }
-        //       //     }
-        //       // }, '[查看公司]'),
-        //       h(
-        //         "Button",
-        //         {
-        //           props: {
-        //             type: "text",
-        //             size: "small"
-        //           },
-        //           on: {
-        //             click: () => {
-        //               this.flowChart(params);
-        //             }
-        //           }
-        //         },
-        //         "[流程图]"
-        //       )
-        //       // h('Button', {
-        //       //     props: {
-        //       //         type: 'text',
-        //       //         size: 'small'
-        //       //     },
-        //       //     on: {
-        //       //         click: () => {
-        //       //             var _self = this
-        //       //             console.log(params)
-        //       //             //  暂停
-        //       //             if(params.row.resumeFlag == null || params.row.resumeFlag == 3){
-        //       //                 let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=3`
-        //       //                 this.$http.get(url).then(function(res){
-        //       //                 _self.$backToLogin(res)
-        //       //                     if(res.data.msgCode == 40000){
-        //       //                         _self.$Message.success(res.data.msg)
-        //       //                     }else{
-        //       //                         _self.$Message.error(res.data.msg)
-        //       //                     }
-        //       //                     _self.getData()
-        //       //                 })
-        //       //             }else if(params.row.resumeFlag == 2){
-        //       //                 let url = `api/order/serviceResume?workOrderId=${params.row.id}&resumeFlag=2`
-        //       //                 this.$http.get(url).then(function(res){
-        //       //                 _self.$backToLogin(res)
-
-        //       //                     if(res.data.msgCode == 40000){
-        //       //                         _self.$Message.success(res.data.msg)
-        //       //                     }else{
-        //       //                         _self.$Message.error(res.data.msg)
-        //       //                     }
-        //       //                     _self.getData()
-        //       //                 })
-        //       //             }else{}
-        //       //         }
-        //       //     }
-        //       // }, '[暂停/解锁]'),
-        //       // h('Button', {
-        //       //     props: {
-        //       //         type: 'text',
-        //       //         size: 'small'
-        //       //     },
-        //       //     on: {
-        //       //         click: () => {
-        //       //             this.endlife = true
-        //       //         }
-        //       //     }
-        //       // }, '[退款终止]'),
-        //     ]);
-        //   }
-        // }
+          key: "remark"
+        }
       ],
       tempArray: [],
       isGysModel: false
@@ -488,34 +434,35 @@ export default {
   methods: {
     // 开始服务弹窗
     async handleServeModal() {
-      this.gycList = await listByProductId({
-        productId: this.current_row.productId
+      const resp = await getSupplierWorkOrderAndSupplierByWorkOrderId({
+        workorderId: this.current_row.id
       });
-      if (this.gycList.length) {
-        this.forms.settlementPrice = this.gycList[0].settlement_price;
-        this.forms.suppilerId = this.gycList[0].id;
-      }
-      this.forms.remark = this.current_row.remark;
+      this.forms = { ...resp, ...(resp.supplierList && resp.supplierList[0]) };
+
       this.serveModal = true;
+    },
+    async handleAddSuppilerModel() {
+      this.addSuppilerModel = false;
     },
     async handleServe() {
       await beginExecutiveWorkOrder({
         workorderId: this.current_row.id,
-        suppilerId: this.forms.suppilerId,
-        settlementPrice: this.forms.settlementPrice,
-        remark: this.forms.remark
+        suppilerId: this.forms.id,
+        settlementPrice: this.forms.settlement_price,
+        remark: this.forms.remark,
+        serverId: this.forms.serverId
       });
       this.serveModal = false;
       this.getData();
     },
     async hanldeProductFinish() {
       let formData = new FormData();
-      this.forms.files.forEach(v=>{
-        formData.append("files",v);
-      })
+      this.forms.files.forEach(v => {
+        formData.append("files", v);
+      });
       formData.append("workorderId", this.current_row.id);
       formData.append("salesPrice", this.forms.salesPrice);
-      formData.append("suppilerId", this.forms.suppilerId);
+      formData.append("supplierId", this.forms.supplierId);
       formData.append("settlementPrice", this.forms.settlementPrice);
       formData.append("remark", this.forms.remark);
       this.gysModelLoading = true;
@@ -588,7 +535,7 @@ export default {
       this.getData();
     },
     handleUpload(file) {
-      console.log(file)
+      console.log(file);
       let that = this;
       this.forms.files.push(file);
       let fileReader = new FileReader();
@@ -634,6 +581,9 @@ export default {
       };
       let toExcel = this.$MergeURL(url, config);
       window.open(toExcel);
+    },
+    handleAddSuppiler() {
+      this.addSuppilerModel = true;
     },
     getData() {
       var _self = this;
@@ -740,11 +690,14 @@ export default {
       }
     },
     gycSelectChange(id) {
-      const values = this.gycList.find(v => id == v.id);
-      this.forms.salesPrice = values.sales_price;
-      this.forms.settlementPrice = values.settlement_price;
-      this.forms.suppilerId = values.id;
+      const values = this.forms.supplierList.find(v => id == v.id);
+      this.forms = { ...this.forms, ...values };
     },
+    gycSelectChangeTwo(id) {
+      const values = this.gycList.find(v => id == v.id);
+      this.forms = { ...this.forms, ...values };
+    },
+
     reCreate() {
       let _self = this;
       if (this.current_row != "") {
@@ -803,9 +756,7 @@ export default {
             productId: this.current_row.productId
           });
           if (this.gycList.length) {
-            this.forms.salesPrice = this.gycList[0].sales_price;
-            this.forms.settlementPrice = this.gycList[0].settlement_price;
-            this.forms.suppilerId = this.gycList[0].id;
+            this.forms = this.gycList[0];
           }
           this.forms.files = [];
           this.picUrl = [];
