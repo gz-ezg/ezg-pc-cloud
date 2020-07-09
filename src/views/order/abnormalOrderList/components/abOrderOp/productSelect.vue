@@ -249,8 +249,7 @@ export default {
         params: {
           page: _self.page,
           pageSize: _self.pageSize,
-          product: _self.searchProduct,
-          isCycle: "Y"
+          product: _self.searchProduct
         }
       };
 
