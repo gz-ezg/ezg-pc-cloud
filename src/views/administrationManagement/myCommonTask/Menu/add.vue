@@ -44,8 +44,8 @@
           <Input type="number" v-model="forms.settlementPrice" />
         </FormItem>
 
-        <FormItem label="销售价" prop="salesPrice">
-          <Input type="number" v-model="forms.salesPrice" />
+        <FormItem label="销售价">
+          <Input v-model="forms.salesPrice" />
         </FormItem>
 
         <FormItem label="状态" prop="status">
@@ -79,6 +79,7 @@ import companySelect from "../components/companySelect";
 import { supplierCreate } from "../api";
 export default {
   components: { companySelect },
+  props: ["productId", "product", "salePrice"],
   data() {
     return {
       show: true,
@@ -95,13 +96,6 @@ export default {
           {
             required: true,
             message: "请填写结算价",
-            trigger: "change"
-          }
-        ],
-        salesPrice: [
-          {
-            required: true,
-            message: "请填写销售价",
             trigger: "change"
           }
         ]
@@ -125,7 +119,6 @@ export default {
     },
     async getOpenBankList() {
       const resp = await this.$queryCodes("open_bank");
-      console.log(resp);
       this.openBankList = resp[0];
     },
     handleConfirm() {
@@ -141,6 +134,11 @@ export default {
   },
   created() {
     this.getOpenBankList();
+  },
+  mounted() {
+    this.forms.productId = this.productId;
+    this.forms.product = this.product;
+    this.forms.salesPrice = this.salePrice;
   }
 };
 </script>

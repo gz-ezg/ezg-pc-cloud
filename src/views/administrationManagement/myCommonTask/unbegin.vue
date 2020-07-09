@@ -178,7 +178,7 @@
           <Input type="number" v-model="forms.settlement_price" />
         </FormItem>
         <FormItem prop="servicename" label="服务部门">
-          <Select disabled :value="forms.departId" style="width:200px">
+          <Select @on-change="handledepartChange" :value="forms.departId" style="width:200px">
             <Option
               v-for="(item,index) in forms.serviceDeparts"
               :key="index"
@@ -205,7 +205,14 @@
       </div>
     </Modal>
 
-    <Add @ok="handleAddSuppilerModel" @cancel="addSuppilerModel=false" v-if="addSuppilerModel" />
+    <Add
+      @ok="handleAddSuppilerModel"
+      :productId="forms.productId"
+      :product="forms.product"
+      :salePrice="forms.salePrice"
+      @cancel="addSuppilerModel=false"
+      v-if="addSuppilerModel"
+    />
     <allot-service></allot-service>
   </Card>
 </template>
@@ -241,6 +248,9 @@ export default {
       picUrl: [],
       productTypeDict: [],
       forms: {
+        productId: "",
+        product: "",
+        salePrice: "",
         settlement_open_bank: "",
         settlement_account: "",
         sales_price: "",
@@ -476,6 +486,15 @@ export default {
       } finally {
         this.gysModelLoading = false;
         this.getData();
+      }
+    },
+    async handledepartChange(e) {
+      let url = "api/user/getAllUserListByDepartId?departId=" + e;
+
+      const resp = await this.$http.get(url);
+      this.forms.currentDepartServers = resp.data.data;
+      if (this.forms.currentDepartServers.length == 1) {
+        this.forms.serverId = this.forms.currentDepartServers[0].id;
       }
     },
     get_all_selection(e) {

@@ -27,13 +27,26 @@
         <Cascader trigger="hover" :data="customerTypes_Casr" v-model="formValidate.customerType"></Cascader>
       </FormItem>
       <FormItem label="客户来源" prop="customersource" style="margin-bottom:0px">
-        <Select transfer v-model="formValidate.customersource" disabled size="small">
-          <Option v-for="item in cluesources" :value="item.typecode" :key="item.id">{{ item.typename }}</Option>
+        <Select transfer v-model="formValidate.customersource" :disabled="!isAdmin" size="small">
+          <Option
+            v-for="item in cluesources"
+            :value="item.typecode"
+            :key="item.id"
+          >{{ item.typename }}</Option>
         </Select>
       </FormItem>
-      <FormItem label="渠道名称" prop="channel_type_id" v-if="formValidate.customersource == 'xzqd'" style="margin-bottom:0px">
+      <FormItem
+        label="渠道名称"
+        prop="channel_type_id"
+        v-if="formValidate.customersource == 'xzqd'"
+        style="margin-bottom:0px"
+      >
         <Select transfer v-model="formValidate.channel_type_id" size="small">
-          <Option v-for="item in ChannelType" :value="item.id" :key="item.id">{{ item.channel_type_name }}</Option>
+          <Option
+            v-for="item in ChannelType"
+            :value="item.id"
+            :key="item.id"
+          >{{ item.channel_type_name }}</Option>
         </Select>
       </FormItem>
       <FormItem label="关联客户" v-if="!!formValidate.recommendCustomerName" style="margin-bottom:0px">
@@ -41,13 +54,26 @@
         <Input size="small" v-model="formValidate.recommendCustomerName" readonly />
       </FormItem>
       <FormItem label="客户等级" prop="importlevel" style="margin-bottom:0px">
-        <Select transfer v-model="formValidate.importlevel" size="small" :disabled="formValidate.customerType[0] == 10919">
-          <Option v-for="item in customerrating" :value="item.typecode" :key="item.id">{{ item.typename }}</Option>
+        <Select
+          transfer
+          v-model="formValidate.importlevel"
+          size="small"
+          :disabled="formValidate.customerType[0] == 10919"
+        >
+          <Option
+            v-for="item in customerrating"
+            :value="item.typecode"
+            :key="item.id"
+          >{{ item.typename }}</Option>
         </Select>
       </FormItem>
       <FormItem label="重要性" prop="importance" style="margin-bottom:0px">
         <Select transfer v-model="formValidate.importance" size="small">
-          <Option v-for="item in importance" :value="item.typecode" :key="item.id">{{ item.typename }}</Option>
+          <Option
+            v-for="item in importance"
+            :value="item.typecode"
+            :key="item.id"
+          >{{ item.typename }}</Option>
         </Select>
       </FormItem>
       <FormItem label="区域" prop="AREA" style="margin-bottom:0px">
@@ -61,12 +87,24 @@
         </Select>
       </FormItem>
       <FormItem label="标签" prop="customerlabelTags" style="margin-bottom:0px">
-        <Tag v-for="(item, index) in LabelArray" :key="index" :name="index" closable @on-close="close_tag(index)">{{
-          item.labelName
-        }}</Tag>
-        <Button name="marketingManagement_index_edit_addtag" icon="ios-plus-empty" type="dashed" size="small" @click="open_tag"
-          >添加</Button
+        <Tag
+          v-for="(item, index) in LabelArray"
+          :key="index"
+          :name="index"
+          closable
+          @on-close="close_tag(index)"
         >
+          {{
+          item.labelName
+          }}
+        </Tag>
+        <Button
+          name="marketingManagement_index_edit_addtag"
+          icon="ios-plus-empty"
+          type="dashed"
+          size="small"
+          @click="open_tag"
+        >添加</Button>
       </FormItem>
       <FormItem label="创建时间" prop="CREATEDATE" style="margin-bottom:0px">
         <Input readonly size="small" v-model="formValidate.CREATEDATE" />
@@ -85,8 +123,7 @@
           @click="update"
           style="margin-left: 20px"
           :loading="loading"
-          >保存</Button
-        >
+        >保存</Button>
       </FormItem>
     </Form>
   </div>
@@ -121,47 +158,47 @@ export default {
     //  自定义规则
     const validateTel = (rule, value, callback) => {
       let re = /^1\d{10}$/;
-      if (value == '' || value == null) {
+      if (value == "" || value == null) {
         callback();
       } else {
         if (re.test(value)) {
           callback();
         } else {
-          callback(new Error('电话格式不正确'));
+          callback(new Error("电话格式不正确"));
         }
       }
     };
 
     const validateFixedphone = (rule, value, callback) => {
       let re = /\d{3}-\d{8}|\d{4}-\d{7}/;
-      if (value == '' || value == null) {
+      if (value == "" || value == null) {
         callback();
       } else {
         if (re.test(value)) {
           callback();
         } else {
-          callback(new Error('固话格式不正确'));
+          callback(new Error("固话格式不正确"));
         }
       }
     };
 
     const validateQQ = (rule, value, callback) => {
       let re = /^[1-9]\d{4,10}$/;
-      if (value == '' || value == null) {
+      if (value == "" || value == null) {
         callback();
       } else {
         if (re.test(value)) {
           callback();
         } else {
-          callback(new Error('QQ格式不正确'));
+          callback(new Error("QQ格式不正确"));
         }
       }
     };
 
     const validateChannel = (rule, value, callback) => {
-      if (this.formValidate.customersource == 'xzqd') {
-        if (value == '' || value == null) {
-          callback(new Error('请选择渠道类型'));
+      if (this.formValidate.customersource == "xzqd") {
+        if (value == "" || value == null) {
+          callback(new Error("请选择渠道类型"));
         } else {
           callback();
         }
@@ -170,49 +207,71 @@ export default {
       }
     };
     return {
+      isAdmin: "",
       loading: false,
       LabelArray: [],
       allLabel: [],
       ChannelType: [],
       isOpenEdit: false,
       formValidate: {
-        id: '',
-        NAME: '',
-        TEL: '',
-        fixedPhone: '',
-        qq: '',
-        weixin: '',
-        ADDRESS: '',
+        id: "",
+        NAME: "",
+        TEL: "",
+        fixedPhone: "",
+        qq: "",
+        weixin: "",
+        ADDRESS: "",
         customerType: [],
-        customersource: '',
-        importlevel: '',
-        AREA: '',
-        issend: '',
+        customersource: "",
+        importlevel: "",
+        AREA: "",
+        issend: "",
         customerlabel: [],
-        createdate: '',
-        updatedate: '',
-        gxr: '',
-        backup: '',
-        sourcesubdivision: '',
-        isbound: '',
-        email: '',
-        channelsource: '',
-        channel_type_id: '',
-        rec_customer: '',
-        importance: '',
+        createdate: "",
+        updatedate: "",
+        gxr: "",
+        backup: "",
+        sourcesubdivision: "",
+        isbound: "",
+        email: "",
+        channelsource: "",
+        channel_type_id: "",
+        rec_customer: "",
+        importance: "",
         labels: []
       },
       ruleValidate: {
-        NAME: [{ required: true, trigger: 'change', message: '姓名不能为空' }],
-        customerType: [{ required: true, message: '客户状态不能为空', trigger: 'change', type: 'array' }],
-        customersource: [{ required: true, trigger: 'change', message: '请选择客户来源' }],
-        TEL: [{ validator: validateTel, trigger: 'blur', type: 'number' }],
-        fixedPhone: [{ validator: validateFixedphone, trigger: 'change', type: 'number' }],
-        importlevel: [{ required: true, trigger: 'change', message: '请选择客户等级' }],
-        area: [{ required: true, trigger: 'change', message: '请选择区域' }],
-        channel_type_id: [{ validator: validateChannel, trigger: 'change', message: '请选择渠道来源' }],
-        email: [{ type: 'email', trigger: 'change', message: '邮箱格式不正确' }],
-        qq: [{ validator: validateQQ, trigger: 'change' }]
+        NAME: [{ required: true, trigger: "change", message: "姓名不能为空" }],
+        customerType: [
+          {
+            required: true,
+            message: "客户状态不能为空",
+            trigger: "change",
+            type: "array"
+          }
+        ],
+        customersource: [
+          { required: true, trigger: "change", message: "请选择客户来源" }
+        ],
+        TEL: [{ validator: validateTel, trigger: "blur", type: "number" }],
+        fixedPhone: [
+          { validator: validateFixedphone, trigger: "change", type: "number" }
+        ],
+        importlevel: [
+          { required: true, trigger: "change", message: "请选择客户等级" }
+        ],
+        area: [{ required: true, trigger: "change", message: "请选择区域" }],
+        channel_type_id: [
+          {
+            validator: validateChannel,
+            trigger: "change",
+            message: "请选择渠道来源"
+          }
+        ],
+        email: [
+          { type: "email", trigger: "change", message: "邮箱格式不正确" }
+        ],
+        qq: [{ validator: validateQQ, trigger: "change" }]
       }
     };
   },
@@ -230,22 +289,30 @@ export default {
       function success(res) {
         _self.formValidate = res.data.data;
         if (_self.formValidate.customerType) {
-          _self.formValidate.customerType = _self.formValidate.customerType.split('-');
-          _self.formValidate.customerType[0] = parseInt(_self.formValidate.customerType[0]);
-          _self.formValidate.customerType[1] = parseInt(_self.formValidate.customerType[1]);
+          _self.formValidate.customerType = _self.formValidate.customerType.split(
+            "-"
+          );
+          _self.formValidate.customerType[0] = parseInt(
+            _self.formValidate.customerType[0]
+          );
+          _self.formValidate.customerType[1] = parseInt(
+            _self.formValidate.customerType[1]
+          );
         } else {
           _self.formValidate.customerType = [];
         }
         if (_self.formValidate.importlevel) {
-          _self.formValidate.importlevel = '' + _self.formValidate.importlevel;
+          _self.formValidate.importlevel = "" + _self.formValidate.importlevel;
         }
         if (_self.formValidate.labels) {
-          _self.formValidate.labels = _self.formValidate.labels.split(',');
+          _self.formValidate.labels = _self.formValidate.labels.split(",");
           for (let j = 0; j < _self.formValidate.labels.length; j++) {
-            _self.formValidate.labels[j] = parseInt(_self.formValidate.labels[j]);
+            _self.formValidate.labels[j] = parseInt(
+              _self.formValidate.labels[j]
+            );
           }
         }
-        _self.$emit('cancel-loading', true);
+        _self.$emit("cancel-loading", true);
       }
 
       this.$Get(url, config, success);
@@ -286,16 +353,21 @@ export default {
       if (!_self.formValidate.labels) {
         _self.formValidate.labels = [];
       }
-      this.$bus.emit('OPEN_TAG', _self.formValidate.labels);
+      this.$bus.emit("OPEN_TAG", _self.formValidate.labels);
     },
     close_tag(e) {
       this.formValidate.labels.splice(e, 1);
     },
 
     update() {
-      if (this.formValidate.TEL || this.formValidate.email || this.formValidate.fixedPhone || this.formValidate.weixin) {
+      if (
+        this.formValidate.TEL ||
+        this.formValidate.email ||
+        this.formValidate.fixedPhone ||
+        this.formValidate.weixin
+      ) {
         this.loading = true;
-        this.$refs['formValidate'].validate(valid => {
+        this.$refs["formValidate"].validate(valid => {
           if (valid) {
             this.submit();
           } else {
@@ -303,13 +375,13 @@ export default {
           }
         });
       } else {
-        this.$Message.warning('联系方式需至少填写一项！');
+        this.$Message.warning("联系方式需至少填写一项！");
       }
     },
     submit() {
       let _self = this;
       let url = `api/customer/updateCustomer`;
-      console.log('123456');
+      console.log("123456");
 
       // if(_self.formValidate.customerType.length>2){
       //     console.log("1111")
@@ -320,9 +392,9 @@ export default {
 
       console.log(_self.formValidate.labels);
       // console.log(_self.formValidate.labels.join(","))
-      let labelTemp = '';
+      let labelTemp = "";
       if (_self.formValidate.labels) {
-        labelTemp = _self.formValidate.labels.join(',');
+        labelTemp = _self.formValidate.labels.join(",");
       }
       let config = {
         id: _self.formValidate.ID,
@@ -331,7 +403,10 @@ export default {
         name: _self.formValidate.NAME,
         tel: _self.formValidate.TEL,
         backup: _self.formValidate.backup,
-        customertype: _self.formValidate.customerType[0] + '-' + _self.formValidate.customerType[1],
+        customertype:
+          _self.formValidate.customerType[0] +
+          "-" +
+          _self.formValidate.customerType[1],
         issend: _self.formValidate.issend,
         fixedphone: _self.formValidate.fixedPhone,
         qq: _self.formValidate.qq,
@@ -349,9 +424,9 @@ export default {
       function success(res) {
         _self.loading = false;
 
-        _self.$bus.emit('CLOSE_EDIT_PAGE', true);
+        _self.$bus.emit("CLOSE_EDIT_PAGE", true);
         setTimeout(() => {
-          _self.$bus.emit('UPDATE_CUSTOMER', true);
+          _self.$bus.emit("UPDATE_CUSTOMER", true);
         }, 300);
       }
 
@@ -368,9 +443,12 @@ export default {
     Promise.all([_self.get_channel_type(), _self.get_all_label()]).then(() => {
       this.get_data(this.customer.ID);
     });
+
+    // 判断是否管理员
+    this.isAdmin = localStorage.getItem("realname") == "管理员";
   },
   watch: {
-    'formValidate.labels': function() {
+    "formValidate.labels": function() {
       //  用于计算展示的标签数组
       //  formValidate.labels id数组
       //  LabelName 所有值数组

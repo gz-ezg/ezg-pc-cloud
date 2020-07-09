@@ -12,7 +12,7 @@
             </div>
             <Spin v-if="loading" fix></Spin>
             <Row style="overflow: hidden; *zoom: 1;">
-                <Card style="width:300px;float:left;" title="信息编辑">
+                <Card style="width:300px;float:left;" title="信息编辑1">
                     <edit-form
                         :customer="customer"
                         :cluesources="cluesources"
