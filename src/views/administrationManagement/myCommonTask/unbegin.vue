@@ -156,20 +156,29 @@
           </Select>
           <Button @click="handleAddSuppiler">添加</Button>
         </FormItem>
+        <FormItem label="联系人" prop="tel">
+          <!-- <Input readonly v-model="forms.tel" /> -->
+           {{forms.contact_name || '------'}}
+        </FormItem>
         <FormItem label="联系方式" prop="tel">
-          <Input readonly v-model="forms.tel" />
+          <!-- <Input readonly v-model="forms.tel" /> -->
+           {{forms.tel || '------'}}
         </FormItem>
         <FormItem label="开户行" prop="settlement_open_bank">
-          <Input readonly v-model="forms.settlement_open_bank" />
+          <!-- <Input readonly v-model="forms.settlement_open_bank" /> -->
+           {{forms.settlement_open_bank || '------'}}
         </FormItem>
         <FormItem label="开户支行" prop="settlement_open_bank_item">
-          <Input readonly v-model="forms.settlement_open_bank_item" />
+          <!-- <Input readonly v-model="forms.settlement_open_bank_item" /> -->
+           {{forms.settlement_open_bank_item || '------'}}
         </FormItem>
         <FormItem label="结算账号" prop="settlement_account">
-          <Input readonly v-model="forms.settlement_account" />
+          <!-- <Input readonly v-model="forms.settlement_account" /> -->
+          {{forms.settlement_account || '------'}}
         </FormItem>
         <FormItem label="产品" prop="product">
-          <Input readonly v-model="forms.product" />
+          <!-- <Input readonly v-model="forms.product" /> -->
+           {{forms.product || '------'}}
         </FormItem>
         <FormItem label="销售价" prop="sales_price">
           <!-- <Input readonly v-model="forms.salePrice" /> -->
@@ -259,7 +268,16 @@ export default {
         files: [],
         remark: ""
       },
-      ruleValidate: {},
+      ruleValidate: {
+          settlement_price: [
+                    {
+                      required: true,
+                      message: "请填写结算价",
+                      trigger: "change"
+                    }
+                  ]
+
+      },
       gycList: [],
       //  加载中
       Sloading: false,

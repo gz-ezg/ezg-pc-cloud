@@ -9,6 +9,18 @@
         label-position="right"
         :label-width="100"
       >
+
+        <FormItem label="产品" prop="product">
+          {{forms.product || '------'}}
+          <!-- <Input v-model="forms.product" @on-focus="openCompany" readonly /> -->
+        </FormItem>
+
+        <FormItem label="销售价">
+          {{forms.salesPrice || '------'}}
+          <!-- <Input v-model="forms.salesPrice" /> -->
+        </FormItem>
+
+
         <FormItem label="供应商" prop="supplierName">
           <Input v-model="forms.supplierName" />
         </FormItem>
@@ -36,19 +48,13 @@
           <Input v-model="forms.settlementAccount" />
         </FormItem>
 
-        <FormItem label="产品" prop="product">
-          <Input v-model="forms.product" @on-focus="openCompany" readonly />
-        </FormItem>
 
         <FormItem label="结算价" prop="settlementPrice">
           <Input type="number" v-model="forms.settlementPrice" />
         </FormItem>
 
-        <FormItem label="销售价">
-          <Input v-model="forms.salesPrice" />
-        </FormItem>
-
-        <FormItem label="状态" prop="status">
+        
+        <!-- <FormItem label="状态" prop="status">
           <RadioGroup v-model="forms.status">
             <Radio label="Y">启用</Radio>
             <Radio label="N">禁用</Radio>
@@ -62,7 +68,7 @@
             :autosize="{minRows: 2,maxRows: 5}"
             placeholder="Enter something..."
           />
-        </FormItem>
+        </FormItem> -->
       </Form>
       <div slot="footer">
         <Button type="primary" @click="handleConfirm" :loading="loading" style="margin-left:20px">确定</Button>
@@ -91,7 +97,23 @@ export default {
         supplierName: [
           { required: true, message: "请填写供应商", trigger: "change" }
         ],
-        product: [{ required: true, message: "请选择产品", trigger: "change" }],
+        contactName: [
+          { required: true, message: "请填写联系人", trigger: "change" }
+        ],
+        tel: [
+          { required: true, message: "请填写联系电话", trigger: "change" }
+        ],
+         settlementOpenBank: [
+          { required: true, message: "请填写开户行", trigger: "change" }
+        ],
+        settlementOpenBankItem: [
+          { required: true, message: "请填写开户行支行", trigger: "change" }
+        ],
+        settlementAccount: [
+          { required: true, message: "请填写结算账号", trigger: "change" }
+        ],
+
+        // product: [{ required: true, message: "请选择产品", trigger: "change" }],
         settlementPrice: [
           {
             required: true,
