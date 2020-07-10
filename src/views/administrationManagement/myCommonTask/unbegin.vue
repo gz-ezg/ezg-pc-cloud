@@ -172,7 +172,8 @@
           <Input readonly v-model="forms.product" />
         </FormItem>
         <FormItem label="销售价" prop="sales_price">
-          <Input readonly v-model="forms.sales_price" />
+          <!-- <Input readonly v-model="forms.salePrice" /> -->
+          {{forms.salePrice || 0}}
         </FormItem>
         <FormItem label="结算价" prop="settlement_price">
           <Input type="number" v-model="forms.settlement_price" />
@@ -493,7 +494,7 @@ export default {
       }
     },
     async handledepartChange(e) {
-      this.forms.departId = e
+      this.forms.departId = e;
       let url = "api/user/getAllUserListByDepartId?departId=" + e;
 
       const resp = await this.$http.get(url);
