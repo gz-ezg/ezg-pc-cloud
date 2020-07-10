@@ -74,7 +74,7 @@ export default {
       tableHeader: [
         {
           title: "供应商",
-          key: "supplier_name",
+          key: "supplierName",
           minWidth: 140
         },
         {
@@ -82,26 +82,60 @@ export default {
           key: "product",
           minWidth: 300
         },
+
         {
-          title: "结算价",
-          key: "settlement_price",
+          title: "联系人",
+          key: "contactName",
           minWidth: 120
         },
         {
-          title: "销售价",
-          key: "sales_price",
+          title: "电话",
+          key: "tel",
+          minWidth: 120
+        },
+        {
+          title: "结算价格",
+          key: "settlementPrice",
+          minWidth: 120
+        },
+        {
+          title: "结算账号",
+          key: "settlementAccount",
+          minWidth: 120
+        },
+        {
+          title: "开户行",
+          key: "settlementOpenBank",
+          minWidth: 120
+        },
+        {
+          title: "开户行编码",
+          key: "settlementOpenBankCode",
+          minWidth: 120
+        },
+        {
+          title: "开户行支行",
+          key: "settlementOpenBankItem",
           minWidth: 120
         }
       ],
       filtraConfig: [
         { type: "input", key: "supplierName", label: "供应商名称：" },
-        { type: "input", key: "product", label: "产品名称：" }
+        { type: "input", key: "product", label: "产品名称：" },
+        { type: "input", key: "contactName", label: "联系人：" },
+        { type: "input", key: "tel", label: "电话：" },
+        { type: "input", key: "settlementAccount", label: "结算账号：" },
       ],
       excelField: [
-        { field: "supplier_name", title: "供应商" },
+        { field: "supplierName", title: "供应商" },
         { field: "product", title: "产品" },
-        { field: "settlement_price", title: "结算价" },
-        { field: "sales_price", title: "销售价" }
+        { field: "contactName", title: "联系人" },
+        { field: "tel", title: "电话" },
+        { field: "settlementPrice", title: "结算价" },
+        { field: "settlementOpenBank", title: "开户行" },
+        { field: "settlementOpenBankCode", title: "开户行编码" },
+        { field: "settlementOpenBankItem", title: "开户行支行" },
+        { field: "settlementAccount", title: "结算账号" }
       ],
       nowQuery: {
         status: "Y"

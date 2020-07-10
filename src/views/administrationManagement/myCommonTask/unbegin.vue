@@ -450,12 +450,16 @@ export default {
       const resp = await getSupplierWorkOrderAndSupplierByWorkOrderId({
         workorderId: this.current_row.id
       });
-      this.forms = { ...resp, ...(resp.supplierList && resp.supplierList[0]) };
-
+      this.forms = {
+        ...resp,
+        ...(resp.supplierList &&
+          resp.supplierList[resp.supplierList.length - 1])
+      };
       this.serveModal = true;
     },
     async handleAddSuppilerModel() {
       this.addSuppilerModel = false;
+      this.handleServeModal();
     },
     async handleServe() {
       await beginExecutiveWorkOrder({
@@ -489,11 +493,12 @@ export default {
       }
     },
     async handledepartChange(e) {
+      this.forms.departId = e
       let url = "api/user/getAllUserListByDepartId?departId=" + e;
 
       const resp = await this.$http.get(url);
       this.forms.currentDepartServers = resp.data.data;
-      if (this.forms.currentDepartServers.length == 1) {
+      if (this.forms.currentDepartServers.length) {
         this.forms.serverId = this.forms.currentDepartServers[0].id;
       }
     },
