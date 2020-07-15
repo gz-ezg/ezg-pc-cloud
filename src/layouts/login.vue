@@ -94,7 +94,9 @@ export default {
         redirect_uri: "http%3a%2f%2fcloud.zgcfo.com%2f%23%2flogin",
         // "redirect_uri" :"http%3a%2f%2fyc.zgcfo.com%3a8089%2fapi%2fuser%2fm%2flogin%2f1000052",
         state: "web_login",
-        href: "https://cloud.zgcfo.com/api/assets/upload/commonImg/wx_code.css"
+        //href: "https://cloud.zgcfo.com/api/assets/upload/commonImg/wx_code.css"
+        href: "https://zgcfo.oss-cn-shenzhen.aliyuncs.com/commonImg/wx_code.css"
+        
       });
     },
     handleSubmit() {
@@ -386,7 +388,7 @@ export default {
       text-align: center;
       padding: 30px 0;
     }
-    .form-con {
+       .form-con {
       padding: 10px 0 0;
     }
     .login-tip {
