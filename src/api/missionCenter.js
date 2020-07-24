@@ -4,8 +4,8 @@ import request from '@U/request'
 export function sendMiniProgramMsgByWXOA(data) {
   return request({
     url: '/customer/sendMiniProgramMsgByWXOA',
-    method: 'post',
-    data
+    method: 'get',
+    params: data
   })
 }
 export function getMonthServiceInfo(data) {
@@ -32,8 +32,8 @@ export function updateMonthServiceInfo(data) {
 export function deleteMonthServiceInfo(data) {
   return request({
     url: '/order/cycle/month/service/info/delete',
-    method: 'post',
-    data
+    method: 'get',
+    params:data
   })
 }
 

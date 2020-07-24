@@ -5,7 +5,13 @@
         <Collapse v-model="Collapse">
           <Panel name="1">
             代账情况
-            <Table :loading="loading" height="200" slot="content" :columns="columns1" :data="info"></Table>
+            <Table
+              :loading="loading"
+              max-height="200"
+              slot="content"
+              :columns="columns1"
+              :data="info"
+            ></Table>
           </Panel>
           <Panel name="2">
             代账工单
@@ -22,7 +28,7 @@
                 highlight-row
                 @on-row-click="selectWorkRow"
                 :loading="loading"
-                height="280"
+                max-height="240"
                 :columns="columns2"
                 :data="workOrder"
               ></Table>
@@ -48,7 +54,7 @@
               <Table
                 highlight-row
                 @on-row-click="selectRow"
-                height="280"
+                height="240"
                 :loading="loading"
                 :columns="columns3"
                 :data="monthRecordList"
@@ -69,8 +75,14 @@
           <Input v-model="form.baseWorkOrderId" placeholder="请输入" />
         </FormItem>
 
-        <FormItem label="税期" prop="settlementStatus ">
-          <DatePicker @on-change="latePeriodChange" type="month" placeholder="选择税期"></DatePicker>
+        <FormItem label="税期" prop="period ">
+          <DatePicker
+            @on-change="dateChange"
+            format="yyyyMM"
+            v-model="period"
+            type="month"
+            placeholder="选择税期"
+          ></DatePicker>
         </FormItem>
         <FormItem label="结算状态" prop="settlementStatus">
           <Select v-model="form.settlementStatus" placeholder="请选择">
@@ -82,7 +94,7 @@
           <Select v-model="form.serverId" placeholder="请选择">
             <Option
               v-for="(item,index) in serverList"
-              :key="index"
+              :key="item.serverId"
               :value="item.serverId"
             >{{item.serverName}}</Option>
           </Select>
@@ -112,14 +124,14 @@ import {
   deleteMonthServiceInfo,
   updateMonthServiceInfo,
   addMonthServiceInfo,
-  getAccounterList
+  getAccounterList,
 } from "@/api/missionCenter";
 export default {
   props: {
     row: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   data() {
     return {
@@ -130,97 +142,98 @@ export default {
       monthRecordList: [],
       currentRow: null,
       currentWorkRow: null,
-      Collapse: [0, 1],
-      form: {},
+      Collapse: ["2", "3"],
+      form: { serverId: "" },
       formModel: false,
       ruleValidate: {},
       serverList: [],
+      period: "",
       columns1: [
         {
           title: "服务状态",
           key: "serviceStatus",
           render(h, { row }) {
             const inserviceMap = {
-              inservice: "服务中"
+              inservice: "服务中",
             };
             return h("span", inserviceMap[row.serviceStatus]);
-          }
+          },
         },
         {
           title: "对应企业",
-          key: "companyName"
+          key: "companyName",
         },
         {
           title: "产品",
           minWidth: 120,
-          key: "product"
+          key: "product",
         },
         {
           title: "开始税期",
-          key: "beginPeriod"
+          key: "beginPeriod",
         },
         {
           title: "结束税期",
-          key: "endPeriod"
-        }
+          key: "endPeriod",
+        },
       ],
       columns2: [
         {
           title: "记录ID",
-          key: "cycleServiceTotalId"
+          key: "cycleServiceTotalId",
         },
         {
           title: "工单ID",
-          key: "baseWorkOrderId"
+          key: "baseWorkOrderId",
         },
         {
           title: "产品",
           key: "alisName",
-          minWidth: 120
+          minWidth: 120,
         },
         {
           title: "开始税期",
-          key: "beginPeriod"
+          key: "beginPeriod",
         },
         {
           title: "结束税期",
-          key: "endPeriod"
-        }
+          key: "endPeriod",
+        },
       ],
       columns3: [
         {
           title: "当前税期",
-          key: "period"
+          key: "period",
         },
         {
           title: "产品",
           key: "alisName",
-          minWidth: 120
+          minWidth: 120,
         },
         {
           title: "结算状态",
           key: "settlementStatus",
           render(h, { row }) {
             return h("span", row.settlementStatus == "N" ? "未结算" : "已结算");
-          }
+          },
         },
         {
           title: "单价",
-          key: "price"
+          key: "price",
         },
         {
           title: "提成",
-          key: "percentage"
+          key: "percentage",
         },
         {
           title: "会计",
-          key: "serverName"
+          key: "serverName",
         },
         {
           title: "备注",
-          key: "memo"
-        }
-      ]
+          key: "memo",
+        },
+      ],
     };
   },
   created() {
@@ -235,7 +248,6 @@ export default {
       this.form.cycleServiceTotalId = this.currentWorkRow.cycleServiceTotalId;
       this.form.baseWorkOrderId = this.currentWorkRow.baseWorkOrderId;
       this.form.price = this.currentWorkRow.price;
-
       this.serverList = await getAccounterList();
     },
     async handleSubmit() {
@@ -247,15 +259,20 @@ export default {
       this.getList();
       this.formModel = false;
     },
+    dateChange(date) {
+      this.form.period = date;
+    },
     async handleEdit() {
       if (!this.currentRow) return this.$Message.warning("请选择一行");
-      this.form = this.currentRow;
+      this.form = { ...this.currentRow };
+
+      this.$set(this.form, "serverId", Number(this.currentRow.serverId));
+      this.period = this.currentRow.period;
+      delete this.form.serverName;
       this.formModel = true;
       this.serverList = await getAccounterList();
     },
-    latePeriodChange(e) {
-      this.form.period = e.replace(/-/, "");
-    },
+
     handleDelete() {
       if (!this.currentRow) return this.$Message.warning("请选择一行");
       this.$Modal.confirm({
@@ -263,12 +280,12 @@ export default {
         content: "<p>您确定删除吗</p>",
         onOk: async () => {
           await deleteMonthServiceInfo({
-            monthServiceId: this.currentRow.monthServiceId
+            monthServiceId: this.currentRow.monthServiceId,
           });
 
           this.getList();
         },
-        onCancel: () => {}
+        onCancel: () => {},
       });
     },
     handleExcel() {},
@@ -281,13 +298,13 @@ export default {
     async getList() {
       this.loading = true;
       const resp = await getMonthServiceInfo({
-        companyId: this.row.company_id
+        companyId: this.row.company_id,
       });
       this.loading = false;
       this.info = resp.info;
       this.workOrder = resp.workOrder;
       this.monthRecordList = resp.monthRecordList;
-    }
-  }
+    },
+  },
 };
 </script>
