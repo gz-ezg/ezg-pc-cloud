@@ -873,8 +873,8 @@ export const appRouter = [
     ]
   },
   {
-    access: 11614,
-    meta: 11614,
+    access: 11663,
+    meta: 11663,
     path: '/customerRefundManagement',
     icon: 'social-windows',
     title: '客户退款管理',
@@ -882,8 +882,8 @@ export const appRouter = [
     component: Main,
     children: [
       {
-        access: 11615,
-        meta: 11615,
+        access: 11664,
+        meta: 11664,
         path: 'customerRefundOrderList',
         title: '客户退款订单',
         name: 'customerRefundOrderList',
@@ -891,8 +891,8 @@ export const appRouter = [
           import(/* webpackChunkName: "customerRefundOrderList" */ '@/views/customerRefundManagement/customerRefundOrderList/index.vue')
       },
       {
-        access: 11616,
-        meta: 11616,
+        access: 11665,
+        meta: 11665,
         path: 'customerRefundWorkOrderList',
         title: '客户退款工单',
         name: 'customerRefundWorkOrderList',
