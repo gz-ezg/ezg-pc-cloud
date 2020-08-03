@@ -28,7 +28,7 @@
                       >{{item.typename}}</Option>
                     </Select>
                   </FormItem>
-                </Col> -->
+                </Col>-->
               </Row>
               <FormItem>
                 <Button type="primary" @click="search">搜索</Button>
@@ -41,11 +41,7 @@
     </Row>
     <Row>
       <ButtonGroup style="float:left">
-        <Button
-          type="primary"
-          icon="ios-color-wand-outline"
-          @click="handleServeModal"
-        >变更服务商</Button>
+        <Button type="primary" icon="ios-color-wand-outline" @click="handleServeModal">变更服务商</Button>
 
         <Button
           type="primary"
@@ -132,15 +128,21 @@
         :label-width="100"
       >
         <FormItem prop="servicename" label="供应商">
-          <Select @on-change="gycSelectChange" v-model="forms.suppilerId" style="width:200px">
+          <Select @on-change="gycSelectChange" v-model="forms.supplierId" style="width:200px">
             <Option
               v-for="(item,index) in gycList"
               :key="index"
-              :value="item.id"
-            >{{item.supplier_name}}</Option>
+              :value="item.supplierId"
+            >{{item.supplierName}}</Option>
           </Select>
         </FormItem>
-        <FormItem label="结算价" prop="settlementPrice">
+        <FormItem label="联系人">{{forms.contactName}}</FormItem>
+        <FormItem label="联系电话">{{forms.tel}}</FormItem>
+        <FormItem label="开户行">{{forms.settlementOpenBank}}</FormItem>
+        <FormItem label="开户支行">{{forms.settlementOpenBankItem}}</FormItem>
+        <FormItem label="结算账号">{{forms.settlementAccount}}</FormItem>
+        <FormItem label="产品">{{current_row.product}}</FormItem>
+        <FormItem label="销售价">
           <Input type="number" v-model="forms.settlementPrice" />
         </FormItem>
       </Form>
@@ -170,7 +172,7 @@ import {
   terminateExecutiveWorkOrder,
   listByProductId,
   goNextExecutiveWorkOrder,
-  changeWorkorderSuppiler
+  changeWorkorderSuppiler,
 } from "@A/supplierManage";
 export default {
   components: { fishModal, flowModal },
@@ -190,7 +192,7 @@ export default {
       formInline: {
         companyname: "",
         servicename: "",
-        productType: 'gyscp'
+        productType: "gyscp",
       },
 
       isFishModal: false,
@@ -264,29 +266,29 @@ export default {
                 {
                   props: {
                     trigger: "hover",
-                    placement: "bottom"
-                  }
+                    placement: "bottom",
+                  },
                 },
                 [
                   h("span", params.row.companyname.slice(0, 12) + "..."),
                   h("Icon", {
                     props: {
-                      type: "arrow-down-b"
-                    }
+                      type: "arrow-down-b",
+                    },
                   }),
                   h(
                     "div",
                     {
-                      slot: "content"
+                      slot: "content",
                     },
                     [h("span", params.row.companyname)]
-                  )
+                  ),
                 ]
               );
             } else {
               return h("span", params.row.companyname);
             }
-          }
+          },
         },
         // {
         //   title: "提示",
@@ -318,29 +320,29 @@ export default {
                 {
                   props: {
                     trigger: "hover",
-                    placement: "bottom"
-                  }
+                    placement: "bottom",
+                  },
                 },
                 [
                   h("span", params.row.product.slice(0, 10) + "..."),
                   h("Icon", {
                     props: {
-                      type: "arrow-down-b"
-                    }
+                      type: "arrow-down-b",
+                    },
                   }),
                   h(
                     "div",
                     {
-                      slot: "content"
+                      slot: "content",
                     },
                     [h("span", params.row.product)]
-                  )
+                  ),
                 ]
               );
             } else {
               return h("span", params.row.product);
             }
-          }
+          },
         },
         // {
         //   title: "产品数量",
@@ -373,7 +375,7 @@ export default {
         {
           title: "创建时间",
           key: "CreateDate",
-          sortable: true
+          sortable: true,
         },
         // {
         //     title: '预计完成时间',
@@ -389,24 +391,22 @@ export default {
         {
           title: "供应商",
           key: "supplier_name",
-   
         },
         {
           title: "结算价",
           key: "settlement_price",
-        
         },
         {
           title: "服务人员",
           key: "servername",
-    
-          sortable: true
+
+          sortable: true,
         },
         {
           title: "跟进人",
           key: "followname",
-       
-          sortable: true
+
+          sortable: true,
         },
         {
           title: "备注",
@@ -498,18 +498,17 @@ export default {
         //   }
         // }
       ],
-      tempArray: []
+      tempArray: [],
     };
   },
   methods: {
     // 供应商改变
     async handleServeModal() {
       this.gycList = await listByProductId({
-        productId: this.current_row.productId
+        productId: this.current_row.productId,
       });
       if (this.gycList.length) {
-        this.forms.settlementPrice = this.gycList[0].settlement_price;
-        this.forms.suppilerId = this.gycList[0].id;
+        this.forms = this.gycList[0];
       }
       this.changeModal = true;
     },
@@ -526,7 +525,7 @@ export default {
           let url = `api/order/next`;
           let config = {
             workOrderId: _self.tempArray[i].id,
-            backup: "批量流转"
+            backup: "批量流转",
           };
           function success(res) {
             console.log(
@@ -576,7 +575,7 @@ export default {
         {
           field: "workOrderStatus",
           title: "工单状态",
-          format: "workOrderStatus"
+          format: "workOrderStatus",
         },
         { field: "companyname", title: "公司名称" },
         { field: "baseorderid", title: "提示" },
@@ -588,7 +587,7 @@ export default {
         { field: "CreateDate", title: "创建时间" },
         { field: "ServiceEnd", title: "实际完成时间" },
         { field: "servername", title: "服务人员" },
-        { field: "followname", title: "跟进人" }
+        { field: "followname", title: "跟进人" },
       ];
       let _self = this;
       let url = `api/order/workOrderList`;
@@ -603,7 +602,7 @@ export default {
         // serviceDept:"'ACCOUNT','AUDIT'",
         serviceDept: "'EXECUTIVE'",
         export: "Y",
-        exportField: encodeURI(JSON.stringify(field))
+        exportField: encodeURI(JSON.stringify(field)),
       };
       let toExcel = this.$MergeURL(url, config);
       window.open(toExcel);
@@ -624,11 +623,11 @@ export default {
           productType: _self.formInline.productType,
           // serviceDept:"'ACCOUNT','AUDIT'",
           serviceDept: "'EXECUTIVE'",
-          iscycle: "N"
-        }
+          iscycle: "N",
+        },
       };
 
-      _self.$http.get(url, config).then(function(res) {
+      _self.$http.get(url, config).then(function (res) {
         _self.$backToLogin(res);
         // console.log(res.data.data.rows)
         _self.data = res.data.data.rows;
@@ -671,17 +670,15 @@ export default {
     async handleSupplyStop() {
       await terminateExecutiveWorkOrder({
         workorderId: this.current_row.id,
-        remark: this.stopRemark
+        remark: this.stopRemark,
       });
       this.stopModal = false;
       this.getData();
     },
 
     gycSelectChange(id) {
-      const values = this.gycList.find(v => id == v.id);
-
-      this.forms.settlementPrice = values.settlement_price;
-      this.forms.suppilerId = values.id;
+      const values = this.gycList.find((v) => id == v.supplierId);
+      this.forms = { ...values };
     },
     reset() {
       this.isSearh = false;
@@ -718,8 +715,8 @@ export default {
     async handleSupplyChange() {
       await changeWorkorderSuppiler({
         workorderId: this.current_row.id,
-        suppilerId: this.forms.suppilerId,
-        settlementPrice: this.forms.settlementPrice
+        suppilerId: this.forms.supplierId,
+        settlementPrice: this.forms.settlementPrice,
       });
       this.changeModal = false;
       this.getData();
@@ -742,8 +739,8 @@ export default {
         let url = `api/workorder/reCreateWorkOrderProcess`;
         let config = {
           params: {
-            workOrderId: _self.current_row.id
-          }
+            workOrderId: _self.current_row.id,
+          },
         };
         function success(res) {
           _self.$Message.success(res.data.msg);
@@ -777,8 +774,8 @@ export default {
           let url = `api/order/goFinshWorkOrderProcess`;
           let config = {
             params: {
-              workOrderId: _self.current_row.id
-            }
+              workOrderId: _self.current_row.id,
+            },
           };
           function success(res) {
             _self.$Message.success(res.data.msg);
@@ -821,25 +818,25 @@ export default {
 
       function finish(res) {
         _self.productTypeDict = res.data.data.product_type;
-        res.data.data.product_type.forEach(e => {
+        res.data.data.product_type.forEach((e) => {
           map.set(e.typecode, e.typename);
         });
 
-        _self.data = _self.data.map(v => {
+        _self.data = _self.data.map((v) => {
           v.productType = map.get(v.product_type);
           return v;
         });
       }
       _self.$GetDataCenter(params, finish);
-    }
+    },
   },
   created() {
     var _self = this;
     this.getData();
-    this.$bus.on("flowsuccess", e => {
+    this.$bus.on("flowsuccess", (e) => {
       _self.getData();
     });
-  }
+  },
 };
 </script>
 

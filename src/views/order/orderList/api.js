@@ -53,6 +53,14 @@ function orderItemRefund(config, success, fail){
     return err
   })
 }
+function orderRefundToCustomer(config, success, fail){
+  let url = `order/item/refundToCustomer`
+  return new Promise((resolve, reject)=>{
+    resolve(AjaxPost(url, config, success, fail))
+  }).catch((err)=>{
+    return err
+  })
+}
 
 /**
  * 上传合同图片
@@ -86,5 +94,6 @@ export {
   orderItemRefund,
   orderContractUpload,
   orderCreate,
-	getRealName
+  getRealName,
+  orderRefundToCustomer
 }

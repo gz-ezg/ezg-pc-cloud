@@ -46,6 +46,7 @@ service.interceptors.response.use(
         err: JSON.stringify(response),
       };
       axios.post("api/system/saveFontErrMsg", config);
+      return Promise.reject(response.data);
     }
     if (response.data.msgCode == "50003" && Cookies.get("user") != "") {
       iView.Message.warning("对不起，您还未登陆！");

@@ -135,7 +135,7 @@ export default {
   name: "Executing",
   components: {
     finishedDetail,
-    taskEdit
+    taskEdit,
   },
   data() {
     return {
@@ -161,18 +161,18 @@ export default {
         crealname: "",
         frealname: "",
         paytime: [],
-        customerCreateTime: []
+        customerCreateTime: [],
       },
       header: [
         {
           title: "客户",
           key: "name",
-          minWidth: 140
+          minWidth: 140,
         },
         {
           title: "联系方式",
           key: "tel",
-          minWidth: 140
+          minWidth: 140,
         },
         {
           title: "公司名称",
@@ -194,38 +194,38 @@ export default {
                     props: {
                       trigger: "hover",
                       title: "归属公司",
-                      placement: "bottom"
-                    }
+                      placement: "bottom",
+                    },
                   },
                   [
                     h("span", temp[0].slice(0, 13) + "..."),
                     h("Icon", {
                       props: {
-                        type: "arrow-down-b"
-                      }
+                        type: "arrow-down-b",
+                      },
                     }),
                     h(
                       "div",
                       {
-                        slot: "content"
+                        slot: "content",
                       },
                       [
                         h(
                           "ul",
-                          temp.map(item => [
+                          temp.map((item) => [
                             h(
                               "li",
                               {
                                 style: {
-                                  padding: "4px"
-                                }
+                                  padding: "4px",
+                                },
                               },
                               "公司名：" + item
-                            )
+                            ),
                           ])
-                        )
+                        ),
                       ]
-                    )
+                    ),
                   ]
                 );
               } else {
@@ -235,43 +235,43 @@ export default {
                     props: {
                       trigger: "hover",
                       title: "归属公司",
-                      placement: "bottom"
-                    }
+                      placement: "bottom",
+                    },
                   },
                   [
                     h("span", temp[0]),
                     h("Icon", {
                       props: {
-                        type: "arrow-down-b"
-                      }
+                        type: "arrow-down-b",
+                      },
                     }),
                     h(
                       "div",
                       {
-                        slot: "content"
+                        slot: "content",
                       },
                       [
                         h(
                           "ul",
-                          temp.map(item => [
+                          temp.map((item) => [
                             h(
                               "li",
                               {
                                 style: {
-                                  padding: "4px"
-                                }
+                                  padding: "4px",
+                                },
                               },
                               "公司名：" + item
-                            )
+                            ),
                           ])
-                        )
+                        ),
                       ]
-                    )
+                    ),
                   ]
                 );
               }
             }
-          }
+          },
         },
         {
           title: "回访任务",
@@ -297,38 +297,38 @@ export default {
                     props: {
                       trigger: "hover",
                       title: "回访任务",
-                      placement: "bottom"
-                    }
+                      placement: "bottom",
+                    },
                   },
                   [
                     h("span", temp[0].slice(0, 13) + "..."),
                     h("Icon", {
                       props: {
-                        type: "arrow-down-b"
-                      }
+                        type: "arrow-down-b",
+                      },
                     }),
                     h(
                       "div",
                       {
-                        slot: "content"
+                        slot: "content",
                       },
                       [
                         h(
                           "ul",
-                          temp.map(item => [
+                          temp.map((item) => [
                             h(
                               "li",
                               {
                                 style: {
-                                  padding: "4px"
-                                }
+                                  padding: "4px",
+                                },
                               },
                               "任务名：" + item
-                            )
+                            ),
                           ])
-                        )
+                        ),
                       ]
-                    )
+                    ),
                   ]
                 );
               } else {
@@ -338,48 +338,48 @@ export default {
                     props: {
                       trigger: "hover",
                       title: "回访任务",
-                      placement: "bottom"
-                    }
+                      placement: "bottom",
+                    },
                   },
                   [
                     h("span", temp[0]),
                     h("Icon", {
                       props: {
-                        type: "arrow-down-b"
-                      }
+                        type: "arrow-down-b",
+                      },
                     }),
                     h(
                       "div",
                       {
-                        slot: "content"
+                        slot: "content",
                       },
                       [
                         h(
                           "ul",
-                          temp.map(item => [
+                          temp.map((item) => [
                             h(
                               "li",
                               {
                                 style: {
-                                  padding: "4px"
-                                }
+                                  padding: "4px",
+                                },
                               },
                               "任务名：" + item
-                            )
+                            ),
                           ])
-                        )
+                        ),
                       ]
-                    )
+                    ),
                   ]
                 );
               }
             }
-          }
+          },
         },
         {
           title: "计划回访时间",
           key: "plan_date",
-          minWidth: 180
+          minWidth: 180,
         },
         {
           title: "推送状态",
@@ -390,27 +390,27 @@ export default {
               "span",
               params.row.sendWxpjStatus == "Y" ? "已推送" : "未推送"
             );
-          }
+          },
         },
         {
           title: "推送时间",
           key: "sendWxpjDate",
-          minWidth: 100
+          minWidth: 100,
         },
         {
           title: "服务评分",
           key: "serviceranks",
-          minWidth: 100
+          minWidth: 100,
         },
         {
           title: "对应市场",
           key: "realname",
-          minWidth: 120
+          minWidth: 120,
         },
         {
           title: "服务人员",
           key: "servername",
-          minWidth: 140
+          minWidth: 140,
         },
         {
           title: "操作",
@@ -424,13 +424,13 @@ export default {
                 {
                   props: {
                     type: "text",
-                    size: "small"
+                    size: "small",
                   },
                   on: {
                     click: () => {
                       this.show(params);
-                    }
-                  }
+                    },
+                  },
                 },
                 "[查看]"
               ),
@@ -439,22 +439,22 @@ export default {
                 {
                   props: {
                     type: "text",
-                    size: "small"
+                    size: "small",
                   },
                   on: {
                     click: () => {
                       this.$store.commit("open_gobal_customer_detail_modal", {
-                        ID: params.row.customerid
+                        ID: params.row.customerid,
                       });
-                    }
-                  }
+                    },
+                  },
                 },
                 "[查看客户]"
-              )
+              ),
             ]);
-          }
-        }
-      ]
+          },
+        },
+      ],
     };
   },
   methods: {
@@ -463,7 +463,9 @@ export default {
       if (this.row.sendwxpjstatus == "Y") {
         return this.$Message.warning("请勿重复推送");
       }
+      this.$Message.warning("正在推送中...");
       await sendMiniProgramMsgByWXOA({ callbackId: this.row.callbackid });
+      this.$Message.success("发送成功!");
       this.get_data();
     },
     pageChange(e) {
@@ -515,7 +517,7 @@ export default {
         { field: "realname", title: "市场人员" },
         { field: "market_feedback", title: "市场反馈" },
         { field: "problem_feedback", title: "问题反馈或建议" },
-        { field: "server_feedback", title: "服务人员反馈" }
+        { field: "server_feedback", title: "服务人员反馈" },
         // {field:'depart',title:'责任部门',format:'departAlias'},
         // {field:'serviceranks',title:'服务评分'},
       ];
@@ -534,7 +536,7 @@ export default {
         endDate: DateFormat(_self.formValidateSearch.date[1]),
         exportField: encodeURI(JSON.stringify(field)),
         startRanks: _self.formValidateSearch.brank,
-        endRanks: _self.formValidateSearch.erank
+        endRanks: _self.formValidateSearch.erank,
       };
       let toExcel = this.$MergeURL(url, config);
       // console.log(toExcel)
@@ -546,8 +548,8 @@ export default {
       let url = `api/task/deleteTask`;
       let config = {
         params: {
-          taskId: p.row.taskId
-        }
+          taskId: p.row.taskId,
+        },
       };
       function success(res) {
         // _self.$Message.success(res.data.msg)
@@ -575,8 +577,8 @@ export default {
           startDate: DateFormat(_self.formValidateSearch.date[0]),
           endDate: DateFormat(_self.formValidateSearch.date[1]),
           startRanks: _self.formValidateSearch.brank,
-          endRanks: _self.formValidateSearch.erank
-        }
+          endRanks: _self.formValidateSearch.erank,
+        },
       };
       function success(res) {
         console.log(res.data.data.rows);
@@ -607,7 +609,7 @@ export default {
         _self.loading = false;
       }
       this.$Get(url, config, success);
-    }
+    },
     // get_data_center(){
     //     let _self = this
     //     return new Promise((resolve,reject) => {
@@ -626,10 +628,10 @@ export default {
     this.loading = true;
     // this.get_data_center()
     this.get_data();
-    this.$bus.on("UPDATE_EXECUTING_DATA", e => {
+    this.$bus.on("UPDATE_EXECUTING_DATA", (e) => {
       this.get_data();
     });
-  }
+  },
 };
 </script>
 
