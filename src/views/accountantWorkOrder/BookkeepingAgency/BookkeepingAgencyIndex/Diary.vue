@@ -90,15 +90,16 @@
             <Option value="N">未结算</Option>
           </Select>
         </FormItem>
-        <FormItem label="服务人员" prop="settlementStatus">
+         <FormItem label="服务人员" prop="serverId">
           <Select v-model="form.serverId" placeholder="请选择">
             <Option
-              v-for="(item,index) in serverList"
+              v-for="item in serverList"
               :key="item.serverId"
               :value="item.serverId"
             >{{item.serverName}}</Option>
           </Select>
-        </FormItem>
+        </FormItem> 
+         
         <FormItem label="提成" prop="name">
           <Input type="number" v-model="form.percentage" placeholder="请输入"></Input>
         </FormItem>
@@ -265,8 +266,9 @@ export default {
     async handleEdit() {
       if (!this.currentRow) return this.$Message.warning("请选择一行");
       this.form = { ...this.currentRow };
+      console.log(this.form);
 
-      this.$set(this.form, "serverId", Number(this.currentRow.serverId));
+      //this.$set(this.form, "serverId", Number(this.currentRow.serverId));
       this.period = this.currentRow.period;
       delete this.form.serverName;
       this.formModel = true;
