@@ -28,7 +28,7 @@
                       >{{item.typename}}</Option>
                     </Select>
                   </FormItem>
-                </Col> -->
+                </Col>-->
               </Row>
               <FormItem>
                 <Button type="primary" @click="search">搜索</Button>
@@ -41,6 +41,8 @@
     </Row>
     <Row>
       <ButtonGroup style="float:left">
+        <Button type="primary" icon="ios-color-wand-outline" @click="handleServeModal">变更服务商</Button>
+
         <Button type="primary" icon="information-circled" @click="showdetail">查询详情</Button>
         <Button type="primary" icon="ios-color-wand-outline" @click="company">查看公司</Button>
         <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
@@ -75,30 +77,71 @@
         <img :src="flowChartImg" />
       </center>
     </Modal>
+
+    <Modal
+      v-model="changeModal"
+      title="变更服务商"
+      @on-ok="changeModal=false"
+      @on-cancel="changeModal = false"
+    >
+      <Form
+        style="padding-rigth:20px"
+        ref="form"
+        :model="forms"
+        label-position="right"
+        :label-width="100"
+      >
+        <FormItem prop="servicename" label="供应商">
+          <Select @on-change="gycSelectChange" v-model="forms.supplierId" style="width:200px">
+            <Option
+              v-for="(item,index) in gycList"
+              :key="index"
+              :value="item.supplierId"
+            >{{item.supplierName}}</Option>
+          </Select>
+        </FormItem>
+        <FormItem label="联系人">{{forms.contactName}}</FormItem>
+        <FormItem label="联系电话">{{forms.tel}}</FormItem>
+        <FormItem label="开户行">{{forms.settlementOpenBank}}</FormItem>
+        <FormItem label="开户支行">{{forms.settlementOpenBankItem}}</FormItem>
+        <FormItem label="结算账号">{{forms.settlementAccount}}</FormItem>
+        <FormItem label="产品">{{current_row.product}}</FormItem>
+        <FormItem label="销售价">
+          <Input type="number" v-model="forms.settlementPrice" />
+        </FormItem>
+      </Form>
+      <div slot="footer">
+        <Button type="primary" @click="handleSupplyChange">变更</Button>
+        <Button type="ghost" style="margin-left:20px" @click="changeModal=false">取消</Button>
+      </div>
+    </Modal>-->
     <Modal width="70%" title="查看凭证" v-model="visible">
-      <template v-for="(item,index) in imgUrl"><img :key="index" :src="item" v-if="visible" style="width: 100%" /></template>
+      <template v-for="(item,index) in imgUrl">
+        <img :key="index" :src="item" v-if="visible" style="width: 100%" />
+      </template>
     </Modal>
-    <!-- <Modal
-            v-model="pause"
-            title="提示信息"
-        >
-            <div style="font-size:20px;"><Icon type="alert-circled"></Icon>是否暂停/解锁</div>
-            <div slot="footer">
-                <Button type="primary" @click="pausetask">确定</Button>
-                <Button type="ghost" style="margin-left:20px" @click="pause=!pause">取消</Button>
-            </div>
-        </Modal>
-    -->
+    <!-- <Modal v-model="pause" title="提示信息">
+      <div style="font-size:20px;">
+        <Icon type="alert-circled"></Icon>是否暂停/解锁
+      </div>
+      <div slot="footer">
+        <Button type="primary" @click="pausetask">确定</Button>
+        <Button type="ghost" style="margin-left:20px" @click="pause=!pause">取消</Button>
+      </div>
+    </Modal>-->
   </Card>
 </template>
 
 <script>
+import { listByProductId, changeWorkorderSuppiler } from "@A/supplierManage";
 export default {
   data() {
     return {
       visible: false, // 显示图片
       imgUrl: [], // 凭证地址
       search_model: "",
+      gycList: [],
+      changeModal: false,
       sortField: "updatedate",
       order: "desc",
       //  触发搜索
@@ -107,7 +150,7 @@ export default {
       formInline: {
         companyname: "",
         servicename: "",
-        productType: 'gyscp'
+        productType: "gyscp",
       },
       productTypeDict: [],
       //  加载中
@@ -126,6 +169,7 @@ export default {
       page: "1",
       pageSize: "10",
       data: [],
+      forms: {},
       workOrderStatus: [],
       workOrderStatus_map: new Map(),
       header: [
@@ -174,29 +218,29 @@ export default {
                 {
                   props: {
                     trigger: "hover",
-                    placement: "bottom"
-                  }
+                    placement: "bottom",
+                  },
                 },
                 [
                   h("span", params.row.companyname.slice(0, 12) + "..."),
                   h("Icon", {
                     props: {
-                      type: "arrow-down-b"
-                    }
+                      type: "arrow-down-b",
+                    },
                   }),
                   h(
                     "div",
                     {
-                      slot: "content"
+                      slot: "content",
                     },
                     [h("span", params.row.companyname)]
-                  )
+                  ),
                 ]
               );
             } else {
               return h("span", params.row.companyname);
             }
-          }
+          },
         },
         // {
         //   title: "提示",
@@ -229,29 +273,29 @@ export default {
                 {
                   props: {
                     trigger: "hover",
-                    placement: "bottom"
-                  }
+                    placement: "bottom",
+                  },
                 },
                 [
                   h("span", params.row.product.slice(0, 10) + "..."),
                   h("Icon", {
                     props: {
-                      type: "arrow-down-b"
-                    }
+                      type: "arrow-down-b",
+                    },
                   }),
                   h(
                     "div",
                     {
-                      slot: "content"
+                      slot: "content",
                     },
                     [h("span", params.row.product)]
-                  )
+                  ),
                 ]
               );
             } else {
               return h("span", params.row.product);
             }
-          }
+          },
         },
         // {
         //   title: "产品数量",
@@ -291,7 +335,7 @@ export default {
           title: "创建时间",
           key: "CreateDate",
           width: 120,
-          sortable: true
+          sortable: true,
         },
         // {
         //     title: '预计完成时间',
@@ -307,12 +351,12 @@ export default {
         {
           title: "供应商",
           key: "supplier_name",
-          width: 120
+          width: 120,
         },
         {
           title: "结算价",
           key: "settlement_price",
-          width: 120
+          width: 120,
         },
         {
           title: "凭证",
@@ -324,38 +368,38 @@ export default {
                   "border-radius": "4px",
                   width: "80px",
                   height: "40px",
-                  cursor: "pointer"
+                  cursor: "pointer",
                 },
                 attrs: {
-                  src: "/api/assets/" + params.row.credential.split(',')[0]
+                  src: "/api/assets/" + params.row.credential.split(",")[0],
                 },
                 on: {
-                  click: e => {
+                  click: (e) => {
                     this.handleView(params.row.credential);
-                  }
-                }
-              })
+                  },
+                },
+              }),
             ]);
           },
-          width: 120
+          width: 120,
         },
         {
           title: "备注",
           key: "remark",
-          width: 180
+          width: 180,
         },
         {
           title: "服务人员",
           key: "servername",
           width: 120,
-          sortable: true
+          sortable: true,
         },
         {
           title: "跟进人",
           key: "followname",
           width: 120,
-          sortable: true
-        }
+          sortable: true,
+        },
         // {
         //   title: "操作",
         //   key: "action",
@@ -441,7 +485,7 @@ export default {
         //     ]);
         //   }
         // }
-      ]
+      ],
     };
   },
   methods: {
@@ -455,12 +499,35 @@ export default {
       }
       this.getData();
     },
+    // 供应商改变
+    async handleServeModal() {
+      this.gycList = await listByProductId({
+        productId: this.current_row.productId,
+      });
+      if (this.gycList.length) {
+        this.forms = this.gycList[0];
+      }
+      this.changeModal = true;
+    },
+    async handleSupplyChange() {
+      await changeWorkorderSuppiler({
+        workorderId: this.current_row.id,
+        suppilerId: this.forms.supplierId,
+        settlementPrice: this.forms.settlementPrice,
+      });
+      this.changeModal = false;
+      this.getData();
+    },
+    gycSelectChange(id) {
+      const values = this.gycList.find((v) => id == v.supplierId);
+      this.forms = { ...values };
+    },
     downloadExcel() {
       let field = [
         {
           field: "workOrderStatus",
           title: "工单状态",
-          format: "workOrderStatus"
+          format: "workOrderStatus",
         },
         { field: "companyname", title: "公司名称" },
         { field: "baseorderid", title: "提示" },
@@ -472,7 +539,7 @@ export default {
         { field: "CreateDate", title: "创建时间" },
         { field: "ServiceEnd", title: "实际完成时间" },
         { field: "servername", title: "服务人员" },
-        { field: "followname", title: "跟进人" }
+        { field: "followname", title: "跟进人" },
       ];
       let _self = this;
       let url = `api/order/workOrderList`;
@@ -487,7 +554,7 @@ export default {
         // serviceDept:"'ACCOUNT','AUDIT'",
         serviceDept: "'EXECUTIVE'",
         export: "Y",
-        exportField: encodeURI(JSON.stringify(field))
+        exportField: encodeURI(JSON.stringify(field)),
       };
       let toExcel = this.$MergeURL(url, config);
       window.open(toExcel);
@@ -508,11 +575,11 @@ export default {
           productType: _self.formInline.productType,
           // serviceDept:"'ACCOUNT','AUDIT'",
           serviceDept: "'EXECUTIVE'",
-          iscycle: "N"
-        }
+          iscycle: "N",
+        },
       };
 
-      _self.$http.get(url, config).then(function(res) {
+      _self.$http.get(url, config).then(function (res) {
         _self.$backToLogin(res);
         // console.log(res.data.data.rows)
         _self.data = res.data.data.rows;
@@ -552,7 +619,7 @@ export default {
       this.getData();
     },
     handleView(url) {
-      this.imgUrl = url.split(',').map(v=>'/api/assets/'+v);
+      this.imgUrl = url.split(",").map((v) => "/api/assets/" + v);
       this.visible = true;
     },
     reset() {
@@ -592,8 +659,8 @@ export default {
         let url = `api/workorder/reCreateWorkOrderProcess`;
         let config = {
           params: {
-            workOrderId: _self.current_row.id
-          }
+            workOrderId: _self.current_row.id,
+          },
         };
         function success(res) {
           _self.$Message.success(res.data.msg);
@@ -643,16 +710,16 @@ export default {
         _self.productTypeDict = res.data.data.product_type;
       }
       this.$GetDataCenter(params, finish);
-    }
+    },
   },
   created() {
     var _self = this;
     // this.getDataCenter()
     this.getData();
-    this.$bus.on("flowsuccess", e => {
+    this.$bus.on("flowsuccess", (e) => {
       _self.getData();
     });
-  }
+  },
 };
 </script>
 

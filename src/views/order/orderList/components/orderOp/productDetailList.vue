@@ -6,21 +6,37 @@
           style="display: flex; justify-content: space-between;align-items: center; padding: 5px; margin-top: 10px; background: #f8f8f9;border: 1px solid #dddee1;border-bottom: none"
         >
           <span>{{ item.product }}</span>
-          <Button v-if="pageFlag == 'createOrder' || pageFlag == 'editOrder'" type="error" size="small" @click="removeItem(index)"
-            >删除</Button
-          >
           <Button
+            v-if="pageFlag == 'createOrder' || pageFlag == 'editOrder'"
             type="error"
-            v-if="
+            size="small"
+            @click="removeItem(index)"
+          >删除</Button>
+          <ButtonGroup>
+            <Button
+              type="error"
+              style="margin-right:10px"
+              v-if="
               pageFlag == 'showOrder' &&
                 (operatorId == 10059 || operatorId == 10182) &&
                 item.deleteflag != 5 &&
                 orderDetail.orderstatus == 'approval_finish'
             "
-            size="small"
-            @click="refundItem(index)"
-            >退款</Button
-          >
+              size="small"
+              @click="refundToCustomer(index)"
+            >退钱给客户</Button>
+            <Button
+              type="error"
+              v-if="
+              pageFlag == 'showOrder' &&
+                (operatorId == 10059 || operatorId == 10182) &&
+                item.deleteflag != 5 &&
+                orderDetail.orderstatus == 'approval_finish'
+            "
+              size="small"
+              @click="refundItem(index)"
+            >退款</Button>
+          </ButtonGroup>
         </h3>
         <Card>
           <Form label-position="left" ref="formValidate" :rules="ruleValidate">
@@ -38,8 +54,16 @@
                   </div>
 
                   <div v-if="!isDisabled && item.defaultdepartalias == 'PLAN'">
-                    <Button :type="!isPlan[index] ? 'error' : ''" size="small" @click="changePayMethod(index)">定额</Button>
-                    <Button :type="isPlan[index] ? 'error' : ''" size="small" @click="changePayMethod(index)">比例</Button>
+                    <Button
+                      :type="!isPlan[index] ? 'error' : ''"
+                      size="small"
+                      @click="changePayMethod(index)"
+                    >定额</Button>
+                    <Button
+                      :type="isPlan[index] ? 'error' : ''"
+                      size="small"
+                      @click="changePayMethod(index)"
+                    >比例</Button>
                   </div>
                   <div v-if="!isDisabled && !isPlan[index]">
                     <FormItem label="销售金额￥" prop="paynumber">
@@ -78,8 +102,7 @@
                         size="small"
                         style="width:100px"
                         :disabled="isDisabled"
-                      ></Input
-                      >%
+                      ></Input>%
                     </FormItem>
                   </div>
                   <div v-if="isDisabled && item.receipt_type == 'proportion'">
@@ -92,8 +115,7 @@
                         size="small"
                         style="width:100px"
                         :disabled="isDisabled"
-                      ></Input
-                      >%
+                      ></Input>%
                     </FormItem>
                   </div>
                 </div>
@@ -132,8 +154,7 @@
                             :value="parseInt(departItem.type)"
                             v-for="departItem of JSON.parse(item.servicedeparts)"
                             :key="departItem.departCode"
-                            >{{ departItem.text }}</Option
-                          >
+                          >{{ departItem.text }}</Option>
                         </Select>
                         <Input
                           v-if="pageFlag == 'showOrder' || pageFlag == 'amendOrder'"
@@ -149,11 +170,20 @@
                   <Row>
                     <Col span="12">
                       <FormItem style="margin-left: 10px" label=" 服务人员：">
-                        <div v-if="pageFlag == 'createOrder' || pageFlag == 'editOrder'" style="display:inline-block">
+                        <div
+                          v-if="pageFlag == 'createOrder' || pageFlag == 'editOrder'"
+                          style="display:inline-block"
+                        >
                           <Select v-model="item.selectServer">
-                            <Option v-for="item in serverList[index]" :key="item.userId" :value="item">{{
+                            <Option
+                              v-for="item in serverList[index]"
+                              :key="item.userId"
+                              :value="item"
+                            >
+                              {{
                               item.realname + '【' + item.flag + '】'
-                            }}</Option>
+                              }}
+                            </Option>
                           </Select>
                         </div>
                         <Input
@@ -208,8 +238,7 @@
                           value="0"
                           size="small"
                           style="width:80px"
-                        ></InputNumber
-                        >月
+                        ></InputNumber>月
                       </FormItem>
                     </Col>
                     <Col v-if="item.iscycle != 'N'" span="12">
@@ -239,8 +268,7 @@
                           v-model="item.type_a_count"
                           size="small"
                           style="width:80px"
-                        ></InputNumber
-                        >次
+                        ></InputNumber>次
                       </FormItem>
                     </Col>
                     <Col span="10" v-if="item.iscycle === 'Y' && item.product != '会计到家'">
@@ -253,8 +281,7 @@
                           v-model="item.type_b_count"
                           size="small"
                           style="width:80px"
-                        ></InputNumber
-                        >次
+                        ></InputNumber>次
                       </FormItem>
                     </Col>
                   </Row>
@@ -280,71 +307,125 @@
         </Card>
       </div>
     </div>
+
+    <Modal
+      v-model="refundToCustomerModel"
+      title="退钱给客户"
+      @on-ok="refundToCustomerModel=false"
+      @on-cancel="refundToCustomerModel = false"
+    >
+      <Form
+        style="padding-rigth:20px"
+        ref="form"
+        :model="refundToCustomerForms"
+        label-position="right"
+        :label-width="100"
+      >
+        <FormItem label="明细退款">{{refundToCustomerForms.product}}</FormItem>
+
+        <FormItem label="退款金额">
+          <Input type="number" v-model="refundToCustomerForms.paynumber" />
+        </FormItem>
+
+        <FormItem label="退款备注">
+          <Input type="textarea" v-model="refundToCustomerForms.refundMemo" placeholder="请输入退款备注." />
+        </FormItem>
+      </Form>
+      <div slot="footer">
+        <Button type="primary" @click="handleRefundToCustomer">确定</Button>
+        <Button type="ghost" style="margin-left:20px" @click="refundToCustomerModel=false">取消</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 
 <script>
-import * as orderApi from '../../api';
-import {getSystemParamByKey} from "../../../../../api/order";
-import {deepCopy} from "../../../../../libs/utils";
-import { DateFormat, DateFormatYearMonth, nowDateFormatYearMonth } from '../../../../../libs/utils.js';
-
+import * as orderApi from "../../api";
+import { getSystemParamByKey } from "../../../../../api/order";
+import { deepCopy } from "../../../../../libs/utils";
+import {
+  DateFormat,
+  DateFormatYearMonth,
+  nowDateFormatYearMonth,
+} from "../../../../../libs/utils.js";
 
 export default {
-  props: ['productList', 'isDisabled', 'orderDetail', 'pageFlag', 'id', 'productListOne', 'createdate'],
-  inject: ['cancel_order'],
+  props: [
+    "productList",
+    "isDisabled",
+    "orderDetail",
+    "pageFlag",
+    "id",
+    "productListOne",
+    "createdate",
+  ],
+  inject: ["cancel_order"],
   data() {
     return {
+      refundToCustomerModel: false,
+      refundToCustomerForms: {},
       isPlan: {},
-      companyId: '',
+      companyId: "",
       departServerObj: [],
       serverList: [],
       flag: 0,
-      isDateOptions:false,
+      isDateOptions: false,
       dateOptions: {
-        disabledDate: this.checkMonth
+        disabledDate: this.checkMonth,
       },
-      servicestartdate: '',
-      operatorId: localStorage.getItem('id'),
+      servicestartdate: "",
+      operatorId: localStorage.getItem("id"),
       ruleValidate: {
         productnumber: [
           {
             required: true,
-            message: '请输入整数',
-            trigger: 'blur',
-            type: 'integer'
-          }
-        ]
-      }
+            message: "请输入整数",
+            trigger: "blur",
+            type: "integer",
+          },
+        ],
+      },
     };
   },
   methods: {
     checkMonth(data) {
-      if (this.isDateOptions){
-        return ""
+      if (this.isDateOptions) {
+        return "";
       } else {
-        if (this.servicestartdate){
-          let a = this.servicestartdate.substr(0, 4)
-          let b = this.servicestartdate.substr(4)
-          let product = a+"-"+b
-          let period = null
-          period = product ? nowDateFormatYearMonth(product) : nowDateFormatYearMonth();
-          let between = data.getFullYear() * 12 + data.getMonth() - period.substr(0, 4) * 12 - period.substr(4) * 1;
+        if (this.servicestartdate) {
+          let a = this.servicestartdate.substr(0, 4);
+          let b = this.servicestartdate.substr(4);
+          let product = a + "-" + b;
+          let period = null;
+          period = product
+            ? nowDateFormatYearMonth(product)
+            : nowDateFormatYearMonth();
+          let between =
+            data.getFullYear() * 12 +
+            data.getMonth() -
+            period.substr(0, 4) * 12 -
+            period.substr(4) * 1;
           return -3 >= between;
         } else {
-          let period = null
+          let period = null;
           period = nowDateFormatYearMonth();
-          let between = data.getFullYear() * 12 + data.getMonth() - period.substr(0, 4) * 12 - period.substr(4) * 1;
+          let between =
+            data.getFullYear() * 12 +
+            data.getMonth() -
+            period.substr(0, 4) * 12 -
+            period.substr(4) * 1;
           return -3 >= between;
         }
       }
     },
     async handleClickDate() {
-      const resp = await getSystemParamByKey({ paramKey: 'force_oi_taxperiod_filter_users' });
-      if ( resp.split(',').includes(localStorage.getItem('id'))) {
-          this.isDateOptions = true
+      const resp = await getSystemParamByKey({
+        paramKey: "force_oi_taxperiod_filter_users",
+      });
+      if (resp.split(",").includes(localStorage.getItem("id"))) {
+        this.isDateOptions = true;
       } else {
-        this.isDateOptions = false
+        this.isDateOptions = false;
       }
     },
     async handleGetService(e, index) {
@@ -356,13 +437,13 @@ export default {
         params: {
           productSkuId: product.skuid,
           serviceDepartId: product.departid,
-          companyId: e.orderDetail.companyid || this.id
-        }
+          companyId: e.orderDetail.companyid || this.id,
+        },
       };
 
-      let success = res => {
+      let success = (res) => {
         this.serverList.splice(index, 1, res.data.data);
-        e.orderItem[index].selectServer = res.data.data.find(v => {
+        e.orderItem[index].selectServer = res.data.data.find((v) => {
           if (!v.userId) {
             return {};
           }
@@ -381,13 +462,13 @@ export default {
     // },
     changePayMethod(i) {
       this.isPlan = Object.assign({}, this.isPlan, {
-        [i]: !this.isPlan[i]
+        [i]: !this.isPlan[i],
       });
       if (this.isPlan[i]) {
-        this.productList[i].receipt_type = 'proportion';
+        this.productList[i].receipt_type = "proportion";
         this.productList[i].paynumber = 0;
       } else {
-        this.productList[i].receipt_type = 'quota';
+        this.productList[i].receipt_type = "quota";
         this.productList[i].receipt_proportion = 0;
       }
       this.computer_paynumber();
@@ -410,18 +491,18 @@ export default {
       }
       let paynumber = parseFloat(temp);
       let realnumber = parseFloat(temp);
-      this.$bus.emit('SET_PAYNUMBER', {
+      this.$bus.emit("SET_PAYNUMBER", {
         paynumber: paynumber,
-        realnumber: realnumber
+        realnumber: realnumber,
       });
     },
     removeItem(index) {
       let _self = this;
       _self.productList.splice(index, 1);
-      for (let i=0;i<_self.productList.length;i++) {
-        this.changeServerPerson('',i)
+      for (let i = 0; i < _self.productList.length; i++) {
+        this.changeServerPerson("", i);
       }
-      _self.$bus.emit('REMOVE_ITEM', _self.productList);
+      _self.$bus.emit("REMOVE_ITEM", _self.productList);
       // _self.productListOne = []
       // console.log(_self.productList)
       if (_self.productList.length == 0) {
@@ -465,74 +546,97 @@ export default {
           params: {
             productSkuId: product.skuid,
             serviceDepartId: product.departid,
-            companyId: this.companyId || this.id
-          }
+            companyId: this.companyId || this.id,
+          },
         };
       } else {
         config = {
           params: {
             productSkuId: this.productList[index].skuid,
             serviceDepartId: item.value,
-            companyId: this.companyId || this.id
-          }
+            companyId: this.companyId || this.id,
+          },
         };
       }
-      let success = res => {
+      let success = (res) => {
         try {
           this.serverList.splice(index, 1, res.data.data);
-          this.productList[index].selectServer = (this.serverList[index].length && this.serverList[index][0]) || {};
+          this.productList[index].selectServer =
+            (this.serverList[index].length && this.serverList[index][0]) || {};
         } catch (error) {}
       };
       function fail() {}
       this.$Get(url, config, success);
     },
 
+    refundToCustomer(index) {
+      this.refundToCustomerModel = true;
+      this.refundToCustomerForms.paynumber = this.productList[index].paynumber;
+      this.refundToCustomerForms.product = this.productList[index].product;
+      this.refundToCustomerForms.itemid = this.productList[index].itemid;
+    },
+    handleRefundToCustomer() {
+      this.$Modal.confirm({
+        title: "您确定要对该订单项退款给客户吗？",
+        content: this.refundToCustomerForms.product,
+        onOk: async () => {
+          await orderApi.orderRefundToCustomer({
+            itemId: this.refundToCustomerForms.itemid,
+            refundMoney: this.refundToCustomerForms.paynumber,
+            refundMemo: this.refundToCustomerForms.refundMemo,
+          });
+          this.refundToCustomerModel = false;
+          this.refundToCustomerForms = {};
+        },
+        onCancel: () => {},
+      });
+    },
     refundItem(index) {
       let _self = this;
       this.$Modal.confirm({
-        title: '您确定要对该订单项退款吗？',
+        title: "您确定要对该订单项退款吗？",
         content: _self.productList[index].propertys,
         onOk: () => {
-          _self.$bus.$emit('CANCEL_ORDER', {
+          _self.$bus.$emit("CANCEL_ORDER", {
             id: _self.orderDetail.id,
-            itemid: _self.productList[index].itemid
+            itemid: _self.productList[index].itemid,
           });
         },
-        onCancel: () => {}
+        onCancel: () => {},
       });
-    }
+    },
   },
 
   beforeCreate() {
-    this.$bus.off('PRODUCT_LIST_EDIT', true);
+    this.$bus.off("PRODUCT_LIST_EDIT", true);
   },
   created() {
     let _self = this;
-    _self.handleClickDate()
+    _self.handleClickDate();
     this.productList.forEach((e, i) => {
-      if (e.defaultdepartalias == 'PLAN') {
-        e.receipt_type = 'quota';
+      if (e.defaultdepartalias == "PLAN") {
+        e.receipt_type = "quota";
       }
     });
 
-    this.serverList = this.productList.map(v => {
+    this.serverList = this.productList.map((v) => {
       return v.serverList;
     });
-    this.$bus.off('ADD_PRODUCT_DETAIL_LIST', true);
-    this.$bus.on('ADD_PRODUCT_DETAIL_LIST', e => {
-      console.log(e)
-      let a = deepCopy(e)
+    this.$bus.off("ADD_PRODUCT_DETAIL_LIST", true);
+    this.$bus.on("ADD_PRODUCT_DETAIL_LIST", (e) => {
+      console.log(e);
+      let a = deepCopy(e);
       if (a.servicestartdate) {
         this.servicestartdate = a.servicestartdate;
       }
-      console.log(a)
+      console.log(a);
       this.flag = 0;
       e.givethenumber = 0;
       if (e.departid) {
         e.departid = parseInt(e.departid);
       }
-      if (e.defaultdepartalias == 'PLAN') {
-        e.receipt_type = 'quota';
+      if (e.defaultdepartalias == "PLAN") {
+        e.receipt_type = "quota";
       }
       if (_self.productList.length !== 0) {
         for (let i = 0; i < _self.productList.length; i++) {
@@ -543,7 +647,7 @@ export default {
       }
 
       _self.productList.push(e);
-      _self.productList = _self.productList.map(item => {
+      _self.productList = _self.productList.map((item) => {
         if (!item.type_a_count) {
           item.type_a_count = 0;
         }
@@ -560,21 +664,21 @@ export default {
 
       _self.departChange();
       _self.computer_paynumber();
-      _self.changeServerPerson('', _self.productList.length - 1);
+      _self.changeServerPerson("", _self.productList.length - 1);
     });
 
-    _self.$bus.off('PRODUCT_LIST_EDIT');
-    _self.$bus.on('PRODUCT_LIST_EDIT', e => {
-      console.log('PRODUCT_LIST_EDIT');
+    _self.$bus.off("PRODUCT_LIST_EDIT");
+    _self.$bus.on("PRODUCT_LIST_EDIT", (e) => {
+      console.log("PRODUCT_LIST_EDIT");
       for (let i = 0; i < e.orderItem.length; i++) {
         _self.handleGetService(e, i);
       }
     });
-    _self.$bus.off('OPEN_ORDER_PRODUCT_LIST', true);
-    _self.$bus.on('OPEN_ORDER_PRODUCT_LIST', (e) => {
+    _self.$bus.off("OPEN_ORDER_PRODUCT_LIST", true);
+    _self.$bus.on("OPEN_ORDER_PRODUCT_LIST", (e) => {
       _self.companyId = e;
     });
-  }
+  },
 };
 </script>
 

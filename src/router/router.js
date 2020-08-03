@@ -873,6 +873,35 @@ export const appRouter = [
     ]
   },
   {
+    access: 11614,
+    meta: 11614,
+    path: '/customerRefundManagement',
+    icon: 'social-windows',
+    title: '客户退款管理',
+    name: 'customerRefundManagement',
+    component: Main,
+    children: [
+      {
+        access: 11615,
+        meta: 11615,
+        path: 'customerRefundOrderList',
+        title: '客户退款订单',
+        name: 'customerRefundOrderList',
+        component: () =>
+          import(/* webpackChunkName: "customerRefundOrderList" */ '@/views/customerRefundManagement/customerRefundOrderList/index.vue')
+      },
+      {
+        access: 11616,
+        meta: 11616,
+        path: 'customerRefundWorkOrderList',
+        title: '客户退款工单',
+        name: 'customerRefundWorkOrderList',
+        component: () =>
+          import(/* webpackChunkName: "customerRefundWorkOrderList" */ '@/views/customerRefundManagement/customerRefundWorkOrderList/index.vue')
+      }
+    ]
+  },
+  {
     access: 6035,
     meta: 6035,
     path: '/commercialmanagement',

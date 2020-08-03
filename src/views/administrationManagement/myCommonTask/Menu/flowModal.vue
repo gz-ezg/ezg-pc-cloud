@@ -16,17 +16,16 @@
       :label-width="100"
     >
       <FormItem label="凭证" prop="file">
-        <Upload
-          action="//jsonplaceholder.typicode.com/posts/"
-          :before-upload="handleUpload"
-        >
+        <Upload action="//jsonplaceholder.typicode.com/posts/" :before-upload="handleUpload">
           <!-- <div style="padding: 20px 0">
             <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
             <p>上传</p>
-          </div> -->
+          </div>-->
           <Button icon="ios-cloud-upload-outline">上传</Button>
         </Upload>
-        <template v-for="(item,index) in picUrl" ><img :key="index" :src="item" style="width:100px;height:100px" /></template>
+        <template v-for="(item,index) in picUrl">
+          <img :key="index" :src="item" style="width:100px;height:100px" />
+        </template>
       </FormItem>
       <FormItem label="备注" prop="remark">
         <Input type="textarea" v-model="forms.remark" />
@@ -40,31 +39,32 @@ import { listByProductId, goNextExecutiveWorkOrder } from "@A/supplierManage";
 export default {
   props: {
     current_row: { type: Object, default: {} },
-    show: { type: Boolean, default: false }
+    show: { type: Boolean, default: false },
   },
   watch: {
     show(value) {
       this.model = value;
       this.forms.remark = this.current_row.remark;
-    }
+    },
   },
   data() {
     return {
       model: false,
       gysModelLoading: false,
-      forms: { files: [] , remark: "" },
+      forms: { files: [], remark: "" },
       ruleValidate: {},
       picUrl: [],
-      gycList: []
+      gycList: [],
     };
   },
 
   methods: {
     async hanldeProductFinish() {
       let formData = new FormData();
-      this.forms.files.forEach(v=>{
-        formData.append("files",v);
-      })
+      this.forms.files &&
+        this.forms.files.forEach((v) => {
+          formData.append("files", v);
+        });
       formData.append("workorderId", this.current_row.id);
       formData.append("remark", this.forms.remark);
       this.gysModelLoading = true;
@@ -85,12 +85,12 @@ export default {
       this.forms.files.push(file);
       let fileReader = new FileReader();
       fileReader.readAsDataURL(file);
-      fileReader.onload = e => {
+      fileReader.onload = (e) => {
         this.picUrl.push(e.target.result);
       };
       return false;
-    }
-  }
+    },
+  },
 };
 </script>
 

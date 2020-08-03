@@ -22,6 +22,7 @@
                   type="primary"
                   icon="information-circled"
                   @click="handleAdd"
+                  v-if="isAdmin"
                 >新增税期记录</Button>
               </ButtonGroup>
               <Table
@@ -42,6 +43,7 @@
                   size="small"
                   type="primary"
                   icon="information-circled"
+                  v-if="isAdmin"
                   @click="handleEdit"
                 >编辑</Button>
                 <Button
@@ -49,6 +51,7 @@
                   type="primary"
                   icon="information-circled"
                   @click="handleDelete"
+                  v-if="isAdmin"
                 >删除</Button>
               </ButtonGroup>
               <Table
@@ -148,6 +151,7 @@ export default {
       ruleValidate: {},
       serverList: [],
       period: "",
+      isAdmin: false,
       columns1: [
         {
           title: "服务状态",
@@ -237,6 +241,7 @@ export default {
     };
   },
   created() {
+    this.isAdmin = localStorage.getItem("id") == 10059;
     this.getList();
   },
   methods: {
