@@ -508,7 +508,7 @@ export default {
         productId: this.current_row.productId,
       });
       if (this.gycList.length) {
-        this.forms = this.gycList[0];
+        this.forms = JSON.parse(JSON.stringify(this.gycList[0]));
       }
       this.changeModal = true;
     },

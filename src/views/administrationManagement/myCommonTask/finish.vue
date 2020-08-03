@@ -84,18 +84,12 @@
       @on-ok="changeModal=false"
       @on-cancel="changeModal = false"
     >
-      <Form
-        style="padding-rigth:20px"
-        ref="form"
-        :model="forms"
-        label-position="right"
-        :label-width="100"
-      >
-        <FormItem prop="servicename" label="供应商">
+      <Form style="padding-rigth:20px" ref="form" label-position="right" :label-width="100">
+        <FormItem label="供应商">
           <Select @on-change="gycSelectChange" v-model="forms.supplierId" style="width:200px">
             <Option
               v-for="(item,index) in gycList"
-              :key="index"
+              :key="item.supplierId+index"
               :value="item.supplierId"
             >{{item.supplierName}}</Option>
           </Select>
@@ -504,10 +498,13 @@ export default {
       this.gycList = await listByProductId({
         productId: this.current_row.productId,
       });
-      if (this.gycList.length) {
-        this.forms = this.gycList[0];
-      }
       this.changeModal = true;
+
+      this.forms = JSON.parse(
+        JSON.stringify(
+          this.gycList.find((v) => this.current_row.suppiler_id == v.supplierId)
+        )
+      );
     },
     async handleSupplyChange() {
       await changeWorkorderSuppiler({
@@ -520,7 +517,7 @@ export default {
     },
     gycSelectChange(id) {
       const values = this.gycList.find((v) => id == v.supplierId);
-      this.forms = { ...values };
+      this.forms = { ...this.forms, ...values };
     },
     downloadExcel() {
       let field = [
