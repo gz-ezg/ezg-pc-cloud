@@ -398,6 +398,9 @@ export default {
                     if (item.deleteflag == 5) {
                         item.product = item.product.concat("（已退款）")
                     }
+                    if(item.deleteflag == 10) {
+                        item.product = item.product.concat("（已退款给客户）")
+                    }
                     return item
                 })
 

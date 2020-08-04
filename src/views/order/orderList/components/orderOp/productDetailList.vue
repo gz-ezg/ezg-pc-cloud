@@ -12,30 +12,21 @@
             size="small"
             @click="removeItem(index)"
           >删除</Button>
-          <ButtonGroup>
+          <ButtonGroup
+            v-if="
+              pageFlag == 'showOrder' &&
+                (operatorId == 10059 || operatorId == 10182) &&
+                item.deleteflag != 10 && item.deleteflag != 5 &&
+                orderDetail.orderstatus == 'approval_finish'
+            "
+          >
             <Button
               type="error"
               style="margin-right:10px"
-              v-if="
-              pageFlag == 'showOrder' &&
-                (operatorId == 10059 || operatorId == 10182) &&
-                item.deleteflag != 5 &&
-                orderDetail.orderstatus == 'approval_finish'
-            "
               size="small"
               @click="refundToCustomer(index)"
             >退钱给客户</Button>
-            <Button
-              type="error"
-              v-if="
-              pageFlag == 'showOrder' &&
-                (operatorId == 10059 || operatorId == 10182) &&
-                item.deleteflag != 5 &&
-                orderDetail.orderstatus == 'approval_finish'
-            "
-              size="small"
-              @click="refundItem(index)"
-            >退款</Button>
+            <Button type="error" size="small" @click="refundItem(index)">退款</Button>
           </ButtonGroup>
         </h3>
         <Card>
@@ -587,6 +578,9 @@ export default {
           });
           this.refundToCustomerModel = false;
           this.refundToCustomerForms = {};
+          this.$bus.$emit("CANCEL_ORDER", {
+            id: this.orderDetail.id,
+          });
         },
         onCancel: () => {},
       });
@@ -612,6 +606,7 @@ export default {
   },
   created() {
     let _self = this;
+    console.log(this);
     _self.handleClickDate();
     this.productList.forEach((e, i) => {
       if (e.defaultdepartalias == "PLAN") {
