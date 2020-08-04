@@ -68,6 +68,8 @@
                       <Select size="small" v-model="formValidateSearch.sendWxpjStatus">
                         <Option value="Y" key="Y">已推送</Option>
                         <Option value="N" key="N">未推送</Option>
+                        <Option value="N" key="E">发送异常</Option>
+                        <Option value="N" key="U">客户未绑定</Option>
                       </Select>
                     </FormItem>
                   </Col>
@@ -383,18 +385,30 @@ export default {
         },
         {
           title: "推送状态",
-          key: "sendWxpjStatus",
+          key: "sendwxpjstatus",
           minWidth: 100,
           render(h, params) {
+            
+          const CustomerCallBackSendMsgStatus ={
+            
+            "Y": "已发送",
+            "E": "发送异常",
+            "N": "未发送",
+            "U": "客户未绑定"
+            
+          };
             return h(
               "span",
-              params.row.sendWxpjStatus == "Y" ? "已推送" : "未推送"
+
+              //params.row.sendwxpjstatus == "Y" ? "已推送" : "未推送"
+              
+              CustomerCallBackSendMsgStatus[params.row.sendwxpjstatus]
             );
           },
         },
         {
           title: "推送时间",
-          key: "sendWxpjDate",
+          key: "sendwxpjdate",
           minWidth: 100,
         },
         {
