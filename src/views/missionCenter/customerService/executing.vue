@@ -68,8 +68,8 @@
                       <Select size="small" v-model="formValidateSearch.sendWxpjStatus">
                         <Option value="Y" key="Y">已推送</Option>
                         <Option value="N" key="N">未推送</Option>
-                        <Option value="N" key="E">发送异常</Option>
-                        <Option value="N" key="U">客户未绑定</Option>
+                        <Option value="E" key="E">发送异常</Option>
+                        <Option value="U" key="U">客户未绑定</Option>
                       </Select>
                     </FormItem>
                   </Col>
