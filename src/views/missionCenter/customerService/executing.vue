@@ -478,9 +478,13 @@ export default {
         return this.$Message.warning("请勿重复推送");
       }
       this.$Message.warning("正在推送中...");
-      await sendMiniProgramMsgByWXOA({ callbackId: this.row.callbackid });
-      this.$Message.success("发送成功!");
-      this.get_data();
+      try {
+          await sendMiniProgramMsgByWXOA({ callbackId: this.row.callbackid });
+          this.$Message.success("发送成功!");
+      } catch (error) {
+      } finally {
+        this.get_data();
+      }
     },
     pageChange(e) {
       this.page = e;
