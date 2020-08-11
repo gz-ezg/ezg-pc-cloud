@@ -80,7 +80,7 @@ export default {
         {
           title: "产品",
           key: "product",
-          minWidth: 300
+          minWidth: 100
         },
 
         {
@@ -96,7 +96,12 @@ export default {
         {
           title: "结算价格",
           key: "settlementPrice",
-          minWidth: 120
+          minWidth: 80
+        },
+        {
+          title: "销售价格",
+          key: "salesPrice",
+          minWidth: 80
         },
         {
           title: "结算账号",
@@ -109,13 +114,18 @@ export default {
           minWidth: 120
         },
         {
-          title: "开户行编码",
-          key: "settlementOpenBankCode",
+          title: "开户行支行",
+          key: "settlementOpenBankItem",
           minWidth: 120
         },
         {
-          title: "开户行支行",
-          key: "settlementOpenBankItem",
+          title: "状态",
+          key: "status",
+          minWidth: 60
+        },
+        {
+          title: "备注",
+          key: "remark",
           minWidth: 120
         }
       ],
@@ -133,7 +143,6 @@ export default {
         { field: "tel", title: "电话" },
         { field: "settlementPrice", title: "结算价" },
         { field: "settlementOpenBank", title: "开户行" },
-        { field: "settlementOpenBankCode", title: "开户行编码" },
         { field: "settlementOpenBankItem", title: "开户行支行" },
         { field: "settlementAccount", title: "结算账号" }
       ],
@@ -173,9 +182,11 @@ export default {
       // if (this.currentRow.notify_status == "sent") {
       //   return this.$Message.info("该消息不能编辑");
       // }
+      console.log(this.currentRow);
       this.isEdit = !this.isEdit;
       this.$refs.nowTable.list.fetchList();
       this.$refs.historyTable.list.fetchList();
+      console.log(this.isEdit);
     },
     handleShow() {
       if (!this.currentRow) {

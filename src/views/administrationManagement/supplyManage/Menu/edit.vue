@@ -158,18 +158,18 @@ export default {
   },
   created() {
     this.forms.id = this.initForm.id;
-    this.forms.productId = this.initForm.product_id;
+    this.forms.productId = this.initForm.productId;
     this.forms.product = this.initForm.product;
     this.forms.remark = this.initForm.remark;
-    this.forms.supplierName = this.initForm.supplier_name;
-    this.forms.contactName = this.initForm.contact_name;
+    this.forms.supplierName = this.initForm.supplierName;
+    this.forms.contactName = this.initForm.contactName;
     this.forms.tel = this.initForm.tel;
-    this.forms.settlementAccount = this.initForm.settlement_account;
+    this.forms.settlementAccount = this.initForm.settlementAccount;
     this.forms.status = this.initForm.status;
-    this.forms.salesPrice = this.initForm.sales_price;
-    this.forms.settlementPrice = this.initForm.settlement_price;
-    this.forms.settlementOpenBank = this.initForm.settlement_open_bank;
-    this.forms.settlementOpenBankItem = this.initForm.settlement_open_bank_item;
+    this.forms.salesPrice = this.initForm.salesPrice;
+    this.forms.settlementPrice = this.initForm.settlementPrice;
+    this.forms.settlementOpenBank = this.initForm.settlementOpenBank;
+    this.forms.settlementOpenBankItem = this.initForm.settlementOpenBankItem;
     this.getOpenBankList();
   }
 };
