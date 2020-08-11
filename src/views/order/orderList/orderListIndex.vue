@@ -185,6 +185,12 @@
             v-permission="['orderL.export']"
             type="primary"
             icon="ios-color-filter-outline"
+            @click="downloadOrderItemExcel"
+          >订单明细导出Excel</Button>
+          <Button
+            v-permission="['orderL.export']"
+            type="primary"
+            icon="ios-color-filter-outline"
             @click="account_downloadExcel"
           >结算导出</Button>
         </ButtonGroup>
@@ -781,6 +787,64 @@ export default {
       // console.log(toExcel)
       window.open(toExcel);
     },
+
+    //  下载文件
+    downloadOrderItemExcel() {
+      let field = [
+        { field: "ordercode", title: "订单号码" },
+        { field: "companyname", title: "公司名称" },       
+        { field: "paynumber", title: "订单金额" },
+        { field: "realnumber", title: "实付金额" },
+        { field: "neednumber", title: "欠费金额" },
+        { field: "usebalance", title: "使用余额" },
+        { field: "customerName", title: "客户名称" },
+        { field: "market", title: "销售" },
+        { field: "followby", title: "企业跟进人" },
+        { field: "payDirs", title: "缴费渠道", format: "payDirs" },
+        { field: "customersource", title: "客户来源", format: "cluesources" },
+        { field: "customercreatedate", title: "客户创建时间"},
+        { field: "ordercreatedate", title: "订单创建时间" },
+        { field: "payTime", title: "支付时间" },
+        { field: "productname", title: "产品名称" },
+        { field: "alisname", title: "产品明细" },
+        { field: "itemtotalnumber", title: "单价" },
+        { field: "itempaynumber", title: "明细实付" },
+        { field: "productnumber", title: "数量" },
+        { field: "affiliationarea", title: "地区" }    
+        
+      ];
+      let _self = this;
+      let url = `api/order/itemList`;
+      let config = {
+        page: "1",
+        pageSize: "1000000",
+        ordercode: _self.formValidateSearch.ordercode,
+        companyname: _self.formValidateSearch.companyname,
+        customername: _self.formValidateSearch.customername,
+        customertel: _self.formValidateSearch.customertel,
+        crealname: _self.formValidateSearch.crealname,
+        frealname: _self.formValidateSearch.frealname,
+        productname: _self.formValidateSearch.productname,
+        payDir: _self.formValidateSearch.payDir,
+        bcreatedate: DateFormat(_self.formValidateSearch.date[0]),
+        ecreatedate: DateFormat(_self.formValidateSearch.date[1]),
+        bpaytime: DateFormat(_self.formValidateSearch.paytime[0]),
+        epaytime: DateFormat(_self.formValidateSearch.paytime[1]),
+        sumField: "paynumber,realnumber,neednumber",
+        customer_bcreatedate: DateFormat(
+          _self.formValidateSearch.customerCreateTime[0]
+        ),
+        customer_ecreatedate: DateFormat(
+          _self.formValidateSearch.customerCreateTime[1]
+        ),
+        export: "Y",
+        exportField: encodeURI(JSON.stringify(field)),
+      };
+      let toExcel = this.$MergeURL(url, config);
+      // console.log(toExcel)
+      window.open(toExcel);
+    },
+
     //  搜索相关
     Search() {
       this.page = 1;
