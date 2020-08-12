@@ -108,7 +108,7 @@
         <Button type="primary" @click="handleSupplyChange">变更</Button>
         <Button type="ghost" style="margin-left:20px" @click="changeModal=false">取消</Button>
       </div>
-    </Modal>-->
+    </Modal>
     <Modal width="70%" title="查看凭证" v-model="visible">
       <template v-for="(item,index) in imgUrl">
         <img :key="index" :src="item" v-if="visible" style="width: 100%" />

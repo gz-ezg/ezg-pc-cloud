@@ -46,6 +46,7 @@ export default {
       listQuery: {
         notJs: "Y",
         iscycle: "N",
+        workOrderStatus: "60",
         serviceDept: "'EXECUTIVE'",
         sortField: "updatedate",
         order: "desc"

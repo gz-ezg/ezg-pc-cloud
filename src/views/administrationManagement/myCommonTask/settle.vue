@@ -63,7 +63,12 @@ export default {
       imgUrl: "",
       priceModal: false,
       url: "/order/workOrderList",
-      listQuery: { yesJs: "Y", iscycle: "N", serviceDept: "'EXECUTIVE'" },
+      listQuery: { 
+        yesJs: "Y", 
+        iscycle: "N", 
+        workOrderStatus: "60",
+        serviceDept: "'EXECUTIVE'" 
+      },
       tableHeader: [
         {
           title: "归属企业",
