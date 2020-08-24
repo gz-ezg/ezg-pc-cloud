@@ -137,7 +137,7 @@ export default {
             this.dateTemp.push(e[1])
         },
         open_every_analyz(){
-            let url = "api/order/bussiness/index.vue/work/order/analysis/dataReport"
+            let url = "api/order/bussiness/index/work/order/analysis/dataReport"
             let _self = this
 
             this.$http.get(url).then(function(res){

@@ -64,7 +64,7 @@ export default {
             var _self = this
             _self.table_loading = true
             // _self.Sloading = true       
-            var url = 'api/order/bussiness/index.vue/work/order/analysis/list'
+            var url = 'api/order/bussiness/index/work/order/analysis/list'
             var config = {
                 params:{
                     // page: _self.page,
