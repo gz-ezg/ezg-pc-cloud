@@ -175,7 +175,8 @@ export default {
                     }
 
                     function success(res) {
-                        if (res.data.data != null) {
+                        let result = res.data.data;
+                        if (result != null && result.length > 0 ) {
                             callback(new Error("抱歉，电话号码重复"));
                         } else {
                             callback();

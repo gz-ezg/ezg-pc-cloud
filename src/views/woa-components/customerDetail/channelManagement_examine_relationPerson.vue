@@ -95,8 +95,9 @@
                     if (re.test(value)) {
                         let url = '/customer/findCustomerByTel?tel=' + value
 
-                        function doSuccess(response) {
-                            if (response.data.data != null) {
+                        function doSuccess(res) {
+                            let result = res.data.data;
+                            if (result != null && result.length > 0 ) {
                                 callback(new Error('抱歉，电话号码重复'));
                             } else {
                                 callback();
