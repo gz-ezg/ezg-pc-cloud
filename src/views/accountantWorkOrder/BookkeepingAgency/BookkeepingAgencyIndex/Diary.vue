@@ -254,6 +254,7 @@ export default {
       this.form.cycleServiceTotalId = this.currentWorkRow.cycleServiceTotalId;
       this.form.baseWorkOrderId = this.currentWorkRow.baseWorkOrderId;
       this.form.price = this.currentWorkRow.price;
+      this.form.serverId = this.currentWorkRow.serverId;
       this.serverList = await getAccounterList();
     },
     async handleSubmit() {
