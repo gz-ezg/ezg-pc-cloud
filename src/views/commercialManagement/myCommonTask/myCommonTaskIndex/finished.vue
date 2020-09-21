@@ -311,8 +311,8 @@ export default {
           }
         },
         {
-          title: "产品数量",
-          key: "productnumber",
+          title: "销售金额",
+          key: "paynumber",
           width: 120
         },
         {
@@ -514,6 +514,8 @@ export default {
         eupdatedate: DateFormat(_self.formInline.updatedate[1]),
         serviceDept: "'BUSSINESS'",
         export: "Y",
+        sortField: _self.sortField,
+        order: _self.order,
         exportField: encodeURI(JSON.stringify(field))
       };
       let toExcel = this.$MergeURL(url, config);
