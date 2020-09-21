@@ -54,6 +54,11 @@
                                                 <DatePicker transfer type="daterange" placement="bottom-end" v-model="YformInline.date" style="width:100%" size="small"></DatePicker>
                                             </FormItem>
                                         </Col>
+                                        <Col span="8">
+                                            <FormItem label="完结时间：" prop="date">
+                                                <DatePicker transfer type="daterange" placement="bottom-end" v-model="YformInline.enddate" style="width:100%" size="small"></DatePicker>
+                                            </FormItem>
+                                        </Col>
                                     </Row>
                                     <FormItem>
                                         <Button type="primary" @click="search">搜索</Button>
@@ -180,7 +185,8 @@
                     product:"",
                     marketername:"",
                     servicename:"",
-                    date: []
+                    date: [],
+                    enddate: []
                 },
                 loading: false,
                 search_model:"",
@@ -189,6 +195,8 @@
                 pageTotal: new Number(),
                 page: 1,
                 pageSize: 10,
+                order: "desc",
+                sortField: "enddate",
                 row: {},
                 customerid: [],
                 data: [],
@@ -315,6 +323,7 @@
                 let _self = this
                 let url = `api/customer/customerEndList`
                 let config = {
+                        sortField: _self.sortField,
                         page: '1',
                         pageSize: '1000000',
                         status:"Y",
@@ -327,7 +336,9 @@
                         marketer:_self.YformInline.marketername,
                         servicer:_self.YformInline.servicename,
                         bcreatedate: DateFormat(_self.YformInline.date[0]),
-                        ecreatedate: DateFormat(_self.YformInline.date[1])
+                        ecreatedate: DateFormat(_self.YformInline.date[1]),
+                        benddate: DateFormat(_self.YformInline.enddate[0]),
+                        eenddate: DateFormat(_self.YformInline.enddate[1])
                 }
                 let toExcel = this.$MergeURL(url, config)
                 // console.log(toExcel)
@@ -351,6 +362,7 @@
                 this.YformInline.marketername = ""
                 this.YformInline.servicename = ""
                 this.YformInline.date = []
+                this.YformInline.enddate = []                
                 this.getData()
             },
             customerDetail(a) {
@@ -398,7 +410,8 @@
                 let url = `api/customer/customerEndList`
                 let config = {
                     params: {
-                        sortField: 'id',
+                        sortField: _self.sortField,
+                        order: _self.order,
                         page: _self.page,
                         pageSize: _self.pageSize,
                         status: 'Y',
@@ -409,7 +422,9 @@
                         marketer: _self.YformInline.marketername,
                         servicer: _self.YformInline.servicename,
                         bcreatedate: DateFormat(_self.YformInline.date[0]),
-                        ecreatedate: DateFormat(_self.YformInline.date[1])
+                        ecreatedate: DateFormat(_self.YformInline.date[1]),
+                        benddate: DateFormat(_self.YformInline.enddate[0]),
+                        eenddate: DateFormat(_self.YformInline.enddate[1])
                     }
                 }
                 _self.row = {}

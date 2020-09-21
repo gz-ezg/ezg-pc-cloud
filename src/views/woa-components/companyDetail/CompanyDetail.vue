@@ -2257,6 +2257,7 @@ export default {
       }
 
       function fail(err) {
+        console.log(err);
         _self.$Message.error(
           "对不起，当前查询的公司有误！请确认后重试！窗口将在2秒后关闭！"
         );
