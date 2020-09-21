@@ -2576,6 +2576,7 @@ export default {
       } else {
         _self.followupshow = true;
       }
+      
     },
     get_data_center() {
       let params =
