@@ -122,7 +122,7 @@
         <Row v-if="task_message.money" :gutter="16">
           <Col span="10">
             <FormItem label="欠费金额">
-              <Input size="small" :value="task_message.money" readonly />
+              <Input size="small" v-model="task_message.money" :readonly="isKf ? false : 'readonly'"/>
             </FormItem>
           </Col>
           <Col span="10">
@@ -268,6 +268,7 @@ export default {
       searchProduct: '',
       searchFollow: '',
       isOpenEdit: false,
+      isKf: false,
       task_message: {
         companyid: '',
         taxperiod: '',
@@ -364,6 +365,8 @@ export default {
   },
   created() {
     let _self = this;
+    let roles = localStorage.getItem("Role");
+    this.isKf = (roles.indexOf('hfgl') > -1) || (localStorage.getItem("id") == 10059);
 
     _self.$bus.on('OPEN_OFFLINE_UPDATE', e => {
       _self.$refs['task_message'].resetFields();
@@ -416,8 +419,12 @@ export default {
       }
     },
     checkMonth(data) {
+      
       let period = nowDateFormatYearMonth(this.task_message.createdate);
       let between = data.getFullYear() * 12 + data.getMonth() - period.substr(0, 4) * 12 - period.substr(4) * 1;
+      if (this.isKf){
+         return false;
+      }
       return -3 >= between;
     },
     //选择产品改变相关数据
