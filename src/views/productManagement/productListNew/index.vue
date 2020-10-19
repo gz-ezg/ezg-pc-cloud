@@ -196,6 +196,7 @@ export default {
                     page: _self.page,
                     pageSize: _self.pageSize,
                     product: _self.formValidate.product,
+                    selectProductFlag: 1,
                     productCode: _self.formValidate.productCode
                 }
             }
