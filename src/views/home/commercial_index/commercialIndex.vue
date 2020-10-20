@@ -20,7 +20,7 @@
         </Col>
     </Row>
     <Row :gutter="10" class="margin-top-10">
-        <iframe style="width:100%;min-height:700px" :src="srcUrl"></iframe>
+        <iframe style="width:100%;min-height:300px" :src="srcUrl"></iframe>
         <!--
         <Col span="12" :style="{marginBottom: '10px'}">
         <Card style="height:500px">
@@ -46,7 +46,7 @@
         </Col>
         -->
     </Row>
-    <!-- <Row :gutter="10" class="margin-top-10" style="height:600px">
+    <Row :gutter="10" class="margin-top-10" style="height:600px">
         <Col span="24" :style="{marginBottom: '10px'}">
         <Card style="height:600px">
             <div class="data-source-row">
@@ -64,7 +64,6 @@
         </Card>
         </Col>
     </Row>
- -->
     <Modal title="工单提醒" width="400" v-model="workorderTip" :closable="false" :mask-closable="false">
         <Row :gutter="16">
             <Table ref="selection" highlight-row size="small" :columns="header" :data="dataAnalyz">
@@ -147,7 +146,7 @@ export default {
     },
     methods: {
         getSelectList() {
-            let url = 'api/product/businessProductIdAndProduct'
+            let url = 'api/product/businessProductIdAndProduct?defaultdepartalias=BUSSINESS'
             let _self = this
 
             this.$http.get(url).then(function (res) {
