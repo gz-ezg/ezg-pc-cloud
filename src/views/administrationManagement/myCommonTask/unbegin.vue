@@ -244,7 +244,7 @@ export default {
       addSuppilerModel: false,
       serveModal: false,
       search_model: "",
-      sortField: "updatedate",
+      sortField: "CreateDate", //updatedate
       order: "desc",
       //  触发搜索
       isSearh: false,
