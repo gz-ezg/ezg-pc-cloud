@@ -1,7 +1,48 @@
 <template>
-    <div style="min-width:1500px">
-        <Row :gutter="10" class="margin-top-10">
-            <Col span="12" :style="{marginBottom: '10px'}">
+  <div style="min-width:1500px">
+    <Row>
+      <Col
+        span="24"
+        style="background-color:#FFFFFF;padding:10px"
+      >
+      <div>
+        <Col
+          span="24"
+          style="padding:20px"
+        >
+        <center>
+          <h2>报表条件筛选</h2>
+        </center>
+        </Col>
+        <Col
+          span="24"
+          style="padding-bottom:20px"
+        >
+        <center>
+          <DatePicker
+            size="small"
+            type="month"
+            placeholder="选择月份"
+            style="width: 200px"
+            v-model="dataRange"
+            @on-change="date_change"
+            placement="bottom"
+          />
+        </center>
+        </Col>
+      </div>
+      </Col>
+    </Row>
+    <Row
+      :gutter="10"
+      class="margin-top-10"
+    >
+
+      <iframe
+        style="width:100%;min-height:700px"
+        :src="srcUrl"
+      ></iframe>
+      <!-- <Col span="12" :style="{marginBottom: '10px'}">
                 <Card style="height:1200px">
                     <p slot="title" class="card-title">
                         <Icon type="android-map"></Icon>
@@ -22,58 +63,90 @@
                         <workload :month="month"></workload>
                     </div>
                 </Card>
-            </Col>
-        </Row>
-        <Row :gutter="10" class="margin-top-10">
-            <Col span="12" :style="{marginBottom: '10px'}">
-                <Card style="height:1000px">
-                    <p slot="title" class="card-title">
-                        <Icon type="android-map"></Icon>
-                        业务分析图
-                    </p>
-                    <div class="data-source-row">
-                        <bussiness-type :year="year"></bussiness-type>
-                    </div>
-                </Card>
-            </Col>
-            <Col span="12" :style="{marginBottom: '10px'}">
-                <Card style="height:1000px">
-                    <p slot="title" class="card-title">
-                        <Icon type="android-map"></Icon>
-                        新增/下线客户统计
-                    </p>
-                    <div class="data-source-row">
-                        <offline-statistical :month="month"></offline-statistical>
-                    </div>
-                </Card>
-            </Col>
-        </Row>
-        <Row :gutter="10" class="margin-top-10">
-            <Col span="12" :style="{marginBottom: '10px'}">
-                <Card style="height:1000px">
-                    <p slot="title" class="card-title" align="center">
-                        <Icon type="android-map"></Icon>
-                        产值总计
-                    </p>
-                    <div class="data-source-row">
-                        <total-output-value></total-output-value>
-                    </div>
-                </Card>
-            </Col>
-            <Col span="12" :style="{marginBottom: '10px'}">
-                <Card style="height:1000px">
-                    <p slot="title" class="card-title" align="center">
-                        <Icon type="android-map"></Icon>
-                        完成情况
-                    </p>
-                    <div class="data-source-row">
-                        <completion></completion>
-                    </div>
-                </Card>
-            </Col>
-        </Row>
-        <common-module></common-module>
-    </div>
+            </Col> -->
+    </Row>
+    <Row
+      :gutter="10"
+      class="margin-top-10"
+    >
+      <Col
+        span="12"
+        :style="{marginBottom: '10px'}"
+      >
+      <Card style="height:1000px">
+        <p
+          slot="title"
+          class="card-title"
+        >
+          <Icon type="android-map"></Icon>
+          业务分析图
+        </p>
+        <div class="data-source-row">
+          <bussiness-type :year="year"></bussiness-type>
+        </div>
+      </Card>
+      </Col>
+      <Col
+        span="12"
+        :style="{marginBottom: '10px'}"
+      >
+      <Card style="height:1000px">
+        <p
+          slot="title"
+          class="card-title"
+        >
+          <Icon type="android-map"></Icon>
+          新增/下线客户统计
+        </p>
+        <div class="data-source-row">
+          <offline-statistical :month="month"></offline-statistical>
+        </div>
+      </Card>
+      </Col>
+    </Row>
+    <Row
+      :gutter="10"
+      class="margin-top-10"
+    >
+      <Col
+        span="12"
+        :style="{marginBottom: '10px'}"
+      >
+      <Card style="height:1000px">
+        <p
+          slot="title"
+          class="card-title"
+          align="center"
+        >
+          <Icon type="android-map"></Icon>
+          产值总计
+        </p>
+        <div class="data-source-row">
+          <total-output-value></total-output-value>
+        </div>
+      </Card>
+      </Col>
+      <Col
+        span="12"
+        :style="{marginBottom: '10px'}"
+      >
+      <Card style="height:1000px">
+        <p
+          slot="title"
+          class="card-title"
+          align="center"
+        >
+          <Icon type="android-map"></Icon>
+          完成情况
+        </p>
+        <div class="data-source-row">
+          <completion></completion>
+        </div>
+      </Card>
+      </Col>
+    </Row>
+    <common-module></common-module>
+  </div>
 </template>
 
 <script>
@@ -81,42 +154,59 @@ import bussinessType from './bussinessType'
 import offlineStatistical from './offlineStatistical'
 import workProgress from './progress'
 import workload from './workload'
-import commonModule from './common_module';
+import commonModule from './common_module'
 import totalOutputValue from './totalOutputValue'
 import completion from './completion'
 export default {
-    components:{
-        bussinessType,
-        offlineStatistical,
-        workProgress,
-        workload,
-        commonModule,
-        totalOutputValue,
-        completion
-    },
-    data(){
-        return {
-            year:"",
-            month:"",
-            day:""
-        }
-    },
-    methods:{
-        get_local_day(){
-            let _self = this
-            let date = new Date()
-            _self.year = date.getFullYear()
-            if(date.getMonth()<8){
-                _self.month = _self.year + "0" + (date.getMonth() + 1)
-            }else{
-                _self.month = _self.year + "" + (date.getMonth() + 1)
-            }
-            _self.day = date.getDate() + 1
-        }
-    },
-    created(){
-        this.get_local_day()
+  components: {
+    bussinessType,
+    offlineStatistical,
+    workProgress,
+    workload,
+    commonModule,
+    totalOutputValue,
+    completion,
+  },
+  data() {
+    return {
+      year: '',
+      month: '',
+      day: '',
+      srcUrl: '',
+      dataRange: '',
     }
+  },
+  methods: {
+    date_change(e) {
+      this.selectMonth = e
+      this.srcUrl =
+        'http://ureport.zgcfo.com/ureport/preview?_u=file:accounterWorkTotal.ureport.xml&period=' +
+        this.selectMonth.replace('-', '')
+    },
+
+    get_local_day() {
+      let _self = this
+      let date = new Date()
+      _self.year = date.getFullYear()
+      if (date.getMonth() < 8) {
+        _self.month = _self.year + '0' + (date.getMonth() + 1)
+      } else {
+        _self.month = _self.year + '' + (date.getMonth() + 1)
+      }
+      _self.day = date.getDate() + 1
+    },
+  },
+  created() {
+    this.get_local_day()
+    let date = new Date()
+    let now = `${date.getFullYear()}${
+      date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()
+    } `
+    this.dataRange = now
+    this.srcUrl =
+      'http://ureport.zgcfo.com/ureport/preview?_u=file:accounterWorkTotal.ureport.xml&period=' +
+      now
+  },
 }
 </script>
 
