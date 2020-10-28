@@ -296,6 +296,11 @@ export default {
                         width: 120,
                     },
                     {
+                        title: '产值',
+                        key: 'paynumber',
+                        width: 120,
+                    },
+                    {
                         title: '目前进度',
                         key: 'CurrentProcess',
                         width: 120,
@@ -444,6 +449,7 @@ export default {
                     {field:'baseorderid',title:'提示'},
                     {field:'departname',title:'服务部门'},
                     {field:'product',title:'产品全称'},
+                    {field:'paynumber',title:'产值'},
                     {field:'CurrentProcess',title:'目前进度'},
                     {field:'nextprocess',title:'下个进度'},
                     {field:'ServiceStart',title:'服务开始时间'},
