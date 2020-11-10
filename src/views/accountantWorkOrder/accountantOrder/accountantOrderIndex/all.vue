@@ -387,6 +387,21 @@
                             _data.rows[i].gdsreport = '不用报道'
                         }
 
+
+                        if (_data.rows[i].service_status == 'stop') {
+                            _data.rows[i].service_status = '已下线'
+                        } else if (_data.rows[i].service_status == 'exception') {
+                            _data.rows[i].service_status = '异常'
+                        } else if (_data.rows[i].service_status == 'inservice') {
+                            _data.rows[i].service_status = '服务中'
+                        } else if (_data.rows[i].service_status == 'logout') {
+                            _data.rows[i].service_status = '已注销'
+                        } else if (_data.rows[i].service_status == 'upgrade') {
+                            _data.rows[i].service_status = '已升级'
+                        } else if (_data.rows[i].service_status == 'notStarted') {
+                            _data.rows[i].service_status = '未开始'
+                        }
+
                         _self.data.push(_data.rows[i])
                     }
                 }
