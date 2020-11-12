@@ -321,7 +321,7 @@ export default {
             id: _self.orderDetail.id,
             payDir: _self.orderDetail.paydir,
             payTime: DateFormat(_self.orderDetail.payTime),
-            GDSreport: _self.orderDetail.gdsreport,
+            gdsreport: _self.orderDetail.gdsreport,
             companyId: _self.orderDetail.companyid,
             isornotkp: _self.orderDetail.isornotkp,
             orderPayNumber: _self.orderDetail.realnumber,
