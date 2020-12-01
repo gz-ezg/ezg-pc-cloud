@@ -499,7 +499,8 @@ export default {
         { field: "paynumber", title: "收款金额" },
         { field: "product", title: "完成事项" },
         { field: "UpdateDate", title: "完成时间" },
-        { field: "servername", title: "服务人员" }
+        { field: "servername", title: "服务人员" },
+        { field: "followname", title: "销售人员" }
       ];
       let _self = this;
       let url = `api/order/workOrderList`;
