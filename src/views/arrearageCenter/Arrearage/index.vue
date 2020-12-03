@@ -99,8 +99,8 @@ export default {
   },
   methods: {
     async hanldeSubmit() {
-      if (!this.applyMemo || !this.latePeriod) {
-        return this.$Message.info('请完善信息');
+      if ( !this.latePeriod) {
+        return this.$Message.info('请完善税期');
       }
       try {
         this.loading = true;
