@@ -219,7 +219,7 @@ export default {
                                     },
                                     style: {
                                         marginRight: '5px',
-                                        display: (localStorage.getItem("realname") == "管理员") ? "inline" : "none"
+                                        display: (localStorage.getItem("id") == 10059) ? "inline" : "none"
                                     },
                                     on: {
                                         click: () => {
@@ -271,7 +271,7 @@ export default {
                                     },
                                     style: {
                                         marginRight: '5px',
-                                        display: (localStorage.getItem("realname") == "管理员") ? "inline" : "none"
+                                        display: (localStorage.getItem("id") == 10059) ? "inline" : "none"
                                     },
                                     on: {
                                         click: () => {

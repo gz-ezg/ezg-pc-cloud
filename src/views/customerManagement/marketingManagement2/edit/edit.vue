@@ -445,7 +445,7 @@ export default {
     });
 
     // 判断是否管理员
-    this.isAdmin = localStorage.getItem("realname") == "管理员";
+    this.isAdmin = localStorage.getItem("id") == 10059;
   },
   watch: {
     "formValidate.labels": function() {

@@ -150,11 +150,11 @@ export default {
                                 h('Button', {
                                     props: {
                                         type: 'text',
-                                        size: 'small',
-                                        disabled: params.row.status == "readonly"? true : false
+                                        size: 'small'
                                     },
                                     style: {
-                                        marginRight: '5px'
+                                        marginRight: '5px',
+                                         display: (localStorage.getItem("id") == 10059 ) ? "inline-block" : "none"
                                     },
                                     on: {
                                         click: () => {
@@ -163,25 +163,25 @@ export default {
                                         }
                                     }
                                 }, '编辑'),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    style: {
-                                        marginRight: '5px'
-                                    },
-                                    on: {
-                                        click: () => {
+                                // h('Button', {
+                                //     props: {
+                                //         type: 'text',
+                                //         size: 'small'
+                                //     },
+                                //     style: {
+                                //         marginRight: '5px'
+                                //     },
+                                //     on: {
+                                //         click: () => {
                                           // console.log(params)
                                             // this.$bus.emit("OPEN_COMPANY_UPDATE", params.row)
                                             // this.open_company_merge()
 
                                             // this.edit(params);
 
-                                        }
-                                    }
-                                }, '工商信息'),
+                                //         }
+                                //     }
+                                // }, '工商信息'),
                                 h('Button', {
                                     props: {
                                         type: 'text',

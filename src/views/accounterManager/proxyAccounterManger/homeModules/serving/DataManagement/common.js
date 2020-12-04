@@ -138,7 +138,7 @@ export default {
                         return ("div",[
                             h('Button',{
                                 style: {
-                                    display: (localStorage.getItem("realname") == "管理员" ) ? "inline-block" : "none"
+                                    display: (localStorage.getItem("id") == 10059 ) ? "inline-block" : "none"
                                 },
                                 props: {
                                     type: 'text',
@@ -152,7 +152,7 @@ export default {
                             },'[ 删除 ]'),
                             h('Button',{
                                 style: {
-                                    display: (localStorage.getItem("realname") == "管理员" ) ? "inline-block" : "none"
+                                    display: (localStorage.getItem("id") == 10059 ) ? "inline-block" : "none"
                                 },
                                 props: {
                                     type: 'text',
