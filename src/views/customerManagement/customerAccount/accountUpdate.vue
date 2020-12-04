@@ -31,6 +31,14 @@
                         </FormItem>
                     </Col>
                 </Row>
+                <Row :gutter="16">
+                    
+                    <Col span="16">
+                        <FormItem label="调整理由" prop="now_account">
+                            <Input v-model="memo" type="textarea" :autosize="{minRows: 5,maxRows: 10}" />
+                        </FormItem>
+                    </Col>
+                </Row>
             </Form>
             <div slot="footer">
                 <Button type="primary" @click="submit">确定修改</Button>
@@ -72,7 +80,8 @@
                 let url = `api/customer/account/update`
                 let config = {
                     id: this.selectRow.id,
-                    amount_num: this.now_account
+                    amount_num: this.now_account,
+                    memo: this.memo
                 }
                 function success(res){
                     console.log(res)

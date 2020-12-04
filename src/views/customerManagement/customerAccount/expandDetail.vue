@@ -33,17 +33,22 @@ export default {
                 {
                     title: "订单号",
                     key: "ordercode",
-                    minWidth: 150
+                    minWidth: 90
                 },
                 {
                     title: "明细类型",
                     key: "item_type",
-                    minWidth: 150
+                    minWidth: 90
                 },
                 {
                     title: "金额",
                     key: "item_amount",
-                    minWidth: 120
+                    minWidth: 90
+                },
+                {
+                    title: "备注",
+                    key: "item_memo",
+                    minWidth: 150
                 }
             ],
             data: [],

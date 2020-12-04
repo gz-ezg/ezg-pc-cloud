@@ -246,7 +246,7 @@ export default {
             try {
                 let { account_change_type,account_change_item_type } = await api.getDictionary(params)
 
-                _self.accountChangeType = _self.$array2map(account_change_type)
+                _self.accountChangeType = _self.$array2map(account_change_type)                
                 _self.accountChangeItemType = _self.$array2map(account_change_item_type)
             }catch(error){
                 console.log(error)
