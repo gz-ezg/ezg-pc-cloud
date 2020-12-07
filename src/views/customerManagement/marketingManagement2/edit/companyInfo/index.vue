@@ -153,8 +153,8 @@ export default {
                                         size: 'small'
                                     },
                                     style: {
-                                        marginRight: '5px',
-                                         display: (localStorage.getItem("id") == 10059 ) ? "inline-block" : "none"
+                                        marginRight: '5px' //,
+                                        //display: (localStorage.getItem("id") == 10059 ) ? "inline-block" : "none"
                                     },
                                     on: {
                                         click: () => {

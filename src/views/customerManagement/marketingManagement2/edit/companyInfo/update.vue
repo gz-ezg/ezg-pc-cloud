@@ -26,7 +26,7 @@
           <Input v-model="formValidate.createby" readonly size="small"></Input>
         </FormItem>
         <FormItem label="企业来源" prop="cluesource">
-          <Select transfer v-model="formValidate.cluesource" placement="top" size="small">
+          <Select transfer v-model="formValidate.cluesource" placement="top" size="small" :disabled="!isAdmin">
             <Option v-for="item in cluesources" :value="item.typecode" :key="item.typecode">{{ item.typename }} </Option>
           </Select>
         </FormItem>
@@ -49,7 +49,8 @@ export default {
   mixins: [relationCommon],
   data() {
     return {
-      openUpdateCompany: false
+      openUpdateCompany: false,
+      isAdmin: false
       // companyarea_temp: []
     };
   },
@@ -90,6 +91,7 @@ export default {
   },
   created() {
     let _self = this;
+    this.isAdmin = localStorage.getItem("id") == 10059;
     this.$bus.off('OPEN_COMPANY_UPDATE', true);
     this.$bus.on('OPEN_COMPANY_UPDATE', e => {
       _self.formValidate = e;
