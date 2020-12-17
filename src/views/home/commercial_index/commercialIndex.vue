@@ -3,11 +3,11 @@
     <Row>
         <Col span="24" style="background-color:#FFFFFF;padding:10px">
         <div>
-            <Col span="24" style="padding:20px">
+            <!-- <Col span="24" style="padding:20px">
             <center>
                 <h2>报表条件筛选</h2>
             </center>
-            </Col>
+            </Col> -->
             <Col span="24" style="padding-bottom:20px">
             <center>
                 产品：
@@ -20,31 +20,10 @@
         </Col>
     </Row>
     <Row :gutter="10" class="margin-top-10">
-        <iframe style="width:100%;min-height:300px" :src="srcUrl"></iframe>
-        <!--
-        <Col span="12" :style="{marginBottom: '10px'}">
-        <Card style="height:500px">
-            <p slot="title" class="card-title">
-                <Icon type="android-map"></Icon>
-                外勤分析
-            </p>
-            <div class="data-source-row">
-                <field-anaylist :date="dateTemp" :type="type"></field-anaylist>
-            </div>
-        </Card>
-        </Col>
-        <Col span="12" :style="{marginBottom: '10px'}">
-        <Card style="height:500px">
-            <p slot="title" class="card-title">
-                <Icon type="android-map"></Icon>
-                工单分析
-            </p>
-            <div class="data-source-row">
-                <workorder-anaylist :date="dateTemp" :type="type"></workorder-anaylist>
-            </div>
-        </Card>
-        </Col>
-        -->
+        <iframe style="width:100%;min-height:210px" :src="srcUrl"></iframe>
+    </Row>
+     <Row :gutter="10" class="margin-top-10">
+        <iframe style="width:100%;min-height:600px" :src="srcWqUrl"></iframe>        
     </Row>
     <Row :gutter="10" class="margin-top-10" style="height:600px">
         <Col span="24" :style="{marginBottom: '10px'}">
@@ -115,7 +94,11 @@ export default {
         return {
             checkAll: true,
             indeterminate: false,
+            isAdmin: false,
+            isBusinessAdmin: false,
+            userid:0,
             srcUrl: 'http://ureport.zgcfo.com/ureport/preview?_u=file:businessWorkTotalValue.ureport.xml&serviceMonth=',
+            srcWqUrl: 'http://ureport.zgcfo.com/ureport/preview?_u=file:businessWQTotalPerformace.ureport.xml&serviceMonth=',
             count: '',
             selectMonth: '',
             selectValue: [],
@@ -165,6 +148,12 @@ export default {
                 .filter((v) => this.selectValue.includes(v.product))
                 .map((v) => v.id)
                 .join(',')
+
+           this.srcWqUrl=
+                'http://ureport.zgcfo.com/ureport/preview?_u=file:businessWQTotalPerformace.ureport.xml&serviceMonth=' +
+                this.selectMonth +
+                '&userid=' +
+                this.userid
 
             this.selectModel = false
         },
@@ -226,6 +215,13 @@ export default {
         },
     },
     created() {
+        this.userid = localStorage.getItem("id")
+        this.isAdmin = (this.userid == 10059 )
+        this.isBusinessAdmin = localStorage.getItem("Role").indexOf('ssbgd') > -1
+        if (this.isBusinessAdmin || this.isAdmin) {
+            this.userid = 0
+        }
+
         let date = new Date()
         let now =
             date.getFullYear() +
@@ -237,6 +233,7 @@ export default {
         this.dataRange = now
         this.selectMonth = now
         this.srcUrl = this.srcUrl + now
+        this.srcWqUrl = this.srcWqUrl + now + '&userid=' + this.userid
         // this.open_every_analyz()
         this.getSelectList()
     },
