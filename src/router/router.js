@@ -932,8 +932,8 @@ export const appRouter = [
           import(/* webpackChunkName: "commercialTaskManagement" */ "@/views/commercialManagement/myCommonTask/myCommonTask_table.vue"),
       },
       {
-        access: 6038,
-        meta: 6038,
+        access: 6037,
+        meta: 6037,
         path: "schedule",
         title: "商事排程表",
         name: "newSchedule",
