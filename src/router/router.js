@@ -940,6 +940,16 @@ export const appRouter = [
         component: () =>
           import(/* webpackChunkName: "newSchedule" */ "@/views/commercialManagement/newSchedule/index.vue"),
       },
+      {
+        // access: 11666,
+        access: 6038,
+        meta: 6038,
+        path: "commercialPerformanceManagement",
+        title: "商事绩效管理",
+        name: "commercialPerformanceManagement",
+        component: () =>
+          import(/* webpackChunkName: "commercialPerformanceManagement" */ "@/views/commercialManagement/commercialPerformanceManagement/index.vue"),
+      },
     ],
   },
   {
