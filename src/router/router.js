@@ -941,9 +941,8 @@ export const appRouter = [
           import(/* webpackChunkName: "newSchedule" */ "@/views/commercialManagement/newSchedule/index.vue"),
       },
       {
-        // access: 11666,
-        access: 6038,
-        meta: 6038,
+        access: 11666,
+        meta: 11666,
         path: "commercialPerformanceManagement",
         title: "商事绩效管理",
         name: "commercialPerformanceManagement",
