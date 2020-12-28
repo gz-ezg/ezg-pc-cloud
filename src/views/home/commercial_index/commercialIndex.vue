@@ -20,7 +20,7 @@
         </Col>
     </Row>
     <Row :gutter="10" class="margin-top-10">
-        <iframe style="width:100%;min-height:210px" :src="srcUrl"></iframe>
+        <iframe style="width:100%;min-height:240px" :src="srcUrl"></iframe>
     </Row>
      <Row :gutter="10" class="margin-top-10">
         <iframe style="width:100%;min-height:600px" :src="srcWqUrl"></iframe>        

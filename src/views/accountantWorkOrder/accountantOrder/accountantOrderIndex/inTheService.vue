@@ -313,6 +313,7 @@
         methods: {
             downloadExcel(){
                 let field = [
+                    {field: "CompanyName", title: "对应企业"},
                     {field:'product',title:'产品名称'},
                     {field:'server_realname',title:'服务人员'},
                     // {field:'createbyrealname',title:'创建人'},
