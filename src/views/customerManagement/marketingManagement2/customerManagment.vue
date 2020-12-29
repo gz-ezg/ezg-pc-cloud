@@ -622,7 +622,7 @@ export default {
                   },
                   on: {
                     click: function(event) {
-                      this.dialout(params.row.TEL, params.row.ID);
+                      this.dialout(params.row.full_tel, params.row.ID);
                       // this.phone(params.row.ID, params.row.TEL);
                       // this.getLoginerMessage(params.row.TEL);
                       event.stopPropagation();
