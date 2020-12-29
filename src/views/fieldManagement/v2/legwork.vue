@@ -295,43 +295,44 @@
                                 }
                             }
                         }
-                    },
-                    {
-                        title: '操作',
-                        key: 'action',
-                        fixed: 'right',
-                        width: 100,
-                        align: 'center',
-                        render: (h, params) => {
-                            console.log(params)
-                            return h('div', [
-                                // h('Button', {
-                                //     props: {
-                                //         type: 'text',
-                                //         size: 'small'
-                                //     },
-                                //     on: {
-                                //         click: () => {
-                                //             Bus.$emit('openCompanyDetail',params.row.companyid)
-                                //         }
-                                //     }
-                                // }, '[公司详情]'),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            // console.log(params.row.customerid)
-                                            this.$store.commit('open_gobal_customer_detail_modal', {ID: params.row.customer_id});
-                                            // Bus.$emit('Open_customer_detail',params.row.customerid)
-                                        }
-                                    }
-                                }, '[客户详情]'),
-                            ]);
-                        }
                     }
+                    // ,
+                    // {
+                    //     title: '操作',
+                    //     key: 'action',
+                    //     fixed: 'right',
+                    //     width: 100,
+                    //     align: 'center',
+                    //     render: (h, params) => {
+                    //         console.log(params)
+                    //         return h('div', [
+                    //             // h('Button', {
+                    //             //     props: {
+                    //             //         type: 'text',
+                    //             //         size: 'small'
+                    //             //     },
+                    //             //     on: {
+                    //             //         click: () => {
+                    //             //             Bus.$emit('openCompanyDetail',params.row.companyid)
+                    //             //         }
+                    //             //     }
+                    //             // }, '[公司详情]'),
+                    //             h('Button', {
+                    //                 props: {
+                    //                     type: 'text',
+                    //                     size: 'small'
+                    //                 },
+                    //                 on: {
+                    //                     click: () => {
+                    //                         // console.log(params.row.customerid)
+                    //                         this.$store.commit('open_gobal_customer_detail_modal', {ID: params.row.customer_id});
+                    //                         // Bus.$emit('Open_customer_detail',params.row.customerid)
+                    //                     }
+                    //                 }
+                    //             }, '[客户详情]'),
+                    //         ]);
+                    //     }
+                    // }
                 ]
             }
         },
