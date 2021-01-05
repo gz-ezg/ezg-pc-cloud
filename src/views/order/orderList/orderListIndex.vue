@@ -742,6 +742,7 @@ export default {
         { field: "name", title: "客户名称" },
         { field: "productname", title: "产品名称" },
         { field: "ProcessType", title: "流程状态" },
+        { field: "payTime", title: "到账时间" },
         { field: "base_paydir", title: "缴费渠道", format: "payDirs" },
         { field: "paynumber", title: "订单价格" },
         { field: "realnumber", title: "已付款" },
