@@ -620,11 +620,11 @@ export default {
         end_residue_time: "",
         importance: "",
         order: "desc",
-        sortField: "clue_ranks"
+        sortField: "updatedate"
       },
       //  模态框控制
       createCustomerStatus: false,
-      sortName: "clue_ranks",
+      sortName: "updatedate",
       order: "desc"
     };
   },

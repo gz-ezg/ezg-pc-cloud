@@ -279,6 +279,11 @@ export default {
                         }
                     },
                     {
+                    title: "销售金额",
+                    key: "paynumber",
+                    width: 120
+                    },
+                    {
                         title: '目前进度',
                         key: 'CurrentProcess',
                         width: 120,

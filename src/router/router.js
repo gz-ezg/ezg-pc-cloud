@@ -1440,14 +1440,23 @@ export const appRouter = [
     component: Main,
     children: [
       {
-        access: 6089,
-        meta: 6089,
+        access: 11667,
+        meta: 11667,
         path: "index",
-        title: "公海池",
-        name: "publicPool_index",
+        title: "公海池2.0",
+        name: "publicPool2.0_index",
         component: () =>
-          import(/* webpackChunkName: "publicPool_index" */ "@/views/publicPool/publicPool"),
+          import(/* webpackChunkName: "publicPool2.0_index" */ "@/views/publicPool/publicPool2.0"),
       },
+      // {
+      //   access: 6089,
+      //   meta: 6089,
+      //   path: "index",
+      //   title: "公海池",
+      //   name: "publicPool_index",
+      //   component: () =>
+      //     import(/* webpackChunkName: "publicPool_index" */ "@/views/publicPool/publicPool"),
+      // },
       {
         access: 11654,
         meta: 11654,

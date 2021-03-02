@@ -49,7 +49,7 @@ import workOrderLog from "./workOrderLog";
             Finished,
             Notbegin,
             // Detail,
-            // CompanyDetail,
+            // CompanyDetail,P
             Flow,
             overDueReason,
             Stop,
