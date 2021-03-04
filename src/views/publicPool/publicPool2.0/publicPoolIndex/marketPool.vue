@@ -490,7 +490,7 @@ import { getLabelList } from "@A/systemManage";
                 },
                 get_data() {
                 let _self = this;
-                let url = `api/customer/public/pool/list`;
+                let url = `api/customer/market/pool/list`;
                 this.selectRow = "";
                 _self.tableLoading = true;
 

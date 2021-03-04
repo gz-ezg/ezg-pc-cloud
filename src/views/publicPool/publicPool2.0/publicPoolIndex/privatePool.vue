@@ -517,7 +517,7 @@ import { getLabelList } from "@A/systemManage";
                 },
                 get_data() {
                 let _self = this;
-                let url = `api/customer/public/pool/list`;
+                let url = `api/customer/private/pool/list`;
                 this.selectRow = "";
                 _self.tableLoading = true;
 
