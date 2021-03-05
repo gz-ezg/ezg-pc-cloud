@@ -149,6 +149,12 @@
             @click="refresh"
           >刷新
           </Button>
+          <Button
+            type="primary"
+            name="marketingManagement_index_pool_record"
+            icon="ios-crop"
+            @click="check_select('Open_Pool_Record')"
+          >查看转移日志</Button>
 
         </ButtonGroup>
 
@@ -194,11 +200,12 @@
 import commonVue from "./commonVue";
 import { DateFormat } from "../../../../libs/utils";
 import { getLabelList } from "@A/systemManage";
+import showPoolRecord from "./op/poolRecord";
     export default {
         name:'allPool',
         mixins: [commonVue],
         components:{
-            
+            showPoolRecord
         },
         data(){
             return{

@@ -64,27 +64,28 @@ export default {
             _self.get_data();
         },
         check_select(e){
-            console.log(e)
+            if(this.selectRow){
+                this.$bus.emit(e, this.selectRow)
+                console.log(e);
+            }else{
+                this.$Message.warning("请选择需要操作的客户！")
+            }
 
-            if (e == 'CUSTOMER_CHANGE_MARKETER') {
-                console.log(0);
-                if (this.selectRow.length !== 0) {
-                    console.log(1);
-                  this.$bus.emit(e, this.selectRow)
-                } else if (this.row) {
-                    console.log(2);
-                  this.$bus.emit(e, [this.row])
-                } else {
-                    console.log(3);
-                  this.$Message.warning('请选择需要操作的客户！')
-                }
-              }else{
-                if(this.selectRow){
-                    this.$bus.emit(e, this.selectRow)
-                }else{
-                    this.$Message.warning("请选择需要操作的客户！")
-                }
-              }
+            // if (e == 'CUSTOMER_CHANGE_MARKETER') {
+            //     if (this.selectRow.length !== 0) {
+            //       this.$bus.emit(e, this.selectRow)
+            //     } else if (this.row) {
+            //       this.$bus.emit(e, [this.row])
+            //     } else {
+            //       this.$Message.warning('请选择需要操作的客户！')
+            //     }
+            //   }else{
+            //     if(this.selectRow){
+            //         this.$bus.emit(e, this.selectRow)
+            //     }else{
+            //         this.$Message.warning("请选择需要操作的客户！")
+            //     }
+            //   }
 
             
         }

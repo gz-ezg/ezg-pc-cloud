@@ -116,6 +116,12 @@
             @click="check_select('CUSTOMER_CHANGE_MARKETER')"
             v-permission="['privatePool2.change']"
           >客户变更</Button>
+          <Button
+            type="primary"
+            name="marketingManagement_index_pool_record"
+            icon="ios-crop"
+            @click="check_select('Open_Pool_Record')"
+          >查看转移日志</Button>
 
 
           <Dropdown >
@@ -205,6 +211,7 @@
     </card>
 
     <change-marker></change-marker>
+    <show-pool-record></show-pool-record>
 
 </div>
     
@@ -214,12 +221,14 @@
 import commonVue from "./commonVue";
 import { DateFormat } from "../../../../libs/utils";
 import changeMarker from "./op/change";
+import showPoolRecord from "./op/poolRecord";
 import { getLabelList } from "@A/systemManage";
     export default {
         name:'allPool',
         mixins: [commonVue],
         components:{
-            changeMarker
+            changeMarker,
+            showPoolRecord
         },
         data(){
             return{
