@@ -56,6 +56,11 @@ export default {
                     minWidth: 100
                 },
                 {
+                    title: "落入类型",
+                    key:"fallType",
+                    minWidth: 150
+                },
+                {
                     title: "变更时间",
                     key:"createDate",
                     minWidth: 150
@@ -70,6 +75,7 @@ export default {
             pageTotal: 0,
             poolId: "",
             customerName:"",
+            fall_type_map: new Map(),
             pool_type_map: new Map(),
             pool_sub_type_map: new Map(),
         }
@@ -118,6 +124,10 @@ export default {
                     _self.data[i].desSubPool = _self.pool_sub_type_map.get(
                       _self.data[i].desSubPool.toString()
                     );
+
+                    _self.data[i].fallType = _self.fall_type_map.get(
+                      _self.data[i].fallType.toString()
+                    );
                 }
                 
             }
@@ -129,11 +139,13 @@ export default {
             return new Promise((resolve, reject) => {
                 let _self = this
                 
-                let params = "poolType,poolSubType";
+                let params = "fallType,poolType,poolSubType";
                 function success(res) {
+                _self.fallType = res.data.data.fallType;
                 _self.poolType = res.data.data.poolType;
                 _self.poolSubType = res.data.data.poolSubType;
 
+                _self.fall_type_map = _self.$array2map(_self.fallType);
                 _self.pool_type_map = _self.$array2map(_self.poolType);
                 _self.pool_sub_type_map = _self.$array2map(_self.poolSubType);
                 resolve()

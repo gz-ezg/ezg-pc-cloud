@@ -133,6 +133,20 @@
                 <Icon type="arrow-down-b"></Icon>
             </Button>
             <DropdownMenu slot="list">
+
+              <Dropdown placement="right-start" 
+                @on-click="transferPool">
+                     
+                      <DropdownItem name="-1">
+                          市场公海池
+                          <Icon type="ios-arrow-right"></Icon>
+                      </DropdownItem>
+                      <DropdownMenu slot="list">
+                          <DropdownItem name="2-21" :disabled="true">自动转入</DropdownItem>
+                          <DropdownItem name="2-22" :disabled="true">二次落入</DropdownItem>
+                          <DropdownItem name="2-23">公海池转入</DropdownItem>
+                      </DropdownMenu>
+                </Dropdown>
                 
                 <Dropdown placement="right-start" 
                 @on-click="transferPool">
@@ -150,19 +164,21 @@
                     </DropdownMenu>
                 </Dropdown>
 
-                <Dropdown placement="right-start" 
-                @on-click="transferPool">
-                     
+                
+
+                <Dropdown placement="right-start" @on-click="transferPool">
+                
                       <DropdownItem name="-1">
-                          市场公海池
+                          开放公海池
                           <Icon type="ios-arrow-right"></Icon>
                       </DropdownItem>
-                      <DropdownMenu slot="list">
-                          <DropdownItem name="2-21" :disabled="true">自动转入</DropdownItem>
-                          <DropdownItem name="2-22" :disabled="true">二次落入</DropdownItem>
-                          <DropdownItem name="2-23">公海池转入</DropdownItem>
-                      </DropdownMenu>
-                </Dropdown>
+                <DropdownMenu slot="list">
+                    <DropdownItem name="3-31">有  效</DropdownItem>
+                    <DropdownItem name="3-32">无  效</DropdownItem>
+                    <DropdownItem name="3-33">待修正</DropdownItem>
+                </DropdownMenu>
+
+            </Dropdown>
 
             </DropdownMenu>
         </Dropdown>
@@ -357,6 +373,16 @@ import { getLabelList } from "@A/systemManage";
                     width: 100
                     },
                     {
+                    title: "落入方式",
+                    key: "fallType",
+                    width: 100
+                    },
+                    {
+                    title: "落入时间",
+                    key: "fallDate",
+                    width: 180
+                    },
+                    {
                     title: "备注",
                     key: "backup",
                     width: 100
@@ -367,25 +393,28 @@ import { getLabelList } from "@A/systemManage";
                     key: "followbyname",
                     width: 120,
                     sortable: "custom"
-                    },
-                    {
-                    title: "创建时间",
-                    key: "CREATEDATE",
-                    width: 120,
-                    sortable: "custom"
-                    },
-                    {
-                    title: "回滚时间",
-                    key: "updatedate",
-                    width: 120,
-                    sortable: "custom"
-                    
                     }
+                    // ,
+                    // {
+                    // title: "创建时间",
+                    // key: "CREATEDATE",
+                    // width: 120,
+                    // sortable: "custom"
+                    // },
+                    // {
+                    // title: "回滚时间",
+                    // key: "updatedate",
+                    // width: 120,
+                    // sortable: "custom"
+                    
+                    // }
                 ],
                 data: [],
                 page: 1,
                 pageSize: 10,
                 total: 0,
+                sortName:"fallDate",
+                order: "desc",
                 tableLoading: true,
                 formValidate: {                    
                     name: "",
@@ -395,7 +424,7 @@ import { getLabelList } from "@A/systemManage";
                     credate: [],
                     upddate: [],
                     order: "desc",
-                    sortField: "clue_ranks"
+                    sortField: "fallDate"
                 }
                 
             }
@@ -488,7 +517,7 @@ import { getLabelList } from "@A/systemManage";
                 sort(e) {
                   if (e.order == "normal") {
                       this.order = "";
-                      this.sortName = "updatedate";
+                      this.sortName = "fallDate";
                   } else {
                       this.sortName = e.key;
                       this.order = e.order;
@@ -558,6 +587,11 @@ import { getLabelList } from "@A/systemManage";
                     _self.data[i].customerType = _self.findCustomerType(
                       _self.data[i].customerType
                     );
+
+                    _self.data[i].fallType = _self.fall_type_map.get(
+                      _self.data[i].fallType.toString()
+                    );
+
                    _self.data[i].poolType = _self.pool_type_map.get(
                       _self.data[i].poolType.toString()
                     );

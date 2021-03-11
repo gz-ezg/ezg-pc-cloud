@@ -19,6 +19,7 @@ export default {
             area_map: new Map(),
             sf_yn_map: new Map(),
             importance_map: new Map(),
+            fall_type_map: new Map(),
             pool_type_map: new Map(),
             pool_sub_type_map: new Map(),
             //  单独处理的客户状态
@@ -33,7 +34,7 @@ export default {
             let _self = this
             return new Promise((resolve, reject)=>{
                 let _self = this
-                let params = "customerTypes,cluesources,customerrating,area,sf_yn,importance,poolType,poolSubType";
+                let params = "customerTypes,cluesources,customerrating,area,sf_yn,importance,fallType,poolType,poolSubType";
 
                 function success(res){
                     _self.customerTypes = res.data.data.customerTypes
@@ -42,6 +43,7 @@ export default {
                     _self.area = res.data.data.area
                     _self.sf_yn = res.data.data.sf_yn
                     _self.importance = res.data.data.importance
+                    _self.fallType = res.data.data.fallType
                     _self.poolType = res.data.data.poolType
                     _self.poolSubType = res.data.data.poolSubType
 
@@ -50,6 +52,7 @@ export default {
                     _self.area_map = _self.$array2map(_self.area)
                     _self.sf_yn_map = _self.$array2map(_self.sf_yn)
                     _self.importance_map = _self.$array2map(_self.importance)
+                    _self.fall_type_map = _self.$array2map(_self.fallType)
                     _self.pool_type_map = _self.$array2map(_self.poolType)
                     _self.pool_sub_type_map = _self.$array2map(_self.poolSubType)
                     _self.customerTypes_Casr = _self.$changeCars(_self.customerTypes)

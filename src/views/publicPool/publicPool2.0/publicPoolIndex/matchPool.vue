@@ -300,6 +300,12 @@ import showPoolRecord from "./op/poolRecord";
                     width: 100
                     },
                     {
+                    title: "回滚时间",
+                    key: "fallDate",
+                    width: 180
+                    
+                    },
+                    {
                     title: "备注",
                     key: "backup",
                     width: 100
@@ -310,25 +316,14 @@ import showPoolRecord from "./op/poolRecord";
                     key: "followbyname",
                     width: 120,
                     sortable: "custom"
-                    },
-                    {
-                    title: "创建时间",
-                    key: "CREATEDATE",
-                    width: 120,
-                    sortable: "custom"
-                    },
-                    {
-                    title: "回滚时间",
-                    key: "updatedate",
-                    width: 120,
-                    sortable: "custom"
-                    
                     }
                 ],
                 data: [],
                 page: 1,
                 pageSize: 10,
                 total: 0,
+                sortName:"fallDate",
+                order: "desc",
                 tableLoading: true,
                 formValidate: {                    
                     name: "",

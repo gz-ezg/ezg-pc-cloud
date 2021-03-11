@@ -140,6 +140,22 @@
                     </DropdownMenu>
                 </Dropdown>
 
+                <Dropdown placement="right-start" @on-click="transferPool">
+                
+                      <DropdownItem name="-1">
+                          开放公海池
+                          <Icon type="ios-arrow-right"></Icon>
+                      </DropdownItem>
+                <DropdownMenu slot="list">
+                    <DropdownItem name="3-31">有  效</DropdownItem>
+                    <DropdownItem name="3-32">无  效</DropdownItem>
+                    <DropdownItem name="3-33">待修正</DropdownItem>
+                </DropdownMenu>
+
+            </Dropdown>
+
+                
+
             </DropdownMenu>
         </Dropdown>
 
@@ -328,6 +344,16 @@ import showPoolRecord from "./op/poolRecord";
                     width: 100
                     },
                     {
+                    title: "落入方式",
+                    key: "fallType",
+                    width: 100
+                    },
+                    {
+                    title: "落入时间",
+                    key: "fallDate",
+                    width: 180
+                    },
+                    {
                     title: "备注",
                     key: "backup",
                     width: 100
@@ -338,25 +364,28 @@ import showPoolRecord from "./op/poolRecord";
                     key: "followbyname",
                     width: 120,
                     sortable: "custom"
-                    },
-                    {
-                    title: "创建时间",
-                    key: "CREATEDATE",
-                    width: 120,
-                    sortable: "custom"
-                    },
-                    {
-                    title: "回滚时间",
-                    key: "updatedate",
-                    width: 120,
-                    sortable: "custom"
-                    
                     }
+                    // ,
+                    // {
+                    // title: "创建时间",
+                    // key: "CREATEDATE",
+                    // width: 120,
+                    // sortable: "custom"
+                    // },
+                    // {
+                    // title: "回滚时间",
+                    // key: "updatedate",
+                    // width: 120,
+                    // sortable: "custom"
+                    
+                    // }
                 ],
                 data: [],
                 page: 1,
                 pageSize: 10,
                 total: 0,
+                sortName:"fallDate",
+                order: "desc",
                 tableLoading: true,
                 formValidate: {                    
                     name: "",
@@ -366,7 +395,7 @@ import showPoolRecord from "./op/poolRecord";
                     credate: [],
                     upddate: [],
                     order: "desc",
-                    sortField: "clue_ranks"
+                    sortField: "fallDate"
                 }
                 
             }
@@ -459,7 +488,7 @@ import showPoolRecord from "./op/poolRecord";
                 sort(e) {
                   if (e.order == "normal") {
                       this.order = "";
-                      this.sortName = "updatedate";
+                      this.sortName = "fallDate";
                   } else {
                       this.sortName = e.key;
                       this.order = e.order;
@@ -525,7 +554,10 @@ import showPoolRecord from "./op/poolRecord";
                     _self.total = res.data.data.total;
                     for (let i = 0; i < _self.data.length; i++) {
                     
-                    
+                    _self.data[i].fallType = _self.fall_type_map.get(
+                      _self.data[i].fallType.toString()
+                    );
+
                    _self.data[i].poolType = _self.pool_type_map.get(
                       _self.data[i].poolType.toString()
                     );
