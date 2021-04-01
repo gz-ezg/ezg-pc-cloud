@@ -12,6 +12,14 @@
                 <FormItem label="公司注册地" prop="companyarea">
                     <Cascader :data="companyarea" v-model="formValidate.companyarea"></Cascader>
                 </FormItem>
+                <FormItem label="国地税报道" prop="gdsreport">
+                  <Select v-model="formValidate.gdsreport" size="small">
+                    <Option value="ybd">已报道</Option>
+                    <Option value="wbd">未报道</Option>
+                    <Option value="bybd">不用报道</Option>
+                  </Select>
+                </FormItem>
+
                 <FormItem label="跟进销售" prop="followby">
                     <Input v-model="formValidate.followby" readonly size="small"></Input>
                 </FormItem>
@@ -42,6 +50,7 @@
                         </Option>
                     </Select>
                 </FormItem>
+
             </Form>
             <div slot="footer">
                 <Button type="primary" @click="submit" :loading="loading">新增</Button>
@@ -72,6 +81,7 @@ export default {
                 cluesource: _self.formValidate.cluesource,
                 companyarea: _self.formValidate.companyarea.join("-"),
                 companyname: _self.formValidate.companyname,
+                gdsreport: _self.formValidate.gdsreport,
                 customerid: _self.formValidate.customerid,
                 importlevel: _self.formValidate.importlevel.toString(),
                 legalrepresentative: _self.formValidate.legalrepresentative,

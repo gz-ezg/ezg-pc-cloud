@@ -66,6 +66,9 @@ export default {
                 legalrepresentative: [
                     {required: true, trigger: 'change',message:'法人名称不能为空'},
                 ],
+                gdsreport: [
+                    {required: true,trigger: 'change',message: '国地税报道不能为空'}
+                ],
                 importlevel: [
                     {required: true, trigger: 'change',message:'重要等级不能为空'}
                 ],
