@@ -15,7 +15,7 @@
           <ButtonGroup
             v-if="
               pageFlag == 'showOrder' &&
-                (operatorId == 10059 || operatorId == 10182) &&
+                isAdmin &&
                 item.deleteflag != 10 && item.deleteflag != 5 &&
                 orderDetail.orderstatus == 'approval_finish'
             "
@@ -365,7 +365,7 @@ export default {
         disabledDate: this.checkMonth,
       },
       servicestartdate: "",
-      operatorId: localStorage.getItem("id"),
+      isAdmin:false,
       ruleValidate: {
         productnumber: [
           {
@@ -606,7 +606,8 @@ export default {
   },
   created() {
     let _self = this;
-    console.log(this);
+    let temp = localStorage.getItem("Role");  
+    _self.isAdmin = localStorage.getItem("id") == 10059 || temp.indexOf('cwsp') > -1;
     _self.handleClickDate();
     this.productList.forEach((e, i) => {
       if (e.defaultdepartalias == "PLAN") {

@@ -69,7 +69,7 @@
             <Button type="primary" icon="ios-color-wand-outline" @click="downloadExcel">导出Excel</Button>
             <Button type="primary" icon="information-circled" v-permission="['accounterManager.upgrade']" @click="service_level">服务升级</Button>
             <Button type="primary" icon="information-circled" v-permission="['accounterManager.logout']" @click="layout">公司注销</Button>
-            <Button type="primary" icon="information-circled" @click="showDiary">服务日志1</Button>
+            <Button type="primary" icon="information-circled" @click="showDiary">服务日志</Button>
         </ButtonGroup>
     </Row>
     <Row style="margin-top: 10px;">

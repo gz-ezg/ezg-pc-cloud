@@ -192,7 +192,8 @@ export default {
         };
     },
     created() {
-        this.isAdmin = localStorage.getItem("id") == 10059;
+        let temp = localStorage.getItem("Role");  
+        this.isAdmin = localStorage.getItem("id") == 10059 || temp.indexOf('cwsp') > -1;
         this.getList();
     },
     methods: {
