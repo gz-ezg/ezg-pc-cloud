@@ -89,18 +89,10 @@
                 },
                 data:[],
                 header: [
-                    {
-                        title: '服务状态',
-                        key: 'service_status',
-                        minWidth: 40,
-                        render:(h,params)=>{
-                            let _self = this
-                            return h('div',{},_self.cservicest_map.get(params.row.service_status))
-                        }
-                    },
+                    
                     {
                         title: '企业',
-                        key: 'companyname',
+                        key: 'companyName',
                         minWidth: 200
                     },
                     {
@@ -110,29 +102,25 @@
                     },
                     {
                         title: '产品详情',
-                        key: 'skuname',
+                        key: 'alisName',
                         minWidth: 120
                     },
                     {
-                        title: '开始税期',
-                        key: 'begin_period',
-                        minWidth: 40
-                    },
-                    {
-                        title: '结束税期',
-                        key: 'end_period',
+                        title: '单价',
+                        key: 'unitPrice',
                         minWidth: 40
                     },
                     {
                         title: '会计',
-                        key: 'cmsServername',
+                        key: 'serverName',
                         minWidth: 40
                     },
                     {
-                        title: '单价',
-                        key: 'unit_price',
+                        title: '销售',
+                        key: 'market',
                         minWidth: 40
-                    },
+                    }
+                    
                 ]
             }
         },
@@ -171,7 +159,6 @@
                         companyName:_self.SearchValidate.CompanyName,
                         serverName:_self.SearchValidate.server_realname,
                         perforanceMonth:DateFormatYearMonth(_self.SearchValidate.work_month),
-                        serviceType:'dljz',
                         period:'',
                     }
                 }
@@ -200,13 +187,9 @@
             },
             downloadExcel(){
                 let field = [
+                    
                     {
-                        field: 'service_status',
-                        title: '服务状态',
-                        format:'cservicest'
-                    },
-                    {
-                        field: 'companyname',
+                        field: 'companyName',
                         title: '企业'
                     },
                     {
@@ -214,25 +197,22 @@
                         title: '产品名称'
                     },
                     {
-                        field: 'skuname',
+                        field: 'alisName',
                         title: '产品详情'
                     },
                     {
-                        field: 'begin_period',
-                        title: '开始税期'
+                        field: 'unitPrice',
+                        title: '单价'
                     },
                     {
-                        field: 'end_period',
-                        title: '结束税期'
-                    },
-                    {
-                        field: 'cmsServername',
+                        field: 'serverName',
                         title: '会计'
                     },
                     {
-                        field: 'unit_price',
-                        title: '单价'
-                    }
+                        field: 'market',
+                        title: '销售'
+                    },
+                    
                 ];
                 let _self = this;
                 let url = `api/order/accountPerformanceList`;
@@ -242,7 +222,6 @@
                     companyName:_self.SearchValidate.CompanyName,
                     serverName:_self.SearchValidate.server_realname,
                     perforanceMonth:DateFormatYearMonth(_self.SearchValidate.work_month),
-                    serviceType:'dljz',
                     period:'',
                     export: 'Y',
                     exportField: encodeURI(JSON.stringify(field))
@@ -255,7 +234,7 @@
             let a = new Date()
             this.SearchValidate.work_month = DateFormatYearMonth3(a)
             this.get_data()
-            this.get_data_center()
+            //this.get_data_center()
         }
     }
 </script>

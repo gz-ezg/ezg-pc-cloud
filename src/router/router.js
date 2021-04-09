@@ -1050,6 +1050,15 @@ export const appRouter = [
         name: "accountantOrder_index",
         component: () =>
           import(/* webpackChunkName: "accountantOrder_index" */ "@/views/accountantWorkOrder/accountantOrder/accountantOrder.vue"),
+      },      
+      {
+        access: 11656,
+        meta: 11656,
+        path: "accountworks",
+        title: "会计工作量",
+        name: "accountworks_index",
+        component: () =>
+          import(/* webpackChunkName: "accountworks_index" */ "@/views/administrationManagement/accountworks/index.vue"),
       },
       {
         access: 6047,
@@ -1304,15 +1313,6 @@ export const appRouter = [
         name: "addManager_index",
         component: () =>
           import(/* webpackChunkName: "addManager_index" */ "@/views/administrationManagement/addManager/index.vue"),
-      },
-      {
-        access: 11656,
-        meta: 11656,
-        path: "accountworks",
-        title: "会计工作量",
-        name: "accountworks_index",
-        component: () =>
-          import(/* webpackChunkName: "accountworks_index" */ "@/views/administrationManagement/accountworks/index.vue"),
       },
       {
         access: 11661,
