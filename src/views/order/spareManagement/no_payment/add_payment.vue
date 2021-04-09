@@ -30,6 +30,9 @@
                 <FormItem prop="transcationtime" label="缴费日期">
                         <DatePicker type="date" placeholder="" v-model="payment.transcationtime"></DatePicker>
                 </FormItem>
+                <FormItem label="申请理由">
+                    <Input v-model="payment.itemmemo" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></Input>
+                </FormItem>
                 <FormItem>
                     <Button type="primary" @click="handleSubmit('payment')">新增</Button>
                     <Button type="ghost" @click="handleReset('payment')" style="margin-left: 8px">重置</Button>
@@ -73,7 +76,8 @@ export default {
                 transcationamount:'',
                 transcationtime:'',
                 paydir:'',
-                money:''
+                money:'',
+                itemmemo:''
             },
             // 表单验证规则
             rulepayment:{
@@ -138,6 +142,7 @@ export default {
                     const params = {
                         'balanceid':_that.current_orderId,
                         'paydir':_that.payment.paydir,
+                        'itemmemo':_that.payment.itemmemo,
                         'transcationtime':DateFormat(_that.payment.transcationtime),
                         'transcationamount':_that.payment.transcationamount?_that.payment.transcationamount:0,
                         'accountBalance':_that.payment.money?_that.payment.money:0

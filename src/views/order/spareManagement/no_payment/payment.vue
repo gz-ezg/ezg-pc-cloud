@@ -130,6 +130,10 @@ export default {
                         key: 'processtype',
                     },
                     {
+                        title: '申请理由',
+                        key:'itemmemo'
+                    },
+                    {
                         title: '驳回原因',
                         key:'memo'
                     },
