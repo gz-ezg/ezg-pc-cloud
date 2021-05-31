@@ -139,12 +139,12 @@
             @click="order_show"
             name="order_show"
           >查看</Button>
-          <Button
+          <!-- <Button
             v-permission="['orderL.flowChart']"
             type="primary"
             icon="ios-crop"
             @click="open_flowChart"
-          >查看流程图</Button>
+          >查看流程图</Button> -->
           <Button
             v-permission="['orderL.resubmit']"
             type="primary"
@@ -614,37 +614,37 @@ export default {
           let _self = this;
           if (params.index != this.pageSize) {
             return h("div", [
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "warning",
-                    size: "small",
-                  },
-                  // style:{
-                  //         marginLeft: "10px"
-                  // },
-                  on: {
-                    click: () => {
-                      _self.$ButtonCollect("order_rebuild_orderflow");
-                      let url = `api/order/resetOrderProcess`;
-                      let config = {
-                        params: {
-                          orderId: params.row.id,
-                        },
-                      };
+              // h(
+              //   "Button",
+              //   {
+              //     props: {
+              //       type: "warning",
+              //       size: "small",
+              //     },
+              //     // style:{
+              //     //         marginLeft: "10px"
+              //     // },
+              //     on: {
+              //       click: () => {
+              //         _self.$ButtonCollect("order_rebuild_orderflow");
+              //         let url = `api/order/resetOrderProcess`;
+              //         let config = {
+              //           params: {
+              //             orderId: params.row.id,
+              //           },
+              //         };
 
-                      function success(res) {
-                        _self.$Message.success(res.data.msg);
-                        _self.get_data();
-                      }
+              //         function success(res) {
+              //           _self.$Message.success(res.data.msg);
+              //           _self.get_data();
+              //         }
 
-                      _self.$Get(url, config, success);
-                    },
-                  },
-                },
-                "重置流程"
-              ),
+              //         _self.$Get(url, config, success);
+              //       },
+              //     },
+              //   },
+              //   "重置流程"
+              // ),
               h(
                 "Button",
                 {
@@ -1042,12 +1042,14 @@ export default {
             title: "重新提交审批",
             content: "<p>是否重新提交审批</p>",
             onOk: () => {
-              let url = "api/activiti/reApplyProcessByOrderId";
+              let url = "api/order/reApply";
               let config = {
-                params: {
-                  orderId: _self.selectRow.id,
-                  auditFlag: 1,
-                },
+                orderId: _self.selectRow.id,
+                auditFlag: 1
+                // params: {
+                //   orderId: _self.selectRow.id,
+                //   auditFlag: 1,
+                // },
               };
               function success(res) {
                 _self.$Modal.remove();
@@ -1065,7 +1067,7 @@ export default {
                 }, 1000);
               }
 
-              _self.$Get(url, config, success, fail);
+              _self.$Post(url, config, success, fail);
             },
           });
         } else {
@@ -1114,9 +1116,8 @@ export default {
     open_edit() {
       if (this.selectRow) {
         if (
-          this.selectRow.CurrentProcess != "Ready" &&
-          this.selectRow.CurrentProcess != "Returned" &&
-          this.selectRow.CurrentProcess != "ReturnedToReady"
+          this.selectRow.CurrentProcess != "cw" &&
+          this.selectRow.CurrentProcess != "Returned"
         ) {
           this.$Message.warning("当前订单状态不允许编辑！");
         } else {

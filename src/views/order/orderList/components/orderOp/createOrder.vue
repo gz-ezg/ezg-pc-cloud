@@ -356,7 +356,7 @@ export default {
 
       for (let i = 0; i < order.length; i++) {
         order[i].servicedeparts = "";
-		order[i].servicestartdate = DateFormat(order[i].servicestartdate);
+		    order[i].servicestartdate = DateFormat(order[i].servicestartdate);
         if(order[i].selectServer){
           order[i].serverId = order[i].selectServer.userId
         }
@@ -368,16 +368,19 @@ export default {
     //       serverId: _self.departServerObj[j].serverId
     //     });
     //   }
+    //校验订单有欠款则要选择异常工单
 
       let config = {
         companyId: _self.orderDetail.companyid,
         payDir: _self.orderDetail.paydir,
         orderPayNumber: _self.orderDetail.realnumber,
+        orderTotalNumber: _self.orderDetail.paynumber,
+        applyId: _self.applyId,
         serviceStartDate: "",
         GDSreport: _self.orderDetail.gdsreport,
         payTime: DateFormat(_self.orderDetail.payTime),
         isornotkp: _self.orderDetail.isornotkp,
-        usebalance: _self.orderDetail.usebalance,
+        usebalance: _self.orderDetail.usebalance,        
         orderitems: JSON.stringify(order)
 
       };

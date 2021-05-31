@@ -273,6 +273,11 @@ export default {
                         }
                     },
                     {
+                        title: '服务时间',
+                        key: 'serviceyear',
+                        width: 120,
+                    },
+                    {
                         title: '产品数量',
                         key: 'productnumber',
                         width: 120,

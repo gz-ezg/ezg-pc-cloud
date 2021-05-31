@@ -401,7 +401,7 @@ export default {
           pageSize: _self.pageSize,
           service_status: "notStarted",
           sortField: "unit_price",
-          service_type: "dljz",
+          //service_type: "dljz",
           CompanyName: _self.SearchValidate.CompanyName,
           server_realname: _self.SearchValidate.server_realname,
           followby_realname: _self.SearchValidate.followby_realname,

@@ -480,10 +480,10 @@ export default {
             function success(res){
                     for(let i = 0;i<res.data.data.length;i++){
                         _self.detail = res.data.data[i]
-                        if(_self.detail.skuid =='1051' || _self.detail.skuid =='1052' ||_self.detail.skuid =='1053' ||_self.detail.skuid =='1054'){
-                            _self.detail.productnumber = '12'
-                            _self.detail.unitprice = parseInt(_self.detail.unitprice/12)
-                        }
+                        // if(_self.detail.skuid =='1051' || _self.detail.skuid =='1052' ||_self.detail.skuid =='1053' ||_self.detail.skuid =='1054'){
+                        //     _self.detail.productnumber = '12'
+                        //     _self.detail.unitprice = parseInt(_self.detail.unitprice/12)
+                        // }
 
                         if(res.data.data[i].iscycle == "Y"){
                             let url2 = "api/order/cycle/service/record/budget/period"

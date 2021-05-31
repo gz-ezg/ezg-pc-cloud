@@ -299,15 +299,18 @@ export default {
             let _self = this
             _self.submitLoading = true
             _self.$ButtonCollect("order_approve_submit")
-            let url = 'api/activiti/toDoWorkFlowByBid'
+            let url = 'api/order/audit'
             
             let config = {
-                params: {
-                    bId: _self.formValidateDetail.id,
-                    bType: 10,
-                    auditFlag: _self.banlishenpi.agree,
-                    auditMemo: _self.banlishenpi.desc
-                }
+                orderId: _self.formValidateDetail.id,
+                auditFlag: _self.banlishenpi.agree,
+                auditMemo: _self.banlishenpi.desc
+                // params: {
+                //     bId: _self.formValidateDetail.id,
+                //     bType: 10,
+                //     auditFlag: _self.banlishenpi.agree,
+                //     auditMemo: _self.banlishenpi.desc
+                // }
             }
 
             function success(res) {
@@ -325,7 +328,7 @@ export default {
                 _self.submitLoading = false
             }
 
-            this.$Get(url, config, success, fail)
+            this.$Post(url, config, success, fail)
         },
         // get_data_center(){
         //     let _self = this
