@@ -327,7 +327,8 @@ export default {
             orderPayNumber: _self.orderDetail.realnumber,
             orderitems: JSON.stringify(order),
             usebalance: _self.orderDetail.usebalance,
-            serviceStartDate: ''
+            serviceStartDate: '',
+            applyId: _self.applyId
           };
           try {
             let { status, data } = await orderApi.orderUpdate(config);
