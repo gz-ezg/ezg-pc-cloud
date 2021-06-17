@@ -136,6 +136,7 @@ export default {
       orderDetail: {},
       payDirs: [],
       allUseBalance: '',
+      applyId: '',
       unusualCode: '',
       orderDetailRule: {
         isornotkp: [{ required: true, message: '请补全！', trigger: 'change' }],
@@ -153,6 +154,7 @@ export default {
       this.$emit('cancel');
     },
     async onSumbit() {
+      let self = this;
       this.$refs['orderDetail'].validate(async valid => {
         const { orderDetail } = this;
         let orderitems = JSON.parse(JSON.stringify(orderDetail.items)).map(v => {
@@ -162,6 +164,7 @@ export default {
 
         let config = {
           id: orderDetail.id,
+          applyId: self.applyId,
           payDir: orderDetail.paydir,
           payTime: DateFormat(orderDetail.payTime),
           GDSreport: orderDetail.gdsreport,
@@ -173,7 +176,17 @@ export default {
           serviceStartDate: ''
         };
         try {
-          await orderCreate(config);
+          let data= await orderCreate(config);
+          let orderId = data;
+          console.log(data);
+                     
+          if (self.applyId) {
+            console.log(self.applyId);
+            self.relate(self.applyId, orderId);
+          }
+            //_self.$Message.warning("订单创建成功！请及时上传合同！");
+          
+          
           this.$emit('ok');
         } catch (error) {}
       });
@@ -202,6 +215,19 @@ export default {
     },
     openAbOrder() {
       this.$bus.emit('SELECT_ABORDER', true);
+    },
+    relate(applyId, orderId) {
+      let _self = this;
+      let url = `api/order/unusual/workorder/linkUnusualWorkOrder`;
+      let config = {
+        applyId: applyId,
+        orderId: orderId
+      };
+      function success(res) {
+        console.log(res);
+      }
+      function fail() {}
+      this.$Post(url, config, success, fail);
     },
     settingAborder(e) {
       this.applyId = e.id;
