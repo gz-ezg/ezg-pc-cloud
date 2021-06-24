@@ -33,6 +33,22 @@
                 </Row>
                 <Row :gutter="16">
                     <Col span="24">
+                        <FormItem prop="record" label="截图照片：">
+                            <Upload
+                                    ref="upload"
+                                    multiple
+                                    :before-upload="handleUpload"
+                                    >
+                                <Button name="complaint_selectfile" type="ghost" icon="ios-cloud-upload-outline">选择文件</Button>
+                            </Upload>
+                            <div v-for="(item,index) in showFile" :key=index>{{ item.name }}
+                                <Button name="complaint_removefile" type="text" @click="fileRemove(index)">移除</Button>
+                            </div>
+                        </FormItem> 
+                    </Col>
+                </Row>
+                <Row :gutter="16">
+                    <Col span="24">
                         <FormItem prop="record" label="投诉内容：">
                             <Input type="textarea" v-model="add.record" :rows=rows></Input>
                         </FormItem> 
@@ -92,6 +108,7 @@ export default {
                 companyid:'',
                 departid:'',
                 type:'',
+                attIds:'',
                 record:''
             },
             selectCompany:false,
@@ -115,19 +132,55 @@ export default {
             company_data:[],
             company_data_total:new Number(),
             currentPage:new Number(),
+            showFile: [],
+            fileArray: [],
             InnerComplaintType: []
         }
     },
     methods:{
         //  新增投诉
         add_complaint_detail(){
-            let _self = this
-            _self.loading = true
-            let url = 'api/customer/createComplaint'
+            let _self = this;
+            if(_self.fileArray.length){    
+                _self.uploadImgAndCreateComplaint(_self.fileArray);
+            }else{
+                _self.createComplaint();
+            }
+
+        },
+        uploadImgAndCreateComplaint(){
+            let _self = this;
+            let url = "/api/customer/addCustomerContentImg";
+
+            let formdata = new FormData();
+
+            for(let i = 0;i<_self.fileArray.length;i++){
+                formdata.append('files', _self.fileArray[i]);
+            }
+
+            function success(res){
+                let imgCode = []
+                for(let j = 0; j<res.data.data.length; j++){
+                    imgCode.push(res.data.data[j].id);
+                }
+                _self.add.attIds = imgCode.toString();
+                _self.createComplaint();
+            }
+
+            function fail(err){}
+
+            this.$Post(url, formdata, success, fail)
+
+        },
+        createComplaint(){
+            let _self = this;
+            _self.loading = true;
+            let url = 'api/customer/createComplaint';
             let config = {
                 companyid: _self.add.companyid,
                 departid: _self.add.departid,
                 type: _self.add.type,
+                attIds: _self.add.attIds,
                 record: _self.add.record
             }
 
@@ -146,24 +199,6 @@ export default {
             function fail(err){
                 _self.loading = false
             }
-            // console.log(config)
-            // this.$http.post(url,config).then(function(res){
-            //     // console.log(res.data.msgCode)
-            //     if(res.data.msgCode == 40000){
-            //         _self.$Message.success(res.data.msg)
-            //         _self.add_complaint = false
-            //         _self.loading = false
-            //         _self.$bus.emit('UPDATE_COMPLAINT', true)
-
-            //         // Bus.$emit('UPDATE_COMPLAINT', true)
-            //         _self.add.companyid = ""
-            //         _self.add.departid = ""
-            //         _self.add.type = ""
-            //         _self.add.record = ""
-            //     }else{
-            //         _self.$Message.error(res.data.msg)
-            //     }
-            // })
             this.$Post(url, config, success, fail)
         },
         close_complaint_detail(){
@@ -251,6 +286,39 @@ export default {
                     }
 
                 this.GetData(url, doSuccess)
+            },
+            handleUpload(file) {
+                var _self = this
+                console.log(file)
+                _self.fileArray.push(file)
+                _self.showFile.push(file)
+                return false;
+            },
+            fileRemove(e) {
+                this.fileArray.splice(e, 1);
+                this.showFile.splice(e, 1);
+            },
+            uploadImg(){
+                let _self = this;
+                let url = "/api/customer/addCustomerContentImg";
+
+                let formdata = new FormData();
+
+                for(let i = 0;i<_self.fileArray.length;i++){
+                    formdata.append('files', _self.fileArray[i]);
+                }
+
+                function success(res){
+                    let imgCode = []
+                    for(let j = 0; j<res.data.data.length; j++){
+                        imgCode.push(res.data.data[j].id);
+                    }
+                    _self.add.attIds = imgCode.toString();
+                }
+
+                function fail(err){}
+
+                this.$Post(url, formdata, success, fail)
             },
             rowSelect(a) {
                 let _self = this

@@ -114,6 +114,13 @@ export function budgetPeriod(params) {
     params
   })
 }
+export function findImgageArrByBusinessIdAndType(params) {
+  return request({
+    url: `customer/findImgageArrByBusinessIdAndType`,
+    method: 'get',
+    params
+  })
+}
 export function findFollowContentImgageByBusinessId(params) {
   return request({
     url: `customer/findFollowContentImgageByBusinessId`,

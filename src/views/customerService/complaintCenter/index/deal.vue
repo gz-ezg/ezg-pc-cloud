@@ -29,6 +29,18 @@
                 </Row>
                 <Row :gutter="16">
                     <Col span="24">
+                        <FormItem prop="typeName" label="截图照片：" >
+                            <Col span="24" v-for="(item,index) in imgUrls " :key="index">
+                            <a target="_blank"  :href="'/api/assets/' + item" >
+                                <img :src="'/api/assets/' +item" alt=""  width="100" height="100" onerror="this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null">
+                            </a>   
+                            </Col>
+                                             
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row :gutter="16">
+                    <Col span="24">
                         <FormItem prop="record" label="投诉内容：" >
                             <Input type="textarea" v-model="deal.record" :rows="4" readonly></Input>
                         </FormItem> 
@@ -93,6 +105,7 @@ export default {
             deal:{
 
             },
+            imgsList:[],
             selectCompany:false,
             searchCompany:"",
             columns44: 
@@ -152,6 +165,17 @@ export default {
             }
 
             this.$Post(url, config, success, fail)
+        },
+        async findImgageArrByBusinessIdAndType(id, type) {            
+            const resp = await findImgageArrByBusinessIdAndType({
+                bussinessId: id,
+                bType: 'Complaint'
+            });
+            if (resp[0].imgurls) {
+                this.imgsList = resp[0].imgurls
+                .split("``")
+                .filter((v) => v.includes("upload"));
+            }
         }
     },
     created () {
@@ -166,6 +190,8 @@ export default {
             _self.deal_complaint = true
             _self.deal = e
         })
+
+        _self.findImgageArrByBusinessIdAndType(_self.deal.id, 'Complaint')
     }
 }
 </script>
