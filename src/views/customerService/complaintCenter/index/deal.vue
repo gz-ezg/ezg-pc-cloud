@@ -30,9 +30,10 @@
                 <Row :gutter="16">
                     <Col span="24">
                         <FormItem prop="typeName" label="截图照片：" >
+                            
                             <Col span="24" v-for="(item,index) in imgUrls " :key="index">
-                            <a target="_blank"  :href="'/api/assets/' + item" >
-                                <img :src="'/api/assets/' +item" alt=""  width="100" height="100" onerror="this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null">
+                            <a target="_blank"  :href="item" >
+                                <img :src="item" alt=""  width="100" height="100" onerror="this.src='/api/assets/upload/commonImg/error.jpg';this.onerror=null">
                             </a>   
                             </Col>
                                              
@@ -94,6 +95,9 @@
 
 <script>
 // import Bus from '../../../../components/bus'
+import {
+  findImgageArrByBusinessIdAndType
+} from "@A/order.js";
 
 export default {
     props:['complaintType','processType'],
@@ -105,7 +109,7 @@ export default {
             deal:{
 
             },
-            imgsList:[],
+            imgUrls:[],
             selectCompany:false,
             searchCompany:"",
             columns44: 
@@ -166,16 +170,19 @@ export default {
 
             this.$Post(url, config, success, fail)
         },
-        async findImgageArrByBusinessIdAndType(id, type) {            
+        async findImgageArr(id, type) {   
+            let _self = this;         
             const resp = await findImgageArrByBusinessIdAndType({
                 bussinessId: id,
                 bType: 'Complaint'
             });
             if (resp[0].imgurls) {
-                this.imgsList = resp[0].imgurls
+                _self.imgUrls = resp[0].imgurls
                 .split("``")
+                .map((v) =>  '/api/assets/' + v )
                 .filter((v) => v.includes("upload"));
             }
+            console.log(_self.imgUrls);
         }
     },
     created () {
@@ -186,12 +193,13 @@ export default {
         //     _self.deal = e
         // })
         _self.$bus.on('DEAL_COMPLATNT',(e)=>{
-            // console.log(e)
+             console.log(e)
             _self.deal_complaint = true
             _self.deal = e
+            _self.findImgageArr(_self.deal.id, 'Complaint')
         })
 
-        _self.findImgageArrByBusinessIdAndType(_self.deal.id, 'Complaint')
     }
 }
 </script>
+

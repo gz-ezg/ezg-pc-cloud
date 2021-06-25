@@ -158,8 +158,7 @@
                         pageSize:_self.pageSize,
                         companyName:_self.SearchValidate.CompanyName,
                         serverName:_self.SearchValidate.server_realname,
-                        perforanceMonth:DateFormatYearMonth(_self.SearchValidate.work_month),
-                        period:'',
+                        perforanceMonth:DateFormatYearMonth(_self.SearchValidate.work_month)
                     }
                 }
                 function success(res) {

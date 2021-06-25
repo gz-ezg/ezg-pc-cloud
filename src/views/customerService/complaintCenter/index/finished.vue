@@ -281,7 +281,7 @@ export default {
             function success(res){
                 _self.Ydata =res.data.data.rows
                 _self.NpageTotal = res.data.data.total
-                // console.log(_self.Ydata.length)
+                 console.log(res)
                 for(let i = 0;i<_self.Ydata.length;i++){
                     // console.log('1111')
                     _self.Ydata[i].typeName = _self.complaintType.get(_self.Ydata[i].type)
