@@ -135,7 +135,9 @@ export default {
             this.$http.get(url).then(function (res) {
                 if (res.data.msgCode == '40000') {
                     _self.selectList = res.data.data.rows
-                    _self.selectValue = res.data.data.rows.map((v) => v.product)
+                    _self.selectValue = _self.selectList
+                    .filter((v) => v.producttags != "kz")
+                    .map((v) => v.product)
                 }
             })
         },
