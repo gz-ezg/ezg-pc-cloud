@@ -76,11 +76,10 @@
                     return
                 }
                 _self.loading = true
-                let url = 'api/order/cycle/service/dljz/addAccountRemindTask'
+                let url = 'api/task/remind/addAccImpRemindTask'
                 let config = {
                     companyId:_self.companyId,
-                    taskKind: "tkRemImport",
-                    taskName:_self.newMission.taskName,
+                    content:_self.newMission.taskName,
                     sPlanDate:FULLDateFormat(_self.newMission.planDate)
                 }
                 function success(res){

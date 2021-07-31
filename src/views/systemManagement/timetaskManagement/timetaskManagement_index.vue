@@ -44,9 +44,12 @@
                 <FormItem label="cronExpression" prop="cronExpression：" >
                     <Input v-model="addTimeTask.cronExpression" style="width:500px"></Input>                        
                 </FormItem>
+                <FormItem label="jobParam" prop="job_param：" >
+                    <Input v-model="addTimeTask.job_param" style="width:500px"></Input>                        
+                </FormItem>
                 <FormItem label="jobMemo" prop="jobMemo：" >
                     <Input v-model="addTimeTask.jobMemo" style="width:500px"></Input>                        
-                </FormItem>
+                </FormItem>                
             </Form>
             <div slot="footer">
                 <Button type="ghost" @click="add_Reset">重置</Button>
@@ -67,6 +70,9 @@
                 </FormItem>
                 <FormItem label="cronExpression:" prop="ncron" >
                     <Input v-model="EditTimeTask.ncron" style="width:500px"></Input>                        
+                </FormItem>
+                <FormItem label="jobParam:" prop="job_param" >
+                    <Input v-model="EditTimeTask.job_param" style="width:500px"></Input>                        
                 </FormItem>
                 <FormItem label="jobMemo:" prop="job_memo" >
                     <Input v-model="EditTimeTask.job_memo" style="width:500px" disabled></Input>                        
@@ -91,6 +97,9 @@
                 </FormItem>
                 <FormItem label="cronExpression：" prop="ncron" >
                     <Input v-model="ShowTimeTask.ncron" style="width:500px" readonly></Input>                        
+                </FormItem>
+                <FormItem label="cronExpression：" prop="job_param" >
+                    <Input v-model="ShowTimeTask.job_param" style="width:500px" readonly></Input>                        
                 </FormItem>
                 <FormItem label="jobMemo" prop="jobMemo：" >
                     <Input v-model="ShowTimeTask.job_memo" style="width:500px" readonly></Input>                        
@@ -176,6 +185,11 @@ export default {
                                 return h('span',params.row.jobClassName)
                             }
                         }
+                    },
+                    {
+                        title: 'job_param',
+                        key: 'job_param',
+                        width: 150
                     },
                     {
                         title: 'job_memo',
@@ -304,12 +318,14 @@ export default {
             this.addTimeTask.jobClassName = ''
             this.addTimeTask.jobGroupName = ''
             this.addTimeTask.cronExpression = ''
+            this.addTimeTask.job_param = ''
             this.addTimeTask.jobMemo = ''
         },
         edit_Reset(){
             this.EditTimeTask.jobClassName = ''
             // this.EditTimeTask.groupName = ''
             this.EditTimeTask.ncron = ''
+            this.EditTimeTask.job_param = ''
             // this.EditTimeTask.jobMemo = ''
         },
         handleReset(name){
@@ -348,6 +364,7 @@ export default {
                 jobClassName:_self.addTimeTask.jobClassName,
                 jobGroupName:_self.addTimeTask.jobGroupName,
                 cronExpression:_self.addTimeTask.cronExpression,
+                jobParam:_self.addTimeTask.job_param,
                 jobMemo:_self.addTimeTask.jobMemo
             }
             this.$http.post(url,config).then(function(res){
@@ -370,6 +387,7 @@ export default {
                 jobClassName:_self.EditTimeTask.jobClassName,
                 // jobGroupName:_self.EditTimeTask.groupName,
                 cronExpression:_self.EditTimeTask.ncron,
+                jobParam:_self.EditTimeTask.job_param
                 // jobMemo:_self.EditTimeTask.job_memo
             }
             this.$http.post(url,config).then(function(res){

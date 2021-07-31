@@ -2229,6 +2229,7 @@ export default {
       _self.get_data();
       _self.current_row = "";
     });
+    
     Bus.$on("UPDATE_INDEX", e => {
       _self.get_data();
       _self.current_row = "";

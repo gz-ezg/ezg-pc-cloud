@@ -76,20 +76,32 @@
                     return
                 }
                 _self.loading = true
-                let url = 'api/order/cycle/service/dljz/addAccountRemindTask'
+
+                let url = 'api/task/remind/addAccImpRemindTask'
                 let config = {
                     companyId:_self.companyId,
-                    taskKind: "tkRemImport",
-                    taskName:_self.newMission.taskName,
+                    content:_self.newMission.taskName,
                     sPlanDate:FULLDateFormat(_self.newMission.planDate)
                 }
+
+                // let url = 'api/order/cycle/service/dljz/addAccountRemindTask'
+                // let config = {
+                //     companyId:_self.companyId,
+                //     taskKind: "tkRemImport",
+                //     taskName:_self.newMission.taskName,
+                //     sPlanDate:FULLDateFormat(_self.newMission.planDate)
+                // }
                 function success(res){
                     _self.loading = false
                     _self.$bus.emit("UPDATE_INDEX",true)
                     _self.newMission.taskName = ""
                     _self.openAddMission = false
                 }
-                this.$Post(url, config, success)
+
+                function fail(err){
+                    _self.loading = false
+                }
+                this.$Post(url, config, success, fail)
             },
             cancel_task(){
                 this.newMission.taskName = ""
